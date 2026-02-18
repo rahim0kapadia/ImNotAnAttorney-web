@@ -25,10 +25,18 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "ImNotAnAttorney",
+    url: "https://imnotanattorney.com",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@ImNotAnAttorney",
   },
   robots: {
     index: true,
     follow: true,
+  },
+  alternates: {
+    canonical: "https://imnotanattorney.com",
   },
 };
 
