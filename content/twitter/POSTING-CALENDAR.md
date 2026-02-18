@@ -23,6 +23,10 @@
 | tweet-03.txt | "You paid $10,000..." | Attorney communication | Ready |
 | tweet-04.txt | "'What motions have you filed?'" | Actionable advice | Ready |
 | tweet-05.txt | "The police investigated you..." | Provocative | Ready |
+| tweet-06.txt | "Processing vs Defense" | Framework | Ready |
+| tweet-07.txt | "You can read your own discovery" | Empowerment | Ready |
+| tweet-08.txt | "The questions work" | Guarantee/confidence | Ready |
+| tweet-09.txt | "Public defenders are overwhelmed" | Public defender market | Ready |
 
 ## Suggested Posting Schedule (Week 1)
 
