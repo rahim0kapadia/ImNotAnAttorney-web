@@ -4,8 +4,9 @@ export function Footer() {
   return (
     <footer className="border-t border-zinc-800 bg-zinc-950">
       <div className="mx-auto max-w-6xl px-4 py-12">
-        <div className="grid gap-8 md:grid-cols-4">
-          <div>
+        <div className="grid gap-8 md:grid-cols-5">
+          {/* Brand */}
+          <div className="md:col-span-1">
             <Link href="/" className="text-lg font-bold tracking-tight">
               <span className="text-amber-400">Im</span>NotAnAttorney
             </Link>
@@ -13,12 +14,13 @@ export function Footer() {
               We Research. You Ask.
             </p>
             <p className="mt-2 text-xs text-zinc-600">
-              We provide legal information, not legal advice.
+              Legal information, not legal advice.
             </p>
           </div>
 
+          {/* Pages */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-zinc-300">Pages</h4>
+            <h4 className="mb-3 text-sm font-semibold text-zinc-300">Explore</h4>
             <div className="flex flex-col gap-2">
               <Link
                 href="/blog"
@@ -36,7 +38,7 @@ export function Footer() {
                 href="/resources"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                Resources
+                Free Resources
               </Link>
               <Link
                 href="/about"
@@ -44,12 +46,19 @@ export function Footer() {
               >
                 About
               </Link>
+              <Link
+                href="/intake"
+                className="text-sm text-amber-400 hover:text-amber-300"
+              >
+                Get Started →
+              </Link>
             </div>
           </div>
 
+          {/* Categories */}
           <div>
             <h4 className="mb-3 text-sm font-semibold text-zinc-300">
-              Categories
+              Blog Topics
             </h4>
             <div className="flex flex-col gap-2">
               <Link
@@ -79,20 +88,82 @@ export function Footer() {
             </div>
           </div>
 
+          {/* Services */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-zinc-300">Legal</h4>
+            <h4 className="mb-3 text-sm font-semibold text-zinc-300">
+              Our Services
+            </h4>
             <div className="flex flex-col gap-2">
-              <span className="text-xs text-zinc-600">
-                ImNotAnAttorney is not a law firm and does not provide legal
-                advice. All content is for informational purposes only.
-              </span>
+              <Link
+                href="/services#question-pack"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Question Pack ($49)
+              </Link>
+              <Link
+                href="/services#case-audit"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Case Audit ($497)
+              </Link>
+              <Link
+                href="/services#war-room"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                War Room ($1,997)
+              </Link>
+              <Link
+                href="/services"
+                className="text-sm text-amber-400 hover:text-amber-300"
+              >
+                View All Services →
+              </Link>
+            </div>
+          </div>
+
+          {/* Connect */}
+          <div>
+            <h4 className="mb-3 text-sm font-semibold text-zinc-300">
+              Connect
+            </h4>
+            <div className="flex flex-col gap-2">
+              <a
+                href="https://twitter.com/ImNotAnAttorney"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Twitter / X
+              </a>
+              <Link
+                href="/sitemap.xml"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Sitemap
+              </Link>
+              <Link
+                href="/robots.txt"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Robots.txt
+              </Link>
             </div>
           </div>
         </div>
 
+        {/* Disclaimer */}
+        <div className="mt-8 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+          <p className="text-xs text-zinc-500">
+            <strong className="text-zinc-400">Disclaimer:</strong>{" "}
+            ImNotAnAttorney provides legal information and research services,
+            not legal advice. We are not a law firm and do not create an
+            attorney-client relationship. Always consult with a licensed
+            attorney for legal advice specific to your situation.
+          </p>
+        </div>
+
         <div className="mt-8 border-t border-zinc-800 pt-8 text-center text-xs text-zinc-600">
-          &copy; {new Date().getFullYear()} ImNotAnAttorney. All rights
-          reserved.
+          © {new Date().getFullYear()} ImNotAnAttorney. All rights reserved.
         </div>
       </div>
     </footer>
