@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import type { Metadata } from "next";
 
 const chargeTypes = [
   "Drug Possession",
@@ -277,6 +276,12 @@ export default function IntakePage() {
           >
             Submit — Get Your Case Reviewed
           </button>
+
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-zinc-600">
+            <span>🔒 Your information is confidential</span>
+            <span>⚡ Response within 24 hours</span>
+            <span>🛡️ Deliverable guarantee</span>
+          </div>
         </form>
       </div>
     </div>
