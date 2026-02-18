@@ -42,6 +42,19 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "ImNotAnAttorney",
+              url: "https://imnotanattorney.com",
+              description: "Legal research and case analysis for criminal defendants. We provide legal information, not legal advice.",
+              sameAs: [],
+            }),
+          }}
+        />
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />

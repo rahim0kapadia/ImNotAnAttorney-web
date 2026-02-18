@@ -93,9 +93,38 @@ const faqs = [
   },
 ];
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "ImNotAnAttorney Case Review Services",
+  description: "Legal research and case analysis for criminal defendants. Discovery review, motion identification, and attorney accountability question reports.",
+  provider: {
+    "@type": "Organization",
+    name: "ImNotAnAttorney",
+    url: "https://imnotanattorney.com",
+  },
+  serviceType: "Legal Research",
+  areaServed: "US",
+};
+
 export default function ServicesPage() {
   return (
     <div className="px-4 py-16">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <div className="text-center">
