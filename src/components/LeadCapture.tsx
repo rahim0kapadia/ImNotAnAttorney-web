@@ -4,15 +4,28 @@ import { useState } from "react";
 
 export function LeadCapture() {
   const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: integrate with Supabase or email provider
-    setSubmitted(true);
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "lead-capture" }),
+      });
+      if (res.ok) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
-  if (submitted) {
+  if (status === "success") {
     return (
       <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-center">
         <div className="mb-2 text-2xl">&#10003;</div>
@@ -43,11 +56,15 @@ export function LeadCapture() {
         />
         <button
           type="submit"
-          className="rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
+          disabled={status === "loading"}
+          className="rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-amber-400 disabled:opacity-50"
         >
-          Send It
+          {status === "loading" ? "..." : "Send It"}
         </button>
       </form>
+      {status === "error" && (
+        <p className="mt-2 text-xs text-red-400">Something went wrong. Try again.</p>
+      )}
       <p className="mt-3 text-xs text-zinc-600">
         No spam. Unsubscribe anytime. We&apos;re too busy researching your case to
         send junk mail.
