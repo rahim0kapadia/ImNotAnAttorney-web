@@ -40,7 +40,7 @@ export function Header() {
             About
           </Link>
           <Link
-            href="#pricing"
+            href="/intake"
             className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
           >
             Get Started
@@ -111,7 +111,7 @@ export function Header() {
               About
             </Link>
             <Link
-              href="#pricing"
+              href="/intake"
               onClick={() => setMobileOpen(false)}
               className="rounded-lg bg-amber-500 px-4 py-2 text-center text-sm font-semibold text-black transition-colors hover:bg-amber-400"
             >
