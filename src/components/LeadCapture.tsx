@@ -31,8 +31,15 @@ export function LeadCapture() {
         <div className="mb-2 text-2xl">&#10003;</div>
         <h3 className="text-lg font-semibold text-white">You&apos;re in.</h3>
         <p className="mt-2 text-sm text-zinc-400">
-          Check your email for the free guide.
+          Here&apos;s your guide. Bookmark it — you&apos;ll need it.
         </p>
+        <a
+          href="/guides/10-questions-your-attorney-hopes-you-never-ask.pdf"
+          download
+          className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
+        >
+          Download PDF Guide →
+        </a>
       </div>
     );
   }
