@@ -1,0 +1,10 @@
+17:48:15.313034 exec-cmd.c:266          trace: resolved executable dir: C:/Program Files/Git/mingw64/bin
+17:48:15.323692 git.c:502               trace: built-in: git push origin master
+17:48:15.323692 run-command.c:674       trace: run_command: GIT_DIR=.git git remote-https origin https://rahim0kapadia@github.com/rahim0kapadia/ImNotAnAttorney-web.git
+17:48:15.323692 run-command.c:935       trace: start_command: git remote-https origin https://rahim0kapadia@github.com/rahim0kapadia/ImNotAnAttorney-web.git
+17:48:15.337592 exec-cmd.c:266          trace: resolved executable dir: C:/Program Files/Git/mingw64/libexec/git-core
+17:48:15.337592 git.c:807               trace: exec: git-remote-https origin https://rahim0kapadia@github.com/rahim0kapadia/ImNotAnAttorney-web.git
+17:48:15.337592 run-command.c:674       trace: run_command: git-remote-https origin https://rahim0kapadia@github.com/rahim0kapadia/ImNotAnAttorney-web.git
+17:48:15.337592 run-command.c:935       trace: start_command: git-remote-https origin https://rahim0kapadia@github.com/rahim0kapadia/ImNotAnAttorney-web.git
+17:48:15.348297 exec-cmd.c:266          trace: resolved executable dir: C:/Program Files/Git/mingw64/libexec/git-core
+17:48:15.580877 run-command.c:674       trace: run_command: ''\''C:\Program Files\GitHub CLI\gh.exe'\'' auth git-credential get'
