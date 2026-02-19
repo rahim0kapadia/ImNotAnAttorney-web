@@ -12,10 +12,11 @@ const chargeTypes = [
 ];
 
 const serviceInterests = [
-  "Question Pack",
-  "Discovery Review",
-  "Motion Awareness Report",
-  "Full Case Package",
+  "Case Decoder ($97)",
+  "Intelligence Brief ($497)",
+  "The X-Ray ($997)",
+  "The War Room ($1,997)",
+  "The Situation Room ($4,997)",
   "Not sure — help me decide",
 ];
 

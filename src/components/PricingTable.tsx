@@ -2,53 +2,116 @@ import Link from "next/link";
 
 const tiers = [
   {
-    name: "Question Pack",
-    price: "$49",
+    name: "Case Decoder",
+    price: "$97",
     anchor: null,
-    description: "Start asking the right questions today",
+    description: "24-hour turnaround. No discovery needed.",
     features: [
-      "75+ case-specific questions for your attorney",
-      "Organized by topic (discovery, motions, strategy)",
-      "Delivered via email within 24 hours",
-      "Works for any criminal charge",
+      "Plain-English charge breakdown",
+      "Case stage benchmark",
+      "Attorney accountability checklist",
+      "10-15 targeted questions for your attorney",
+      "Red flags for your stage",
+      "Motion overview for your charges",
     ],
-    cta: "Get Your Questions",
+    cta: "Get Your Case Decoder",
     featured: false,
+    tier: "case-decoder",
   },
   {
-    name: "Case Audit",
+    name: "Intelligence Brief",
     price: "$497",
     anchor: "vs. $1,500+ for a second-opinion attorney",
-    description: "Full discovery review + custom question report",
+    description:
+      "Judge intel + 35-50 questions. No discovery needed.",
     features: [
-      "Everything in Question Pack",
-      "Full discovery document analysis",
-      "Identify missed motions & deadlines",
-      "Prosecution weakness assessment",
-      "Custom 15-30 page case report",
-      "Delivered within 72 hours",
-      "One follow-up revision included",
+      "Everything in Case Decoder",
+      "Charge exposure map",
+      "Judge intelligence profile",
+      "Jurisdiction profile",
+      "Attorney accountability timeline",
+      "Motion landscape report",
+      "Pre-discovery red flags",
+      "35-50 targeted questions",
     ],
-    cta: "Get Your Audit",
+    cta: "Get Your Intelligence Brief",
     featured: true,
+    tier: "intelligence-brief",
   },
   {
-    name: "War Room",
+    name: "The X-Ray",
+    price: "$997",
+    anchor: null,
+    description: "Full discovery analysis. 5-7 business days.",
+    features: [
+      "Everything in Intelligence Brief",
+      "Discovery document index",
+      "Comprehensive timeline",
+      "Discrepancy report",
+      "Red flags summary",
+      "20+ case-specific questions",
+    ],
+    cta: "Get The X-Ray",
+    featured: false,
+    tier: "x-ray",
+  },
+  {
+    name: "The War Room",
     price: "$1,997",
     anchor: "Less than 10% of most retainers",
-    description: "Ongoing case monitoring until resolution. Limited to 10 active clients.",
+    description:
+      "Full intelligence operation. 25-28 days + weekly updates.",
     features: [
-      "Everything in Case Audit",
-      "Weekly case status reviews",
-      "Updated question reports before every court date",
-      "Motion deadline tracking & alerts",
-      "Plea deal analysis & comparison",
-      "Direct email access to research team",
-      "Court date preparation briefs",
-      "Unlimited revisions until case closes",
+      "Everything in The X-Ray",
+      "Judge & prosecution dossiers",
+      "Witness analysis (up to 8)",
+      "Motion awareness + wave strategy",
+      "Case law reference package",
+      "Strategy recommendations",
+      "Attorney delivery package",
+      "Weekly updates for duration of case",
     ],
-    cta: "Enter the War Room",
+    cta: "Enter The War Room",
     featured: false,
+    tier: "war-room",
+  },
+  {
+    name: "The Situation Room",
+    price: "$4,997",
+    anchor: "Priority everything. Trial-ready.",
+    description:
+      "Complete pipeline + trial prep. 24-48hr priority turnaround.",
+    features: [
+      "Everything in The War Room",
+      "ALL witness battle scripts",
+      "Reply brief templates",
+      "Attack intelligence packages",
+      "Voir dire + opening + closing frameworks",
+      "JOA motion packages",
+      "Trial morning cheat sheets",
+      "Real-time trial support",
+      "Direct access channel",
+    ],
+    cta: "Enter The Situation Room",
+    featured: false,
+    tier: "situation-room",
+  },
+];
+
+const addons = [
+  {
+    name: "Extra Witness Intel",
+    price: "$149",
+    unit: "per witness",
+    description: "Additional witness dossier beyond your tier limit",
+    availability: "War Room & Situation Room",
+  },
+  {
+    name: "Standalone Witness Pack",
+    price: "$297",
+    unit: "up to 3 witnesses",
+    description: "Witness analysis from your discovery documents",
+    availability: "Any tier with discovery",
   },
 ];
 
@@ -59,17 +122,18 @@ export function PricingTable() {
       <div className="mb-8 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
         <p className="text-sm text-zinc-400">
           The average criminal defense retainer is{" "}
-          <span className="font-bold text-white">$5,000–$25,000</span>. A
+          <span className="font-bold text-white">$5,000-$25,000</span>. A
           second opinion from another attorney costs{" "}
           <span className="font-bold text-white">$1,500+</span> for one hour.
         </p>
         <p className="mt-2 text-sm text-amber-400 font-semibold">
-          We start at $49. Your freedom is worth asking the right questions.
+          We start at $97. Your freedom is worth asking the right questions.
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
-        {tiers.map((tier) => (
+      {/* Main tiers - first 3 */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {tiers.slice(0, 3).map((tier) => (
           <div
             key={tier.name}
             className={`flex flex-col rounded-xl border p-8 ${
@@ -85,7 +149,9 @@ export function PricingTable() {
             )}
             <h3 className="text-xl font-bold text-white">{tier.name}</h3>
             <div className="mt-2">
-              <span className="text-3xl font-bold text-white">{tier.price}</span>
+              <span className="text-3xl font-bold text-white">
+                {tier.price}
+              </span>
             </div>
             {tier.anchor && (
               <p className="mt-1 text-xs text-amber-400/70">{tier.anchor}</p>
@@ -103,7 +169,7 @@ export function PricingTable() {
               ))}
             </ul>
             <Link
-              href="/intake"
+              href={`/checkout?tier=${tier.tier}`}
               className={`mt-8 block rounded-lg py-3 text-center text-sm font-semibold transition-colors ${
                 tier.featured
                   ? "bg-amber-500 text-black hover:bg-amber-400"
@@ -116,15 +182,89 @@ export function PricingTable() {
         ))}
       </div>
 
-      {/* Guarantee */}
-      <div className="mt-8 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
-        <p className="text-lg font-bold text-white">
-          Deliverable Guarantee
+      {/* Premium tiers */}
+      <div className="mt-6 grid gap-6 md:grid-cols-2">
+        {tiers.slice(3).map((tier) => (
+          <div
+            key={tier.name}
+            className="flex flex-col rounded-xl border border-zinc-800 bg-zinc-900/50 p-8"
+          >
+            <h3 className="text-xl font-bold text-white">{tier.name}</h3>
+            <div className="mt-2">
+              <span className="text-3xl font-bold text-white">
+                {tier.price}
+              </span>
+            </div>
+            {tier.anchor && (
+              <p className="mt-1 text-xs text-amber-400/70">{tier.anchor}</p>
+            )}
+            <p className="mt-2 text-sm text-zinc-400">{tier.description}</p>
+            <ul className="mt-6 flex-1 space-y-3">
+              {tier.features.map((feature) => (
+                <li
+                  key={feature}
+                  className="flex items-start gap-2 text-sm text-zinc-300"
+                >
+                  <span className="mt-0.5 text-amber-400">&#10003;</span>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <Link
+              href={`/checkout?tier=${tier.tier}`}
+              className="mt-8 block rounded-lg border border-zinc-700 py-3 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
+            >
+              {tier.cta}
+            </Link>
+          </div>
+        ))}
+      </div>
+
+      {/* Add-ons */}
+      <div className="mt-6 grid gap-4 md:grid-cols-2">
+        {addons.map((addon) => (
+          <div
+            key={addon.name}
+            className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
+          >
+            <div className="flex items-baseline justify-between">
+              <h4 className="font-semibold text-white">{addon.name}</h4>
+              <div className="text-right">
+                <span className="text-lg font-bold text-white">
+                  {addon.price}
+                </span>
+                <span className="ml-1 text-xs text-zinc-400">
+                  {addon.unit}
+                </span>
+              </div>
+            </div>
+            <p className="mt-2 text-sm text-zinc-400">{addon.description}</p>
+            <p className="mt-1 text-xs text-zinc-500">
+              Available for: {addon.availability}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Upgrade Credits */}
+      <div className="mt-6 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6 text-center">
+        <p className="text-sm font-semibold text-amber-400">
+          Upgrade Credits: 100% Applied
         </p>
         <p className="mt-2 text-sm text-zinc-400">
-          Every question, every page, on time — or you pay nothing. We
+          Start with the Case Decoder for $97. If you upgrade later, every
+          dollar you paid is credited toward the next tier. No money wasted.
+          12-month expiration.
+        </p>
+      </div>
+
+      {/* Guarantee */}
+      <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
+        <p className="text-lg font-bold text-white">Deliverable Guarantee</p>
+        <p className="mt-2 text-sm text-zinc-400">
+          Every question, every report, on time — or your money back. We
           can&apos;t guarantee your attorney will change. We guarantee
-          you&apos;ll have every tool to make them.
+          you&apos;ll have the intelligence to hold them accountable.
         </p>
       </div>
     </div>

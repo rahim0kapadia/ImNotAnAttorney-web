@@ -95,22 +95,28 @@ export function Footer() {
             </p>
             <div className="flex flex-col gap-2">
               <Link
-                href="/services#question-pack"
+                href="/checkout?tier=case-decoder"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                Question Pack ($49)
+                Case Decoder ($97)
               </Link>
               <Link
-                href="/services#case-audit"
+                href="/checkout?tier=intelligence-brief"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                Case Audit ($497)
+                Intelligence Brief ($497)
               </Link>
               <Link
-                href="/services#war-room"
+                href="/checkout?tier=x-ray"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                War Room ($1,997)
+                The X-Ray ($997)
+              </Link>
+              <Link
+                href="/checkout?tier=war-room"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                The War Room ($1,997)
               </Link>
               <Link
                 href="/services"

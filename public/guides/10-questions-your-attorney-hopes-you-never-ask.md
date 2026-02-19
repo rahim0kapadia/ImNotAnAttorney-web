@@ -157,7 +157,7 @@ That's where we come in.
 
 We're not lawyers. We don't give legal advice. But we make sure you're never in the dark about your own case.
 
-**Services start at $49.**
+**Services start at $97.** Our Case Decoder gives you a plain-English charge breakdown plus 10-15 targeted questions — delivered in 24 hours.
 
 → Visit **imnotanattorney.com** to get started.
 
