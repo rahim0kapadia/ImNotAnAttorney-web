@@ -1,6 +1,7 @@
 import { LeadCapture } from "@/components/LeadCapture";
 import { PricingTable } from "@/components/PricingTable";
 import { TestimonialCard } from "@/components/TestimonialCard";
+import { FAQAccordion } from "@/components/FAQAccordion";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -31,9 +32,9 @@ export default function Home() {
             Make sure they remember that.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-zinc-400">
-            We dig through your discovery, find what your lawyer missed, and
-            hand you the exact questions that make them start working. Starting
-            at $49.
+            We hand you the exact questions that make your attorney start
+            working. We dig through your discovery, find what they missed, and
+            turn it into ammunition. Starting at $49.
           </p>
           <p className="mt-4 text-sm font-semibold text-amber-500">
             We Research. You Ask.
@@ -130,7 +131,7 @@ export default function Home() {
               {
                 step: "03",
                 title: "You ask the questions",
-                desc: "We hand you a custom report with pointed, specific questions. You bring them to your attorney. Watch what happens next.",
+                desc: "We hand you a custom report with pointed, specific questions. You bring them to your next meeting. Suddenly, motions get filed. Calls get returned. Your defense gets real.",
               },
             ].map((item) => (
               <div key={item.step} className="text-center">
@@ -222,6 +223,49 @@ export default function Home() {
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-2xl">
           <LeadCapture />
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="border-t border-zinc-800 px-4 py-20">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="mb-8 text-center text-2xl font-bold text-white md:text-3xl">
+            Common Questions
+          </h2>
+          <FAQAccordion
+            items={[
+              {
+                question: "Will asking these questions upset my attorney?",
+                answer:
+                  "Good attorneys welcome informed clients. Asking educated questions isn't adversarial — it's your right. The lawyers who get angry when you push back? They're the reason you're here.",
+              },
+              {
+                question: "Is this legal advice?",
+                answer:
+                  "No. We provide legal research, case analysis, and questions — not legal advice. Your attorney provides legal advice. We research. You ask.",
+              },
+              {
+                question: "What if I don't have my discovery documents yet?",
+                answer:
+                  "That's fine — and it's more common than you think. We'll tell you exactly how to request them and what to ask your attorney for. You can still get started with a Question Pack based on your charges alone.",
+              },
+              {
+                question: "Do you work on federal cases?",
+                answer:
+                  "Yes. From misdemeanor DUIs to federal indictments — we research every case type. The more complex your case, the more questions your attorney should be answering.",
+              },
+              {
+                question: "How fast do I get my report?",
+                answer:
+                  "Question Packs are delivered within 24 hours. Discovery Reviews and Case Audits within 3–5 business days. War Room clients get ongoing support with same-day turnaround.",
+              },
+              {
+                question: "Can I get a refund?",
+                answer:
+                  "If we don't deliver the stated question counts and reports on time, you get a full refund. We guarantee the work — every question, every page, on time — or you pay nothing.",
+              },
+            ]}
+          />
         </div>
       </section>
 
