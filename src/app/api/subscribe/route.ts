@@ -1,32 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
-
-const DATA_DIR = path.join(process.cwd(), "data");
-const SUBSCRIBERS_FILE = path.join(DATA_DIR, "subscribers.json");
-
-interface Subscriber {
-  email: string;
-  source: string;
-  timestamp: string;
-}
-
-async function ensureDataDir() {
-  try {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-  } catch {
-    // already exists
-  }
-}
-
-async function getSubscribers(): Promise<Subscriber[]> {
-  try {
-    const data = await fs.readFile(SUBSCRIBERS_FILE, "utf-8");
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
-}
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function POST(req: NextRequest) {
   try {
@@ -40,21 +13,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await ensureDataDir();
-    const subscribers = await getSubscribers();
+    const supabase = createAdminClient();
+    const normalizedEmail = email.toLowerCase().trim();
 
-    // Check for duplicate
-    if (subscribers.some((s) => s.email.toLowerCase() === email.toLowerCase())) {
-      return NextResponse.json({ message: "Already subscribed" });
+    // Upsert — if already subscribed, just return success
+    const { error } = await supabase
+      .from("subscribers")
+      .upsert({ email: normalizedEmail, source }, { onConflict: "email" });
+
+    if (error) {
+      console.error("[Subscribe] Supabase error:", error);
+      return NextResponse.json(
+        { error: "Something went wrong" },
+        { status: 500 }
+      );
     }
-
-    subscribers.push({
-      email: email.toLowerCase().trim(),
-      source,
-      timestamp: new Date().toISOString(),
-    });
-
-    await fs.writeFile(SUBSCRIBERS_FILE, JSON.stringify(subscribers, null, 2));
 
     return NextResponse.json({ message: "Subscribed successfully" });
   } catch {

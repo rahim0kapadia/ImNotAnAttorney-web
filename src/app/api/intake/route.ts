@@ -1,26 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
-
-const DATA_DIR = path.join(process.cwd(), "data");
-const INTAKES_FILE = path.join(DATA_DIR, "intakes.json");
-
-async function ensureDataDir() {
-  try {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-  } catch {
-    // already exists
-  }
-}
-
-async function getIntakes(): Promise<Record<string, unknown>[]> {
-  try {
-    const data = await fs.readFile(INTAKES_FILE, "utf-8");
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
-}
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function POST(req: NextRequest) {
   try {
@@ -34,15 +13,28 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await ensureDataDir();
-    const intakes = await getIntakes();
+    const supabase = createAdminClient();
 
-    intakes.push({
-      ...body,
-      timestamp: new Date().toISOString(),
+    const { error } = await supabase.from("intakes").insert({
+      first_name: firstName,
+      last_name: body.lastName || null,
+      email: email.toLowerCase().trim(),
+      phone: body.phone || null,
+      charge_type: chargeType,
+      state: body.state || null,
+      has_attorney: body.hasAttorney || null,
+      has_discovery: body.hasDiscovery || null,
+      services: body.services || [],
+      situation: body.situation || null,
     });
 
-    await fs.writeFile(INTAKES_FILE, JSON.stringify(intakes, null, 2));
+    if (error) {
+      console.error("[Intake] Supabase error:", error);
+      return NextResponse.json(
+        { error: "Something went wrong" },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({ message: "Intake received" });
   } catch {
