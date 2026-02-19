@@ -71,7 +71,7 @@ export default async function BlogPage({
         </div>
 
         {posts.length === 0 && (
-          <div className="py-12 text-center text-zinc-500">
+          <div className="py-12 text-center text-zinc-400">
             No posts in this category yet. Check back soon.
           </div>
         )}

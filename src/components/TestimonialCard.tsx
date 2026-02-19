@@ -12,7 +12,7 @@ export function TestimonialCard({ quote, name, detail }: TestimonialCardProps) {
       </p>
       <div className="mt-4">
         <p className="text-sm font-semibold text-white">{name}</p>
-        <p className="text-xs text-zinc-500">{detail}</p>
+        <p className="text-xs text-zinc-400">{detail}</p>
       </div>
     </div>
   );

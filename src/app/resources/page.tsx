@@ -87,7 +87,7 @@ export default function ResourcesPage() {
           <h2 className="text-xl font-bold text-white">
             Guides &amp; Templates
           </h2>
-          <p className="mt-1 text-sm text-zinc-500">
+          <p className="mt-1 text-sm text-zinc-400">
             Enter your email to access. No spam. No selling your data.
           </p>
           <div className="mt-6 grid gap-4 md:grid-cols-2">

@@ -62,9 +62,9 @@ export default function IntakePage() {
             We&apos;ll review your information and get back to you within 24
             hours. Check your email.
           </p>
-          <p className="mt-6 text-sm text-zinc-500">
+          <p className="mt-6 text-sm text-zinc-400">
             In the meantime, read our{" "}
-            <a href="/blog" className="text-amber-400 hover:underline">
+            <a href="/blog" className="text-amber-400 underline decoration-amber-400/50 hover:decoration-amber-400">
               blog
             </a>{" "}
             — it&apos;s full of free information about your rights.
@@ -95,7 +95,7 @@ export default function IntakePage() {
               <div>
                 <label
                   htmlFor="firstName"
-                  className="block text-xs text-zinc-500"
+                  className="block text-xs text-zinc-400"
                 >
                   First Name
                 </label>
@@ -111,7 +111,7 @@ export default function IntakePage() {
               <div>
                 <label
                   htmlFor="lastName"
-                  className="block text-xs text-zinc-500"
+                  className="block text-xs text-zinc-400"
                 >
                   Last Name
                 </label>
@@ -126,7 +126,7 @@ export default function IntakePage() {
               </div>
             </div>
             <div className="mt-4">
-              <label htmlFor="email" className="block text-xs text-zinc-500">
+              <label htmlFor="email" className="block text-xs text-zinc-400">
                 Email
               </label>
               <input
@@ -139,7 +139,7 @@ export default function IntakePage() {
               />
             </div>
             <div className="mt-4">
-              <label htmlFor="phone" className="block text-xs text-zinc-500">
+              <label htmlFor="phone" className="block text-xs text-zinc-400">
                 Phone (optional)
               </label>
               <input
@@ -160,7 +160,7 @@ export default function IntakePage() {
             <div className="mt-4">
               <label
                 htmlFor="chargeType"
-                className="block text-xs text-zinc-500"
+                className="block text-xs text-zinc-400"
               >
                 Type of Charges
               </label>
@@ -179,7 +179,7 @@ export default function IntakePage() {
               </select>
             </div>
             <div className="mt-4">
-              <label htmlFor="state" className="block text-xs text-zinc-500">
+              <label htmlFor="state" className="block text-xs text-zinc-400">
                 State
               </label>
               <input
@@ -194,7 +194,7 @@ export default function IntakePage() {
             <div className="mt-4">
               <label
                 htmlFor="hasAttorney"
-                className="block text-xs text-zinc-500"
+                className="block text-xs text-zinc-400"
               >
                 Do you have a private attorney?
               </label>
@@ -213,7 +213,7 @@ export default function IntakePage() {
             <div className="mt-4">
               <label
                 htmlFor="hasDiscovery"
-                className="block text-xs text-zinc-500"
+                className="block text-xs text-zinc-400"
               >
                 Have you received discovery documents?
               </label>
@@ -257,7 +257,7 @@ export default function IntakePage() {
           <div>
             <label
               htmlFor="situation"
-              className="block text-xs text-zinc-500"
+              className="block text-xs text-zinc-400"
             >
               Tell us more about your situation (optional)
             </label>
@@ -272,7 +272,7 @@ export default function IntakePage() {
 
           {/* Disclaimer */}
           <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
-            <p className="text-xs text-zinc-500">
+            <p className="text-xs text-zinc-400">
               By submitting this form, you understand that ImNotAnAttorney
               provides legal information and research — not legal advice. We are
               not a law firm and do not create an attorney-client relationship.

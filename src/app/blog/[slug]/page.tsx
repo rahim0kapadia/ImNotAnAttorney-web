@@ -51,9 +51,9 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* Header */}
         <div className="mb-8">
           <div className="mb-4 flex items-center gap-3">
-            <time className="text-sm text-zinc-500">{post.date}</time>
+            <time className="text-sm text-zinc-400">{post.date}</time>
             <span className="text-sm text-zinc-400">&bull;</span>
-            <span className="text-sm text-zinc-500">{post.readingTime}</span>
+            <span className="text-sm text-zinc-400">{post.readingTime}</span>
           </div>
           <h1 className="text-3xl font-bold leading-tight text-white md:text-4xl">
             {post.title}
@@ -99,7 +99,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           <p className="text-sm font-bold text-white">
             Know someone facing charges? Send them this.
           </p>
-          <p className="mt-1 text-xs text-zinc-500">
+          <p className="mt-1 text-xs text-zinc-400">
             Most defendants don&apos;t know they can hold their attorney accountable. Share this with someone who needs it.
           </p>
           <div className="mt-4 flex flex-wrap gap-3">

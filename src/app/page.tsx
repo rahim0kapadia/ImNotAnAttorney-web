@@ -211,12 +211,12 @@ export default function Home() {
             Names changed for privacy. These are real clients who used real
             reports on real cases.
           </p>
-          <p className="mt-4 text-center text-sm text-zinc-500">
+          <p className="mt-4 text-center text-sm text-zinc-400">
             Built by people who&apos;ve navigated the criminal justice system
             firsthand.{" "}
             <Link
               href="/about"
-              className="text-amber-400 hover:underline"
+              className="text-amber-400 underline decoration-amber-400/50 hover:decoration-amber-400"
             >
               Read our story
             </Link>

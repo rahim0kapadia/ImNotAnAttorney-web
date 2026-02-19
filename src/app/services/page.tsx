@@ -154,11 +154,11 @@ export default function ServicesPage() {
               { attorney: "$100K", ours: "$4,997", pct: "5%" },
             ].map((row) => (
               <div key={row.attorney} className="rounded-lg bg-zinc-800/50 p-4">
-                <div className="text-xs text-zinc-500">You paid attorney</div>
+                <div className="text-xs text-zinc-400">You paid attorney</div>
                 <div className="text-lg font-bold text-white">
                   {row.attorney}
                 </div>
-                <div className="mt-2 text-xs text-zinc-500">Our service</div>
+                <div className="mt-2 text-xs text-zinc-400">Our service</div>
                 <div className="text-lg font-bold text-amber-400">
                   {row.ours}
                 </div>

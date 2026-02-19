@@ -20,7 +20,7 @@ export function Footer() {
 
           {/* Pages */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-zinc-300">Explore</h4>
+            <p className="mb-3 text-sm font-semibold text-zinc-300">Explore</p>
             <div className="flex flex-col gap-2">
               <Link
                 href="/blog"
@@ -57,9 +57,9 @@ export function Footer() {
 
           {/* Categories */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-zinc-300">
+            <p className="mb-3 text-sm font-semibold text-zinc-300">
               Blog Topics
-            </h4>
+            </p>
             <div className="flex flex-col gap-2">
               <Link
                 href="/blog?category=dui"
@@ -90,9 +90,9 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-zinc-300">
+            <p className="mb-3 text-sm font-semibold text-zinc-300">
               Our Services
-            </h4>
+            </p>
             <div className="flex flex-col gap-2">
               <Link
                 href="/services#question-pack"
@@ -123,9 +123,9 @@ export function Footer() {
 
           {/* Connect */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-zinc-300">
+            <p className="mb-3 text-sm font-semibold text-zinc-300">
               Connect
-            </h4>
+            </p>
             <div className="flex flex-col gap-2">
               <a
                 href="https://twitter.com/ImNotAnAttorney"
@@ -153,7 +153,7 @@ export function Footer() {
 
         {/* Disclaimer */}
         <div className="mt-8 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-zinc-400">
             <strong className="text-zinc-400">Disclaimer:</strong>{" "}
             ImNotAnAttorney provides legal information and research services,
             not legal advice. We are not a law firm and do not create an
