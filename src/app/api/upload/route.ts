@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { sendEmail } from "@/lib/email";
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 
@@ -16,6 +17,22 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const supabase = createAdminClient();
+
+    // Auth: verify caseId exists in cases table
+    const { data: caseRecord, error: caseError } = await supabase
+      .from("cases")
+      .select("id, email, tier, status, file_urls")
+      .eq("id", caseId)
+      .single();
+
+    if (caseError || !caseRecord) {
+      return NextResponse.json(
+        { error: "Invalid case ID" },
+        { status: 403 }
+      );
+    }
+
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
         { error: "File exceeds 50MB limit" },
@@ -23,9 +40,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const supabase = createAdminClient();
-    const ext = file.name.split(".").pop() || "bin";
-    const path = `${caseId}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "_")}.${ext}`;
+    // Use file.name directly — no extra extension appended
+    const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
+    const path = `${caseId}/${Date.now()}-${safeName}`;
 
     const buffer = Buffer.from(await file.arrayBuffer());
 
@@ -44,27 +61,30 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Get the file URL
-    const {
-      data: { publicUrl },
-    } = supabase.storage.from("discovery-files").getPublicUrl(path);
-
-    // Update the case record with the new file URL
-    const { data: caseRecord } = await supabase
+    // Store the storage path (not a public URL — bucket is private)
+    const existingUrls = caseRecord.file_urls || [];
+    await supabase
       .from("cases")
-      .select("file_urls")
-      .eq("id", caseId)
-      .single();
+      .update({ file_urls: [...existingUrls, path] })
+      .eq("id", caseId);
 
-    if (caseRecord) {
-      const existingUrls = caseRecord.file_urls || [];
-      await supabase
-        .from("cases")
-        .update({ file_urls: [...existingUrls, publicUrl] })
-        .eq("id", caseId);
-    }
+    // Send upload receipt email
+    await sendEmail({
+      to: caseRecord.email,
+      subject: "Document Received — Your File Has Been Uploaded",
+      html: `
+        <h1 style="color: #F59E0B;">Document Received</h1>
+        <p>We've received your uploaded file: <strong>${file.name}</strong></p>
+        <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
+          <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">File:</strong> ${file.name}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Size:</strong> ${(file.size / 1024 / 1024).toFixed(1)} MB</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Total files uploaded:</strong> ${existingUrls.length + 1}</p>
+        </div>
+        <p style="color: #A1A1AA;">You can upload additional files using the same link. When you've uploaded everything, your analysis begins.</p>
+      `,
+    });
 
-    return NextResponse.json({ url: publicUrl });
+    return NextResponse.json({ path });
   } catch (error) {
     console.error("[Upload] Error:", error);
     return NextResponse.json(

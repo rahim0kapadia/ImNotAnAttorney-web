@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
+import { stripe, TIERS, isValidTier } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email";
+
+const OPERATOR_EMAIL =
+  process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -36,6 +39,8 @@ export async function POST(req: NextRequest) {
     }
 
     const supabase = createAdminClient();
+    const tierConfig = isValidTier(tier) ? TIERS[tier] : null;
+    const requiresDiscovery = tierConfig?.requiresDiscovery ?? false;
 
     // Create order record
     const { error: orderError } = await supabase.from("orders").insert({
@@ -55,6 +60,34 @@ export async function POST(req: NextRequest) {
       console.error("[Stripe Webhook] Order insert error:", orderError);
     }
 
+    // Create cases record for discovery tiers
+    let caseId: string | null = null;
+    if (requiresDiscovery) {
+      caseId = crypto.randomUUID();
+      const { error: caseError } = await supabase.from("cases").insert({
+        id: caseId,
+        email,
+        tier,
+        status: "pending",
+        file_urls: [],
+      });
+      if (caseError) {
+        console.error("[Stripe Webhook] Case insert error:", caseError);
+        caseId = null;
+      }
+    }
+
+    // Build upload section for discovery tier emails
+    const uploadSection = caseId
+      ? `
+        <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border: 1px solid #F59E0B;">
+          <p style="margin: 0; color: white; font-weight: bold;">Next Step: Upload Your Discovery Documents</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${productName} requires discovery documents for analysis. Upload them here:</p>
+          <a href="https://imnotanattorney.com/upload?case=${caseId}" style="display: inline-block; margin-top: 16px; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Upload Discovery Documents</a>
+        </div>
+      `
+      : "";
+
     // Send payment confirmation email
     await sendEmail({
       to: email,
@@ -65,9 +98,29 @@ export async function POST(req: NextRequest) {
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
           <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Product:</strong> ${productName}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Amount:</strong> $${(amount / 100).toFixed(2)}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Delivery:</strong> ${tierConfig?.delivery ?? "We'll be in touch"}</p>
         </div>
+        ${uploadSection}
         <p style="color: #A1A1AA;">We'll email you when your report is ready. Keep an eye on your inbox.</p>
-        <p style="color: #A1A1AA; font-size: 14px;">If you purchased The X-Ray, War Room, or Situation Room, you'll receive a link to upload your discovery documents shortly.</p>
+      `,
+    });
+
+    // Send operator notification
+    await sendEmail({
+      to: OPERATOR_EMAIL,
+      subject: `New Order: ${productName} — $${(amount / 100).toFixed(2)}`,
+      html: `
+        <h1 style="color: #F59E0B;">New Order Received</h1>
+        <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
+          <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Product:</strong> ${productName}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${email}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Amount:</strong> $${(amount / 100).toFixed(2)}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${tier}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Stripe Session:</strong> ${session.id}</p>
+          ${caseId ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>` : ""}
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Requires Discovery:</strong> ${requiresDiscovery ? "Yes" : "No"}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Time:</strong> ${new Date().toISOString()}</p>
+        </div>
       `,
     });
   }
