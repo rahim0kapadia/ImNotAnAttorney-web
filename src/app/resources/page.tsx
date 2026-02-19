@@ -15,24 +15,6 @@ const resources = [
     type: "PDF Guide",
     gated: true,
   },
-  {
-    title: "Attorney Communication Tracker",
-    desc: "Document every call, email, and meeting with your attorney. If it's not documented, it didn't happen.",
-    type: "Template",
-    gated: true,
-  },
-  {
-    title: "Discovery Review Checklist",
-    desc: "A step-by-step checklist for reviewing your own discovery documents. Know what to look for.",
-    type: "Checklist",
-    gated: true,
-  },
-  {
-    title: "Motion Deadlines by State",
-    desc: "Common motion filing deadlines. If your attorney misses these, you need to know.",
-    type: "Reference Guide",
-    gated: true,
-  },
 ];
 
 const rightsGuides = [
