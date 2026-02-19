@@ -54,12 +54,6 @@ export function getPostBySlug(slug: string): BlogPost | null {
   };
 }
 
-export function getPostsByCategory(category: string): BlogPost[] {
-  return getAllPosts().filter(
-    (post) => post.category.toLowerCase() === category.toLowerCase()
-  );
-}
-
 export function getRelatedPosts(
   currentSlug: string,
   limit = 2
