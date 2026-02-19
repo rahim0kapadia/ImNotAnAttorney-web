@@ -18,12 +18,14 @@ const caseTypes = [
     tiers: [
       {
         name: "Case Decoder",
+        slug: "case-decoder",
         price: "$97",
         desc: "Plain-English charge breakdown + 10-15 drug-case questions. Which motions apply to your charges? What should have happened by now?",
         discovery: false,
       },
       {
         name: "Intelligence Brief",
+        slug: "intelligence-brief",
         price: "$497",
         desc: "Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 35-50 targeted questions.",
         discovery: false,
@@ -31,18 +33,21 @@ const caseTypes = [
       },
       {
         name: "The X-Ray",
+        slug: "x-ray",
         price: "$997",
         desc: "Full discovery analysis — weight discrepancies, lab methodology gaps, CI reliability, chain of custody. 20+ case-specific questions.",
         discovery: true,
       },
       {
         name: "The War Room",
+        slug: "war-room",
         price: "$1,997",
         desc: "Everything above + officer dossiers, witness analysis (up to 8), motion wave strategy, case law package, weekly updates.",
         discovery: true,
       },
       {
         name: "The Situation Room",
+        slug: "situation-room",
         price: "$4,997",
         desc: "Full trial prep — witness battle scripts, CI destruction playbook, lab expert cross-exam, reply briefs, real-time trial support.",
         discovery: true,
@@ -57,12 +62,14 @@ const caseTypes = [
     tiers: [
       {
         name: "Case Decoder",
+        slug: "case-decoder",
         price: "$97",
         desc: "Your DUI charges explained in plain English. What to expect at each stage. 10-15 questions your attorney needs to answer.",
         discovery: false,
       },
       {
         name: "Intelligence Brief",
+        slug: "intelligence-brief",
         price: "$497",
         desc: "Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 35-50 targeted questions.",
         discovery: false,
@@ -70,18 +77,21 @@ const caseTypes = [
       },
       {
         name: "The X-Ray",
+        slug: "x-ray",
         price: "$997",
         desc: "Full discovery analysis — BAC evidence, breathalyzer calibration, dashcam review, field sobriety compliance. 20+ questions.",
         discovery: true,
       },
       {
         name: "The War Room",
+        slug: "war-room",
         price: "$1,997",
         desc: "Officer dossiers, expert witness challenges, motion wave strategy, case law package, weekly updates until resolution.",
         discovery: true,
       },
       {
         name: "The Situation Room",
+        slug: "situation-room",
         price: "$4,997",
         desc: "Full trial prep — officer cross-exam scripts, expert destruction playbook, voir dire framework, real-time trial support.",
         discovery: true,
@@ -96,12 +106,14 @@ const caseTypes = [
     tiers: [
       {
         name: "Case Decoder",
+        slug: "case-decoder",
         price: "$97",
         desc: "Plain-English federal process guide. What are the elements of each count? What should your attorney have done by now?",
         discovery: false,
       },
       {
         name: "Intelligence Brief",
+        slug: "intelligence-brief",
         price: "$497",
         desc: "Judge sentencing patterns, AUSA profile, guidelines calculation review, cooperation framework. 35-50 targeted questions.",
         discovery: false,
@@ -109,18 +121,21 @@ const caseTypes = [
       },
       {
         name: "The X-Ray",
+        slug: "x-ray",
         price: "$997",
         desc: "Discovery indexing for massive cases. Financial document analysis, witness statement review, timeline reconstruction. 20+ questions.",
         discovery: true,
       },
       {
         name: "The War Room",
+        slug: "war-room",
         price: "$1,997",
         desc: "Full intelligence operation — AUSA dossier, cooperator analysis, sentencing guidelines deep dive, case law package, weekly updates.",
         discovery: true,
       },
       {
         name: "The Situation Room",
+        slug: "situation-room",
         price: "$4,997",
         desc: "Complete trial prep + sentencing prep. Expert cross-exam, cooperator destruction playbook, guidelines objections, real-time support.",
         discovery: true,
@@ -298,7 +313,7 @@ export default function ServicesPage() {
                     </p>
                   )}
                   <Link
-                    href={`/checkout?tier=${tier.name.toLowerCase().replace(/\s+/g, "-")}`}
+                    href={`/checkout?tier=${tier.slug}`}
                     className={`mt-4 block rounded-lg py-2 text-center text-sm font-semibold transition-colors ${
                       tier.popular
                         ? "bg-amber-500 text-black hover:bg-amber-400"
@@ -331,7 +346,7 @@ export default function ServicesPage() {
                     </p>
                   )}
                   <Link
-                    href={`/checkout?tier=${tier.name.toLowerCase().replace(/\s+/g, "-")}`}
+                    href={`/checkout?tier=${tier.slug}`}
                     className="mt-4 block rounded-lg border border-zinc-700 py-2 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
                   >
                     Get {tier.name}
