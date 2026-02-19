@@ -162,7 +162,7 @@ export default function ServicesPage() {
                 <div className="text-lg font-bold text-amber-400">
                   {row.ours}
                 </div>
-                <div className="mt-1 text-xs text-zinc-600">{row.pct} of your investment</div>
+                <div className="mt-1 text-xs text-zinc-400">{row.pct} of your investment</div>
               </div>
             ))}
           </div>

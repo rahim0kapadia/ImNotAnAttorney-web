@@ -72,7 +72,7 @@ export function LeadCapture() {
       {status === "error" && (
         <p className="mt-2 text-xs text-red-400">Something went wrong. Try again.</p>
       )}
-      <p className="mt-3 text-xs text-zinc-600">
+      <p className="mt-3 text-xs text-zinc-400">
         No spam. Unsubscribe anytime. We&apos;re too busy researching your case to
         send junk mail.
       </p>

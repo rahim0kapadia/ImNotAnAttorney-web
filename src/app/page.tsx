@@ -52,7 +52,7 @@ export default function Home() {
               Read Free Guides
             </Link>
           </div>
-          <p className="mt-4 text-xs text-zinc-600">
+          <p className="mt-4 text-xs text-zinc-400">
             Not a law firm. We provide legal information and research — not legal advice.
           </p>
         </div>
@@ -197,7 +197,7 @@ export default function Home() {
               detail="White collar case, NY"
             />
           </div>
-          <p className="mt-6 text-center text-xs text-zinc-600">
+          <p className="mt-6 text-center text-xs text-zinc-400">
             Names changed for privacy. Real cases, real results.
           </p>
         </div>

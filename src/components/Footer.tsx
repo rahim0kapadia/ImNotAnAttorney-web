@@ -13,7 +13,7 @@ export function Footer() {
             <p className="mt-3 text-sm text-zinc-400">
               We Research. You Ask.
             </p>
-            <p className="mt-2 text-xs text-zinc-600">
+            <p className="mt-2 text-xs text-zinc-400">
               Legal information, not legal advice.
             </p>
           </div>
@@ -162,7 +162,7 @@ export function Footer() {
           </p>
         </div>
 
-        <div className="mt-8 border-t border-zinc-800 pt-8 text-center text-xs text-zinc-600">
+        <div className="mt-8 border-t border-zinc-800 pt-8 text-center text-xs text-zinc-400">
           © {new Date().getFullYear()} ImNotAnAttorney. All rights reserved.
         </div>
       </div>
