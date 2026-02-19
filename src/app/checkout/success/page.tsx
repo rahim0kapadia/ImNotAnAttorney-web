@@ -1,0 +1,138 @@
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import Link from "next/link";
+
+const TIER_NEXT_STEPS: Record<
+  string,
+  { name: string; delivery: string; action: string; showUpload: boolean }
+> = {
+  "case-decoder": {
+    name: "Case Decoder",
+    delivery: "24 hours",
+    action:
+      "Check your email — we'll send your Case Decoder report within 24 hours.",
+    showUpload: false,
+  },
+  "intelligence-brief": {
+    name: "Case Intelligence Brief",
+    delivery: "48-72 hours",
+    action:
+      "Check your email — we'll send your Intelligence Brief within 72 hours.",
+    showUpload: false,
+  },
+  "x-ray": {
+    name: "The X-Ray",
+    delivery: "5-7 business days",
+    action:
+      "Upload your discovery documents so we can begin analysis. You'll receive a link via email.",
+    showUpload: true,
+  },
+  "war-room": {
+    name: "The War Room",
+    delivery: "25-28 days",
+    action:
+      "Upload your discovery documents and we'll begin your full intelligence operation. Expect your first update within 7 days.",
+    showUpload: true,
+  },
+  "situation-room": {
+    name: "The Situation Room",
+    delivery: "24-48 hours per stage",
+    action:
+      "Upload your discovery documents to begin. We'll contact you within 24 hours to schedule your priority onboarding.",
+    showUpload: true,
+  },
+};
+
+function SuccessContent() {
+  const searchParams = useSearchParams();
+  const sessionId = searchParams.get("session_id");
+
+  // Determine tier from session (in production, verify with Stripe API)
+  // For now, show generic success with all possible next steps
+  const tier = searchParams.get("tier");
+  const info = tier ? TIER_NEXT_STEPS[tier] : null;
+
+  return (
+    <div className="flex min-h-[60vh] items-center justify-center px-4">
+      <div className="max-w-lg text-center">
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-amber-500/10 text-3xl text-amber-400">
+          &#10003;
+        </div>
+
+        <h1 className="text-2xl font-bold text-white">
+          Payment Confirmed
+        </h1>
+
+        {info ? (
+          <>
+            <p className="mt-3 text-lg text-amber-400">{info.name}</p>
+            <p className="mt-4 text-zinc-400">{info.action}</p>
+            <p className="mt-2 text-sm text-zinc-500">
+              Delivery: {info.delivery}
+            </p>
+
+            {info.showUpload && (
+              <div className="mt-8">
+                <p className="mb-3 text-sm text-zinc-400">
+                  You&apos;ll receive an email with your upload link shortly.
+                </p>
+              </div>
+            )}
+          </>
+        ) : (
+          <p className="mt-4 text-zinc-400">
+            Thank you for your purchase. Check your email for confirmation and
+            next steps.
+          </p>
+        )}
+
+        {sessionId && (
+          <p className="mt-4 text-xs text-zinc-600">
+            Session: {sessionId.slice(0, 20)}...
+          </p>
+        )}
+
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <Link
+            href="/"
+            className="rounded-lg border border-zinc-700 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-zinc-500"
+          >
+            Back to Home
+          </Link>
+          <Link
+            href="/blog"
+            className="rounded-lg border border-zinc-700 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-zinc-500"
+          >
+            Read Our Blog
+          </Link>
+        </div>
+
+        <p className="mt-8 text-sm text-zinc-500">
+          Questions? Email us at{" "}
+          <a
+            href="mailto:help@imnotanattorney.com"
+            className="text-amber-400 underline decoration-amber-400/50"
+          >
+            help@imnotanattorney.com
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-[60vh] items-center justify-center">
+          <p className="text-zinc-400">Loading...</p>
+        </div>
+      }
+    >
+      <SuccessContent />
+    </Suspense>
+  );
+}

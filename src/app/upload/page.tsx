@@ -1,0 +1,127 @@
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import { useState, Suspense } from "react";
+import { FileUpload } from "@/components/FileUpload";
+import Link from "next/link";
+
+function UploadContent() {
+  const searchParams = useSearchParams();
+  const caseId = searchParams.get("case");
+  const [submitted, setSubmitted] = useState(false);
+  const [fileCount, setFileCount] = useState(0);
+
+  if (!caseId) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center px-4">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-white">
+            Missing case reference
+          </h1>
+          <p className="mt-3 text-zinc-400">
+            Use the upload link from your confirmation email.
+          </p>
+          <Link
+            href="/"
+            className="mt-4 inline-block text-amber-400 underline"
+          >
+            Back to Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (submitted) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center px-4">
+        <div className="text-center">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-amber-500/10 text-3xl text-amber-400">
+            &#10003;
+          </div>
+          <h1 className="text-2xl font-bold text-white">
+            Documents Received
+          </h1>
+          <p className="mt-3 text-zinc-400">
+            We received {fileCount} file{fileCount !== 1 ? "s" : ""}. Your
+            analysis is now in progress.
+          </p>
+          <p className="mt-2 text-sm text-zinc-500">
+            You&apos;ll receive an email when your report is ready.
+          </p>
+          <Link
+            href="/"
+            className="mt-6 inline-block rounded-lg border border-zinc-700 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-zinc-500"
+          >
+            Back to Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="px-4 py-16">
+      <div className="mx-auto max-w-2xl">
+        <h1 className="text-2xl font-bold text-white md:text-3xl">
+          Upload Your Discovery Documents
+        </h1>
+        <p className="mt-3 text-zinc-400">
+          Upload the discovery documents your attorney provided. We accept PDF,
+          Word documents, images, audio, and video files. Maximum 50MB per file.
+        </p>
+
+        <div className="mt-4 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+          <p className="text-sm font-semibold text-zinc-300">
+            What to upload:
+          </p>
+          <ul className="mt-2 space-y-1 text-sm text-zinc-400">
+            <li>- Police reports and arrest affidavits</li>
+            <li>- Lab results and forensic reports</li>
+            <li>- Witness statements</li>
+            <li>- Body camera / dashcam footage</li>
+            <li>- Warrants and affidavits</li>
+            <li>- Any other evidence provided by your attorney</li>
+          </ul>
+        </div>
+
+        <div className="mt-8">
+          <FileUpload
+            caseId={caseId}
+            onUploadComplete={(files) => setFileCount(files.length)}
+          />
+        </div>
+
+        {fileCount > 0 && (
+          <button
+            onClick={() => setSubmitted(true)}
+            className="mt-6 w-full rounded-lg bg-amber-500 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+          >
+            Submit {fileCount} Document{fileCount !== 1 ? "s" : ""} for Analysis
+          </button>
+        )}
+
+        <div className="mt-8 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+          <p className="text-xs text-zinc-400">
+            Your documents are encrypted and stored securely. We use them only
+            for your case analysis. They are never shared with third parties.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function UploadPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-[60vh] items-center justify-center">
+          <p className="text-zinc-400">Loading...</p>
+        </div>
+      }
+    >
+      <UploadContent />
+    </Suspense>
+  );
+}
