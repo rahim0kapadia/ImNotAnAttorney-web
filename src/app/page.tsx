@@ -2,6 +2,18 @@ import { LeadCapture } from "@/components/LeadCapture";
 import { PricingTable } from "@/components/PricingTable";
 import { TestimonialCard } from "@/components/TestimonialCard";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ImNotAnAttorney — We Research. You Ask.",
+  description:
+    "Legal empowerment for criminal defendants. We research your case and generate the questions that hold your attorney accountable. Starting at $49.",
+  openGraph: {
+    title: "ImNotAnAttorney — We Research. You Ask.",
+    description:
+      "We dig through your discovery, find what your lawyer missed, and hand you the exact questions that make them start working.",
+  },
+};
 
 export default function Home() {
   return (

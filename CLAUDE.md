@@ -29,7 +29,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 - `Footer` — Navigation, CTAs, sitemap link
 - `EmbeddableBadge` — Widget for other sites
 
-### Blog Posts (13 total)
+### Blog Posts (20 total)
 1. 5-questions-dui-attorney
 2. attorney-not-returning-calls
 3. discovery-rights-drug-cases
@@ -43,6 +43,13 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 11. what-to-expect-after-dui-arrest
 12. feels-like-lawyer-working-against-me
 13. questions-to-ask-before-hiring-criminal-defense-attorney
+14. what-happens-if-attorney-misses-deadline
+15. why-is-my-criminal-case-taking-so-long
+16. how-often-should-attorney-communicate
+17. what-happens-at-arraignment
+18. how-to-file-bar-complaint-against-attorney
+19. can-criminal-charges-be-dropped
+20. can-dui-be-dismissed
 
 ### Tech Stack
 - **Framework:** Next.js 15 (App Router)
@@ -79,7 +86,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 
 ## Important Notes
 - All commits pushed to GitHub: github.com/rahim0kapadia/ImNotAnAttorney-web
-- Vercel deploy pending (needs Rahim auth)
+- Vercel deploy LIVE (auto-deploys on push to master)
 - Domain imnotanattorney.com not yet pointed
 - Twitter account @ImNotAnAttorney not yet created
 
