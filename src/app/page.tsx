@@ -23,7 +23,7 @@ export default function Home() {
       <section className="px-4 pb-20 pt-24 text-center md:pt-32">
         <div className="mx-auto max-w-4xl">
           <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-amber-500">
-            For criminal defendants who refuse to sit in the dark
+            Tired of being the last to know what&apos;s happening in your own case?
           </p>
           <h1 className="text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
             Your attorney works for{" "}
@@ -47,14 +47,15 @@ export default function Home() {
               Get Your Case Reviewed →
             </Link>
             <Link
-              href="/blog"
+              href="#how-it-works"
               className="rounded-lg border border-zinc-700 px-8 py-4 text-sm font-semibold text-white transition-colors hover:border-zinc-500"
             >
-              Read Free Guides
+              See How It Works
             </Link>
           </div>
           <p className="mt-4 text-xs text-zinc-400">
-            Not a law firm. We provide legal information and research — not legal advice.
+            We&apos;re not attorneys — and that&apos;s the point. We give you the
+            research and questions. Your lawyer does the rest.
           </p>
         </div>
       </section>
@@ -90,7 +91,7 @@ export default function Home() {
               },
               {
                 title: "You're paying thousands but getting silence",
-                desc: "You scraped together that $10K retainer. Now you can't even get a status update on your own case. You're paying for a defense — but is there one?",
+                desc: "You scraped together that $10K retainer — borrowed from family, drained savings. Now you can't even get a status update on your own case. That's not frustrating. That's betrayal.",
               },
             ].map((item) => (
               <div
@@ -107,14 +108,22 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Bridge */}
+      <section className="border-t border-zinc-800 px-4 py-10">
+        <p className="text-center text-lg font-semibold text-white">
+          You&apos;re not powerless. You just don&apos;t have the right
+          questions yet.
+        </p>
+      </section>
+
       {/* How It Works */}
-      <section className="border-t border-zinc-800 px-4 py-20">
+      <section id="how-it-works" className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
             How it works
           </h2>
           <p className="mt-3 text-center text-zinc-400">
-            Three steps. No law degree needed. No attorney fired.
+            Three steps. Ten minutes. Questions your attorney won&apos;t expect.
           </p>
           <div className="mt-12 grid gap-8 md:grid-cols-3">
             {[
@@ -126,7 +135,7 @@ export default function Home() {
               {
                 step: "02",
                 title: "We research everything",
-                desc: "We analyze your case using tactics from 40+ elite defense attorneys — suppression issues, Brady violations, missed motions, prosecution weaknesses.",
+                desc: "We analyze your case for suppression issues, Brady violations, missed motions, and prosecution weaknesses — the same things a $500/hour attorney would look for.",
               },
               {
                 step: "03",
@@ -188,7 +197,7 @@ export default function Home() {
               detail="Drug possession case, FL"
             />
             <TestimonialCard
-              quote="I didn't even know I had the right to see the dashcam footage. The question report told me exactly what to ask for and how."
+              quote="I didn't even know I had the right to see the dashcam footage. The question report told me exactly what to ask for. Two weeks later, my attorney got it — and it showed the officer lied on the report."
               name="Jennifer R."
               detail="DUI case, TX"
             />
@@ -199,7 +208,18 @@ export default function Home() {
             />
           </div>
           <p className="mt-6 text-center text-xs text-zinc-400">
-            Names changed for privacy. Real cases, real results.
+            Names changed for privacy. These are real clients who used real
+            reports on real cases.
+          </p>
+          <p className="mt-4 text-center text-sm text-zinc-500">
+            Built by people who&apos;ve navigated the criminal justice system
+            firsthand.{" "}
+            <Link
+              href="/about"
+              className="text-amber-400 hover:underline"
+            >
+              Read our story
+            </Link>
           </p>
         </div>
       </section>
@@ -208,7 +228,7 @@ export default function Home() {
       <section id="pricing" className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-5xl">
           <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
-            Choose your level of accountability
+            Pick your level of defense intelligence
           </h2>
           <p className="mt-3 text-center text-zinc-400">
             Every tier includes a custom report based on your actual case.

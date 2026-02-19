@@ -36,7 +36,7 @@ const tiers = [
     name: "War Room",
     price: "$1,997",
     anchor: "Less than 10% of most retainers",
-    description: "Ongoing case monitoring until resolution",
+    description: "Ongoing case monitoring until resolution. Limited to 10 active clients.",
     features: [
       "Everything in Case Audit",
       "Weekly case status reviews",
@@ -118,13 +118,13 @@ export function PricingTable() {
 
       {/* Guarantee */}
       <div className="mt-8 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
-        <p className="text-sm font-semibold text-white">
-          🛡️ Deliverable Guarantee
+        <p className="text-lg font-bold text-white">
+          Deliverable Guarantee
         </p>
         <p className="mt-2 text-sm text-zinc-400">
-          If we don&apos;t deliver the stated question counts and reports on
-          time, you get a full refund. We guarantee the work — not the outcome.
-          No questions asked.
+          Every question, every page, on time — or you pay nothing. We
+          can&apos;t guarantee your attorney will change. We guarantee
+          you&apos;ll have every tool to make them.
         </p>
       </div>
     </div>

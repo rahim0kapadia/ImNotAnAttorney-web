@@ -66,7 +66,7 @@ export function LeadCapture() {
           disabled={status === "loading"}
           className="rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-amber-400 disabled:opacity-50"
         >
-          {status === "loading" ? "..." : "Send It"}
+          {status === "loading" ? "..." : "Get the Free Guide"}
         </button>
       </form>
       {status === "error" && (
