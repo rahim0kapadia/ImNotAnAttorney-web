@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
         tier,
         product_name: tierConfig.name,
       },
-      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
       cancel_url: `${origin}/checkout?tier=${tier}`,
     });
 
