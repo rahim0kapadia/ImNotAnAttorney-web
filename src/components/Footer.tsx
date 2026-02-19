@@ -119,6 +119,12 @@ export function Footer() {
                 The War Room ($1,997)
               </Link>
               <Link
+                href="/checkout?tier=situation-room"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                The Situation Room ($4,997)
+              </Link>
+              <Link
                 href="/services"
                 className="text-sm text-amber-400 hover:text-amber-300"
               >

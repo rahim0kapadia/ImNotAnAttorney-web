@@ -112,10 +112,10 @@ function SuccessContent() {
         <p className="mt-8 text-sm text-zinc-500">
           Questions? Email us at{" "}
           <a
-            href="mailto:help@imnotanattorney.com"
+            href="mailto:rahim0kapadia@gmail.com"
             className="text-amber-400 underline decoration-amber-400/50"
           >
-            help@imnotanattorney.com
+            rahim0kapadia@gmail.com
           </a>
         </p>
       </div>
