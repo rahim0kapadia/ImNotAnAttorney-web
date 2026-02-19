@@ -21,9 +21,13 @@ const serviceInterests = [
 
 export default function IntakePage() {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError(null);
+    setSubmitting(true);
     const form = e.currentTarget;
     const data = Object.fromEntries(new FormData(form));
     // Collect checkboxes separately
@@ -34,9 +38,15 @@ export default function IntakePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data, services }),
       });
-      if (res.ok) setSubmitted(true);
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setError("Something went wrong submitting your case. Please try again.");
+      }
     } catch {
-      // silently fail for now, form still shows
+      setError("Couldn't reach our servers. Check your connection and try again.");
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -270,11 +280,29 @@ export default function IntakePage() {
             </p>
           </div>
 
+          {error && (
+            <div
+              role="alert"
+              className="rounded-lg border border-red-500/50 bg-red-500/10 p-4"
+            >
+              <p className="text-sm font-medium text-red-400">{error}</p>
+              <button
+                type="button"
+                onClick={() => setError(null)}
+                className="mt-2 text-xs text-red-400/70 underline hover:text-red-300"
+              >
+                Dismiss
+              </button>
+            </div>
+          )}
+
           <button
             type="submit"
-            className="w-full rounded-lg bg-amber-500 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+            disabled={submitting}
+            aria-disabled={submitting}
+            className="w-full rounded-lg bg-amber-500 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Submit — Get Your Case Reviewed
+            {submitting ? "Submitting..." : "Submit — Get Your Case Reviewed"}
           </button>
 
           <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-zinc-600">
