@@ -18,7 +18,6 @@
   --color-red-600: #dc2626;
   --color-green-500: #22c55e;
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 body {
@@ -27,6 +26,7 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
+*:focus-visible {
+  outline: 2px solid var(--color-amber-400);
+  outline-offset: 2px;
 }
