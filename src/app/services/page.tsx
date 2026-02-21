@@ -195,7 +195,7 @@ const faqSchema = {
 
 const serviceSchema = {
   "@context": "https://schema.org",
-  "@type": "Service",
+  "@type": "LegalService",
   name: "ImNotAnAttorney Case Review Services",
   description:
     "Legal research and case analysis for criminal defendants. Five tiers from $97 Case Decoder to $4,997 Situation Room.",
@@ -311,7 +311,7 @@ export default function ServicesPage() {
                   </div>
                   <p className="mt-2 text-sm text-zinc-400">{tier.desc}</p>
                   {tier.discovery && (
-                    <p className="mt-2 text-xs text-zinc-500">
+                    <p className="mt-2 text-xs text-zinc-400">
                       Requires discovery documents
                     </p>
                   )}
@@ -344,7 +344,7 @@ export default function ServicesPage() {
                   </div>
                   <p className="mt-2 text-sm text-zinc-400">{tier.desc}</p>
                   {tier.discovery && (
-                    <p className="mt-2 text-xs text-zinc-500">
+                    <p className="mt-2 text-xs text-zinc-400">
                       Requires discovery documents
                     </p>
                   )}
