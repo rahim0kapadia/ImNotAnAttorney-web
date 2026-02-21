@@ -16,7 +16,7 @@ export default function TermsPage() {
         <h1 className="text-3xl font-bold text-white md:text-4xl">
           Terms of Service
         </h1>
-        <p className="mt-2 text-sm text-zinc-500">
+        <p className="mt-2 text-sm text-zinc-400">
           Last updated: February 19, 2026
         </p>
 
@@ -208,14 +208,6 @@ export default function TermsPage() {
           </section>
         </div>
 
-        <div className="mt-12 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
-          <p className="text-xs text-zinc-400">
-            <strong className="text-amber-400">Note:</strong> These terms should
-            be reviewed by a licensed attorney before relying on them. They are
-            provided as a starting framework and may require modifications based
-            on legal counsel.
-          </p>
-        </div>
       </div>
     </div>
   );

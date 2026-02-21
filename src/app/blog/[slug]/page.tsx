@@ -81,10 +81,27 @@ export default async function BlogPostPage({ params }: PageProps) {
               headline: post.title,
               description: post.excerpt,
               datePublished: post.date,
+              dateModified: post.date,
+              url: `https://imnotanattorney.com/blog/${slug}`,
+              mainEntityOfPage: {
+                "@type": "WebPage",
+                "@id": `https://imnotanattorney.com/blog/${slug}`,
+              },
               author: {
                 "@type": "Organization",
                 name: "ImNotAnAttorney",
+                url: "https://imnotanattorney.com",
               },
+              publisher: {
+                "@type": "Organization",
+                name: "ImNotAnAttorney",
+                url: "https://imnotanattorney.com",
+                logo: {
+                  "@type": "ImageObject",
+                  url: "https://imnotanattorney.com/icon.tsx",
+                },
+              },
+              image: `https://imnotanattorney.com/blog/${slug}/opengraph-image`,
             }),
           }}
         />

@@ -4,9 +4,9 @@ import { LeadCapture } from "@/components/LeadCapture";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Criminal Defense Blog — Questions Your Attorney Should Answer",
   description:
-    "Legal information and strategies for criminal defendants. Learn how to hold your attorney accountable.",
+    "In-depth legal research and defense strategies for criminal defendants. DUI, drug cases, white collar — the questions your attorney should be answering but isn't.",
   alternates: {
     canonical: "https://imnotanattorney.com/blog",
   },
@@ -36,7 +36,7 @@ export default async function BlogPage({
   return (
     <div className="px-4 py-16">
       <div className="mx-auto max-w-4xl">
-        <h1 className="text-3xl font-bold text-white md:text-4xl">Blog</h1>
+        <h1 className="text-3xl font-bold text-white md:text-4xl">Criminal Defense Blog — Questions Your Attorney Should Answer</h1>
         <p className="mt-3 text-zinc-400">
           Legal information that actually helps. No jargon, no fluff.
         </p>

@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         <h1 className="text-3xl font-bold text-white md:text-4xl">
           Privacy Policy
         </h1>
-        <p className="mt-2 text-sm text-zinc-500">
+        <p className="mt-2 text-sm text-zinc-400">
           Last updated: February 19, 2026
         </p>
 
@@ -249,7 +249,19 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              10. Changes to This Policy
+              10. Artificial Intelligence Disclosure
+            </h2>
+            <p>
+              Your documents may be processed using artificial intelligence
+              systems. We use AI to analyze legal documents and generate
+              research questions. Documents may be processed by third-party AI
+              providers subject to their data handling policies.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="mb-3 text-lg font-semibold text-white">
+              11. Changes to This Policy
             </h2>
             <p>
               We may update this Privacy Policy from time to time. Changes will
@@ -261,7 +273,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              11. Contact
+              12. Contact
             </h2>
             <p>
               For privacy-related questions or to exercise your rights, contact
@@ -284,14 +296,6 @@ export default function PrivacyPage() {
           </section>
         </div>
 
-        <div className="mt-12 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
-          <p className="text-xs text-zinc-400">
-            <strong className="text-amber-400">Note:</strong> This privacy
-            policy should be reviewed by a licensed attorney before relying on
-            it. It is provided as a starting framework and may require
-            modifications based on legal counsel.
-          </p>
-        </div>
       </div>
     </div>
   );
