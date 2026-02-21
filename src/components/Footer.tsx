@@ -20,7 +20,7 @@ export function Footer() {
 
           {/* Pages */}
           <div>
-            <p className="mb-3 text-sm font-semibold text-zinc-300">Explore</p>
+            <h2 className="mb-3 text-sm font-semibold text-zinc-300">Explore</h2>
             <div className="flex flex-col gap-2">
               <Link
                 href="/blog"
@@ -57,9 +57,9 @@ export function Footer() {
 
           {/* Categories */}
           <div>
-            <p className="mb-3 text-sm font-semibold text-zinc-300">
+            <h2 className="mb-3 text-sm font-semibold text-zinc-300">
               Blog Topics
-            </p>
+            </h2>
             <div className="flex flex-col gap-2">
               <Link
                 href="/blog?category=dui"
@@ -90,9 +90,9 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <p className="mb-3 text-sm font-semibold text-zinc-300">
+            <h2 className="mb-3 text-sm font-semibold text-zinc-300">
               Our Services
-            </p>
+            </h2>
             <div className="flex flex-col gap-2">
               <Link
                 href="/checkout?tier=case-decoder"
@@ -135,9 +135,9 @@ export function Footer() {
 
           {/* Legal & Connect */}
           <div>
-            <p className="mb-3 text-sm font-semibold text-zinc-300">
+            <h2 className="mb-3 text-sm font-semibold text-zinc-300">
               Legal
-            </p>
+            </h2>
             <div className="flex flex-col gap-2">
               <Link
                 href="/terms"
@@ -152,12 +152,24 @@ export function Footer() {
                 Privacy Policy
               </Link>
               <Link
+                href="/contact"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Contact
+              </Link>
+              <Link
                 href="/sitemap.xml"
                 className="text-sm text-zinc-400 hover:text-white"
+                prefetch={false}
               >
                 Sitemap
               </Link>
             </div>
+            <p className="mt-4 text-xs text-zinc-400">
+              195 Dr MLK Jr St N
+              <br />
+              St Petersburg, FL 33701
+            </p>
           </div>
         </div>
 

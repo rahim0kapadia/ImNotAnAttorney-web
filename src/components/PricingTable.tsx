@@ -17,6 +17,7 @@ const tiers = [
     cta: "Get Your Case Decoder",
     featured: false,
     tier: "case-decoder",
+    bestFor: "Just arrested, need clarity",
   },
   {
     name: "Intelligence Brief",
@@ -37,6 +38,7 @@ const tiers = [
     cta: "Get Your Intelligence Brief",
     featured: true,
     tier: "intelligence-brief",
+    bestFor: "Pre-trial, want judge intel + questions",
   },
   {
     name: "The X-Ray",
@@ -54,6 +56,7 @@ const tiers = [
     cta: "Get The X-Ray",
     featured: false,
     tier: "x-ray",
+    bestFor: "Have discovery, need deep analysis",
   },
   {
     name: "The War Room",
@@ -74,6 +77,7 @@ const tiers = [
     cta: "Enter The War Room",
     featured: false,
     tier: "war-room",
+    bestFor: "Complex case, need ongoing intelligence",
   },
   {
     name: "The Situation Room",
@@ -95,6 +99,7 @@ const tiers = [
     cta: "Enter The Situation Room",
     featured: false,
     tier: "situation-room",
+    bestFor: "Headed to trial, need everything",
   },
 ];
 
@@ -163,13 +168,16 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
               <p className="mt-1 text-xs text-amber-400/70">{tier.anchor}</p>
             )}
             <p className="mt-2 text-sm text-zinc-400">{tier.description}</p>
+            {tier.bestFor && (
+              <p className="mt-2 text-xs text-amber-400/70">Best for: {tier.bestFor}</p>
+            )}
             <ul className="mt-6 flex-1 space-y-3">
               {tier.features.map((feature) => (
                 <li
                   key={feature}
                   className="flex items-start gap-2 text-sm text-zinc-300"
                 >
-                  <span className="mt-0.5 text-amber-400">&#10003;</span>
+                  <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                   {feature}
                 </li>
               ))}
@@ -217,13 +225,16 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
               <p className="mt-1 text-xs text-amber-400/70">{tier.anchor}</p>
             )}
             <p className="mt-2 text-sm text-zinc-400">{tier.description}</p>
+            {tier.bestFor && (
+              <p className="mt-2 text-xs text-amber-400/70">Best for: {tier.bestFor}</p>
+            )}
             <ul className="mt-6 flex-1 space-y-3">
               {tier.features.map((feature) => (
                 <li
                   key={feature}
                   className="flex items-start gap-2 text-sm text-zinc-300"
                 >
-                  <span className="mt-0.5 text-amber-400">&#10003;</span>
+                  <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                   {feature}
                 </li>
               ))}
@@ -257,7 +268,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
               </div>
             </div>
             <p className="mt-2 text-sm text-zinc-400">{addon.description}</p>
-            <p className="mt-1 text-xs text-zinc-500">
+            <p className="mt-1 text-xs text-zinc-400">
               Available for: {addon.availability}
             </p>
           </div>

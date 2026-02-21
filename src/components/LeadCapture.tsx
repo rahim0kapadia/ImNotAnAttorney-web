@@ -27,7 +27,7 @@ export function LeadCapture() {
 
   if (status === "success") {
     return (
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-center">
+      <div role="status" className="rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-center">
         <div className="mb-2 text-2xl">&#10003;</div>
         <h3 className="text-lg font-semibold text-white">You&apos;re in.</h3>
         <p className="mt-2 text-sm text-zinc-400">
@@ -59,7 +59,8 @@ export function LeadCapture() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="your@email.com"
-          className="flex-1 rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-sm text-white placeholder-zinc-500 outline-none focus:border-amber-500"
+          aria-label="Email address"
+          className="flex-1 rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-base text-white placeholder-zinc-400 outline-none focus:border-amber-500"
         />
         <button
           type="submit"
@@ -70,7 +71,7 @@ export function LeadCapture() {
         </button>
       </form>
       {status === "error" && (
-        <p className="mt-2 text-xs text-red-400">Something went wrong. Try again.</p>
+        <p role="alert" className="mt-2 text-xs text-red-400">Something went wrong. Try again.</p>
       )}
       <p className="mt-3 text-xs text-zinc-400">
         No spam. Unsubscribe anytime. We&apos;re too busy researching your case to

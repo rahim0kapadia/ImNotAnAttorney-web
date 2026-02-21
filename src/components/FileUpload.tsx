@@ -119,7 +119,7 @@ export function FileUpload({ caseId, onUploadComplete }: FileUploadProps) {
             ? "Uploading..."
             : "Drag and drop your discovery documents here"}
         </p>
-        <p className="mt-1 text-xs text-zinc-500">
+        <p className="mt-1 text-xs text-zinc-400">
           PDF, DOCX, images, audio, video — max 50MB per file
         </p>
         <label className="mt-4 inline-block cursor-pointer rounded-lg border border-zinc-700 px-6 py-2 text-sm font-semibold text-white transition-colors hover:border-zinc-500">
@@ -139,7 +139,7 @@ export function FileUpload({ caseId, onUploadComplete }: FileUploadProps) {
       </div>
 
       {error && (
-        <div className="mt-3 rounded-lg border border-red-500/50 bg-red-500/10 p-3">
+        <div role="alert" className="mt-3 rounded-lg border border-red-500/50 bg-red-500/10 p-3">
           <p className="text-sm text-red-400">{error}</p>
         </div>
       )}
@@ -155,7 +155,7 @@ export function FileUpload({ caseId, onUploadComplete }: FileUploadProps) {
               className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900/50 px-4 py-2"
             >
               <span className="text-sm text-white">{f.name}</span>
-              <span className="text-xs text-zinc-500">
+              <span className="text-xs text-zinc-400">
                 {formatSize(f.size)}
               </span>
             </div>

@@ -1,20 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileOpen) setMobileOpen(false);
+    };
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [mobileOpen]);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         <Link href="/" className="text-xl font-bold tracking-tight">
           <span className="text-amber-400">Im</span>NotAnAttorney
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav aria-label="Main navigation" className="hidden items-center gap-8 md:flex">
           <Link
             href="/blog"
             className="text-sm text-zinc-400 transition-colors hover:text-white"
@@ -52,6 +60,7 @@ export function Header() {
           onClick={() => setMobileOpen(!mobileOpen)}
           className="text-zinc-400 md:hidden"
           aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
         >
           <svg
             className="h-6 w-6"
@@ -80,7 +89,7 @@ export function Header() {
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <nav className="border-t border-zinc-800 px-4 py-4 md:hidden">
+        <nav aria-label="Mobile navigation" className="border-t border-zinc-800 px-4 py-4 md:hidden">
           <div className="flex flex-col gap-4">
             <Link
               href="/blog"
