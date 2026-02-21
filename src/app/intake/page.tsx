@@ -11,6 +11,17 @@ const chargeTypes = [
   "Other",
 ];
 
+const usStates = [
+  "Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut",
+  "Delaware","District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois",
+  "Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts",
+  "Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada",
+  "New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota",
+  "Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina",
+  "South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington",
+  "West Virginia","Wisconsin","Wyoming",
+];
+
 const serviceInterests = [
   "Case Decoder ($97)",
   "Intelligence Brief ($497)",
@@ -82,8 +93,9 @@ export default function IntakePage() {
           Tell us about your case
         </h1>
         <p className="mt-3 text-zinc-400">
-          Everything you share is confidential. We&apos;ll use this to determine
+          Everything you share is kept private. We&apos;ll use this to determine
           which services fit your situation and give you an accurate quote.
+          Communications are not protected by attorney-client privilege.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-10 space-y-8">
@@ -105,7 +117,7 @@ export default function IntakePage() {
                   name="firstName"
                   type="text"
                   required
-                  className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm text-white placeholder-zinc-600 focus:border-amber-500 focus:outline-none"
+                  className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none"
                   placeholder="First name"
                 />
               </div>
@@ -121,7 +133,7 @@ export default function IntakePage() {
                   name="lastName"
                   type="text"
                   required
-                  className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm text-white placeholder-zinc-600 focus:border-amber-500 focus:outline-none"
+                  className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none"
                   placeholder="Last name"
                 />
               </div>
@@ -135,7 +147,7 @@ export default function IntakePage() {
                 name="email"
                 type="email"
                 required
-                className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm text-white placeholder-zinc-600 focus:border-amber-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none"
                 placeholder="you@email.com"
               />
             </div>
@@ -147,7 +159,7 @@ export default function IntakePage() {
                 id="phone"
                 name="phone"
                 type="tel"
-                className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm text-white placeholder-zinc-600 focus:border-amber-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none"
                 placeholder="(555) 555-5555"
               />
             </div>
@@ -169,7 +181,7 @@ export default function IntakePage() {
                 id="chargeType"
                 name="chargeType"
                 required
-                className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm text-white focus:border-amber-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-base text-white focus:border-amber-500 focus:outline-none"
               >
                 <option value="">Select charge type</option>
                 {chargeTypes.map((ct) => (
@@ -183,14 +195,17 @@ export default function IntakePage() {
               <label htmlFor="state" className="block text-xs text-zinc-400">
                 State
               </label>
-              <input
+              <select
                 id="state"
                 name="state"
-                type="text"
                 required
-                className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm text-white placeholder-zinc-600 focus:border-amber-500 focus:outline-none"
-                placeholder="e.g., Florida"
-              />
+                className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-base text-white focus:border-amber-500 focus:outline-none"
+              >
+                <option value="">Select state</option>
+                {usStates.map((st) => (
+                  <option key={st} value={st}>{st}</option>
+                ))}
+              </select>
             </div>
             <div className="mt-4">
               <label
@@ -203,7 +218,7 @@ export default function IntakePage() {
                 id="hasAttorney"
                 name="hasAttorney"
                 required
-                className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm text-white focus:border-amber-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-base text-white focus:border-amber-500 focus:outline-none"
               >
                 <option value="">Select</option>
                 <option value="yes">Yes — private attorney</option>
@@ -221,7 +236,7 @@ export default function IntakePage() {
               <select
                 id="hasDiscovery"
                 name="hasDiscovery"
-                className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm text-white focus:border-amber-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-base text-white focus:border-amber-500 focus:outline-none"
               >
                 <option value="">Select</option>
                 <option value="yes">Yes</option>
@@ -266,7 +281,7 @@ export default function IntakePage() {
               id="situation"
               name="situation"
               rows={4}
-              className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm text-white placeholder-zinc-600 focus:border-amber-500 focus:outline-none"
+              className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none"
               placeholder="What's going on with your case? What's frustrating you? The more we know, the better we can help."
             />
           </div>
@@ -277,7 +292,7 @@ export default function IntakePage() {
               By submitting this form, you understand that ImNotAnAttorney
               provides legal information and research — not legal advice. We are
               not a law firm and do not create an attorney-client relationship.
-              Your information is kept confidential.
+              Your information is kept private. Communications are not protected by attorney-client privilege.
             </p>
           </div>
 
