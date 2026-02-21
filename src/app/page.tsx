@@ -32,8 +32,8 @@ export default function Home() {
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-zinc-400">
             We hand you the exact questions that make your attorney start
-            working. We analyze your case, find what they missed, and
-            turn it into ammunition. Starting at $97.
+            working. We research your case and generate the questions that
+            hold your attorney accountable. Starting at $97.
           </p>
           <p className="mt-4 text-sm font-semibold text-amber-500">
             We Research. You Ask.
