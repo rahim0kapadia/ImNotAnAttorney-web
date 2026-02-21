@@ -48,7 +48,7 @@ function UploadContent() {
             We received {fileCount} file{fileCount !== 1 ? "s" : ""}. Your
             analysis is now in progress.
           </p>
-          <p className="mt-2 text-sm text-zinc-500">
+          <p className="mt-2 text-sm text-zinc-400">
             You&apos;ll receive an email when your report is ready.
           </p>
           <Link
@@ -98,6 +98,7 @@ function UploadContent() {
           <>
             <button
               onClick={async () => {
+                if (!window.confirm(`Submit ${fileCount} document${fileCount !== 1 ? "s" : ""} for analysis? This cannot be undone.`)) return;
                 setSubmitting(true);
                 setSubmitError(null);
                 try {
@@ -135,6 +136,9 @@ function UploadContent() {
 
         <div className="mt-8 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
           <p className="text-xs text-zinc-400">
+            ImNotAnAttorney provides legal information and research — not legal advice. No attorney-client relationship is created.
+          </p>
+          <p className="mt-2 text-xs text-zinc-400">
             Your documents are encrypted and stored securely. We use them only
             for your case analysis. They are never shared with third parties.
           </p>

@@ -83,15 +83,36 @@ function SuccessContent() {
           <>
             <p className="mt-3 text-lg text-amber-400">{info.name}</p>
             <p className="mt-4 text-zinc-400">{info.action}</p>
-            <p className="mt-2 text-sm text-zinc-500">
+            <p className="mt-2 text-sm text-zinc-400">
               Delivery: {info.delivery}
             </p>
 
             {info.showUpload && (
               <div className="mt-8">
-                <p className="mb-3 text-sm text-zinc-400">
-                  You&apos;ll receive an email with your upload link shortly.
+                <Link
+                  href="/upload"
+                  className="inline-block rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+                >
+                  Upload Your Documents Now &rarr;
+                </Link>
+              </div>
+            )}
+
+            {/* Upsell for Case Decoder buyers (H11) */}
+            {tier === "case-decoder" && (
+              <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
+                <p className="text-sm font-semibold text-amber-400">
+                  Upgrade to Intelligence Brief
                 </p>
+                <p className="mt-2 text-sm text-zinc-400">
+                  Your $97 is already credited. Get 35-50 questions for just $400 more.
+                </p>
+                <Link
+                  href="/checkout?tier=intelligence-brief"
+                  className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
+                >
+                  Upgrade for $400 &rarr;
+                </Link>
               </div>
             )}
           </>
@@ -103,7 +124,7 @@ function SuccessContent() {
         )}
 
         {sessionId && (
-          <p className="mt-4 text-xs text-zinc-600">
+          <p className="mt-4 text-xs text-zinc-400">
             Session: {sessionId.slice(0, 20)}...
           </p>
         )}
@@ -123,13 +144,16 @@ function SuccessContent() {
           </Link>
         </div>
 
-        <p className="mt-8 text-sm text-zinc-500">
+        <p className="mt-8 text-xs text-zinc-400">
+          ImNotAnAttorney provides legal information and research — not legal advice. No attorney-client relationship is created.
+        </p>
+        <p className="mt-4 text-sm text-zinc-400">
           Questions? Email us at{" "}
           <a
-            href="mailto:rahim0kapadia@gmail.com"
+            href="mailto:help@imnotanattorney.com"
             className="text-amber-400 underline decoration-amber-400/50"
           >
-            rahim0kapadia@gmail.com
+            help@imnotanattorney.com
           </a>
         </p>
       </div>
