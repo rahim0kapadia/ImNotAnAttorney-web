@@ -108,6 +108,33 @@ const TIER_INFO: Record<
     guarantee:
       "Priority 24-48hr turnaround per stage. Trial-ready intelligence.",
   },
+  "extra-witness": {
+    name: "Extra Witness Intel",
+    price: "$149",
+    priceNum: 149,
+    delivery: "Next update cycle",
+    requiresDiscovery: false,
+    features: [
+      "Individual witness background report",
+      "Cross-examination question set",
+      "Added to your existing case file",
+    ],
+    guarantee: "Delivered in your next scheduled update cycle.",
+  },
+  "witness-pack": {
+    name: "Standalone Witness Pack",
+    price: "$297",
+    priceNum: 297,
+    delivery: "3-5 business days",
+    requiresDiscovery: true,
+    features: [
+      "Comprehensive witness analysis",
+      "Background and credibility report",
+      "Cross-examination questions",
+      "Impeachment opportunities",
+    ],
+    guarantee: "Delivered within 5 business days.",
+  },
 };
 
 function CheckoutContent() {

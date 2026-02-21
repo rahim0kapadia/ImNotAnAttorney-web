@@ -133,31 +133,29 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Connect */}
+          {/* Legal & Connect */}
           <div>
             <p className="mb-3 text-sm font-semibold text-zinc-300">
-              Connect
+              Legal
             </p>
             <div className="flex flex-col gap-2">
-              <a
-                href="https://twitter.com/ImNotAnAttorney"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/terms"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                Twitter / X
-              </a>
+                Terms of Service
+              </Link>
+              <Link
+                href="/privacy"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Privacy Policy
+              </Link>
               <Link
                 href="/sitemap.xml"
                 className="text-sm text-zinc-400 hover:text-white"
               >
                 Sitemap
-              </Link>
-              <Link
-                href="/robots.txt"
-                className="text-sm text-zinc-400 hover:text-white"
-              >
-                Robots.txt
               </Link>
             </div>
           </div>

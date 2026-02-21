@@ -6,8 +6,12 @@ create table if not exists subscribers (
   id uuid default gen_random_uuid() primary key,
   email text not null unique,
   source text not null default 'lead-capture',
+  unsubscribed_at timestamptz, -- CAN-SPAM: tracks when user unsubscribed
   created_at timestamptz default now() not null
 );
+
+-- Migration for existing databases:
+-- ALTER TABLE subscribers ADD COLUMN IF NOT EXISTS unsubscribed_at timestamptz;
 
 -- Intakes (case submissions — replaces data/intakes.json)
 create table if not exists intakes (

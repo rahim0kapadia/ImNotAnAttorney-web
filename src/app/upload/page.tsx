@@ -9,6 +9,8 @@ function UploadContent() {
   const searchParams = useSearchParams();
   const caseId = searchParams.get("case");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [fileCount, setFileCount] = useState(0);
 
   if (!caseId) {
@@ -93,12 +95,42 @@ function UploadContent() {
         </div>
 
         {fileCount > 0 && (
-          <button
-            onClick={() => setSubmitted(true)}
-            className="mt-6 w-full rounded-lg bg-amber-500 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400"
-          >
-            Submit {fileCount} Document{fileCount !== 1 ? "s" : ""} for Analysis
-          </button>
+          <>
+            <button
+              onClick={async () => {
+                setSubmitting(true);
+                setSubmitError(null);
+                try {
+                  const res = await fetch("/api/upload/finalize", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ caseId }),
+                  });
+                  if (res.ok) {
+                    setSubmitted(true);
+                  } else {
+                    const data = await res.json();
+                    setSubmitError(data.error || "Something went wrong. Please try again.");
+                  }
+                } catch {
+                  setSubmitError("Couldn't reach our servers. Please try again.");
+                } finally {
+                  setSubmitting(false);
+                }
+              }}
+              disabled={submitting}
+              className="mt-6 w-full rounded-lg bg-amber-500 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {submitting
+                ? "Submitting..."
+                : `Submit ${fileCount} Document${fileCount !== 1 ? "s" : ""} for Analysis`}
+            </button>
+            {submitError && (
+              <div className="mt-3 rounded-lg border border-red-500/50 bg-red-500/10 p-3">
+                <p className="text-sm text-red-400">{submitError}</p>
+              </div>
+            )}
+          </>
         )}
 
         <div className="mt-8 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">

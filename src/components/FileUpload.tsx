@@ -76,7 +76,7 @@ export function FileUpload({ caseId, onUploadComplete }: FileUploadProps) {
           newFiles.push({
             name: file.name,
             size: file.size,
-            url: data.url,
+            url: data.path,
           });
         } catch {
           setError(`Failed to upload ${file.name}`);

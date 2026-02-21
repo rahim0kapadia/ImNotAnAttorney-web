@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { sendEmail } from "@/lib/email";
+import { sendEmail, escapeHtml } from "@/lib/email";
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 
@@ -72,11 +72,12 @@ export async function POST(req: NextRequest) {
     await sendEmail({
       to: caseRecord.email,
       subject: "Document Received — Your File Has Been Uploaded",
+      unsubscribeEmail: caseRecord.email,
       html: `
         <h1 style="color: #F59E0B;">Document Received</h1>
-        <p>We've received your uploaded file: <strong>${file.name}</strong></p>
+        <p>We've received your uploaded file: <strong>${escapeHtml(file.name)}</strong></p>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
-          <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">File:</strong> ${file.name}</p>
+          <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">File:</strong> ${escapeHtml(file.name)}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Size:</strong> ${(file.size / 1024 / 1024).toFixed(1)} MB</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Total files uploaded:</strong> ${existingUrls.length + 1}</p>
         </div>

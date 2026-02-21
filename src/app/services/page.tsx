@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Services",
   description:
     "Case-specific research and question reports for criminal defendants. Five tiers from $97 Case Decoder to $4,997 Situation Room. DUI, drug cases, white collar, and federal defense.",
+  alternates: {
+    canonical: "https://imnotanattorney.com/services",
+  },
 };
 
 const caseTypes = [

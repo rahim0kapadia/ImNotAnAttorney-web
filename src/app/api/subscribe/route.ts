@@ -18,9 +18,13 @@ export async function POST(req: NextRequest) {
     const normalizedEmail = email.toLowerCase().trim();
 
     // Upsert — if already subscribed, just return success
+    // Also clear unsubscribed_at on re-subscribe
     const { error } = await supabase
       .from("subscribers")
-      .upsert({ email: normalizedEmail, source }, { onConflict: "email" });
+      .upsert(
+        { email: normalizedEmail, source, unsubscribed_at: null },
+        { onConflict: "email" }
+      );
 
     if (error) {
       console.error("[Subscribe] Supabase error:", error);
@@ -34,6 +38,7 @@ export async function POST(req: NextRequest) {
     await sendEmail({
       to: normalizedEmail,
       subject: "Your Free Guide: 10 Questions Your Attorney Hopes You Never Ask",
+      unsubscribeEmail: normalizedEmail,
       html: `
         <h1 style="color: #F59E0B;">Welcome to ImNotAnAttorney</h1>
         <p>You just took the first step toward holding your attorney accountable. Here's your free guide:</p>

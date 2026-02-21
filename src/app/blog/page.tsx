@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Blog",
   description:
     "Legal information and strategies for criminal defendants. Learn how to hold your attorney accountable.",
+  alternates: {
+    canonical: "https://imnotanattorney.com/blog",
+  },
 };
 
 const CATEGORIES = [

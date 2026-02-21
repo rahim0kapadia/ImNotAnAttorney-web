@@ -43,6 +43,20 @@ const TIER_NEXT_STEPS: Record<
       "Upload your discovery documents to begin. We'll contact you within 24 hours to schedule your priority onboarding.",
     showUpload: true,
   },
+  "extra-witness": {
+    name: "Extra Witness Intel",
+    delivery: "Next update cycle",
+    action:
+      "Your extra witness analysis will be included in your next scheduled case update.",
+    showUpload: false,
+  },
+  "witness-pack": {
+    name: "Standalone Witness Pack",
+    delivery: "3-5 business days",
+    action:
+      "Upload your discovery documents so we can begin your witness analysis. You'll receive a link via email.",
+    showUpload: true,
+  },
 };
 
 function SuccessContent() {

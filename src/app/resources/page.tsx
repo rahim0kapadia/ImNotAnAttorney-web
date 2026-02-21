@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Free Resources",
   description:
     "Free guides, checklists, and templates for criminal defendants. Know your rights. Hold your attorney accountable.",
+  alternates: {
+    canonical: "https://imnotanattorney.com/resources",
+  },
 };
 
 const resources = [

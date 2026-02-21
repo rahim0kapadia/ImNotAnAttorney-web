@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "ImNotAnAttorney was built by a defendant, for defendants. We provide legal research and questions — not legal advice.",
+  alternates: {
+    canonical: "https://imnotanattorney.com/about",
+  },
 };
 
 export default function AboutPage() {

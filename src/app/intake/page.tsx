@@ -60,8 +60,8 @@ export default function IntakePage() {
           </div>
           <h1 className="text-2xl font-bold text-white">We got it.</h1>
           <p className="mt-3 text-zinc-400">
-            We&apos;ll review your information and get back to you within 24
-            hours. Check your email.
+            We&apos;ll review your information and reach out if we need
+            anything. Check your email for confirmation.
           </p>
           <p className="mt-6 text-sm text-zinc-400">
             In the meantime, read our{" "}
