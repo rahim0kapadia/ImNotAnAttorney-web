@@ -15,9 +15,66 @@ export const metadata: Metadata = {
   },
 };
 
+const homeFaqs = [
+  {
+    question: "Will asking these questions upset my attorney?",
+    answer:
+      "Good attorneys welcome informed clients. Asking educated questions isn't adversarial — it's your right. The lawyers who get angry when you push back? They're the reason you're here.",
+  },
+  {
+    question: "Is this legal advice?",
+    answer:
+      "No. We provide legal research, case analysis, and questions — not legal advice. Your attorney provides legal advice. We research. You ask.",
+  },
+  {
+    question: "What if I don't have my discovery documents yet?",
+    answer:
+      "That's fine — our Case Decoder ($97) and Intelligence Brief ($497) don't require discovery. We can analyze your charges, research your judge, and generate targeted questions with just your case information. When you get discovery, upgrade to The X-Ray with full credit.",
+  },
+  {
+    question: "Do you work on federal cases?",
+    answer:
+      "Yes. From misdemeanor DUIs to federal indictments — we research every case type. The more complex your case, the more questions your attorney should be answering.",
+  },
+  {
+    question: "How fast do I get my report?",
+    answer:
+      "Case Decoder: 24 hours. Intelligence Brief: 48-72 hours. The X-Ray: 5-7 business days. War Room: 25-28 days initial + weekly updates. Situation Room: 24-48hr priority turnaround.",
+  },
+  {
+    question: "What if I already bought a lower tier?",
+    answer:
+      "100% of what you paid is credited toward the next tier. Buy the Case Decoder for $97, then upgrade to the Intelligence Brief for just $400. No money wasted. Credits are valid for 12 months.",
+  },
+  {
+    question: "Can I get a refund?",
+    answer:
+      "If we don't deliver the stated question counts and reports within the guaranteed timeframe, you get a full refund. We guarantee the work — every question, every page, on time — or you pay nothing.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: homeFaqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+
 export default function Home() {
   return (
     <>
+      {/* FAQ Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       {/* Hero */}
       <section className="px-4 pb-20 pt-24 text-center md:pt-32">
         <div className="mx-auto max-w-4xl">
@@ -55,6 +112,44 @@ export default function Home() {
           <p className="mt-4 text-xs text-zinc-400">
             We&apos;re not attorneys — and that&apos;s the point. We give you the
             research and questions. Your lawyer does the rest.
+          </p>
+        </div>
+      </section>
+
+      {/* Proof — Real case findings (moved above fold for H2) */}
+      <section className="border-t border-zinc-800 px-4 py-20">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
+            What we actually found in a real case
+          </h2>
+          <p className="mt-3 text-center text-zinc-400">
+            This system was built for a real defendant facing real charges. Here&apos;s what the analysis uncovered — issues the attorney hadn&apos;t raised.
+          </p>
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">
+              <div className="text-3xl font-bold text-red-400">73%</div>
+              <p className="mt-1 text-sm font-semibold text-white">Weight Discrepancy</p>
+              <p className="mt-2 text-sm text-zinc-400">
+                Scene weight: 93.9g. Lab weight: 25.59g. That&apos;s 68.3g missing — enough to change the charge tier entirely. The attorney never flagged it.
+              </p>
+            </div>
+            <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">
+              <div className="text-3xl font-bold text-red-400">CI Phone</div>
+              <p className="mt-1 text-sm font-semibold text-white">Dual Attribution</p>
+              <p className="mt-2 text-sm text-zinc-400">
+                Same phone number attributed to BOTH the confidential informant and the defendant. Same detective, same report. A Franks v. Delaware issue hiding in plain sight.
+              </p>
+            </div>
+            <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">
+              <div className="text-3xl font-bold text-red-400">Fatal</div>
+              <p className="mt-1 text-sm font-semibold text-white">Drug Type Variance</p>
+              <p className="mt-2 text-sm text-zinc-400">
+                Officers said &ldquo;amphetamine&rdquo; on scene. Lab found MDMA/MDA — a completely different substance. That&apos;s a fatal variance the state had to amend.
+              </p>
+            </div>
+          </div>
+          <p className="mt-8 text-center text-sm text-zinc-400">
+            This is what our analysis finds. These are the questions your attorney should be asking — but isn&apos;t.
           </p>
         </div>
       </section>
@@ -113,44 +208,6 @@ export default function Home() {
           You&apos;re not powerless. You just don&apos;t have the right
           questions yet.
         </p>
-      </section>
-
-      {/* Proof — Real case findings */}
-      <section className="border-t border-zinc-800 px-4 py-20">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
-            What we actually found in a real case
-          </h2>
-          <p className="mt-3 text-center text-zinc-400">
-            This system was built for a real defendant facing real charges. Here&apos;s what the analysis uncovered — issues the attorney hadn&apos;t raised.
-          </p>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">
-              <div className="text-3xl font-bold text-red-400">73%</div>
-              <p className="mt-1 text-sm font-semibold text-white">Weight Discrepancy</p>
-              <p className="mt-2 text-sm text-zinc-400">
-                Scene weight: 93.9g. Lab weight: 25.59g. That&apos;s 68.3g missing — enough to change the charge tier entirely. The attorney never flagged it.
-              </p>
-            </div>
-            <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">
-              <div className="text-3xl font-bold text-red-400">CI Phone</div>
-              <p className="mt-1 text-sm font-semibold text-white">Dual Attribution</p>
-              <p className="mt-2 text-sm text-zinc-400">
-                Same phone number attributed to BOTH the confidential informant and the defendant. Same detective, same report. A Franks v. Delaware issue hiding in plain sight.
-              </p>
-            </div>
-            <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">
-              <div className="text-3xl font-bold text-red-400">Fatal</div>
-              <p className="mt-1 text-sm font-semibold text-white">Drug Type Variance</p>
-              <p className="mt-2 text-sm text-zinc-400">
-                Officers said &ldquo;amphetamine&rdquo; on scene. Lab found MDMA/MDA — a completely different substance. That&apos;s a fatal variance the state had to amend.
-              </p>
-            </div>
-          </div>
-          <p className="mt-8 text-center text-sm text-zinc-400">
-            This is what our analysis finds. These are the questions your attorney should be asking — but isn&apos;t.
-          </p>
-        </div>
       </section>
 
       {/* How It Works */}
@@ -221,6 +278,25 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Guarantee (H12) */}
+      <section className="border-t border-zinc-800 px-4 py-16">
+        <div className="mx-auto max-w-3xl text-center">
+          <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-8">
+            <h2 className="text-2xl font-bold text-white">
+              Our Guarantee
+            </h2>
+            <p className="mt-4 text-lg text-zinc-300">
+              If your Case Decoder doesn&apos;t contain at least{" "}
+              <span className="font-bold text-amber-400">10 specific questions</span>{" "}
+              you can bring to your attorney — you pay nothing.
+            </p>
+            <p className="mt-3 text-sm text-zinc-400">
+              Every tier has a deliverable guarantee. Question counts, timeframes, and thoroughness — all guaranteed or your money back.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing */}
       <section id="pricing" className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-5xl">
@@ -232,7 +308,7 @@ export default function Home() {
             at $97 — upgrade anytime with full credit.
           </p>
           <div className="mt-12">
-            <PricingTable />
+            <PricingTable maxTiers={3} />
           </div>
         </div>
       </section>
@@ -250,45 +326,7 @@ export default function Home() {
           <h2 className="mb-8 text-center text-2xl font-bold text-white md:text-3xl">
             Common Questions
           </h2>
-          <FAQAccordion
-            items={[
-              {
-                question: "Will asking these questions upset my attorney?",
-                answer:
-                  "Good attorneys welcome informed clients. Asking educated questions isn't adversarial — it's your right. The lawyers who get angry when you push back? They're the reason you're here.",
-              },
-              {
-                question: "Is this legal advice?",
-                answer:
-                  "No. We provide legal research, case analysis, and questions — not legal advice. Your attorney provides legal advice. We research. You ask.",
-              },
-              {
-                question: "What if I don't have my discovery documents yet?",
-                answer:
-                  "That's fine — our Case Decoder ($97) and Intelligence Brief ($497) don't require discovery. We can analyze your charges, research your judge, and generate targeted questions with just your case information. When you get discovery, upgrade to The X-Ray with full credit.",
-              },
-              {
-                question: "Do you work on federal cases?",
-                answer:
-                  "Yes. From misdemeanor DUIs to federal indictments — we research every case type. The more complex your case, the more questions your attorney should be answering.",
-              },
-              {
-                question: "How fast do I get my report?",
-                answer:
-                  "Case Decoder: 24 hours. Intelligence Brief: 48-72 hours. The X-Ray: 5-7 business days. War Room: 25-28 days initial + weekly updates. Situation Room: 24-48hr priority turnaround.",
-              },
-              {
-                question: "What if I already bought a lower tier?",
-                answer:
-                  "100% of what you paid is credited toward the next tier. Buy the Case Decoder for $97, then upgrade to the Intelligence Brief for just $400. No money wasted. Credits are valid for 12 months.",
-              },
-              {
-                question: "Can I get a refund?",
-                answer:
-                  "If we don't deliver the stated question counts and reports within the guaranteed timeframe, you get a full refund. We guarantee the work — every question, every page, on time — or you pay nothing.",
-              },
-            ]}
-          />
+          <FAQAccordion items={homeFaqs} />
         </div>
       </section>
 

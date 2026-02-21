@@ -115,7 +115,13 @@ const addons = [
   },
 ];
 
-export function PricingTable() {
+interface PricingTableProps {
+  maxTiers?: number;
+}
+
+export function PricingTable({ maxTiers }: PricingTableProps) {
+  const visibleTiers = maxTiers ? tiers.slice(0, maxTiers) : tiers;
+  const hasHiddenTiers = maxTiers ? tiers.length > maxTiers : false;
   return (
     <div>
       {/* Anchor */}
@@ -131,9 +137,9 @@ export function PricingTable() {
         </p>
       </div>
 
-      {/* Main tiers - first 3 */}
+      {/* Main tiers - first 3 (or maxTiers) */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {tiers.slice(0, 3).map((tier) => (
+        {visibleTiers.slice(0, 3).map((tier) => (
           <div
             key={tier.name}
             className={`flex flex-col rounded-xl border p-8 ${
@@ -182,8 +188,20 @@ export function PricingTable() {
         ))}
       </div>
 
+      {/* "See premium tiers" link when truncated */}
+      {hasHiddenTiers && (
+        <div className="mt-8 text-center">
+          <Link
+            href="/services"
+            className="inline-block rounded-lg border border-zinc-700 px-8 py-3 text-sm font-semibold text-white transition-colors hover:border-zinc-500"
+          >
+            See premium tiers &rarr;
+          </Link>
+        </div>
+      )}
+
       {/* Premium tiers */}
-      <div className="mt-6 grid gap-6 md:grid-cols-2">
+      {!hasHiddenTiers && <div className="mt-6 grid gap-6 md:grid-cols-2">
         {tiers.slice(3).map((tier) => (
           <div
             key={tier.name}
@@ -218,10 +236,10 @@ export function PricingTable() {
             </Link>
           </div>
         ))}
-      </div>
+      </div>}
 
       {/* Add-ons */}
-      <div className="mt-6 grid gap-4 md:grid-cols-2">
+      {!hasHiddenTiers && <div className="mt-6 grid gap-4 md:grid-cols-2">
         {addons.map((addon) => (
           <div
             key={addon.name}
@@ -244,7 +262,7 @@ export function PricingTable() {
             </p>
           </div>
         ))}
-      </div>
+      </div>}
 
       {/* Upgrade Credits */}
       <div className="mt-6 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6 text-center">
