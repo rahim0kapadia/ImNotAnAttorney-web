@@ -2,6 +2,7 @@ import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { LeadCapture } from "@/components/LeadCapture";
 import { BlogCTA } from "@/components/BlogCTA";
 import { BlogCard } from "@/components/BlogCard";
+import { SourceIntelligence } from "@/components/SourceIntelligence";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -105,6 +106,9 @@ export default async function BlogPostPage({ params }: PageProps) {
             }),
           }}
         />
+
+        {/* Source Intelligence */}
+        <SourceIntelligence category={post.category || "general-defense"} />
 
         {/* Content */}
         <div className="prose prose-invert prose-amber max-w-none prose-headings:text-white prose-p:text-zinc-300 prose-a:text-amber-400 prose-strong:text-white prose-li:text-zinc-300">
