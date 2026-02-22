@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About — Built by a Defendant, for Defendants",
   description:
     "ImNotAnAttorney was built by a defendant, for defendants. We provide legal research and questions — not legal advice.",
   alternates: {

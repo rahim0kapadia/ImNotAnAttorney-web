@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Criminal Defense Case Analysis Services",
   description:
     "Case-specific research and question reports for criminal defendants. Five tiers from $97 Case Decoder to $9,997 Situation Room. DUI, drug cases, white collar, and federal defense.",
   alternates: {

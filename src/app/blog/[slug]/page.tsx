@@ -25,13 +25,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: post.title,
     description: post.excerpt,
     alternates: {
-      canonical: `/blog/${slug}`,
+      canonical: `https://imnotanattorney.com/blog/${slug}`,
     },
     openGraph: {
       type: "article",
       title: post.title,
       description: post.excerpt,
-      url: `/blog/${slug}`,
+      url: `https://imnotanattorney.com/blog/${slug}`,
       publishedTime: post.date,
       tags: post.tags,
     },
@@ -99,7 +99,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 url: "https://imnotanattorney.com",
                 logo: {
                   "@type": "ImageObject",
-                  url: "https://imnotanattorney.com/icon.tsx",
+                  url: "https://imnotanattorney.com/icon",
                 },
               },
               image: `https://imnotanattorney.com/blog/${slug}/opengraph-image`,

@@ -239,7 +239,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
 
   // --- X-Ray+ ($997+) ---
   {
-    key: "post_xray_delivery",
+    key: "post_x_ray_delivery",
     delayDays: 0,
     tier: "x-ray",
     subject: "Your X-Ray analysis is ready — here's how to use it",
@@ -257,7 +257,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
   {
-    key: "post_xray_upload_reminder",
+    key: "post_x_ray_upload_reminder",
     delayDays: 2,
     tier: "x-ray",
     subject: "Reminder: Upload your discovery documents to begin analysis",
@@ -270,7 +270,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
   {
-    key: "post_xray_story_harvest",
+    key: "post_x_ray_story_harvest",
     delayDays: 5,
     tier: "x-ray",
     relativeToMeeting: true,

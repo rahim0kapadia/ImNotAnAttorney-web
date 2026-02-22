@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { sendEmail } from "@/lib/email";
+import { sendEmail, escapeHtml } from "@/lib/email";
 
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
@@ -31,6 +31,10 @@ export async function POST(req: NextRequest) {
         { error: "Invalid case ID" },
         { status: 403 }
       );
+    }
+
+    if (caseRecord.status === "submitted") {
+      return NextResponse.json({ success: true, message: "Already submitted" });
     }
 
     const fileCount = caseRecord.file_urls?.length || 0;
@@ -67,10 +71,10 @@ export async function POST(req: NextRequest) {
         <h1 style="color: #F59E0B;">Discovery Documents Submitted</h1>
         <p>A customer has finished uploading their discovery documents and is ready for analysis.</p>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
-          <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${caseRecord.email}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${caseRecord.tier}</p>
+          <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(caseRecord.email)}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(caseRecord.tier)}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Files Uploaded:</strong> ${fileCount}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${escapeHtml(caseId)}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Time:</strong> ${new Date().toISOString()}</p>
         </div>
         <p style="color: #A1A1AA;">Log into Supabase to access the uploaded files and begin analysis.</p>

@@ -37,12 +37,11 @@ export default function ContactPage() {
             </p>
           </div>
 
-          {/* Phone */}
+          {/* Response Time */}
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-            <h2 className="text-lg font-semibold text-white">Phone</h2>
+            <h2 className="text-lg font-semibold text-white">Response Time</h2>
             <p className="mt-2 text-sm text-zinc-400">
-              Phone support coming soon. For now, email is the fastest way to
-              reach us.
+              We respond to all emails within 24 hours on business days.
             </p>
           </div>
 
