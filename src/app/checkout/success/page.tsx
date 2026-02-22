@@ -98,20 +98,80 @@ function SuccessContent() {
               </div>
             )}
 
-            {/* Upsell for Case Decoder buyers (H11) */}
+            {/* Upsell — tier-specific */}
             {tier === "case-decoder" && (
               <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
                 <p className="text-sm font-semibold text-amber-400">
                   Upgrade to Intelligence Brief
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $97 is already credited. Get 35-50 questions for just $400 more.
+                  Your $97 is already credited. Get judge intelligence, jurisdiction profile, and 35-50 questions instead of 10-15.
+                </p>
+                <p className="mt-1 text-xs text-zinc-500">
+                  Adds: judge sentencing patterns, motion landscape report, attorney accountability timeline.
                 </p>
                 <Link
                   href="/checkout?tier=intelligence-brief"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
                   Upgrade for $400 &rarr;
+                </Link>
+              </div>
+            )}
+            {tier === "intelligence-brief" && (
+              <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
+                <p className="text-sm font-semibold text-amber-400">
+                  Upgrade to The X-Ray
+                </p>
+                <p className="mt-2 text-sm text-zinc-400">
+                  Your $497 is already credited. Get full discovery analysis — every page, every discrepancy, every red flag mapped.
+                </p>
+                <p className="mt-1 text-xs text-zinc-500">
+                  Adds: discovery document index, comprehensive timeline, discrepancy report, 20+ case-specific questions.
+                </p>
+                <Link
+                  href="/checkout?tier=x-ray"
+                  className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
+                >
+                  Upgrade for $500 &rarr;
+                </Link>
+              </div>
+            )}
+            {tier === "x-ray" && (
+              <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
+                <p className="text-sm font-semibold text-amber-400">
+                  Upgrade to The War Room
+                </p>
+                <p className="mt-2 text-sm text-zinc-400">
+                  Your $997 is already credited. Get judge and prosecution dossiers, witness analysis, case law package, and weekly updates through resolution.
+                </p>
+                <p className="mt-1 text-xs text-zinc-500">
+                  Adds: witness analysis (up to 8), officer dossiers, motion wave strategy, weekly intelligence updates.
+                </p>
+                <Link
+                  href="/checkout?tier=war-room"
+                  className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
+                >
+                  Upgrade for $1,000 &rarr;
+                </Link>
+              </div>
+            )}
+            {tier === "war-room" && (
+              <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
+                <p className="text-sm font-semibold text-amber-400">
+                  Upgrade to The Situation Room
+                </p>
+                <p className="mt-2 text-sm text-zinc-400">
+                  Your $1,997 is already credited. Get full trial prep — witness research, reply brief research, jury selection intelligence, real-time trial support, and priority 24-48hr turnaround.
+                </p>
+                <p className="mt-1 text-xs text-zinc-500">
+                  Adds: trial morning cheat sheets, attack intelligence packages, direct access channel, real-time trial support.
+                </p>
+                <Link
+                  href="/checkout?tier=situation-room"
+                  className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
+                >
+                  Upgrade for $3,000 &rarr;
                 </Link>
               </div>
             )}
