@@ -124,7 +124,7 @@ export async function POST(req: NextRequest) {
       unsubscribeEmail: email,
       html: `
         <h1 style="color: #F59E0B;">Payment Received</h1>
-        <p>Thank you for your purchase. Your <strong>${escapeHtml(productName)}</strong> is now being prepared.</p>
+        <p>You're the kind of defendant who does their homework. Your <strong>${escapeHtml(productName)}</strong> is being prepared now.</p>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
           <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Product:</strong> ${escapeHtml(productName)}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Amount:</strong> $${(amount / 100).toFixed(2)}</p>

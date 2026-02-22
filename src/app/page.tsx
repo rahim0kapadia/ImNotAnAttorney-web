@@ -79,39 +79,48 @@ export default function Home() {
       <section className="px-4 pb-20 pt-24 text-center md:pt-32">
         <div className="mx-auto max-w-4xl">
           <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-amber-500">
-            Tired of being the last to know what&apos;s happening in your own case?
+            A real trafficking case. Four case-ending issues. The attorney found zero.
           </p>
           <h1 className="text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
-            Your attorney works for{" "}
-            <span className="text-amber-400">you</span>.
+            There&apos;s something in your case
             <br />
-            Make sure they remember that.
+            your attorney{" "}
+            <span className="text-amber-400">hasn&apos;t found yet.</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-zinc-400">
-            We hand you the exact questions that make your attorney start
-            working. We research your case and generate the questions that
-            hold your attorney accountable. Starting at $97.
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
+            We analyzed a real trafficking case and found a 73% evidence weight
+            discrepancy, a misidentified drug substance, a CI phone number
+            attributed to both the informant and the defendant, and 21
+            fingerprints — zero matching the defendant. The attorney had filed
+            nothing on any of it. We found all of it in the discovery documents.
+            We can do the same for yours.
           </p>
-          <p className="mt-4 text-sm font-semibold text-amber-500">
-            We Research. You Ask.
+          <p className="mx-auto mt-4 max-w-2xl text-sm text-zinc-400">
+            Our research is built on the tactics of Gerry Spence (never lost a
+            criminal case), Barry Scheck (Innocence Project, OJ Simpson DNA
+            defense), Jeffrey Lichtman (El Chapo, John Gotti Jr.), and 37 more
+            of the most dangerous defense attorneys who ever practiced.
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/checkout?tier=case-decoder"
               className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400"
             >
-              Get Your Case Decoder — $97 →
+              Find What&apos;s in My Case — $97 →
             </Link>
             <Link
-              href="#how-it-works"
+              href="/sample"
               className="rounded-lg border border-zinc-700 px-8 py-4 text-sm font-semibold text-white transition-colors hover:border-zinc-500"
             >
-              See How It Works
+              See What We Found in a Real Case →
             </Link>
           </div>
           <p className="mt-4 text-xs text-zinc-400">
-            We&apos;re not attorneys — and that&apos;s the point. We give you the
-            research and questions. Your lawyer does the rest.
+            We&apos;re not attorneys. We&apos;re researchers — and that&apos;s
+            exactly why we find what they miss.
+          </p>
+          <p className="mt-2 text-sm font-semibold text-amber-500">
+            We Read the Discovery. You Ask the Questions.
           </p>
         </div>
       </section>
@@ -132,12 +141,18 @@ export default function Home() {
               <p className="mt-2 text-sm text-zinc-400">
                 Scene weight: 93.9g. Lab weight: 25.59g. That&apos;s 68.3g missing — enough to change the charge tier entirely. The attorney never flagged it.
               </p>
+              <p className="mt-2 text-xs text-zinc-500">
+                Identified using Barry Scheck&apos;s chain of custody protocol — the same methodology used in the OJ Simpson DNA defense.
+              </p>
             </div>
             <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">
               <div className="text-3xl font-bold text-red-400">CI Phone</div>
               <p className="mt-1 text-sm font-semibold text-white">Dual Attribution</p>
               <p className="mt-2 text-sm text-zinc-400">
                 Same phone number attributed to BOTH the confidential informant and the defendant. Same detective, same report. A Franks v. Delaware issue hiding in plain sight.
+              </p>
+              <p className="mt-2 text-xs text-zinc-500">
+                Flagged using Jeffrey Lichtman&apos;s investigation pattern framework — Lichtman&apos;s informant destruction method won 3 mistrials for John Gotti Jr. and led El Chapo&apos;s defense.
               </p>
             </div>
             <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">
@@ -146,11 +161,22 @@ export default function Home() {
               <p className="mt-2 text-sm text-zinc-400">
                 Officers said &ldquo;amphetamine&rdquo; on scene. Lab found MDMA/MDA — a completely different substance. That&apos;s a fatal variance the state had to amend.
               </p>
+              <p className="mt-2 text-xs text-zinc-500">
+                Identified via Ron Chapman II&apos;s substance identification protocol — Chapman exploits prosecutorial complacency in federal cases.
+              </p>
             </div>
           </div>
           <p className="mt-8 text-center text-sm text-zinc-400">
             This is what our analysis finds. These are the questions your attorney should be asking — but isn&apos;t.
           </p>
+          <div className="mt-6 text-center">
+            <Link
+              href="/sample"
+              className="text-sm font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+            >
+              See the full sample report from this case →
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -167,7 +193,8 @@ export default function Home() {
       <section className="px-4 py-20">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
-            Does this sound familiar?
+            Some defendants take what they get.{" "}
+            <span className="text-amber-400">You&apos;re not one of them.</span>
           </h2>
           <div className="mt-12 grid gap-6 md:grid-cols-2">
             {[
@@ -205,8 +232,10 @@ export default function Home() {
       {/* Bridge */}
       <section className="border-t border-zinc-800 px-4 py-10">
         <p className="text-center text-lg font-semibold text-white">
-          You&apos;re not powerless. You just don&apos;t have the right
-          questions yet.
+          People like us don&apos;t just trust the system.{" "}
+          <span className="text-amber-400">
+            People like us read the discovery ourselves.
+          </span>
         </p>
       </section>
 
@@ -229,7 +258,7 @@ export default function Home() {
               {
                 step: "02",
                 title: "We research everything",
-                desc: "We analyze your case using elite defense frameworks — the same tactics used by legendary attorneys like Shapiro, Dershowitz, and Scheck. AI-powered, human-reviewed.",
+                desc: "We run your case through a research system built on 40+ elite defense attorneys — their documented tactics, their specific playbooks, their winning frameworks. Barry Scheck's chain of custody protocol (OJ, 375+ Innocence Project exonerations). Jeffrey Lichtman's confidential informant destruction playbook (El Chapo, Gotti Jr.). Alan Dershowitz's constitutional appellate framework. Gerry Spence's investigation patterns (never lost a criminal case). We generate the questions they would ask if they were reading your file.",
               },
               {
                 step: "03",
@@ -246,6 +275,66 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* The Attorneys Behind Your Questions */}
+      <section className="border-t border-zinc-800 px-4 py-20">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
+            The Attorneys Behind Your Questions
+          </h2>
+          <p className="mt-3 text-center text-zinc-400">
+            Every question we generate traces to a documented winning method.
+          </p>
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                name: "Barry Scheck",
+                record: "Innocence Project (375+ exonerations), OJ Simpson DNA defense",
+                method: "Chain of custody protocol applied to every discovery review.",
+              },
+              {
+                name: "Jeffrey Lichtman",
+                record: "Gotti Jr. (charges dismissed), El Chapo lead counsel",
+                method: "7-pillar CI destruction playbook for every CI/cooperator question.",
+              },
+              {
+                name: "Gerry Spence",
+                record: "Never lost a criminal case",
+                method: "Investigation pattern analysis — find the one fact that destroys everything.",
+              },
+              {
+                name: "F. Lee Bailey",
+                record: "Sam Sheppard retrial acquittal, OJ defense team",
+                method: "5-phase trap sequence for witness examination questions.",
+              },
+              {
+                name: "Alan Dershowitz",
+                record: "Harvard Law youngest full professor, Von Bulow reversal",
+                method: "Constitutional hooks for motion/appellate issues.",
+              },
+              {
+                name: "Ron Chapman II",
+                record: "Federal drug defense specialist, former prosecutor",
+                method: "Weight discrepancy and substance variance protocols for drug cases.",
+              },
+            ].map((attorney) => (
+              <div
+                key={attorney.name}
+                className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
+              >
+                <h3 className="font-bold text-amber-400">{attorney.name}</h3>
+                <p className="mt-1 text-xs text-zinc-400">{attorney.record}</p>
+                <p className="mt-3 text-sm text-zinc-300">{attorney.method}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-8 text-center text-sm text-zinc-400">
+            Plus: Johnnie Cochran. Jose Baez. Alan Jackson (Karen Read, 2025).
+            Roy Black. Benjamin Brafman. Mark Geragos. Barry Berke. Robert
+            Shapiro. Tom Mesereau. And 28 more.
+          </p>
         </div>
       </section>
 
@@ -286,12 +375,16 @@ export default function Home() {
               Our Guarantee
             </h2>
             <p className="mt-4 text-lg text-zinc-300">
-              If your Case Decoder doesn&apos;t contain at least{" "}
-              <span className="font-bold text-amber-400">10 specific questions</span>{" "}
-              you can bring to your attorney — you pay nothing.
+              If your report doesn&apos;t surface at least one issue your attorney
+              hasn&apos;t raised — something specific to{" "}
+              <span className="font-bold text-amber-400">YOUR</span> case,
+              documented with evidence from{" "}
+              <span className="font-bold text-amber-400">YOUR</span> records —
+              keep the report and we&apos;ll refund every penny.
             </p>
             <p className="mt-3 text-sm text-zinc-400">
-              Every tier has a deliverable guarantee. Question counts, timeframes, and thoroughness — all guaranteed or your money back.
+              Not templates. Not generic questions. Findings from your actual
+              case details.
             </p>
           </div>
         </div>
@@ -304,8 +397,13 @@ export default function Home() {
             Pick your level of defense intelligence
           </h2>
           <p className="mt-3 text-center text-zinc-400">
-            Every tier includes a custom report based on your actual case. Start
-            at $97 — upgrade anytime with full credit.
+            Every tier draws from the same intelligence base: 40+ elite defense
+            attorneys, their documented tactics, their proven frameworks. The
+            tier determines how deep we go.
+          </p>
+          <p className="mt-2 text-center text-sm text-zinc-400">
+            Defendants who fight back with research choose their tier. Start at
+            $97 — upgrade anytime with full credit.
           </p>
           <div className="mt-12">
             <PricingTable maxTiers={3} />
@@ -342,11 +440,15 @@ export default function Home() {
             Motions expire. Evidence disappears. Witnesses forget. The only
             thing that doesn&apos;t change is what you&apos;re facing.
           </p>
+          <p className="mt-3 text-sm font-semibold text-zinc-300">
+            Informed defendants don&apos;t wait to find out what their attorney
+            missed.
+          </p>
           <Link
             href="/checkout?tier=case-decoder"
             className="mt-8 inline-block rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400"
           >
-            Get Your Case Decoder — $97 →
+            Find What&apos;s in My Case — $97 →
           </Link>
         </div>
       </section>

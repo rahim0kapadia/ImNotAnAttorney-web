@@ -17,7 +17,7 @@ const caseTypes = [
     title: "Drug Cases",
     subtitle: "Possession, trafficking, distribution",
     description:
-      "We analyze your case for weight discrepancies, CI reliability issues, chain of custody gaps, and every motion your attorney should be filing.",
+      "We analyze your case using Barry Scheck's chain of custody protocol, Ron Chapman II's weight discrepancy framework, and Jeffrey Lichtman's 7-pillar CI reliability system — the same approaches that won El Chapo's defense and produced 375+ Innocence Project exonerations.",
     tiers: [
       {
         name: "Case Decoder",
@@ -25,34 +25,35 @@ const caseTypes = [
         price: "$97",
         desc: "Plain-English charge breakdown + 10-15 drug-case questions. Which motions apply to your charges? What should have happened by now?",
         discovery: false,
+        popular: true,
       },
       {
         name: "Intelligence Brief",
         slug: "intelligence-brief",
         price: "$497",
-        desc: "Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 35-50 targeted questions.",
+        desc: "Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 35-50 targeted questions. Judge intelligence built on Benjamin Brafman's jury psychology methodology.",
         discovery: false,
-        popular: true,
       },
       {
         name: "The X-Ray",
         slug: "x-ray",
         price: "$997",
-        desc: "Full discovery analysis — weight discrepancies, lab methodology gaps, CI reliability, chain of custody. 20+ case-specific questions.",
+        desc: "Full discovery analysis — weight discrepancies, lab methodology gaps, CI reliability, chain of custody. 20+ case-specific questions. Discovery analysis using Barry Scheck's protocol and Ron Chapman II's drug forensic framework.",
         discovery: true,
+        bestValue: true,
       },
       {
         name: "The War Room",
         slug: "war-room",
         price: "$1,997",
-        desc: "Everything above + officer dossiers, witness analysis (up to 8), motion wave strategy, case law package, weekly updates.",
+        desc: "Everything above + officer dossiers, witness analysis (up to 8), motion wave strategy, case law package, weekly updates. Witness analysis using Jeffrey Lichtman's 7-pillar methodology. Officer dossiers built on Alan Jackson's investigator accountability framework.",
         discovery: true,
       },
       {
         name: "The Situation Room",
         slug: "situation-room",
         price: "$4,997",
-        desc: "Full trial prep — witness background research, CI credibility questions, lab expert credibility research, reply brief research, real-time trial support.",
+        desc: "Full trial prep — witness background research, CI credibility questions, lab expert credibility research, reply brief research, real-time trial support. Trial prep built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology.",
         discovery: true,
       },
     ],
@@ -61,7 +62,7 @@ const caseTypes = [
     title: "DUI / DWI",
     subtitle: "First offense through felony DUI",
     description:
-      "From breathalyzer calibration records to field sobriety test compliance — we find the questions your attorney should already be asking.",
+      "From breathalyzer calibration to field sobriety compliance, we apply Barry Scheck's forensic methodology and F. Lee Bailey's evidence analysis framework — the same approach Bailey used to destroy prosecution witnesses in the Sam Sheppard retrial.",
     tiers: [
       {
         name: "Case Decoder",
@@ -69,34 +70,35 @@ const caseTypes = [
         price: "$97",
         desc: "Your DUI charges explained in plain English. What to expect at each stage. 10-15 questions your attorney needs to answer.",
         discovery: false,
+        popular: true,
       },
       {
         name: "Intelligence Brief",
         slug: "intelligence-brief",
         price: "$497",
-        desc: "Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 35-50 targeted questions.",
+        desc: "Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 35-50 targeted questions. Judge intelligence built on Benjamin Brafman's jury psychology methodology.",
         discovery: false,
-        popular: true,
       },
       {
         name: "The X-Ray",
         slug: "x-ray",
         price: "$997",
-        desc: "Full discovery analysis — BAC evidence, breathalyzer calibration, dashcam review, field sobriety compliance. 20+ questions.",
+        desc: "Full discovery analysis — BAC evidence, breathalyzer calibration, dashcam review, field sobriety compliance. 20+ questions. Discovery analysis using Barry Scheck's protocol and F. Lee Bailey's forensic evidence framework.",
         discovery: true,
+        bestValue: true,
       },
       {
         name: "The War Room",
         slug: "war-room",
         price: "$1,997",
-        desc: "Officer dossiers, expert witness challenges, motion wave strategy, case law package, weekly updates until resolution.",
+        desc: "Officer dossiers, expert witness challenges, motion wave strategy, case law package, weekly updates until resolution. Witness analysis using Jeffrey Lichtman's 7-pillar methodology. Officer dossiers built on Alan Jackson's investigator accountability framework.",
         discovery: true,
       },
       {
         name: "The Situation Room",
         slug: "situation-room",
         price: "$4,997",
-        desc: "Full trial prep — officer background research, expert credibility questions, jury selection research, real-time trial support.",
+        desc: "Full trial prep — officer background research, expert credibility questions, jury selection research, real-time trial support. Trial prep built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology.",
         discovery: true,
       },
     ],
@@ -105,7 +107,7 @@ const caseTypes = [
     title: "White Collar",
     subtitle: "Fraud, embezzlement, federal charges",
     description:
-      "Federal cases are a different game. We help you understand complex charges, organize overwhelming discovery, and evaluate the cooperation decision.",
+      "Federal cases are a different game. We apply Alan Dershowitz's constitutional framework, Benjamin Brafman's jury psychology methodology (DSK, Martin Shkreli), and Martin Weinberg's RICO dismantling approach to help you understand complex charges and evaluate every strategic decision.",
     tiers: [
       {
         name: "Case Decoder",
@@ -113,34 +115,35 @@ const caseTypes = [
         price: "$97",
         desc: "Plain-English federal process guide. What are the elements of each count? What should your attorney have done by now?",
         discovery: false,
+        popular: true,
       },
       {
         name: "Intelligence Brief",
         slug: "intelligence-brief",
         price: "$497",
-        desc: "Judge sentencing patterns, AUSA profile, guidelines calculation review, cooperation framework. 35-50 targeted questions.",
+        desc: "Judge sentencing patterns, AUSA profile, guidelines calculation review, cooperation framework. 35-50 targeted questions. Judge intelligence built on Benjamin Brafman's jury psychology methodology.",
         discovery: false,
-        popular: true,
       },
       {
         name: "The X-Ray",
         slug: "x-ray",
         price: "$997",
-        desc: "Discovery indexing for massive cases. Financial document analysis, witness statement review, timeline reconstruction. 20+ questions.",
+        desc: "Discovery indexing for massive cases. Financial document analysis, witness statement review, timeline reconstruction. 20+ questions. Discovery analysis using Alan Dershowitz's constitutional framework and Benjamin Brafman's defense methodology.",
         discovery: true,
+        bestValue: true,
       },
       {
         name: "The War Room",
         slug: "war-room",
         price: "$1,997",
-        desc: "Full intelligence operation — AUSA dossier, cooperator analysis, sentencing guidelines deep dive, case law package, weekly updates.",
+        desc: "Full intelligence operation — AUSA dossier, cooperator analysis, sentencing guidelines deep dive, case law package, weekly updates. Witness analysis using Jeffrey Lichtman's 7-pillar methodology. Strategy built on Benjamin Brafman's federal defense framework.",
         discovery: true,
       },
       {
         name: "The Situation Room",
         slug: "situation-room",
         price: "$4,997",
-        desc: "Complete trial prep + sentencing prep. Expert credibility research, cooperator background questions, guidelines research, real-time support.",
+        desc: "Complete trial prep + sentencing prep. Expert credibility research, cooperator background questions, guidelines research, real-time support. Trial prep built on Roy Black's preparation standard, Alan Dershowitz's appellate framework, and Barry Berke's precision methodology.",
         discovery: true,
       },
     ],
@@ -227,15 +230,18 @@ export default function ServicesPage() {
             case
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-zinc-400">
-            Five tiers of defense intelligence. Start at $97 — upgrade anytime
-            with full credit toward the next tier.
+            For defendants who read their own discovery. Five tiers of defense
+            intelligence. Start at $97 — upgrade anytime with full credit.
           </p>
         </div>
 
         {/* How pricing works */}
         <div className="mt-16 rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 text-center">
           <h2 className="text-lg font-bold text-white">
-            We&apos;re insurance on your attorney investment
+            Smart defendants don&apos;t just hire an attorney.{" "}
+            <span className="text-amber-400">
+              They make sure the attorney is working.
+            </span>
           </h2>
           <p className="mt-2 text-sm text-zinc-400">
             You paid $10K-$100K+ for an attorney. Our services cost a fraction
@@ -276,6 +282,41 @@ export default function ServicesPage() {
           </p>
         </div>
 
+        {/* Decision Guide */}
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+            <p className="text-sm font-bold text-amber-400">
+              No discovery yet?
+            </p>
+            <p className="mt-2 text-sm text-zinc-400">
+              Start with the{" "}
+              <Link href="/checkout?tier=case-decoder" className="text-white underline">
+                Case Decoder ($97)
+              </Link>{" "}
+              or{" "}
+              <Link href="/checkout?tier=intelligence-brief" className="text-white underline">
+                Intelligence Brief ($497)
+              </Link>
+              . Both work without discovery documents. Get charge analysis,
+              judge intel, and targeted questions for your next attorney meeting.
+            </p>
+          </div>
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+            <p className="text-sm font-bold text-amber-400">
+              You have discovery?
+            </p>
+            <p className="mt-2 text-sm text-zinc-400">
+              The{" "}
+              <Link href="/checkout?tier=x-ray" className="text-white underline">
+                X-Ray ($997)
+              </Link>{" "}
+              is the most thorough starting point. Full discovery analysis —
+              every page, every discrepancy, every red flag mapped. 20+
+              case-specific questions.
+            </p>
+          </div>
+        </div>
+
         {/* Case Types */}
         {caseTypes.map((ct) => (
           <section key={ct.title} className="mt-20">
@@ -300,7 +341,12 @@ export default function ServicesPage() {
                 >
                   {tier.popular && (
                     <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
-                      Most Popular
+                      Best Starting Point
+                    </span>
+                  )}
+                  {(tier as { bestValue?: boolean }).bestValue && (
+                    <span className="mb-2 inline-block rounded-full bg-green-500/10 px-2 py-0.5 text-xs font-semibold text-green-400">
+                      Best Value
                     </span>
                   )}
                   <div className="flex items-baseline justify-between">
@@ -325,6 +371,14 @@ export default function ServicesPage() {
                   >
                     Get {tier.name}
                   </Link>
+                  {tier.slug === "case-decoder" && (
+                    <Link
+                      href="/sample"
+                      className="mt-2 block text-center text-xs text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+                    >
+                      View Sample Report
+                    </Link>
+                  )}
                 </div>
               ))}
             </div>
@@ -363,41 +417,45 @@ export default function ServicesPage() {
         {/* Guarantee */}
         <section className="mt-20 rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 text-center">
           <h2 className="text-2xl font-bold text-white">
-            Deliverable Guarantee
+            Our Guarantee
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-zinc-400">
-            Every question, every report, on time — or your money back. We
-            guarantee the work — not the outcome.
+          <p className="mx-auto mt-4 max-w-xl text-zinc-300">
+            If your report doesn&apos;t surface at least one issue your attorney
+            hasn&apos;t raised — something specific to YOUR case, documented with
+            evidence from YOUR records — keep the report and we&apos;ll refund
+            every penny.
+          </p>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-zinc-400">
+            Not templates. Not generic questions. Findings from your actual case
+            details. We guarantee the work — not the outcome.
           </p>
           <div className="mx-auto mt-6 max-w-2xl text-left">
             <div className="space-y-2 text-sm text-zinc-400">
               <p>
                 <span className="font-semibold text-white">Case Decoder:</span>{" "}
-                Delivered within 24 hours with 10+ targeted questions.
+                Delivered within 24 hours. 10+ targeted questions from your case details.
               </p>
               <p>
                 <span className="font-semibold text-white">
                   Intelligence Brief:
                 </span>{" "}
-                Delivered within 72 hours with 35+ targeted questions.
+                Delivered within 72 hours. 35+ targeted questions with judge intelligence.
               </p>
               <p>
                 <span className="font-semibold text-white">The X-Ray:</span>{" "}
-                Delivered within 7 business days with 20+ case-specific
-                questions.
+                Delivered within 7 business days. Full discovery analysis with 20+ questions.
               </p>
               <p>
                 <span className="font-semibold text-white">
                   The War Room:
                 </span>{" "}
-                Initial package within 28 business days. Weekly updates
-                thereafter.
+                Initial package within 28 business days. Weekly updates thereafter.
               </p>
               <p>
                 <span className="font-semibold text-white">
                   The Situation Room:
                 </span>{" "}
-                Priority 24-48hr turnaround per stage. Trial-ready.
+                Priority 24-48hr turnaround per stage. Trial-ready intelligence.
               </p>
             </div>
           </div>

@@ -4,18 +4,28 @@ import { useSearchParams } from "next/navigation";
 import { useState, Suspense } from "react";
 import Link from "next/link";
 
-const TIER_INFO: Record<
-  string,
-  {
-    name: string;
-    price: string;
-    priceNum: number;
-    delivery: string;
-    requiresDiscovery: boolean;
-    features: string[];
-    guarantee: string;
-  }
-> = {
+type TierInfo = {
+  name: string;
+  price: string;
+  priceNum: number;
+  delivery: string;
+  requiresDiscovery: boolean;
+  features: string[];
+  guarantee: string;
+  validation?: string;
+  whyThisWorks?: string;
+  pullquote?: { quote: string; author: string };
+  nudge?: {
+    nextTierSlug: string;
+    nextTierName: string;
+    nextTierPrice: string;
+    upgradeCost: string;
+    unlocks: string;
+    bestFor: string;
+  };
+};
+
+const TIER_INFO: Record<string, TierInfo> = {
   "case-decoder": {
     name: "Case Decoder",
     price: "$97",
@@ -29,9 +39,30 @@ const TIER_INFO: Record<
       "10-15 targeted questions for your attorney",
       "Red flags for your stage",
       "Common motion types for your charge category",
+      "BONUS: Attorney Meeting Prep Guide — how to present these questions for maximum impact",
+      "BONUS: Motion Deadline Awareness — which deadlines may apply to your charge type",
     ],
     guarantee:
       "Delivered within 24 hours with 10+ targeted questions — or your money back.",
+    validation:
+      "The right place to start. Understand exactly what you are facing before your next attorney meeting.",
+    whyThisWorks:
+      "Every question generated using documented tactics from elite defense attorneys — Barry Scheck's chain of custody protocol. F. Lee Bailey's witness analysis framework. Jeffrey Lichtman's informant reliability methodology. These are the questions a $500/hour defense attorney would ask if they were reading your file. You're getting them for $97.",
+    pullquote: {
+      quote:
+        "Forensic evidence is only as reliable as the humans who handle it.",
+      author: "Barry Scheck",
+    },
+    nudge: {
+      nextTierSlug: "intelligence-brief",
+      nextTierName: "Intelligence Brief",
+      nextTierPrice: "$497",
+      upgradeCost: "$400",
+      unlocks:
+        "Adds your judge's actual sentencing patterns, a motion landscape report, and 35-50 questions instead of 10-15.",
+      bestFor:
+        "Worth it if you already have an attorney and want to evaluate how they're handling your specific judge.",
+    },
   },
   "intelligence-brief": {
     name: "Case Intelligence Brief",
@@ -48,9 +79,30 @@ const TIER_INFO: Record<
       "Motion landscape report",
       "Pre-discovery red flags",
       "35-50 targeted questions",
+      "BONUS: Judge Tendencies Card — one-page quick-reference for your assigned judge",
+      "BONUS: Plea vs. Trial Decision Framework — questions to help evaluate the cooperation decision",
     ],
     guarantee:
       "Delivered within 72 hours with 35+ targeted questions — or your money back.",
+    validation:
+      "Everything you need to hold your attorney accountable — without needing discovery yet.",
+    whyThisWorks:
+      "Your judge's actual sentencing patterns. Your jurisdiction's plea statistics. Built on Benjamin Brafman's jury psychology methodology and Alan Dershowitz's constitutional framework. A single hour with an attorney who knows this costs $500+. You're getting a complete intelligence file.",
+    pullquote: {
+      quote:
+        "If you're not filing suppression motions, you're not defending.",
+      author: "Victor Knapp",
+    },
+    nudge: {
+      nextTierSlug: "x-ray",
+      nextTierName: "The X-Ray",
+      nextTierPrice: "$997",
+      upgradeCost: "$500",
+      unlocks:
+        "Adds full discovery analysis — timelines, discrepancies, red flags inside the documents your attorney already has.",
+      bestFor:
+        "Worth it once you've received discovery. No discovery yet? The Brief is the right call for now.",
+    },
   },
   "x-ray": {
     name: "The X-Ray",
@@ -68,6 +120,25 @@ const TIER_INFO: Record<
     ],
     guarantee:
       "Delivered within 7 business days with 20+ case-specific questions — or your money back.",
+    validation:
+      "The most thorough analysis available without a multi-week engagement. Full discovery, full picture.",
+    whyThisWorks:
+      "Every page of your discovery analyzed using Barry Scheck's chain of custody protocol and Ron Chapman II's drug forensic framework. We found a 73% weight discrepancy in the case that built this system. Your discovery has its own story — we'll find it.",
+    pullquote: {
+      quote:
+        "The absence of physical evidence is itself evidence.",
+      author: "Barry Scheck",
+    },
+    nudge: {
+      nextTierSlug: "war-room",
+      nextTierName: "The War Room",
+      nextTierPrice: "$1,997",
+      upgradeCost: "$1,000",
+      unlocks:
+        "Adds judge and prosecution dossiers, witness analysis for up to 8 witnesses, a case law package, and weekly updates.",
+      bestFor:
+        "Worth it if your case has multiple witnesses, is headed to trial, or has months ahead.",
+    },
   },
   "war-room": {
     name: "The War Room",
@@ -87,6 +158,15 @@ const TIER_INFO: Record<
     ],
     guarantee:
       "Initial package within 28 business days. Weekly updates every 7 days thereafter.",
+    validation:
+      "Ongoing intelligence from now through resolution. Most clients stay in this tier for the life of their case.",
+    whyThisWorks:
+      "Witness analysis using Jeffrey Lichtman's 7-pillar methodology — the system that dismantled cooperators in El Chapo and Gotti Jr. Officer dossiers built on Alan Jackson's investigator accountability framework. Updated weekly as your case develops.",
+    pullquote: {
+      quote:
+        "The cooperator is only as good as their handler lets them be.",
+      author: "Jeffrey Lichtman",
+    },
   },
   "situation-room": {
     name: "The Situation Room",
@@ -107,6 +187,15 @@ const TIER_INFO: Record<
     ],
     guarantee:
       "Priority 24-48hr turnaround per stage. Trial-ready intelligence.",
+    validation:
+      "Reserved for cases going to trial or cases where the stakes are highest.",
+    whyThisWorks:
+      "Trial prep built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology. Priority turnaround because trial doesn't wait.",
+    pullquote: {
+      quote:
+        "Preparation is the be-all of good trial work.",
+      author: "Roy Black",
+    },
   },
   "extra-witness": {
     name: "Extra Witness Intel",
@@ -210,11 +299,40 @@ function CheckoutContent() {
             <span className="text-sm text-zinc-400">one-time</span>
           </div>
 
+          {/* Tier validation */}
+          {info.validation && (
+            <p className="mt-3 text-sm text-zinc-300">{info.validation}</p>
+          )}
+
           <div className="mt-2 rounded-lg bg-zinc-800/50 px-3 py-1 inline-block">
             <span className="text-xs text-zinc-400">
               Delivery: {info.delivery}
             </span>
           </div>
+
+          {/* Why This Works */}
+          {info.whyThisWorks && (
+            <div className="mt-6 rounded-lg border border-zinc-700 bg-zinc-800/30 p-4">
+              <p className="text-xs font-bold uppercase tracking-wider text-amber-400">
+                Why This Works
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-zinc-300">
+                {info.whyThisWorks}
+              </p>
+            </div>
+          )}
+
+          {/* Attorney pullquote */}
+          {info.pullquote && (
+            <div className="mt-4 border-l-2 border-amber-500/30 pl-4">
+              <p className="text-sm italic text-zinc-400">
+                &ldquo;{info.pullquote.quote}&rdquo;
+              </p>
+              <p className="mt-1 text-xs text-zinc-500">
+                — {info.pullquote.author}
+              </p>
+            </div>
+          )}
 
           {/* What's included */}
           <div className="mt-8">
@@ -234,6 +352,14 @@ function CheckoutContent() {
             </ul>
           </div>
 
+          {/* Preview link */}
+          <Link
+            href="/sample"
+            className="mt-4 inline-block text-sm text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+          >
+            Preview what you&apos;ll get — see a real sample report →
+          </Link>
+
           {/* Discovery notice */}
           {info.requiresDiscovery && (
             <div className="mt-6 rounded-lg border border-zinc-700 bg-zinc-800/50 p-4">
@@ -247,10 +373,41 @@ function CheckoutContent() {
           {/* Guarantee */}
           <div className="mt-6 rounded-lg border border-amber-500/20 bg-amber-500/5 p-4">
             <p className="text-xs font-semibold text-amber-400">
-              Deliverable Guarantee
+              Our Guarantee
             </p>
-            <p className="mt-1 text-sm text-zinc-400">{info.guarantee}</p>
+            <p className="mt-1 text-sm text-zinc-300">
+              If your report doesn&apos;t surface at least one issue your
+              attorney hasn&apos;t raised — something specific to YOUR case —
+              keep the report and we&apos;ll refund every penny.
+            </p>
+            <p className="mt-2 text-xs text-zinc-400">{info.guarantee}</p>
           </div>
+
+          {/* Upgrade nudge */}
+          {info.nudge && (
+            <div className="mt-6 rounded-lg border border-zinc-700 bg-zinc-800/40 p-4">
+              <p className="text-xs font-semibold text-zinc-400">
+                Also available
+              </p>
+              <p className="mt-2 text-sm text-zinc-300">
+                <Link
+                  href={`/checkout?tier=${info.nudge.nextTierSlug}`}
+                  className="font-semibold text-amber-400 underline decoration-amber-400/50"
+                >
+                  {info.nudge.nextTierName} ({info.nudge.nextTierPrice})
+                </Link>
+                {" — "}
+                {info.nudge.unlocks}
+              </p>
+              <p className="mt-1 text-xs italic text-zinc-500">
+                {info.nudge.bestFor}
+              </p>
+              <p className="mt-2 text-xs text-zinc-400">
+                Upgrade cost: {info.nudge.upgradeCost} (your {info.price}{" "}
+                is credited)
+              </p>
+            </div>
+          )}
 
           {/* Error */}
           {error && (

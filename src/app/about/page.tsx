@@ -22,6 +22,13 @@ export default function AboutPage() {
           <span className="text-amber-400">For defendants.</span>
         </h1>
         <p className="mt-6 text-lg leading-relaxed text-zinc-400">
+          There&apos;s a certain kind of defendant — the kind who doesn&apos;t
+          accept &quot;just trust the process&quot; as an answer. The kind who
+          reads their own discovery, tracks their own deadlines, and walks into
+          attorney meetings with a list of questions. If you&apos;re reading
+          this page, you&apos;re probably one of them.
+        </p>
+        <p className="mt-4 text-lg leading-relaxed text-zinc-400">
           ImNotAnAttorney started the way most ideas start — out of
           frustration. Real frustration. The kind where you&apos;ve paid
           thousands of dollars to someone who won&apos;t return your calls,
@@ -134,7 +141,8 @@ export default function AboutPage() {
         {/* CTA */}
         <section className="mt-16 text-center">
           <h2 className="text-2xl font-bold text-white">
-            Ready to understand your own case?
+            Defendants who fight back{" "}
+            <span className="text-amber-400">start here.</span>
           </h2>
           <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link

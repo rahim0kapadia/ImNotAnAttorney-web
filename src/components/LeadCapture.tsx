@@ -29,16 +29,18 @@ export function LeadCapture() {
     return (
       <div role="status" className="rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-center">
         <div className="mb-2 text-2xl">&#10003;</div>
-        <h3 className="text-lg font-semibold text-white">You&apos;re in.</h3>
+        <h3 className="text-lg font-semibold text-white">
+          You&apos;re the kind of defendant who does their homework.
+        </h3>
         <p className="mt-2 text-sm text-zinc-400">
           Here&apos;s your guide. Bookmark it — you&apos;ll need it.
         </p>
         <a
-          href="/guides/10-questions-your-attorney-hopes-you-never-ask.pdf"
+          href="/guides/discovery-checklist-7-evidence-problems.md"
           download
           className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
         >
-          Download PDF Guide →
+          Download Discovery Checklist →
         </a>
       </div>
     );
@@ -47,10 +49,12 @@ export function LeadCapture() {
   return (
     <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-8">
       <h3 className="text-lg font-bold text-white">
-        Free Guide: 10 Questions Your Attorney Hopes You Never Ask
+        What&apos;s Actually in Your Discovery?
       </h3>
       <p className="mt-2 text-sm text-zinc-400">
-        Get the questions that make lazy lawyers sweat. Straight to your inbox.
+        7 evidence problems real cases hide — and the questions that expose
+        them. Based on a real case we reviewed. Used by defendants who refuse to
+        go into court blind.
       </p>
       <form onSubmit={handleSubmit} className="mt-4 flex gap-3">
         <input
@@ -67,7 +71,7 @@ export function LeadCapture() {
           disabled={status === "loading"}
           className="rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-amber-400 disabled:opacity-50"
         >
-          {status === "loading" ? "..." : "Get the Free Guide"}
+          {status === "loading" ? "..." : "Send Me the Checklist"}
         </button>
       </form>
       {status === "error" && (

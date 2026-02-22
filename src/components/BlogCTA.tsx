@@ -4,12 +4,14 @@ export function BlogCTA() {
   return (
     <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
       <h3 className="text-lg font-bold text-white">
-        Need questions specific to <span className="text-amber-400">your</span> case?
+        The defendants who walk in prepared{" "}
+        <span className="text-amber-400">don&apos;t use general information.</span>
       </h3>
       <p className="mt-2 text-sm text-zinc-400">
-        This article covers general questions. Our Case Decoder gives you
-        a plain-English charge breakdown plus 10-15 targeted questions
-        for your exact situation. Starting at $97.
+        They use case-specific research — questions built from their
+        actual charges, their actual discovery, their actual judge. Our
+        Case Decoder gives you 10-15 targeted questions your attorney
+        isn&apos;t expecting. Starting at $97.
       </p>
       <div className="mt-4 flex flex-col gap-3 sm:flex-row">
         <Link
@@ -19,10 +21,10 @@ export function BlogCTA() {
           Get Your Case Decoder — $97 →
         </Link>
         <Link
-          href="/services"
+          href="/sample"
           className="rounded-lg border border-zinc-700 px-6 py-3 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
         >
-          See All Services
+          See a Sample Report
         </Link>
       </div>
     </div>
