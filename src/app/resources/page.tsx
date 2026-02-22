@@ -13,8 +13,14 @@ export const metadata: Metadata = {
 
 const resources = [
   {
+    title: "The Discovery Checklist: 7 Evidence Problems Real Cases Actually Hide",
+    desc: "Based on a real trafficking case we reviewed. 7 problems the attorney missed, the questions that expose each one, and a printable accountability checklist.",
+    type: "Free Guide",
+    gated: true,
+  },
+  {
     title: "10 Questions Your Attorney Hopes You Never Ask",
-    desc: "The questions that separate informed defendants from easy clients. These force accountability.",
+    desc: "The original questions that separate informed defendants from easy clients. These force accountability.",
     type: "PDF Guide",
     gated: true,
   },

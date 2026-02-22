@@ -269,6 +269,26 @@ export default function IntakePage() {
             </div>
           </fieldset>
 
+          {/* Next Attorney Meeting */}
+          <div>
+            <label
+              htmlFor="nextMeetingDate"
+              className="block text-xs text-zinc-400"
+            >
+              Next attorney meeting date (optional)
+            </label>
+            <input
+              id="nextMeetingDate"
+              name="nextMeetingDate"
+              type="date"
+              className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-base text-white focus:border-amber-500 focus:outline-none"
+            />
+            <p className="mt-1 text-xs text-zinc-500">
+              If you have a meeting scheduled, we&apos;ll time your follow-up
+              around it.
+            </p>
+          </div>
+
           {/* Situation */}
           <div>
             <label
