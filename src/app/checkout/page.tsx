@@ -10,6 +10,7 @@ type TierInfo = {
   priceNum: number;
   delivery: string;
   requiresDiscovery: boolean;
+  requiresWarRoom?: boolean;
   features: string[];
   guarantee: string;
   validation?: string;
@@ -36,6 +37,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Plain-English charge breakdown",
       "Case stage benchmark",
       "Attorney accountability checklist",
+      "Attorney Accountability Score — 0-100 rating of your attorney's activity for your case stage",
       "10-15 targeted questions for your attorney",
       "Red flags for your stage",
       "Common motion types for your charge category",
@@ -72,6 +74,8 @@ const TIER_INFO: Record<string, TierInfo> = {
     requiresDiscovery: false,
     features: [
       "Everything in Case Decoder",
+      "Attorney Accountability Score — milestone-by-milestone tracking",
+      "Prosecution Case Strength Map — Strong/Moderate/Weak per charge element",
       "Charge exposure map",
       "Judge intelligence profile",
       "Jurisdiction profile",
@@ -116,10 +120,12 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Comprehensive timeline",
       "Discrepancy report",
       "Red flags summary",
-      "20+ case-specific questions",
+      "35+ case-specific questions",
+      "Discovery Health Score — your discovery completeness rated out of 100",
+      "Defense Opportunity Index — your top defense openings ranked by strength",
     ],
     guarantee:
-      "Delivered within 7 business days with 20+ case-specific questions — or your money back.",
+      "Delivered within 7 business days with 35+ case-specific questions — or your money back.",
     validation:
       "The most thorough analysis available without a multi-week engagement. Full discovery, full picture.",
     whyThisWorks:
@@ -155,6 +161,8 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Research-based questions about case strategy for your attorney",
       "Attorney delivery package",
       "Weekly updates for duration of case",
+      "Evidence Chain Audit — every piece of evidence traced, custody gaps flagged",
+      "Witness Reliability Rankings — each witness scored across 7 credibility dimensions",
     ],
     guarantee:
       "Initial package within 28 business days. Weekly updates every 7 days thereafter.",
@@ -167,30 +175,43 @@ const TIER_INFO: Record<string, TierInfo> = {
         "The cooperator is only as good as their handler lets them be.",
       author: "Jeffrey Lichtman",
     },
+    nudge: {
+      nextTierSlug: "situation-room",
+      nextTierName: "The Situation Room",
+      nextTierPrice: "$9,997",
+      upgradeCost: "$8,000",
+      unlocks:
+        "Trial Intelligence Operations — all witnesses researched, daily trial prep, Priority Response Line, JOA + sentencing research.",
+      bestFor:
+        "Worth it if your case is headed to trial or the stakes justify full-spectrum preparation.",
+    },
   },
   "situation-room": {
     name: "The Situation Room",
-    price: "$4,997",
-    priceNum: 4997,
+    price: "$9,997",
+    priceNum: 9997,
     delivery: "24-48hr priority turnaround",
     requiresDiscovery: true,
+    requiresWarRoom: true,
     features: [
       "Everything in The War Room",
+      "Trial Intelligence Operations — evening debrief + morning prep brief every trial day",
       "Research on all witness backgrounds and credibility questions for your attorney",
       "Research summaries your attorney can use when drafting reply briefs",
       "Attack intelligence packages",
       "Research-based questions about jury selection and trial strategy for your attorney",
-      "Research and questions about JOA standards for your case type",
+      "JOA research brief — every applicable standard, formatted for your attorney",
       "Trial morning cheat sheets",
-      "Real-time trial support",
+      "Priority Response Line — 2hr response during trial prep, 4hr during trial",
       "Direct access channel",
+      "All scored deliverables from lower tiers included",
     ],
     guarantee:
-      "Priority 24-48hr turnaround per stage. Trial-ready intelligence.",
+      "Priority 24-48hr turnaround per stage. Trial Intelligence Operations through verdict.",
     validation:
-      "Reserved for cases going to trial or cases where the stakes are highest.",
+      "Reserved for cases going to trial or cases where the stakes are highest. Requires prior War Room engagement.",
     whyThisWorks:
-      "Trial prep built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology. Priority turnaround because trial doesn't wait.",
+      "Trial prep built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology. Trial Intelligence Operations means evening debrief + morning prep brief every trial day — because trial doesn't wait.",
     pullquote: {
       quote:
         "Preparation is the be-all of good trial work.",
@@ -359,6 +380,26 @@ function CheckoutContent() {
           >
             Preview what you&apos;ll get — see a real sample report →
           </Link>
+
+          {/* Situation Room prerequisite notice */}
+          {info.requiresWarRoom && (
+            <div className="mt-6 rounded-lg border border-amber-500/30 bg-amber-500/5 p-4">
+              <p className="text-sm font-semibold text-amber-400">
+                Requires War Room
+              </p>
+              <p className="mt-1 text-sm text-zinc-400">
+                The Situation Room builds on War Room intelligence. If you
+                haven&apos;t started with the War Room, consider{" "}
+                <Link
+                  href="/checkout?tier=war-room"
+                  className="text-amber-400 underline decoration-amber-400/50"
+                >
+                  starting there
+                </Link>
+                .
+              </p>
+            </div>
+          )}
 
           {/* Discovery notice */}
           {info.requiresDiscovery && (

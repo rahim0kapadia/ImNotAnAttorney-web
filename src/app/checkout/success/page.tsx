@@ -127,7 +127,7 @@ function SuccessContent() {
                   Your $497 is already credited. Get full discovery analysis — every page, every discrepancy, every red flag mapped.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
-                  Adds: discovery document index, comprehensive timeline, discrepancy report, 20+ case-specific questions.
+                  Adds: discovery document index, comprehensive timeline, discrepancy report, 35+ case-specific questions.
                 </p>
                 <Link
                   href="/checkout?tier=x-ray"
@@ -162,16 +162,16 @@ function SuccessContent() {
                   Upgrade to The Situation Room
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $1,997 is already credited. Get full trial prep — witness research, reply brief research, jury selection intelligence, real-time trial support, and priority 24-48hr turnaround.
+                  Your $1,997 is already credited. Get Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
-                  Adds: trial morning cheat sheets, attack intelligence packages, direct access channel, real-time trial support.
+                  Adds: Trial Intelligence Operations, attack intelligence packages, Priority Response Line (2hr trial prep, 4hr trial), direct access channel.
                 </p>
                 <Link
                   href="/checkout?tier=situation-room"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Upgrade for $3,000 &rarr;
+                  Upgrade for $8,000 &rarr;
                 </Link>
               </div>
             )}

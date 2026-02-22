@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Case-specific research and question reports for criminal defendants. Five tiers from $97 Case Decoder to $4,997 Situation Room. DUI, drug cases, white collar, and federal defense.",
+    "Case-specific research and question reports for criminal defendants. Five tiers from $97 Case Decoder to $9,997 Situation Room. DUI, drug cases, white collar, and federal defense.",
   alternates: {
     canonical: "https://imnotanattorney.com/services",
   },
@@ -23,7 +23,7 @@ const caseTypes = [
         name: "Case Decoder",
         slug: "case-decoder",
         price: "$97",
-        desc: "Plain-English charge breakdown + 10-15 drug-case questions. Which motions apply to your charges? What should have happened by now?",
+        desc: "Plain-English charge breakdown + 10-15 drug-case questions. Includes Attorney Accountability Score — a 0-100 rating of whether your attorney is on track for your case stage.",
         discovery: false,
         popular: true,
       },
@@ -31,14 +31,14 @@ const caseTypes = [
         name: "Intelligence Brief",
         slug: "intelligence-brief",
         price: "$497",
-        desc: "Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 35-50 targeted questions. Judge intelligence built on Benjamin Brafman's jury psychology methodology.",
+        desc: "Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 35-50 targeted questions. Includes Prosecution Case Strength Map — Strong/Moderate/Weak for every element of every charge.",
         discovery: false,
       },
       {
         name: "The X-Ray",
         slug: "x-ray",
         price: "$997",
-        desc: "Full discovery analysis — weight discrepancies, lab methodology gaps, CI reliability, chain of custody. 20+ case-specific questions. Discovery analysis using Barry Scheck's protocol and Ron Chapman II's drug forensic framework.",
+        desc: "Full discovery analysis — weight discrepancies, lab methodology gaps, CI reliability, chain of custody. 35+ case-specific questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, your defense openings ranked by strength.",
         discovery: true,
         bestValue: true,
       },
@@ -46,15 +46,16 @@ const caseTypes = [
         name: "The War Room",
         slug: "war-room",
         price: "$1,997",
-        desc: "Everything above + officer dossiers, witness analysis (up to 8), motion wave strategy, case law package, weekly updates. Witness analysis using Jeffrey Lichtman's 7-pillar methodology. Officer dossiers built on Alan Jackson's investigator accountability framework.",
+        desc: "Everything above + officer dossiers, witness analysis (up to 8), motion wave strategy, case law package, weekly updates. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
         discovery: true,
       },
       {
         name: "The Situation Room",
         slug: "situation-room",
-        price: "$4,997",
-        desc: "Full trial prep — witness background research, CI credibility questions, lab expert credibility research, reply brief research, real-time trial support. Trial prep built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology.",
+        price: "$9,997",
+        desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology.",
         discovery: true,
+        requiresWarRoom: true,
       },
     ],
   },
@@ -68,7 +69,7 @@ const caseTypes = [
         name: "Case Decoder",
         slug: "case-decoder",
         price: "$97",
-        desc: "Your DUI charges explained in plain English. What to expect at each stage. 10-15 questions your attorney needs to answer.",
+        desc: "Your DUI charges explained in plain English. What to expect at each stage. 10-15 questions your attorney needs to answer. Includes Attorney Accountability Score — a 0-100 rating of whether your attorney is on track for your case stage.",
         discovery: false,
         popular: true,
       },
@@ -76,14 +77,14 @@ const caseTypes = [
         name: "Intelligence Brief",
         slug: "intelligence-brief",
         price: "$497",
-        desc: "Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 35-50 targeted questions. Judge intelligence built on Benjamin Brafman's jury psychology methodology.",
+        desc: "Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 35-50 targeted questions. Includes Prosecution Case Strength Map — Strong/Moderate/Weak for every element of every charge.",
         discovery: false,
       },
       {
         name: "The X-Ray",
         slug: "x-ray",
         price: "$997",
-        desc: "Full discovery analysis — BAC evidence, breathalyzer calibration, dashcam review, field sobriety compliance. 20+ questions. Discovery analysis using Barry Scheck's protocol and F. Lee Bailey's forensic evidence framework.",
+        desc: "Full discovery analysis — BAC evidence, breathalyzer calibration, dashcam review, field sobriety compliance. 35+ questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, your defense openings ranked by strength.",
         discovery: true,
         bestValue: true,
       },
@@ -91,15 +92,16 @@ const caseTypes = [
         name: "The War Room",
         slug: "war-room",
         price: "$1,997",
-        desc: "Officer dossiers, expert witness challenges, motion wave strategy, case law package, weekly updates until resolution. Witness analysis using Jeffrey Lichtman's 7-pillar methodology. Officer dossiers built on Alan Jackson's investigator accountability framework.",
+        desc: "Officer dossiers, expert witness challenges, motion wave strategy, case law package, weekly updates until resolution. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
         discovery: true,
       },
       {
         name: "The Situation Room",
         slug: "situation-room",
-        price: "$4,997",
-        desc: "Full trial prep — officer background research, expert credibility questions, jury selection research, real-time trial support. Trial prep built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology.",
+        price: "$9,997",
+        desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. Officer research, expert credibility questions, jury selection research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology.",
         discovery: true,
+        requiresWarRoom: true,
       },
     ],
   },
@@ -113,7 +115,7 @@ const caseTypes = [
         name: "Case Decoder",
         slug: "case-decoder",
         price: "$97",
-        desc: "Plain-English federal process guide. What are the elements of each count? What should your attorney have done by now?",
+        desc: "Plain-English federal process guide. What are the elements of each count? What should your attorney have done by now? Includes Attorney Accountability Score — a 0-100 rating of whether your attorney is on track for your case stage.",
         discovery: false,
         popular: true,
       },
@@ -121,14 +123,14 @@ const caseTypes = [
         name: "Intelligence Brief",
         slug: "intelligence-brief",
         price: "$497",
-        desc: "Judge sentencing patterns, AUSA profile, guidelines calculation review, cooperation framework. 35-50 targeted questions. Judge intelligence built on Benjamin Brafman's jury psychology methodology.",
+        desc: "Judge sentencing patterns, AUSA profile, guidelines calculation review, cooperation framework. 35-50 targeted questions. Includes Prosecution Case Strength Map — Strong/Moderate/Weak for every element of every charge.",
         discovery: false,
       },
       {
         name: "The X-Ray",
         slug: "x-ray",
         price: "$997",
-        desc: "Discovery indexing for massive cases. Financial document analysis, witness statement review, timeline reconstruction. 20+ questions. Discovery analysis using Alan Dershowitz's constitutional framework and Benjamin Brafman's defense methodology.",
+        desc: "Discovery indexing for massive cases. Financial document analysis, witness statement review, timeline reconstruction. 35+ questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, your defense openings ranked by strength.",
         discovery: true,
         bestValue: true,
       },
@@ -136,15 +138,16 @@ const caseTypes = [
         name: "The War Room",
         slug: "war-room",
         price: "$1,997",
-        desc: "Full intelligence operation — AUSA dossier, cooperator analysis, sentencing guidelines deep dive, case law package, weekly updates. Witness analysis using Jeffrey Lichtman's 7-pillar methodology. Strategy built on Benjamin Brafman's federal defense framework.",
+        desc: "Full intelligence operation — AUSA dossier, cooperator analysis, sentencing guidelines deep dive, case law package, weekly updates. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
         discovery: true,
       },
       {
         name: "The Situation Room",
         slug: "situation-room",
-        price: "$4,997",
-        desc: "Complete trial prep + sentencing prep. Expert credibility research, cooperator background questions, guidelines research, real-time support. Trial prep built on Roy Black's preparation standard, Alan Dershowitz's appellate framework, and Barry Berke's precision methodology.",
+        price: "$9,997",
+        desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. Expert credibility research, cooperator background questions, guidelines research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on Roy Black's preparation standard, Alan Dershowitz's appellate framework, and Barry Berke's precision methodology.",
         discovery: true,
+        requiresWarRoom: true,
       },
     ],
   },
@@ -201,7 +204,7 @@ const serviceSchema = {
   "@type": "LegalService",
   name: "ImNotAnAttorney Case Review Services",
   description:
-    "Legal research and case analysis for criminal defendants. Five tiers from $97 Case Decoder to $4,997 Situation Room.",
+    "Legal research and case analysis for criminal defendants. Five tiers from $97 Case Decoder to $9,997 Situation Room.",
   provider: {
     "@type": "Organization",
     name: "ImNotAnAttorney",
@@ -229,6 +232,9 @@ export default function ServicesPage() {
             Services built for <span className="text-amber-400">your</span>{" "}
             case
           </h1>
+          <p className="mx-auto mt-3 max-w-xl text-lg text-zinc-300">
+            The defense team your attorney should have built.
+          </p>
           <p className="mx-auto mt-4 max-w-2xl text-zinc-400">
             For defendants who read their own discovery. Five tiers of defense
             intelligence. Start at $97 — upgrade anytime with full credit.
@@ -251,7 +257,7 @@ export default function ServicesPage() {
             {[
               { attorney: "$10K", ours: "$97-$997", pct: "1-10%" },
               { attorney: "$30K", ours: "$497-$1,997", pct: "2-7%" },
-              { attorney: "$100K", ours: "$997-$4,997", pct: "1-5%" },
+              { attorney: "$100K", ours: "$997-$9,997", pct: "1-10%" },
             ].map((row) => (
               <div key={row.attorney} className="rounded-lg bg-zinc-800/50 p-4">
                 <div className="text-xs text-zinc-400">You paid attorney</div>
@@ -311,7 +317,7 @@ export default function ServicesPage() {
                 X-Ray ($997)
               </Link>{" "}
               is the most thorough starting point. Full discovery analysis —
-              every page, every discrepancy, every red flag mapped. 20+
+              every page, every discrepancy, every red flag mapped. 35+
               case-specific questions.
             </p>
           </div>
@@ -390,6 +396,11 @@ export default function ServicesPage() {
                   key={tier.name}
                   className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
                 >
+                  {(tier as { requiresWarRoom?: boolean }).requiresWarRoom && (
+                    <span className="mb-2 inline-block rounded-full bg-zinc-800 px-2 py-0.5 text-xs font-semibold text-zinc-300">
+                      Requires War Room
+                    </span>
+                  )}
                   <div className="flex items-baseline justify-between">
                     <h3 className="font-semibold text-white">{tier.name}</h3>
                     <span className="text-lg font-bold text-amber-400">
@@ -443,7 +454,7 @@ export default function ServicesPage() {
               </p>
               <p>
                 <span className="font-semibold text-white">The X-Ray:</span>{" "}
-                Delivered within 7 business days. Full discovery analysis with 20+ questions.
+                Delivered within 7 business days. Full discovery analysis with 35+ questions.
               </p>
               <p>
                 <span className="font-semibold text-white">
@@ -455,7 +466,7 @@ export default function ServicesPage() {
                 <span className="font-semibold text-white">
                   The Situation Room:
                 </span>{" "}
-                Priority 24-48hr turnaround per stage. Trial-ready intelligence.
+                Priority 24-48hr turnaround. Trial Intelligence Operations — evening debrief + morning prep brief every trial day.
               </p>
             </div>
           </div>

@@ -86,7 +86,7 @@ export default function AboutPage() {
           <div className="mt-6 space-y-6">
             {[
               {
-                title: "AI-powered research",
+                title: "Deep Case Research",
                 desc: "Our system analyzes cases using tactics from 40+ elite criminal defense attorneys. We know what good defense looks like — and we can spot when it's missing.",
               },
               {
