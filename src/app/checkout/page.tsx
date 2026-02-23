@@ -446,11 +446,11 @@ function CheckoutContent() {
               Our Guarantee
             </p>
             <p className="mt-1 text-sm text-zinc-300">
-              Delivery: {info.guarantee}
+              Delivery Guarantee: {info.guarantee}
             </p>
             <p className="mt-2 text-sm text-zinc-300">
-              Satisfaction: Not satisfied after delivery? Contact us within 30
-              days for 100% credit toward any higher tier.
+              Satisfaction Guarantee: Not satisfied after delivery? 100% credit
+              toward any higher tier within 30 days.
             </p>
             <p className="mt-2 text-xs text-zinc-400">
               Upgrade credits apply to purchases you keep.

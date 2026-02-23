@@ -431,9 +431,10 @@ export default function ServicesPage() {
             Our Guarantee
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-zinc-300">
-            Delivery Guarantee: On time with the stated question count — or a
-            full cash refund. Satisfaction Guarantee: Not satisfied? 100% credit
-            toward any higher tier within 30 days.
+            Delivery Guarantee: If we miss the stated deadline or question count
+            — full cash refund, no questions asked. Satisfaction Guarantee: Not
+            satisfied after delivery? 100% credit toward any higher tier within
+            30 days.
           </p>
           <p className="mx-auto mt-3 max-w-xl text-sm text-zinc-400">
             Upgrade credits apply to purchases you keep.

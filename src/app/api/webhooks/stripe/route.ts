@@ -6,6 +6,33 @@ import { sendEmail, escapeHtml } from "@/lib/email";
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
 
+/** sendEmail with one retry after 2s. If both fail, notify operator. */
+async function sendEmailWithRetry(
+  params: Parameters<typeof sendEmail>[0],
+  context: string
+) {
+  const result = await sendEmail(params);
+  if (result.success) return result;
+
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  const retry = await sendEmail(params);
+  if (retry.success) return retry;
+
+  // Both failed — notify operator
+  console.error(`[Webhook] Email failed after retry: ${context}`, retry.error);
+  await sendEmail({
+    to: OPERATOR_EMAIL,
+    subject: `ALERT: Email delivery failed — ${context}`,
+    html: `<h1 style="color: #EF4444;">Email Delivery Failed</h1>
+      <p><strong>Context:</strong> ${escapeHtml(context)}</p>
+      <p><strong>Recipient:</strong> ${escapeHtml(params.to)}</p>
+      <p><strong>Subject:</strong> ${escapeHtml(params.subject)}</p>
+      <p><strong>Error:</strong> ${escapeHtml(retry.error || "Unknown")}</p>
+      <p>Both attempts failed. Please send this email manually.</p>`,
+  });
+  return retry;
+}
+
 export async function POST(req: NextRequest) {
   const body = await req.text();
   const signature = req.headers.get("stripe-signature");
@@ -38,6 +65,7 @@ export async function POST(req: NextRequest) {
     }
 
     const productName = session.metadata?.product_name || tier;
+    const origin = "https://imnotanattorney.com";
 
     const supabase = createAdminClient();
     const tierConfig = isValidTier(tier) ? TIERS[tier] : null;
@@ -77,18 +105,39 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Create cases record for discovery tiers
+    // CHANGE #1: Create case record for ALL tiers (not just discovery tiers)
     let caseId: string | null = null;
-    if (requiresDiscovery && orderData) {
+    if (orderData) {
       caseId = crypto.randomUUID();
+
+      // CHANGE #2: Link intake to case by email match
+      const { data: linkedIntake } = await supabase
+        .from("intakes")
+        .select("id, charge_type")
+        .eq("email", email.toLowerCase())
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      const hasIntake = !!linkedIntake;
+      // CHANGE #3: Store charge_type on case from linked intake
+      const chargeType = linkedIntake?.charge_type || null;
+
+      const caseStatus = hasIntake
+        ? (requiresDiscovery ? "pending" : "intake")
+        : "awaiting-intake";
+
       const { error: caseError } = await supabase.from("cases").insert({
         id: caseId,
         order_id: orderData.id,
         email,
         tier,
-        status: "pending",
+        status: caseStatus,
+        intake_id: linkedIntake?.id || null,
+        charge_type: chargeType,
         file_urls: [],
       });
+
       if (caseError) {
         console.error("[Stripe Webhook] Case insert error:", caseError);
         caseId = null;
@@ -101,24 +150,54 @@ export async function POST(req: NextRequest) {
             <p><strong>Tier:</strong> ${tier}</p>
             <p><strong>Order ID:</strong> ${orderData.id}</p>
             <p><strong>Error:</strong> ${caseError.message}</p>
-            <p><strong>Action:</strong> Manually create case and send upload link to customer.</p>`,
+            <p><strong>Action:</strong> Manually create case.</p>`,
         });
+      }
+
+      // CHANGE #5: Trigger report generation or request intake
+      if (caseId && tier === "case-decoder") {
+        if (hasIntake) {
+          // Fire-and-forget report generation
+          fetch(`${origin}/api/generate/case-decoder`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
+            },
+            body: JSON.stringify({ caseId }),
+          }).catch((err) =>
+            console.error("[Webhook] Auto-trigger report generation failed:", err)
+          );
+        } else {
+          // No intake — email customer to complete intake form
+          await sendEmailWithRetry({
+            to: email,
+            subject: "Complete Your Case Details to Start Your Report",
+            unsubscribeEmail: email,
+            html: `
+              <h1 style="color: #F59E0B;">One More Step</h1>
+              <p>Thank you for purchasing the Case Decoder. Before we can generate your personalized report, we need your case details.</p>
+              <a href="${origin}/intake?email=${encodeURIComponent(email)}&tier=case-decoder" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
+              <p style="color: #A1A1AA;">Once you submit your case details, your report will be generated within 24 hours.</p>
+            `,
+          }, `intake request for ${email}`);
+        }
       }
     }
 
     // Build upload section for discovery tier emails
-    const uploadSection = caseId
+    const uploadSection = (caseId && requiresDiscovery)
       ? `
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border: 1px solid #F59E0B;">
           <p style="margin: 0; color: white; font-weight: bold;">Next Step: Upload Your Discovery Documents</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${escapeHtml(productName)} requires discovery documents for analysis. Upload them here:</p>
-          <a href="https://imnotanattorney.com/upload?case=${caseId}" style="display: inline-block; margin-top: 16px; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Upload Discovery Documents</a>
+          <a href="${origin}/upload?case=${caseId}" style="display: inline-block; margin-top: 16px; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Upload Discovery Documents</a>
         </div>
       `
       : "";
 
-    // Send payment confirmation email
-    await sendEmail({
+    // CHANGE #8: Send payment confirmation email with retry
+    await sendEmailWithRetry({
       to: email,
       subject: `Payment Confirmed — Your ${escapeHtml(productName)} is Being Prepared`,
       unsubscribeEmail: email,
@@ -133,25 +212,15 @@ export async function POST(req: NextRequest) {
         ${uploadSection}
         <p style="color: #A1A1AA;">We'll email you when your report is ready. Keep an eye on your inbox.</p>
       `,
-    });
+    }, `payment confirmation for ${email}`);
 
-    // Record post_purchase_day0 drip to prevent cron from re-sending delivery email
-    const deliveryKey = `post_${tier.replace(/-/g, "_")}_delivery`;
-    const { data: subData } = await supabase
-      .from("subscribers")
-      .select("id")
-      .eq("email", email.toLowerCase())
-      .single();
-
-    if (subData?.id) {
-      await supabase.from("drip_emails").upsert(
-        { subscriber_id: subData.id, email_key: deliveryKey },
-        { onConflict: "subscriber_id,email_key" }
-      );
-    }
+    // CHANGE #4: Remove premature drip recording — delivery drip is now handled
+    // by /api/deliver after actual delivery, not at payment time.
+    // (Previously recorded post_{tier}_delivery here, which prevented the actual
+    // delivery email from firing via the cron.)
 
     // Send operator notification
-    await sendEmail({
+    await sendEmailWithRetry({
       to: OPERATOR_EMAIL,
       subject: `New Order: ${escapeHtml(productName)} — $${(amount / 100).toFixed(2)}`,
       html: `
@@ -164,12 +233,14 @@ export async function POST(req: NextRequest) {
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Stripe Session:</strong> ${session.id}</p>
           ${caseId ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>` : ""}
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Requires Discovery:</strong> ${requiresDiscovery ? "Yes" : "No"}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Intake Found:</strong> ${caseId ? (requiresDiscovery ? "N/A (discovery tier)" : "Check case status") : "Case creation failed"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Time:</strong> ${new Date().toISOString()}</p>
         </div>
       `,
-    });
+    }, `operator notification for ${email}`);
   }
 
+  // CHANGE #6: Refund handler — also update linked case status
   if (event.type === "charge.refunded") {
     const charge = event.data.object;
     const paymentIntentId =
@@ -179,6 +250,8 @@ export async function POST(req: NextRequest) {
 
     if (paymentIntentId) {
       const supabase = createAdminClient();
+
+      // Update order status
       const { error: refundError } = await supabase
         .from("orders")
         .update({
@@ -191,14 +264,24 @@ export async function POST(req: NextRequest) {
         console.error("[Stripe Webhook] Refund update error:", refundError);
       }
 
-      // Notify operator
+      // Get the refunded order to find linked case
       const { data: refundedOrder } = await supabase
         .from("orders")
-        .select("email, tier, amount")
+        .select("id, email, tier, amount")
         .eq("stripe_payment_intent_id", paymentIntentId)
         .single();
 
       if (refundedOrder) {
+        // Update linked case status to refunded
+        await supabase
+          .from("cases")
+          .update({
+            status: "refunded",
+            updated_at: new Date().toISOString(),
+          })
+          .eq("order_id", refundedOrder.id);
+
+        // Notify operator
         await sendEmail({
           to: OPERATOR_EMAIL,
           subject: `Refund Processed: ${refundedOrder.tier} — $${((refundedOrder.amount || 0) / 100).toFixed(2)}`,
@@ -206,7 +289,7 @@ export async function POST(req: NextRequest) {
             <p><strong>Customer:</strong> ${refundedOrder.email}</p>
             <p><strong>Tier:</strong> ${refundedOrder.tier}</p>
             <p><strong>Amount:</strong> $${((refundedOrder.amount || 0) / 100).toFixed(2)}</p>
-            <p><strong>Note:</strong> Upgrade credits for this purchase are now void per refund policy.</p>`,
+            <p><strong>Note:</strong> Upgrade credits for this purchase are now void per refund policy. Linked case status updated to 'refunded'.</p>`,
         });
       }
     }

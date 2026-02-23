@@ -38,6 +38,12 @@ export async function POST(req: NextRequest) {
       specific_question: body.specificQuestion || null,
       case_number: body.caseNumber || null,
       court_date: body.courtDate || null,
+      plea_offered: body.pleaOffered || null,
+      plea_terms: body.pleaTerms || null,
+      communication_frequency: body.communicationFrequency || null,
+      last_attorney_contact: body.lastAttorneyContact || null,
+      arrest_date: body.arrestDate || null,
+      evidence_type: body.evidenceType || [],
     });
 
     if (error) {
@@ -46,6 +52,56 @@ export async function POST(req: NextRequest) {
         { error: "Something went wrong" },
         { status: 500 }
       );
+    }
+
+    // Check if a case exists for this email with status 'awaiting-intake'
+    // This handles the flow: customer pays → no intake found → emails customer → customer fills intake
+    const normalizedEmail = email.toLowerCase().trim();
+    const { data: pendingCase } = await supabase
+      .from("cases")
+      .select("id, tier")
+      .eq("email", normalizedEmail)
+      .eq("status", "awaiting-intake")
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (pendingCase) {
+      // Get the intake we just created
+      const { data: latestIntake } = await supabase
+        .from("intakes")
+        .select("id")
+        .eq("email", normalizedEmail)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (latestIntake) {
+        // Link intake to case and update status
+        await supabase
+          .from("cases")
+          .update({
+            intake_id: latestIntake.id,
+            status: "intake",
+            charge_type: chargeType,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("id", pendingCase.id);
+
+        // Trigger report generation for case-decoder tier
+        if (pendingCase.tier === "case-decoder") {
+          const origin = req.headers.get("origin") || req.headers.get("x-forwarded-host")
+            ? `https://${req.headers.get("x-forwarded-host")}` : "https://imnotanattorney.com";
+          fetch(`${origin}/api/generate/case-decoder`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
+            },
+            body: JSON.stringify({ caseId: pendingCase.id }),
+          }).catch((err) => console.error("[Intake] Auto-trigger report generation failed:", err));
+        }
+      }
     }
 
     // Send intake confirmation email
@@ -89,6 +145,12 @@ export async function POST(req: NextRequest) {
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Attorney Strategy:</strong> ${escapeHtml(body.attorneyStrategy || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case Number:</strong> ${escapeHtml(body.caseNumber || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Court Date:</strong> ${escapeHtml(body.courtDate || "Not provided")}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Plea Offered:</strong> ${escapeHtml(body.pleaOffered || "Not specified")}</p>
+          ${body.pleaTerms ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Plea Terms:</strong> ${escapeHtml(body.pleaTerms)}</p>` : ""}
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Communication:</strong> ${escapeHtml(body.communicationFrequency || "Not specified")}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Last Attorney Contact:</strong> ${escapeHtml(body.lastAttorneyContact || "Not provided")}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Arrest Date:</strong> ${escapeHtml(body.arrestDate || "Not provided")}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Evidence Types:</strong> ${(body.evidenceType || []).map((s: string) => escapeHtml(s)).join(", ") || "Not specified"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Services:</strong> ${(body.services || []).join(", ") || "None selected"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Time:</strong> ${new Date().toISOString()}</p>
         </div>

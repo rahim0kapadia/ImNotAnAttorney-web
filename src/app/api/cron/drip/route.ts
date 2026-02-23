@@ -156,11 +156,37 @@ export async function GET(req: NextRequest) {
           // Find next unsent post-purchase email
           let nextEmail: DripEmail | null = null;
           for (const email of tierEmails) {
-            // Skip day-0 emails (handled by webhook)
+            // Skip day-0 emails (handled by webhook/delivery endpoint)
             if (email.delayDays === 0) continue;
 
-            // Skip relativeToMeeting emails for now (no meeting date tracking yet)
+            // Skip relativeToMeeting emails (no meeting date tracking yet)
             if (email.relativeToMeeting) continue;
+
+            // Handle relativeToDelivery emails — calculate from cases.delivered_at
+            if (email.relativeToDelivery) {
+              const { data: deliveredCase } = await supabase
+                .from("cases")
+                .select("delivered_at")
+                .eq("email", order.email.toLowerCase())
+                .eq("tier", order.tier)
+                .eq("status", "delivered")
+                .order("delivered_at", { ascending: false })
+                .limit(1)
+                .maybeSingle();
+
+              if (!deliveredCase?.delivered_at) continue; // Not delivered yet
+
+              const deliveredAt = new Date(deliveredCase.delivered_at);
+              const daysSinceDelivery = Math.floor(
+                (new Date().getTime() - deliveredAt.getTime()) / (1000 * 60 * 60 * 24)
+              );
+
+              if (daysSinceDelivery >= email.delayDays && !sentKeys.has(email.key)) {
+                nextEmail = email;
+                break;
+              }
+              continue;
+            }
 
             if (
               daysSincePurchase >= email.delayDays &&
@@ -226,6 +252,50 @@ export async function GET(req: NextRequest) {
           );
           errors++;
         }
+      }
+    }
+
+    // ============================================================
+    // PART 3: OPERATOR REVIEW REMINDERS (24-hour guarantee protection)
+    // ============================================================
+    // Check for cases stuck in 'review' status for 12+ hours
+    const twelveHoursAgo = new Date();
+    twelveHoursAgo.setHours(twelveHoursAgo.getHours() - 12);
+
+    const { data: staleReviews } = await supabase
+      .from("cases")
+      .select("id, email, charge_type, generated_at, tier")
+      .eq("status", "review")
+      .eq("review_reminder_sent", false)
+      .lt("generated_at", twelveHoursAgo.toISOString());
+
+    if (staleReviews && staleReviews.length > 0) {
+      for (const staleCase of staleReviews) {
+        const hoursAgo = Math.round(
+          (Date.now() - new Date(staleCase.generated_at).getTime()) / (1000 * 60 * 60)
+        );
+
+        await sendEmail({
+          to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+          subject: `REMINDER: Case Decoder report awaiting review (${hoursAgo}+ hours)`,
+          html: `<h1 style="color: #F59E0B;">Report Awaiting Review</h1>
+            <p>A Case Decoder report has been in review for <strong style="color: #EF4444;">${hoursAgo} hours</strong>. The 24-hour delivery guarantee is at risk.</p>
+            <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
+              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${staleCase.email}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${staleCase.charge_type || "Unknown"}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Generated:</strong> ${new Date(staleCase.generated_at).toLocaleString()}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${staleCase.id}</p>
+            </div>
+            <div style="margin: 24px 0;">
+              <a href="https://imnotanattorney.com/api/deliver?token=${process.env.OPERATOR_SECRET}&case=${staleCase.id}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px;">Approve &amp; Deliver</a>
+            </div>`,
+        });
+
+        // Mark reminder as sent so it doesn't fire again
+        await supabase
+          .from("cases")
+          .update({ review_reminder_sent: true })
+          .eq("id", staleCase.id);
       }
     }
 

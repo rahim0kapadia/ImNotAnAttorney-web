@@ -5,7 +5,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { tier, email, consent, priorityDelivery, courtDate } = body;
+    const { tier, email, consent, priorityDelivery, courtDate, chargeType } = body;
 
     if (!tier || !isValidTier(tier)) {
       return NextResponse.json({ error: "Invalid tier" }, { status: 400 });
@@ -21,6 +21,22 @@ export async function POST(req: NextRequest) {
         { email: email.toLowerCase(), source: "checkout" },
         { onConflict: "email" }
       );
+    }
+
+    // Auto-detect charge type from prior intake if not provided
+    let resolvedChargeType = chargeType || null;
+    if (!resolvedChargeType && email) {
+      const { data: priorIntake } = await supabase
+        .from("intakes")
+        .select("charge_type")
+        .eq("email", email.toLowerCase())
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (priorIntake?.charge_type) {
+        resolvedChargeType = priorIntake.charge_type;
+      }
     }
 
     // Check for prior refunds — void upgrade credit if found
@@ -105,6 +121,7 @@ export async function POST(req: NextRequest) {
         ...(consent && { consent_timestamp: new Date().toISOString() }),
         ...(priorityDelivery && { priority_delivery: "true" }),
         ...(courtDate && { court_date: courtDate }),
+        ...(resolvedChargeType && { charge_type: resolvedChargeType }),
       },
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
       cancel_url: `${origin}/checkout?tier=${tier}`,

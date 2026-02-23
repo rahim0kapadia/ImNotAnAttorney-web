@@ -6,14 +6,17 @@ import Link from "next/link";
 
 const TIER_NEXT_STEPS: Record<
   string,
-  { name: string; delivery: string; action: string; showUpload: boolean }
+  { name: string; delivery: string; action: string; showUpload: boolean; noIntakeAction?: string; intakeUrl?: string }
 > = {
   "case-decoder": {
     name: "Case Decoder",
     delivery: "24 hours",
     action:
-      "Check your email — we'll send your Case Decoder report within 24 hours.",
+      "Your Case Decoder report is being prepared. Check your email within 24 hours.",
     showUpload: false,
+    noIntakeAction:
+      "Complete your case details so we can start generating your report.",
+    intakeUrl: "/intake?tier=case-decoder",
   },
   "intelligence-brief": {
     name: "Case Intelligence Brief",
@@ -111,6 +114,24 @@ function SuccessContent() {
             <p className="mt-2 text-sm text-zinc-400">
               Delivery: {info.delivery}
             </p>
+
+            {/* Case Decoder intake CTA — customer may not have filled intake yet */}
+            {info.noIntakeAction && info.intakeUrl && (
+              <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
+                <p className="text-sm font-semibold text-amber-400">
+                  Haven&apos;t submitted your case details yet?
+                </p>
+                <p className="mt-2 text-sm text-zinc-400">
+                  {info.noIntakeAction}
+                </p>
+                <Link
+                  href={info.intakeUrl}
+                  className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+                >
+                  Complete Your Case Details &rarr;
+                </Link>
+              </div>
+            )}
 
             {info.showUpload && (
               <div className="mt-8">

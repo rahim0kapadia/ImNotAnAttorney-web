@@ -13,6 +13,8 @@ export interface DripEmail {
   tier?: string;
   /** If true, delay is relative to attorney_meeting_date, not subscribe/purchase date */
   relativeToMeeting?: boolean;
+  /** If true, delay is relative to cases.delivered_at, not subscribe/purchase date */
+  relativeToDelivery?: boolean;
 }
 
 function cta(text: string, href: string): string {
@@ -151,7 +153,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     key: "post_case_decoder_story_harvest",
     delayDays: 5,
     tier: "case-decoder",
-    relativeToMeeting: true,
+    relativeToDelivery: true,
     subject: "You met with your attorney — what was the first question they stopped to think about?",
     html: `
       <h1 style="color: #F59E0B;">How Did It Go?</h1>
@@ -219,7 +221,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     key: "post_intelligence_brief_story_harvest",
     delayDays: 5,
     tier: "intelligence-brief",
-    relativeToMeeting: true,
+    relativeToDelivery: true,
     subject: "You met with your attorney — what was the first question they stopped to think about?",
     html: `
       <h1 style="color: #F59E0B;">How Did It Go?</h1>
@@ -287,7 +289,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     key: "post_x_ray_story_harvest",
     delayDays: 5,
     tier: "x-ray",
-    relativeToMeeting: true,
+    relativeToDelivery: true,
     subject: "You met with your attorney — what was the first finding they hadn't seen?",
     html: `
       <h1 style="color: #F59E0B;">How Did It Go?</h1>
@@ -339,7 +341,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     key: "post_war_room_story_harvest",
     delayDays: 5,
     tier: "war-room",
-    relativeToMeeting: true,
+    relativeToDelivery: true,
     subject: "How's your case going?",
     html: `
       <h1 style="color: #F59E0B;">How's Your Case Going?</h1>
@@ -374,7 +376,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     key: "post_situation_room_story_harvest",
     delayDays: 5,
     tier: "situation-room",
-    relativeToMeeting: true,
+    relativeToDelivery: true,
     subject: "How's the case progressing?",
     html: `
       <h1 style="color: #F59E0B;">How's the Case Progressing?</h1>

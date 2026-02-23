@@ -6,8 +6,13 @@ import { Suspense } from "react";
 
 const chargeTypes = [
   "Drug Possession",
-  "Drug Trafficking",
+  "Drug Trafficking / Distribution",
   "DUI / DWI",
+  "Assault / Battery",
+  "Domestic Violence",
+  "Theft / Burglary / Robbery",
+  "Sex Offense",
+  "Weapons Charge",
   "White Collar / Fraud",
   "Federal Charges",
   "Other",
@@ -67,6 +72,32 @@ const strategyOptions = [
   "It hasn't come up",
 ];
 
+const communicationFrequencyOptions = [
+  "Weekly",
+  "Biweekly",
+  "Monthly",
+  "Rarely",
+  "Never returned calls",
+];
+
+const pleaOfferedOptions = [
+  { value: "yes", label: "Yes" },
+  { value: "no", label: "No" },
+  { value: "not yet", label: "Not yet" },
+];
+
+const evidenceTypeOptions = [
+  "Confidential Informant (CI)",
+  "Surveillance (video, audio, photos)",
+  "Forensic evidence (lab testing, fingerprints)",
+  "Body camera footage",
+  "Confession / statement",
+  "Witness identification / eyewitness",
+  "DNA evidence",
+  "Digital / phone evidence (texts, social media, GPS)",
+  "I don't know",
+];
+
 const inputClass = "mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none";
 const selectClass = inputClass;
 const labelClass = "block text-xs text-zinc-400";
@@ -100,6 +131,12 @@ function IntakeForm() {
     situation: "",
     specificQuestion: "",
     services: interest ? [`The Situation Room ($9,997)`] : ([] as string[]),
+    pleaOffered: "",
+    pleaTerms: "",
+    communicationFrequency: "",
+    lastAttorneyContact: "",
+    arrestDate: "",
+    evidenceType: [] as string[],
   });
 
   function setField(name: string, value: string | string[]) {
@@ -334,6 +371,73 @@ function IntakeForm() {
                     <option value="">Select</option>
                     {strategyOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
+                </div>
+                <div className="mt-4">
+                  <label htmlFor="communicationFrequency" className={labelClass}>
+                    How often does your attorney communicate with you?
+                  </label>
+                  <select id="communicationFrequency" value={form.communicationFrequency as string}
+                    onChange={(e) => setField("communicationFrequency", e.target.value)}
+                    className={selectClass}>
+                    <option value="">Select</option>
+                    {communicationFrequencyOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
+                </div>
+                <div className="mt-4">
+                  <label htmlFor="lastAttorneyContact" className={labelClass}>
+                    When did you last hear from your attorney?
+                  </label>
+                  <input id="lastAttorneyContact" type="text" value={form.lastAttorneyContact as string}
+                    onChange={(e) => setField("lastAttorneyContact", e.target.value)}
+                    className={inputClass} placeholder="e.g. 2 weeks ago, last month, etc." />
+                </div>
+                <div className="mt-4">
+                  <label htmlFor="arrestDate" className={labelClass}>
+                    Arrest date <span className="text-zinc-500">(for speedy trial calculation)</span>
+                  </label>
+                  <input id="arrestDate" type="date" value={form.arrestDate as string}
+                    onChange={(e) => setField("arrestDate", e.target.value)}
+                    max={new Date().toISOString().split("T")[0]}
+                    className={inputClass} />
+                </div>
+                <div className="mt-4">
+                  <label htmlFor="pleaOffered" className={labelClass}>
+                    Has a plea deal been offered?
+                  </label>
+                  <select id="pleaOffered" value={form.pleaOffered as string}
+                    onChange={(e) => setField("pleaOffered", e.target.value)}
+                    className={selectClass}>
+                    <option value="">Select</option>
+                    {pleaOfferedOptions.map((opt) => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
+                  </select>
+                </div>
+                {form.pleaOffered === "yes" && (
+                  <div className="mt-4">
+                    <label htmlFor="pleaTerms" className={labelClass}>
+                      What are the terms of the plea offer?
+                    </label>
+                    <textarea id="pleaTerms" rows={3} value={form.pleaTerms as string}
+                      onChange={(e) => setField("pleaTerms", e.target.value)}
+                      className={inputClass}
+                      placeholder="Describe the plea deal terms as you understand them" />
+                  </div>
+                )}
+                <div className="mt-4">
+                  <label className={labelClass}>What kind of evidence is involved? (select all that apply)</label>
+                  <div className="mt-2 space-y-2">
+                    {evidenceTypeOptions.map((ev) => (
+                      <label key={ev} className="flex items-center gap-3 text-sm text-zinc-400">
+                        <input type="checkbox" checked={(form.evidenceType as string[]).includes(ev)}
+                          onChange={(e) => {
+                            const curr = form.evidenceType as string[];
+                            setField("evidenceType",
+                              e.target.checked ? [...curr, ev] : curr.filter((c) => c !== ev));
+                          }}
+                          className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500" />
+                        {ev}
+                      </label>
+                    ))}
+                  </div>
                 </div>
                 <div className="mt-4">
                   <label htmlFor="caseNumber" className={labelClass}>
