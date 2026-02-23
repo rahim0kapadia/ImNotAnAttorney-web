@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Criminal Defense Case Analysis Services",
   description:
-    "Case-specific research and question reports for criminal defendants. Five tiers from $97 Case Decoder to $9,997 Situation Room. DUI, drug cases, white collar, and federal defense.",
+    "Case-specific research and question reports for criminal defendants. Five tiers from $197 Case Decoder to $9,997 Situation Room. DUI, drug cases, white collar, and federal defense.",
   alternates: {
     canonical: "https://imnotanattorney.com/services",
   },
@@ -22,7 +22,7 @@ const caseTypes = [
       {
         name: "Case Decoder",
         slug: "case-decoder",
-        price: "$97",
+        price: "$197",
         desc: "Plain-English charge breakdown + 10-15 drug-case questions. Includes Attorney Accountability Score — a 0-100 rating of whether your attorney is on track for your case stage.",
         discovery: false,
         popular: true,
@@ -30,14 +30,14 @@ const caseTypes = [
       {
         name: "Intelligence Brief",
         slug: "intelligence-brief",
-        price: "$497",
+        price: "$797",
         desc: "Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 35-50 targeted questions. Includes Prosecution Case Strength Map — Strong/Moderate/Weak for every element of every charge.",
         discovery: false,
       },
       {
         name: "The X-Ray",
         slug: "x-ray",
-        price: "$997",
+        price: "$1,497",
         desc: "Full discovery analysis — weight discrepancies, lab methodology gaps, CI reliability, chain of custody. 35+ case-specific questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, your defense openings ranked by strength.",
         discovery: true,
         bestValue: true,
@@ -45,7 +45,7 @@ const caseTypes = [
       {
         name: "The War Room",
         slug: "war-room",
-        price: "$1,997",
+        price: "$3,497",
         desc: "Everything above + officer dossiers, witness analysis (up to 8), motion wave strategy, case law package, weekly updates. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
         discovery: true,
       },
@@ -68,7 +68,7 @@ const caseTypes = [
       {
         name: "Case Decoder",
         slug: "case-decoder",
-        price: "$97",
+        price: "$197",
         desc: "Your DUI charges explained in plain English. What to expect at each stage. 10-15 questions your attorney needs to answer. Includes Attorney Accountability Score — a 0-100 rating of whether your attorney is on track for your case stage.",
         discovery: false,
         popular: true,
@@ -76,14 +76,14 @@ const caseTypes = [
       {
         name: "Intelligence Brief",
         slug: "intelligence-brief",
-        price: "$497",
+        price: "$797",
         desc: "Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 35-50 targeted questions. Includes Prosecution Case Strength Map — Strong/Moderate/Weak for every element of every charge.",
         discovery: false,
       },
       {
         name: "The X-Ray",
         slug: "x-ray",
-        price: "$997",
+        price: "$1,497",
         desc: "Full discovery analysis — BAC evidence, breathalyzer calibration, dashcam review, field sobriety compliance. 35+ questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, your defense openings ranked by strength.",
         discovery: true,
         bestValue: true,
@@ -91,7 +91,7 @@ const caseTypes = [
       {
         name: "The War Room",
         slug: "war-room",
-        price: "$1,997",
+        price: "$3,497",
         desc: "Officer dossiers, expert witness challenges, motion wave strategy, case law package, weekly updates until resolution. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
         discovery: true,
       },
@@ -114,7 +114,7 @@ const caseTypes = [
       {
         name: "Case Decoder",
         slug: "case-decoder",
-        price: "$97",
+        price: "$197",
         desc: "Plain-English federal process guide. What are the elements of each count? What should your attorney have done by now? Includes Attorney Accountability Score — a 0-100 rating of whether your attorney is on track for your case stage.",
         discovery: false,
         popular: true,
@@ -122,14 +122,14 @@ const caseTypes = [
       {
         name: "Intelligence Brief",
         slug: "intelligence-brief",
-        price: "$497",
+        price: "$797",
         desc: "Judge sentencing patterns, AUSA profile, guidelines calculation review, cooperation framework. 35-50 targeted questions. Includes Prosecution Case Strength Map — Strong/Moderate/Weak for every element of every charge.",
         discovery: false,
       },
       {
         name: "The X-Ray",
         slug: "x-ray",
-        price: "$997",
+        price: "$1,497",
         desc: "Discovery indexing for massive cases. Financial document analysis, witness statement review, timeline reconstruction. 35+ questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, your defense openings ranked by strength.",
         discovery: true,
         bestValue: true,
@@ -137,7 +137,7 @@ const caseTypes = [
       {
         name: "The War Room",
         slug: "war-room",
-        price: "$1,997",
+        price: "$3,497",
         desc: "Full intelligence operation — AUSA dossier, cooperator analysis, sentencing guidelines deep dive, case law package, weekly updates. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
         discovery: true,
       },
@@ -177,7 +177,7 @@ const faqs = [
   {
     question: "What if I already bought a lower tier?",
     answer:
-      "100% of what you paid is credited toward the next tier. Buy the Case Decoder for $97, then upgrade to the Intelligence Brief for just $400. No money wasted. Credits are valid for 12 months.",
+      "100% of what you paid is credited toward the next tier. Buy the Case Decoder for $197, then upgrade to the Intelligence Brief for just $600. No money wasted. Credits are valid for 12 months.",
   },
   {
     question: "How is this different from a second opinion?",
@@ -204,7 +204,7 @@ const serviceSchema = {
   "@type": "LegalService",
   name: "ImNotAnAttorney Case Review Services",
   description:
-    "Legal research and case analysis for criminal defendants. Five tiers from $97 Case Decoder to $9,997 Situation Room.",
+    "Legal research and case analysis for criminal defendants. Five tiers from $197 Case Decoder to $9,997 Situation Room.",
   provider: {
     "@type": "Organization",
     name: "ImNotAnAttorney",
@@ -237,7 +237,7 @@ export default function ServicesPage() {
           </p>
           <p className="mx-auto mt-4 max-w-2xl text-zinc-400">
             For defendants who read their own discovery. Five tiers of defense
-            intelligence. Start at $97 — upgrade anytime with full credit.
+            intelligence. Start at $197 — upgrade anytime with full credit.
           </p>
         </div>
 
@@ -255,9 +255,9 @@ export default function ServicesPage() {
           </p>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {[
-              { attorney: "$10K", ours: "$97-$997", pct: "1-10%" },
-              { attorney: "$30K", ours: "$497-$1,997", pct: "2-7%" },
-              { attorney: "$100K", ours: "$997-$9,997", pct: "1-10%" },
+              { attorney: "$10K", ours: "$197-$1,497", pct: "2-15%" },
+              { attorney: "$30K", ours: "$797-$3,497", pct: "3-12%" },
+              { attorney: "$100K", ours: "$1,497-$9,997", pct: "1-10%" },
             ].map((row) => (
               <div key={row.attorney} className="rounded-lg bg-zinc-800/50 p-4">
                 <div className="text-xs text-zinc-400">You paid attorney</div>
@@ -282,7 +282,7 @@ export default function ServicesPage() {
             Upgrade Credits: 100% Applied
           </p>
           <p className="mt-2 text-sm text-zinc-400">
-            Start with the Case Decoder for $97. If you upgrade later, every
+            Start with the Case Decoder for $197. If you upgrade later, every
             dollar you paid is credited toward the next tier. No money wasted.
             12-month expiration.
           </p>
@@ -297,11 +297,11 @@ export default function ServicesPage() {
             <p className="mt-2 text-sm text-zinc-400">
               Start with the{" "}
               <Link href="/checkout?tier=case-decoder" className="text-white underline">
-                Case Decoder ($97)
+                Case Decoder ($197)
               </Link>{" "}
               or{" "}
               <Link href="/checkout?tier=intelligence-brief" className="text-white underline">
-                Intelligence Brief ($497)
+                Intelligence Brief ($797)
               </Link>
               . Both work without discovery documents. Get charge analysis,
               judge intel, and targeted questions for your next attorney meeting.
@@ -314,7 +314,7 @@ export default function ServicesPage() {
             <p className="mt-2 text-sm text-zinc-400">
               The{" "}
               <Link href="/checkout?tier=x-ray" className="text-white underline">
-                X-Ray ($997)
+                X-Ray ($1,497)
               </Link>{" "}
               is the most thorough starting point. Full discovery analysis —
               every page, every discrepancy, every red flag mapped. 35+
@@ -431,40 +431,38 @@ export default function ServicesPage() {
             Our Guarantee
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-zinc-300">
-            If your report doesn&apos;t surface at least one issue your attorney
-            hasn&apos;t raised — something specific to YOUR case, documented with
-            evidence from YOUR records — keep the report and we&apos;ll refund
-            every penny.
+            Delivery Guarantee: On time with the stated question count — or a
+            full cash refund. Satisfaction Guarantee: Not satisfied? 100% credit
+            toward any higher tier within 30 days.
           </p>
           <p className="mx-auto mt-3 max-w-xl text-sm text-zinc-400">
-            Not templates. Not generic questions. Findings from your actual case
-            details. We guarantee the work — not the outcome.
+            Upgrade credits apply to purchases you keep.
           </p>
           <div className="mx-auto mt-6 max-w-2xl text-left">
             <div className="space-y-2 text-sm text-zinc-400">
               <p>
-                <span className="font-semibold text-white">Case Decoder:</span>{" "}
+                <span className="font-semibold text-white">Case Decoder ($197):</span>{" "}
                 Delivered within 24 hours. 10+ targeted questions from your case details.
               </p>
               <p>
                 <span className="font-semibold text-white">
-                  Intelligence Brief:
+                  Intelligence Brief ($797):
                 </span>{" "}
                 Delivered within 72 hours. 35+ targeted questions with judge intelligence.
               </p>
               <p>
-                <span className="font-semibold text-white">The X-Ray:</span>{" "}
-                Delivered within 7 business days. Full discovery analysis with 35+ questions.
+                <span className="font-semibold text-white">The X-Ray ($1,497):</span>{" "}
+                Delivered within 10 business days. Full discovery analysis with 35+ questions.
               </p>
               <p>
                 <span className="font-semibold text-white">
-                  The War Room:
+                  The War Room ($3,497):
                 </span>{" "}
                 Initial package within 28 business days. Weekly updates thereafter.
               </p>
               <p>
                 <span className="font-semibold text-white">
-                  The Situation Room:
+                  The Situation Room ($9,997):
                 </span>{" "}
                 Priority 24-48hr turnaround. Trial Intelligence Operations — evening debrief + morning prep brief every trial day.
               </p>

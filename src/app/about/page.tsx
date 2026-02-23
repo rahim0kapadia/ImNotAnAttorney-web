@@ -22,60 +22,57 @@ export default function AboutPage() {
           <span className="text-amber-400">For defendants.</span>
         </h1>
         <p className="mt-6 text-lg leading-relaxed text-zinc-400">
-          There&apos;s a certain kind of defendant — the kind who doesn&apos;t
-          accept &quot;just trust the process&quot; as an answer. The kind who
-          reads their own discovery, tracks their own deadlines, and walks into
-          attorney meetings with a list of questions. If you&apos;re reading
-          this page, you&apos;re probably one of them.
+          I&apos;m Rahim Kapadia. In 2023, I was facing drug trafficking
+          charges in St. Petersburg, Florida. Mandatory minimum: 3 years.
         </p>
         <p className="mt-4 text-lg leading-relaxed text-zinc-400">
-          ImNotAnAttorney started the way most ideas start — out of
-          frustration. Real frustration. The kind where you&apos;ve paid
-          thousands of dollars to someone who won&apos;t return your calls,
-          won&apos;t explain your own case to you, and keeps telling you to
-          &quot;just trust the process.&quot;
+          I paid thousands for an attorney. He told me to trust the process.
+          So I trusted. For months. No motions filed. No calls returned. No
+          explanation of what was in my own discovery.
         </p>
 
         {/* The Story */}
         <section className="mt-16">
-          <h2 className="text-2xl font-bold text-white">The problem</h2>
+          <h2 className="text-2xl font-bold text-white">The day everything changed</h2>
           <div className="mt-4 space-y-4 text-zinc-400 leading-relaxed">
             <p>
-              When you&apos;re a criminal defendant, you&apos;re in the most
-              vulnerable position of your life. Your freedom is on the line.
-              Your money is draining. And the one person who&apos;s supposed to
-              fight for you? Sometimes they&apos;re barely paying attention.
+              One night I opened the discovery myself. 500 pages of police
+              reports, lab results, and witness statements.
             </p>
             <p>
-              Not all attorneys are bad. Most are overworked. But the result is
-              the same: you&apos;re left in the dark about your own case. You
-              don&apos;t understand your discovery. You don&apos;t know what
-              motions should be filed. You don&apos;t know if the plea deal is
-              fair or a scam.
+              Within a week, I found four issues my attorney had never
+              mentioned: A 73% weight discrepancy — 93.9 grams on the scene,
+              25.59 grams at the lab. 68.3 grams missing. A CI phone number
+              attributed to both the informant and me in the same report.
+              Officers wrote &quot;amphetamine&quot; — the lab confirmed
+              MDMA/MDA. A completely different substance. 21 latent
+              fingerprints. Zero matched me.
             </p>
             <p>
-              And when you try to ask questions, you get brushed off. Or worse —
-              you don&apos;t even know what questions to ask.
+              My attorney had filed nothing on any of it.
             </p>
           </div>
         </section>
 
         {/* What we do */}
         <section className="mt-16">
-          <h2 className="text-2xl font-bold text-white">What we do</h2>
+          <h2 className="text-2xl font-bold text-white">What I built after that day</h2>
           <div className="mt-4 space-y-4 text-zinc-400 leading-relaxed">
             <p>
-              We research your case. We read your discovery. We identify
-              inconsistencies, missed motions, and gaps. Then we give you a
-              report full of specific, pointed questions to bring to your
-              attorney.
+              I started reading everything the best defense attorneys ever
+              published. Barry Scheck&apos;s chain of custody protocols. Jeffrey
+              Lichtman&apos;s CI destruction methodology. Gerry Spence&apos;s
+              investigation patterns. 40+ legendary attorneys.
             </p>
             <p>
-              We don&apos;t tell you what to do. We don&apos;t give legal
-              advice. We give you{" "}
-              <span className="font-semibold text-white">information</span> and{" "}
-              <span className="font-semibold text-white">questions</span>. What
-              you do with them is between you and your attorney.
+              I built a system that does what I did — but faster, deeper, and
+              available to any defendant who refuses to sit in the dark about
+              their own case.
+            </p>
+            <p>
+              We don&apos;t give legal advice. We give you the questions your
+              attorney should be answering. What you do with them is between you
+              and your attorney.
             </p>
           </div>
         </section>
@@ -91,7 +88,7 @@ export default function AboutPage() {
               },
               {
                 title: "Real case experience",
-                desc: "This isn't theoretical. Our analysis framework was built on a real case. We found weight discrepancies the attorney missed. We found CI attribution errors in the warrant. We found officer statement conflicts that became trial ammunition.",
+                desc: "This isn't theoretical. Our analysis framework was built from Rahim's real case. We found weight discrepancies the attorney missed. We found CI attribution errors in the warrant. We found officer statement conflicts that became trial ammunition.",
               },
               {
                 title: "Plain English",

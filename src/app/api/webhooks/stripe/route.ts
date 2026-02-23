@@ -135,6 +135,21 @@ export async function POST(req: NextRequest) {
       `,
     });
 
+    // Record post_purchase_day0 drip to prevent cron from re-sending delivery email
+    const deliveryKey = `post_${tier.replace(/-/g, "_")}_delivery`;
+    const { data: subData } = await supabase
+      .from("subscribers")
+      .select("id")
+      .eq("email", email.toLowerCase())
+      .single();
+
+    if (subData?.id) {
+      await supabase.from("drip_emails").upsert(
+        { subscriber_id: subData.id, email_key: deliveryKey },
+        { onConflict: "subscriber_id,email_key" }
+      );
+    }
+
     // Send operator notification
     await sendEmail({
       to: OPERATOR_EMAIL,
@@ -153,6 +168,48 @@ export async function POST(req: NextRequest) {
         </div>
       `,
     });
+  }
+
+  if (event.type === "charge.refunded") {
+    const charge = event.data.object;
+    const paymentIntentId =
+      typeof charge.payment_intent === "string"
+        ? charge.payment_intent
+        : null;
+
+    if (paymentIntentId) {
+      const supabase = createAdminClient();
+      const { error: refundError } = await supabase
+        .from("orders")
+        .update({
+          status: "refunded",
+          refunded_at: new Date().toISOString(),
+        })
+        .eq("stripe_payment_intent_id", paymentIntentId);
+
+      if (refundError) {
+        console.error("[Stripe Webhook] Refund update error:", refundError);
+      }
+
+      // Notify operator
+      const { data: refundedOrder } = await supabase
+        .from("orders")
+        .select("email, tier, amount")
+        .eq("stripe_payment_intent_id", paymentIntentId)
+        .single();
+
+      if (refundedOrder) {
+        await sendEmail({
+          to: OPERATOR_EMAIL,
+          subject: `Refund Processed: ${refundedOrder.tier} — $${((refundedOrder.amount || 0) / 100).toFixed(2)}`,
+          html: `<h1 style="color: #EF4444;">Refund Processed</h1>
+            <p><strong>Customer:</strong> ${refundedOrder.email}</p>
+            <p><strong>Tier:</strong> ${refundedOrder.tier}</p>
+            <p><strong>Amount:</strong> $${((refundedOrder.amount || 0) / 100).toFixed(2)}</p>
+            <p><strong>Note:</strong> Upgrade credits for this purchase are now void per refund policy.</p>`,
+        });
+      }
+    }
   }
 
   return NextResponse.json({ received: true });

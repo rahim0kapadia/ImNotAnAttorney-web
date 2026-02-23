@@ -26,6 +26,14 @@ create table if not exists intakes (
   has_discovery text,
   services text[], -- array of selected service interests
   situation text,
+  time_since_arrest text, -- month/year when arrested or charged
+  arrest_circumstances text[], -- how law enforcement got involved
+  incident_location text, -- where the alleged incident took place
+  co_defendants text, -- was anyone else present or charged
+  attorney_strategy text, -- has attorney explained defense strategy
+  specific_question text, -- one specific question they need answered
+  case_number text, -- optional case number for docket lookup
+  court_date date, -- next court date (optional)
   created_at timestamptz default now() not null
 );
 
@@ -39,6 +47,10 @@ create table if not exists orders (
   stripe_session_id text unique,
   stripe_payment_intent_id text,
   upgrade_credit_applied integer default 0, -- cents credited from prior purchase
+  refunded_at timestamptz, -- when refund was processed
+  priority_delivery boolean default false, -- priority delivery add-on purchased
+  court_date date, -- client's next court date (from checkout)
+  consent_timestamp timestamptz, -- when $1,497+ consent checkbox was accepted
   created_at timestamptz default now() not null,
   paid_at timestamptz
 );
@@ -49,7 +61,8 @@ create table if not exists cases (
   order_id uuid references orders(id) not null,
   email text not null,
   tier text not null,
-  status text not null default 'intake', -- intake, in-progress, review, delivered
+  status text not null default 'intake', -- intake, commenced, in-progress, review, phase_1_delivered, phase_2_delivered, delivered, refunded
+  commenced_at timestamptz, -- when custom research began (refund policy trigger for $1,497+)
   intake_id uuid references intakes(id),
   file_urls text[], -- discovery document URLs in Supabase Storage
   deliverable_url text, -- URL to final report
@@ -60,6 +73,7 @@ create table if not exists cases (
 
 -- Indexes
 create index if not exists idx_orders_email on orders(email);
+create index if not exists idx_orders_email_status on orders(email, status);
 create index if not exists idx_orders_stripe_session on orders(stripe_session_id);
 create index if not exists idx_cases_email on cases(email);
 create index if not exists idx_cases_order on cases(order_id);

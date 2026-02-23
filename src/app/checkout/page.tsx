@@ -16,6 +16,9 @@ type TierInfo = {
   validation?: string;
   whyThisWorks?: string;
   pullquote?: { quote: string; author: string };
+  priorityPrice?: string | null;
+  priorityDesc?: string | null;
+  priorityPriceNum?: number;
   nudge?: {
     nextTierSlug: string;
     nextTierName: string;
@@ -29,8 +32,8 @@ type TierInfo = {
 const TIER_INFO: Record<string, TierInfo> = {
   "case-decoder": {
     name: "Case Decoder",
-    price: "$97",
-    priceNum: 97,
+    price: "$197",
+    priceNum: 197,
     delivery: "24 hours",
     requiresDiscovery: false,
     features: [
@@ -46,10 +49,13 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "Delivered within 24 hours with 10+ targeted questions — or your money back.",
+    priorityPrice: "$97",
+    priorityDesc: "Same-day delivery (4 hours)",
+    priorityPriceNum: 97,
     validation:
       "The right place to start. Understand exactly what you are facing before your next attorney meeting.",
     whyThisWorks:
-      "Every question generated using documented tactics from elite defense attorneys — Barry Scheck's chain of custody protocol. F. Lee Bailey's witness analysis framework. Jeffrey Lichtman's informant reliability methodology. These are the questions a $500/hour defense attorney would ask if they were reading your file. You're getting them for $97.",
+      "Every question generated using documented tactics from elite defense attorneys — Barry Scheck's chain of custody protocol. F. Lee Bailey's witness analysis framework. Jeffrey Lichtman's informant reliability methodology. These are the questions a $500/hour defense attorney would ask if they were reading your file. You're getting them for $197.",
     pullquote: {
       quote:
         "Forensic evidence is only as reliable as the humans who handle it.",
@@ -58,8 +64,8 @@ const TIER_INFO: Record<string, TierInfo> = {
     nudge: {
       nextTierSlug: "intelligence-brief",
       nextTierName: "Intelligence Brief",
-      nextTierPrice: "$497",
-      upgradeCost: "$400",
+      nextTierPrice: "$797",
+      upgradeCost: "$600",
       unlocks:
         "Adds your judge's actual sentencing patterns, a motion landscape report, and 35-50 questions instead of 10-15.",
       bestFor:
@@ -68,8 +74,8 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "intelligence-brief": {
     name: "Case Intelligence Brief",
-    price: "$497",
-    priceNum: 497,
+    price: "$797",
+    priceNum: 797,
     delivery: "48-72 hours",
     requiresDiscovery: false,
     features: [
@@ -88,6 +94,9 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "Delivered within 72 hours with 35+ targeted questions — or your money back.",
+    priorityPrice: "$297",
+    priorityDesc: "24-hour delivery",
+    priorityPriceNum: 297,
     validation:
       "Everything you need to hold your attorney accountable — without needing discovery yet.",
     whyThisWorks:
@@ -100,8 +109,8 @@ const TIER_INFO: Record<string, TierInfo> = {
     nudge: {
       nextTierSlug: "x-ray",
       nextTierName: "The X-Ray",
-      nextTierPrice: "$997",
-      upgradeCost: "$500",
+      nextTierPrice: "$1,497",
+      upgradeCost: "$700",
       unlocks:
         "Adds full discovery analysis — timelines, discrepancies, red flags inside the documents your attorney already has.",
       bestFor:
@@ -110,9 +119,9 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "x-ray": {
     name: "The X-Ray",
-    price: "$997",
-    priceNum: 997,
-    delivery: "5-7 business days",
+    price: "$1,497",
+    priceNum: 1497,
+    delivery: "10 business days",
     requiresDiscovery: true,
     features: [
       "Everything in Intelligence Brief",
@@ -125,7 +134,10 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Defense Opportunity Index — your top defense openings ranked by strength",
     ],
     guarantee:
-      "Delivered within 7 business days with 35+ case-specific questions — or your money back.",
+      "Delivered within 10 business days with 35+ case-specific questions — or your money back.",
+    priorityPrice: "$497",
+    priorityDesc: "5 business day delivery",
+    priorityPriceNum: 497,
     validation:
       "The most thorough analysis available without a multi-week engagement. Full discovery, full picture.",
     whyThisWorks:
@@ -138,8 +150,8 @@ const TIER_INFO: Record<string, TierInfo> = {
     nudge: {
       nextTierSlug: "war-room",
       nextTierName: "The War Room",
-      nextTierPrice: "$1,997",
-      upgradeCost: "$1,000",
+      nextTierPrice: "$3,497",
+      upgradeCost: "$2,000",
       unlocks:
         "Adds judge and prosecution dossiers, witness analysis for up to 8 witnesses, a case law package, and weekly updates.",
       bestFor:
@@ -148,8 +160,8 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "war-room": {
     name: "The War Room",
-    price: "$1,997",
-    priceNum: 1997,
+    price: "$3,497",
+    priceNum: 3497,
     delivery: "25-28 days + weekly updates",
     requiresDiscovery: true,
     features: [
@@ -166,6 +178,9 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "Initial package within 28 business days. Weekly updates every 7 days thereafter.",
+    priorityPrice: "$997",
+    priorityDesc: "Expedited 20-day delivery",
+    priorityPriceNum: 997,
     validation:
       "Ongoing intelligence from now through resolution. Most clients stay in this tier for the life of their case.",
     whyThisWorks:
@@ -179,7 +194,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       nextTierSlug: "situation-room",
       nextTierName: "The Situation Room",
       nextTierPrice: "$9,997",
-      upgradeCost: "$8,000",
+      upgradeCost: "$6,500",
       unlocks:
         "Trial Intelligence Operations — all witnesses researched, daily trial prep, Priority Response Line, JOA + sentencing research.",
       bestFor:
@@ -252,8 +267,17 @@ function CheckoutContent() {
   const tier = searchParams.get("tier") || "case-decoder";
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
+  const [consentChecked, setConsentChecked] = useState(false);
+  const [courtDate, setCourtDate] = useState("");
+  const [priorityDelivery, setPriorityDelivery] = useState(false);
 
   const info = TIER_INFO[tier];
+
+  const daysUntilCourt = courtDate
+    ? Math.ceil((new Date(courtDate).getTime() - Date.now()) / 86400000)
+    : null;
+  const courtDateUrgent = daysUntilCourt !== null && daysUntilCourt < 14;
 
   if (!info) {
     return (
@@ -274,6 +298,11 @@ function CheckoutContent() {
   }
 
   async function handleCheckout() {
+    if (tier === "situation-room") {
+      window.location.href = "/intake?interest=situation-room";
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
@@ -281,7 +310,7 @@ function CheckoutContent() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tier }),
+        body: JSON.stringify({ tier, email, consent: consentChecked, priorityDelivery, courtDate: courtDate || undefined }),
       });
 
       const data = await res.json();
@@ -417,11 +446,15 @@ function CheckoutContent() {
               Our Guarantee
             </p>
             <p className="mt-1 text-sm text-zinc-300">
-              If your report doesn&apos;t surface at least one issue your
-              attorney hasn&apos;t raised — something specific to YOUR case —
-              keep the report and we&apos;ll refund every penny.
+              Delivery: {info.guarantee}
             </p>
-            <p className="mt-2 text-xs text-zinc-400">{info.guarantee}</p>
+            <p className="mt-2 text-sm text-zinc-300">
+              Satisfaction: Not satisfied after delivery? Contact us within 30
+              days for 100% credit toward any higher tier.
+            </p>
+            <p className="mt-2 text-xs text-zinc-400">
+              Upgrade credits apply to purchases you keep.
+            </p>
           </div>
 
           {/* Upgrade nudge */}
@@ -457,6 +490,82 @@ function CheckoutContent() {
             </div>
           )}
 
+          {/* Email capture */}
+          <div className="mt-6">
+            <label htmlFor="email" className="block text-sm font-medium text-zinc-300">
+              Your email — we&apos;ll send your report here
+            </label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              required
+              className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            />
+            <p className="mt-1 text-xs text-zinc-400">No spam — ever. Just your report and delivery updates.</p>
+          </div>
+
+          {/* Court date */}
+          <div className="mt-4">
+            <label htmlFor="courtDate" className="block text-sm font-medium text-zinc-300">
+              Next court date <span className="text-zinc-500">(optional)</span>
+            </label>
+            <input
+              id="courtDate"
+              type="date"
+              value={courtDate}
+              onChange={(e) => setCourtDate(e.target.value)}
+              min={new Date().toISOString().split("T")[0]}
+              className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-sm text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            />
+          </div>
+
+          {/* Priority delivery bump */}
+          {info.priorityPrice && (
+            <label className={`mt-4 flex items-start gap-3 rounded-lg border p-4 cursor-pointer transition-colors ${
+              courtDateUrgent
+                ? "border-amber-500 bg-amber-500/10"
+                : "border-zinc-700 bg-zinc-800/50"
+            }`}>
+              <input
+                type="checkbox"
+                checked={priorityDelivery}
+                onChange={(e) => setPriorityDelivery(e.target.checked)}
+                className="mt-0.5 h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
+              />
+              <div>
+                <span className="text-sm font-semibold text-white">
+                  Priority Delivery — +{info.priorityPrice}
+                </span>
+                <p className="mt-0.5 text-xs text-zinc-400">{info.priorityDesc}</p>
+                {courtDateUrgent && (
+                  <p className="mt-1 text-xs font-medium text-amber-400">
+                    Your court date is {daysUntilCourt} days away — standard delivery may not arrive in time.
+                  </p>
+                )}
+              </div>
+            </label>
+          )}
+
+          {/* Consent checkbox for $1,497+ tiers */}
+          {info.priceNum >= 1497 && (
+            <label className="mt-4 flex items-start gap-3 rounded-lg border border-zinc-700 bg-zinc-800/50 p-4 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={consentChecked}
+                onChange={(e) => setConsentChecked(e.target.checked)}
+                className="mt-0.5 h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
+              />
+              <span className="text-xs text-zinc-400">
+                I understand this service involves custom research specific to my case. Work begins
+                upon intake submission. Non-refundable once research commences. If deliverables are
+                not completed within the stated timeframe, I receive a full refund.
+              </span>
+            </label>
+          )}
+
           {/* Disclaimer (C7) */}
           <p className="mt-6 text-xs text-zinc-400">
             ImNotAnAttorney provides legal information and research — not legal advice. No attorney-client relationship is created.
@@ -465,7 +574,7 @@ function CheckoutContent() {
           {/* CTA */}
           <button
             onClick={handleCheckout}
-            disabled={loading}
+            disabled={loading || !email || (info.priceNum >= 1497 && !consentChecked)}
             className="mt-4 w-full rounded-lg bg-amber-500 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? (
@@ -476,7 +585,9 @@ function CheckoutContent() {
                 </svg>
                 Redirecting to payment...
               </span>
-            ) : `Pay ${info.price} — Secure Checkout`}
+            ) : tier === "situation-room"
+              ? "Apply for The Situation Room"
+              : `Pay ${info.price} — Secure Checkout`}
           </button>
 
           <p className="mt-3 text-center text-sm text-zinc-300">

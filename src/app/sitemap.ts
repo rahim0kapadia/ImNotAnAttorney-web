@@ -55,6 +55,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: "https://imnotanattorney.com/score",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: "https://imnotanattorney.com/contact",
       lastModified: new Date(),
       changeFrequency: "yearly",

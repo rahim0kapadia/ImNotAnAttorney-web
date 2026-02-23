@@ -3,7 +3,7 @@ import Link from "next/link";
 const tiers = [
   {
     name: "Case Decoder",
-    price: "$97",
+    price: "$197",
     anchor: null,
     description: "24-hour turnaround. No discovery needed.",
     features: [
@@ -22,7 +22,7 @@ const tiers = [
   },
   {
     name: "Intelligence Brief",
-    price: "$497",
+    price: "$797",
     anchor: "vs. $1,500+ for a second-opinion attorney",
     description:
       "Judge intel + 35-50 questions. No discovery needed.",
@@ -45,9 +45,9 @@ const tiers = [
   },
   {
     name: "The X-Ray",
-    price: "$997",
+    price: "$1,497",
     anchor: null,
-    description: "Full discovery analysis. 5-7 business days.",
+    description: "Full discovery analysis. 10 business days.",
     features: [
       "Everything in Intelligence Brief",
       "Discovery document index",
@@ -65,7 +65,7 @@ const tiers = [
   },
   {
     name: "The War Room",
-    price: "$1,997",
+    price: "$3,497",
     anchor: "Less than 10% of most retainers",
     description:
       "Full intelligence operation. 25-28 days + weekly updates.",
@@ -105,7 +105,7 @@ const tiers = [
       "Direct access channel",
       "All scored deliverables from lower tiers",
     ],
-    cta: "Enter The Situation Room",
+    cta: "Apply for The Situation Room",
     featured: false,
     tier: "situation-room",
     bestFor: "Headed to trial, need everything",
@@ -147,7 +147,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
           <span className="font-bold text-white">$1,500+</span> for one hour.
         </p>
         <p className="mt-2 text-sm text-amber-400 font-semibold">
-          We start at $97. Your freedom is worth asking the right questions.
+          We start at $197. Your freedom is worth asking the right questions.
         </p>
       </div>
 
@@ -191,6 +191,11 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
                 </li>
               ))}
             </ul>
+            {tier.tier === "case-decoder" && (
+              <Link href="/sample" className="mt-4 block text-center text-xs text-amber-400 underline decoration-amber-400/50 hover:text-amber-300">
+                See a real sample report →
+              </Link>
+            )}
             <Link
               href={`/checkout?tier=${tier.tier}`}
               className={`mt-8 block rounded-lg py-3 text-center text-sm font-semibold transition-colors ${
@@ -249,7 +254,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
               ))}
             </ul>
             <Link
-              href={`/checkout?tier=${tier.tier}`}
+              href={tier.tier === "situation-room" ? "/intake?interest=situation-room" : `/checkout?tier=${tier.tier}`}
               className="mt-8 block rounded-lg border border-zinc-700 py-3 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
             >
               {tier.cta}
@@ -290,7 +295,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
           Upgrade Credits: 100% Applied
         </p>
         <p className="mt-2 text-sm text-zinc-400">
-          Start with the Case Decoder for $97. If you upgrade later, every
+          Start with the Case Decoder for $197. If you upgrade later, every
           dollar you paid is credited toward the next tier. No money wasted.
           12-month expiration.
         </p>
@@ -300,9 +305,12 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
       <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
         <p className="text-lg font-bold text-white">Deliverable Guarantee</p>
         <p className="mt-2 text-sm text-zinc-400">
-          Every question, every report, on time — or your money back. We
-          can&apos;t guarantee your attorney will change. We guarantee
-          you&apos;ll have the intelligence to hold them accountable.
+          Delivery Guarantee: On time with the stated question count — or a
+          full cash refund. Satisfaction Guarantee: Not satisfied? 100% credit
+          toward any higher tier within 30 days.
+        </p>
+        <p className="mt-2 text-xs text-zinc-500">
+          Upgrade credits apply to purchases you keep.
         </p>
       </div>
     </div>

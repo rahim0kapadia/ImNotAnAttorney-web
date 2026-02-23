@@ -75,7 +75,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
   {
     key: "nurture_day7",
     delayDays: 7,
-    subject: "10 questions, $97, 24 hours — here's exactly what you get",
+    subject: "10 questions, $197, 24 hours — here's exactly what you get",
     html: `
       <h1 style="color: #F59E0B;">Here's What a Case Decoder Includes</h1>
       <ul style="padding-left: 20px;">
@@ -89,9 +89,9 @@ export const NURTURE_EMAILS: DripEmail[] = [
         <li>BONUS: Motion Deadline Awareness</li>
       </ul>
       <p>Every question generated using tactics from elite defense attorneys — Barry Scheck, Jeffrey Lichtman, F. Lee Bailey.</p>
-      <p>Delivered within 24 hours. If it doesn't surface at least one issue your attorney hasn't raised — <strong style="color: white;">keep it and get a full refund.</strong></p>
-      <p><strong style="color: white;">$97.</strong> Less than one hour of your attorney's time.</p>
-      ${cta("Find What's in My Case — $97 →", "/checkout?tier=case-decoder")}
+      <p>Delivered within 24 hours with 10+ targeted questions — or full cash refund. Delivered and not satisfied? 100% credit toward any higher tier.</p>
+      <p><strong style="color: white;">$197.</strong> Less than one hour of your attorney's time.</p>
+      ${cta("Find What's in My Case — $197 →", "/checkout?tier=case-decoder")}
     `,
   },
   {
@@ -117,8 +117,8 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p>A motion to suppress that could have thrown out evidence. A Franks hearing that could have invalidated the warrant. A motion to dismiss based on a charging error.</p>
       <p>In the real case we reviewed, <strong style="color: white;">zero motions had been filed</strong>. The substance variance alone was grounds for a motion to dismiss.</p>
       <p>The Case Decoder includes a motion deadline awareness section specific to your charges. It tells you what to ASK about — so nothing slips through the cracks.</p>
-      <p><strong style="color: white;">$97. 24 hours.</strong> The cost of not knowing is higher.</p>
-      ${cta("Find What's in My Case — $97 →", "/checkout?tier=case-decoder")}
+      <p><strong style="color: white;">$197. 24 hours.</strong> The cost of not knowing is higher.</p>
+      ${cta("Find What's in My Case — $197 →", "/checkout?tier=case-decoder")}
     `,
   },
 ];
@@ -169,7 +169,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">Ready to Go Deeper?</h1>
       <p>Your Case Decoder gave you the foundation — charges explained, accountability measured, and 10-15 targeted questions.</p>
-      <p>The <strong style="color: white;">Intelligence Brief ($497)</strong> goes deeper:</p>
+      <p>The <strong style="color: white;">Intelligence Brief ($797)</strong> goes deeper:</p>
       <ul style="padding-left: 20px;">
         <li>Your judge's actual sentencing patterns</li>
         <li>Jurisdiction-specific plea statistics</li>
@@ -177,12 +177,26 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li>35-50 targeted questions (vs. 10-15)</li>
         <li>BONUS: Judge Tendencies Card</li>
       </ul>
-      <p><strong style="color: white;">Your $97 is already credited.</strong> Upgrade for just $400.</p>
-      ${cta("Upgrade to Intelligence Brief — $400 →", "/checkout?tier=intelligence-brief")}
+      <p><strong style="color: white;">Your $197 is already credited.</strong> Upgrade for just $600.</p>
+      ${cta("Upgrade to Intelligence Brief — $600 →", "/checkout?tier=intelligence-brief")}
     `,
   },
 
-  // --- Intelligence Brief ($497) ---
+  {
+    key: "post_case_decoder_referral",
+    delayDays: 14,
+    tier: "case-decoder",
+    subject: "Know someone facing charges?",
+    html: `
+      <h1 style="color: #F59E0B;">Know Someone Facing Charges?</h1>
+      <p>If your Case Decoder helped you ask better questions, it can help someone else too.</p>
+      <p>Share this with anyone facing charges who needs clarity about their case:</p>
+      ${cta("Share ImNotAnAttorney →", "/?ref=friend")}
+      <p style="color: #71717A;">Every defendant deserves to know what's in their case.</p>
+    `,
+  },
+
+  // --- Intelligence Brief ($797) ---
   {
     key: "post_intelligence_brief_delivery",
     delayDays: 0,
@@ -222,7 +236,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">When You Get Discovery</h1>
       <p>Your Intelligence Brief covered charges, judge intel, and accountability. But the real power is in the discovery documents.</p>
-      <p>When you receive discovery, the <strong style="color: white;">X-Ray ($997)</strong> analyzes every page:</p>
+      <p>When you receive discovery, the <strong style="color: white;">X-Ray ($1,497)</strong> analyzes every page:</p>
       <ul style="padding-left: 20px;">
         <li>Complete document index</li>
         <li>Comprehensive timeline</li>
@@ -232,8 +246,8 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li>Discovery Health Score — completeness rated out of 100</li>
         <li>Defense Opportunity Index — defense openings ranked by strength</li>
       </ul>
-      <p><strong style="color: white;">Your $497 is already credited.</strong> Upgrade for just $500.</p>
-      ${cta("Upgrade to The X-Ray — $500 →", "/checkout?tier=x-ray")}
+      <p><strong style="color: white;">Your $797 is already credited.</strong> Upgrade for just $700.</p>
+      ${cta("Upgrade to The X-Ray — $700 →", "/checkout?tier=x-ray")}
     `,
   },
 
@@ -400,16 +414,16 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">Your Witnesses Revealed Something Interesting</h1>
       <p>Witness analysis often uncovers patterns that go beyond individual testimony — contradictions that connect to the broader case, gaps that suggest missing evidence, statements that don't match the physical evidence.</p>
       <p>If your witness analysis raised more questions than it answered, a deeper dive might be worth it:</p>
-      <p><strong style="color: white;">The X-Ray ($997)</strong> — full discovery analysis:</p>
+      <p><strong style="color: white;">The X-Ray ($1,497)</strong> — full discovery analysis:</p>
       <ul style="padding-left: 20px;">
         <li>Complete document index and timeline</li>
         <li>Discrepancy report across ALL evidence</li>
         <li>35+ case-specific questions</li>
         <li>Discovery Health Score + Defense Opportunity Index</li>
       </ul>
-      <p><strong style="color: white;">Your $297 is already credited.</strong> Upgrade for $700.</p>
-      ${cta("Upgrade to The X-Ray — $700 →", "/checkout?tier=x-ray")}
-      <p style="margin-top: 16px;">Or go deeper with <strong style="color: white;">The War Room ($1,997)</strong> — full intelligence operation with weekly updates. Your $297 credit applies. ${link("Learn more →", "/services")}</p>
+      <p><strong style="color: white;">Your $297 is already credited.</strong> Upgrade for $1,200.</p>
+      ${cta("Upgrade to The X-Ray — $1,200 →", "/checkout?tier=x-ray")}
+      <p style="margin-top: 16px;">Or go deeper with <strong style="color: white;">The War Room ($3,497)</strong> — full intelligence operation with weekly updates. Your $297 credit applies. ${link("Learn more →", "/services")}</p>
     `,
   },
 

@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
         <p>Here's your free guide:</p>
         <a href="https://imnotanattorney.com/guides/discovery-checklist-7-evidence-problems.md" style="display: inline-block; margin: 24px 0; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Download Your Discovery Checklist</a>
         <p style="color: #A1A1AA;">Inside: 7 evidence problems from a real trafficking case — the weight that disappeared, the substance that changed, the fingerprints nobody mentioned, and 4 more. Plus the exact questions that expose each one.</p>
-        <p style="color: #A1A1AA;">When you're ready to go deeper, our <a href="https://imnotanattorney.com/services" style="color: #F59E0B;">case analysis services</a> start at $97.</p>
+        <p style="color: #A1A1AA;">When you're ready to go deeper, our <a href="https://imnotanattorney.com/services" style="color: #F59E0B;">case analysis services</a> start at $197.</p>
       `,
     });
 

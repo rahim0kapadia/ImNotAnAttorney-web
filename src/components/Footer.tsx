@@ -16,6 +16,13 @@ export function Footer() {
             <p className="mt-2 text-xs text-zinc-400">
               Legal information, not legal advice.
             </p>
+            <a href="https://x.com/ImNotAnAttorney" target="_blank" rel="noopener noreferrer"
+               className="mt-3 inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white">
+              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              @ImNotAnAttorney
+            </a>
           </div>
 
           {/* Pages */}
@@ -98,31 +105,31 @@ export function Footer() {
                 href="/checkout?tier=case-decoder"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                Case Decoder ($97)
+                Case Decoder ($197)
               </Link>
               <Link
                 href="/checkout?tier=intelligence-brief"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                Intelligence Brief ($497)
+                Intelligence Brief ($797)
               </Link>
               <Link
                 href="/checkout?tier=x-ray"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                The X-Ray ($997)
+                The X-Ray ($1,497)
               </Link>
               <Link
                 href="/checkout?tier=war-room"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                The War Room ($1,997)
+                The War Room ($3,497)
               </Link>
               <Link
                 href="/checkout?tier=situation-room"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                The Situation Room ($4,997)
+                The Situation Room ($9,997)
               </Link>
               <Link
                 href="/services"

@@ -5,11 +5,11 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "ImNotAnAttorney — We Research. You Ask.",
+  title: "ImNotAnAttorney — We Found a 73% Weight Discrepancy Your Attorney Missed",
   description:
-    "Legal empowerment for criminal defendants. We research your case and generate the questions that hold your attorney accountable. Starting at $97.",
+    "Legal empowerment for criminal defendants. We research your case and generate the questions that hold your attorney accountable. Starting at $197.",
   openGraph: {
-    title: "ImNotAnAttorney — We Research. You Ask.",
+    title: "ImNotAnAttorney — We Found a 73% Weight Discrepancy Your Attorney Missed",
     description:
       "We dig through your discovery, find what your lawyer missed, and hand you the exact questions that make them start working.",
   },
@@ -29,7 +29,7 @@ const homeFaqs = [
   {
     question: "What if I don't have my discovery documents yet?",
     answer:
-      "That's fine — our Case Decoder ($97) and Intelligence Brief ($497) don't require discovery. We can analyze your charges, research your judge, and generate targeted questions with just your case information. When you get discovery, upgrade to The X-Ray with full credit.",
+      "That's fine — our Case Decoder ($197) and Intelligence Brief ($797) don't require discovery. We can analyze your charges, research your judge, and generate targeted questions with just your case information. When you get discovery, upgrade to The X-Ray with full credit.",
   },
   {
     question: "Do you work on federal cases?",
@@ -39,17 +39,17 @@ const homeFaqs = [
   {
     question: "How fast do I get my report?",
     answer:
-      "Case Decoder: 24 hours. Intelligence Brief: 48-72 hours. The X-Ray: 5-7 business days. War Room: 25-28 days initial + weekly updates. Situation Room: 24-48hr priority turnaround.",
+      "Case Decoder: 24 hours. Intelligence Brief: 48-72 hours. The X-Ray: 10 business days. War Room: 25-28 days initial + weekly updates. Situation Room: 24-48hr priority turnaround with Trial Intelligence Operations.",
   },
   {
     question: "What if I already bought a lower tier?",
     answer:
-      "100% of what you paid is credited toward the next tier. Buy the Case Decoder for $97, then upgrade to the Intelligence Brief for just $400. No money wasted. Credits are valid for 12 months.",
+      "100% of what you paid is credited toward the next tier. Buy the Case Decoder for $197, then upgrade to the Intelligence Brief for just $600. No money wasted. Credits are valid for 12 months.",
   },
   {
     question: "Can I get a refund?",
     answer:
-      "If we don't deliver the stated question counts and reports within the guaranteed timeframe, you get a full refund. We guarantee the work — every question, every page, on time — or you pay nothing.",
+      "Two guarantees. Delivery: if we miss the stated deadline or question count, full cash refund — no questions asked. Satisfaction: if your delivered report doesn't help, contact us within 30 days for 100% credit toward any higher tier. Upgrade credits apply to purchases you keep.",
   },
 ];
 
@@ -79,21 +79,17 @@ export default function Home() {
       <section className="px-4 pb-20 pt-24 text-center md:pt-32">
         <div className="mx-auto max-w-4xl">
           <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-amber-500">
-            A real trafficking case. Four case-ending issues. The attorney found zero.
+            Built on a real trafficking case. Powered by 40+ elite defense attorneys.
           </p>
           <h1 className="text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
-            There&apos;s something in your case
+            We Found a 73% Weight Discrepancy.
             <br />
-            your attorney{" "}
-            <span className="text-amber-400">hasn&apos;t found yet.</span>
+            <span className="text-amber-400">The Attorney Found Zero.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-            We analyzed a real trafficking case and found a 73% evidence weight
-            discrepancy, a misidentified drug substance, a CI phone number
-            attributed to both the informant and the defendant, and 21
-            fingerprints — zero matching the defendant. The attorney had filed
-            nothing on any of it. We found all of it in the discovery documents.
-            We can do the same for yours.
+            CI phone number attributed to both informant and defendant. Drug
+            type misidentified. 21 fingerprints — zero matching. We found it
+            all in the discovery. We can do the same for yours.
           </p>
           <p className="mx-auto mt-4 max-w-2xl text-sm text-zinc-400">
             Our research is built on the tactics of Gerry Spence (never lost a
@@ -106,7 +102,7 @@ export default function Home() {
               href="/checkout?tier=case-decoder"
               className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400"
             >
-              Find What&apos;s in My Case — $97 →
+              Find What&apos;s in My Case — $197 →
             </Link>
             <Link
               href="/sample"
@@ -118,6 +114,15 @@ export default function Home() {
           <p className="mt-4 text-xs text-zinc-400">
             We&apos;re not attorneys. We&apos;re researchers — and that&apos;s
             exactly why we find what they miss.
+          </p>
+          <p className="mt-3 text-sm text-zinc-400">
+            Or{" "}
+            <Link
+              href="/score"
+              className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+            >
+              check your attorney&apos;s score — free →
+            </Link>
           </p>
           <p className="mt-2 text-sm font-semibold text-amber-500">
             We Read the Discovery. You Ask the Questions.
@@ -358,7 +363,7 @@ export default function Home() {
               </p>
             </div>
             <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
-              <div className="text-2xl font-bold text-amber-400">$97-$4,997</div>
+              <div className="text-2xl font-bold text-amber-400">$197-$9,997</div>
               <p className="mt-2 text-sm text-zinc-400">
                 What it costs to make sure your defense is real
               </p>
@@ -374,17 +379,27 @@ export default function Home() {
             <h2 className="text-2xl font-bold text-white">
               Our Guarantee
             </h2>
-            <p className="mt-4 text-lg text-zinc-300">
-              If your report doesn&apos;t surface at least one issue your attorney
-              hasn&apos;t raised — something specific to{" "}
-              <span className="font-bold text-amber-400">YOUR</span> case,
-              documented with evidence from{" "}
-              <span className="font-bold text-amber-400">YOUR</span> records —
-              keep the report and we&apos;ll refund every penny.
-            </p>
-            <p className="mt-3 text-sm text-zinc-400">
-              Not templates. Not generic questions. Findings from your actual
-              case details.
+            <div className="mt-6 space-y-4 text-left">
+              <div>
+                <p className="text-sm font-semibold text-amber-400">Case Decoder ($197) &amp; Intelligence Brief ($797)</p>
+                <p className="mt-1 text-sm text-zinc-300">
+                  Delivered within the stated timeframe with the guaranteed question
+                  count — or a full cash refund. Not satisfied? 100% credit toward
+                  any higher tier within 30 days.
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-amber-400">The X-Ray ($1,497), War Room ($3,497) &amp; Situation Room ($9,997)</p>
+                <p className="mt-1 text-sm text-zinc-300">
+                  Delivery guarantee — every deliverable completed on schedule, or a
+                  full refund. These services involve substantial custom research
+                  that begins upon intake. Work performed and delivered is
+                  non-refundable.
+                </p>
+              </div>
+            </div>
+            <p className="mt-4 text-xs text-zinc-400">
+              Upgrade credits apply to purchases you keep.
             </p>
           </div>
         </div>
@@ -403,7 +418,7 @@ export default function Home() {
           </p>
           <p className="mt-2 text-center text-sm text-zinc-400">
             Defendants who fight back with research choose their tier. Start at
-            $97 — upgrade anytime with full credit.
+            $197 — upgrade anytime with full credit.
           </p>
           <div className="mt-12">
             <PricingTable maxTiers={3} />
@@ -415,6 +430,15 @@ export default function Home() {
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-2xl">
           <LeadCapture />
+          <p className="mt-6 text-center text-sm text-zinc-400">
+            Want a quick answer?{" "}
+            <Link
+              href="/score"
+              className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+            >
+              Check your Attorney Accountability Score — free, no email required.
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -448,7 +472,7 @@ export default function Home() {
             href="/checkout?tier=case-decoder"
             className="mt-8 inline-block rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400"
           >
-            Find What&apos;s in My Case — $97 →
+            Find What&apos;s in My Case — $197 →
           </Link>
         </div>
       </section>

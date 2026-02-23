@@ -11,14 +11,14 @@ export function BlogCTA() {
         They use case-specific research — questions built from their
         actual charges, their actual discovery, their actual judge. Our
         Case Decoder gives you 10-15 targeted questions your attorney
-        isn&apos;t expecting. Starting at $97.
+        isn&apos;t expecting. Starting at $197.
       </p>
       <div className="mt-4 flex flex-col gap-3 sm:flex-row">
         <Link
           href="/checkout?tier=case-decoder"
           className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-colors hover:bg-amber-400"
         >
-          Get Your Case Decoder — $97 →
+          Get Your Case Decoder — $197 →
         </Link>
         <Link
           href="/sample"
@@ -27,6 +27,14 @@ export function BlogCTA() {
           See a Sample Report
         </Link>
       </div>
+      <p className="mt-3 text-sm text-zinc-400">
+        <Link
+          href="/score"
+          className="text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+        >
+          Check your Attorney Accountability Score — free →
+        </Link>
+      </p>
     </div>
   );
 }

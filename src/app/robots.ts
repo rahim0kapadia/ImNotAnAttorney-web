@@ -15,6 +15,7 @@ export default function robots(): MetadataRoute.Robots {
         "/terms",
         "/privacy",
         "/guides/*",
+        "/score",
       ],
       disallow: [
         "/api/*",

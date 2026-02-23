@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 
 const TIER_NEXT_STEPS: Record<
@@ -24,7 +24,7 @@ const TIER_NEXT_STEPS: Record<
   },
   "x-ray": {
     name: "The X-Ray",
-    delivery: "5-7 business days",
+    delivery: "10 business days",
     action:
       "Upload your discovery documents so we can begin analysis. You'll receive a link via email.",
     showUpload: true,
@@ -68,6 +68,31 @@ function SuccessContent() {
   const tier = searchParams.get("tier");
   const info = tier ? TIER_NEXT_STEPS[tier] : null;
 
+  const [timeLeft, setTimeLeft] = useState<string>("");
+
+  useEffect(() => {
+    if (!tier || !sessionId) return;
+    const key = `oto_${tier}_${sessionId}`;
+    let endTime = localStorage.getItem(key);
+    if (!endTime) {
+      endTime = String(Date.now() + 24 * 60 * 60 * 1000);
+      localStorage.setItem(key, endTime);
+    }
+    const end = Number(endTime);
+
+    const tick = () => {
+      const diff = end - Date.now();
+      if (diff <= 0) { setTimeLeft("Expired"); return; }
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      setTimeLeft(`${h}h ${m}m ${s}s`);
+    };
+    tick();
+    const interval = setInterval(tick, 1000);
+    return () => clearInterval(interval);
+  }, [tier, sessionId]);
+
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-4">
       <div className="max-w-lg text-center">
@@ -98,14 +123,17 @@ function SuccessContent() {
               </div>
             )}
 
-            {/* Upsell — tier-specific */}
-            {tier === "case-decoder" && (
-              <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
+            {/* Upsell — tier-specific with urgency */}
+            {timeLeft && timeLeft !== "Expired" && tier === "case-decoder" && (
+              <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
+                <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
+                  Upgrade offer — {timeLeft} remaining
+                </p>
                 <p className="text-sm font-semibold text-amber-400">
                   Upgrade to Intelligence Brief
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $97 is already credited. Get judge intelligence, jurisdiction profile, and 35-50 questions instead of 10-15.
+                  Your $197 is already credited. Get judge intelligence, jurisdiction profile, and 35-50 questions instead of 10-15.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: judge sentencing patterns, motion landscape report, attorney accountability timeline.
@@ -114,17 +142,20 @@ function SuccessContent() {
                   href="/checkout?tier=intelligence-brief"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Upgrade for $400 &rarr;
+                  Claim Your Upgrade Credit — $600 &rarr;
                 </Link>
               </div>
             )}
-            {tier === "intelligence-brief" && (
-              <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
+            {timeLeft && timeLeft !== "Expired" && tier === "intelligence-brief" && (
+              <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
+                <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
+                  Upgrade offer — {timeLeft} remaining
+                </p>
                 <p className="text-sm font-semibold text-amber-400">
                   Upgrade to The X-Ray
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $497 is already credited. Get full discovery analysis — every page, every discrepancy, every red flag mapped.
+                  Your $797 is already credited. Get full discovery analysis — every page, every discrepancy, every red flag mapped.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: discovery document index, comprehensive timeline, discrepancy report, 35+ case-specific questions.
@@ -133,17 +164,20 @@ function SuccessContent() {
                   href="/checkout?tier=x-ray"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Upgrade for $500 &rarr;
+                  Claim Your Upgrade Credit — $700 &rarr;
                 </Link>
               </div>
             )}
-            {tier === "x-ray" && (
-              <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
+            {timeLeft && timeLeft !== "Expired" && tier === "x-ray" && (
+              <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
+                <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
+                  Upgrade offer — {timeLeft} remaining
+                </p>
                 <p className="text-sm font-semibold text-amber-400">
                   Upgrade to The War Room
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $997 is already credited. Get judge and prosecution dossiers, witness analysis, case law package, and weekly updates through resolution.
+                  Your $1,497 is already credited. Get judge and prosecution dossiers, witness analysis, case law package, and weekly updates through resolution.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: witness analysis (up to 8), officer dossiers, motion wave strategy, weekly intelligence updates.
@@ -152,17 +186,20 @@ function SuccessContent() {
                   href="/checkout?tier=war-room"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Upgrade for $1,000 &rarr;
+                  Claim Your Upgrade Credit — $2,000 &rarr;
                 </Link>
               </div>
             )}
-            {tier === "war-room" && (
-              <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
+            {timeLeft && timeLeft !== "Expired" && tier === "war-room" && (
+              <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
+                <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
+                  Upgrade offer — {timeLeft} remaining
+                </p>
                 <p className="text-sm font-semibold text-amber-400">
                   Upgrade to The Situation Room
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $1,997 is already credited. Get Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line.
+                  Your $3,497 is already credited. Get Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: Trial Intelligence Operations, attack intelligence packages, Priority Response Line (2hr trial prep, 4hr trial), direct access channel.
@@ -171,7 +208,7 @@ function SuccessContent() {
                   href="/checkout?tier=situation-room"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Upgrade for $8,000 &rarr;
+                  Claim Your Upgrade Credit — $6,500 &rarr;
                 </Link>
               </div>
             )}
