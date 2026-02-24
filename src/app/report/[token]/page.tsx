@@ -1,11 +1,30 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import sanitizeHtml from "sanitize-html";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Your Case Decoder Report — ImNotAnAttorney",
-  robots: { index: false, follow: false },
+const TIER_NAMES: Record<string, string> = {
+  "case-decoder": "Case Decoder",
+  "intelligence-brief": "Intelligence Brief",
+  "x-ray": "X-Ray",
+  "war-room": "War Room",
+  "situation-room": "Situation Room",
 };
+
+export async function generateMetadata({ params }: { params: Promise<{ token: string }> }): Promise<Metadata> {
+  const { token } = await params;
+  const supabase = createAdminClient();
+  const { data } = await supabase
+    .from("cases")
+    .select("tier")
+    .eq("report_token", token)
+    .single();
+
+  const tierName = data?.tier ? TIER_NAMES[data.tier] || "Report" : "Report";
+  return {
+    title: `Your ${tierName} Report — ImNotAnAttorney`,
+    robots: { index: false, follow: false },
+  };
+}
 
 export default async function ReportPage({
   params,

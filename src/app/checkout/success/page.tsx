@@ -66,12 +66,22 @@ function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
 
-  // Determine tier from session (in production, verify with Stripe API)
-  // For now, show generic success with all possible next steps
   const tier = searchParams.get("tier");
   const info = tier ? TIER_NEXT_STEPS[tier] : null;
 
+  const [verified, setVerified] = useState<boolean | null>(null);
   const [timeLeft, setTimeLeft] = useState<string>("");
+
+  useEffect(() => {
+    if (!sessionId) {
+      setVerified(false);
+      return;
+    }
+    fetch(`/api/checkout/verify?session_id=${encodeURIComponent(sessionId)}`)
+      .then((r) => r.json())
+      .then((data) => setVerified(data.verified === true))
+      .catch(() => setVerified(false));
+  }, [sessionId]);
 
   useEffect(() => {
     if (!tier || !sessionId) return;
@@ -95,6 +105,39 @@ function SuccessContent() {
     const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
   }, [tier, sessionId]);
+
+  if (verified === null) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center px-4">
+        <div className="text-center">
+          <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-2 border-amber-500 border-t-transparent" />
+          <p className="text-zinc-400">Confirming your payment...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (verified === false) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center px-4">
+        <div className="max-w-lg text-center">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10 text-3xl text-red-400">
+            &#10007;
+          </div>
+          <h1 className="text-2xl font-bold text-white">Payment Not Confirmed</h1>
+          <p className="mt-4 text-zinc-400">
+            We couldn&apos;t verify this payment. If you completed checkout, check your email for a confirmation — it may take a moment to process.
+          </p>
+          <Link
+            href="/services"
+            className="mt-6 inline-block rounded-lg border border-zinc-700 px-6 py-3 text-sm font-semibold text-zinc-300 transition-colors hover:bg-zinc-800"
+          >
+            View Services
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-4">
@@ -134,13 +177,16 @@ function SuccessContent() {
             )}
 
             {info.showUpload && (
-              <div className="mt-8">
-                <Link
-                  href="/upload"
-                  className="inline-block rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
-                >
-                  Upload Your Documents Now &rarr;
-                </Link>
+              <div className="mt-8 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
+                <p className="text-sm font-semibold text-amber-400">
+                  Check your email — we sent a personalized upload link to your inbox.
+                </p>
+                <p className="mt-3 text-xs text-zinc-500">
+                  Didn&apos;t get the email?{" "}
+                  <Link href="/upload" className="text-amber-400 underline hover:text-amber-300">
+                    Go to the upload page
+                  </Link>
+                </p>
               </div>
             )}
 
@@ -201,7 +247,7 @@ function SuccessContent() {
                   Your $1,497 is already credited. Get judge and prosecution dossiers, witness analysis, case law package, and weekly updates through resolution.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
-                  Adds: witness analysis (up to 8), officer dossiers, motion wave strategy, weekly intelligence updates.
+                  Adds: witness analysis (up to 8), officer dossiers, motion timing questions for your attorney, weekly intelligence updates.
                 </p>
                 <Link
                   href="/checkout?tier=war-room"
@@ -223,7 +269,7 @@ function SuccessContent() {
                   Your $3,497 is already credited. Get Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
-                  Adds: Trial Intelligence Operations, attack intelligence packages, Priority Response Line (2hr trial prep, 4hr trial), direct access channel.
+                  Adds: Trial Intelligence Operations, witness impeachment research packages, Priority Response Line (2hr trial prep, 4hr trial), direct access channel.
                 </p>
                 <Link
                   href="/checkout?tier=situation-room"

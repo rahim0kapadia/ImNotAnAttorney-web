@@ -56,7 +56,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p>Your attorney read it. Probably. But <strong style="color: white;">reading and analyzing are different things.</strong></p>
       <p>Analyzing means catching that the inventory weight doesn't match the lab weight. That the field test date is after the arrest date. That the CI's phone number appears in two different people's records.</p>
       <p>The defendants who know what to look for walk into attorney meetings with leverage.</p>
-      ${cta("Re-download the Discovery Checklist →", "/guides/discovery-checklist-7-evidence-problems.md")}
+      ${cta("Re-download the Discovery Checklist →", "/resources")}
     `,
   },
   {
@@ -106,7 +106,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p>Most defendants don't know a confidential informant was used in their case. The ones who do rarely ask about the CI's track record.</p>
       <p>In the real case we reviewed, the CI's phone number appeared in <strong style="color: white;">both the informant's file AND the defendant's records</strong>. Same detective. Same report. That's a Franks v. Delaware issue.</p>
       <p>One question. Asked at the right time. Can change everything.</p>
-      ${cta("Re-download the Discovery Checklist →", "/guides/discovery-checklist-7-evidence-problems.md")}
+      ${cta("Re-download the Discovery Checklist →", "/resources")}
     `,
   },
   {

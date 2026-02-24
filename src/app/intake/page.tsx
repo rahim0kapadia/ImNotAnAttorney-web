@@ -565,7 +565,7 @@ function IntakeForm() {
               </div>
 
               <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-zinc-400">
-                <span>Your information is confidential</span>
+                <span>Your information is private</span>
                 <span>Response within 24 hours</span>
                 <span>Deliverable guarantee</span>
               </div>

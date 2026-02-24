@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "ImNotAnAttorney — We Found a 73% Weight Discrepancy Your Attorney Missed",
   description:
     "Legal empowerment for criminal defendants. We research your case and generate the questions that hold your attorney accountable. Starting at $197.",
+  alternates: {
+    canonical: "https://imnotanattorney.com",
+  },
   openGraph: {
     title: "ImNotAnAttorney — We Found a 73% Weight Discrepancy Your Attorney Missed",
     description:
@@ -137,7 +140,7 @@ export default function Home() {
             What we actually found in a real case
           </h2>
           <p className="mt-3 text-center text-zinc-400">
-            This system was built for a real defendant facing real charges. Here&apos;s what the analysis uncovered — issues the attorney hadn&apos;t raised.
+            This system was built by Rahim Kapadia — a real defendant facing drug trafficking charges in St. Petersburg, Florida. Here&apos;s what the analysis uncovered — issues his attorney hadn&apos;t raised.
           </p>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">

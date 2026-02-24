@@ -46,7 +46,7 @@ const caseTypes = [
         name: "The War Room",
         slug: "war-room",
         price: "$3,497",
-        desc: "Everything above + officer dossiers, witness analysis (up to 8), motion wave strategy, case law package, weekly updates. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
+        desc: "Everything above + officer dossiers, witness analysis (up to 8), motion timing questions for your attorney, case law package, weekly updates. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
         discovery: true,
       },
       {
@@ -92,7 +92,7 @@ const caseTypes = [
         name: "The War Room",
         slug: "war-room",
         price: "$3,497",
-        desc: "Officer dossiers, expert witness challenges, motion wave strategy, case law package, weekly updates until resolution. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
+        desc: "Officer dossiers, expert witness challenges, motion timing questions for your attorney, case law package, weekly updates until resolution. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
         discovery: true,
       },
       {
@@ -123,7 +123,7 @@ const caseTypes = [
         name: "Intelligence Brief",
         slug: "intelligence-brief",
         price: "$797",
-        desc: "Judge sentencing patterns, AUSA profile, guidelines calculation review, cooperation framework. 35-50 targeted questions. Includes Prosecution Case Strength Map — Strong/Moderate/Weak for every element of every charge.",
+        desc: "Judge sentencing patterns, AUSA profile, guidelines calculation review, questions about the cooperation decision for your attorney. 35-50 targeted questions. Includes Prosecution Case Strength Map — Strong/Moderate/Weak for every element of every charge.",
         discovery: false,
       },
       {

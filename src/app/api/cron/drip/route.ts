@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
       .select("id, email, created_at")
       .is("unsubscribed_at", null)
       .order("created_at", { ascending: true })
-      .limit(50);
+      .limit(200);
 
     if (subError) {
       console.error("[Drip Cron] Subscriber query error:", subError);
@@ -106,7 +106,7 @@ export async function GET(req: NextRequest) {
       .eq("status", "paid")
       .gte("paid_at", thirtyDaysAgo.toISOString())
       .order("paid_at", { ascending: true })
-      .limit(50);
+      .limit(200);
 
     if (orderError) {
       console.error("[Drip Cron] Orders query error:", orderError);
@@ -132,11 +132,17 @@ export async function GET(req: NextRequest) {
           // Key by email + email_key combo (subscriber_id may not exist for direct buyers)
           const { data: subMatch } = await supabase
             .from("subscribers")
-            .select("id")
+            .select("id, unsubscribed_at")
             .eq("email", order.email.toLowerCase())
             .maybeSingle();
 
           const subscriberId = subMatch?.id;
+
+          // CAN-SPAM: skip if buyer has unsubscribed
+          if (subMatch?.unsubscribed_at) {
+            skipped++;
+            continue;
+          }
 
           // Get sent keys — check by email_key pattern for this order's tier
           let sentKeys = new Set<string>();
@@ -270,6 +276,7 @@ export async function GET(req: NextRequest) {
       .lt("generated_at", twelveHoursAgo.toISOString());
 
     if (staleReviews && staleReviews.length > 0) {
+      const reviewOrigin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
       for (const staleCase of staleReviews) {
         const hoursAgo = Math.round(
           (Date.now() - new Date(staleCase.generated_at).getTime()) / (1000 * 60 * 60)
@@ -287,7 +294,7 @@ export async function GET(req: NextRequest) {
               <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${staleCase.id}</p>
             </div>
             <div style="margin: 24px 0;">
-              <a href="https://imnotanattorney.com/api/deliver?token=${process.env.OPERATOR_SECRET}&case=${staleCase.id}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px;">Approve &amp; Deliver</a>
+              <a href="${reviewOrigin}/api/deliver?token=${process.env.OPERATOR_SECRET}&case=${staleCase.id}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px;">Approve &amp; Deliver</a>
             </div>`,
         });
 
@@ -296,6 +303,48 @@ export async function GET(req: NextRequest) {
           .from("cases")
           .update({ review_reminder_sent: true })
           .eq("id", staleCase.id);
+      }
+    }
+
+    // ============================================================
+    // PART 4: STUCK INTAKE DETECTION (generation may have been dropped)
+    // ============================================================
+    const twoHoursAgo = new Date();
+    twoHoursAgo.setHours(twoHoursAgo.getHours() - 2);
+
+    const { data: stuckIntakes } = await supabase
+      .from("cases")
+      .select("id, email, charge_type, tier, updated_at")
+      .eq("status", "intake")
+      .lt("updated_at", twoHoursAgo.toISOString());
+
+    if (stuckIntakes && stuckIntakes.length > 0) {
+      const intakeOrigin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+      for (const stuck of stuckIntakes) {
+        const hoursStuck = Math.round(
+          (Date.now() - new Date(stuck.updated_at).getTime()) / (1000 * 60 * 60)
+        );
+        await sendEmail({
+          to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+          subject: `ALERT: Case stuck in intake for ${hoursStuck}+ hours — ${stuck.email}`,
+          html: `<h1 style="color: #EF4444;">Case Stuck — Generation May Have Failed</h1>
+            <p>Case has been in "intake" status for <strong>${hoursStuck} hours</strong>. Report generation may have been silently dropped.</p>
+            <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
+              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${stuck.email}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${stuck.tier}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${stuck.id}</p>
+            </div>
+            <p><strong>Action:</strong> Manually trigger generation:</p>
+            <code>POST ${intakeOrigin}/api/generate/case-decoder</code><br/>
+            <code>Body: {"caseId": "${stuck.id}"}</code><br/>
+            <code>Header: Authorization: Bearer [OPERATOR_SECRET]</code>`,
+        });
+
+        // Update to prevent re-alerting every cron run
+        await supabase
+          .from("cases")
+          .update({ status: "intake-stalled", updated_at: new Date().toISOString() })
+          .eq("id", stuck.id);
       }
     }
 

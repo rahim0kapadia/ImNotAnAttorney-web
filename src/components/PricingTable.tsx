@@ -97,7 +97,7 @@ const tiers = [
       "Trial Intelligence Operations — daily trial prep cycle",
       "Research on all witness backgrounds and credibility questions for your attorney",
       "Research summaries your attorney can use when drafting reply briefs",
-      "Attack intelligence packages",
+      "Witness impeachment research packages",
       "Research-based questions about jury selection and trial strategy for your attorney",
       "JOA research brief — every applicable standard, formatted for your attorney",
       "Trial morning cheat sheets",

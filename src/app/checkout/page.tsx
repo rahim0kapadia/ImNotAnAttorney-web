@@ -90,7 +90,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Pre-discovery red flags",
       "35-50 targeted questions",
       "BONUS: Judge Tendencies Card — one-page quick-reference for your assigned judge",
-      "BONUS: Plea vs. Trial Decision Framework — questions to help evaluate the cooperation decision",
+      "BONUS: Plea vs. Trial Question Framework — questions to help evaluate the cooperation decision",
     ],
     guarantee:
       "Delivered within 72 hours with 35+ targeted questions — or your money back.",
@@ -213,7 +213,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Trial Intelligence Operations — evening debrief + morning prep brief every trial day",
       "Research on all witness backgrounds and credibility questions for your attorney",
       "Research summaries your attorney can use when drafting reply briefs",
-      "Attack intelligence packages",
+      "Witness impeachment research packages",
       "Research-based questions about jury selection and trial strategy for your attorney",
       "JOA research brief — every applicable standard, formatted for your attorney",
       "Trial morning cheat sheets",
@@ -504,7 +504,7 @@ function CheckoutContent() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
-              className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
             <p className="mt-1 text-xs text-zinc-400">No spam — ever. Just your report and delivery updates.</p>
           </div>
@@ -520,7 +520,7 @@ function CheckoutContent() {
               value={courtDate}
               onChange={(e) => setCourtDate(e.target.value)}
               min={new Date().toISOString().split("T")[0]}
-              className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-sm text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-base text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
           </div>
 

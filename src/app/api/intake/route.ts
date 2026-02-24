@@ -90,8 +90,7 @@ export async function POST(req: NextRequest) {
 
         // Trigger report generation for case-decoder tier
         if (pendingCase.tier === "case-decoder") {
-          const origin = req.headers.get("origin") || req.headers.get("x-forwarded-host")
-            ? `https://${req.headers.get("x-forwarded-host")}` : "https://imnotanattorney.com";
+          const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
           fetch(`${origin}/api/generate/case-decoder`, {
             method: "POST",
             headers: {
