@@ -1,5 +1,4 @@
 {
-  "$comment": "vercel.json -- Vercel deployment configuration. Cron: /api/cron/drip runs daily at 2:00 PM UTC for email drip campaign. maxDuration 300s (5min) to handle large subscriber lists (requires Vercel Pro). Cron does not run locally -- test via curl http://localhost:3000/api/cron/drip.",
   "crons": [
     {
       "path": "/api/cron/drip",
