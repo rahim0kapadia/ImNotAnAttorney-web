@@ -239,7 +239,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Witness Reliability Rankings — each witness scored across 7 credibility dimensions",
     ],
     guarantee:
-      "Initial package within 28 business days. Weekly updates every 7 days thereafter.",
+      "Initial package within 25-28 business days. Weekly updates every 7 days thereafter.",
     priorityPrice: "$997",
     priorityDesc: "Expedited 20-day delivery",
     priorityPriceNum: 997,

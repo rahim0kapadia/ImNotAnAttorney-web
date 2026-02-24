@@ -63,7 +63,13 @@ export function Header() {
             About
           </Link>
           <Link
-            href="/intake"
+            href="/sample"
+            className="text-sm text-zinc-400 transition-colors hover:text-white"
+          >
+            Sample Report
+          </Link>
+          <Link
+            href="/checkout?tier=case-decoder"
             className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
           >
             Get Started
@@ -135,7 +141,14 @@ export function Header() {
               About
             </Link>
             <Link
-              href="/intake"
+              href="/sample"
+              onClick={() => setMobileOpen(false)}
+              className="text-sm text-zinc-400 transition-colors hover:text-white"
+            >
+              Sample Report
+            </Link>
+            <Link
+              href="/checkout?tier=case-decoder"
               onClick={() => setMobileOpen(false)}
               className="rounded-lg bg-amber-500 px-4 py-2 text-center text-sm font-semibold text-black transition-colors hover:bg-amber-400"
             >

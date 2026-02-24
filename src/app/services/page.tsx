@@ -518,7 +518,7 @@ export default function ServicesPage() {
                 <span className="font-semibold text-white">
                   The War Room ($3,497):
                 </span>{" "}
-                Initial package within 28 business days. Weekly updates thereafter.
+                Initial package within 25-28 business days. Weekly updates thereafter.
               </p>
               <p>
                 <span className="font-semibold text-white">

@@ -14,7 +14,7 @@
  *   2. Response time card — 24 hours on business days
  *   3. Mailing address card — 195 Dr MLK Jr St N, St Petersburg, FL 33701
  *      (required by CAN-SPAM for all commercial email senders)
- *   4. CTA card — "Ready to get started?" with link to /intake
+ *   4. CTA card — "Ready to get started?" with link to /services
  *   5. Legal disclaimer — not a law firm, no attorney-client relationship,
  *      communications not privileged
  *
@@ -47,7 +47,7 @@ export default function ContactPage() {
         </p>
 
         <div className="mt-10 space-y-8">
-          {/* EMAIL — Primary contact method */}
+          {/* EMAIL — Primary contact method (includes response time) */}
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
             <h2 className="text-lg font-semibold text-white">Email</h2>
             <a
@@ -58,14 +58,6 @@ export default function ContactPage() {
             </a>
             <p className="mt-2 text-sm text-zinc-400">
               We respond within 24 hours on business days.
-            </p>
-          </div>
-
-          {/* RESPONSE TIME — Sets expectations for email replies */}
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-            <h2 className="text-lg font-semibold text-white">Response Time</h2>
-            <p className="mt-2 text-sm text-zinc-400">
-              We respond to all emails within 24 hours on business days.
             </p>
           </div>
 
