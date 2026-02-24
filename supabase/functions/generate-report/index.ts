@@ -1,35 +1,81 @@
 /**
- * Claude API client for Case Decoder report generation.
- * Uses claude-sonnet-4-6 with charge-specific conditional frameworks.
+ * Supabase Edge Function: generate-report
+ *
+ * Self-contained Case Decoder report generator.
+ * Called by Vercel /api/generate/case-decoder (fire-and-forget).
+ * Has 150s timeout (vs Vercel Hobby's 25s) — enough for Claude API.
+ *
+ * Flow: fetch case/intake → Claude API (streaming) → render HTML → save to Supabase → email operator
  */
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+// ============================================================
+// HELPERS
+// ============================================================
 
-interface IntakeData {
-  first_name: string;
-  last_name?: string;
-  email: string;
-  charge_type: string;
-  state?: string;
-  incident_location?: string;
-  has_attorney?: string;
-  has_discovery?: string;
-  situation?: string;
-  time_since_arrest?: string;
-  arrest_circumstances?: string[];
-  co_defendants?: string;
-  attorney_strategy?: string;
-  specific_question?: string;
-  case_number?: string;
-  court_date?: string;
-  plea_offered?: string;
-  plea_terms?: string;
-  communication_frequency?: string;
-  last_attorney_contact?: string;
-  arrest_date?: string;
-  evidence_type?: string[];
-  services?: string[];
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
+
+const PHYSICAL_ADDRESS = "195 Dr MLK Jr St N, St Petersburg, FL 33701";
+
+async function sendEmail(params: {
+  to: string;
+  subject: string;
+  html: string;
+  resendKey: string;
+  fromEmail: string;
+  operatorEmail: string;
+}): Promise<{ success: boolean; error?: string }> {
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${params.resendKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: params.fromEmail,
+        to: [params.to],
+        subject: params.subject,
+        reply_to: params.operatorEmail,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0C0A09; color: #D4D4D8; padding: 32px;">
+            ${params.html}
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #27272A; font-size: 12px; color: #71717A; text-align: center;">
+              <p style="margin: 0 0 8px;">ImNotAnAttorney</p>
+              <p style="margin: 0;">Legal information and research services — not legal advice.</p>
+              <p style="margin: 4px 0 0; font-size: 11px; color: #52525B;">${PHYSICAL_ADDRESS}</p>
+            </div>
+          </div>
+        `,
+      }),
+    });
+
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.message || "Failed to send email");
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("[Email] Failed to send:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Failed to send email",
+    };
+  }
+}
+
+// ============================================================
+// CLAUDE API — SYSTEM PROMPT + CHARGE FRAMEWORKS
+// ============================================================
 
 const SYSTEM_PROMPT = `You are an elite criminal defense research analyst with the combined expertise of 40+ legendary defense attorneys. Your analysis draws from documented winning methods including:
 
@@ -63,6 +109,32 @@ RULES:
 - Always end with specific upgrade triggers based on actual findings in the report — reference specific scores, patterns, or gaps
 - Each question MUST include: the question itself, why it matters, what a good answer sounds like, what a bad answer reveals, and the source methodology
 - Output the report in clean markdown with proper headings (## for sections, ### for subsections)`;
+
+interface IntakeData {
+  first_name: string;
+  last_name?: string;
+  email: string;
+  charge_type: string;
+  state?: string;
+  incident_location?: string;
+  has_attorney?: string;
+  has_discovery?: string;
+  situation?: string;
+  time_since_arrest?: string;
+  arrest_circumstances?: string[];
+  co_defendants?: string;
+  attorney_strategy?: string;
+  specific_question?: string;
+  case_number?: string;
+  court_date?: string;
+  plea_offered?: string;
+  plea_terms?: string;
+  communication_frequency?: string;
+  last_attorney_contact?: string;
+  arrest_date?: string;
+  evidence_type?: string[];
+  services?: string[];
+}
 
 function getChargeSpecificBlock(chargeType: string): string {
   const ct = chargeType.toLowerCase();
@@ -104,7 +176,6 @@ Focus on: document privilege, cooperation strategy (proffer, immunity, DPA), par
     return `\nCHARGE-SPECIFIC CONTEXT — FEDERAL CASE:
 Focus on: sentencing guidelines calculation (base offense level, criminal history category), substantial assistance / 5K1.1, mandatory minimum overrides (safety valve), grand jury process, federal discovery (Brady, Giglio, Jencks Act), 70-day speedy trial, pretrial detention (Bail Reform Act).`;
   }
-  // "Other" or unrecognized — general frameworks still apply
   return "";
 }
 
@@ -220,17 +291,13 @@ ${evidenceBlock}
 - 2-3 specific findings from the report → concrete upgrade recommendations. Upgrade path table with credit amounts ($197 credited, 12-month window). Immediate action items (print, priority questions, document answers, evidence checklist).`;
 }
 
-export async function generateCaseDecoderReport(intake: IntakeData): Promise<string> {
-  if (!ANTHROPIC_API_KEY) {
-    throw new Error("ANTHROPIC_API_KEY not configured");
-  }
-
+async function callClaudeAPI(intake: IntakeData, apiKey: string): Promise<string> {
   const userPrompt = buildUserPrompt(intake);
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
-      "x-api-key": ANTHROPIC_API_KEY,
+      "x-api-key": apiKey,
       "anthropic-version": "2023-06-01",
       "content-type": "application/json",
     },
@@ -249,7 +316,7 @@ export async function generateCaseDecoderReport(intake: IntakeData): Promise<str
     throw new Error(`Claude API error (${response.status}): ${err}`);
   }
 
-  // Stream response to avoid function timeout — collect text chunks
+  // Stream response — collect text chunks
   const reader = response.body?.getReader();
   if (!reader) throw new Error("No response body");
 
@@ -287,55 +354,48 @@ export async function generateCaseDecoderReport(intake: IntakeData): Promise<str
   return text;
 }
 
-import { escapeHtml } from "@/lib/email";
+// ============================================================
+// HTML RENDERER
+// ============================================================
 
-/**
- * Wraps markdown report in branded HTML with dark theme + print-friendly CSS.
- */
-export function renderReportHtml(markdown: string, meta: {
-  firstName: string;
-  charges: string;
-  jurisdiction: string;
-  reportDate: string;
-  reportId: string;
-  caseNumber?: string;
-  courtDate?: string;
-  daysSinceArrest?: number | null;
-}): string {
-  // Simple markdown → HTML conversion for report sections
+function renderReportHtml(
+  markdown: string,
+  meta: {
+    firstName: string;
+    charges: string;
+    jurisdiction: string;
+    reportDate: string;
+    reportId: string;
+    caseNumber?: string;
+    courtDate?: string;
+    daysSinceArrest?: number | null;
+  }
+): string {
   let html = markdown
-    // Headers
     .replace(/^#### (.+)$/gm, '<h4 style="color: #F59E0B; font-size: 14px; margin-top: 20px;">$1</h4>')
     .replace(/^### (.+)$/gm, '<h3 style="color: white; font-size: 16px; margin-top: 24px;">$1</h3>')
     .replace(/^## (.+)$/gm, '<h2 style="color: #F59E0B; font-size: 20px; margin-top: 32px; padding-top: 24px; border-top: 1px solid #27272A;">$1</h2>')
-    // Bold
     .replace(/\*\*(.+?)\*\*/g, '<strong style="color: white;">$1</strong>')
-    // Italic
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    // Blockquotes
+    .replace(/\*(.+?)\*/g, "<em>$1</em>")
     .replace(/^> (.+)$/gm, '<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">$1</blockquote>')
-    // Checkboxes (must come before unordered lists)
     .replace(/^- \[x\] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9745; $1</li>')
     .replace(/^- \[ \] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9744; $1</li>')
-    // Unordered lists
     .replace(/^- (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
-    // Ordered lists
     .replace(/^\d+\. (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
-    // Tables (simple conversion)
     .replace(/\|(.+)\|/g, (match) => {
       const cells = match.split("|").filter(Boolean).map((c) => c.trim());
-      if (cells.every((c) => /^[-:]+$/.test(c))) return ""; // separator row
+      if (cells.every((c) => /^[-:]+$/.test(c))) return "";
       const isHeader = cells.some((c) => c.startsWith("**") || c === "#");
       const tag = isHeader ? "th" : "td";
       const style = `style="padding: 8px 12px; border: 1px solid #27272A; text-align: left;"`;
       return `<tr>${cells.map((c) => `<${tag} ${style}>${c}</${tag}>`).join("")}</tr>`;
     })
-    // Paragraphs (lines not already converted)
     .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p style="margin: 8px 0; line-height: 1.6;">$1</p>');
 
-  // Wrap tables
-  html = html.replace(/(<tr>[\s\S]*?<\/tr>(\s*<tr>[\s\S]*?<\/tr>)*)/g,
-    '<table style="width: 100%; border-collapse: collapse; margin: 16px 0;">$1</table>');
+  html = html.replace(
+    /(<tr>[\s\S]*?<\/tr>(\s*<tr>[\s\S]*?<\/tr>)*)/g,
+    '<table style="width: 100%; border-collapse: collapse; margin: 16px 0;">$1</table>'
+  );
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -404,3 +464,291 @@ export function renderReportHtml(markdown: string, meta: {
 </body>
 </html>`;
 }
+
+// ============================================================
+// MAIN HANDLER
+// ============================================================
+
+Deno.serve(async (req) => {
+  // CORS preflight
+  if (req.method === "OPTIONS") {
+    return new Response("ok", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers":
+          "authorization, x-client-info, apikey, content-type",
+      },
+    });
+  }
+
+  const headers = { "Content-Type": "application/json" };
+
+  try {
+    // --- Config from env ---
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const anthropicKey = Deno.env.get("ANTHROPIC_API_KEY");
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    const resendFrom =
+      Deno.env.get("RESEND_FROM_EMAIL") || "noreply@imnotanattorney.com";
+    const operatorEmail =
+      Deno.env.get("OPERATOR_EMAIL") || "rahim0kapadia@gmail.com";
+    const operatorSecret = Deno.env.get("OPERATOR_SECRET");
+    const siteUrl =
+      Deno.env.get("NEXT_PUBLIC_SITE_URL") || "https://imnotanattorney.com";
+
+    if (!anthropicKey) {
+      return new Response(
+        JSON.stringify({ error: "ANTHROPIC_API_KEY not configured" }),
+        { status: 500, headers }
+      );
+    }
+
+    // --- Parse request ---
+    const { caseId, force } = await req.json();
+    if (!caseId) {
+      return new Response(
+        JSON.stringify({ error: "caseId required" }),
+        { status: 400, headers }
+      );
+    }
+
+    // --- Supabase admin client ---
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // --- Fetch case ---
+    const { data: caseData, error: caseError } = await supabase
+      .from("cases")
+      .select("*")
+      .eq("id", caseId)
+      .single();
+
+    if (caseError || !caseData) {
+      return new Response(
+        JSON.stringify({ error: "Case not found" }),
+        { status: 404, headers }
+      );
+    }
+
+    // --- Idempotency ---
+    if (
+      !force &&
+      (caseData.status === "review" || caseData.status === "delivered")
+    ) {
+      return new Response(
+        JSON.stringify({
+          success: true,
+          caseId,
+          reportToken: caseData.report_token,
+          status: caseData.status,
+          skipped: true,
+          message: `Report already ${caseData.status}. Pass force:true to regenerate.`,
+        }),
+        { headers }
+      );
+    }
+
+    // --- Find linked intake ---
+    let intake: IntakeData | null = null;
+    if (caseData.intake_id) {
+      const { data } = await supabase
+        .from("intakes")
+        .select("*")
+        .eq("id", caseData.intake_id)
+        .single();
+      intake = data;
+    }
+
+    // Fallback: most recent intake by email
+    if (!intake) {
+      const { data } = await supabase
+        .from("intakes")
+        .select("*")
+        .eq("email", caseData.email.toLowerCase())
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      intake = data;
+
+      if (intake) {
+        await supabase
+          .from("cases")
+          .update({
+            intake_id: (intake as unknown as { id: string }).id,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("id", caseId);
+      }
+    }
+
+    if (!intake) {
+      if (resendKey) {
+        await sendEmail({
+          to: operatorEmail,
+          subject: `Report generation failed: No intake for ${caseData.email}`,
+          html: `<h1 style="color: #EF4444;">No Intake Found</h1>
+            <p>Attempted to generate Case Decoder report but no intake form was found.</p>
+            <p><strong>Case ID:</strong> ${caseId}</p>
+            <p><strong>Customer:</strong> ${caseData.email}</p>
+            <p><strong>Action:</strong> Send intake form link to customer or create intake manually.</p>`,
+          resendKey,
+          fromEmail: resendFrom,
+          operatorEmail,
+        });
+      }
+      return new Response(
+        JSON.stringify({ error: "No intake found for this case" }),
+        { status: 404, headers }
+      );
+    }
+
+    // --- Generate report with retry ---
+    let markdown: string;
+    try {
+      markdown = await callClaudeAPI(intake, anthropicKey);
+    } catch (firstError) {
+      console.error("[Generate] First attempt failed:", firstError);
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      try {
+        markdown = await callClaudeAPI(intake, anthropicKey);
+      } catch (secondError) {
+        console.error("[Generate] Second attempt failed:", secondError);
+
+        await supabase
+          .from("cases")
+          .update({
+            status: "generation-failed",
+            updated_at: new Date().toISOString(),
+          })
+          .eq("id", caseId);
+
+        if (resendKey) {
+          await sendEmail({
+            to: operatorEmail,
+            subject: `URGENT: Report generation failed for ${escapeHtml(intake.first_name)}`,
+            html: `<h1 style="color: #EF4444;">Report Generation Failed</h1>
+              <p>Claude API failed after 2 attempts.</p>
+              <p><strong>Case ID:</strong> ${caseId}</p>
+              <p><strong>Customer:</strong> ${caseData.email}</p>
+              <p><strong>Charge Type:</strong> ${escapeHtml(intake.charge_type)}</p>
+              <p><strong>Error:</strong> ${escapeHtml(secondError instanceof Error ? secondError.message : String(secondError))}</p>
+              <div style="margin-top: 16px;">
+                <a href="${siteUrl}/api/generate/case-decoder" style="display: inline-block; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Retry Generation</a>
+                <p style="margin-top: 8px; font-size: 12px; color: #71717A;">POST with {"caseId": "${caseId}"} and Authorization header</p>
+              </div>`,
+            resendKey,
+            fromEmail: resendFrom,
+            operatorEmail,
+          });
+        }
+
+        return new Response(
+          JSON.stringify({ error: "Report generation failed" }),
+          { status: 500, headers }
+        );
+      }
+    }
+
+    // --- Render HTML ---
+    const reportToken = crypto.randomUUID();
+    const reportDate = new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    let daysSinceArrest: number | null = null;
+    if (intake.arrest_date) {
+      const arrestDate = new Date(intake.arrest_date);
+      if (!isNaN(arrestDate.getTime())) {
+        daysSinceArrest = Math.floor(
+          (Date.now() - arrestDate.getTime()) / (1000 * 60 * 60 * 24)
+        );
+      }
+    }
+
+    const reportHtml = renderReportHtml(markdown, {
+      firstName: intake.first_name,
+      charges: intake.charge_type,
+      jurisdiction:
+        `${intake.state || ""}${intake.incident_location ? ` / ${intake.incident_location}` : ""}`.trim() ||
+        "Not specified",
+      reportDate,
+      reportId: reportToken.slice(0, 8).toUpperCase(),
+      caseNumber: intake.case_number || undefined,
+      courtDate: intake.court_date || undefined,
+      daysSinceArrest,
+    });
+
+    // --- Save to Supabase ---
+    await supabase
+      .from("cases")
+      .update({
+        report_html: reportHtml,
+        report_token: reportToken,
+        generated_at: new Date().toISOString(),
+        status: "review",
+        charge_type: intake.charge_type,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", caseId);
+
+    // --- Send operator review email ---
+    if (resendKey) {
+      await sendEmail({
+        to: operatorEmail,
+        subject: `Review Report: ${escapeHtml(intake.charge_type)} — ${escapeHtml(intake.first_name)}`,
+        html: `
+          <h1 style="color: #F59E0B;">Case Decoder Report Ready for Review</h1>
+          <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
+            <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(intake.first_name)} ${escapeHtml(intake.last_name || "")}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Email:</strong> ${caseData.email}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(intake.charge_type)}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">State:</strong> ${escapeHtml(intake.state || "Not provided")}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Generated:</strong> ${reportDate}</p>
+          </div>
+
+          <div style="margin: 24px 0; display: flex; gap: 12px;">
+            <a href="${siteUrl}/api/deliver?token=${operatorSecret}&case=${caseId}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Approve &amp; Deliver</a>
+            <a href="${siteUrl}/report/${reportToken}" style="display: inline-block; padding: 14px 28px; background: #3B82F6; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Preview Report</a>
+          </div>
+
+          <details style="margin-top: 24px;">
+            <summary style="color: #F59E0B; cursor: pointer; font-weight: bold;">Full Report Preview</summary>
+            <div style="margin-top: 16px; max-height: 600px; overflow-y: auto; border: 1px solid #27272A; border-radius: 8px; padding: 16px;">
+              ${reportHtml}
+            </div>
+          </details>
+
+          <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #27272A;">
+            <p style="color: #71717A; font-size: 12px;">
+              To regenerate: POST to ${siteUrl}/api/generate/case-decoder with {"caseId": "${caseId}"}
+            </p>
+          </div>
+        `,
+        resendKey,
+        fromEmail: resendFrom,
+        operatorEmail,
+      });
+    }
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        caseId,
+        reportToken,
+        status: "review",
+      }),
+      { headers }
+    );
+  } catch (error) {
+    console.error("[generate-report] Unhandled error:", error);
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "Internal error",
+      }),
+      { status: 500, headers }
+    );
+  }
+});
