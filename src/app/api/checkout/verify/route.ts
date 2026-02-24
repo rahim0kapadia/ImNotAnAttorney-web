@@ -38,6 +38,11 @@ export async function GET(req: NextRequest) {
   if (!sessionId) {
     return NextResponse.json({ error: "Missing session_id" }, { status: 400 });
   }
+
+  // B10: Reject obviously malformed session IDs before hitting Stripe API
+  if (sessionId.length > 200 || !/^cs_/.test(sessionId)) {
+    return NextResponse.json({ verified: false });
+  }
   try {
     // Retrieve the full session object from Stripe, including metadata
     // that was set during session creation in POST /api/checkout

@@ -23,6 +23,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 /**
  * Subscribes an email address and sends the welcome email with lead magnet.
@@ -32,8 +33,17 @@ import { sendEmail } from "@/lib/email";
  */
 export async function POST(req: NextRequest) {
   try {
+    const supabase = createAdminClient();
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const { limited } = await checkRateLimit(supabase, `subscribe:${ip}`, 5, 60);
+    if (limited) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
     const body = await req.json();
-    const { email, source = "lead-capture" } = body;
+    const { email } = body;
+    const ALLOWED_SOURCES = ["lead-capture", "checkout", "blog", "score", "score-page", "resources"];
+    const source = ALLOWED_SOURCES.includes(body.source) ? body.source : "lead-capture";
 
     // =========================================================================
     // 1. EMAIL VALIDATION
@@ -48,7 +58,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const supabase = createAdminClient();
     const normalizedEmail = email.toLowerCase().trim();
 
     // =========================================================================

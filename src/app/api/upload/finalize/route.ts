@@ -48,6 +48,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (!email) {
+      return NextResponse.json(
+        { error: "email required" },
+        { status: 400 }
+      );
+    }
+
+    // Validate caseId as UUID format
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(caseId)) {
+      return NextResponse.json(
+        { error: "Invalid case ID format" },
+        { status: 400 }
+      );
+    }
+
     const supabase = createAdminClient();
 
     // =========================================================================
@@ -75,7 +90,7 @@ export async function POST(req: NextRequest) {
     // optional here (unlike the upload endpoint) because the finalize button
     // may be called from a context where email is already verified client-side.
     // =========================================================================
-    if (email && caseRecord.email.toLowerCase() !== email.toLowerCase().trim()) {
+    if (caseRecord.email.toLowerCase() !== email.toLowerCase().trim()) {
       return NextResponse.json(
         { error: "Email does not match this case" },
         { status: 403 }

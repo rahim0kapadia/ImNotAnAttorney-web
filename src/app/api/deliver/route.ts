@@ -49,6 +49,15 @@ import { verifyOperatorToken } from "@/lib/site";
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
 
+/** Maps tier slugs to display names for delivery emails. */
+const TIER_NAMES: Record<string, string> = {
+  "case-decoder": "Case Decoder",
+  "intelligence-brief": "Intelligence Brief",
+  "x-ray": "X-Ray",
+  "war-room": "War Room",
+  "situation-room": "Situation Room",
+};
+
 /**
  * Returns the site origin URL for constructing absolute links.
  * Falls back to production URL if NEXT_PUBLIC_SITE_URL is not set.
@@ -279,7 +288,15 @@ export async function POST(req: NextRequest) {
   }
 
   const now = new Date().toISOString();
-  const reportUrl = `${origin}/report/${caseData.report_token}`;
+  // B11: Validate report_token is a UUID before interpolating into HTML
+  const reportToken = caseData.report_token;
+  if (!reportToken || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(reportToken)) {
+    return new NextResponse(
+      "<h1>Invalid report token</h1><p>Case has no valid report token.</p>",
+      { status: 400, headers: { "Content-Type": "text/html" } }
+    );
+  }
+  const reportUrl = `${origin}/report/${reportToken}`;
 
   // ──────────────────────────────────────────────────────────────
   // PERSONALIZATION: Get customer's first name from linked intake
@@ -307,22 +324,23 @@ export async function POST(req: NextRequest) {
   //   - Report view link (primary CTA)
   //   - Usage instructions (print, priority questions, document answers)
   //   - Upgrade upsell (100% credit toward higher tiers within 12 months)
+  const tierName = TIER_NAMES[caseData.tier] || "Case Decoder";
   const emailResult = await sendEmail({
     to: caseData.email,
-    subject: "Your Case Decoder Report is Ready",
+    subject: `Your ${tierName} Report is Ready`,
     unsubscribeEmail: caseData.email,
     html: `
-      <h1 style="color: #F59E0B;">Your Case Decoder Report is Ready</h1>
+      <h1 style="color: #F59E0B;">Your ${escapeHtml(tierName)} Report is Ready</h1>
       <p>Hi ${escapeHtml(firstName)},</p>
-      <p>Your personalized Case Decoder report is ready to view. It contains targeted questions, evidence patterns, and accountability benchmarks built specifically from your case details.</p>
+      <p>Your personalized ${escapeHtml(tierName)} report is ready to view. It contains targeted questions, evidence patterns, and accountability benchmarks built specifically from your case details.</p>
       <a href="${reportUrl}" style="display: inline-block; margin: 24px 0; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">View Your Report</a>
       <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
         <p style="margin: 0; color: white; font-weight: bold;">How to use your report:</p>
         <ol style="color: #D4D4D8; padding-left: 20px; margin-top: 12px;">
           <li style="margin-bottom: 8px;"><strong style="color: white;">Print it</strong> and bring it to your next attorney meeting</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Start with the Priority Questions</strong> (Section 5, Q1-Q5)</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Start with the Targeted Questions</strong> (Section 5) — lead with Q1-Q5</li>
           <li style="margin-bottom: 8px;"><strong style="color: white;">Document every answer</strong> — email your attorney a summary after the meeting</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Use the Evidence Checklist</strong> (Section 6) when you receive discovery</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Use the Evidence Pattern Checklist</strong> (Section 6) when you receive discovery</li>
         </ol>
       </div>
       <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">
@@ -345,10 +363,10 @@ export async function POST(req: NextRequest) {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     const retryResult = await sendEmail({
       to: caseData.email,
-      subject: "Your Case Decoder Report is Ready",
+      subject: `Your ${tierName} Report is Ready`,
       unsubscribeEmail: caseData.email,
       html: `<h1 style="color: #F59E0B;">Your Report is Ready</h1>
-        <p>View your Case Decoder report: <a href="${reportUrl}" style="color: #F59E0B;">${reportUrl}</a></p>`,
+        <p>View your ${escapeHtml(tierName)} report: <a href="${reportUrl}" style="color: #F59E0B;">${reportUrl}</a></p>`,
     });
     if (!retryResult.success) {
       // ── OPERATOR FALLBACK: Both email attempts failed ──
@@ -376,6 +394,10 @@ export async function POST(req: NextRequest) {
   //   2. The operator was alerted to send it manually
   //   3. Not marking delivered would leave the case in "review" limbo
   //      and the cron would send review reminder alerts
+  // E3: Set report token expiry to 12 months from now
+  const expiresAt = new Date();
+  expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+
   await supabase
     .from("cases")
     .update({
@@ -385,6 +407,7 @@ export async function POST(req: NextRequest) {
       reviewed_at: now,
       deliverable_url: reportUrl,
       updated_at: now,
+      report_token_expires_at: expiresAt.toISOString(),
     })
     .eq("id", caseId);
 
@@ -396,15 +419,20 @@ export async function POST(req: NextRequest) {
   // "post_case_decoder_delivery" as unsent and re-send it.
   // Uses upsert with onConflict to be idempotent if delivery is
   // somehow triggered twice.
+  // C2: Auto-create subscriber record for non-subscriber buyers to prevent
+  // duplicate delivery emails from the cron (which needs a subscriber FK).
   const { data: subData } = await supabase
     .from("subscribers")
+    .upsert(
+      { email: caseData.email.toLowerCase(), source: `purchase-${caseData.tier}` },
+      { onConflict: "email" }
+    )
     .select("id")
-    .eq("email", caseData.email.toLowerCase())
-    .maybeSingle();
+    .single();
 
   if (subData?.id) {
     await supabase.from("drip_emails").upsert(
-      { subscriber_id: subData.id, email_key: "post_case_decoder_delivery" },
+      { subscriber_id: subData.id, email_key: `post_${caseData.tier.replace(/-/g, "_")}_delivery` },
       { onConflict: "subscriber_id,email_key" }
     );
   }

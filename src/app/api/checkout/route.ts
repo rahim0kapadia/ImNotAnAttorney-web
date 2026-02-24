@@ -24,6 +24,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, TIERS, isValidTier } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 /**
  * Creates a Stripe Checkout session for a given product tier.
@@ -38,6 +39,12 @@ import { createAdminClient } from "@/lib/supabase/admin";
  */
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const { limited } = await checkRateLimit(createAdminClient(), `checkout:${ip}`, 10, 300);
+    if (limited) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
     const body = await req.json();
     const { tier, email, consent, priorityDelivery, courtDate, chargeType } = body;
 
@@ -58,9 +65,17 @@ export async function POST(req: NextRequest) {
       process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
     const supabase = createAdminClient();
 
+    // B6+B15: Require email and validate format before Stripe session creation.
+    // Without email, the webhook can't create orders properly.
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json(
+        { error: "Valid email required" },
+        { status: 400 }
+      );
+    }
+
     // Normalize email: lowercase + trim for consistent lookups across all tables.
-    // Null if no email provided (anonymous checkout is allowed but limits features).
-    const normalizedEmail = email ? email.toLowerCase().trim() : null;
+    const normalizedEmail = email.toLowerCase().trim();
 
     // =========================================================================
     // 2. EMAIL CAPTURE FOR ABANDONMENT RECOVERY
@@ -86,7 +101,17 @@ export async function POST(req: NextRequest) {
     // ensures the Stripe session metadata has charge context for downstream
     // report generation without requiring the customer to re-enter it.
     // =========================================================================
-    let resolvedChargeType = chargeType || null;
+    // B8: Validate courtDate format if provided (ISO date, max 20 chars)
+    const validCourtDate = courtDate && /^\d{4}-\d{2}-\d{2}$/.test(courtDate) ? courtDate : null;
+
+    // B9: Validate chargeType against known types before writing to Stripe metadata
+    const ALLOWED_CHARGE_TYPES = [
+      "drug-possession", "drug-trafficking", "dui-first", "dui-repeat",
+      "white-collar", "assault", "theft", "other-felony", "other-misdemeanor",
+      "drug", "dui", "domestic-violence", "sex-offense", "weapons", "federal",
+      "robbery", "burglary", "fraud", "other",
+    ];
+    let resolvedChargeType = (chargeType && ALLOWED_CHARGE_TYPES.includes(chargeType)) ? chargeType : null;
     if (!resolvedChargeType && normalizedEmail) {
       const { data: priorIntake, error: intakeError } = await supabase
         .from("intakes")
@@ -319,7 +344,7 @@ export async function POST(req: NextRequest) {
         ...(upgradeCreditVoided && { upgrade_credit_voided: "true" }),
         ...(consent && { consent_timestamp: new Date().toISOString() }),
         ...(priorityDelivery && { priority_delivery: "true" }),
-        ...(courtDate && { court_date: courtDate }),
+        ...(validCourtDate && { court_date: validCourtDate }),
         ...(resolvedChargeType && { charge_type: resolvedChargeType }),
         ...(upgradeCreditCents > 0 && { upgrade_credit_applied: String(upgradeCreditCents) }),
       },

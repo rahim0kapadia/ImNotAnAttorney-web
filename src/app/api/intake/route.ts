@@ -39,6 +39,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import { SITE_URL } from "@/lib/site";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
@@ -68,11 +69,17 @@ const ALLOWED_CHARGE_TYPES = [
   "other-misdemeanor",
   // Also accept free-form values from older intake forms
   "drug", "dui", "domestic-violence", "sex-offense", "weapons", "federal",
-  "robbery", "burglary", "fraud",
+  "robbery", "burglary", "fraud", "other",
 ];
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const { limited } = await checkRateLimit(createAdminClient(), `intake:${ip}`, 5, 300);
+    if (limited) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
     const body = await req.json();
     const { firstName, email, chargeType } = body;
 
@@ -109,39 +116,45 @@ export async function POST(req: NextRequest) {
     const supabase = createAdminClient();
 
     // ──────────────────────────────────────────────────────────────
+    // INPUT LENGTH LIMITS (prevent megabyte payloads)
+    // ──────────────────────────────────────────────────────────────
+    const cap = (val: string | undefined | null, max: number) =>
+      val ? val.slice(0, max) : null;
+
+    // ──────────────────────────────────────────────────────────────
     // SAVE INTAKE RECORD
     // ──────────────────────────────────────────────────────────────
     // Stores all case details from the multi-step intake form.
     // Email is normalized (lowercase + trim) to ensure consistent
     // matching when the Stripe webhook or this endpoint links intakes
     // to cases. All optional fields default to null/empty arrays.
-    const { error } = await supabase.from("intakes").insert({
-      first_name: firstName,
-      last_name: body.lastName || null,
+    const { data: insertedIntake, error } = await supabase.from("intakes").insert({
+      first_name: firstName.slice(0, 100),
+      last_name: cap(body.lastName, 100),
       email: email.toLowerCase().trim(),
-      phone: body.phone || null,
+      phone: cap(body.phone, 30),
       charge_type: chargeType,
-      state: body.state || null,
-      has_attorney: body.hasAttorney || null,
-      has_discovery: body.hasDiscovery || null,
-      services: body.services || [],
-      situation: body.situation || null,
+      state: cap(body.state, 50),
+      has_attorney: cap(body.hasAttorney, 50),
+      has_discovery: cap(body.hasDiscovery, 50),
+      services: Array.isArray(body.services) ? body.services.slice(0, 10) : [],
+      situation: cap(body.situation, 5000),
       // Extended intake fields (added in conversion optimization round)
-      time_since_arrest: body.timeSinceArrest || null,
-      arrest_circumstances: body.arrestCircumstances || [],
-      incident_location: body.incidentLocation || null,
-      co_defendants: body.coDefendants || null,
-      attorney_strategy: body.attorneyStrategy || null,
-      specific_question: body.specificQuestion || null,
-      case_number: body.caseNumber || null,
-      court_date: body.courtDate || null,
-      plea_offered: body.pleaOffered || null,
-      plea_terms: body.pleaTerms || null,
-      communication_frequency: body.communicationFrequency || null,
-      last_attorney_contact: body.lastAttorneyContact || null,
-      arrest_date: body.arrestDate || null,
-      evidence_type: body.evidenceType || [],
-    });
+      time_since_arrest: cap(body.timeSinceArrest, 50),
+      arrest_circumstances: Array.isArray(body.arrestCircumstances) ? body.arrestCircumstances.slice(0, 10) : [],
+      incident_location: cap(body.incidentLocation, 100),
+      co_defendants: cap(body.coDefendants, 200),
+      attorney_strategy: cap(body.attorneyStrategy, 200),
+      specific_question: cap(body.specificQuestion, 500),
+      case_number: cap(body.caseNumber, 50),
+      court_date: cap(body.courtDate, 20),
+      plea_offered: cap(body.pleaOffered, 20),
+      plea_terms: cap(body.pleaTerms, 2000),
+      communication_frequency: cap(body.communicationFrequency, 50),
+      last_attorney_contact: cap(body.lastAttorneyContact, 100),
+      arrest_date: cap(body.arrestDate, 20),
+      evidence_type: Array.isArray(body.evidenceType) ? body.evidenceType.slice(0, 15) : [],
+    }).select("id").single();
 
     if (error) {
       console.error("[Intake] Supabase error:", error);
@@ -173,18 +186,11 @@ export async function POST(req: NextRequest) {
       .maybeSingle();
 
     if (pendingCase) {
-      // ── FETCH THE INTAKE WE JUST CREATED ──
-      // We need the intake ID to link it to the case. We query by email
-      // + most recent created_at since we just inserted it above.
-      const { data: latestIntake } = await supabase
-        .from("intakes")
-        .select("id")
-        .eq("email", normalizedEmail)
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .single();
-
-      if (latestIntake) {
+      // C10: Use the ID returned from the insert instead of re-querying by email.
+      // Re-querying was race-prone: two concurrent intakes from the same email
+      // could return the wrong intake ID.
+      if (insertedIntake) {
+        const latestIntake = insertedIntake;
         // ── STATUS TRANSITION: awaiting-intake → intake ──
         // Links the intake record to the case and copies the charge_type
         // to the case for operator dashboard visibility. The "intake" status
@@ -251,7 +257,7 @@ export async function POST(req: NextRequest) {
           <li style="margin-bottom: 8px;">Purchase your chosen service — 100% of what you pay is credited if you upgrade later</li>
           <li style="margin-bottom: 8px;">We'll analyze your case and deliver your report within the guaranteed timeframe</li>
         </ol>
-        <p style="color: #A1A1AA;">Not sure which tier? Start with the <a href="${SITE_URL}/checkout?tier=case-decoder" style="color: #F59E0B;">Case Decoder ($197)</a> — it covers the essentials and every dollar counts toward an upgrade.</p>
+        <p style="color: #A1A1AA;">Not sure where to start? For <strong style="color: white;">${escapeHtml(chargeType.replace(/-/g, " "))}</strong> cases, the <a href="${SITE_URL}/checkout?tier=case-decoder" style="color: #F59E0B;">Case Decoder ($197)</a> covers the essentials — and every dollar counts toward an upgrade.</p>
       `;
 
     await sendEmail({
@@ -275,7 +281,7 @@ export async function POST(req: NextRequest) {
         <h1 style="color: #F59E0B;">New Intake Submission</h1>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
           <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Name:</strong> ${escapeHtml(firstName)} ${escapeHtml(body.lastName || "")}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Email:</strong> ${email}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Email:</strong> ${escapeHtml(email)}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(chargeType)}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">State:</strong> ${escapeHtml(body.state || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Has Attorney:</strong> ${body.hasAttorney || "Not specified"}</p>

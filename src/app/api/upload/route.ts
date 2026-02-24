@@ -198,13 +198,14 @@ export async function POST(req: NextRequest) {
       new_url: path,
     });
 
-    // Fallback to read-modify-write if RPC doesn't exist yet (migration pending)
+    // Hard error if RPC fails — the race-prone read-modify-write fallback was removed.
+    // Migration 003 must be applied for append_file_url RPC to exist.
     if (appendError) {
-      console.warn("[Upload] RPC append_file_url not available, using fallback:", appendError.message);
-      await supabase
-        .from("cases")
-        .update({ file_urls: [...existingUrls, path] })
-        .eq("id", caseId);
+      console.error("[Upload] RPC append_file_url failed:", appendError.message);
+      return NextResponse.json(
+        { error: "Failed to record file. Please try again." },
+        { status: 500 }
+      );
     }
 
     // =========================================================================

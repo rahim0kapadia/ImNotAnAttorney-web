@@ -127,7 +127,7 @@ export async function POST(req: NextRequest) {
     const email = rawEmail ? rawEmail.toLowerCase().trim() : null;
     const amount = session.amount_total;
 
-    if (!tier || !email || !amount) {
+    if (!tier || !email || amount == null) {
       console.error("[Stripe Webhook] Missing metadata:", { tier, email, amount });
       return NextResponse.json({ received: true });
     }
@@ -263,10 +263,10 @@ export async function POST(req: NextRequest) {
         caseId = null;
         await sendEmail({
           to: OPERATOR_EMAIL,
-          subject: `URGENT: Case creation failed for ${email}`,
+          subject: `URGENT: Case creation failed for ${escapeHtml(email)}`,
           html: `<h1 style="color: #EF4444;">Case Creation Failed</h1>
             <p>Payment received but case record failed to create.</p>
-            <p><strong>Customer:</strong> ${email}</p>
+            <p><strong>Customer:</strong> ${escapeHtml(email)}</p>
             <p><strong>Tier:</strong> ${tier}</p>
             <p><strong>Order ID:</strong> ${orderData.id}</p>
             <p><strong>Error:</strong> ${caseError.message}</p>
@@ -383,6 +383,7 @@ export async function POST(req: NextRequest) {
           ${caseId ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>` : ""}
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Requires Discovery:</strong> ${requiresDiscovery ? "Yes" : "No"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Intake Found:</strong> ${caseId ? (requiresDiscovery ? "N/A (discovery tier)" : "Check case status") : "Case creation failed"}</p>
+          ${session.metadata?.prerequisite_skipped === "true" ? '<p style="margin: 8px 0 0; color: #EF4444;"><strong>WARNING: War Room prerequisite NOT confirmed — customer may not have completed War Room.</strong></p>' : ""}
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Time:</strong> ${new Date().toISOString()}</p>
         </div>
       `,
@@ -436,6 +437,9 @@ export async function POST(req: NextRequest) {
 
         if (refundError) {
           console.error("[Stripe Webhook] Refund update error:", refundError);
+          // DB update failed — don't send "refund processed" notification
+          // because the refund wasn't actually recorded. Return early.
+          return NextResponse.json({ received: true });
         }
       } else {
         // ── PARTIAL REFUND: Log timestamp for audit, keep order active ──
