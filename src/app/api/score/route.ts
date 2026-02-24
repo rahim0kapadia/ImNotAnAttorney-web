@@ -33,6 +33,8 @@
  *   only receives expected values.
  */
 import { NextRequest, NextResponse } from "next/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 /** Input shape for the score calculator -- all 7 fields are required */
 type ScoreInput = {
@@ -324,6 +326,12 @@ const ALLOWED_VALUES: Record<string, string[]> = {
  */
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const { limited } = await checkRateLimit(createAdminClient(), `score:${ip}`, 10, 60);
+    if (limited) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
     const body = await req.json();
 
     // =========================================================================
