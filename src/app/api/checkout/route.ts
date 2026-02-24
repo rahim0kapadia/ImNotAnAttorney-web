@@ -255,8 +255,12 @@ export async function POST(req: NextRequest) {
               tierOrder.indexOf(o.tier) < currentTierIndex
           )
           .reduce(
-            (sum: number, o: { amount: number; tier: string }) =>
-              sum + (o.amount || 0),
+            (sum: number, o: { amount: number; tier: string }) => {
+              // C8: Use base tier price, not o.amount which may include priority delivery add-on.
+              // A customer who paid $197 + $97 priority = $294 should only get $197 credit.
+              const baseTier = TIERS[o.tier as keyof typeof TIERS];
+              return sum + (baseTier ? baseTier.price : o.amount || 0);
+            },
             0
           );
       }
