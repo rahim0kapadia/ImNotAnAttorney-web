@@ -124,6 +124,7 @@ function SuccessContent() {
   const [verified, setVerified] = useState<boolean | null>(null);
   const [timeLeft, setTimeLeft] = useState<string>("");
   const [customerEmail, setCustomerEmail] = useState<string>("");
+  const [sessionCreated, setSessionCreated] = useState<number | null>(null);
 
   // Verify the Stripe checkout session server-side via /api/checkout/verify.
   // This confirms the payment actually completed (prevents URL spoofing).
@@ -138,22 +139,36 @@ function SuccessContent() {
       .then((data) => {
         setVerified(data.verified === true);
         if (data.email) setCustomerEmail(data.email);
+        if (data.sessionCreated) setSessionCreated(data.sessionCreated);
       })
       .catch(() => setVerified(false));
   }, [sessionId]);
 
-  // OTO countdown timer. Creates a 24-hour window from first page visit.
-  // End time is persisted in localStorage so refreshing doesn't reset the clock.
-  // Key format: oto_<tier>_<sessionId> to prevent cross-session interference.
+  // OTO countdown timer. 24-hour window from Stripe session creation time.
+  // Source of truth is sessionCreated (server-side, from Stripe). localStorage
+  // is used only as a cache to prevent flicker on initial render before the
+  // verify API responds. Private/incognito mode can't game the timer since
+  // the server-side timestamp is immutable.
   useEffect(() => {
     if (!tier || !sessionId) return;
     const key = `oto_${tier}_${sessionId}`;
-    let endTime = localStorage.getItem(key);
-    if (!endTime) {
-      endTime = String(Date.now() + 24 * 60 * 60 * 1000);
-      localStorage.setItem(key, endTime);
+
+    // Compute end time from server-side session creation timestamp
+    let end: number;
+    if (sessionCreated) {
+      // sessionCreated is Unix seconds from Stripe — convert to ms + 24h
+      end = sessionCreated * 1000 + 24 * 60 * 60 * 1000;
+      // Cache in localStorage for flicker-free re-renders
+      localStorage.setItem(key, String(end));
+    } else {
+      // Fallback to localStorage cache while waiting for verify API response
+      const cached = localStorage.getItem(key);
+      if (cached) {
+        end = Number(cached);
+      } else {
+        return; // No server time yet, no cache — wait for verify response
+      }
     }
-    const end = Number(endTime);
 
     const tick = () => {
       const diff = end - Date.now();
@@ -166,7 +181,7 @@ function SuccessContent() {
     tick();
     const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
-  }, [tier, sessionId]);
+  }, [tier, sessionId, sessionCreated]);
 
   if (verified === null) {
     return (

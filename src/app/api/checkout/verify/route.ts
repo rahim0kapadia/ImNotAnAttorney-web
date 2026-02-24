@@ -66,6 +66,7 @@ export async function GET(req: NextRequest) {
       email: session.customer_email || session.customer_details?.email,
       amount: session.amount_total,
       productName: session.metadata?.product_name,
+      sessionCreated: session.created, // Unix timestamp (seconds) for OTO timer TTL
     });
   } catch {
     // On any Stripe API error (invalid session ID, network failure, etc.),

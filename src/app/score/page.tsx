@@ -339,7 +339,7 @@ export default function ScorePage() {
                   {q.options.map((opt) => (
                     <label
                       key={opt.value}
-                      className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 text-sm transition-colors ${
+                      className={`flex min-h-[44px] cursor-pointer items-center gap-3 rounded-lg border px-3 py-3 text-sm transition-colors ${
                         answers[q.id] === opt.value
                           ? "border-amber-500/50 bg-amber-500/5 text-white"
                           : "border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:border-zinc-700"
@@ -356,7 +356,7 @@ export default function ScorePage() {
                             [q.id]: opt.value,
                           }))
                         }
-                        className="h-4 w-4 border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
+                        className="h-5 w-5 border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
                       />
                       {opt.label}
                     </label>
