@@ -472,6 +472,24 @@ export async function POST(req: NextRequest) {
             .eq("order_id", refundedOrder.id);
         }
 
+        // ── CUSTOMER NOTIFICATION (partial refunds only) ──
+        // Full refunds: Stripe sends its own receipt. Partial refunds: customer
+        // gets no notification from Stripe, so we send one.
+        if (!isFullRefund) {
+          const partialRefundAmount = (charge.amount_refunded / 100).toFixed(2);
+          await sendEmailWithRetry({
+            to: refundedOrder.email,
+            subject: `Partial Refund Processed — $${partialRefundAmount}`,
+            unsubscribeEmail: refundedOrder.email,
+            html: `
+              <h1 style="color: #F59E0B;">Partial Refund Issued</h1>
+              <p>We've issued a partial refund of <strong>$${partialRefundAmount}</strong> to your original payment method.</p>
+              <p>You should see this reflected in 1-3 business days depending on your bank.</p>
+              <p style="color: #A1A1AA;">Your report access and any upgrade credits remain active.</p>
+            `,
+          }, `partial refund notification for ${refundedOrder.email}`);
+        }
+
         // ── OPERATOR NOTIFICATION ──
         // Always notify operator for both full and partial refunds
         const refundAmount = (charge.amount_refunded / 100).toFixed(2);
@@ -488,6 +506,29 @@ export async function POST(req: NextRequest) {
               : "<p><strong>Note:</strong> Partial refund — order remains 'paid'. Upgrade credits and report access preserved.</p>"}`,
         });
       }
+    }
+  }
+
+  // ================================================================
+  // EVENT: charge.refund.updated — Refund bounce detection (E10)
+  // ================================================================
+  // Fires when a refund's status changes. If it fails or requires action,
+  // alert the operator so they can resolve it manually via Stripe dashboard.
+  if (event.type === "charge.refund.updated") {
+    const refund = event.data.object;
+    if (refund.status === "failed" || refund.status === "requires_action") {
+      await sendEmail({
+        to: OPERATOR_EMAIL,
+        subject: `ALERT: Refund ${refund.status} — ${escapeHtml(refund.id)}`,
+        html: `<h1 style="color: #EF4444;">Refund ${escapeHtml(refund.status)}</h1>
+          <p>A refund has ${refund.status === "failed" ? "failed" : "stalled and requires action"}.</p>
+          <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
+            <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Refund ID:</strong> ${escapeHtml(refund.id)}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Amount:</strong> $${((refund.amount || 0) / 100).toFixed(2)}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Status:</strong> ${escapeHtml(refund.status)}</p>
+          </div>
+          <p><strong>Action:</strong> Check Stripe dashboard and resolve manually.</p>`,
+      });
     }
   }
 

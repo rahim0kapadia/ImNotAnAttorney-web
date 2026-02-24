@@ -111,8 +111,8 @@ export default async function ReportPage({
             Report No Longer Available
           </h1>
           <p className="mt-3 text-zinc-400">
-            This report is no longer available. If you believe this is an error,
-            please contact us.
+            Your refund was processed and report access has been revoked per our
+            refund policy. If you have questions, contact us.
           </p>
           <p className="mt-4 text-sm text-zinc-400">
             Email us at{" "}
@@ -129,15 +129,90 @@ export default async function ReportPage({
   }
 
   if (!caseData || !caseData.report_html) {
+    // Status-aware messages for cases without report HTML yet
+    const status = caseData?.status;
+
+    // generation-failed: explain the issue and set expectation
+    if (status === "generation-failed" || status === "intake-stalled") {
+      return (
+        <div className="flex min-h-[60vh] items-center justify-center px-4">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-white">
+              Report Generation Issue
+            </h1>
+            <p className="mt-3 text-zinc-400">
+              Report generation encountered an issue. Our team has been notified
+              and will reach out within 24 hours.
+            </p>
+            <p className="mt-4 text-sm text-zinc-400">
+              Questions? Email us at{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`} className="text-amber-400 underline decoration-amber-400/50">
+                {CONTACT_EMAIL}
+              </a>
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    // awaiting-intake: direct customer to intake form
+    if (status === "awaiting-intake") {
+      return (
+        <div className="flex min-h-[60vh] items-center justify-center px-4">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-white">
+              Waiting for Your Case Details
+            </h1>
+            <p className="mt-3 text-zinc-400">
+              Please complete your case details form so we can begin generating
+              your report.
+            </p>
+            <a
+              href="/intake"
+              className="mt-6 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+            >
+              Complete Your Case Details
+            </a>
+          </div>
+        </div>
+      );
+    }
+
+    // pending/uploaded: waiting for discovery documents
+    if (status === "pending" || status === "uploaded" || status === "submitted") {
+      return (
+        <div className="flex min-h-[60vh] items-center justify-center px-4">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-white">
+              Waiting for Discovery Documents
+            </h1>
+            <p className="mt-3 text-zinc-400">
+              {status === "pending"
+                ? "Your report requires discovery documents to be submitted before analysis can begin."
+                : "Your discovery documents have been received. Analysis is in progress."}
+            </p>
+            {status === "pending" && (
+              <a
+                href="/upload"
+                className="mt-6 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+              >
+                Upload Discovery Documents
+              </a>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // Default: generic "not available yet"
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-white">
-            Report Not Available
+            Report Not Available Yet
           </h1>
           <p className="mt-3 text-zinc-400">
-            This report is not available yet. If you recently made a purchase,
-            your report is being prepared and you&apos;ll receive an email when
+            Your report is being prepared. You&apos;ll receive an email when
             it&apos;s ready.
           </p>
           <p className="mt-4 text-sm text-zinc-400">

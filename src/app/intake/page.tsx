@@ -301,7 +301,7 @@ function IntakeForm() {
                 </legend>
                 <div className="mt-4 grid gap-4 md:grid-cols-2">
                   <div>
-                    <label htmlFor="firstName" className={labelClass}>First Name</label>
+                    <label htmlFor="firstName" className={labelClass}>First Name <span className="text-red-400">*</span></label>
                     <input id="firstName" type="text" required value={form.firstName as string}
                       onChange={(e) => setField("firstName", e.target.value)}
                       className={inputClass} placeholder="First name" />
@@ -314,7 +314,7 @@ function IntakeForm() {
                   </div>
                 </div>
                 <div className="mt-4">
-                  <label htmlFor="email" className={labelClass}>Email</label>
+                  <label htmlFor="email" className={labelClass}>Email <span className="text-red-400">*</span></label>
                   <input id="email" type="email" required value={form.email as string}
                     onChange={(e) => setField("email", e.target.value)}
                     className={inputClass} placeholder="you@email.com" />
@@ -330,7 +330,7 @@ function IntakeForm() {
               <fieldset>
                 <legend className="text-sm font-semibold text-zinc-300">Your Case</legend>
                 <div className="mt-4">
-                  <label htmlFor="chargeType" className={labelClass}>Type of Charges</label>
+                  <label htmlFor="chargeType" className={labelClass}>Type of Charges <span className="text-red-400">*</span></label>
                   <select id="chargeType" required value={form.chargeType as string}
                     onChange={(e) => setField("chargeType", e.target.value)}
                     className={selectClass}>
@@ -339,7 +339,7 @@ function IntakeForm() {
                   </select>
                 </div>
                 <div className="mt-4">
-                  <label htmlFor="state" className={labelClass}>State</label>
+                  <label htmlFor="state" className={labelClass}>State <span className="text-red-400">*</span></label>
                   <select id="state" required value={form.state as string}
                     onChange={(e) => setField("state", e.target.value)}
                     className={selectClass}>
@@ -349,7 +349,7 @@ function IntakeForm() {
                 </div>
                 <div className="mt-4">
                   <label htmlFor="timeSinceArrest" className={labelClass}>
-                    When were you arrested or charged?
+                    When were you arrested or charged? <span className="text-red-400">*</span>
                   </label>
                   <input id="timeSinceArrest" type="month" value={form.timeSinceArrest as string}
                     max={new Date().toISOString().slice(0, 7)}
@@ -406,7 +406,7 @@ function IntakeForm() {
                 </legend>
                 <div className="mt-4">
                   <label htmlFor="hasAttorney" className={labelClass}>
-                    Do you have an attorney?
+                    Do you have an attorney? <span className="text-red-400">*</span>
                   </label>
                   <select id="hasAttorney" required value={form.hasAttorney as string}
                     onChange={(e) => setField("hasAttorney", e.target.value)}

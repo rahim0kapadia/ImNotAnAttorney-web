@@ -116,6 +116,29 @@ export async function POST(req: NextRequest) {
     const supabase = createAdminClient();
 
     // ──────────────────────────────────────────────────────────────
+    // DUPLICATE INTAKE PREVENTION (60-second dedup)
+    // ──────────────────────────────────────────────────────────────
+    // Prevents accidental double-submissions from double-clicks or
+    // network retries. If an intake from the same email exists within
+    // the last 60 seconds, return 409 Conflict instead of creating a duplicate.
+    const normalizedEmailDedup = email.toLowerCase().trim();
+    const sixtySecondsAgo = new Date(Date.now() - 60 * 1000).toISOString();
+    const { data: recentIntake } = await supabase
+      .from("intakes")
+      .select("id")
+      .eq("email", normalizedEmailDedup)
+      .gte("created_at", sixtySecondsAgo)
+      .limit(1)
+      .maybeSingle();
+
+    if (recentIntake) {
+      return NextResponse.json(
+        { error: "Intake already submitted. Please wait before resubmitting." },
+        { status: 409 }
+      );
+    }
+
+    // ──────────────────────────────────────────────────────────────
     // INPUT LENGTH LIMITS (prevent megabyte payloads)
     // ──────────────────────────────────────────────────────────────
     const cap = (val: string | undefined | null, max: number) =>

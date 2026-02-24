@@ -190,6 +190,18 @@ function SuccessContent() {
           <p className="mt-4 text-zinc-400">
             We couldn&apos;t verify this payment. If you completed checkout, check your email for a confirmation — it may take a moment to process.
           </p>
+          {sessionId && (
+            <p className="mt-3 text-sm text-zinc-500">
+              Reference: {sessionId.slice(0, 20)}...
+            </p>
+          )}
+          <p className="mt-3 text-sm text-zinc-400">
+            Need help? Email{" "}
+            <a href={`mailto:${CONTACT_EMAIL}${sessionId ? `?subject=Payment%20issue%20-%20${sessionId.slice(3, 11).toUpperCase()}` : ""}`} className="text-amber-400 underline decoration-amber-400/50">
+              {CONTACT_EMAIL}
+            </a>
+            {sessionId && <> with reference <strong>{sessionId.slice(3, 11).toUpperCase()}</strong></>}
+          </p>
           <Link
             href="/services"
             className="mt-6 inline-block rounded-lg border border-zinc-700 px-6 py-3 text-sm font-semibold text-zinc-300 transition-colors hover:bg-zinc-800"
@@ -243,13 +255,16 @@ function SuccessContent() {
             {info.showUpload && (
               <div className="mt-8 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
                 <p className="text-sm font-semibold text-amber-400">
-                  Check your email — we sent a personalized upload link to your inbox.
+                  When you&apos;re ready, upload your discovery documents:
                 </p>
+                <Link
+                  href="/upload"
+                  className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+                >
+                  Upload Discovery Documents &rarr;
+                </Link>
                 <p className="mt-3 text-xs text-zinc-500">
-                  Didn&apos;t get the email?{" "}
-                  <Link href="/upload" className="text-amber-400 underline hover:text-amber-300">
-                    Go to the upload page
-                  </Link>
+                  We also sent upload instructions to your email.
                 </p>
               </div>
             )}

@@ -270,15 +270,21 @@ export async function POST(req: NextRequest) {
       // negative amount (which would cause an API error).
       if (upgradeCreditCents > 0) {
         const sessionTotal = tierConfig.price + (priorityDelivery && tierConfig.priorityPrice ? tierConfig.priorityPrice : 0);
-        const cappedCredit = Math.min(upgradeCreditCents, sessionTotal);
+        // Ensure minimum $0.50 charge so Stripe creates a payment_intent.
+        // Without a payment_intent, the order cannot be refunded later.
+        // Stripe minimum charge is 50 cents.
+        const maxCredit = Math.max(sessionTotal - 50, 0);
+        const cappedCredit = Math.min(upgradeCreditCents, maxCredit);
 
-        const coupon = await stripe.coupons.create({
-          amount_off: cappedCredit,
-          currency: "usd",
-          duration: "once",
-          name: "Upgrade Credit",
-        });
-        stripeCouponId = coupon.id;
+        if (cappedCredit > 0) {
+          const coupon = await stripe.coupons.create({
+            amount_off: cappedCredit,
+            currency: "usd",
+            duration: "once",
+            name: "Upgrade Credit",
+          });
+          stripeCouponId = coupon.id;
+        }
       }
     }
 

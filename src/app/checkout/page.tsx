@@ -334,6 +334,7 @@ function CheckoutContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [consentChecked, setConsentChecked] = useState(false);
   const [courtDate, setCourtDate] = useState("");
   const [priorityDelivery, setPriorityDelivery] = useState(false);
@@ -354,7 +355,7 @@ function CheckoutContent() {
             Invalid tier selected
           </h1>
           <Link
-            href="/#pricing"
+            href="/services"
             className="mt-4 inline-block text-amber-400 underline"
           >
             View pricing options
@@ -410,7 +411,7 @@ function CheckoutContent() {
     <div className="px-4 py-16">
       <div className="mx-auto max-w-2xl">
         <Link
-          href="/#pricing"
+          href="/services"
           className="mb-8 inline-block text-sm text-zinc-400 hover:text-white"
         >
           &larr; Back to pricing
@@ -580,11 +581,17 @@ function CheckoutContent() {
               id="email"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => { setEmail(e.target.value); if (emailError) setEmailError(null); }}
+              onBlur={() => {
+                if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                  setEmailError("Please enter a valid email address");
+                }
+              }}
               placeholder="you@example.com"
               required
-              className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className={`mt-1 w-full rounded-lg border ${emailError ? "border-red-500" : "border-zinc-700"} bg-zinc-800 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500`}
             />
+            {emailError && <p className="mt-1 text-xs text-red-400">{emailError}</p>}
             <p className="mt-1 text-xs text-zinc-400">No spam — ever. Just your report and delivery updates.</p>
           </div>
 
