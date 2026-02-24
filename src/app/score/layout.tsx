@@ -12,6 +12,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${SITE_URL}/score`,
   },
+  openGraph: {
+    title: "Free Attorney Accountability Score",
+    description:
+      "Is your attorney doing their job? Answer 7 questions and get your free score in 60 seconds. No email required.",
+    url: `${SITE_URL}/score`,
+  },
 };
 
 export default function ScoreLayout({ children }: { children: React.ReactNode }) {

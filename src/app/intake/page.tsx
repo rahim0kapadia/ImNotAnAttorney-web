@@ -244,6 +244,16 @@ function IntakeForm() {
   }
 
   if (submitted) {
+    // Context-aware success message: paid tiers get specific delivery messaging
+    const paidTierMessages: Record<string, string> = {
+      "case-decoder": "Your Case Decoder report is being generated. You\u2019ll receive it via email within 24 hours.",
+      "intelligence-brief": "Your Intelligence Brief is being prepared. You\u2019ll receive it via email within 48\u201372 hours.",
+      "x-ray": "Your X-Ray analysis has been queued. Upload your discovery documents to begin — check your email for the upload link.",
+      "war-room": "Your War Room engagement has begun. Upload your discovery documents to start — check your email for the upload link.",
+      "situation-room": "Your Situation Room application has been received. We\u2019ll contact you within 24 hours.",
+    };
+    const tierMessage = prefillTier ? paidTierMessages[prefillTier] : null;
+
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4">
         <div className="text-center">
@@ -252,8 +262,7 @@ function IntakeForm() {
           </div>
           <h1 className="text-2xl font-bold text-white">We got it.</h1>
           <p className="mt-3 text-zinc-400">
-            We&apos;ll review your information and reach out if we need
-            anything. Check your email for confirmation.
+            {tierMessage || "We\u2019ll review your information and reach out if we need anything. Check your email for confirmation."}
           </p>
           <p className="mt-6 text-sm text-zinc-400">
             In the meantime, read our{" "}

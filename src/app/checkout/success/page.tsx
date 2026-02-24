@@ -198,7 +198,7 @@ function SuccessContent() {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4">
         <div className="max-w-lg text-center">
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10 text-3xl text-red-400">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10 text-3xl text-red-400" aria-label="Error">
             &#10007;
           </div>
           <h1 className="text-2xl font-bold text-white">Payment Not Confirmed</h1>
@@ -231,7 +231,7 @@ function SuccessContent() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-4">
       <div className="max-w-lg text-center">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-amber-500/10 text-3xl text-amber-400">
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-amber-500/10 text-3xl text-amber-400" aria-label="Success">
           &#10003;
         </div>
 

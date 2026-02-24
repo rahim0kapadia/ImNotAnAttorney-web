@@ -215,6 +215,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
             }
           }} className="mt-3 flex gap-2">
             <input name="scoreEmail" type="email" required placeholder="you@example.com"
+              aria-label="Email address"
               className="flex-1 rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none" />
             <button type="submit" disabled={emailSubmitting}
               className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-bold text-black hover:bg-amber-400 disabled:opacity-50">

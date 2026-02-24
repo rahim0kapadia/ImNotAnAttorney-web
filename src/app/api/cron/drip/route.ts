@@ -347,18 +347,23 @@ export async function GET(req: NextRequest) {
 
           // ── RESOLVE PLACEHOLDERS (e.g., upload reminder needs case ID) ──
           let emailHtml = nextEmail.html;
-          if (emailHtml.includes("{{CASE_ID}}") || emailHtml.includes("{{EMAIL}}")) {
+          if (emailHtml.includes("{{CASE_ID}}") || emailHtml.includes("{{EMAIL}}") || emailHtml.includes("{{REPORT_URL}}")) {
             const { data: linkedCase } = await supabase
               .from("cases")
-              .select("id")
+              .select("id, report_token")
               .eq("email", order.email.toLowerCase())
               .eq("tier", order.tier)
               .order("created_at", { ascending: false })
               .limit(1)
               .maybeSingle();
+            const reportOrigin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+            const reportUrl = linkedCase?.report_token
+              ? `${reportOrigin}/report/${linkedCase.report_token}`
+              : `${reportOrigin}/services`;
             emailHtml = emailHtml
               .replace(/\{\{CASE_ID\}\}/g, linkedCase?.id || "")
-              .replace(/\{\{EMAIL\}\}/g, encodeURIComponent(order.email));
+              .replace(/\{\{EMAIL\}\}/g, encodeURIComponent(order.email))
+              .replace(/\{\{REPORT_URL\}\}/g, reportUrl);
           }
 
           // ── SEND + RECORD (with retry for transient failures) ──

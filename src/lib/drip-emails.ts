@@ -246,6 +246,9 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p style="font-size: 18px; color: white;"><strong>Which question got the most reaction?</strong></p>
       <p>Was it the one about weight discrepancies? The motion deadline? The accountability checklist score?</p>
       <p>Just reply to this email. One sentence is fine. Your experience helps us build better questions for every defendant who comes after you.</p>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Need to find your report?</strong> <a href="{{REPORT_URL}}" style="color: #F59E0B; text-decoration: underline;">View your Case Decoder report here</a>
+      </p>
     `,
   },
   {

@@ -204,7 +204,7 @@ export default async function ReportPage({
       );
     }
 
-    // Default: generic "not available yet"
+    // Default: generic "not available yet" (covers intake, generating, and other in-progress statuses)
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4">
         <div className="text-center">
@@ -216,7 +216,7 @@ export default async function ReportPage({
             it&apos;s ready.
           </p>
           <p className="mt-4 text-sm text-zinc-400">
-            Questions? Email us at{" "}
+            Haven&apos;t received your report within 24 hours? Contact{" "}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="text-amber-400 underline decoration-amber-400/50"
@@ -243,6 +243,15 @@ export default async function ReportPage({
           <p className="mt-3 text-zinc-400">
             Your report is still being prepared. You&apos;ll receive an email
             when it&apos;s ready to view.
+          </p>
+          <p className="mt-4 text-sm text-zinc-400">
+            Haven&apos;t received your report within 24 hours? Contact{" "}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="text-amber-400 underline decoration-amber-400/50"
+            >
+              {CONTACT_EMAIL}
+            </a>
           </p>
         </div>
       </div>
