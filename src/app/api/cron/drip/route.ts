@@ -53,10 +53,11 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { sendEmail } from "@/lib/email";
+import { sendEmail, sendEmailWithRetry, escapeHtml } from "@/lib/email";
 import { getNextNurtureEmail, getPostPurchaseEmails } from "@/lib/drip-emails";
 import type { DripEmail } from "@/lib/drip-emails";
-import { signOperatorToken } from "@/lib/site";
+import { signOperatorToken, SITE_URL } from "@/lib/site";
+import { stripe } from "@/lib/stripe";
 
 /**
  * Vercel Cron handler — runs daily at 9AM EST (14:00 UTC).
@@ -91,6 +92,34 @@ export async function GET(req: NextRequest) {
   }
 
   try {
+    // ============================================================
+    // HEARTBEAT: Detect if cron missed runs (Gap D)
+    // ============================================================
+    // If the last cron_runs entry is >48 hours old, alert the operator.
+    // This catches scenarios where Vercel cron stops firing silently.
+    // Self-healing: if cron stops for 2 days then resumes, the first
+    // run detects the gap and alerts.
+    const { data: lastRun } = await supabase
+      .from("cron_runs")
+      .select("ran_at")
+      .order("ran_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (lastRun?.ran_at) {
+      const hoursSinceLastRun = (Date.now() - new Date(lastRun.ran_at).getTime()) / (1000 * 60 * 60);
+      if (hoursSinceLastRun > 48) {
+        await sendEmail({
+          to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+          subject: `ALERT: Cron missed runs — last run was ${Math.round(hoursSinceLastRun)} hours ago`,
+          html: `<h1 style="color: #EF4444;">Cron Gap Detected</h1>
+            <p>The daily cron job hasn't run in <strong>${Math.round(hoursSinceLastRun)} hours</strong>.</p>
+            <p>Last successful run: ${new Date(lastRun.ran_at).toISOString()}</p>
+            <p><strong>Action:</strong> Check Vercel cron configuration and logs.</p>`,
+        });
+      }
+    }
+
     // ============================================================
     // PART 1: NURTURE EMAILS (subscribers who haven't bought yet)
     // ============================================================
@@ -148,8 +177,8 @@ export async function GET(req: NextRequest) {
             continue;
           }
 
-          // ── SEND + RECORD ──
-          const result = await sendEmail({
+          // ── SEND + RECORD (with retry for transient failures) ──
+          const result = await sendEmailWithRetry({
             to: sub.email,
             subject: nextEmail.subject,
             html: nextEmail.html,
@@ -332,8 +361,8 @@ export async function GET(req: NextRequest) {
               .replace(/\{\{EMAIL\}\}/g, encodeURIComponent(order.email));
           }
 
-          // ── SEND + RECORD ──
-          const result = await sendEmail({
+          // ── SEND + RECORD (with retry for transient failures) ──
+          const result = await sendEmailWithRetry({
             to: order.email,
             subject: nextEmail.subject,
             html: emailHtml,
@@ -425,8 +454,8 @@ export async function GET(req: NextRequest) {
           html: `<h1 style="color: #F59E0B;">Report Awaiting Review</h1>
             <p>A Case Decoder report has been in review for <strong style="color: #EF4444;">${hoursAgo} hours</strong>. The 24-hour delivery guarantee is at risk.</p>
             <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
-              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${staleCase.email}</p>
-              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${staleCase.charge_type || "Unknown"}</p>
+              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(staleCase.email)}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(staleCase.charge_type || "Unknown")}</p>
               <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Generated:</strong> ${new Date(staleCase.generated_at).toLocaleString()}</p>
               <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${staleCase.id}</p>
             </div>
@@ -474,12 +503,12 @@ export async function GET(req: NextRequest) {
         );
         await sendEmail({
           to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
-          subject: `ALERT: Case stuck in intake for ${hoursStuck}+ hours — ${stuck.email}`,
+          subject: `ALERT: Case stuck in intake for ${hoursStuck}+ hours — ${escapeHtml(stuck.email)}`,
           html: `<h1 style="color: #EF4444;">Case Stuck — Generation May Have Failed</h1>
             <p>Case has been in "intake" status for <strong>${hoursStuck} hours</strong>. Report generation may have been silently dropped.</p>
             <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
-              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${stuck.email}</p>
-              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${stuck.tier}</p>
+              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(stuck.email)}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(stuck.tier)}</p>
               <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${stuck.id}</p>
             </div>
             <p><strong>Action:</strong> Manually trigger generation:</p>
@@ -530,12 +559,12 @@ export async function GET(req: NextRequest) {
         );
         await sendEmail({
           to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
-          subject: `ALERT: Report generation stuck for ${minutesStuck}+ min — ${stuck.email}`,
+          subject: `ALERT: Report generation stuck for ${minutesStuck}+ min — ${escapeHtml(stuck.email)}`,
           html: `<h1 style="color: #EF4444;">Report Generation Stuck</h1>
             <p>Case has been in "generating" status for <strong>${minutesStuck} minutes</strong>. The edge function likely crashed or timed out.</p>
             <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
-              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${stuck.email}</p>
-              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${stuck.tier}</p>
+              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(stuck.email)}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(stuck.tier)}</p>
               <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${stuck.id}</p>
             </div>
             <p><strong>Retry command:</strong></p>
@@ -590,7 +619,7 @@ export async function GET(req: NextRequest) {
           if (alreadySent) continue;
         }
 
-        const result = await sendEmail({
+        const result = await sendEmailWithRetry({
           to: awCase.email,
           subject: "Reminder: Complete your case details to start your report",
           unsubscribeEmail: awCase.email,
@@ -598,7 +627,7 @@ export async function GET(req: NextRequest) {
             <h1 style="color: #F59E0B;">We're Waiting on You</h1>
             <p>You purchased your report — but we still need your case details before we can generate it.</p>
             <p>It only takes 3 minutes:</p>
-            <a href="${intakeOrigin}/intake?email=${encodeURIComponent(awCase.email)}&tier=${awCase.tier}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
+            <a href="${intakeOrigin}/intake?email=${encodeURIComponent(awCase.email)}&tier=${escapeHtml(awCase.tier)}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
             <p style="color: #A1A1AA;">Once you submit, your report will be generated within 24 hours.</p>
           `,
         });
@@ -609,6 +638,77 @@ export async function GET(req: NextRequest) {
             email_key: `intake_reminder_${awCase.id}`,
           });
           sent++;
+        }
+      }
+    }
+
+    // ============================================================
+    // PART 6b: INTAKE ESCALATION — 72h + 7d operator alerts (Gap C)
+    // ============================================================
+    // After the 24h customer reminder, cases can still sit in
+    // "awaiting-intake" forever. This escalates to the operator:
+    //   - 72 hours: "Customer paid 3 days ago, still no intake"
+    //   - 7 days: "Consider reaching out or initiating refund"
+    // Both use drip_emails dedup to avoid re-alerting.
+    const seventyTwoHoursAgo = new Date();
+    seventyTwoHoursAgo.setHours(seventyTwoHoursAgo.getHours() - 72);
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+    const { data: escalationCases } = await supabase
+      .from("cases")
+      .select("id, email, tier, created_at")
+      .eq("status", "awaiting-intake")
+      .lt("created_at", seventyTwoHoursAgo.toISOString());
+
+    if (escalationCases && escalationCases.length > 0) {
+      for (const escCase of escalationCases) {
+        const caseAge = Date.now() - new Date(escCase.created_at).getTime();
+        const daysSincePaid = Math.round(caseAge / (1000 * 60 * 60 * 24));
+        const isSevenDay = caseAge > 7 * 24 * 60 * 60 * 1000;
+        const escalationKey = isSevenDay
+          ? `intake_escalation_7d_${escCase.id}`
+          : `intake_escalation_72h_${escCase.id}`;
+
+        // Need subscriber for dedup
+        const { data: escSub } = await supabase
+          .from("subscribers")
+          .select("id")
+          .eq("email", escCase.email.toLowerCase())
+          .maybeSingle();
+
+        if (escSub?.id) {
+          const { data: alreadyEscalated } = await supabase
+            .from("drip_emails")
+            .select("id")
+            .eq("subscriber_id", escSub.id)
+            .eq("email_key", escalationKey)
+            .maybeSingle();
+
+          if (alreadyEscalated) continue;
+        }
+
+        await sendEmail({
+          to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+          subject: isSevenDay
+            ? `URGENT: Customer paid ${daysSincePaid} days ago — no intake (consider refund)`
+            : `ALERT: Customer paid ${daysSincePaid} days ago — still no intake`,
+          html: `<h1 style="color: ${isSevenDay ? "#EF4444" : "#F59E0B"};">${isSevenDay ? "Customer May Need Refund" : "Intake Still Missing"}</h1>
+            <p>Customer paid <strong>${daysSincePaid} days ago</strong> and has not submitted their intake form.</p>
+            <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid ${isSevenDay ? "#EF4444" : "#F59E0B"};">
+              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(escCase.email)}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(escCase.tier)}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${escCase.id}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Paid:</strong> ${new Date(escCase.created_at).toISOString()}</p>
+            </div>
+            <p><strong>Action:</strong> ${isSevenDay ? "Consider reaching out directly or initiating a refund." : "Send a personal follow-up email."}</p>`,
+        });
+
+        if (escSub?.id) {
+          await supabase.from("drip_emails").insert({
+            subscriber_id: escSub.id,
+            email_key: escalationKey,
+          });
         }
       }
     }
@@ -649,6 +749,276 @@ export async function GET(req: NextRequest) {
     // ============================================================
     // Remove expired rate limit entries older than 1 hour.
     await supabase.rpc("cleanup_rate_limits", { p_max_age_seconds: 3600 });
+
+    // ============================================================
+    // PART 9: STRIPE RECONCILIATION + ORPHAN ORDER DETECTION (Gap A + B)
+    // ============================================================
+    // 9a — Stripe reconciliation: detect paid sessions with no matching order.
+    //   If webhook failed or was never delivered, the customer paid but we
+    //   have no record. Check last 2 hours of paid sessions against orders.
+    //
+    // 9b — Orphan order detection: detect orders with no linked case.
+    //   If the case INSERT failed after the order INSERT, the customer has
+    //   an order but no case — services can't be delivered.
+    try {
+      // 9a: List recent paid Stripe sessions, check for missing orders
+      const twoHoursAgoEpoch = Math.floor((Date.now() - 2 * 60 * 60 * 1000) / 1000);
+      const sessions = await stripe.checkout.sessions.list({
+        limit: 50,
+        created: { gte: twoHoursAgoEpoch },
+      });
+
+      for (const session of sessions.data) {
+        if (session.payment_status !== "paid") continue;
+        if (!session.metadata?.tier) continue;
+
+        const { data: existingOrder } = await supabase
+          .from("orders")
+          .select("id")
+          .eq("stripe_session_id", session.id)
+          .maybeSingle();
+
+        if (!existingOrder) {
+          // Missing order — webhook never fired or failed
+          const email = (session.customer_email || session.customer_details?.email || "").toLowerCase().trim();
+          const tier = session.metadata.tier;
+          const amount = session.amount_total || 0;
+
+          // Auto-create the missing order
+          const { data: recoveredOrder } = await supabase
+            .from("orders")
+            .insert({
+              email,
+              tier,
+              amount,
+              status: "paid",
+              stripe_session_id: session.id,
+              stripe_payment_intent_id: typeof session.payment_intent === "string" ? session.payment_intent : null,
+              paid_at: new Date(session.created * 1000).toISOString(),
+            })
+            .select("id")
+            .single();
+
+          if (recoveredOrder) {
+            // Auto-create case
+            const caseId = crypto.randomUUID();
+            await supabase.from("cases").insert({
+              id: caseId,
+              order_id: recoveredOrder.id,
+              email,
+              tier,
+              status: "awaiting-intake",
+              file_urls: [],
+            });
+          }
+
+          // URGENT operator alert
+          await sendEmail({
+            to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+            subject: `URGENT: Recovered missed payment — ${escapeHtml(email || "unknown")}`,
+            html: `<h1 style="color: #EF4444;">Webhook Failure Recovered</h1>
+              <p>A paid Stripe session had no matching order. Auto-recovered.</p>
+              <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
+                <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(email || "unknown")}</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(tier)}</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Amount:</strong> $${(amount / 100).toFixed(2)}</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Stripe Session:</strong> ${escapeHtml(session.id)}</p>
+              </div>
+              <p><strong>Action:</strong> Verify recovery + send customer their intake/upload email if needed.</p>`,
+          });
+          errors++; // Count as an anomaly
+        }
+      }
+
+      // 9b: Orphan order detection — orders with no linked case
+      const oneHourAgo = new Date();
+      oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+
+      const { data: recentOrders } = await supabase
+        .from("orders")
+        .select("id, email, tier, amount")
+        .eq("status", "paid")
+        .lt("created_at", oneHourAgo.toISOString())
+        .gte("created_at", new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString());
+
+      if (recentOrders) {
+        for (const order of recentOrders) {
+          const { data: linkedCase } = await supabase
+            .from("cases")
+            .select("id")
+            .eq("order_id", order.id)
+            .maybeSingle();
+
+          if (!linkedCase) {
+            // Orphan order — create case and alert
+            const caseId = crypto.randomUUID();
+            await supabase.from("cases").insert({
+              id: caseId,
+              order_id: order.id,
+              email: order.email,
+              tier: order.tier,
+              status: "awaiting-intake",
+              file_urls: [],
+            });
+
+            await sendEmail({
+              to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+              subject: `URGENT: Orphan order recovered — ${escapeHtml(order.email)}`,
+              html: `<h1 style="color: #EF4444;">Orphan Order — Case Auto-Created</h1>
+                <p>Order existed with no linked case. Auto-created case.</p>
+                <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
+                  <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(order.email)}</p>
+                  <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(order.tier)}</p>
+                  <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Order ID:</strong> ${order.id}</p>
+                  <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">New Case ID:</strong> ${caseId}</p>
+                </div>
+                <p><strong>Action:</strong> Verify and send customer their intake email.</p>`,
+            });
+            errors++;
+          }
+        }
+      }
+    } catch (stripeErr) {
+      console.error("[Drip Cron] Part 9 Stripe reconciliation error:", stripeErr);
+      errors++;
+    }
+
+    // ============================================================
+    // PART 10: REPORT EXPIRING SOON EMAIL (E9)
+    // ============================================================
+    // Case Decoder reports expire at 12 months. Send a 30-day warning
+    // so customers can access their report before the link dies.
+    const thirtyDaysFromNow = new Date();
+    thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
+    const thirtyOneDaysFromNow = new Date();
+    thirtyOneDaysFromNow.setDate(thirtyOneDaysFromNow.getDate() + 31);
+
+    const { data: expiringCases } = await supabase
+      .from("cases")
+      .select("id, email, tier, report_token, report_token_expires_at")
+      .eq("status", "delivered")
+      .gte("report_token_expires_at", thirtyDaysFromNow.toISOString())
+      .lt("report_token_expires_at", thirtyOneDaysFromNow.toISOString());
+
+    if (expiringCases && expiringCases.length > 0) {
+      const reportOrigin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+      for (const expCase of expiringCases) {
+        if (!expCase.report_token) continue;
+
+        // Dedup via drip_emails
+        const { data: expSub } = await supabase
+          .from("subscribers")
+          .select("id")
+          .eq("email", expCase.email.toLowerCase())
+          .maybeSingle();
+
+        if (expSub?.id) {
+          const { data: alreadySent } = await supabase
+            .from("drip_emails")
+            .select("id")
+            .eq("subscriber_id", expSub.id)
+            .eq("email_key", `report_expiry_warning_${expCase.id}`)
+            .maybeSingle();
+
+          if (alreadySent) continue;
+        }
+
+        const result = await sendEmailWithRetry({
+          to: expCase.email,
+          subject: "Your report link expires in 30 days",
+          unsubscribeEmail: expCase.email,
+          html: `
+            <h1 style="color: #F59E0B;">Report Link Expiring Soon</h1>
+            <p>Your report link will expire in 30 days. Make sure to access it before then:</p>
+            <a href="${reportOrigin}/report/${expCase.report_token}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">View Your Report</a>
+            <p style="color: #A1A1AA;">After expiration, contact us to request a new link.</p>
+          `,
+        });
+
+        if (result.success && expSub?.id) {
+          await supabase.from("drip_emails").insert({
+            subscriber_id: expSub.id,
+            email_key: `report_expiry_warning_${expCase.id}`,
+          });
+          sent++;
+        }
+      }
+    }
+
+    // ============================================================
+    // PART 11: ABANDONED CHECKOUT RECOVERY EMAIL (U8)
+    // ============================================================
+    // Customers who entered checkout (email captured as subscriber with
+    // source="checkout") but never completed payment get a follow-up
+    // 24-48 hours later.
+    const abandonedStart = new Date();
+    abandonedStart.setHours(abandonedStart.getHours() - 48);
+    const abandonedEnd = new Date();
+    abandonedEnd.setHours(abandonedEnd.getHours() - 24);
+
+    const { data: abandonedSubs } = await supabase
+      .from("subscribers")
+      .select("id, email, created_at")
+      .eq("source", "checkout")
+      .gte("created_at", abandonedStart.toISOString())
+      .lt("created_at", abandonedEnd.toISOString())
+      .is("unsubscribed_at", null);
+
+    if (abandonedSubs && abandonedSubs.length > 0) {
+      const checkoutOrigin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+      for (const abSub of abandonedSubs) {
+        // Check if they actually completed a purchase
+        const { data: hasPaidOrder } = await supabase
+          .from("orders")
+          .select("id")
+          .eq("email", abSub.email.toLowerCase())
+          .eq("status", "paid")
+          .limit(1)
+          .maybeSingle();
+
+        if (hasPaidOrder) continue; // They bought — skip
+
+        // Dedup
+        const { data: alreadySent } = await supabase
+          .from("drip_emails")
+          .select("id")
+          .eq("subscriber_id", abSub.id)
+          .eq("email_key", `abandoned_checkout_${abSub.id}`)
+          .maybeSingle();
+
+        if (alreadySent) continue;
+
+        const result = await sendEmailWithRetry({
+          to: abSub.email,
+          subject: "Still thinking about the Case Decoder?",
+          unsubscribeEmail: abSub.email,
+          html: `
+            <h1 style="color: #F59E0B;">You Were Close</h1>
+            <p>You started checkout but didn't finish. No pressure — but if you're still thinking about it, the Case Decoder is the right place to start.</p>
+            <p>For $197, you get a plain-English charge breakdown, 10-15 targeted questions for your attorney, and red flags specific to your case stage.</p>
+            <a href="${checkoutOrigin}/checkout?tier=case-decoder" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Continue to Checkout</a>
+            <p style="color: #A1A1AA;">Questions? Reply to this email — a real person reads every message.</p>
+          `,
+        });
+
+        if (result.success) {
+          await supabase.from("drip_emails").insert({
+            subscriber_id: abSub.id,
+            email_key: `abandoned_checkout_${abSub.id}`,
+          });
+          sent++;
+        } else {
+          errors++;
+        }
+      }
+    }
+
+    // ============================================================
+    // CRON HEARTBEAT: Record this run (Gap D)
+    // ============================================================
+    await supabase.from("cron_runs").insert({
+      result: { sent, skipped, errors, cleaned },
+    });
 
     // ──────────────────────────────────────────────────────────────
     // RETURN SUMMARY

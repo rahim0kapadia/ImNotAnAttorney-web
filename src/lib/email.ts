@@ -181,3 +181,34 @@ export async function sendEmail(params: EmailParams): Promise<EmailResult> {
     };
   }
 }
+
+// ============================================================
+// SEND EMAIL WITH RETRY
+// ============================================================
+
+/**
+ * Sends an email with one automatic retry after a 2-second delay.
+ * If both attempts fail, logs the error but does NOT send an operator alert
+ * (callers in the cron use this for batch sends where individual failures
+ * are tallied in the errors counter and summarized at the end).
+ *
+ * @param params - Email parameters (to, subject, html, etc.)
+ * @returns The result of the last send attempt. Never throws.
+ */
+export async function sendEmailWithRetry(
+  params: EmailParams
+): Promise<EmailResult> {
+  const result = await sendEmail(params);
+  if (result.success) return result;
+
+  // First attempt failed — wait 2s and retry (transient Resend API errors)
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  const retry = await sendEmail(params);
+  if (!retry.success) {
+    console.error(
+      `[Email] Failed after retry: to=${params.to} subject="${params.subject}"`,
+      retry.error
+    );
+  }
+  return retry;
+}
