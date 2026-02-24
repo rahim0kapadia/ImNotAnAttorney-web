@@ -40,6 +40,8 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 
+const CONTACT_EMAIL = "help@imnotanattorney.com";
+
 /**
  * Per-tier next steps configuration.
  * Determines what the customer sees after successful payment:
@@ -80,7 +82,7 @@ const TIER_NEXT_STEPS: Record<
   },
   "war-room": {
     name: "The War Room",
-    delivery: "25-28 days",
+    delivery: "25-28 business days",
     action:
       "Upload your discovery documents and we'll begin your full intelligence operation. Expect your first update within 7 days.",
     showUpload: true,
@@ -121,9 +123,11 @@ function SuccessContent() {
 
   const [verified, setVerified] = useState<boolean | null>(null);
   const [timeLeft, setTimeLeft] = useState<string>("");
+  const [customerEmail, setCustomerEmail] = useState<string>("");
 
   // Verify the Stripe checkout session server-side via /api/checkout/verify.
   // This confirms the payment actually completed (prevents URL spoofing).
+  // Also extracts the customer email for pre-filling the intake form URL.
   useEffect(() => {
     if (!sessionId) {
       setVerified(false);
@@ -131,7 +135,10 @@ function SuccessContent() {
     }
     fetch(`/api/checkout/verify?session_id=${encodeURIComponent(sessionId)}`)
       .then((r) => r.json())
-      .then((data) => setVerified(data.verified === true))
+      .then((data) => {
+        setVerified(data.verified === true);
+        if (data.email) setCustomerEmail(data.email);
+      })
       .catch(() => setVerified(false));
   }, [sessionId]);
 
@@ -225,7 +232,7 @@ function SuccessContent() {
                   {info.noIntakeAction}
                 </p>
                 <Link
-                  href={info.intakeUrl}
+                  href={customerEmail ? `${info.intakeUrl}&email=${encodeURIComponent(customerEmail)}` : info.intakeUrl}
                   className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
                 >
                   Complete Your Case Details &rarr;
@@ -351,7 +358,7 @@ function SuccessContent() {
 
         {sessionId && (
           <p className="mt-4 text-xs text-zinc-400">
-            Session: {sessionId.slice(0, 20)}...
+            Confirmation #{sessionId.slice(3, 11).toUpperCase()}
           </p>
         )}
 
@@ -376,10 +383,10 @@ function SuccessContent() {
         <p className="mt-4 text-sm text-zinc-400">
           Questions? Email us at{" "}
           <a
-            href="mailto:help@imnotanattorney.com"
+            href={`mailto:${CONTACT_EMAIL}`}
             className="text-amber-400 underline decoration-amber-400/50"
           >
-            help@imnotanattorney.com
+            {CONTACT_EMAIL}
           </a>
         </p>
       </div>

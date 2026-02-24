@@ -51,19 +51,21 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
-/** Charge type options — covers main criminal case categories we serve. */
+/** Charge type options — covers main criminal case categories we serve.
+ * Values are slugs matching ALLOWED_CHARGE_TYPES in /api/intake.
+ * Labels are human-readable for the dropdown display. */
 const chargeTypes = [
-  "Drug Possession",
-  "Drug Trafficking / Distribution",
-  "DUI / DWI",
-  "Assault / Battery",
-  "Domestic Violence",
-  "Theft / Burglary / Robbery",
-  "Sex Offense",
-  "Weapons Charge",
-  "White Collar / Fraud",
-  "Federal Charges",
-  "Other",
+  { value: "drug-possession", label: "Drug Possession" },
+  { value: "drug-trafficking", label: "Drug Trafficking / Distribution" },
+  { value: "dui", label: "DUI / DWI" },
+  { value: "assault", label: "Assault / Battery" },
+  { value: "domestic-violence", label: "Domestic Violence" },
+  { value: "theft", label: "Theft / Burglary / Robbery" },
+  { value: "sex-offense", label: "Sex Offense" },
+  { value: "weapons", label: "Weapons Charge" },
+  { value: "white-collar", label: "White Collar / Fraud" },
+  { value: "federal", label: "Federal Charges" },
+  { value: "other", label: "Other" },
 ];
 
 /** US states + DC for jurisdiction selection. */
@@ -195,7 +197,13 @@ function IntakeForm() {
     courtDate: "",
     situation: "",
     specificQuestion: "",
-    services: interest ? [`The Situation Room ($9,997)`] : prefillTier ? [prefillTier === "case-decoder" ? "Case Decoder ($197)" : prefillTier] : ([] as string[]),
+    services: interest ? [`The Situation Room ($9,997)`] : prefillTier ? [({
+      "case-decoder": "Case Decoder ($197)",
+      "intelligence-brief": "Intelligence Brief ($797)",
+      "x-ray": "The X-Ray ($1,497)",
+      "war-room": "The War Room ($3,497)",
+      "situation-room": "The Situation Room ($9,997)",
+    } as Record<string, string>)[prefillTier] || prefillTier] : ([] as string[]),
     pleaOffered: "",
     pleaTerms: "",
     communicationFrequency: "",
@@ -327,7 +335,7 @@ function IntakeForm() {
                     onChange={(e) => setField("chargeType", e.target.value)}
                     className={selectClass}>
                     <option value="">Select charge type</option>
-                    {chargeTypes.map((ct) => <option key={ct} value={ct}>{ct}</option>)}
+                    {chargeTypes.map((ct) => <option key={ct.value} value={ct.value}>{ct.label}</option>)}
                   </select>
                 </div>
                 <div className="mt-4">
@@ -344,6 +352,7 @@ function IntakeForm() {
                     When were you arrested or charged?
                   </label>
                   <input id="timeSinceArrest" type="month" value={form.timeSinceArrest as string}
+                    max={new Date().toISOString().slice(0, 7)}
                     onChange={(e) => setField("timeSinceArrest", e.target.value)}
                     className={inputClass} />
                 </div>
@@ -599,6 +608,7 @@ function IntakeForm() {
                     placeholder="What's the one thing keeping you up at night about your case?" />
                   <p className="mt-1 text-xs text-zinc-500">
                     Optional. If provided, we&apos;ll address this first in your report.
+                    <span className="ml-2 tabular-nums">{(form.specificQuestion as string).length}/300</span>
                   </p>
                 </div>
               </fieldset>

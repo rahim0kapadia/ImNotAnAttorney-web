@@ -145,6 +145,33 @@ function escapeHtml(str: string): string {
 }
 
 /**
+ * Generates an HMAC-signed operator token for email links (Deno Web Crypto API).
+ * Mirrors signOperatorToken() from src/lib/site.ts but uses Web Crypto instead of Node.
+ * Token format: {timestamp}.{hmac} — same as the Next.js version.
+ *
+ * @param caseId - The case this token authorizes action on.
+ * @param secret - The OPERATOR_SECRET used as HMAC key.
+ * @returns A signed token string in format "timestamp.hmac".
+ */
+async function signOperatorTokenDeno(caseId: string, secret: string): Promise<string> {
+  const timestamp = Math.floor(Date.now() / 1000);
+  const payload = `${caseId}:${timestamp}`;
+  const encoder = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, encoder.encode(payload));
+  const hmac = Array.from(new Uint8Array(sig))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  return `${timestamp}.${hmac}`;
+}
+
+/**
  * CAN-SPAM physical address. Duplicated from src/lib/site.ts.
  * If this changes, update src/lib/site.ts and src/lib/email.ts as well.
  */
@@ -423,7 +450,7 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string): Promise<string
     },
     body: JSON.stringify({
       model: "claude-haiku-4-5-20251001",
-      max_tokens: 8000,
+      max_tokens: 16000,
       temperature: 0.3,
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: userPrompt }],
@@ -708,6 +735,10 @@ Deno.serve(async (req: Request) => {
     });
 
     // --- Save to Supabase ---
+    // E3: Set initial report token expiry to 12 months from generation
+    const tokenExpiry = new Date();
+    tokenExpiry.setFullYear(tokenExpiry.getFullYear() + 1);
+
     await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
       report_html: reportHtml,
       report_token: reportToken,
@@ -715,6 +746,7 @@ Deno.serve(async (req: Request) => {
       status: "review",
       charge_type: intake.charge_type,
       updated_at: new Date().toISOString(),
+      report_token_expires_at: tokenExpiry.toISOString(),
     });
 
     console.log(`[generate-report] Saved to DB, sending operator email...`);
@@ -735,7 +767,7 @@ Deno.serve(async (req: Request) => {
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Generated:</strong> ${reportDate}</p>
           </div>
           <div style="margin: 24px 0; display: flex; gap: 12px;">
-            <a href="${siteUrl}/api/deliver?token=${operatorSecret}&case=${caseId}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Approve &amp; Deliver</a>
+            <a href="${siteUrl}/api/deliver?token=${await signOperatorTokenDeno(caseId, operatorSecret)}&case=${caseId}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Approve &amp; Deliver</a>
             <a href="${siteUrl}/report/${reportToken}" style="display: inline-block; padding: 14px 28px; background: #3B82F6; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Preview Report</a>
           </div>
         `,

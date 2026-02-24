@@ -223,7 +223,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Your Attorney Meeting Prep Kit is ready",
     html: `
       <h1 style="color: #F59E0B;">Your Attorney Meeting Prep Kit Is Ready</h1>
-      <p>Your Case Decoder report is attached / linked below. Here's how to use it:</p>
+      <p>Your Case Decoder report has been delivered — check your inbox for the report link. Here's how to use it:</p>
       <ol>
         <li><strong style="color: white;">Read sections 1-3 first</strong> — charges, timeline, accountability checklist</li>
         <li><strong style="color: white;">Pick your top 5 questions</strong> from section 4 — start with the ones that surprised you most</li>
@@ -291,7 +291,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Your Intelligence Brief is ready — here's how to use it in your next meeting",
     html: `
       <h1 style="color: #F59E0B;">Your Intelligence Brief Is Ready</h1>
-      <p>Your full Intelligence Brief is attached / linked below. Here's how to use it:</p>
+      <p>Your full Intelligence Brief has been delivered — check your inbox for the report link. Here's how to use it:</p>
       <ol>
         <li><strong style="color: white;">Start with the Judge Tendencies Card</strong> — know your judge before your next hearing</li>
         <li><strong style="color: white;">Review the motion landscape</strong> — which motions apply and what the deadlines look like</li>
@@ -346,7 +346,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Your X-Ray analysis is ready — here's how to use it",
     html: `
       <h1 style="color: #F59E0B;">Your X-Ray Analysis Is Ready</h1>
-      <p>Your full discovery analysis is attached / linked below.</p>
+      <p>Your full discovery analysis has been delivered — check your inbox for the report link.</p>
       <ol>
         <li><strong style="color: white;">Start with the Discrepancy Report</strong> — these are the findings that matter most</li>
         <li><strong style="color: white;">Review the timeline</strong> — look for date conflicts and gaps</li>
@@ -366,7 +366,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">Upload Reminder</h1>
       <p>We're ready to start your X-Ray analysis — but we need your discovery documents first.</p>
       <p>If you've already uploaded them, ignore this email. If not:</p>
-      ${cta("Upload Discovery Documents →", "/upload")}
+      ${cta("Upload Discovery Documents →", "/upload?case={{CASE_ID}}&email={{EMAIL}}")}
       <p style="color: #71717A;">Not sure what to upload? Send everything your attorney gave you — police reports, lab results, witness statements, photos, any documents labeled "discovery."</p>
     `,
   },
@@ -384,7 +384,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
 
-  // --- War Room ($1,997) ---
+  // --- War Room ($3,497) ---
   {
     key: "post_war_room_delivery",
     delayDays: 0,

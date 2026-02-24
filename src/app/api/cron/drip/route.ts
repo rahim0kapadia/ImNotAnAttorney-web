@@ -4,7 +4,7 @@
  * Schedule: Runs daily at 9 AM EST (14:00 UTC) via Vercel Cron.
  * Protected by CRON_SECRET bearer token (Vercel sets this automatically).
  *
- * This cron does 5 things, in order:
+ * This cron does 7 things, in order:
  *
  * PART 1 — Nurture emails (subscribers who haven't bought yet)
  *   Sends the next unsent email in the nurture sequence based on days since signup.
@@ -84,6 +84,12 @@ export async function GET(req: NextRequest) {
   /** Counter: email send failures */
   let errors = 0;
 
+  // ── E2: ADVISORY LOCK — Prevent concurrent cron executions ──
+  const { data: lockAcquired } = await supabase.rpc("acquire_cron_lock", { lock_key: 1 });
+  if (!lockAcquired) {
+    return NextResponse.json({ message: "Cron already running (lock not acquired)" });
+  }
+
   try {
     // ============================================================
     // PART 1: NURTURE EMAILS (subscribers who haven't bought yet)
@@ -101,31 +107,35 @@ export async function GET(req: NextRequest) {
 
     if (subError) {
       console.error("[Drip Cron] Subscriber query error:", subError);
+      errors++;
     }
 
     if (subscribers && subscribers.length > 0) {
+      // ── E12: BATCH FETCH all drip_emails for these subscribers (avoids N+1) ──
+      const subIds = subscribers.map((s) => s.id);
+      const { data: allSentEmails } = await supabase
+        .from("drip_emails")
+        .select("subscriber_id, email_key")
+        .in("subscriber_id", subIds);
+
+      // Build a map of subscriber_id -> Set of sent email keys
+      const sentBySubscriber = new Map<string, Set<string>>();
+      for (const row of allSentEmails ?? []) {
+        if (!sentBySubscriber.has(row.subscriber_id)) {
+          sentBySubscriber.set(row.subscriber_id, new Set());
+        }
+        sentBySubscriber.get(row.subscriber_id)!.add(row.email_key);
+      }
+
       for (const sub of subscribers) {
         try {
-          // Calculate how many days since this person subscribed.
-          // This determines which nurture email they should receive next
-          // (e.g., day 1 = welcome, day 3 = case study, day 7 = service intro).
           const subscribedAt = new Date(sub.created_at);
           const now = new Date();
           const daysSinceSubscribe = Math.floor(
             (now.getTime() - subscribedAt.getTime()) / (1000 * 60 * 60 * 24)
           );
 
-          // ── DEDUP CHECK: What emails have we already sent to this subscriber? ──
-          // The drip_emails table acts as a send log. Each (subscriber_id, email_key)
-          // pair is unique. If the key exists, that email was already sent.
-          const { data: sentEmails } = await supabase
-            .from("drip_emails")
-            .select("email_key")
-            .eq("subscriber_id", sub.id);
-
-          const sentKeys = new Set(
-            (sentEmails ?? []).map((e: { email_key: string }) => e.email_key)
-          );
+          const sentKeys = sentBySubscriber.get(sub.id) ?? new Set<string>();
 
           // getNextNurtureEmail returns the next email in the sequence that:
           //   1. Is due based on daysSinceSubscribe
@@ -191,6 +201,7 @@ export async function GET(req: NextRequest) {
 
     if (orderError) {
       console.error("[Drip Cron] Orders query error:", orderError);
+      errors++;
     }
 
     if (orders && orders.length > 0) {
@@ -305,11 +316,27 @@ export async function GET(req: NextRequest) {
             continue;
           }
 
+          // ── RESOLVE PLACEHOLDERS (e.g., upload reminder needs case ID) ──
+          let emailHtml = nextEmail.html;
+          if (emailHtml.includes("{{CASE_ID}}") || emailHtml.includes("{{EMAIL}}")) {
+            const { data: linkedCase } = await supabase
+              .from("cases")
+              .select("id")
+              .eq("email", order.email.toLowerCase())
+              .eq("tier", order.tier)
+              .order("created_at", { ascending: false })
+              .limit(1)
+              .maybeSingle();
+            emailHtml = emailHtml
+              .replace(/\{\{CASE_ID\}\}/g, linkedCase?.id || "")
+              .replace(/\{\{EMAIL\}\}/g, encodeURIComponent(order.email));
+          }
+
           // ── SEND + RECORD ──
           const result = await sendEmail({
             to: order.email,
             subject: nextEmail.subject,
-            html: nextEmail.html,
+            html: emailHtml,
             unsubscribeEmail: order.email,
           });
 
@@ -528,16 +555,114 @@ export async function GET(req: NextRequest) {
       }
     }
 
+    // ============================================================
+    // PART 6: AWAITING-INTAKE REMINDER (paid but didn't fill form)
+    // ============================================================
+    // Customers who paid but haven't submitted intake after 24 hours
+    // get a reminder email. Without this, their case sits forever.
+    const twentyFourHoursAgo = new Date();
+    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
+
+    const { data: awaitingIntakes } = await supabase
+      .from("cases")
+      .select("id, email, tier, created_at")
+      .eq("status", "awaiting-intake")
+      .lt("created_at", twentyFourHoursAgo.toISOString());
+
+    if (awaitingIntakes && awaitingIntakes.length > 0) {
+      const intakeOrigin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+      for (const awCase of awaitingIntakes) {
+        // Check if we already sent a reminder (use drip_emails dedup)
+        const { data: existingSub } = await supabase
+          .from("subscribers")
+          .select("id")
+          .eq("email", awCase.email.toLowerCase())
+          .maybeSingle();
+
+        if (existingSub?.id) {
+          const { data: alreadySent } = await supabase
+            .from("drip_emails")
+            .select("id")
+            .eq("subscriber_id", existingSub.id)
+            .eq("email_key", `intake_reminder_${awCase.id}`)
+            .maybeSingle();
+
+          if (alreadySent) continue;
+        }
+
+        const result = await sendEmail({
+          to: awCase.email,
+          subject: "Reminder: Complete your case details to start your report",
+          unsubscribeEmail: awCase.email,
+          html: `
+            <h1 style="color: #F59E0B;">We're Waiting on You</h1>
+            <p>You purchased your report — but we still need your case details before we can generate it.</p>
+            <p>It only takes 3 minutes:</p>
+            <a href="${intakeOrigin}/intake?email=${encodeURIComponent(awCase.email)}&tier=${awCase.tier}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
+            <p style="color: #A1A1AA;">Once you submit, your report will be generated within 24 hours.</p>
+          `,
+        });
+
+        if (result.success && existingSub?.id) {
+          await supabase.from("drip_emails").insert({
+            subscriber_id: existingSub.id,
+            email_key: `intake_reminder_${awCase.id}`,
+          });
+          sent++;
+        }
+      }
+    }
+
+    // ============================================================
+    // PART 7: ABANDONED INTAKE CLEANUP (E5)
+    // ============================================================
+    // Delete intakes older than 90 days that have no corresponding case.
+    // These are browsing-only submissions (never purchased).
+    const ninetyDaysAgo = new Date();
+    ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+
+    const { data: oldIntakes } = await supabase
+      .from("intakes")
+      .select("id, email")
+      .lt("created_at", ninetyDaysAgo.toISOString());
+
+    let cleaned = 0;
+    if (oldIntakes && oldIntakes.length > 0) {
+      for (const intake of oldIntakes) {
+        // Only delete if no case exists for this email
+        const { data: hasCase } = await supabase
+          .from("cases")
+          .select("id")
+          .eq("email", intake.email.toLowerCase())
+          .limit(1)
+          .maybeSingle();
+
+        if (!hasCase) {
+          await supabase.from("intakes").delete().eq("id", intake.id);
+          cleaned++;
+        }
+      }
+    }
+
+    // ============================================================
+    // PART 8: RATE LIMIT TABLE CLEANUP (E7)
+    // ============================================================
+    // Remove expired rate limit entries older than 1 hour.
+    await supabase.rpc("cleanup_rate_limits", { p_max_age_seconds: 3600 });
+
     // ──────────────────────────────────────────────────────────────
     // RETURN SUMMARY
     // ──────────────────────────────────────────────────────────────
     // Vercel Cron logs this response. Useful for debugging drip issues.
-    return NextResponse.json({ sent, skipped, errors });
+    return NextResponse.json({ sent, skipped, errors, cleaned });
   } catch (err) {
     console.error("[Drip Cron] Unexpected error:", err);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
     );
+  } finally {
+    // ── E2: Release advisory lock regardless of success/failure ──
+    await supabase.rpc("release_cron_lock", { lock_key: 1 });
   }
 }
