@@ -1,10 +1,43 @@
 /**
- * Claude API client for Case Decoder report generation.
- * Uses claude-sonnet-4-6 with charge-specific conditional frameworks.
+ * @fileoverview LEGACY — Claude API client for Case Decoder report generation.
+ *
+ * =====================================================================
+ *  WARNING: THIS FILE IS LEGACY AND NO LONGER USED IN PRODUCTION.
+ * =====================================================================
+ *
+ * This module was replaced by the Supabase Edge Function at:
+ *   supabase/functions/generate-report/index.ts
+ *
+ * WHY IT WAS REPLACED:
+ *   Vercel Hobby plan has a 25-second function timeout. Claude API calls
+ *   for Case Decoder reports (16k max_tokens, streaming) typically take
+ *   40-90 seconds to complete. The Supabase Edge Function has a 150-second
+ *   timeout, which is sufficient for full report generation.
+ *
+ * This file used claude-sonnet-4-6 (slower, more expensive); the edge
+ * function uses claude-haiku-4-5 (fastest Claude model, adequate quality for
+ * structured report generation, stays well under 150s).
+ *
+ * The renderReportHtml() function at the bottom IS still imported by other
+ * modules (it's the shared HTML renderer for report preview pages), so
+ * this file cannot be deleted without migrating that function elsewhere.
+ *
+ * DO NOT add new callers to generateCaseDecoderReport(). Use the edge
+ * function via POST /api/generate/case-decoder instead.
+ * =====================================================================
  */
+
+// ============================================================
+// CONFIGURATION
+// ============================================================
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
+// ============================================================
+// TYPES
+// ============================================================
+
+/** Shape of a case intake record from Supabase. */
 interface IntakeData {
   first_name: string;
   last_name?: string;
@@ -31,6 +64,16 @@ interface IntakeData {
   services?: string[];
 }
 
+// ============================================================
+// CLAUDE SYSTEM PROMPT
+// ============================================================
+
+/**
+ * System prompt sent with every Claude API call. Encodes the full "persona"
+ * of the report generator: expertise attributions, formatting rules, UPL
+ * safeguards (questions + information, never directives), scoring rubrics,
+ * and minimum output requirements (15+ questions, 10-15 evidence patterns).
+ */
 const SYSTEM_PROMPT = `You are an elite criminal defense research analyst with the combined expertise of 40+ legendary defense attorneys. Your analysis draws from documented winning methods including:
 
 - Jeffrey Lichtman's 7-pillar CI destruction protocol (3 Gotti mistrials, El Chapo defense)
@@ -64,6 +107,22 @@ RULES:
 - Each question MUST include: the question itself, why it matters, what a good answer sounds like, what a bad answer reveals, and the source methodology
 - Output the report in clean markdown with proper headings (## for sections, ### for subsections)`;
 
+// ============================================================
+// CHARGE-SPECIFIC FRAMEWORKS
+// ============================================================
+
+/**
+ * Returns a charge-specific instruction block to append to the user prompt.
+ * Matches the intake's charge_type string against known categories (drug,
+ * DUI, assault, etc.) and returns focused instructions citing the relevant
+ * attorney methodologies and legal frameworks.
+ *
+ * Falls back to an empty string for unrecognized charge types — the general
+ * system prompt still applies.
+ *
+ * @param chargeType - Free-text charge description from the intake form.
+ * @returns A newline-prefixed instruction block, or empty string.
+ */
 function getChargeSpecificBlock(chargeType: string): string {
   const ct = chargeType.toLowerCase();
 
@@ -108,6 +167,21 @@ Focus on: sentencing guidelines calculation (base offense level, criminal histor
   return "";
 }
 
+// ============================================================
+// EVIDENCE-SPECIFIC QUESTIONS
+// ============================================================
+
+/**
+ * Generates additional question instructions based on the types of evidence
+ * the defendant reported in the intake form.
+ *
+ * Each evidence type (CI, forensic, body cam, DNA, digital, confession,
+ * eyewitness) maps to a focused question set citing the relevant attorney
+ * methodology (e.g., Lichtman 7-Pillar for CIs, Scheck for forensics).
+ *
+ * @param evidenceTypes - Array of evidence type strings from the intake.
+ * @returns A newline-prefixed instruction block, or empty string if none match.
+ */
 function getEvidenceSpecificQuestions(evidenceTypes: string[]): string {
   if (!evidenceTypes || evidenceTypes.length === 0) return "";
 
@@ -142,6 +216,23 @@ function getEvidenceSpecificQuestions(evidenceTypes: string[]): string {
   return "\n\nADDITIONAL EVIDENCE-SPECIFIC QUESTIONS TO INCLUDE:\n" + blocks.join("\n");
 }
 
+// ============================================================
+// USER PROMPT BUILDER
+// ============================================================
+
+/**
+ * Assembles the full user prompt from intake data, including:
+ *   - All intake fields formatted as labeled key-value pairs
+ *   - Charge-specific instruction block (drug, DUI, assault, etc.)
+ *   - Evidence-specific question instructions
+ *   - Plea and communication conditional instructions
+ *   - The full 9-section report template with per-section expectations
+ *
+ * The resulting prompt is what Claude receives as the "user" message.
+ *
+ * @param intake - The complete intake record from Supabase.
+ * @returns The assembled user prompt string.
+ */
 function buildUserPrompt(intake: IntakeData): string {
   const daysSinceArrest = intake.arrest_date
     ? Math.floor((Date.now() - new Date(intake.arrest_date).getTime()) / (1000 * 60 * 60 * 24))
@@ -220,6 +311,22 @@ ${evidenceBlock}
 - 2-3 specific findings from the report → concrete upgrade recommendations. Upgrade path table with credit amounts ($197 credited, 12-month window). Immediate action items (print, priority questions, document answers, evidence checklist).`;
 }
 
+// ============================================================
+// REPORT GENERATION (LEGACY — see edge function)
+// ============================================================
+
+/**
+ * LEGACY: Calls the Claude API to generate a Case Decoder report.
+ *
+ * @deprecated Use the Supabase Edge Function (POST /api/generate/case-decoder)
+ * instead. This function uses streaming to mitigate Vercel's timeout, but
+ * still fails on Hobby plan (25s limit) for most reports. The edge function
+ * has a 150s timeout and uses Haiku 4.5 for faster generation.
+ *
+ * @param intake - The complete intake record from Supabase.
+ * @returns The generated report as a markdown string.
+ * @throws If ANTHROPIC_API_KEY is missing, or if the Claude API returns an error.
+ */
 export async function generateCaseDecoderReport(intake: IntakeData): Promise<string> {
   if (!ANTHROPIC_API_KEY) {
     throw new Error("ANTHROPIC_API_KEY not configured");
@@ -287,10 +394,39 @@ export async function generateCaseDecoderReport(intake: IntakeData): Promise<str
   return text;
 }
 
+// ============================================================
+// HTML REPORT RENDERER (still active — used by report preview pages)
+// ============================================================
+
 import { escapeHtml } from "@/lib/email";
+import { SITE_URL } from "@/lib/site";
 
 /**
- * Wraps markdown report in branded HTML with dark theme + print-friendly CSS.
+ * Converts a markdown Case Decoder report into a branded HTML document.
+ *
+ * This function IS still active (unlike generateCaseDecoderReport above) —
+ * it is used by the /report/[token] preview page to render saved reports.
+ *
+ * Features:
+ *   - Dark theme matching the site brand (#0C0A09 bg, #F59E0B amber accent)
+ *   - Print-friendly CSS (switches to white bg, dark text via @media print)
+ *   - Header block with case metadata (all values escaped for XSS prevention)
+ *   - Legal disclaimer block
+ *   - Upgrade CTA hidden in print mode
+ *   - Simple markdown-to-HTML conversion (headers, bold, italic, blockquotes,
+ *     lists, checkboxes, tables, paragraphs)
+ *
+ * @param markdown - The raw markdown report from Claude API.
+ * @param meta - Case metadata for the header block.
+ * @param meta.firstName - Client's first name (escaped before rendering).
+ * @param meta.charges - Charge description (escaped before rendering).
+ * @param meta.jurisdiction - State / county string.
+ * @param meta.reportDate - Human-readable date string for the report.
+ * @param meta.reportId - Short UUID used as the report identifier.
+ * @param meta.caseNumber - Optional case number from intake.
+ * @param meta.courtDate - Optional next court date from intake.
+ * @param meta.daysSinceArrest - Optional computed days since arrest date.
+ * @returns A complete HTML document string (DOCTYPE through closing </html>).
  */
 export function renderReportHtml(markdown: string, meta: {
   firstName: string;
@@ -394,7 +530,7 @@ export function renderReportHtml(markdown: string, meta: {
 
   <!-- Upgrade CTA (hidden in print) -->
   <div class="no-print" style="margin-top: 32px; text-align: center;">
-    <a href="https://imnotanattorney.com/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">
+    <a href="${SITE_URL}/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">
       Upgrade — 100% Credit Applied
     </a>
     <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is credited toward any higher tier within 12 months.</p>

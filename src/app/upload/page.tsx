@@ -1,3 +1,41 @@
+/**
+ * Upload Page (/upload?case=<caseId>&email=...)
+ *
+ * Discovery document upload page for customers who purchased discovery-tier
+ * services (X-Ray $1,497+, War Room, Situation Room, Witness Pack).
+ * Customers receive a personalized upload link via email after checkout.
+ *
+ * User journey position:
+ *   Checkout success email -> THIS PAGE -> /api/upload/finalize -> analysis begins
+ *   /checkout/success (fallback link) -> THIS PAGE
+ *
+ * Query parameters:
+ *   ?case=<caseId> — Required. The Supabase case ID for file association.
+ *     If missing, shows "Missing case reference" error with link home.
+ *   ?email=... — Optional. Pre-fills the email field for ownership verification.
+ *
+ * Page structure:
+ *   1. Missing case guard — Error state if ?case param is absent
+ *   2. Success state — Shows file count + "analysis in progress" after finalize
+ *   3. Upload form:
+ *      a. "What to upload" guidance — Police reports, lab results, statements, etc.
+ *      b. Email field — Must match checkout email (case ownership verification)
+ *      c. FileUpload component — Drag-and-drop with accepted types:
+ *         PDF, Word, images, audio, video. 50MB per file limit.
+ *      d. Finalize button — Appears after files are uploaded (fileCount > 0)
+ *         Calls /api/upload/finalize with caseId + email
+ *         Includes confirm() dialog: "Submit X documents for analysis? This cannot be undone."
+ *      e. Legal disclaimer + document security notice
+ *
+ * Data flow:
+ *   FileUpload component uploads files to Supabase Storage (per-case folder).
+ *   Finalize endpoint (/api/upload/finalize):
+ *     - Verifies email matches case record
+ *     - Updates case status to "uploaded"
+ *     - Sends operator notification
+ *
+ * Wrapped in Suspense for useSearchParams.
+ */
 "use client";
 
 import { useSearchParams } from "next/navigation";
@@ -5,6 +43,10 @@ import { useState, Suspense } from "react";
 import { FileUpload } from "@/components/FileUpload";
 import Link from "next/link";
 
+/**
+ * UploadContent — client component handling case ID validation, file upload
+ * tracking, and the finalize submission flow.
+ */
 function UploadContent() {
   const searchParams = useSearchParams();
   const caseId = searchParams.get("case");
@@ -15,6 +57,7 @@ function UploadContent() {
   const [fileCount, setFileCount] = useState(0);
   const [email, setEmail] = useState(prefillEmail);
 
+  // Guard: case ID is required — without it, we can't associate uploads
   if (!caseId) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4">
@@ -36,6 +79,7 @@ function UploadContent() {
     );
   }
 
+  // Success state: shown after finalize completes
   if (submitted) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4">
@@ -111,6 +155,10 @@ function UploadContent() {
           />
         </div>
 
+        {/* FINALIZE BUTTON — Only appears after at least 1 file uploaded.   */}
+        {/* Includes a confirm() dialog to prevent accidental submission.    */}
+        {/* POSTs to /api/upload/finalize which verifies email ownership,   */}
+        {/* updates case status, and notifies the operator.                  */}
         {fileCount > 0 && (
           <>
             <button
@@ -165,6 +213,7 @@ function UploadContent() {
   );
 }
 
+/** Page export with Suspense boundary for useSearchParams. */
 export default function UploadPage() {
   return (
     <Suspense

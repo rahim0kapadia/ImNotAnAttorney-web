@@ -1,3 +1,26 @@
+/**
+ * FileUpload -- Drag-and-drop file uploader for discovery documents.
+ *
+ * Supports both drag-and-drop and click-to-browse. Files are uploaded one at a time
+ * sequentially to `/api/upload` as multipart FormData with the associated `caseId`.
+ *
+ * Validation:
+ *   - Max file size: 50 MB per file.
+ *   - Accepted MIME types: PDF, DOC, DOCX, JPEG, PNG, TIFF, MP3, WAV, MP4.
+ *   - Files that fail validation are skipped with an inline error message.
+ *
+ * Upload progress: There is no per-file progress bar -- the component shows a simple
+ * "Uploading..." message during upload. Successfully uploaded files are listed below
+ * the drop zone with filename and formatted size.
+ *
+ * The `onUploadComplete` callback fires after each batch with the full cumulative
+ * list of uploaded files, allowing parent components to track state.
+ *
+ * Used on: `/upload` page for tiers that include discovery analysis ($1,497+).
+ *
+ * @param props.caseId           - Supabase case UUID, sent with each upload request.
+ * @param props.onUploadComplete - Optional callback receiving the full list of uploaded files.
+ */
 "use client";
 
 import { useState, useCallback } from "react";

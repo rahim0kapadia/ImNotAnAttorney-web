@@ -1,9 +1,57 @@
+/**
+ * Intake Form Page (/intake)
+ *
+ * Multi-step (3-step) wizard that collects case details from customers.
+ * This is the primary data collection point for service delivery. Customers
+ * arrive here either:
+ *   a) After purchasing Case Decoder (from /checkout/success CTA)
+ *   b) Directly via /intake?interest=situation-room (Situation Room application)
+ *   c) From the contact page or nav
+ *
+ * User journey position:
+ *   /checkout/success -> THIS PAGE -> /api/intake (POST) -> Supabase intakes table
+ *   /contact CTA -> THIS PAGE
+ *
+ * Query parameters:
+ *   ?interest=situation-room — Pre-selects Situation Room in service interest
+ *   ?email=... — Pre-fills email (passed from checkout success)
+ *   ?tier=... — Pre-selects the corresponding service interest checkbox
+ *
+ * 3-Step wizard structure:
+ *   Step 1 — Contact & Charges:
+ *     Required: First name, email, charge type, state, time since arrest
+ *     Optional: Last name, phone, incident location, arrest circumstances (multi-select)
+ *
+ *   Step 2 — Your Situation:
+ *     Required: Has attorney?
+ *     Optional: Has discovery, co-defendants, attorney strategy, communication
+ *     frequency, last attorney contact, arrest date (speedy trial), plea offered
+ *     (conditionally shows plea terms textarea), evidence types (multi-select),
+ *     case number, court date, service interest checkboxes, free-text situation
+ *
+ *   Step 3 — One More Thing:
+ *     Optional: One specific question (max 300 chars, addressed first in report)
+ *     Legal disclaimer + submit button
+ *
+ * Data flow:
+ *   All form fields stored in a single `form` state object.
+ *   On submit, entire form object POSTed to /api/intake as JSON.
+ *   API inserts into Supabase `intakes` table and sends operator notification.
+ *
+ * Validation:
+ *   Step 1 gate: firstName + email + chargeType + state + timeSinceArrest
+ *   Step 2 gate: hasAttorney
+ *   Step 3: No gate (all optional), submit always available
+ *
+ * Wrapped in Suspense for useSearchParams.
+ */
 "use client";
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
+/** Charge type options — covers main criminal case categories we serve. */
 const chargeTypes = [
   "Drug Possession",
   "Drug Trafficking / Distribution",
@@ -18,6 +66,7 @@ const chargeTypes = [
   "Other",
 ];
 
+/** US states + DC for jurisdiction selection. */
 const usStates = [
   "Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut",
   "Delaware","District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois",
@@ -29,6 +78,7 @@ const usStates = [
   "West Virginia","Wisconsin","Wyoming",
 ];
 
+/** Service interest options — maps to the 5 tiers + "help me decide" fallback. */
 const serviceInterests = [
   "Case Decoder ($197)",
   "Intelligence Brief ($797)",
@@ -38,6 +88,7 @@ const serviceInterests = [
   "Not sure — help me decide",
 ];
 
+/** How law enforcement got involved — helps determine applicable motions. */
 const arrestCircumstances = [
   "Traffic stop",
   "Search warrant",
@@ -48,6 +99,7 @@ const arrestCircumstances = [
   "Other",
 ];
 
+/** Incident location — affects search/seizure analysis (home = higher 4A protection). */
 const incidentLocations = [
   "Home / residence",
   "Vehicle",
@@ -57,6 +109,7 @@ const incidentLocations = [
   "Other",
 ];
 
+/** Co-defendant status — affects cooperation/snitch analysis in report. */
 const coDefendantOptions = [
   "I was alone",
   "Co-defendant(s) charged",
@@ -64,6 +117,7 @@ const coDefendantOptions = [
   "I may have been misidentified / wrong target",
 ];
 
+/** Attorney strategy communication — feeds into Attorney Accountability Score. */
 const strategyOptions = [
   "Yes — attorney explained clearly",
   "Mentioned something but unclear",
@@ -72,6 +126,7 @@ const strategyOptions = [
   "It hasn't come up",
 ];
 
+/** How often attorney communicates — key metric for accountability scoring. */
 const communicationFrequencyOptions = [
   "Weekly",
   "Biweekly",
@@ -80,12 +135,14 @@ const communicationFrequencyOptions = [
   "Never returned calls",
 ];
 
+/** Plea deal status — if "yes", conditionally shows plea terms textarea. */
 const pleaOfferedOptions = [
   { value: "yes", label: "Yes" },
   { value: "no", label: "No" },
   { value: "not yet", label: "Not yet" },
 ];
 
+/** Evidence types (multi-select) — determines which attorney frameworks apply. */
 const evidenceTypeOptions = [
   "Confidential Informant (CI)",
   "Surveillance (video, audio, photos)",
@@ -98,10 +155,16 @@ const evidenceTypeOptions = [
   "I don't know",
 ];
 
+/** Shared Tailwind classes for form inputs, selects, and labels. */
 const inputClass = "mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none";
 const selectClass = inputClass;
 const labelClass = "block text-xs text-zinc-400";
 
+/**
+ * IntakeForm — multi-step wizard component.
+ * Reads URL params for pre-fill (interest, email, tier) and manages
+ * a 3-step form with progressive disclosure and per-step validation gates.
+ */
 function IntakeForm() {
   const searchParams = useSearchParams();
   const interest = searchParams.get("interest");
@@ -113,7 +176,7 @@ function IntakeForm() {
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  // All form data in one state object
+  // All form data in one state object — simplifies submission (entire object POSTed as JSON)
   const [form, setForm] = useState<Record<string, string | string[]>>({
     firstName: "",
     lastName: "",
@@ -145,10 +208,12 @@ function IntakeForm() {
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
+  // Step validation gates — each step's "Continue" button is disabled until these are met
   const canProceedStep1 =
     form.firstName && form.email && form.chargeType && form.state && form.timeSinceArrest;
   const canProceedStep2 = form.hasAttorney;
 
+  /** Submit all form data to /api/intake. API inserts into Supabase and notifies operator. */
   async function handleSubmit() {
     setError(null);
     setSubmitting(true);
@@ -205,7 +270,7 @@ function IntakeForm() {
           by attorney-client privilege.
         </p>
 
-        {/* Progress bar */}
+        {/* PROGRESS BAR — 3-segment visual indicator of wizard progress */}
         <div className="mt-6 flex items-center gap-2">
           {[1, 2, 3].map((s) => (
             <div key={s} className="flex-1">
@@ -218,7 +283,8 @@ function IntakeForm() {
         </div>
 
         <div className="mt-10 space-y-8">
-          {/* Step 1 — Your Case */}
+          {/* STEP 1 — Contact info and charge details.                       */}
+          {/* Gate: firstName + email + chargeType + state + timeSinceArrest  */}
           {step === 1 && (
             <>
               <fieldset>
@@ -319,7 +385,10 @@ function IntakeForm() {
             </>
           )}
 
-          {/* Step 2 — Your Situation */}
+          {/* STEP 2 — Attorney status, case details, evidence, plea info.    */}
+          {/* Gate: hasAttorney must be selected.                              */}
+          {/* Conditional: plea terms textarea appears only when plea = "yes". */}
+          {/* Multi-selects: arrest circumstances, evidence types, services.   */}
           {step === 2 && (
             <>
               <fieldset>
@@ -509,7 +578,9 @@ function IntakeForm() {
             </>
           )}
 
-          {/* Step 3 — One More Thing */}
+          {/* STEP 3 — Optional specific question + disclaimer + submit.      */}
+          {/* No validation gate — all fields optional. The specific question  */}
+          {/* (max 300 chars) gets prioritized first in the delivered report.  */}
           {step === 3 && (
             <>
               <fieldset>
@@ -577,6 +648,7 @@ function IntakeForm() {
   );
 }
 
+/** Page export with Suspense boundary for useSearchParams. */
 export default function IntakePage() {
   return (
     <Suspense fallback={

@@ -1,9 +1,56 @@
+/**
+ * Checkout Page (/checkout?tier=<slug>)
+ *
+ * Single-tier checkout page that displays detailed tier information and collects
+ * email before redirecting to Stripe hosted checkout. This is the critical
+ * conversion page — every paid customer passes through here.
+ *
+ * User journey position:
+ *   /services or / (pricing CTA) -> THIS PAGE -> Stripe checkout -> /checkout/success
+ *   Exception: Situation Room redirects to /intake?interest=situation-room (application gate)
+ *
+ * Query parameter:
+ *   ?tier= case-decoder | intelligence-brief | x-ray | war-room | situation-room
+ *         | extra-witness | witness-pack
+ *
+ * Page structure:
+ *   1. Tier card — Name, price, delivery timeline, validation copy
+ *   2. "Why This Works" — Attorney methodology proof specific to each tier
+ *   3. Attorney pullquote — Named quote for credibility
+ *   4. Feature list — Checkmarked deliverables for the selected tier
+ *   5. Sample report link — Proof of deliverable quality
+ *   6. Prerequisite notices — War Room requirement (Situation Room only)
+ *   7. Discovery notice — For tiers requiring discovery upload after payment
+ *   8. Guarantee card — Delivery + satisfaction guarantee
+ *   9. Upgrade nudge — "Also available" card showing next tier with upgrade cost
+ *  10. Email capture — Required field, enables cart abandonment recovery
+ *  11. Court date input — Optional, triggers urgency nudge if <14 days away
+ *  12. Priority delivery checkbox — Add-on upsell with dynamic pricing
+ *  13. Consent checkbox — Required for $1,497+ tiers (custom research acknowledgment)
+ *  14. CTA button — Dynamic label showing total price (base + priority if selected)
+ *  15. Upgrade credits reminder — Below the card
+ *
+ * Business logic:
+ *   - Email is captured BEFORE Stripe redirect for abandonment recovery
+ *   - Court date <14 days auto-highlights priority delivery checkbox
+ *   - Consent gate for $1,497+ tiers (priceNum >= 1497) blocks checkout until checked
+ *   - Situation Room tier redirects to intake form instead of Stripe (application flow)
+ *   - Priority delivery add-on adds to base price dynamically
+ *   - handleCheckout() POSTs to /api/checkout which creates a Stripe session
+ *
+ * Wrapped in Suspense because useSearchParams requires client-side rendering.
+ */
 "use client";
 
 import { useSearchParams } from "next/navigation";
 import { useState, Suspense } from "react";
 import Link from "next/link";
 
+/**
+ * TierInfo shape for the TIER_INFO lookup table.
+ * Each tier defines its pricing, features, guarantee copy, priority delivery
+ * options, and an optional nudge to the next tier up.
+ */
 type TierInfo = {
   name: string;
   price: string;
@@ -29,6 +76,21 @@ type TierInfo = {
   };
 };
 
+/**
+ * Complete tier configuration for all purchasable products.
+ * Each tier includes:
+ *   - pricing (display price + numeric for consent gate logic)
+ *   - features list (rendered as checkmark items)
+ *   - guarantee copy (tier-specific)
+ *   - validation copy (reassurance at top of card)
+ *   - whyThisWorks (attorney methodology proof)
+ *   - pullquote (named attorney quote)
+ *   - priorityPrice/Desc (add-on upsell for expedited delivery)
+ *   - nudge (next tier up with upgrade cost calculation)
+ *
+ * The nudge.upgradeCost accounts for 100% upgrade credit policy.
+ * Example: Case Decoder ($197) -> Intelligence Brief ($797) = $600 upgrade.
+ */
 const TIER_INFO: Record<string, TierInfo> = {
   "case-decoder": {
     name: "Case Decoder",
@@ -262,6 +324,10 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
 };
 
+/**
+ * CheckoutContent — client component that reads ?tier from URL and renders
+ * the checkout experience. Separated from the page export for Suspense boundary.
+ */
 function CheckoutContent() {
   const searchParams = useSearchParams();
   const tier = searchParams.get("tier") || "case-decoder";
@@ -274,6 +340,7 @@ function CheckoutContent() {
 
   const info = TIER_INFO[tier];
 
+  // Calculate urgency: if court date is <14 days away, highlight priority delivery
   const daysUntilCourt = courtDate
     ? Math.ceil((new Date(courtDate).getTime() - Date.now()) / 86400000)
     : null;
@@ -297,6 +364,13 @@ function CheckoutContent() {
     );
   }
 
+  /**
+   * Handles the checkout button click.
+   * - Situation Room: redirects to intake form (application gate, not direct purchase)
+   * - All other tiers: POSTs to /api/checkout with tier, email, consent, priority,
+   *   and court date. API creates a Stripe checkout session and returns the URL.
+   *   On success, redirects browser to Stripe hosted checkout.
+   */
   async function handleCheckout() {
     if (loading) return;
 
@@ -351,7 +425,7 @@ function CheckoutContent() {
             <span className="text-sm text-zinc-400">one-time</span>
           </div>
 
-          {/* Tier validation */}
+          {/* Tier validation — reassurance copy specific to each tier */}
           {info.validation && (
             <p className="mt-3 text-sm text-zinc-300">{info.validation}</p>
           )}
@@ -362,7 +436,7 @@ function CheckoutContent() {
             </span>
           </div>
 
-          {/* Why This Works */}
+          {/* Why This Works — attorney methodology proof, tier-specific */}
           {info.whyThisWorks && (
             <div className="mt-6 rounded-lg border border-zinc-700 bg-zinc-800/30 p-4">
               <p className="text-xs font-bold uppercase tracking-wider text-amber-400">
@@ -374,7 +448,7 @@ function CheckoutContent() {
             </div>
           )}
 
-          {/* Attorney pullquote */}
+          {/* Attorney pullquote — named quote for credibility at point of purchase */}
           {info.pullquote && (
             <div className="mt-4 border-l-2 border-amber-500/30 pl-4">
               <p className="text-sm italic text-zinc-400">
@@ -412,7 +486,7 @@ function CheckoutContent() {
             Preview what you&apos;ll get — see a real sample report →
           </Link>
 
-          {/* Situation Room prerequisite notice */}
+          {/* Situation Room prerequisite — requires prior War Room purchase */}
           {info.requiresWarRoom && (
             <div className="mt-6 rounded-lg border border-amber-500/30 bg-amber-500/5 p-4">
               <p className="text-sm font-semibold text-amber-400">
@@ -432,7 +506,7 @@ function CheckoutContent() {
             </div>
           )}
 
-          {/* Discovery notice */}
+          {/* Discovery notice — informs buyer they'll need to upload documents after payment */}
           {info.requiresDiscovery && (
             <div className="mt-6 rounded-lg border border-zinc-700 bg-zinc-800/50 p-4">
               <p className="text-sm text-zinc-400">
@@ -459,7 +533,9 @@ function CheckoutContent() {
             </p>
           </div>
 
-          {/* Upgrade nudge */}
+          {/* UPGRADE NUDGE — Shows the next tier up with upgrade cost.         */}
+          {/* Conversion tactic: even if they buy the current tier, this       */}
+          {/* plants the seed for future upgrade (100% credit applies).        */}
           {info.nudge && (
             <div className="mt-6 rounded-lg border border-zinc-700 bg-zinc-800/40 p-4">
               <p className="text-xs font-semibold text-zinc-400">
@@ -492,7 +568,10 @@ function CheckoutContent() {
             </div>
           )}
 
-          {/* Email capture */}
+          {/* EMAIL CAPTURE — Required before Stripe redirect.                  */}
+          {/* Business logic: email is sent to /api/checkout and stored in     */}
+          {/* Stripe session metadata. Enables cart abandonment follow-up      */}
+          {/* even if the customer never completes Stripe checkout.            */}
           <div className="mt-6">
             <label htmlFor="email" className="block text-sm font-medium text-zinc-300">
               Your email — we&apos;ll send your report here
@@ -509,7 +588,9 @@ function CheckoutContent() {
             <p className="mt-1 text-xs text-zinc-400">No spam — ever. Just your report and delivery updates.</p>
           </div>
 
-          {/* Court date */}
+          {/* COURT DATE — Optional input. If set and <14 days away,            */}
+          {/* courtDateUrgent triggers a warning on the priority delivery      */}
+          {/* checkbox ("Your court date is X days away").                      */}
           <div className="mt-4">
             <label htmlFor="courtDate" className="block text-sm font-medium text-zinc-300">
               Next court date <span className="text-zinc-500">(optional)</span>
@@ -524,7 +605,9 @@ function CheckoutContent() {
             />
           </div>
 
-          {/* Priority delivery bump */}
+          {/* PRIORITY DELIVERY ADD-ON — Checkbox upsell for expedited delivery.*/}
+          {/* Visually highlighted (amber border) when court date is urgent.  */}
+          {/* Adds priorityPrice to total shown on CTA button.               */}
           {info.priorityPrice && (
             <label className={`mt-4 flex items-start gap-3 rounded-lg border p-4 cursor-pointer transition-colors ${
               courtDateUrgent
@@ -551,7 +634,10 @@ function CheckoutContent() {
             </label>
           )}
 
-          {/* Consent checkbox for $1,497+ tiers */}
+          {/* CONSENT GATE — Required for tiers >= $1,497 (X-Ray, War Room,   */}
+          {/* Situation Room). Customer must acknowledge that custom research  */}
+          {/* begins on intake and delivered work is non-refundable.           */}
+          {/* CTA button is disabled until this is checked.                    */}
           {info.priceNum >= 1497 && (
             <label className="mt-4 flex items-start gap-3 rounded-lg border border-zinc-700 bg-zinc-800/50 p-4 cursor-pointer">
               <input
@@ -573,7 +659,9 @@ function CheckoutContent() {
             ImNotAnAttorney provides legal information and research — not legal advice. No attorney-client relationship is created.
           </p>
 
-          {/* CTA */}
+          {/* CTA BUTTON — Disabled until: email provided + consent (for $1,497+). */}
+          {/* Dynamic label: "Apply for The Situation Room" or "Pay $X — Secure Checkout". */}
+          {/* Price shown includes priority delivery add-on when selected.    */}
           <button
             onClick={handleCheckout}
             disabled={loading || !email || (info.priceNum >= 1497 && !consentChecked)}
@@ -603,7 +691,9 @@ function CheckoutContent() {
           </p>
         </div>
 
-        {/* Upgrade credits */}
+        {/* UPGRADE CREDITS REMINDER — Outside the main card, reinforces that */}
+        {/* every dollar spent counts toward future upgrades. Reduces "what  */}
+        {/* if I pick the wrong tier?" anxiety.                              */}
         <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
           <p className="text-sm font-semibold text-amber-400">
             100% Upgrade Credit
@@ -618,6 +708,7 @@ function CheckoutContent() {
   );
 }
 
+/** Page export wrapped in Suspense — useSearchParams requires client-side rendering. */
 export default function CheckoutPage() {
   return (
     <Suspense

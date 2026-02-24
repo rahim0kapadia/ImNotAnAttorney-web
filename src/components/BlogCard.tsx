@@ -1,3 +1,25 @@
+/**
+ * BlogCard -- Preview card for a blog post, used in the blog index and related-posts sections.
+ *
+ * Renders a semantic `<article>` element with:
+ *   - Date and reading time in a meta row
+ *   - Post title as an `<h2>` wrapped in a Next.js Link to `/blog/{slug}`
+ *   - Excerpt text, truncated to 2 lines via `line-clamp-2`
+ *   - Tag pills rendered as non-clickable `<span>` elements
+ *
+ * The entire card has a hover border transition; the title gets amber highlight on hover
+ * via the `group` / `group-hover` Tailwind pattern.
+ *
+ * Data source: Post metadata comes from `src/lib/blog.ts` which reads MDX frontmatter
+ * from `content/blog/`. The `readingTime` field is computed at build time.
+ *
+ * @param props.title       - Post title (displayed as-is, no truncation applied here).
+ * @param props.excerpt     - Short description, visually truncated to 2 lines via CSS.
+ * @param props.slug        - URL slug used to build the `/blog/{slug}` link.
+ * @param props.date        - Human-readable date string (e.g. "February 20, 2026").
+ * @param props.tags        - Array of tag labels rendered as pills.
+ * @param props.readingTime - Reading time string (e.g. "5 min read").
+ */
 import Link from "next/link";
 
 interface BlogCardProps {

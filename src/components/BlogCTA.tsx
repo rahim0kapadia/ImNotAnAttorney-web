@@ -1,3 +1,18 @@
+/**
+ * BlogCTA -- In-blog conversion call-to-action component.
+ *
+ * Placed after the content in every blog post to convert readers into customers.
+ * Contains three conversion paths:
+ *   1. Primary CTA: "Get Your Case Decoder" -- links to `/checkout?tier=case-decoder` ($197).
+ *   2. Secondary CTA: "See a Sample Report" -- links to `/sample` for social proof.
+ *   3. Tertiary link: "Check your Attorney Accountability Score" -- links to `/score`,
+ *      the free lead magnet that captures emails before showing results.
+ *
+ * The messaging emphasizes case-specific research over generic information to
+ * differentiate from free blog content.
+ *
+ * Used in: `src/app/blog/[slug]/page.tsx` (rendered after MDX content, before LeadCapture).
+ */
 import Link from "next/link";
 
 export function BlogCTA() {

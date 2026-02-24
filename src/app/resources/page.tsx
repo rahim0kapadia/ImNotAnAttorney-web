@@ -1,4 +1,37 @@
+/**
+ * Resources Page (/resources)
+ *
+ * Free resources hub providing educational content and lead magnets.
+ * Serves two purposes: SEO content for organic traffic and lead generation
+ * for visitors not ready to purchase.
+ *
+ * User journey position:
+ *   Nav / footer / blog -> THIS PAGE -> LeadCapture (email for downloads)
+ *                                    -> /services (paid service CTA)
+ *
+ * Page structure:
+ *   1. Header — "Free Resources" with empowerment framing
+ *   2. Guides & Templates — Two downloadable lead magnets (email-gated):
+ *      a. "The Discovery Checklist: 7 Evidence Problems Real Cases Hide"
+ *         (based on the real trafficking case findings)
+ *      b. "10 Questions Your Attorney Hopes You Never Ask"
+ *         (the original accountability questions)
+ *      Lead capture component handles email collection.
+ *   3. Know Your Rights by Charge Type — Three charge categories:
+ *      a. Drug Possession / Trafficking — 5 rights (discovery, Franks, lab, CI, suppress)
+ *      b. DUI / DWI — 5 rights (breathalyzer, dashcam, FST, DMV, training)
+ *      c. White Collar / Federal — 5 rights (discovery, Brady/Giglio, guidelines,
+ *         proffer, loss calculations)
+ *      No email required — pure value, builds trust and SEO authority.
+ *   4. CTA — Links to /services for case-specific paid analysis
+ *
+ * Conversion logic:
+ *   - Downloadable guides are email-gated (LeadCapture component)
+ *   - Rights guides are NOT gated — builds trust and SEO content
+ *   - Page naturally funnels: free resources -> "need case-specific?" -> services
+ */
 import { LeadCapture } from "@/components/LeadCapture";
+import { SITE_URL } from "@/lib/site";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -7,10 +40,11 @@ export const metadata: Metadata = {
   description:
     "Free guides, checklists, and templates for criminal defendants. Know your rights. Hold your attorney accountable.",
   alternates: {
-    canonical: "https://imnotanattorney.com/resources",
+    canonical: `${SITE_URL}/resources`,
   },
 };
 
+/** Downloadable lead magnets — email-gated via LeadCapture component. */
 const resources = [
   {
     title: "The Discovery Checklist: 7 Evidence Problems Real Cases Actually Hide",
@@ -26,6 +60,11 @@ const resources = [
   },
 ];
 
+/**
+ * Per-charge-type rights guides — NOT email-gated (public information).
+ * Builds SEO authority and trust. These are general legal information,
+ * not legal advice (disclaimer at bottom of section).
+ */
 const rightsGuides = [
   {
     charge: "Drug Possession / Trafficking",
@@ -63,7 +102,7 @@ export default function ResourcesPage() {
   return (
     <div className="px-4 py-16">
       <div className="mx-auto max-w-4xl">
-        {/* Header */}
+        {/* HEADER — Empowerment framing: "Knowledge is power" */}
         <h1 className="text-3xl font-bold text-white md:text-4xl">
           Free Resources
         </h1>
@@ -73,7 +112,7 @@ export default function ResourcesPage() {
           rights.
         </p>
 
-        {/* Downloadable Guides */}
+        {/* DOWNLOADABLE GUIDES — Email-gated lead magnets */}
         <section className="mt-12">
           <h2 className="text-xl font-bold text-white">
             Guides &amp; Templates
@@ -96,13 +135,14 @@ export default function ResourcesPage() {
             ))}
           </div>
 
-          {/* Lead capture for downloads */}
+          {/* LEAD CAPTURE — Email collection for guide downloads */}
           <div className="mt-8">
             <LeadCapture />
           </div>
         </section>
 
-        {/* Know Your Rights */}
+        {/* KNOW YOUR RIGHTS — Free (no email required) rights guides per     */}
+        {/* charge type. Pure educational value for SEO and trust-building.   */}
         <section className="mt-20">
           <h2 className="text-2xl font-bold text-white">
             Know Your Rights by Charge Type
@@ -146,7 +186,7 @@ export default function ResourcesPage() {
           </div>
         </section>
 
-        {/* CTA */}
+        {/* CTA — Bridges from free resources to paid case-specific services */}
         <section className="mt-16 text-center">
           <h2 className="text-xl font-bold text-white">
             Need case-specific analysis?

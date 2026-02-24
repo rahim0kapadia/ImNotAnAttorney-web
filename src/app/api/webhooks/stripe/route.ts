@@ -1,12 +1,53 @@
+/**
+ * @file /api/webhooks/stripe — Stripe webhook handler
+ *
+ * Pipeline position: Entry point for all payment events. This is where
+ * paid cases are born and refunded cases are terminated.
+ *
+ * Handles two event types:
+ *
+ * 1. `checkout.session.completed` — Customer just paid
+ *    Flow: Create order → Create case → Link intake (if exists) → Trigger generation (case-decoder)
+ *    Status assignments:
+ *      - "intake"           — Intake exists + non-discovery tier → ready for generation
+ *      - "awaiting-intake"  — No intake found → email customer to fill intake form
+ *      - "pending"          — Intake exists + discovery tier → waiting for document upload
+ *
+ * 2. `charge.refunded` — Stripe processed a refund (full or partial)
+ *    Flow: Update order status → Update case status → Notify operator
+ *    Business rules:
+ *      - Full refund: order.status → "refunded", case.status → "refunded", report access revoked
+ *      - Partial refund: order stays "paid", only refunded_at timestamp logged for audit
+ *
+ * Key patterns:
+ *   - Duplicate webhook handling via Postgres unique constraint (error code 23505)
+ *   - Email normalization: all emails lowercased + trimmed before storage/lookup
+ *   - Fire-and-forget generation trigger (doesn't block webhook response)
+ *   - Operator alerts on every failure path (order insert, case insert, email delivery)
+ *
+ * Security: Stripe signature verification using STRIPE_WEBHOOK_SECRET.
+ * Stripe retries webhooks up to 3 times over 72 hours on non-2xx responses.
+ */
+
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, TIERS, isValidTier } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 
+/** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
 
-/** sendEmail with one retry after 2s. If both fail, notify operator. */
+/**
+ * Sends an email with one automatic retry after a 2-second delay.
+ * If both attempts fail, sends an alert to the operator so the email
+ * can be sent manually. This prevents silent email delivery failures
+ * from leaving customers in the dark after payment.
+ *
+ * @param params - Email parameters (to, subject, html, etc.)
+ * @param context - Human-readable description of what this email is for (used in operator alert)
+ * @returns The result of the last send attempt
+ */
 async function sendEmailWithRetry(
   params: Parameters<typeof sendEmail>[0],
   context: string
@@ -14,11 +55,12 @@ async function sendEmailWithRetry(
   const result = await sendEmail(params);
   if (result.success) return result;
 
+  // First attempt failed — wait 2s and retry (transient Resend API errors)
   await new Promise((resolve) => setTimeout(resolve, 2000));
   const retry = await sendEmail(params);
   if (retry.success) return retry;
 
-  // Both failed — notify operator
+  // Both failed — notify operator so they can send manually
   console.error(`[Webhook] Email failed after retry: ${context}`, retry.error);
   await sendEmail({
     to: OPERATOR_EMAIL,
@@ -34,6 +76,13 @@ async function sendEmailWithRetry(
 }
 
 export async function POST(req: NextRequest) {
+  // ──────────────────────────────────────────────────────────────
+  // STRIPE SIGNATURE VERIFICATION
+  // ──────────────────────────────────────────────────────────────
+  // Stripe signs every webhook payload with STRIPE_WEBHOOK_SECRET.
+  // This prevents forged webhook calls. We read the raw body (not
+  // parsed JSON) because signature verification requires the exact
+  // bytes Stripe sent.
   const body = await req.text();
   const signature = req.headers.get("stripe-signature");
 
@@ -43,20 +92,39 @@ export async function POST(req: NextRequest) {
 
   let event;
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    if (!webhookSecret) {
+      console.error("[Stripe Webhook] Missing STRIPE_WEBHOOK_SECRET env var");
+      return NextResponse.json(
+        { error: "Webhook not configured" },
+        { status: 500 }
+      );
+    }
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err) {
     console.error("[Stripe Webhook] Signature verification failed:", err);
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
+  // ================================================================
+  // EVENT: checkout.session.completed
+  // ================================================================
+  // Fires when a customer completes payment through Stripe Checkout.
+  // This is the primary order creation path — every paid customer
+  // flows through here.
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
+
+    // ──────────────────────────────────────────────────────────────
+    // EXTRACT & NORMALIZE METADATA
+    // ──────────────────────────────────────────────────────────────
+    // `tier` is set in checkout session metadata when creating the session.
+    // Email normalization (lowercase + trim) ensures consistent lookup
+    // across intakes, subscribers, and cases — prevents "User@Gmail.com"
+    // and "user@gmail.com" from being treated as different customers.
     const tier = session.metadata?.tier;
-    const email = session.customer_email || session.customer_details?.email;
+    const rawEmail = session.customer_email || session.customer_details?.email;
+    const email = rawEmail ? rawEmail.toLowerCase().trim() : null;
     const amount = session.amount_total;
 
     if (!tier || !email || !amount) {
@@ -71,11 +139,23 @@ export async function POST(req: NextRequest) {
     const tierConfig = isValidTier(tier) ? TIERS[tier] : null;
     const requiresDiscovery = tierConfig?.requiresDiscovery ?? false;
 
-    // Create order record
+    // ──────────────────────────────────────────────────────────────
+    // CREATE ORDER RECORD
+    // ──────────────────────────────────────────────────────────────
+    // The orders table has a unique constraint on stripe_session_id.
+    // If Stripe retries this webhook (e.g., our response was slow),
+    // the INSERT will fail with error code 23505 (unique violation).
+    // We treat that as a successful no-op rather than an error.
+    //
+    // Fields from checkout metadata:
+    //   - priority_delivery: customer paid for expedited processing
+    //   - court_date: urgency signal for operator prioritization
+    //   - consent_timestamp: when customer agreed to terms (legal compliance)
+    //   - upgrade_credit_applied: cents credited from a previous tier purchase
     const { data: orderData, error: orderError } = await supabase
       .from("orders")
       .insert({
-        email: email.toLowerCase(),
+        email,
         tier,
         amount,
         status: "paid",
@@ -88,18 +168,27 @@ export async function POST(req: NextRequest) {
         priority_delivery: session.metadata?.priority_delivery === "true",
         court_date: session.metadata?.court_date || null,
         consent_timestamp: session.metadata?.consent_timestamp || null,
+        upgrade_credit_applied: session.metadata?.upgrade_credit_applied
+          ? parseInt(session.metadata.upgrade_credit_applied, 10)
+          : 0,
       })
       .select("id")
       .single();
 
     if (orderError) {
-      // Check if this is a duplicate (unique constraint violation) — Stripe retries webhooks
+      // ── DUPLICATE WEBHOOK HANDLING ──
+      // Stripe retries webhooks on timeout/5xx. The unique constraint on
+      // stripe_session_id causes a 23505 error on duplicate INSERTs.
+      // This is expected behavior — return 200 so Stripe stops retrying.
       const isDuplicate = orderError.code === "23505" || orderError.message?.includes("duplicate");
       if (isDuplicate) {
         console.log("[Stripe Webhook] Duplicate webhook event, skipping:", session.id);
         return NextResponse.json({ received: true });
       }
 
+      // ── GENUINE ORDER INSERT FAILURE ──
+      // Payment was collected but we couldn't record it. This is critical —
+      // operator must manually create the order in Supabase.
       console.error("[Stripe Webhook] Order insert error:", orderError);
       await sendEmail({
         to: OPERATOR_EMAIL,
@@ -115,24 +204,42 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // CHANGE #1: Create case record for ALL tiers (not just discovery tiers)
+    // ──────────────────────────────────────────────────────────────
+    // CREATE CASE RECORD + LINK INTAKE
+    // ──────────────────────────────────────────────────────────────
+    // Cases are created for ALL tiers (not just discovery tiers) so every
+    // purchase has a trackable lifecycle. The case status depends on two factors:
+    //
+    //   1. Does an intake exist for this email?
+    //      - YES + non-discovery tier → "intake" (ready for generation)
+    //      - YES + discovery tier → "pending" (waiting for document upload)
+    //      - NO → "awaiting-intake" (customer needs to fill the intake form)
+    //
+    //   2. Intake linking: We find the most recent intake by email match.
+    //      This handles the common flow where a customer fills the intake
+    //      form BEFORE paying. The charge_type from the intake is copied
+    //      to the case for quick reference in operator dashboards.
     let caseId: string | null = null;
     if (orderData) {
       caseId = crypto.randomUUID();
 
-      // CHANGE #2: Link intake to case by email match
+      // Look up the most recent intake for this email to auto-link
       const { data: linkedIntake } = await supabase
         .from("intakes")
         .select("id, charge_type")
-        .eq("email", email.toLowerCase())
+        .eq("email", email)
         .order("created_at", { ascending: false })
         .limit(1)
         .maybeSingle();
 
       const hasIntake = !!linkedIntake;
-      // CHANGE #3: Store charge_type on case from linked intake
+      // Store charge_type on case from linked intake for operator visibility
       const chargeType = linkedIntake?.charge_type || null;
 
+      // ── STATUS ASSIGNMENT LOGIC ──
+      // hasIntake + non-discovery → "intake" → generation can start immediately
+      // hasIntake + discovery → "pending" → needs document upload first
+      // no intake → "awaiting-intake" → customer gets email to fill intake form
       const caseStatus = hasIntake
         ? (requiresDiscovery ? "pending" : "intake")
         : "awaiting-intake";
@@ -140,7 +247,7 @@ export async function POST(req: NextRequest) {
       const { error: caseError } = await supabase.from("cases").insert({
         id: caseId,
         order_id: orderData.id,
-        email,
+        email: email,
         tier,
         status: caseStatus,
         intake_id: linkedIntake?.id || null,
@@ -149,6 +256,9 @@ export async function POST(req: NextRequest) {
       });
 
       if (caseError) {
+        // Case creation failed — operator must create manually.
+        // Order exists but has no linked case, so services can't be delivered
+        // until the operator intervenes.
         console.error("[Stripe Webhook] Case insert error:", caseError);
         caseId = null;
         await sendEmail({
@@ -164,10 +274,22 @@ export async function POST(req: NextRequest) {
         });
       }
 
-      // CHANGE #5: Trigger report generation or request intake
+      // ──────────────────────────────────────────────────────────────
+      // AUTO-TRIGGER: Case Decoder report generation
+      // ──────────────────────────────────────────────────────────────
+      // Only case-decoder tier gets auto-triggered here. Higher tiers
+      // require discovery documents or manual operator action.
+      //
+      // Two paths:
+      //   A. Intake exists → Fire-and-forget to /api/generate/case-decoder
+      //      The generate endpoint handles its own idempotency + atomic guard,
+      //      so duplicate triggers are safe.
+      //   B. No intake → Email customer with a link to the intake form.
+      //      When they submit, /api/intake will detect the awaiting-intake case
+      //      and trigger generation at that point.
       if (caseId && tier === "case-decoder") {
         if (hasIntake) {
-          // Fire-and-forget report generation
+          // Fire-and-forget report generation — don't block the webhook response
           fetch(`${origin}/api/generate/case-decoder`, {
             method: "POST",
             headers: {
@@ -180,6 +302,7 @@ export async function POST(req: NextRequest) {
           );
         } else {
           // No intake — email customer to complete intake form
+          // The intake form URL includes email + tier so the form can pre-populate
           await sendEmailWithRetry({
             to: email,
             subject: "Complete Your Case Details to Start Your Report",
@@ -195,7 +318,12 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Build upload section for discovery tier emails
+    // ──────────────────────────────────────────────────────────────
+    // DISCOVERY UPLOAD SECTION (for payment confirmation email)
+    // ──────────────────────────────────────────────────────────────
+    // Discovery tiers ($1,497+) require the customer to upload their
+    // discovery documents. This section is injected into the payment
+    // confirmation email only for those tiers.
     const uploadSection = (caseId && requiresDiscovery)
       ? `
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border: 1px solid #F59E0B;">
@@ -206,7 +334,13 @@ export async function POST(req: NextRequest) {
       `
       : "";
 
-    // CHANGE #8: Send payment confirmation email with retry
+    // ──────────────────────────────────────────────────────────────
+    // PAYMENT CONFIRMATION EMAIL (to customer)
+    // ──────────────────────────────────────────────────────────────
+    // Sent for every successful payment. Includes:
+    //   - Product name, amount, expected delivery timeframe
+    //   - Upload section (discovery tiers only)
+    //   - Unsubscribe link (CAN-SPAM compliance)
     await sendEmailWithRetry({
       to: email,
       subject: `Payment Confirmed — Your ${escapeHtml(productName)} is Being Prepared`,
@@ -224,12 +358,17 @@ export async function POST(req: NextRequest) {
       `,
     }, `payment confirmation for ${email}`);
 
-    // CHANGE #4: Remove premature drip recording — delivery drip is now handled
-    // by /api/deliver after actual delivery, not at payment time.
-    // (Previously recorded post_{tier}_delivery here, which prevented the actual
-    // delivery email from firing via the cron.)
+    // NOTE: Drip recording was intentionally removed from this webhook.
+    // Previously, we recorded post_{tier}_delivery here at payment time, which
+    // caused the actual delivery drip email to be skipped (it thought it was
+    // already sent). Delivery drip is now recorded in /api/deliver after the
+    // report is actually delivered to the customer.
 
-    // Send operator notification
+    // ──────────────────────────────────────────────────────────────
+    // OPERATOR NOTIFICATION EMAIL
+    // ──────────────────────────────────────────────────────────────
+    // Every payment triggers an operator email with full order details.
+    // This is the operator's primary awareness mechanism for new orders.
     await sendEmailWithRetry({
       to: OPERATOR_EMAIL,
       subject: `New Order: ${escapeHtml(productName)} — $${(amount / 100).toFixed(2)}`,
@@ -250,9 +389,30 @@ export async function POST(req: NextRequest) {
     }, `operator notification for ${email}`);
   }
 
-  // CHANGE #6: Refund handler — also update linked case status
+  // ================================================================
+  // EVENT: charge.refunded
+  // ================================================================
+  // Fires when Stripe processes a refund (initiated via Stripe Dashboard
+  // or API). Handles both full and partial refunds differently:
+  //
+  // Full refund:
+  //   - order.status → "refunded" (upgrade credits voided)
+  //   - case.status → "refunded" (report access revoked)
+  //   - Operator notified
+  //
+  // Partial refund:
+  //   - order.status stays "paid" (upgrade credits preserved)
+  //   - case.status unchanged (report access preserved)
+  //   - refunded_at timestamp logged for audit trail
+  //   - Operator notified
+  //
+  // Business rationale: Partial refunds are typically goodwill gestures
+  // (e.g., late delivery). Revoking access would damage the relationship.
+  // Full refunds indicate a complete cancellation — access must be revoked
+  // and the drip cron (Part 2) will skip refunded orders.
   if (event.type === "charge.refunded") {
     const charge = event.data.object;
+    // payment_intent links the charge back to our order record
     const paymentIntentId =
       typeof charge.payment_intent === "string"
         ? charge.payment_intent
@@ -261,11 +421,11 @@ export async function POST(req: NextRequest) {
     if (paymentIntentId) {
       const supabase = createAdminClient();
 
-      // Determine if full or partial refund
+      // Determine if full or partial refund by comparing refunded amount to total
       const isFullRefund = charge.amount_refunded === charge.amount;
 
       if (isFullRefund) {
-        // Full refund: mark order as refunded, revoke report access
+        // ── FULL REFUND: Mark order as refunded, revoke report access ──
         const { error: refundError } = await supabase
           .from("orders")
           .update({
@@ -278,14 +438,14 @@ export async function POST(req: NextRequest) {
           console.error("[Stripe Webhook] Refund update error:", refundError);
         }
       } else {
-        // Partial refund: log refunded_at for audit but keep status "paid"
+        // ── PARTIAL REFUND: Log timestamp for audit, keep order active ──
         await supabase
           .from("orders")
           .update({ refunded_at: new Date().toISOString() })
           .eq("stripe_payment_intent_id", paymentIntentId);
       }
 
-      // Get the refunded order to find linked case
+      // ── LOOKUP REFUNDED ORDER for case linking + operator notification ──
       const { data: refundedOrder } = await supabase
         .from("orders")
         .select("id, email, tier, amount")
@@ -294,7 +454,11 @@ export async function POST(req: NextRequest) {
 
       if (refundedOrder) {
         if (isFullRefund) {
-          // Update linked case status to refunded
+          // ── UPDATE LINKED CASE STATUS ──
+          // Setting case to "refunded" causes:
+          //   1. Report page returns 403 (access revoked)
+          //   2. Drip cron skips this order (Part 2 filters by status:"paid")
+          //   3. Upgrade credit is voided (cannot be applied to future purchases)
           await supabase
             .from("cases")
             .update({
@@ -304,7 +468,8 @@ export async function POST(req: NextRequest) {
             .eq("order_id", refundedOrder.id);
         }
 
-        // Notify operator
+        // ── OPERATOR NOTIFICATION ──
+        // Always notify operator for both full and partial refunds
         const refundAmount = (charge.amount_refunded / 100).toFixed(2);
         const totalAmount = ((refundedOrder.amount || 0) / 100).toFixed(2);
         await sendEmail({
@@ -322,5 +487,11 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // ──────────────────────────────────────────────────────────────
+  // ACKNOWLEDGE WEBHOOK
+  // ──────────────────────────────────────────────────────────────
+  // Always return 200 to Stripe. Non-2xx causes retries (up to 3x over 72h).
+  // Even if internal processing fails, we handle it via operator alerts
+  // rather than letting Stripe re-deliver (which could cause duplicates).
   return NextResponse.json({ received: true });
 }

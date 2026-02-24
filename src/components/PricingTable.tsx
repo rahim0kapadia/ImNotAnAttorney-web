@@ -1,3 +1,27 @@
+/**
+ * PricingTable -- Renders the tiered pricing grid for all service tiers and add-ons.
+ *
+ * MAINTENANCE WARNING: Tier names, prices, and feature lists are hardcoded in the
+ * `tiers` array below. This is the THIRD source of truth for pricing data -- the
+ * other two are:
+ *   1. `src/lib/stripe.ts`       (Stripe product/price IDs and metadata)
+ *   2. `src/app/services/page.tsx` (services page copy and feature descriptions)
+ * Any pricing change MUST be updated in all three locations to stay consistent.
+ *
+ * Display modes controlled by the `maxTiers` prop:
+ *   - Omitted / undefined: Full display -- all 5 tiers + add-ons + upgrade credits + guarantee.
+ *   - Number (e.g. 3):    Truncated display -- shows only the first N tiers, hides add-ons
+ *                          and premium tiers, and renders a "See premium tiers" link to /services.
+ *
+ * Used on: Landing page (truncated, maxTiers=3), Services page (full).
+ *
+ * Layout: First 3 tiers in a 3-column grid, premium tiers (War Room, Situation Room)
+ * in a 2-column grid below. Add-ons, upgrade credit info, and guarantee banner follow.
+ *
+ * The Situation Room CTA links to /intake (application gate) instead of /checkout.
+ *
+ * @param props.maxTiers - Optional. Limits visible tiers for truncated display.
+ */
 import Link from "next/link";
 
 const tiers = [

@@ -1,3 +1,20 @@
+/**
+ * error.tsx -- Client-side error boundary for route segments.
+ *
+ * Catches runtime errors thrown by any page or layout BELOW the root layout.
+ * When an error occurs, Next.js replaces the route segment with this component
+ * instead of showing a blank page.
+ *
+ * Provides two recovery actions:
+ *   1. "Try Again" -- calls `reset()` which re-renders the route segment.
+ *   2. "Go Home" -- navigates to "/" as a full page load (uses `<a>` not `<Link>`).
+ *
+ * Must be a Client Component ("use client") because it receives the `reset` function
+ * and handles user interaction.
+ *
+ * The `error` prop includes an optional `digest` property (hashed error ID) that
+ * is safe to log or display. The full error message is NOT shown to users.
+ */
 "use client";
 
 export default function Error({

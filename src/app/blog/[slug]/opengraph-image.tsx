@@ -1,3 +1,20 @@
+/**
+ * blog/[slug]/opengraph-image.tsx -- Dynamic per-post Open Graph image.
+ *
+ * Generates a unique 1200x630 PNG OG image for each blog post, using the post's
+ * title as the main headline. Falls back to "ImNotAnAttorney" if the slug is invalid.
+ *
+ * Layout: Brand name top-left, post title centered (large text, max 900px width),
+ * site URL + tagline at the bottom. Dark gradient background matching site theme.
+ *
+ * This runs at BUILD TIME for statically generated blog posts (via generateStaticParams
+ * in the sibling page.tsx). The image is cached and served as a static asset.
+ *
+ * Data source: `getPostBySlug()` from `src/lib/blog.ts`.
+ *
+ * Note: Unlike the root opengraph-image.tsx, this does NOT use the Edge runtime --
+ * it runs in the default Node.js runtime at build time.
+ */
 import { ImageResponse } from "next/og";
 import { getPostBySlug } from "@/lib/blog";
 

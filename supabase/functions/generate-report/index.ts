@@ -1,20 +1,69 @@
 /**
- * Supabase Edge Function: generate-report
+ * @fileoverview Supabase Edge Function: Case Decoder report generator.
  *
- * Self-contained Case Decoder report generator.
- * Called by Vercel /api/generate/case-decoder (fire-and-forget).
- * Has 150s timeout (vs Vercel Hobby's 25s) — enough for Claude API.
+ * This is the PRODUCTION report generation path. It replaced the legacy
+ * `src/lib/claude.ts` module because Vercel Hobby plan has a 25-second
+ * function timeout, which is insufficient for Claude API calls (typically
+ * 40-90 seconds). Supabase Edge Functions have a 150-second timeout.
  *
- * ZERO external imports — uses raw fetch() for Supabase PostgREST + Claude + Resend.
- * This avoids the 60-90s cold start penalty from importing @supabase/supabase-js via esm.sh.
+ * INVOCATION:
+ *   Called by Vercel /api/generate/case-decoder via HTTP POST (fire-and-forget).
+ *   The Vercel route returns 202 immediately; this function runs async.
  *
- * Flow: fetch case/intake → Claude API (streaming) → render HTML → save to Supabase → email operator
+ * FLOW:
+ *   1. Fetch case record from Supabase (with idempotency check)
+ *   2. Find linked intake record (by intake_id or email fallback)
+ *   3. Call Claude API (Haiku 4.5) to generate the 9-section report
+ *   4. Render markdown to branded HTML
+ *   5. Save report_html + report_token to Supabase
+ *   6. Email operator with review/approve links
+ *
+ * ZERO EXTERNAL IMPORTS:
+ *   This function has NO npm/esm.sh imports. Why: importing
+ *   @supabase/supabase-js via esm.sh adds 60-90 seconds of cold start
+ *   latency, which would consume most of the 150s budget before Claude
+ *   even starts generating. Instead, all Supabase operations use raw
+ *   PostgREST fetch calls, email uses raw Resend API fetch, and Claude
+ *   uses raw Anthropic API fetch.
+ *
+ * CODE DUPLICATION (intentional):
+ *   The following are duplicated from Next.js modules because Deno
+ *   cannot import from the Next.js codebase:
+ *     - escapeHtml() — duplicated from src/lib/email.ts
+ *     - sendEmail() — duplicated from src/lib/email.ts (simplified, no unsubscribe)
+ *     - PHYSICAL_ADDRESS — duplicated from src/lib/site.ts
+ *     - renderReportHtml() — duplicated from src/lib/claude.ts
+ *     - SYSTEM_PROMPT, charge/evidence blocks — duplicated from src/lib/claude.ts
+ *   This is intentional — keeping the edge function fully self-contained
+ *   avoids cross-runtime import issues and makes the function deployable
+ *   independently.
+ *
+ * MODEL CHOICE — claude-haiku-4-5-20251001:
+ *   Haiku 4.5 was chosen because it is the fastest Claude model, which is
+ *   critical for staying under the 150s timeout. Report quality is adequate
+ *   for structured generation (the system prompt is highly prescriptive).
+ *   The legacy module used Sonnet 4 (slower, more expensive).
+ *
+ * ERROR STRATEGY:
+ *   On Claude API failure, the function:
+ *     1. Sets case status to "generation-failed" in Supabase
+ *     2. Emails the operator with error details and a curl retry command
+ *   This ensures failures are visible and manually recoverable without
+ *   requiring a dashboard login.
  */
 
 // ============================================================
-// SUPABASE REST HELPERS (raw PostgREST — no SDK import needed)
+// SUPABASE REST HELPERS
+// Raw PostgREST fetch calls — no SDK import needed.
+// These replace @supabase/supabase-js to avoid esm.sh cold start.
 // ============================================================
 
+/**
+ * Builds standard Supabase PostgREST headers with the service role key.
+ *
+ * @param serviceKey - The SUPABASE_SERVICE_ROLE_KEY (bypasses RLS).
+ * @returns Headers object for PostgREST requests.
+ */
 function supabaseHeaders(serviceKey: string) {
   return {
     apikey: serviceKey,
@@ -23,6 +72,16 @@ function supabaseHeaders(serviceKey: string) {
   };
 }
 
+/**
+ * Performs a SELECT query against a Supabase table via PostgREST.
+ *
+ * @param url - Supabase project URL (SUPABASE_URL env var).
+ * @param key - Service role key for authentication.
+ * @param table - Table name to query.
+ * @param query - PostgREST query string (e.g., "id=eq.123&select=*").
+ * @returns Array of matching rows.
+ * @throws If the HTTP request fails.
+ */
 async function supabaseSelect(
   url: string,
   key: string,
@@ -36,6 +95,17 @@ async function supabaseSelect(
   return res.json();
 }
 
+/**
+ * Performs a PATCH (update) against a Supabase table via PostgREST.
+ * Logs errors but does not throw — update failures are non-fatal
+ * (the report may already be saved; we don't want to lose it).
+ *
+ * @param url - Supabase project URL.
+ * @param key - Service role key.
+ * @param table - Table name.
+ * @param query - PostgREST filter (e.g., "id=eq.123").
+ * @param body - Fields to update.
+ */
 async function supabaseUpdate(
   url: string,
   key: string,
@@ -55,9 +125,16 @@ async function supabaseUpdate(
 }
 
 // ============================================================
-// HELPERS
+// HELPERS (duplicated from Next.js modules — see file header for why)
 // ============================================================
 
+/**
+ * Escapes HTML special characters to prevent XSS.
+ * Duplicated from src/lib/email.ts because Deno cannot import Next.js modules.
+ *
+ * @param str - Raw string to escape.
+ * @returns HTML-safe string.
+ */
 function escapeHtml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
@@ -67,8 +144,22 @@ function escapeHtml(str: string): string {
     .replace(/'/g, "&#39;");
 }
 
+/**
+ * CAN-SPAM physical address. Duplicated from src/lib/site.ts.
+ * If this changes, update src/lib/site.ts and src/lib/email.ts as well.
+ */
 const PHYSICAL_ADDRESS = "195 Dr MLK Jr St N, St Petersburg, FL 33701";
 
+/**
+ * Sends an email via the Resend API.
+ *
+ * Simplified version of the sendEmail in src/lib/email.ts — no unsubscribe
+ * headers because this only sends operator notification emails (not customer-
+ * facing). Includes the branded dark-theme wrapper and CAN-SPAM footer.
+ *
+ * @param params - Email parameters including Resend credentials.
+ * @returns Success/failure result. Never throws.
+ */
 async function sendEmail(params: {
   to: string;
   subject: string;
@@ -119,8 +210,14 @@ async function sendEmail(params: {
 
 // ============================================================
 // CLAUDE API — SYSTEM PROMPT + CHARGE FRAMEWORKS
+// Duplicated from src/lib/claude.ts. The prompts are identical;
+// keeping them here avoids cross-runtime import dependencies.
 // ============================================================
 
+/**
+ * System prompt encoding the report generator's persona, rules, and output format.
+ * See src/lib/claude.ts for the annotated version with section-by-section notes.
+ */
 const SYSTEM_PROMPT = `You are an elite criminal defense research analyst with the combined expertise of 40+ legendary defense attorneys. Your analysis draws from documented winning methods including:
 
 - Jeffrey Lichtman's 7-pillar CI destruction protocol (3 Gotti mistrials, El Chapo defense)
@@ -155,8 +252,17 @@ RULES:
 - Output the report in clean markdown with proper headings (## for sections, ### for subsections)`;
 
 // deno-lint-ignore no-explicit-any
+/** Loose type for intake records — fields vary by intake version. */
 type IntakeData = Record<string, any>;
 
+/**
+ * Returns charge-specific instruction text for the Claude prompt.
+ * Maps common charge types to focused analysis frameworks citing
+ * relevant attorney methodologies and legal standards.
+ *
+ * @param chargeType - Free-text charge description from the intake.
+ * @returns Instruction block string, or empty string for unrecognized types.
+ */
 function getChargeSpecificBlock(chargeType: string): string {
   const ct = chargeType.toLowerCase();
   if (ct.includes("drug possession") || ct.includes("drug trafficking") || ct.includes("distribution"))
@@ -180,6 +286,12 @@ function getChargeSpecificBlock(chargeType: string): string {
   return "";
 }
 
+/**
+ * Generates evidence-type-specific question instructions for the Claude prompt.
+ *
+ * @param types - Array of evidence type strings from the intake form.
+ * @returns Instruction block with evidence-specific questions, or empty string.
+ */
 function getEvidenceQuestions(types: string[]): string {
   if (!types || types.length === 0) return "";
   const blocks: string[] = [];
@@ -204,6 +316,14 @@ function getEvidenceQuestions(types: string[]): string {
   return "\n\nADDITIONAL EVIDENCE-SPECIFIC QUESTIONS TO INCLUDE:\n" + blocks.join("\n");
 }
 
+/**
+ * Assembles the full user prompt from intake data for the Claude API call.
+ * Includes all intake fields, charge-specific blocks, evidence blocks,
+ * plea/communication conditional instructions, and the 9-section template.
+ *
+ * @param intake - The intake record from Supabase.
+ * @returns The complete user prompt string.
+ */
 function buildUserPrompt(intake: IntakeData): string {
   const daysSinceArrest = intake.arrest_date
     ? Math.floor((Date.now() - new Date(intake.arrest_date).getTime()) / (1000 * 60 * 60 * 24))
@@ -278,6 +398,19 @@ Table: motion, what it does, legal basis, deadline sensitivity, asymmetric value
 2-3 findings → upgrade recommendations. Upgrade path table ($197 credited, 12-month window). Immediate action items.`;
 }
 
+/**
+ * Calls the Claude API to generate a Case Decoder report.
+ *
+ * Uses claude-haiku-4-5-20251001 (fastest Claude model) with 8k max tokens
+ * and temperature 0.3 (low creativity, high consistency). Does NOT use
+ * streaming — the non-streaming response is simpler and Haiku is fast
+ * enough to complete within the 150s edge function timeout.
+ *
+ * @param intake - Intake data to build the prompt from.
+ * @param apiKey - Anthropic API key.
+ * @returns The generated markdown report.
+ * @throws If the API returns an error or an empty response.
+ */
 async function callClaudeAPI(intake: IntakeData, apiKey: string): Promise<string> {
   const userPrompt = buildUserPrompt(intake);
 
@@ -305,14 +438,27 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string): Promise<string
   // deno-lint-ignore no-explicit-any
   const result: any = await response.json();
   const text = result.content?.[0]?.text || "";
-  if (!text) throw new Error("Empty response from Claude API");
+  if (!text.trim()) throw new Error("Empty response from Claude API");
   return text;
 }
 
 // ============================================================
 // HTML RENDERER
+// Duplicated from src/lib/claude.ts renderReportHtml().
+// Must stay in sync if the report template changes.
 // ============================================================
 
+/**
+ * Converts a markdown report to a branded HTML document.
+ *
+ * Includes dark theme, print-friendly CSS, header with case metadata,
+ * legal disclaimer, upgrade CTA, and simple markdown-to-HTML conversion.
+ * All user-supplied metadata is escaped via escapeHtml() for XSS prevention.
+ *
+ * @param markdown - Raw markdown report from Claude.
+ * @param meta - Case metadata for the report header.
+ * @returns Complete HTML document string.
+ */
 function renderReportHtml(
   markdown: string,
   meta: {
@@ -408,7 +554,9 @@ function renderReportHtml(
 }
 
 // ============================================================
-// MAIN HANDLER
+// MAIN HTTP HANDLER
+// Handles POST requests with { caseId, force? } JSON body.
+// CORS preflight (OPTIONS) is supported for cross-origin calls.
 // ============================================================
 
 Deno.serve(async (req: Request) => {
@@ -452,7 +600,10 @@ Deno.serve(async (req: Request) => {
       return new Response(JSON.stringify({ error: "Case not found" }), { status: 404, headers });
     }
 
-    // --- Idempotency ---
+    // --- Idempotency guard ---
+    // Prevents duplicate report generation if this function is called again
+    // for a case that already has a report (e.g., webhook retry, operator re-click).
+    // The `force` flag allows manual regeneration via the retry curl command.
     if (!force && (caseData.status === "review" || caseData.status === "delivered")) {
       return new Response(JSON.stringify({
         success: true, caseId, reportToken: caseData.report_token,
@@ -461,6 +612,9 @@ Deno.serve(async (req: Request) => {
     }
 
     // --- Find linked intake ---
+    // First tries the explicit intake_id FK. If missing (older cases), falls back
+    // to matching by email address (most recent intake for that customer).
+    // If found via email fallback, backfills the intake_id on the case record.
     let intake: IntakeData | null = null;
     if (caseData.intake_id) {
       const rows = await supabaseSelect(supabaseUrl, supabaseKey, "intakes", `id=eq.${caseData.intake_id}&select=*`);
@@ -497,7 +651,10 @@ Deno.serve(async (req: Request) => {
 
     console.log(`[generate-report] Intake found, calling Claude API...`);
 
-    // --- Generate report (single attempt — no retry to save time) ---
+    // --- Generate report ---
+    // Single attempt with no retry: retrying a 40-90s Claude call would risk
+    // exceeding the 150s timeout. On failure, we set status to "generation-failed"
+    // and email the operator a retry curl command for manual recovery.
     let markdown: string;
     try {
       markdown = await callClaudeAPI(intake, anthropicKey);
@@ -516,7 +673,8 @@ Deno.serve(async (req: Request) => {
             <p>Case ID: ${caseId}</p><p>Customer: ${caseData.email}</p>
             <p>Charge: ${escapeHtml(intake.charge_type)}</p>
             <p>Error: ${escapeHtml(err instanceof Error ? err.message : String(err))}</p>
-            <p><a href="${siteUrl}/api/generate/case-decoder" style="padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Retry</a></p>`,
+            <p style="margin-top: 16px;"><strong>Retry command:</strong></p>
+            <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${siteUrl}/api/generate/case-decoder -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${caseId}"}'</code>`,
           resendKey, fromEmail: resendFrom, operatorEmail,
         });
       }

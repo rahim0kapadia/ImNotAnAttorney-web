@@ -1,3 +1,21 @@
+/**
+ * Footer -- Site-wide footer with navigation, legal links, and CAN-SPAM compliance.
+ *
+ * Layout (5-column grid on desktop, stacked on mobile):
+ *   1. Brand column: Logo, tagline, "not legal advice" disclaimer, X/Twitter social link.
+ *   2. Explore: Blog, Services, Resources, About, Get Started.
+ *   3. Blog Topics: Category filter links (DUI, Drug Cases, White Collar, General Defense).
+ *   4. Our Services: Direct checkout links with prices for all 5 tiers.
+ *   5. Legal: Terms, Privacy, Contact, Sitemap + CAN-SPAM required physical address.
+ *
+ * CAN-SPAM compliance: The physical mailing address (195 Dr MLK Jr St N, St Petersburg,
+ * FL 33701) is required by federal law for commercial email. Do NOT remove it.
+ *
+ * The full-width disclaimer banner at the bottom reinforces the "not legal advice"
+ * positioning, which is critical for UPL (unauthorized practice of law) risk mitigation.
+ *
+ * Copyright year is dynamically generated via `new Date().getFullYear()`.
+ */
 import Link from "next/link";
 
 export function Footer() {

@@ -1,9 +1,54 @@
 /**
- * Drip email templates for nurture and post-purchase sequences.
- * Follows existing email style: dark bg (#0C0A09), zinc text (#D4D4D8), amber accent (#F59E0B).
- * All emails include CAN-SPAM footer via sendEmail() in lib/email.ts.
+ * @fileoverview Drip email templates for nurture and post-purchase sequences.
+ *
+ * This file defines two distinct email sequences:
+ *
+ * 1. **Nurture sequence** (NURTURE_EMAILS) — sent to free subscribers on a
+ *    schedule of day 1, 3, 5, 7, 10, 14 after subscribing. Goal: demonstrate
+ *    expertise with real case examples, build trust, convert to Case Decoder.
+ *
+ * 2. **Post-purchase sequences** (POST_PURCHASE_EMAILS) — tier-specific emails
+ *    triggered after a purchase. Each tier has its own sequence:
+ *      - Case Decoder: delivery → story harvest → upsell → referral
+ *      - Intelligence Brief: delivery → story harvest → upsell
+ *      - X-Ray: delivery → upload reminder → story harvest
+ *      - War Room: delivery → first weekly update → story harvest
+ *      - Situation Room: delivery → story harvest
+ *      - Witness Pack / Extra Witness: delivery → upsell
+ *
+ * KEY DESIGN DECISIONS:
+ *
+ * - `relativeToDelivery` flag: When true, the `delayDays` is measured from
+ *   `cases.delivered_at` (when the report was actually delivered to the customer),
+ *   NOT from the purchase date. This ensures story-harvest emails arrive ~5 days
+ *   after the customer receives their report, not 5 days after payment (which
+ *   could be before delivery for higher tiers with longer turnaround).
+ *
+ * - Day-0 emails (delayDays: 0) are sent by the delivery/webhook endpoints
+ *   at the moment of purchase or delivery, NOT by the drip cron job. The cron
+ *   skips them because delayDays === 0 means "send immediately" and the cron
+ *   runs on a schedule, not in real-time.
+ *
+ * - `getSiteUrl()` reads the env var at call time, not module load time. This
+ *   matters because in serverless environments, the module may be loaded once
+ *   and reused across requests with different env configurations (e.g., preview
+ *   deploys vs production).
+ *
+ * Style: dark bg (#0C0A09), zinc text (#D4D4D8), amber accent (#F59E0B).
+ * CAN-SPAM footer is added by sendEmail() in lib/email.ts — not here.
  */
 
+// ============================================================
+// TYPES
+// ============================================================
+
+/**
+ * A single drip email template with scheduling metadata.
+ *
+ * The cron job uses `delayDays`, `tier`, `relativeToDelivery`, and `key`
+ * to determine which email to send and when. The `html` is the inner content
+ * that gets wrapped in the branded template by sendEmail().
+ */
 export interface DripEmail {
   key: string;
   delayDays: number;
@@ -17,16 +62,50 @@ export interface DripEmail {
   relativeToDelivery?: boolean;
 }
 
-function cta(text: string, href: string): string {
-  return `<a href="https://imnotanattorney.com${href}" style="display: inline-block; margin: 24px 0; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">${text}</a>`;
+// ============================================================
+// TEMPLATE HELPERS
+// ============================================================
+
+/**
+ * Returns the site URL for constructing email links.
+ *
+ * Reads from the env var at call time (not module load time) so that
+ * serverless function reuse across preview vs production deploys gets the
+ * correct URL. Falls back to the production domain.
+ *
+ * @returns The site base URL without trailing slash.
+ */
+function getSiteUrl(): string {
+  return process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
 }
 
+/**
+ * Generates a styled CTA button as an HTML anchor tag.
+ *
+ * @param text - Button label text.
+ * @param href - Path appended to the site URL (e.g., "/checkout?tier=case-decoder").
+ * @returns An HTML string for an amber call-to-action button.
+ */
+function cta(text: string, href: string): string {
+  return `<a href="${getSiteUrl()}${href}" style="display: inline-block; margin: 24px 0; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">${text}</a>`;
+}
+
+/**
+ * Generates a styled inline text link.
+ *
+ * @param text - Link display text.
+ * @param href - Path appended to the site URL.
+ * @returns An HTML string for an amber underlined link.
+ */
 function link(text: string, href: string): string {
-  return `<a href="https://imnotanattorney.com${href}" style="color: #F59E0B; text-decoration: underline;">${text}</a>`;
+  return `<a href="${getSiteUrl()}${href}" style="color: #F59E0B; text-decoration: underline;">${text}</a>`;
 }
 
 // ============================================================
-// NURTURE SEQUENCE (subscribers)
+// NURTURE SEQUENCE (free subscribers)
+// Schedule: day 1, 3, 5, 7, 10, 14 after subscribing.
+// Goal: build trust with real case examples, convert to Case Decoder ($197).
+// Each email provides genuine standalone value before the CTA.
 // ============================================================
 
 export const NURTURE_EMAILS: DripEmail[] = [
@@ -127,6 +206,12 @@ export const NURTURE_EMAILS: DripEmail[] = [
 
 // ============================================================
 // POST-PURCHASE SEQUENCES (buyers)
+// Organized by tier. Each tier has: delivery (day 0), story harvest
+// (day 5 relative to delivery), upsell, and optionally referral.
+//
+// Day-0 emails are sent by delivery/webhook endpoints, not the cron.
+// Story-harvest emails use relativeToDelivery: true so the delay
+// is measured from cases.delivered_at, not the purchase date.
 // ============================================================
 
 export const POST_PURCHASE_EMAILS: DripEmail[] = [
@@ -451,23 +536,39 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
   },
 ];
 
+// ============================================================
+// ACCESSOR FUNCTIONS
+// ============================================================
+
 /**
- * Get all drip emails for a sequence type.
+ * Returns all nurture sequence emails (for free subscribers).
+ *
+ * @returns The full array of nurture drip email templates.
  */
 export function getNurtureEmails(): DripEmail[] {
   return NURTURE_EMAILS;
 }
 
 /**
- * Get post-purchase emails for a specific tier.
+ * Returns post-purchase emails filtered to a specific product tier.
+ *
+ * @param tier - The tier slug (e.g., "case-decoder", "x-ray", "war-room").
+ * @returns Only the drip emails matching that tier.
  */
 export function getPostPurchaseEmails(tier: string): DripEmail[] {
   return POST_PURCHASE_EMAILS.filter((e) => e.tier === tier);
 }
 
 /**
- * Get the next email to send for a subscriber based on days since subscribe
- * and already-sent email keys.
+ * Determines the next nurture email to send for a subscriber.
+ *
+ * Iterates through NURTURE_EMAILS in order and returns the first email
+ * whose `delayDays` has been reached AND whose `key` has not already
+ * been recorded as sent. Returns null when the sequence is complete.
+ *
+ * @param daysSinceSubscribe - Calendar days since the subscriber signed up.
+ * @param sentKeys - Set of email keys already sent to this subscriber.
+ * @returns The next email to send, or null if none remain.
  */
 export function getNextNurtureEmail(
   daysSinceSubscribe: number,

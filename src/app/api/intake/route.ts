@@ -1,15 +1,86 @@
+/**
+ * @file /api/intake — Intake form submission handler
+ *
+ * Pipeline position: Receives case details from the intake form on the frontend.
+ * Can be submitted BEFORE or AFTER payment — the handler adapts to both flows.
+ *
+ * Two customer flows converge here:
+ *
+ *   Flow A: Intake BEFORE payment (browsing → fills intake → pays later)
+ *     1. Customer fills intake form → this endpoint saves it to `intakes` table
+ *     2. No matching case exists → confirmation email says "browse services to purchase"
+ *     3. When customer later pays, the Stripe webhook finds this intake by email
+ *        and links it to the new case
+ *
+ *   Flow B: Intake AFTER payment (pays → gets "complete your details" email → fills intake)
+ *     1. Stripe webhook created a case with status "awaiting-intake"
+ *     2. Customer fills intake form → this endpoint saves it AND finds the waiting case
+ *     3. Links intake to case, transitions status: awaiting-intake → intake
+ *     4. For case-decoder tier: auto-triggers report generation (fire-and-forget)
+ *     5. Confirmation email says "your report is being generated"
+ *
+ * Status transitions handled:
+ *   - awaiting-intake → intake (when a paid case is found for this email)
+ *   - No status change if customer hasn't paid yet (intake is stored for later linking)
+ *
+ * Validation:
+ *   - Required fields: firstName, email, chargeType
+ *   - Email format: basic regex check
+ *   - Charge type: validated against ALLOWED_CHARGE_TYPES allowlist
+ *     The allowlist includes both the current multi-step intake form values
+ *     (drug-possession, dui-first, etc.) and legacy free-form values from
+ *     older intake forms (drug, dui, etc.) for backward compatibility.
+ *
+ * Security: No auth required — this is a public form endpoint.
+ * All user input is escaped via escapeHtml before inclusion in emails.
+ */
+
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
+import { SITE_URL } from "@/lib/site";
 
+/** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
+
+/**
+ * Allowlist of valid charge types accepted by the intake form.
+ *
+ * Split into two groups:
+ *   1. Current intake form values (multi-step form with specific subcategories)
+ *   2. Legacy values from older intake forms (broader categories)
+ *
+ * This prevents injection of arbitrary strings into the database while
+ * maintaining backward compatibility with existing intake records.
+ * Any chargeType not in this list is rejected with a 400 error.
+ */
+const ALLOWED_CHARGE_TYPES = [
+  // Current intake form values (specific subcategories)
+  "drug-possession",
+  "drug-trafficking",
+  "dui-first",
+  "dui-repeat",
+  "white-collar",
+  "assault",
+  "theft",
+  "other-felony",
+  "other-misdemeanor",
+  // Also accept free-form values from older intake forms
+  "drug", "dui", "domestic-violence", "sex-offense", "weapons", "federal",
+  "robbery", "burglary", "fraud",
+];
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { firstName, email, chargeType } = body;
 
+    // ──────────────────────────────────────────────────────────────
+    // INPUT VALIDATION
+    // ──────────────────────────────────────────────────────────────
+    // Required fields: the minimum information needed to create a
+    // useful intake record and send a confirmation email.
     if (!firstName || !email || !chargeType) {
       return NextResponse.json(
         { error: "Required fields missing" },
@@ -17,8 +88,33 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Validate email format (basic regex — not exhaustive, but catches typos)
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json(
+        { error: "Invalid email format" },
+        { status: 400 }
+      );
+    }
+
+    // Validate charge type against allowlist to prevent arbitrary string injection.
+    // The frontend dropdown should only send values from this list, but we validate
+    // server-side because the frontend can be bypassed.
+    if (!ALLOWED_CHARGE_TYPES.includes(chargeType)) {
+      return NextResponse.json(
+        { error: "Invalid charge type" },
+        { status: 400 }
+      );
+    }
+
     const supabase = createAdminClient();
 
+    // ──────────────────────────────────────────────────────────────
+    // SAVE INTAKE RECORD
+    // ──────────────────────────────────────────────────────────────
+    // Stores all case details from the multi-step intake form.
+    // Email is normalized (lowercase + trim) to ensure consistent
+    // matching when the Stripe webhook or this endpoint links intakes
+    // to cases. All optional fields default to null/empty arrays.
     const { error } = await supabase.from("intakes").insert({
       first_name: firstName,
       last_name: body.lastName || null,
@@ -30,6 +126,7 @@ export async function POST(req: NextRequest) {
       has_discovery: body.hasDiscovery || null,
       services: body.services || [],
       situation: body.situation || null,
+      // Extended intake fields (added in conversion optimization round)
       time_since_arrest: body.timeSinceArrest || null,
       arrest_circumstances: body.arrestCircumstances || [],
       incident_location: body.incidentLocation || null,
@@ -54,8 +151,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check if a case exists for this email with status 'awaiting-intake'
-    // This handles the flow: customer pays → no intake found → emails customer → customer fills intake
+    // ──────────────────────────────────────────────────────────────
+    // LINK TO EXISTING CASE (Flow B: customer already paid)
+    // ──────────────────────────────────────────────────────────────
+    // Check if a case exists for this email with status "awaiting-intake".
+    // This handles the post-payment flow:
+    //   1. Customer pays → webhook creates case with "awaiting-intake"
+    //   2. Customer receives "complete your details" email
+    //   3. Customer submits intake → THIS CODE links it to the waiting case
+    //
+    // We match by email (normalized) and take the most recent case if
+    // multiple exist (edge case: customer purchased twice before filling intake).
     const normalizedEmail = email.toLowerCase().trim();
     const { data: pendingCase } = await supabase
       .from("cases")
@@ -67,7 +173,9 @@ export async function POST(req: NextRequest) {
       .maybeSingle();
 
     if (pendingCase) {
-      // Get the intake we just created
+      // ── FETCH THE INTAKE WE JUST CREATED ──
+      // We need the intake ID to link it to the case. We query by email
+      // + most recent created_at since we just inserted it above.
       const { data: latestIntake } = await supabase
         .from("intakes")
         .select("id")
@@ -77,7 +185,10 @@ export async function POST(req: NextRequest) {
         .single();
 
       if (latestIntake) {
-        // Link intake to case and update status
+        // ── STATUS TRANSITION: awaiting-intake → intake ──
+        // Links the intake record to the case and copies the charge_type
+        // to the case for operator dashboard visibility. The "intake" status
+        // signals that the case has all the information needed for generation.
         await supabase
           .from("cases")
           .update({
@@ -88,7 +199,11 @@ export async function POST(req: NextRequest) {
           })
           .eq("id", pendingCase.id);
 
-        // Trigger report generation for case-decoder tier
+        // ── AUTO-TRIGGER: Case Decoder report generation ──
+        // Only case-decoder tier gets auto-triggered. Higher tiers require
+        // discovery documents or manual operator action.
+        // Fire-and-forget: the generate endpoint handles its own idempotency,
+        // so duplicate triggers from webhook + intake are safe.
         if (pendingCase.tier === "case-decoder") {
           const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
           fetch(`${origin}/api/generate/case-decoder`, {
@@ -103,7 +218,18 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Send intake confirmation email — context-aware based on whether they already paid
+    // ──────────────────────────────────────────────────────────────
+    // CONTEXT-AWARE CONFIRMATION EMAIL (to customer)
+    // ──────────────────────────────────────────────────────────────
+    // The confirmation email adapts based on whether the customer has
+    // already paid (pendingCase exists) or is still browsing:
+    //
+    //   Already paid (Flow B): "Your report is being generated. Watch your inbox."
+    //     - Sets expectation that something is actively happening
+    //
+    //   Not yet paid (Flow A): "Here's what happens next: browse services, purchase..."
+    //     - Guides them toward the purchase funnel with upgrade incentive
+    //     - Links to services page and Case Decoder checkout directly
     const confirmationHtml = pendingCase
       ? `
         <h1 style="color: #F59E0B;">Case Details Received</h1>
@@ -121,11 +247,11 @@ export async function POST(req: NextRequest) {
         </div>
         <h2 style="color: white; font-size: 18px;">What Happens Next</h2>
         <ol style="color: #D4D4D8; padding-left: 20px;">
-          <li style="margin-bottom: 8px;">Browse our <a href="https://imnotanattorney.com/services" style="color: #F59E0B;">services page</a> to find the right tier for your case</li>
+          <li style="margin-bottom: 8px;">Browse our <a href="${SITE_URL}/services" style="color: #F59E0B;">services page</a> to find the right tier for your case</li>
           <li style="margin-bottom: 8px;">Purchase your chosen service — 100% of what you pay is credited if you upgrade later</li>
           <li style="margin-bottom: 8px;">We'll analyze your case and deliver your report within the guaranteed timeframe</li>
         </ol>
-        <p style="color: #A1A1AA;">Not sure which tier? Start with the <a href="https://imnotanattorney.com/checkout?tier=case-decoder" style="color: #F59E0B;">Case Decoder ($197)</a> — it covers the essentials and every dollar counts toward an upgrade.</p>
+        <p style="color: #A1A1AA;">Not sure which tier? Start with the <a href="${SITE_URL}/checkout?tier=case-decoder" style="color: #F59E0B;">Case Decoder ($197)</a> — it covers the essentials and every dollar counts toward an upgrade.</p>
       `;
 
     await sendEmail({
@@ -135,7 +261,13 @@ export async function POST(req: NextRequest) {
       html: confirmationHtml,
     });
 
-    // Send operator notification
+    // ──────────────────────────────────────────────────────────────
+    // OPERATOR NOTIFICATION EMAIL
+    // ──────────────────────────────────────────────────────────────
+    // Sends a comprehensive summary of every intake field to the operator.
+    // This serves as both an alert (new lead) and a reference (all details
+    // in one email without needing to check Supabase). Includes the
+    // customer's #1 specific question and situation narrative if provided.
     await sendEmail({
       to: OPERATOR_EMAIL,
       subject: `New Intake: ${escapeHtml(chargeType)} — ${escapeHtml(firstName)}`,

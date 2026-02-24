@@ -1,3 +1,47 @@
+/**
+ * Sample Report Page (/sample)
+ *
+ * Redacted sample of a real Case Decoder report, used as proof of deliverable
+ * quality. This is one of the highest-impact conversion pages — visitors who
+ * view the sample are significantly more likely to purchase.
+ *
+ * User journey position:
+ *   Landing page ("See What We Found") -> THIS PAGE -> /checkout?tier=case-decoder
+ *   /services ("View Sample Report") -> THIS PAGE
+ *   /checkout ("Preview what you'll get") -> THIS PAGE
+ *
+ * Content source: Based on Rahim's real trafficking case (23-01773-CF),
+ * with names, case numbers, and dates changed. The findings and discrepancy
+ * magnitudes are real.
+ *
+ * Report sections shown:
+ *   1. Report header — Client name, charges, jurisdiction, case stage (all redacted)
+ *   2. Methodology note — Names the specific attorney methods used
+ *      (Lichtman CI protocol, Scheck chain of custody, Dershowitz constitutional,
+ *       Chapman drug forensics)
+ *   3. Section 1: Charges in Plain English — Statute, elements, penalties,
+ *      FATAL VARIANCE callout (amphetamine charged vs MDMA/MDA found)
+ *   4. Section 2: Case Stage Benchmark — Timeline table with status indicators
+ *      (green=done, amber=partial, red=not done). "BEHIND SCHEDULE" assessment.
+ *   5. Section 3: Attorney Accountability Checklist — 10-item checklist (3/10 done).
+ *      Highlights the gaps between expected and actual attorney behavior.
+ *   6. Mid-page CTA (InlineCTA variant="mid") — Conversion point
+ *   7. Section 4: Questions (5 of 15 shown) — Each with:
+ *      - Category tag (weight, substance, fingerprints, CI, identity)
+ *      - The actual question to ask the attorney
+ *      - "Why this matters" explanation
+ *      - SOURCE attribution to named attorney methodology
+ *   8. Section 5: Red Flags — 5 flags with descriptions
+ *   9. Section 6: Motions That May Apply — Table with motion name, purpose, deadline
+ *  10. End-page CTA (InlineCTA variant="end") — Final conversion point
+ *
+ * Two inline CTAs strategically placed:
+ *   - Mid-page (after accountability checklist) — catches engaged readers
+ *   - End-page (after motions table) — catches completionists
+ *
+ * SEO: Full OG metadata with specific findings in description.
+ */
+import { SITE_URL } from "@/lib/site";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -6,7 +50,7 @@ export const metadata: Metadata = {
   description:
     "See what a Case Decoder report actually looks like. Real trafficking case analysis: 73% weight discrepancy, fatal substance variance, 21 unmatched fingerprints. Every question traced to elite defense attorney methodology.",
   alternates: {
-    canonical: "https://imnotanattorney.com/sample",
+    canonical: `${SITE_URL}/sample`,
   },
   openGraph: {
     title: "Sample Case Decoder Report — Real Findings from a Real Case",
@@ -15,10 +59,17 @@ export const metadata: Metadata = {
   },
 };
 
+/** Visual separator between report sections — amber-tinted line. */
 function SectionDivider() {
   return <div className="my-8 border-t border-amber-500/20" />;
 }
 
+/**
+ * InlineCTA — conversion callout placed within the report body.
+ * "mid" variant: after the accountability checklist (engagement point).
+ * "end" variant: after the motions table (completion point).
+ * Both link to /checkout?tier=case-decoder at $197.
+ */
 function InlineCTA({ variant }: { variant: "mid" | "end" }) {
   return (
     <div className="my-8 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6 text-center">
@@ -46,7 +97,7 @@ export default function SamplePage() {
   return (
     <div className="px-4 py-16">
       <div className="mx-auto max-w-3xl">
-        {/* Page header */}
+        {/* PAGE HEADER — Sets expectations: real case, redacted, real findings */}
         <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-amber-500">
             Sample Report — Real Case, Redacted
@@ -61,9 +112,9 @@ export default function SamplePage() {
           </p>
         </div>
 
-        {/* Report container */}
+        {/* REPORT CONTAINER — Styled to look like the actual delivered report */}
         <div className="mt-12 rounded-xl border border-amber-500/30 bg-zinc-900 p-6 md:p-10">
-          {/* Report header */}
+          {/* REPORT HEADER — Monospace styled case info block (redacted) */}
           <div className="rounded-lg border border-zinc-700 bg-zinc-800/50 p-6 font-mono text-sm text-zinc-300">
             <p className="text-center font-bold text-amber-400">
               CASE DECODER REPORT
@@ -89,7 +140,9 @@ export default function SamplePage() {
             </div>
           </div>
 
-          {/* Methodology note */}
+          {/* METHODOLOGY NOTE — Names the specific attorney methods used.     */}
+          {/* This differentiates from generic legal tools by showing the      */}
+          {/* traceable provenance of each question category.                   */}
           <div className="mt-8 rounded-lg border border-zinc-700 bg-zinc-800/30 p-5">
             <p className="text-xs font-bold uppercase tracking-wider text-amber-400">
               Methodology
@@ -139,7 +192,9 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* Section 1: Charges */}
+          {/* SECTION 1: CHARGES — Plain-English charge explanation with        */}
+          {/* statute reference, elements, penalties, and FATAL VARIANCE       */}
+          {/* callout (amphetamine charged vs MDMA/MDA found).                 */}
           <section>
             <h2 className="text-xl font-bold text-white">
               Section 1: Your Charges — In Plain English
@@ -200,7 +255,9 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* Section 2: Case Stage */}
+          {/* SECTION 2: CASE STAGE — Timeline benchmark table showing where   */}
+          {/* the case should be vs where it actually is. Color-coded status:  */}
+          {/* green = done, amber = partial/pending, red = missing/overdue.    */}
           <section>
             <h2 className="text-xl font-bold text-white">
               Section 2: Where Your Case Should Be Right Now
@@ -265,7 +322,9 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* Section 3: Attorney Accountability */}
+          {/* SECTION 3: ATTORNEY ACCOUNTABILITY CHECKLIST — 10-item yes/no    */}
+          {/* assessment. Score: 3/10 (deliberately low to show the product's  */}
+          {/* value in identifying attorney gaps).                              */}
           <section>
             <h2 className="text-xl font-bold text-white">
               Section 3: Attorney Accountability Checklist
@@ -338,7 +397,11 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* Section 4: Questions (top 5 shown) */}
+          {/* SECTION 4: QUESTIONS — Shows 5 of the 15 questions from the full */}
+          {/* report. Each question has category tag, the verbatim question,   */}
+          {/* "why this matters" context, and SOURCE attribution to a named    */}
+          {/* attorney methodology. Showing 5/15 creates intrigue for the full */}
+          {/* report while demonstrating the quality and specificity.           */}
           <section>
             <h2 className="text-xl font-bold text-white">
               Section 4: 15 Questions to Ask Your Attorney
@@ -473,7 +536,8 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* Section 5: Red Flags */}
+          {/* SECTION 5: RED FLAGS — 5 critical findings that the attorney     */}
+          {/* should have caught. Each with severity description.               */}
           <section>
             <h2 className="text-xl font-bold text-white">
               Section 5: Red Flags
@@ -519,7 +583,9 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* Section 6: Motions */}
+          {/* SECTION 6: MOTIONS — Table of applicable motions with plain-     */}
+          {/* English explanations and deadline urgency. Shows the type of     */}
+          {/* actionable output the customer will receive.                      */}
           <section>
             <h2 className="text-xl font-bold text-white">
               Section 6: Motions That May Apply
@@ -588,7 +654,7 @@ export default function SamplePage() {
           <InlineCTA variant="end" />
         </div>
 
-        {/* Disclaimer */}
+        {/* DISCLAIMER — Clarifies redaction and legal positioning */}
         <p className="mt-6 text-center text-xs text-zinc-400">
           Names, case numbers, and dates have been changed. Findings and
           discrepancy magnitudes are real. ImNotAnAttorney provides legal

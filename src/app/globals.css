@@ -1,3 +1,21 @@
+/**
+ * globals.css -- Global stylesheet for the ImNotAnAttorney site.
+ *
+ * Imports Tailwind CSS v4 and defines the custom theme inline via @theme.
+ *
+ * Theme tokens:
+ *   - Background (#0a0a0a) and foreground (#ededed) base colors.
+ *   - Amber palette (400/500/600) -- brand accent color used for CTAs and highlights.
+ *   - Zinc palette (200-950) -- neutral grays for text, borders, and backgrounds.
+ *   - Red and green for error/success states.
+ *   - Font: Geist Sans (loaded via next/font in layout.tsx), falling back to system fonts.
+ *
+ * Global styles:
+ *   - Body: dark background, light foreground, Geist Sans font.
+ *   - Focus-visible: amber outline ring (2px, 2px offset) for keyboard accessibility.
+ *
+ * All component-level styling is done via Tailwind utility classes, not this file.
+ */
 @import "tailwindcss";
 
 @theme inline {

@@ -1,11 +1,43 @@
 /**
- * Setup cron-job.org jobs for ImNotAnAttorney
+ * Setup cron-job.org jobs for ImNotAnAttorney.
  * Run with: node scripts/setup-cronjob-org.js
+ *
+ * Reads secrets from .env.local (same pattern as e2e-test.js).
+ * Requires CRONJOB_API_KEY and CRON_SECRET to be set in .env.local.
  */
 
-const CRONJOB_API_KEY = 'qmy3F+k6DrUgKCz/Jp8fEnpViJrE3pgaUfOoO8yAQn4=';
-const CRON_SECRET = 'aac26b1410638b44cb1d94a30c45fcb142fc9125e743aa7bedd79815e2e2e98d';
-const BASE_URL = 'https://imnotanattorney.com/api/cron';
+const fs = require('fs');
+const path = require('path');
+
+// Read env vars from .env.local
+function loadEnv() {
+  const envPath = path.join(__dirname, '..', '.env.local');
+  if (!fs.existsSync(envPath)) {
+    console.error('ERROR: .env.local not found. Copy .env.example and fill in values.');
+    process.exit(1);
+  }
+  const lines = fs.readFileSync(envPath, 'utf-8').split('\n');
+  const env = {};
+  for (const line of lines) {
+    const match = line.match(/^([^#=]+)=(.*)$/);
+    if (match) {
+      env[match[1].trim()] = match[2].trim().replace(/^["']|["']$/g, '');
+    }
+  }
+  return env;
+}
+
+const env = loadEnv();
+const CRONJOB_API_KEY = env.CRONJOB_API_KEY;
+const CRON_SECRET = env.CRON_SECRET;
+
+if (!CRONJOB_API_KEY || !CRON_SECRET) {
+  console.error('ERROR: CRONJOB_API_KEY and CRON_SECRET must be set in .env.local');
+  process.exit(1);
+}
+
+const BASE_URL = env.NEXT_PUBLIC_SITE_URL || 'https://imnotanattorney.com';
+const CRON_URL = `${BASE_URL}/api/cron`;
 
 const CRON_JOBS = [
   {
@@ -16,7 +48,7 @@ const CRON_JOBS = [
 ];
 
 async function createCronJob(job) {
-  const url = `${BASE_URL}/${job.name}`;
+  const url = `${CRON_URL}/${job.name}`;
 
   const payload = {
     job: {

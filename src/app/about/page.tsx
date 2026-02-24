@@ -1,4 +1,39 @@
+/**
+ * About Page (/about)
+ *
+ * Founder story page using an "epiphany bridge" narrative — the copywriting
+ * technique where you share the personal experience that led to creating the
+ * product. This builds trust by demonstrating lived experience as a defendant.
+ *
+ * User journey position:
+ *   Nav / footer -> THIS PAGE -> /services (primary CTA) or /blog (secondary CTA)
+ *
+ * Narrative structure (epiphany bridge):
+ *   1. Hero — "Built by a defendant. For defendants." (identity statement)
+ *   2. The Setup — Rahim facing trafficking charges, paid thousands for attorney,
+ *      got silence and inaction for months
+ *   3. The Epiphany — Opened the discovery himself, found 4 critical issues
+ *      in one week that the attorney never mentioned:
+ *        - 73% weight discrepancy (93.9g -> 25.59g = 68.3g missing)
+ *        - CI phone dual attribution
+ *        - Drug type mismatch (amphetamine charged, MDMA/MDA found)
+ *        - 21 fingerprints, zero match
+ *   4. The Mission — Built a research system from 40+ elite defense attorneys'
+ *      published methodologies. Now available to any defendant.
+ *   5. How We Do It — Three differentiators (deep research, real case experience,
+ *      plain English translation)
+ *   6. What We're NOT — UPL compliance section. Five explicit disclaimers:
+ *      not a law firm, no legal advice, no court representation, no attorney
+ *      replacement, no outcome guarantees. "We Research. You Ask." tagline.
+ *   7. CTA — Services page + blog links
+ *   8. Lead capture — Email opt-in fallback
+ *
+ * Conversion role: This page handles the "who are these people?" objection.
+ * Founder-as-defendant credibility is the strongest trust signal for the
+ * target audience (defendants who feel their attorney is failing them).
+ */
 import { LeadCapture } from "@/components/LeadCapture";
+import { SITE_URL } from "@/lib/site";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -7,7 +42,7 @@ export const metadata: Metadata = {
   description:
     "ImNotAnAttorney was built by a defendant, for defendants. We provide legal research and questions — not legal advice.",
   alternates: {
-    canonical: "https://imnotanattorney.com/about",
+    canonical: `${SITE_URL}/about`,
   },
 };
 
@@ -15,7 +50,7 @@ export default function AboutPage() {
   return (
     <div className="px-4 py-16">
       <div className="mx-auto max-w-3xl">
-        {/* Hero */}
+        {/* HERO — Identity statement that immediately establishes credibility */}
         <h1 className="text-3xl font-bold text-white md:text-5xl">
           Built by a defendant.
           <br />
@@ -31,7 +66,9 @@ export default function AboutPage() {
           explanation of what was in my own discovery.
         </p>
 
-        {/* The Story */}
+        {/* THE STORY — Epiphany bridge: the night Rahim opened his own      */}
+        {/* discovery and found four issues the attorney had never raised.   */}
+        {/* This is the emotional core of the brand narrative.               */}
         <section className="mt-16">
           <h2 className="text-2xl font-bold text-white">The day everything changed</h2>
           <div className="mt-4 space-y-4 text-zinc-400 leading-relaxed">
@@ -54,7 +91,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* What we do */}
+        {/* WHAT WE BUILT — Transition from personal story to product.       */}
+        {/* Shows how the personal epiphany became a service for others.     */}
         <section className="mt-16">
           <h2 className="text-2xl font-bold text-white">What I built after that day</h2>
           <div className="mt-4 space-y-4 text-zinc-400 leading-relaxed">
@@ -77,7 +115,9 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* How it works */}
+        {/* HOW WE DO IT — Three differentiators: deep research, real case   */}
+        {/* experience, and plain English. AI-powered positioning without    */}
+        {/* over-promising.                                                  */}
         <section className="mt-16">
           <h2 className="text-2xl font-bold text-white">How we do it</h2>
           <div className="mt-6 space-y-6">
@@ -106,7 +146,10 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* What we're NOT */}
+        {/* WHAT WE'RE NOT — UPL (Unauthorized Practice of Law) compliance.  */}
+        {/* Five explicit disclaimers plus the "We Research. You Ask."       */}
+        {/* tagline that defines the legal boundary of our services.         */}
+        {/* This section is legally important — do not remove or soften.     */}
         <section className="mt-16">
           <h2 className="text-2xl font-bold text-white">
             What we are <span className="text-amber-400">not</span>
@@ -135,7 +178,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* CTA */}
+        {/* CTA — Routes to services (primary) and blog (secondary) */}
         <section className="mt-16 text-center">
           <h2 className="text-2xl font-bold text-white">
             Defendants who fight back{" "}
@@ -157,7 +200,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Lead Capture */}
+        {/* LEAD CAPTURE — Email opt-in fallback for visitors not ready to buy */}
         <div className="mt-16">
           <LeadCapture />
         </div>

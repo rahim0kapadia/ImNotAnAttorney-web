@@ -1,11 +1,32 @@
+/**
+ * terms/page.tsx -- Terms of Service page.
+ *
+ * WARNING: NEEDS ATTORNEY REVIEW -- This content is PLACEHOLDER copy drafted without
+ * legal counsel. It MUST be reviewed and approved by a licensed attorney before Stripe
+ * live mode is enabled or real customers are charged. Key areas requiring review:
+ *   - Section 3 (Not Legal Advice disclaimer) -- UPL risk language
+ *   - Section 4 (Payment Terms) -- refund and guarantee obligations
+ *   - Section 7 (Limitation of Liability) -- liability cap and exclusions
+ *   - Section 10 (Governing Law) -- Florida jurisdiction clause
+ *
+ * Covers: Acceptance of terms, service description, legal advice disclaimer,
+ * payment terms (delivery guarantee, upgrade credits, refunds), user responsibilities,
+ * intellectual property, limitation of liability, document handling, modifications,
+ * governing law (Florida/Pinellas County), and contact info.
+ *
+ * The "Not Legal Advice" section (3) is the most critical for UPL protection.
+ *
+ * SEO: Static metadata with canonical URL at /terms.
+ */
 import type { Metadata } from "next";
+import { SITE_URL, CONTACT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
     "Terms of Service for ImNotAnAttorney — legal information and research services.",
   alternates: {
-    canonical: "https://imnotanattorney.com/terms",
+    canonical: `${SITE_URL}/terms`,
   },
 };
 
@@ -191,10 +212,10 @@ export default function TermsPage() {
             <p>
               Questions about these terms? Contact us at{" "}
               <a
-                href="mailto:help@imnotanattorney.com"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="text-amber-400 underline"
               >
-                help@imnotanattorney.com
+                {CONTACT_EMAIL}
               </a>
               .
             </p>

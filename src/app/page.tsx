@@ -1,15 +1,48 @@
+/**
+ * Landing Page (/)
+ *
+ * Primary conversion entry point for the entire site. This page is designed to
+ * take a cold visitor (typically arriving from Reddit, Google, or a blog post)
+ * and move them toward purchasing the Case Decoder ($197) or entering the free
+ * Attorney Accountability Score funnel.
+ *
+ * User journey position:
+ *   Traffic source -> THIS PAGE -> /checkout?tier=case-decoder (primary CTA)
+ *                                -> /score (free lead magnet CTA)
+ *                                -> /sample (proof / objection handling)
+ *
+ * Page structure (conversion-optimized order):
+ *   1. Hero — H1 with the 73% weight discrepancy hook + dual CTA (buy / sample)
+ *   2. Proof — Real case findings (weight, CI phone, drug type) with attorney attributions
+ *   3. Urgency bar — Motion deadline scarcity
+ *   4. Pain points — Four defendant frustrations that validate the visitor's situation
+ *   5. Bridge — Identity statement ("people like us read the discovery ourselves")
+ *   6. How it works — 3-step process (tell us, we research, you ask)
+ *   7. Attorneys behind your questions — Credibility via 40+ named attorneys
+ *   8. Value anchor — Stakes comparison ($10K-$100K attorney vs $197-$9,997 service)
+ *   9. Guarantee — Tiered guarantee (delivery + satisfaction)
+ *  10. Pricing — PricingTable component (first 3 tiers shown on landing page)
+ *  11. Lead capture — Email opt-in for non-buyers
+ *  12. FAQ — Schema-marked FAQ accordion (7 questions, SEO + objection handling)
+ *  13. Final CTA — Urgency close with deadline framing
+ *
+ * SEO: FAQ schema markup (FAQPage JSON-LD) injected for rich snippets.
+ * OG/meta: Title uses the 73% weight discrepancy hook for social sharing.
+ */
 import { LeadCapture } from "@/components/LeadCapture";
 import { PricingTable } from "@/components/PricingTable";
 import { FAQAccordion } from "@/components/FAQAccordion";
+import { SITE_URL } from "@/lib/site";
 import Link from "next/link";
 import type { Metadata } from "next";
 
+/** Page-level metadata. Title uses the real case hook for SEO + social click-through. */
 export const metadata: Metadata = {
   title: "ImNotAnAttorney — We Found a 73% Weight Discrepancy Your Attorney Missed",
   description:
     "Legal empowerment for criminal defendants. We research your case and generate the questions that hold your attorney accountable. Starting at $197.",
   alternates: {
-    canonical: "https://imnotanattorney.com",
+    canonical: SITE_URL,
   },
   openGraph: {
     title: "ImNotAnAttorney — We Found a 73% Weight Discrepancy Your Attorney Missed",
@@ -18,6 +51,19 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * FAQ items for the landing page accordion.
+ * These are chosen to handle the top purchase objections:
+ *   - "Will this upset my attorney?" (relationship fear)
+ *   - "Is this legal advice?" (UPL compliance)
+ *   - "What if I don't have discovery?" (tier gating)
+ *   - "Do you work on federal cases?" (scope)
+ *   - "How fast?" (delivery timeline)
+ *   - "What about upgrade credit?" (commitment reduction)
+ *   - "Can I get a refund?" (risk reversal)
+ *
+ * Also used to generate FAQPage schema markup for Google rich snippets.
+ */
 const homeFaqs = [
   {
     question: "Will asking these questions upset my attorney?",
@@ -56,6 +102,7 @@ const homeFaqs = [
   },
 ];
 
+/** FAQPage JSON-LD schema for Google rich snippets. Renders as a <script> tag in the page head. */
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -78,7 +125,16 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* Hero */}
+      {/* ------------------------------------------------------------------ */}
+      {/* HERO SECTION                                                      */}
+      {/* The H1 leads with the 73% weight discrepancy — a real, specific   */}
+      {/* finding that immediately differentiates us from generic legal      */}
+      {/* services. Subtext adds CI phone, drug type, and fingerprint       */}
+      {/* findings for credibility. Two CTAs:                               */}
+      {/*   Primary: "Find What's in My Case — $197" -> /checkout           */}
+      {/*   Secondary: "See What We Found" -> /sample (proof before buy)    */}
+      {/* Below CTAs: free score link (/score) as low-commitment fallback.  */}
+      {/* ------------------------------------------------------------------ */}
       <section className="px-4 pb-20 pt-24 text-center md:pt-32">
         <div className="mx-auto max-w-4xl">
           <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-amber-500">
@@ -133,7 +189,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Proof — Real case findings (moved above fold for H2) */}
+      {/* ------------------------------------------------------------------ */}
+      {/* PROOF SECTION — Real Case Findings                                */}
+      {/* Shows three specific findings from Rahim's actual trafficking     */}
+      {/* case (23-01773-CF). Placed high on page (above pain points)       */}
+      {/* because specificity converts better than empathy alone.           */}
+      {/*   - 73% weight discrepancy (93.9g scene vs 25.59g lab = 68.3g)   */}
+      {/*   - CI phone dual attribution (Franks v. Delaware issue)          */}
+      {/*   - Drug type variance (amphetamine charged, MDMA/MDA found)     */}
+      {/* Each card attributes the finding to a named attorney's method.    */}
+      {/* ------------------------------------------------------------------ */}
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
@@ -188,7 +253,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Urgency Bar */}
+      {/* URGENCY BAR — Motion deadline scarcity. Creates time pressure      */}
+      {/* without being manipulative (suppression motions genuinely expire). */}
       <section className="border-y border-amber-500/20 bg-amber-500/5 px-4 py-4">
         <p className="text-center text-sm text-amber-400">
           Motion deadlines don&apos;t wait. Some suppression motions must be
@@ -197,7 +263,15 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Pain Points */}
+      {/* ------------------------------------------------------------------ */}
+      {/* PAIN POINTS — Four defendant frustrations                         */}
+      {/* Validates the visitor's situation by naming exact feelings:        */}
+      {/*   - Attorney never calls back                                     */}
+      {/*   - Can't understand discovery                                    */}
+      {/*   - Feels like getting railroaded                                 */}
+      {/*   - Paying thousands for silence                                  */}
+      {/* These map directly to Reddit/forum posts from r/legaladvice.      */}
+      {/* ------------------------------------------------------------------ */}
       <section className="px-4 py-20">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
@@ -237,7 +311,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Bridge */}
+      {/* BRIDGE — Identity statement. Transitions from pain to action by    */}
+      {/* creating an in-group ("people like us") before the how-it-works.  */}
       <section className="border-t border-zinc-800 px-4 py-10">
         <p className="text-center text-lg font-semibold text-white">
           People like us don&apos;t just trust the system.{" "}
@@ -247,7 +322,13 @@ export default function Home() {
         </p>
       </section>
 
-      {/* How It Works */}
+      {/* ------------------------------------------------------------------ */}
+      {/* HOW IT WORKS — 3-step simplification                              */}
+      {/*   Step 01: Tell us about your case (10 min intake form)           */}
+      {/*   Step 02: We research everything (40+ attorney methodologies)    */}
+      {/*   Step 03: You ask the questions (bring report to attorney)       */}
+      {/* Anchor id="how-it-works" for in-page linking from nav.           */}
+      {/* ------------------------------------------------------------------ */}
       <section id="how-it-works" className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
@@ -286,7 +367,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The Attorneys Behind Your Questions */}
+      {/* ------------------------------------------------------------------ */}
+      {/* ATTORNEY CREDIBILITY SECTION                                      */}
+      {/* Names 6 elite defense attorneys whose documented methods power     */}
+      {/* our question generation. This is the core differentiator:         */}
+      {/* we don't generate generic questions — each traces to a specific   */}
+      {/* attorney's winning methodology. Social proof via real names       */}
+      {/* and real case wins (OJ, El Chapo, Gotti Jr, etc).                */}
+      {/* ------------------------------------------------------------------ */}
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-5xl">
           <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
@@ -346,7 +434,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Value Anchor */}
+      {/* VALUE ANCHOR — Stakes comparison. Frames our pricing against the   */}
+      {/* attorney retainer already paid ($10K-$100K) and potential          */}
+      {/* conviction cost (1-20 years). Makes $197-$9,997 feel small.       */}
       <section className="border-t border-zinc-800 px-4 py-16">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-bold text-white md:text-3xl">
@@ -375,7 +465,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Guarantee (H12) */}
+      {/* GUARANTEE SECTION — Tiered guarantees to reduce purchase risk.     */}
+      {/* Lower tiers ($197/$797): Full cash refund if delivery or question */}
+      {/* count missed + 100% credit toward upgrade within 30 days.         */}
+      {/* Higher tiers ($1,497+): Delivery guarantee only (custom research  */}
+      {/* begins on intake, non-refundable once delivered).                  */}
       <section className="border-t border-zinc-800 px-4 py-16">
         <div className="mx-auto max-w-3xl text-center">
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-8">
@@ -408,7 +502,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pricing */}
+      {/* ------------------------------------------------------------------ */}
+      {/* PRICING SECTION                                                   */}
+      {/* Shows the first 3 tiers via PricingTable component (maxTiers=3).  */}
+      {/* Landing page intentionally hides War Room and Situation Room to   */}
+      {/* reduce decision fatigue. Full 5-tier display is on /services.     */}
+      {/* Anchor id="pricing" for direct linking from nav + CTAs.          */}
+      {/* Upgrade credit messaging reinforces "start small, grow later."   */}
+      {/* ------------------------------------------------------------------ */}
       <section id="pricing" className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-5xl">
           <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
@@ -429,7 +530,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Lead Capture */}
+      {/* LEAD CAPTURE — Email opt-in for visitors not ready to buy.         */}
+      {/* Falls back to free score link for zero-friction engagement.       */}
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-2xl">
           <LeadCapture />
@@ -445,7 +547,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* FAQ — Renders the homeFaqs array via FAQAccordion component.       */}
+      {/* Handles remaining objections. Schema markup is injected above     */}
+      {/* via faqSchema JSON-LD for Google rich snippet eligibility.        */}
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-3xl">
           <h2 className="mb-8 text-center text-2xl font-bold text-white md:text-3xl">
@@ -455,7 +559,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Final CTA */}
+      {/* FINAL CTA — Urgency close. Frames inaction as the risk            */}
+      {/* ("motions expire, evidence disappears, witnesses forget").        */}
+      {/* Single CTA to Case Decoder at $197 — lowest commitment action.   */}
       <section className="border-t border-zinc-800 px-4 py-20 text-center">
         <div className="mx-auto max-w-2xl">
           <h2 className="text-2xl font-bold text-white md:text-3xl">

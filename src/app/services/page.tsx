@@ -1,5 +1,38 @@
+/**
+ * Services / Pricing Page (/services)
+ *
+ * Full 5-tier service catalog organized by case type (Drug, DUI, White Collar).
+ * This is the deep-dive pricing page linked from the landing page, nav, and
+ * blog CTAs. While the landing page shows only 3 tiers to reduce decision
+ * fatigue, this page shows all 5 tiers per case type.
+ *
+ * User journey position:
+ *   Landing page / Blog / Nav -> THIS PAGE -> /checkout?tier=<slug>
+ *
+ * Page structure:
+ *   1. Header — "Services built for your case" with tier count + upgrade credit intro
+ *   2. Pricing comparison — Attorney cost vs. our cost (value framing)
+ *   3. Upgrade credits callout — 100% credit toward next tier, 12-month expiration
+ *   4. Decision guide — "No discovery yet?" vs "You have discovery?" routing
+ *   5. Case type sections (Drug, DUI, White Collar) — each with all 5 tiers:
+ *      - Top 3 tiers in 3-column grid (Case Decoder, Intelligence Brief, X-Ray)
+ *      - Bottom 2 tiers in 2-column grid (War Room, Situation Room)
+ *      - Each tier card links to /checkout?tier=<slug>
+ *   6. Guarantee section — Delivery + satisfaction guarantees with per-tier details
+ *   7. FAQ accordion — 6 service-specific questions with schema markup
+ *   8. Lead capture — Email opt-in fallback
+ *
+ * Conversion decisions:
+ *   - Case Decoder marked "Best Starting Point" (popular=true) — lowest commitment
+ *   - X-Ray marked "Best Value" (bestValue=true) — highest margin tier
+ *   - Situation Room shows "Requires War Room" badge — application gate
+ *   - Case Decoder cards include "View Sample Report" link to /sample
+ *
+ * SEO: FAQ schema (FAQPage) + ProfessionalService schema for rich snippets.
+ */
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { LeadCapture } from "@/components/LeadCapture";
+import { SITE_URL } from "@/lib/site";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -8,10 +41,22 @@ export const metadata: Metadata = {
   description:
     "Case-specific research and question reports for criminal defendants. Five tiers from $197 Case Decoder to $9,997 Situation Room. DUI, drug cases, white collar, and federal defense.",
   alternates: {
-    canonical: "https://imnotanattorney.com/services",
+    canonical: `${SITE_URL}/services`,
   },
 };
 
+/**
+ * Case type definitions with per-type tier descriptions.
+ * Each case type (Drug, DUI, White Collar) has its own tier descriptions
+ * tailored to the specific charge category. This allows the same 5-tier
+ * structure to speak differently to each audience.
+ *
+ * Tier flags:
+ *   - popular: true -> "Best Starting Point" badge (Case Decoder)
+ *   - bestValue: true -> "Best Value" badge (X-Ray)
+ *   - requiresWarRoom: true -> "Requires War Room" prerequisite badge
+ *   - discovery: true -> shows "Requires discovery documents" note
+ */
 const caseTypes = [
   {
     title: "Drug Cases",
@@ -153,6 +198,7 @@ const caseTypes = [
   },
 ];
 
+/** Service-specific FAQ items for objection handling. Also used for FAQPage schema. */
 const faqs = [
   {
     question: "Is this legal advice?",
@@ -186,6 +232,7 @@ const faqs = [
   },
 ];
 
+/** FAQPage JSON-LD for Google rich snippet eligibility on the services page. */
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -199,6 +246,7 @@ const faqSchema = {
   })),
 };
 
+/** ProfessionalService JSON-LD schema for structured data in search results. */
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
@@ -208,7 +256,7 @@ const serviceSchema = {
   provider: {
     "@type": "Organization",
     name: "ImNotAnAttorney",
-    url: "https://imnotanattorney.com",
+    url: SITE_URL,
   },
   serviceType: "Legal Research",
   areaServed: "US",
@@ -226,7 +274,7 @@ export default function ServicesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
       <div className="mx-auto max-w-5xl">
-        {/* Header */}
+        {/* HEADER — Page title + value proposition */}
         <div className="text-center">
           <h1 className="text-3xl font-bold text-white md:text-5xl">
             Services built for <span className="text-amber-400">your</span>{" "}
@@ -241,7 +289,9 @@ export default function ServicesPage() {
           </p>
         </div>
 
-        {/* How pricing works */}
+        {/* PRICING COMPARISON — Value framing: attorney retainer vs our cost. */}
+        {/* Shows 3 price tiers ($10K, $30K, $100K attorney) with our price  */}
+        {/* as a percentage. Makes even the $9,997 tier feel like 1-10%.     */}
         <div className="mt-16 rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 text-center">
           <h2 className="text-lg font-bold text-white">
             Smart defendants don&apos;t just hire an attorney.{" "}
@@ -276,7 +326,9 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        {/* Upgrade Credits */}
+        {/* UPGRADE CREDITS — Reduces commitment anxiety. 100% of payment     */}
+        {/* applies toward next tier. 12-month expiration. This is key for   */}
+        {/* getting Case Decoder purchases from people considering X-Ray.    */}
         <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6 text-center">
           <p className="text-sm font-semibold text-amber-400">
             Upgrade Credits: 100% Applied
@@ -288,7 +340,10 @@ export default function ServicesPage() {
           </p>
         </div>
 
-        {/* Decision Guide */}
+        {/* DECISION GUIDE — Routes visitors based on discovery status.       */}
+        {/* No discovery: Case Decoder ($197) or Intelligence Brief ($797).  */}
+        {/* Has discovery: X-Ray ($1,497) recommended as starting point.     */}
+        {/* This reduces confusion from the 5-tier display below.            */}
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
             <p className="text-sm font-bold text-amber-400">
@@ -323,7 +378,10 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        {/* Case Types */}
+        {/* CASE TYPE SECTIONS — One section per case type (Drug, DUI, WC).   */}
+        {/* Each renders all 5 tiers with case-type-specific descriptions.   */}
+        {/* First 3 tiers in 3-col grid, last 2 (War Room, Situation Room)  */}
+        {/* in a 2-col grid below — visual hierarchy emphasizes entry tiers. */}
         {caseTypes.map((ct) => (
           <section key={ct.title} className="mt-20">
             <div className="mb-8">
@@ -425,7 +483,8 @@ export default function ServicesPage() {
           </section>
         ))}
 
-        {/* Guarantee */}
+        {/* GUARANTEE — Per-tier delivery commitments with deadlines.          */}
+        {/* Reinforces risk reversal at the point of maximum hesitation.      */}
         <section className="mt-20 rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 text-center">
           <h2 className="text-2xl font-bold text-white">
             Our Guarantee
@@ -471,7 +530,7 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* FAQ */}
+        {/* FAQ — Service-specific questions rendered via FAQAccordion.        */}
         <section className="mt-20">
           <h2 className="mb-8 text-center text-2xl font-bold text-white">
             Frequently Asked Questions
@@ -479,7 +538,7 @@ export default function ServicesPage() {
           <FAQAccordion items={faqs} />
         </section>
 
-        {/* Lead Capture */}
+        {/* LEAD CAPTURE — Fallback email opt-in for visitors not ready to buy. */}
         <div className="mt-16">
           <LeadCapture />
         </div>

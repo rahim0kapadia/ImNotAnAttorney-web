@@ -1,6 +1,28 @@
+/**
+ * blog/page.tsx -- Blog index page with category filtering.
+ *
+ * Displays all published blog posts as a 2-column grid of BlogCard components,
+ * with optional filtering by category via the `?category=` query parameter.
+ *
+ * Categories: DUI, Drug Cases, White Collar, General Defense, or All (no filter).
+ * Category filter pills are rendered as plain `<a>` tags (not Links) to allow
+ * server-side re-rendering with the new searchParams on each click.
+ *
+ * Data source: `getAllPosts()` from `src/lib/blog.ts` reads MDX frontmatter from
+ * the `content/blog/` directory at build time. Posts are sorted by date (newest first).
+ *
+ * SEO: Static metadata with canonical URL. No dynamic OG image for the index page --
+ * the root opengraph-image.tsx is used instead.
+ *
+ * A LeadCapture component is rendered below the post grid for email collection.
+ *
+ * Empty state: If no posts match the selected category, a "No posts in this category
+ * yet" message is shown.
+ */
 import { getAllPosts } from "@/lib/blog";
 import { BlogCard } from "@/components/BlogCard";
 import { LeadCapture } from "@/components/LeadCapture";
+import { SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,7 +30,7 @@ export const metadata: Metadata = {
   description:
     "In-depth legal research and defense strategies for criminal defendants. DUI, drug cases, white collar — the questions your attorney should be answering but isn't.",
   alternates: {
-    canonical: "https://imnotanattorney.com/blog",
+    canonical: `${SITE_URL}/blog`,
   },
 };
 

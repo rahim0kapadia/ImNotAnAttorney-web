@@ -1,19 +1,44 @@
 /**
- * ImNotAnAttorney Embed Script
+ * ImNotAnAttorney Embed Script -- Embeddable widget for third-party sites.
+ *
+ * Allows external websites (legal blogs, forums, etc.) to embed an ImNotAnAttorney
+ * badge that links to the free attorney questions guide (PDF lead magnet).
  *
  * Usage:
- * <script src="https://imnotanattorney.com/embed.js"></script>
- * <div data-ina-embed="badge"></div>
+ *   <script src="https://imnotanattorney.com/embed.js"></script>
+ *   <div data-ina-embed="badge"></div>
  *
- * Options:
- * <div data-ina-embed="badge" data-ina-theme="dark"></div>
- * <div data-ina-embed="badge" data-ina-theme="light"></div>
+ * Theme options (not yet fully implemented):
+ *   <div data-ina-embed="badge" data-ina-theme="dark"></div>
+ *   <div data-ina-embed="badge" data-ina-theme="light"></div>
+ *
+ * Base URL derivation: The script automatically determines the base URL from its own
+ * `src` attribute (e.g., if loaded from https://imnotanattorney.com/embed.js, the
+ * base URL is https://imnotanattorney.com). This allows the script to work correctly
+ * in development/staging environments without hardcoded URLs. Can also be overridden
+ * via a `data-base-url` attribute on the script tag. Falls back to production URL.
+ *
+ * How it works:
+ *   1. Injects scoped CSS styles (`.ina-embed-*` classes) into the page `<head>`.
+ *   2. Finds all elements with `data-ina-embed="badge"` attribute.
+ *   3. Replaces their innerHTML with the badge widget (icon + text + download link).
+ *   4. Initializes on DOMContentLoaded or immediately if DOM is already ready.
+ *
+ * The script is wrapped in an IIFE and uses "use strict" to avoid global pollution.
+ * Styles are injected only once (deduped via `#ina-embed-styles` id).
  */
 (function() {
   "use strict";
 
+  // Derive base URL from script src or data attribute, fallback to production
+  const currentScript = document.currentScript;
+  const scriptBaseUrl = currentScript
+    ? currentScript.getAttribute("data-base-url") ||
+      (currentScript.src ? new URL(currentScript.src).origin : null)
+    : null;
+
   const CONFIG = {
-    baseUrl: "https://imnotanattorney.com",
+    baseUrl: scriptBaseUrl || "https://imnotanattorney.com",
     guidePath: "/guides/10-questions-your-attorney-hopes-you-never-ask.pdf",
   };
 

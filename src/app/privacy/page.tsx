@@ -1,11 +1,33 @@
+/**
+ * privacy/page.tsx -- Privacy Policy page.
+ *
+ * WARNING: NEEDS ATTORNEY REVIEW -- This content is PLACEHOLDER copy drafted without
+ * legal counsel. It MUST be reviewed and approved by a licensed attorney before Stripe
+ * live mode is enabled or real customers are charged. Key areas requiring review:
+ *   - Section 3 (Discovery Document Handling) -- sensitivity of legal documents
+ *   - Section 5 (Data Retention) -- retention periods and deletion obligations
+ *   - Section 6 (Your Rights / CCPA) -- California compliance obligations
+ *   - Section 10 (AI Disclosure) -- third-party AI processing disclaimer
+ *
+ * Covers: Information collected (contact, case info, discovery docs, payment, usage data),
+ * how info is used, discovery document handling and security, third-party services
+ * (Stripe, Supabase, Resend, Vercel), data retention policies, user rights (access,
+ * correct, delete, unsubscribe, CCPA), cookies policy, security measures,
+ * children's privacy, AI disclosure, changes to policy, and contact info.
+ *
+ * Third-party services section links to Stripe's privacy policy.
+ *
+ * SEO: Static metadata with canonical URL at /privacy.
+ */
 import type { Metadata } from "next";
+import { SITE_URL, CONTACT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
     "Privacy Policy for ImNotAnAttorney — how we collect, use, and protect your data.",
   alternates: {
-    canonical: "https://imnotanattorney.com/privacy",
+    canonical: `${SITE_URL}/privacy`,
   },
 };
 
@@ -279,10 +301,10 @@ export default function PrivacyPage() {
               For privacy-related questions or to exercise your rights, contact
               us at{" "}
               <a
-                href="mailto:help@imnotanattorney.com"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="text-amber-400 underline"
               >
-                help@imnotanattorney.com
+                {CONTACT_EMAIL}
               </a>
               .
             </p>

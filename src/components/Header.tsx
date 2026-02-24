@@ -1,3 +1,18 @@
+/**
+ * Header -- Sticky site-wide navigation bar with responsive mobile menu.
+ *
+ * Desktop: Horizontal nav links (Blog, Services, Resources, About) + amber "Get Started" CTA.
+ * Mobile (<md breakpoint): Hamburger toggle with animated icon (bars <-> X) and
+ * full-width vertical link list. Pressing Escape closes the mobile menu.
+ *
+ * The mobile menu auto-closes on link click via `setMobileOpen(false)`.
+ *
+ * Note: There is no active-route highlighting implemented yet -- all nav links
+ * use identical styling regardless of the current page. Consider adding
+ * `usePathname()` if active state is needed in the future.
+ *
+ * The header uses `sticky top-0 z-50` so it stays visible on scroll.
+ */
 "use client";
 
 import Link from "next/link";

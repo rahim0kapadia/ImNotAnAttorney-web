@@ -1,8 +1,56 @@
+/**
+ * Attorney Accountability Score Page (/score)
+ *
+ * Free lead magnet — no email required, no login, no paywall. Users answer
+ * 7 multiple-choice questions about their attorney's behavior and receive a
+ * 0-100 score with band classification and observations.
+ *
+ * User journey position:
+ *   Landing page (free CTA) -> THIS PAGE -> /checkout?tier=case-decoder (paid CTA)
+ *   Blog posts -> THIS PAGE
+ *   Direct traffic (SEO) -> THIS PAGE
+ *
+ * Conversion funnel:
+ *   1. Answer 7 questions (zero friction — no email, no account)
+ *   2. See score + observations (immediate value)
+ *   3. Optional email capture — "Get our free Discovery Checklist" (soft ask)
+ *   4. CTA to Case Decoder ($197) — "Want the full breakdown + 10-15 questions?"
+ *
+ * The 7 questions map to key attorney accountability indicators:
+ *   1. chargeType — What charge (drug, DUI, white collar, etc.)
+ *   2. timeSinceArrest — How long since arrest (speed matters for motions)
+ *   3. hasAttorney — Private, public defender, or none
+ *   4. motionsFiled — Has attorney filed any motions?
+ *   5. hasDiscovery — Has client received discovery documents?
+ *   6. communicationFrequency — How often attorney communicates
+ *   7. strategyDiscussed — Has attorney discussed case strategy?
+ *
+ * Score computation: /api/score endpoint (server-side) evaluates answers
+ * against defense milestone benchmarks and returns:
+ *   - score: 0-100 numeric
+ *   - band: Critical / Concerning / Average / Adequate / Excellent
+ *   - observations: Array of plain-English findings
+ *
+ * Score display:
+ *   - Color-coded circle (red/orange/yellow/green/emerald by band)
+ *   - Observations list
+ *   - Optional email capture (POST to /api/subscribe, source="score-page")
+ *   - CTA to Case Decoder for paid deep-dive
+ *   - "Take the score again" reset link (full page reload)
+ *
+ * Privacy: "Your answers are not stored" — important for trust.
+ */
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
 
+/**
+ * The 7 scoring questions. Each has a unique id (used as the key in the
+ * answers object sent to /api/score) and radio-button options.
+ * Question order is deliberate: starts with charge type (context),
+ * then progressively probes attorney behavior.
+ */
 const questions = [
   {
     id: "chargeType",
@@ -75,13 +123,20 @@ const questions = [
   },
 ];
 
+/** Shape of the response from /api/score. */
 type ScoreResult = {
   score: number;
   band: string;
   observations: string[];
 };
 
+/**
+ * ScoreDisplay — renders the score result after the 7 questions are answered.
+ * Shows: score circle (color-coded by band), observations, optional email capture,
+ * CTA to Case Decoder, and a "take again" reset link.
+ */
 function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void }) {
+  // Band-to-color mapping: Critical (red) through Excellent (emerald)
   const bandColors: Record<string, string> = {
     Critical: "text-red-400 border-red-500/50",
     Concerning: "text-orange-400 border-orange-500/50",
@@ -96,7 +151,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
 
   return (
     <div className="mt-8 space-y-6">
-      {/* Score circle */}
+      {/* SCORE CIRCLE — Large visual display of the 0-100 score with band color */}
       <div className="text-center">
         <div
           className={`mx-auto flex h-32 w-32 items-center justify-center rounded-full border-4 ${borderClass}`}
@@ -111,7 +166,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
         <p className={`mt-4 text-lg font-bold ${textClass}`}>{result.band}</p>
       </div>
 
-      {/* Observations */}
+      {/* OBSERVATIONS — Plain-English findings from the score algorithm */}
       <div className="space-y-3">
         <h3 className="text-sm font-semibold text-zinc-300">
           What we found:
@@ -126,7 +181,9 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
         ))}
       </div>
 
-      {/* Optional email capture */}
+      {/* OPTIONAL EMAIL CAPTURE — Soft ask after delivering free value.     */}
+      {/* Subscribes to /api/subscribe with source="score-page" for         */}
+      {/* segmented email marketing. No gate — user already got their score. */}
       {!emailSent && (
         <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
           <p className="font-semibold text-white">Get our free Discovery Checklist emailed to you</p>
@@ -135,12 +192,18 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
             e.preventDefault();
             const form = e.target as HTMLFormElement;
             const emailInput = (form.elements.namedItem("scoreEmail") as HTMLInputElement).value;
-            await fetch("/api/subscribe", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email: emailInput, source: "score-page" }),
-            });
-            setEmailSent(true);
+            try {
+              const res = await fetch("/api/subscribe", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: emailInput, source: "score-page" }),
+              });
+              if (res.ok) {
+                setEmailSent(true);
+              }
+            } catch {
+              // Silently fail — non-critical email capture
+            }
           }} className="mt-3 flex gap-2">
             <input name="scoreEmail" type="email" required placeholder="you@example.com"
               className="flex-1 rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none" />
@@ -155,7 +218,9 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
         <p className="text-center text-sm text-green-400">Sent! Check your inbox.</p>
       )}
 
-      {/* CTA */}
+      {/* CASE DECODER CTA — Primary conversion from free -> paid.           */}
+      {/* Positions the $197 Case Decoder as the "full breakdown" upgrade   */}
+      {/* from the free score. Secondary CTA to free Discovery Checklist.   */}
       <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
         <h3 className="font-bold text-white">
           Want the full breakdown + 10-15 questions for your attorney?
@@ -182,7 +247,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
         </div>
       </div>
 
-      {/* Reset */}
+      {/* RESET — Full page reload to retake the score */}
       <p className="text-center text-sm text-zinc-400">
         <button
           onClick={() => window.location.reload()}
@@ -195,6 +260,10 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
   );
 }
 
+/**
+ * ScorePage — main page component managing question/answer state
+ * and the transition from questionnaire to score display.
+ */
 export default function ScorePage() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [result, setResult] = useState<ScoreResult | null>(null);
@@ -204,6 +273,7 @@ export default function ScorePage() {
 
   const allAnswered = questions.every((q) => answers[q.id]);
 
+  /** Submit answers to /api/score for server-side scoring. Answers are not persisted. */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!allAnswered) return;

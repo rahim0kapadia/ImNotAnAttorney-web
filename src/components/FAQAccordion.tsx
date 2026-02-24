@@ -1,3 +1,20 @@
+/**
+ * FAQAccordion -- Accessible accordion component for FAQ sections.
+ *
+ * Renders a list of question/answer pairs as expandable panels. Only one panel
+ * can be open at a time (single-expand behavior). Clicking an already-open panel
+ * closes it.
+ *
+ * Accessibility: Uses `aria-expanded` on toggle buttons and `aria-controls` / `role="region"`
+ * on answer panels. The +/- indicator is marked `aria-hidden`.
+ *
+ * This component is generic and reusable -- it accepts any array of { question, answer }
+ * objects. It is NOT tied to any specific page's FAQ data.
+ *
+ * Currently used on: Services page, landing page FAQ section.
+ *
+ * @param props.items - Array of FAQ items, each with a `question` and `answer` string.
+ */
 "use client";
 
 import { useState } from "react";

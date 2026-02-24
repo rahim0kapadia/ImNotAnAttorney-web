@@ -1,3 +1,17 @@
+/**
+ * opengraph-image.tsx -- Root-level Open Graph image generated at the edge.
+ *
+ * Produces a 1200x630 PNG image used as the default OG image for the entire site.
+ * This image appears when the homepage or any page WITHOUT its own opengraph-image
+ * is shared on social media (Facebook, Twitter/X, LinkedIn, iMessage, etc.).
+ *
+ * Content: Centered brand name ("ImNotAnAttorney" with amber "Im"), tagline
+ * ("We Research. You Ask."), and description text on a dark gradient background.
+ *
+ * Runs on the Edge runtime for fast generation. No external fonts or images are loaded.
+ *
+ * Blog posts have their own dynamic OG image at `src/app/blog/[slug]/opengraph-image.tsx`.
+ */
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";

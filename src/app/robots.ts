@@ -1,4 +1,22 @@
+/**
+ * robots.ts -- Search engine crawl rules served at `/robots.txt`.
+ *
+ * Allowed paths: Public content pages (homepage, blog, services, resources, about,
+ * intake, terms, privacy, guides, score).
+ *
+ * Disallowed paths:
+ *   - /api/*       -- API routes (not for indexing)
+ *   - /_next/*     -- Next.js internal assets
+ *   - /404         -- Error page
+ *   - /checkout*   -- Payment flow (contains dynamic Stripe sessions)
+ *   - /upload      -- Authenticated file upload page
+ *   - /report/*    -- Paid customer reports (private)
+ *   - /unsubscribe -- Email unsubscribe handler
+ *
+ * Points to the XML sitemap at https://imnotanattorney.com/sitemap.xml.
+ */
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -28,7 +46,7 @@ export default function robots(): MetadataRoute.Robots {
         "/unsubscribe",
       ],
     },
-    sitemap: "https://imnotanattorney.com/sitemap.xml",
-    host: "https://imnotanattorney.com",
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }

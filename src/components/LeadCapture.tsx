@@ -1,3 +1,23 @@
+/**
+ * LeadCapture -- Email capture form offering a free discovery checklist as a lead magnet.
+ *
+ * Flow:
+ *   1. User sees headline + description about the "7 evidence problems" checklist.
+ *   2. User enters email and submits the form.
+ *   3. Form POSTs to `/api/subscribe` with `{ email, source: "lead-capture" }`.
+ *   4. On success, the form is replaced with a confirmation message + download link
+ *      to `/guides/discovery-checklist-7-evidence-problems.md`.
+ *   5. On error, a red inline error message is shown; user can retry.
+ *
+ * States: idle -> loading -> success | error
+ *
+ * Data flow: The `/api/subscribe` endpoint inserts into the `subscribers` table in
+ * Supabase with the `source` field set to "lead-capture" for attribution tracking.
+ *
+ * CAN-SPAM: Includes "No spam. Unsubscribe anytime." disclaimer text.
+ *
+ * Used on: Blog index page, blog post pages, resources page.
+ */
 "use client";
 
 import { useState } from "react";

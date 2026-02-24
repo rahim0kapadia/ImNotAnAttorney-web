@@ -1,3 +1,14 @@
+/**
+ * not-found.tsx -- Custom 404 page displayed when a route does not match any page.
+ *
+ * Also triggered explicitly by calling `notFound()` from server components
+ * (e.g., when a blog post slug is not found in `src/app/blog/[slug]/page.tsx`).
+ *
+ * Renders a branded 404 message with on-brand humor about attorneys, plus
+ * two navigation options: "Go Home" (/) and "Read the Blog" (/blog).
+ *
+ * This is a Server Component (no "use client") since it has no interactivity.
+ */
 import Link from "next/link";
 
 export default function NotFound() {

@@ -1,21 +1,87 @@
+/**
+ * @file /api/deliver — Operator-facing report delivery endpoint
+ *
+ * Pipeline position: Final step in the delivery pipeline. Called by the operator
+ * after reviewing a generated report. This is where case status transitions from
+ * "review" to "delivered" and the customer receives their report link.
+ *
+ * Two HTTP methods, each with a specific purpose:
+ *
+ *   GET  — Renders a confirmation page (read-only, no state change)
+ *          Safe for email prefetch bots (Outlook, Gmail, etc.) that automatically
+ *          follow links in emails. If this were a POST, bots would accidentally
+ *          deliver reports. The GET shows case details + a "Confirm Delivery" button
+ *          that submits a POST form.
+ *
+ *   POST — Actually delivers the report (sends email, updates status)
+ *          This is the destructive action. Only triggered by the operator clicking
+ *          the confirmation button.
+ *
+ * Email-before-status pattern:
+ *   The delivery email is sent BEFORE updating case status to "delivered".
+ *   Rationale: If we mark "delivered" first and the email fails, the case looks
+ *   complete but the customer never got notified — a silent failure. By sending
+ *   the email first, we know whether notification succeeded. If it fails after
+ *   retries, the operator is alerted, but the case is still marked "delivered"
+ *   so the report URL is accessible (the operator can share it manually).
+ *
+ * Retry logic:
+ *   1. First email attempt (full HTML template)
+ *   2. If failed → wait 2s → retry with simplified HTML (less likely to trigger spam filters)
+ *   3. If both fail → send operator alert with the report URL for manual forwarding
+ *   4. Case status is updated to "delivered" regardless (report URL works even without email)
+ *
+ * Drip recording:
+ *   After delivery, records "post_case_decoder_delivery" in drip_emails table.
+ *   This prevents the cron (/api/cron/drip Part 2) from re-sending the delivery
+ *   notification as a post-purchase drip email.
+ *
+ * Security: OPERATOR_SECRET token required (same undefined-guard pattern as /api/generate).
+ * Status flow: review → delivered
+ */
+
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
+import { verifyOperatorToken } from "@/lib/site";
 
+/** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
 
+/**
+ * Returns the site origin URL for constructing absolute links.
+ * Falls back to production URL if NEXT_PUBLIC_SITE_URL is not set.
+ */
 function getOrigin(req: NextRequest): string {
   return process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
 }
 
-// GET: Show confirmation page (safe for email prefetch)
+// ================================================================
+// GET: Render delivery confirmation page (safe for email prefetch)
+// ================================================================
+// This endpoint is linked in operator notification emails. Email clients
+// (Outlook, Gmail) may prefetch/preview linked URLs with GET requests.
+// By making GET read-only, these prefetch requests don't accidentally
+// deliver reports. The operator must explicitly click "Confirm Delivery"
+// which submits a POST form.
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const token = searchParams.get("token");
   const caseId = searchParams.get("case");
 
-  if (!token || token !== process.env.OPERATOR_SECRET) {
+  // ──────────────────────────────────────────────────────────────
+  // AUTH: Operator token validation
+  // ──────────────────────────────────────────────────────────────
+  // Accepts two token formats:
+  //   1. Raw OPERATOR_SECRET (for curl/manual access by operator)
+  //   2. HMAC-signed token (from email links — scoped to caseId, 24h expiry)
+  //
+  // Signed tokens are preferred because they:
+  //   - Don't expose the raw secret in browser history or email logs
+  //   - Are scoped to a specific case (can't be reused for other cases)
+  //   - Expire after 24 hours (limits damage if an email is compromised)
+  if (!process.env.OPERATOR_SECRET || !token) {
     return new NextResponse(
       "<h1>Unauthorized</h1><p>Invalid operator token.</p>",
       { status: 401, headers: { "Content-Type": "text/html" } }
@@ -29,6 +95,19 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  // Check raw secret first (operator curl), then signed token (email link)
+  const isRawSecret = token === process.env.OPERATOR_SECRET;
+  const isSignedToken = !isRawSecret && verifyOperatorToken(token, caseId);
+  if (!isRawSecret && !isSignedToken) {
+    return new NextResponse(
+      "<h1>Unauthorized</h1><p>Invalid or expired operator token.</p>",
+      { status: 401, headers: { "Content-Type": "text/html" } }
+    );
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // FETCH CASE DATA for display on confirmation page
+  // ──────────────────────────────────────────────────────────────
   const supabase = createAdminClient();
 
   const { data: caseData, error: caseError } = await supabase
@@ -44,6 +123,11 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  // ──────────────────────────────────────────────────────────────
+  // STATUS GUARDS: Prevent re-delivery or premature delivery
+  // ──────────────────────────────────────────────────────────────
+  // "delivered" — idempotent: show already-delivered message
+  // anything other than "review" — case isn't ready for delivery yet
   if (caseData.status === "delivered") {
     return new NextResponse(
       `<h1>Already Delivered</h1><p>This case has already been delivered to ${escapeHtml(caseData.email)}.</p>`,
@@ -60,7 +144,12 @@ export async function GET(req: NextRequest) {
 
   const origin = getOrigin(req);
 
-  // Return confirmation page — no state change on GET
+  // ──────────────────────────────────────────────────────────────
+  // RENDER CONFIRMATION PAGE (no state change — GET is read-only)
+  // ──────────────────────────────────────────────────────────────
+  // Shows case details, optional report preview link, and a POST form
+  // with a "Confirm Delivery" button. The form POSTs back to this same
+  // endpoint, which triggers the actual delivery logic below.
   return new NextResponse(
     `<!DOCTYPE html>
 <html>
@@ -90,23 +179,45 @@ export async function GET(req: NextRequest) {
   );
 }
 
-// POST: Actually deliver the report
+// ================================================================
+// POST: Actually deliver the report to the customer
+// ================================================================
+// This is the destructive action triggered by the operator clicking
+// "Confirm Delivery" on the GET page above.
+//
+// Execution order (intentional):
+//   1. Validate auth + case status
+//   2. Send delivery email to customer (with retry)
+//   3. Update case status to "delivered"
+//   4. Record drip to prevent duplicate delivery emails from cron
+//   5. Return confirmation HTML to operator
+//
+// The email-before-status ordering is critical — see file-level JSDoc.
 export async function POST(req: NextRequest) {
+  // ──────────────────────────────────────────────────────────────
+  // PARSE INPUT: Support both form-encoded (from GET page button)
+  // and JSON (from programmatic API calls)
+  // ──────────────────────────────────────────────────────────────
   let token: string | null = null;
   let caseId: string | null = null;
 
   const contentType = req.headers.get("content-type") || "";
   if (contentType.includes("application/x-www-form-urlencoded")) {
+    // From the HTML form on the GET confirmation page
     const formData = await req.formData();
     token = formData.get("token") as string | null;
     caseId = formData.get("case") as string | null;
   } else {
+    // From a programmatic JSON API call (e.g., curl or future automation)
     const body = await req.json().catch(() => ({}));
     token = body.token || null;
     caseId = body.case || body.caseId || null;
   }
 
-  if (!token || token !== process.env.OPERATOR_SECRET) {
+  // ──────────────────────────────────────────────────────────────
+  // AUTH: Operator token validation (raw secret or signed token)
+  // ──────────────────────────────────────────────────────────────
+  if (!process.env.OPERATOR_SECRET || !token) {
     return new NextResponse(
       "<h1>Unauthorized</h1><p>Invalid operator token.</p>",
       { status: 401, headers: { "Content-Type": "text/html" } }
@@ -120,9 +231,22 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Accept raw OPERATOR_SECRET (curl) or HMAC-signed token (email links)
+  const isRawSecretPost = token === process.env.OPERATOR_SECRET;
+  const isSignedTokenPost = !isRawSecretPost && verifyOperatorToken(token, caseId);
+  if (!isRawSecretPost && !isSignedTokenPost) {
+    return new NextResponse(
+      "<h1>Unauthorized</h1><p>Invalid or expired operator token.</p>",
+      { status: 401, headers: { "Content-Type": "text/html" } }
+    );
+  }
+
   const supabase = createAdminClient();
   const origin = getOrigin(req);
 
+  // ──────────────────────────────────────────────────────────────
+  // FETCH FULL CASE DATA (need all fields for email + status update)
+  // ──────────────────────────────────────────────────────────────
   const { data: caseData, error: caseError } = await supabase
     .from("cases")
     .select("*")
@@ -136,6 +260,10 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // ──────────────────────────────────────────────────────────────
+  // STATUS GUARDS: Same checks as GET — prevent re-delivery or
+  // delivery of cases not yet in "review" status
+  // ──────────────────────────────────────────────────────────────
   if (caseData.status === "delivered") {
     return new NextResponse(
       `<h1>Already Delivered</h1><p>This case was already delivered to ${escapeHtml(caseData.email)}.</p>`,
@@ -153,20 +281,9 @@ export async function POST(req: NextRequest) {
   const now = new Date().toISOString();
   const reportUrl = `${origin}/report/${caseData.report_token}`;
 
-  // Update case to delivered
-  await supabase
-    .from("cases")
-    .update({
-      status: "delivered",
-      delivered_at: now,
-      reviewed_by: "operator",
-      reviewed_at: now,
-      deliverable_url: reportUrl,
-      updated_at: now,
-    })
-    .eq("id", caseId);
-
-  // Get customer name from intake
+  // ──────────────────────────────────────────────────────────────
+  // PERSONALIZATION: Get customer's first name from linked intake
+  // ──────────────────────────────────────────────────────────────
   let firstName = "there";
   if (caseData.intake_id) {
     const { data: intake } = await supabase
@@ -177,7 +294,19 @@ export async function POST(req: NextRequest) {
     if (intake) firstName = intake.first_name;
   }
 
-  // Send delivery email to customer
+  // ──────────────────────────────────────────────────────────────
+  // STEP 1: SEND DELIVERY EMAIL (before status update)
+  // ──────────────────────────────────────────────────────────────
+  // IMPORTANT: Email is sent FIRST, then status is updated.
+  // If we mark "delivered" first and email fails, the customer never
+  // gets notified but the case looks complete — a silent failure.
+  // Email-first ensures we know if notification worked before
+  // claiming the case is delivered.
+  //
+  // The email includes:
+  //   - Report view link (primary CTA)
+  //   - Usage instructions (print, priority questions, document answers)
+  //   - Upgrade upsell (100% credit toward higher tiers within 12 months)
   const emailResult = await sendEmail({
     to: caseData.email,
     subject: "Your Case Decoder Report is Ready",
@@ -203,7 +332,15 @@ export async function POST(req: NextRequest) {
     `,
   });
 
-  // Retry email if first attempt failed
+  let customerNotified = true;
+
+  // ──────────────────────────────────────────────────────────────
+  // STEP 1b: RETRY with simplified email if first attempt failed
+  // ──────────────────────────────────────────────────────────────
+  // The retry uses a much simpler HTML template — this helps if the
+  // failure was due to email size or HTML complexity triggering spam
+  // filters. If retry also fails, notify operator with the report URL
+  // so they can forward it manually.
   if (!emailResult.success) {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     const retryResult = await sendEmail({
@@ -214,18 +351,51 @@ export async function POST(req: NextRequest) {
         <p>View your Case Decoder report: <a href="${reportUrl}" style="color: #F59E0B;">${reportUrl}</a></p>`,
     });
     if (!retryResult.success) {
+      // ── OPERATOR FALLBACK: Both email attempts failed ──
+      // Mark customerNotified=false so the operator knows to send manually.
+      // The case will still be marked "delivered" so the report URL works —
+      // the operator just needs to get the URL to the customer another way.
+      customerNotified = false;
       await sendEmail({
         to: OPERATOR_EMAIL,
         subject: `ALERT: Delivery email failed for ${escapeHtml(caseData.email)}`,
         html: `<p>Delivery email failed after 2 attempts.</p>
           <p><strong>Customer:</strong> ${escapeHtml(caseData.email)}</p>
           <p><strong>Report URL:</strong> ${reportUrl}</p>
-          <p>Case status is updated to 'delivered' but customer has NOT been notified.</p>`,
+          <p>Case status is updated to 'delivered' but customer was <strong>NOT notified</strong>. Please send the report link manually.</p>`,
       });
     }
   }
 
-  // Record post_case_decoder_delivery drip to prevent cron from re-sending
+  // ──────────────────────────────────────────────────────────────
+  // STEP 2: UPDATE CASE STATUS → "delivered"
+  // ──────────────────────────────────────────────────────────────
+  // This happens AFTER the email attempt (regardless of success).
+  // Even if the email failed, we mark delivered because:
+  //   1. The report URL is live and accessible
+  //   2. The operator was alerted to send it manually
+  //   3. Not marking delivered would leave the case in "review" limbo
+  //      and the cron would send review reminder alerts
+  await supabase
+    .from("cases")
+    .update({
+      status: "delivered",
+      delivered_at: now,
+      reviewed_by: "operator",
+      reviewed_at: now,
+      deliverable_url: reportUrl,
+      updated_at: now,
+    })
+    .eq("id", caseId);
+
+  // ──────────────────────────────────────────────────────────────
+  // STEP 3: RECORD DRIP to prevent duplicate delivery emails
+  // ──────────────────────────────────────────────────────────────
+  // The cron (/api/cron/drip Part 2) sends post-purchase emails based
+  // on the drip_emails table. Without this record, the cron would see
+  // "post_case_decoder_delivery" as unsent and re-send it.
+  // Uses upsert with onConflict to be idempotent if delivery is
+  // somehow triggered twice.
   const { data: subData } = await supabase
     .from("subscribers")
     .select("id")
@@ -239,7 +409,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Return confirmation HTML page
+  // ──────────────────────────────────────────────────────────────
+  // STEP 4: RETURN CONFIRMATION HTML to operator
+  // ──────────────────────────────────────────────────────────────
   return new NextResponse(
     `<!DOCTYPE html>
 <html>
