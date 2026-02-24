@@ -5,10 +5,54 @@
  * Called by Vercel /api/generate/case-decoder (fire-and-forget).
  * Has 150s timeout (vs Vercel Hobby's 25s) — enough for Claude API.
  *
+ * ZERO external imports — uses raw fetch() for Supabase PostgREST + Claude + Resend.
+ * This avoids the 60-90s cold start penalty from importing @supabase/supabase-js via esm.sh.
+ *
  * Flow: fetch case/intake → Claude API (streaming) → render HTML → save to Supabase → email operator
  */
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+// ============================================================
+// SUPABASE REST HELPERS (raw PostgREST — no SDK import needed)
+// ============================================================
+
+function supabaseHeaders(serviceKey: string) {
+  return {
+    apikey: serviceKey,
+    Authorization: `Bearer ${serviceKey}`,
+    "Content-Type": "application/json",
+  };
+}
+
+async function supabaseSelect(
+  url: string,
+  key: string,
+  table: string,
+  query: string
+): Promise<unknown[]> {
+  const res = await fetch(`${url}/rest/v1/${table}?${query}`, {
+    headers: { ...supabaseHeaders(key), Prefer: "return=representation" },
+  });
+  if (!res.ok) throw new Error(`Supabase SELECT ${table} failed: ${res.status}`);
+  return res.json();
+}
+
+async function supabaseUpdate(
+  url: string,
+  key: string,
+  table: string,
+  query: string,
+  body: Record<string, unknown>
+): Promise<void> {
+  const res = await fetch(`${url}/rest/v1/${table}?${query}`, {
+    method: "PATCH",
+    headers: { ...supabaseHeaders(key), Prefer: "return=minimal" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    console.error(`Supabase UPDATE ${table} failed: ${res.status}`, err);
+  }
+}
 
 // ============================================================
 // HELPERS
@@ -110,105 +154,52 @@ RULES:
 - Each question MUST include: the question itself, why it matters, what a good answer sounds like, what a bad answer reveals, and the source methodology
 - Output the report in clean markdown with proper headings (## for sections, ### for subsections)`;
 
-interface IntakeData {
-  first_name: string;
-  last_name?: string;
-  email: string;
-  charge_type: string;
-  state?: string;
-  incident_location?: string;
-  has_attorney?: string;
-  has_discovery?: string;
-  situation?: string;
-  time_since_arrest?: string;
-  arrest_circumstances?: string[];
-  co_defendants?: string;
-  attorney_strategy?: string;
-  specific_question?: string;
-  case_number?: string;
-  court_date?: string;
-  plea_offered?: string;
-  plea_terms?: string;
-  communication_frequency?: string;
-  last_attorney_contact?: string;
-  arrest_date?: string;
-  evidence_type?: string[];
-  services?: string[];
-}
+// deno-lint-ignore no-explicit-any
+type IntakeData = Record<string, any>;
 
 function getChargeSpecificBlock(chargeType: string): string {
   const ct = chargeType.toLowerCase();
-
-  if (ct.includes("drug possession") || ct.includes("drug trafficking") || ct.includes("distribution")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — DRUG CASE:
-Apply: Lichtman 7-Pillar CI protocol, Scheck chain of custody, Chapman substance/weight analysis.
-Focus on: constructive vs actual possession, weight threshold analysis, mandatory minimum exposure, CI reliability, entrapment considerations.`;
-  }
-  if (ct.includes("dui") || ct.includes("dwi")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — DUI/DWI:
-Focus on: BAC methodology challenge (calibration, operator certification, observation period), field sobriety test validity (conditions, medical conditions, HGN angles), rising BAC defense, implied consent issues, video evidence analysis, medical conditions (diabetes, GERD).`;
-  }
-  if (ct.includes("assault") || ct.includes("battery")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — ASSAULT/BATTERY:
-Focus on: self-defense analysis (Stand Your Ground, Castle Doctrine, duty to retreat), proportionality assessment, witness credibility patterns, video/surveillance evidence, mutual combat defense, injury documentation gaps, aggravating factor analysis.`;
-  }
-  if (ct.includes("domestic violence")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — DOMESTIC VIOLENCE:
-Focus on: Crawford v. Washington confrontation clause, 911 call analysis (excited utterance), mandatory arrest policy, prior incident pattern, dual arrest situations, digital evidence (texts, social media, Ring camera), protective order implications, recanting witness issues.`;
-  }
-  if (ct.includes("theft") || ct.includes("burglary") || ct.includes("robbery")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — THEFT/BURGLARY/ROBBERY:
-Focus on: intent element analysis (mistake of fact, claim of right), value threshold (misdemeanor vs felony cutoff), identity evidence (Manson v. Brathwaite factors), accomplice liability, restitution vs criminal liability. BURGLARY: unlawful entry element, dwelling vs structure. ROBBERY: force/threat element, weapon enhancement.`;
-  }
-  if (ct.includes("sex offense")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — SEX OFFENSE:
-Focus on: SANE kit collection protocol, delayed reporting patterns, memory science (inconsistent statements, suggestive techniques), Rule 404(b) prior bad acts, sex offender registry consequences, complainant credibility factors, forensic interview protocol (NICHD), digital evidence.`;
-  }
-  if (ct.includes("weapons") || ct.includes("weapon")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — WEAPONS CHARGE:
-Focus on: constructive vs actual possession, Second Amendment (Bruen framework), felon-in-possession (knowledge of status, restoration of rights), enhancement analysis, lawful carry defense, stop-and-frisk legality (Terry stop basis, plain feel doctrine).`;
-  }
-  if (ct.includes("white collar") || ct.includes("fraud")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — WHITE COLLAR/FRAUD:
-Focus on: document privilege, cooperation strategy (proffer, immunity, DPA), parallel proceedings, RICO/conspiracy, loss calculation, asset preservation/forfeiture, Brafman jury psychology.`;
-  }
-  if (ct.includes("federal")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — FEDERAL CASE:
-Focus on: sentencing guidelines calculation (base offense level, criminal history category), substantial assistance / 5K1.1, mandatory minimum overrides (safety valve), grand jury process, federal discovery (Brady, Giglio, Jencks Act), 70-day speedy trial, pretrial detention (Bail Reform Act).`;
-  }
+  if (ct.includes("drug possession") || ct.includes("drug trafficking") || ct.includes("distribution"))
+    return `\nCHARGE-SPECIFIC CONTEXT — DRUG CASE:\nApply: Lichtman 7-Pillar CI protocol, Scheck chain of custody, Chapman substance/weight analysis.\nFocus on: constructive vs actual possession, weight threshold analysis, mandatory minimum exposure, CI reliability, entrapment considerations.`;
+  if (ct.includes("dui") || ct.includes("dwi"))
+    return `\nCHARGE-SPECIFIC CONTEXT — DUI/DWI:\nFocus on: BAC methodology challenge (calibration, operator certification, observation period), field sobriety test validity (conditions, medical conditions, HGN angles), rising BAC defense, implied consent issues, video evidence analysis, medical conditions (diabetes, GERD).`;
+  if (ct.includes("assault") || ct.includes("battery"))
+    return `\nCHARGE-SPECIFIC CONTEXT — ASSAULT/BATTERY:\nFocus on: self-defense analysis (Stand Your Ground, Castle Doctrine, duty to retreat), proportionality assessment, witness credibility patterns, video/surveillance evidence, mutual combat defense, injury documentation gaps, aggravating factor analysis.`;
+  if (ct.includes("domestic violence"))
+    return `\nCHARGE-SPECIFIC CONTEXT — DOMESTIC VIOLENCE:\nFocus on: Crawford v. Washington confrontation clause, 911 call analysis (excited utterance), mandatory arrest policy, prior incident pattern, dual arrest situations, digital evidence (texts, social media, Ring camera), protective order implications, recanting witness issues.`;
+  if (ct.includes("theft") || ct.includes("burglary") || ct.includes("robbery"))
+    return `\nCHARGE-SPECIFIC CONTEXT — THEFT/BURGLARY/ROBBERY:\nFocus on: intent element analysis (mistake of fact, claim of right), value threshold (misdemeanor vs felony cutoff), identity evidence (Manson v. Brathwaite factors), accomplice liability, restitution vs criminal liability.`;
+  if (ct.includes("sex offense"))
+    return `\nCHARGE-SPECIFIC CONTEXT — SEX OFFENSE:\nFocus on: SANE kit collection protocol, delayed reporting patterns, memory science, Rule 404(b) prior bad acts, sex offender registry consequences, complainant credibility factors, forensic interview protocol (NICHD), digital evidence.`;
+  if (ct.includes("weapons") || ct.includes("weapon"))
+    return `\nCHARGE-SPECIFIC CONTEXT — WEAPONS CHARGE:\nFocus on: constructive vs actual possession, Second Amendment (Bruen framework), felon-in-possession, enhancement analysis, lawful carry defense, stop-and-frisk legality.`;
+  if (ct.includes("white collar") || ct.includes("fraud"))
+    return `\nCHARGE-SPECIFIC CONTEXT — WHITE COLLAR/FRAUD:\nFocus on: document privilege, cooperation strategy (proffer, immunity, DPA), parallel proceedings, RICO/conspiracy, loss calculation, asset preservation/forfeiture, Brafman jury psychology.`;
+  if (ct.includes("federal"))
+    return `\nCHARGE-SPECIFIC CONTEXT — FEDERAL CASE:\nFocus on: sentencing guidelines calculation, substantial assistance / 5K1.1, mandatory minimum overrides (safety valve), grand jury process, federal discovery (Brady, Giglio, Jencks Act), 70-day speedy trial, pretrial detention.`;
   return "";
 }
 
-function getEvidenceSpecificQuestions(evidenceTypes: string[]): string {
-  if (!evidenceTypes || evidenceTypes.length === 0) return "";
-
+function getEvidenceQuestions(types: string[]): string {
+  if (!types || types.length === 0) return "";
   const blocks: string[] = [];
-
-  for (const et of evidenceTypes) {
+  for (const et of types) {
     const e = et.toLowerCase();
-    if (e.includes("confidential informant") || e.includes("ci")) {
-      blocks.push(`CI-SPECIFIC QUESTIONS (Lichtman 7-Pillar): Address all 7 pillars — criminal history, payment structure, reliability track record, supervision, motive to fabricate, corroboration, constitutional issues.`);
-    }
-    if (e.includes("forensic")) {
-      blocks.push(`FORENSIC-SPECIFIC QUESTIONS (Scheck): Lab analyst error rate, controls/blanks, accreditation status, contamination history, analyst testimony history.`);
-    }
-    if (e.includes("body cam")) {
-      blocks.push(`BODY CAMERA QUESTIONS: Full encounter coverage? Gaps? Reviewed before charges? Enhanced/edited?`);
-    }
-    if (e.includes("dna")) {
-      blocks.push(`DNA QUESTIONS: Type of testing (STR, mitochondrial, touch DNA)? Statistical weight? Mixture samples? Lab contamination history?`);
-    }
-    if (e.includes("digital") || e.includes("phone")) {
-      blocks.push(`DIGITAL EVIDENCE QUESTIONS: Search warrant scope? Forensic extraction tool? Full or selective data provided? Geofence/tower dump warrants?`);
-    }
-    if (e.includes("confession") || e.includes("statement")) {
-      blocks.push(`STATEMENT QUESTIONS: Miranda administered? Recorded? Interrogation duration? Promises/threats? Reid Technique?`);
-    }
-    if (e.includes("witness") || e.includes("eyewitness")) {
-      blocks.push(`IDENTIFICATION QUESTIONS: Lineup type (photo/live, sequential/simultaneous)? Blind administrator? Time elapsed? Certainty documented?`);
-    }
+    if (e.includes("confidential informant") || e.includes("ci"))
+      blocks.push("CI-SPECIFIC QUESTIONS (Lichtman 7-Pillar): criminal history, payment structure, reliability track record, supervision, motive to fabricate, corroboration, constitutional issues.");
+    if (e.includes("forensic"))
+      blocks.push("FORENSIC-SPECIFIC QUESTIONS (Scheck): Lab analyst error rate, controls/blanks, accreditation status, contamination history.");
+    if (e.includes("body cam"))
+      blocks.push("BODY CAMERA QUESTIONS: Full encounter coverage? Gaps? Reviewed before charges?");
+    if (e.includes("dna"))
+      blocks.push("DNA QUESTIONS: Type of testing? Statistical weight? Mixture samples? Lab contamination history?");
+    if (e.includes("digital") || e.includes("phone"))
+      blocks.push("DIGITAL EVIDENCE QUESTIONS: Search warrant scope? Forensic extraction tool? Full or selective data?");
+    if (e.includes("confession") || e.includes("statement"))
+      blocks.push("STATEMENT QUESTIONS: Miranda administered? Recorded? Interrogation duration? Promises/threats?");
+    if (e.includes("witness") || e.includes("eyewitness"))
+      blocks.push("IDENTIFICATION QUESTIONS: Lineup type? Blind administrator? Time elapsed? Certainty documented?");
   }
-
   if (blocks.length === 0) return "";
   return "\n\nADDITIONAL EVIDENCE-SPECIFIC QUESTIONS TO INCLUDE:\n" + blocks.join("\n");
 }
@@ -217,19 +208,20 @@ function buildUserPrompt(intake: IntakeData): string {
   const daysSinceArrest = intake.arrest_date
     ? Math.floor((Date.now() - new Date(intake.arrest_date).getTime()) / (1000 * 60 * 60 * 24))
     : null;
-
   const chargeBlock = getChargeSpecificBlock(intake.charge_type);
-  const evidenceBlock = getEvidenceSpecificQuestions(intake.evidence_type || []);
+  const evidenceBlock = getEvidenceQuestions(intake.evidence_type || []);
 
-  const pleaInstruction = intake.plea_offered === "yes" || intake.plea_offered === "Yes"
-    ? `\nPlea has been offered. Terms: "${intake.plea_terms || "Not specified"}". Generate full Section 4 (Plea Deal Assessment) with terms analysis.`
-    : intake.plea_offered === "no" || intake.plea_offered === "No" || intake.plea_offered === "not yet" || intake.plea_offered === "Not yet"
-    ? `\nNo plea offered yet. Generate Section 4 with "what to expect" content for this charge type.`
-    : `\nPlea status unknown. Generate Section 4 with general plea information for this charge type.`;
+  const plea = intake.plea_offered;
+  const pleaInstruction = plea === "yes" || plea === "Yes"
+    ? `\nPlea has been offered. Terms: "${intake.plea_terms || "Not specified"}". Generate full Section 4 with terms analysis.`
+    : plea === "no" || plea === "No" || plea === "not yet" || plea === "Not yet"
+    ? `\nNo plea offered yet. Generate Section 4 with "what to expect" content.`
+    : `\nPlea status unknown. Generate Section 4 with general plea information.`;
 
-  const commInstruction = intake.communication_frequency === "Rarely" || intake.communication_frequency === "Never returned calls"
-    ? `\nAttorney communication is poor (${intake.communication_frequency}). Include FULL 7-level escalation ladder in Section 3 Communication Playbook.`
-    : `\nAttorney communication frequency: ${intake.communication_frequency || "Not specified"}. Include appropriate Communication Playbook section.`;
+  const comm = intake.communication_frequency;
+  const commInstruction = comm === "Rarely" || comm === "Never returned calls"
+    ? `\nAttorney communication is poor (${comm}). Include FULL 7-level escalation ladder.`
+    : `\nAttorney communication frequency: ${comm || "Not specified"}.`;
 
   return `Analyze the following case intake and generate a complete 9-section Case Decoder report in markdown.
 
@@ -237,18 +229,16 @@ function buildUserPrompt(intake: IntakeData): string {
 - Client First Name: ${intake.first_name}
 - Charges: ${intake.charge_type}
 - State/County: ${intake.state || "Not provided"}${intake.incident_location ? ` / ${intake.incident_location}` : ""}
-- Case Stage: Derived from intake responses
 - Arrest Date: ${intake.arrest_date || "Not provided"}
 - Days Since Arrest: ${daysSinceArrest !== null ? daysSinceArrest : "Unknown"}
 - Attorney Type: ${intake.has_attorney || "Not specified"}
-- Attorney Strategy Discussion: ${intake.attorney_strategy || "Not provided"}
-- Communication Frequency: ${intake.communication_frequency || "Not specified"}
+- Attorney Strategy: ${intake.attorney_strategy || "Not provided"}
+- Communication Frequency: ${comm || "Not specified"}
 - Last Attorney Contact: ${intake.last_attorney_contact || "Not provided"}
-- Motions Filed: Not specified in intake
 - Discovery Status: ${intake.has_discovery || "Not specified"}
 - Plea Offered: ${intake.plea_offered || "Not specified"}
 - Plea Terms: ${intake.plea_terms || "N/A"}
-- Evidence Types Involved: ${(intake.evidence_type || []).join(", ") || "Not specified"}
+- Evidence Types: ${(intake.evidence_type || []).join(", ") || "Not specified"}
 - Arrest Circumstances: ${(intake.arrest_circumstances || []).join(", ") || "Not provided"}
 - Co-Defendants: ${intake.co_defendants || "Not specified"}
 - Case Number: ${intake.case_number || "Not provided"}
@@ -256,39 +246,36 @@ function buildUserPrompt(intake: IntakeData): string {
 - Time Since Arrest: ${intake.time_since_arrest || "Not provided"}
 - Primary Frustration: ${intake.situation || "Not provided"}
 - Specific Concerns: ${intake.specific_question || "Not provided"}
-${chargeBlock}
-${pleaInstruction}
-${commInstruction}
-${evidenceBlock}
+${chargeBlock}${pleaInstruction}${commInstruction}${evidenceBlock}
 
 **GENERATE ALL 9 SECTIONS:**
 
 ## Section 1: Your Charges & The Case Against You
-- Plain-English explanation, prosecution burden map (rate each element: Strong/Moderate/Weak/Unknown without discovery), realistic penalty range, common defense strategies with attorney attribution, charge interactions.
+Plain-English explanation, prosecution burden map (Strong/Moderate/Weak/Unknown), realistic penalty range, common defense strategies with attorney attribution.
 
 ## Section 2: Case Stage Benchmark
-- Days since arrest, speedy trial calculation if applicable, timeline table with milestones and assessments, "What should happen NEXT" (3 most important things in next 30 days), deadline alerts.
+Days since arrest, speedy trial calculation, timeline table, "What should happen NEXT" (3 things in next 30 days), deadline alerts.
 
 ## Section 3: Attorney Accountability & Communication Playbook
-- Score out of 100 with band, category breakdown (Communication/Preparation/Strategy/Filing Activity each X/25), accountability checklist, Communication Playbook (escalation ladder OR meeting agenda based on score), opening script.
+Score out of 100 with band, category breakdown (Communication/Preparation/Strategy/Filing Activity each X/25), accountability checklist, Communication Playbook, opening script.
 
 ## Section 4: Plea Deal Assessment
-- ${intake.plea_offered === "yes" || intake.plea_offered === "Yes" ? "Full plea terms analysis, comparison to typical pleas" : "What to expect, typical plea structures"}. Alternatives (diversion, drug court, PTI). Collateral consequences checklist. 3 questions before signing. What elite attorneys check. Upgrade trigger → Intelligence Brief.
+${plea === "yes" || plea === "Yes" ? "Full plea terms analysis" : "What to expect, typical plea structures"}. Alternatives (diversion, drug court, PTI). Collateral consequences. 3 questions before signing.
 
 ## Section 5: 15-20 Targeted Questions for Your Attorney
-- Minimum 15 questions, target 20. Organized by category (Evidence, Attorney Performance, Strategy, Plea/Sentencing, Charge-Specific). Each with: calibrated question, why it matters, good answer, bad answer, source methodology.
+Minimum 15 questions, target 20. By category. Each with: calibrated question, why it matters, good answer, bad answer, source methodology.
 
 ## Section 6: Evidence Pattern Checklist
-- 10-15 patterns tailored to charge type. Table format: pattern name, what to look for, where in documents, why it matters. End with X-Ray upgrade trigger.
+10-15 patterns for charge type. Table: pattern name, what to look for, where in documents, why it matters.
 
 ## Section 7: Red Flags
-- 8-12 red flags in 3 categories (Attorney, Evidence, Procedural). Each with: what it looks like, what to do, which question from Section 5 addresses it.
+8-12 red flags in 3 categories (Attorney, Evidence, Procedural). Each with: what it looks like, what to do, which question addresses it.
 
 ## Section 8: Motions That May Apply
-- Table with: motion, what it does, legal basis, deadline sensitivity, asymmetric value (benefit even if denied). Strategic sequencing notes. Discovery wall callout.
+Table: motion, what it does, legal basis, deadline sensitivity, asymmetric value. Strategic sequencing notes.
 
 ## Section 9: What's Next
-- 2-3 specific findings from the report → concrete upgrade recommendations. Upgrade path table with credit amounts ($197 credited, 12-month window). Immediate action items (print, priority questions, document answers, evidence checklist).`;
+2-3 findings → upgrade recommendations. Upgrade path table ($197 credited, 12-month window). Immediate action items.`;
 }
 
 async function callClaudeAPI(intake: IntakeData, apiKey: string): Promise<string> {
@@ -302,10 +289,9 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string): Promise<string
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      model: "claude-sonnet-4-6",
-      max_tokens: 16000,
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 8000,
       temperature: 0.3,
-      stream: true,
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: userPrompt }],
     }),
@@ -316,41 +302,10 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string): Promise<string
     throw new Error(`Claude API error (${response.status}): ${err}`);
   }
 
-  // Stream response — collect text chunks
-  const reader = response.body?.getReader();
-  if (!reader) throw new Error("No response body");
-
-  const decoder = new TextDecoder();
-  let text = "";
-  let buffer = "";
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-
-    buffer += decoder.decode(value, { stream: true });
-    const lines = buffer.split("\n");
-    buffer = lines.pop() || "";
-
-    for (const line of lines) {
-      if (!line.startsWith("data: ")) continue;
-      const data = line.slice(6);
-      if (data === "[DONE]") continue;
-      try {
-        const event = JSON.parse(data);
-        if (event.type === "content_block_delta" && event.delta?.text) {
-          text += event.delta.text;
-        }
-      } catch {
-        // skip unparseable lines
-      }
-    }
-  }
-
-  if (!text) {
-    throw new Error("Empty response from Claude API");
-  }
-
+  // deno-lint-ignore no-explicit-any
+  const result: any = await response.json();
+  const text = result.content?.[0]?.text || "";
+  if (!text) throw new Error("Empty response from Claude API");
   return text;
 }
 
@@ -382,13 +337,13 @@ function renderReportHtml(
     .replace(/^- \[ \] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9744; $1</li>')
     .replace(/^- (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
     .replace(/^\d+\. (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
-    .replace(/\|(.+)\|/g, (match) => {
-      const cells = match.split("|").filter(Boolean).map((c) => c.trim());
-      if (cells.every((c) => /^[-:]+$/.test(c))) return "";
-      const isHeader = cells.some((c) => c.startsWith("**") || c === "#");
+    .replace(/\|(.+)\|/g, (match: string) => {
+      const cells = match.split("|").filter(Boolean).map((c: string) => c.trim());
+      if (cells.every((c: string) => /^[-:]+$/.test(c))) return "";
+      const isHeader = cells.some((c: string) => c.startsWith("**") || c === "#");
       const tag = isHeader ? "th" : "td";
       const style = `style="padding: 8px 12px; border: 1px solid #27272A; text-align: left;"`;
-      return `<tr>${cells.map((c) => `<${tag} ${style}>${c}</${tag}>`).join("")}</tr>`;
+      return `<tr>${cells.map((c: string) => `<${tag} ${style}>${c}</${tag}>`).join("")}</tr>`;
     })
     .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p style="margin: 8px 0; line-height: 1.6;">$1</p>');
 
@@ -419,8 +374,6 @@ function renderReportHtml(
 </head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0C0A09; color: #D4D4D8; margin: 0; padding: 0;">
 <div style="max-width: 800px; margin: 0 auto; padding: 32px 24px;">
-
-  <!-- Header -->
   <div class="header-block" style="background: #1C1917; padding: 32px; border-radius: 12px; border: 2px solid #F59E0B; margin-bottom: 32px; text-align: center;">
     <h1 style="color: #F59E0B; font-size: 28px; margin: 0;">CASE DECODER REPORT</h1>
     <p style="color: #A1A1AA; margin: 8px 0 0; font-size: 14px;">ImNotAnAttorney | We Research. You Ask.</p>
@@ -435,31 +388,20 @@ function renderReportHtml(
       <p style="margin: 4px 0;"><strong style="color: white;">Report ID:</strong> ${escapeHtml(meta.reportId)}</p>
     </div>
   </div>
-
-  <!-- Disclaimer -->
   <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-bottom: 32px; border-left: 4px solid #EF4444;">
     <p style="margin: 0; font-size: 13px; color: #A1A1AA;">
       <strong style="color: #EF4444;">DISCLAIMER:</strong> This report contains legal INFORMATION and QUESTIONS — not legal advice. Always consult with your licensed attorney before taking action.
     </p>
   </div>
-
-  <!-- Report Content -->
   ${html}
-
-  <!-- Footer -->
   <div style="margin-top: 48px; padding-top: 24px; border-top: 2px solid #27272A; text-align: center;">
     <p style="margin: 0; font-size: 12px; color: #71717A;">&copy; ${new Date().getFullYear()} ImNotAnAttorney. Legal information, not legal advice.</p>
     <p style="margin: 4px 0 0; font-size: 12px; color: #52525B;">Report ID: ${meta.reportId} | Generated: ${meta.reportDate}</p>
   </div>
-
-  <!-- Upgrade CTA (hidden in print) -->
   <div class="no-print" style="margin-top: 32px; text-align: center;">
-    <a href="https://imnotanattorney.com/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">
-      Upgrade — 100% Credit Applied
-    </a>
+    <a href="https://imnotanattorney.com/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Upgrade — 100% Credit Applied</a>
     <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is credited toward any higher tier within 12 months.</p>
   </div>
-
 </div>
 </body>
 </html>`;
@@ -469,14 +411,12 @@ function renderReportHtml(
 // MAIN HANDLER
 // ============================================================
 
-Deno.serve(async (req) => {
-  // CORS preflight
+Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", {
       headers: {
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers":
-          "authorization, x-client-info, apikey, content-type",
+        "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
       },
     });
   }
@@ -484,100 +424,60 @@ Deno.serve(async (req) => {
   const headers = { "Content-Type": "application/json" };
 
   try {
-    // --- Config from env ---
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const anthropicKey = Deno.env.get("ANTHROPIC_API_KEY");
     const resendKey = Deno.env.get("RESEND_API_KEY");
-    const resendFrom =
-      Deno.env.get("RESEND_FROM_EMAIL") || "noreply@imnotanattorney.com";
-    const operatorEmail =
-      Deno.env.get("OPERATOR_EMAIL") || "rahim0kapadia@gmail.com";
+    const resendFrom = Deno.env.get("RESEND_FROM_EMAIL") || "noreply@imnotanattorney.com";
+    const operatorEmail = Deno.env.get("OPERATOR_EMAIL") || "rahim0kapadia@gmail.com";
     const operatorSecret = Deno.env.get("OPERATOR_SECRET");
-    const siteUrl =
-      Deno.env.get("NEXT_PUBLIC_SITE_URL") || "https://imnotanattorney.com";
+    const siteUrl = Deno.env.get("NEXT_PUBLIC_SITE_URL") || "https://imnotanattorney.com";
 
     if (!anthropicKey) {
-      return new Response(
-        JSON.stringify({ error: "ANTHROPIC_API_KEY not configured" }),
-        { status: 500, headers }
-      );
+      return new Response(JSON.stringify({ error: "ANTHROPIC_API_KEY not configured" }), { status: 500, headers });
     }
 
-    // --- Parse request ---
     const { caseId, force } = await req.json();
     if (!caseId) {
-      return new Response(
-        JSON.stringify({ error: "caseId required" }),
-        { status: 400, headers }
-      );
+      return new Response(JSON.stringify({ error: "caseId required" }), { status: 400, headers });
     }
 
-    // --- Supabase admin client ---
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    console.log(`[generate-report] Starting for case ${caseId}`);
 
     // --- Fetch case ---
-    const { data: caseData, error: caseError } = await supabase
-      .from("cases")
-      .select("*")
-      .eq("id", caseId)
-      .single();
-
-    if (caseError || !caseData) {
-      return new Response(
-        JSON.stringify({ error: "Case not found" }),
-        { status: 404, headers }
-      );
+    const cases = await supabaseSelect(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}&select=*`);
+    // deno-lint-ignore no-explicit-any
+    const caseData = (cases as any[])[0];
+    if (!caseData) {
+      return new Response(JSON.stringify({ error: "Case not found" }), { status: 404, headers });
     }
 
     // --- Idempotency ---
-    if (
-      !force &&
-      (caseData.status === "review" || caseData.status === "delivered")
-    ) {
-      return new Response(
-        JSON.stringify({
-          success: true,
-          caseId,
-          reportToken: caseData.report_token,
-          status: caseData.status,
-          skipped: true,
-          message: `Report already ${caseData.status}. Pass force:true to regenerate.`,
-        }),
-        { headers }
-      );
+    if (!force && (caseData.status === "review" || caseData.status === "delivered")) {
+      return new Response(JSON.stringify({
+        success: true, caseId, reportToken: caseData.report_token,
+        status: caseData.status, skipped: true,
+      }), { headers });
     }
 
     // --- Find linked intake ---
     let intake: IntakeData | null = null;
     if (caseData.intake_id) {
-      const { data } = await supabase
-        .from("intakes")
-        .select("*")
-        .eq("id", caseData.intake_id)
-        .single();
-      intake = data;
+      const rows = await supabaseSelect(supabaseUrl, supabaseKey, "intakes", `id=eq.${caseData.intake_id}&select=*`);
+      intake = (rows as IntakeData[])[0] || null;
     }
 
-    // Fallback: most recent intake by email
     if (!intake) {
-      const { data } = await supabase
-        .from("intakes")
-        .select("*")
-        .eq("email", caseData.email.toLowerCase())
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-      intake = data;
+      const rows = await supabaseSelect(
+        supabaseUrl, supabaseKey, "intakes",
+        `email=eq.${encodeURIComponent(caseData.email.toLowerCase())}&select=*&order=created_at.desc&limit=1`
+      );
+      intake = (rows as IntakeData[])[0] || null;
 
       if (intake) {
-        await supabase
-          .from("cases")
-          .update({
-            intake_id: (intake as unknown as { id: string }).id,
-            updated_at: new Date().toISOString(),
-          })
-          .eq("id", caseId);
+        await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
+          intake_id: intake.id, updated_at: new Date().toISOString(),
+        });
       }
     }
 
@@ -587,92 +487,61 @@ Deno.serve(async (req) => {
           to: operatorEmail,
           subject: `Report generation failed: No intake for ${caseData.email}`,
           html: `<h1 style="color: #EF4444;">No Intake Found</h1>
-            <p>Attempted to generate Case Decoder report but no intake form was found.</p>
-            <p><strong>Case ID:</strong> ${caseId}</p>
-            <p><strong>Customer:</strong> ${caseData.email}</p>
-            <p><strong>Action:</strong> Send intake form link to customer or create intake manually.</p>`,
-          resendKey,
-          fromEmail: resendFrom,
-          operatorEmail,
+            <p>Case ID: ${caseId}</p><p>Customer: ${caseData.email}</p>
+            <p>Action: Send intake form link to customer.</p>`,
+          resendKey, fromEmail: resendFrom, operatorEmail,
         });
       }
-      return new Response(
-        JSON.stringify({ error: "No intake found for this case" }),
-        { status: 404, headers }
-      );
+      return new Response(JSON.stringify({ error: "No intake found" }), { status: 404, headers });
     }
 
-    // --- Generate report with retry ---
+    console.log(`[generate-report] Intake found, calling Claude API...`);
+
+    // --- Generate report (single attempt — no retry to save time) ---
     let markdown: string;
     try {
       markdown = await callClaudeAPI(intake, anthropicKey);
-    } catch (firstError) {
-      console.error("[Generate] First attempt failed:", firstError);
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      try {
-        markdown = await callClaudeAPI(intake, anthropicKey);
-      } catch (secondError) {
-        console.error("[Generate] Second attempt failed:", secondError);
+    } catch (err) {
+      console.error("[generate-report] Claude API failed:", err);
 
-        await supabase
-          .from("cases")
-          .update({
-            status: "generation-failed",
-            updated_at: new Date().toISOString(),
-          })
-          .eq("id", caseId);
+      await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
+        status: "generation-failed", updated_at: new Date().toISOString(),
+      });
 
-        if (resendKey) {
-          await sendEmail({
-            to: operatorEmail,
-            subject: `URGENT: Report generation failed for ${escapeHtml(intake.first_name)}`,
-            html: `<h1 style="color: #EF4444;">Report Generation Failed</h1>
-              <p>Claude API failed after 2 attempts.</p>
-              <p><strong>Case ID:</strong> ${caseId}</p>
-              <p><strong>Customer:</strong> ${caseData.email}</p>
-              <p><strong>Charge Type:</strong> ${escapeHtml(intake.charge_type)}</p>
-              <p><strong>Error:</strong> ${escapeHtml(secondError instanceof Error ? secondError.message : String(secondError))}</p>
-              <div style="margin-top: 16px;">
-                <a href="${siteUrl}/api/generate/case-decoder" style="display: inline-block; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Retry Generation</a>
-                <p style="margin-top: 8px; font-size: 12px; color: #71717A;">POST with {"caseId": "${caseId}"} and Authorization header</p>
-              </div>`,
-            resendKey,
-            fromEmail: resendFrom,
-            operatorEmail,
-          });
-        }
-
-        return new Response(
-          JSON.stringify({ error: "Report generation failed" }),
-          { status: 500, headers }
-        );
+      if (resendKey) {
+        await sendEmail({
+          to: operatorEmail,
+          subject: `URGENT: Report generation failed for ${escapeHtml(intake.first_name)}`,
+          html: `<h1 style="color: #EF4444;">Report Generation Failed</h1>
+            <p>Case ID: ${caseId}</p><p>Customer: ${caseData.email}</p>
+            <p>Charge: ${escapeHtml(intake.charge_type)}</p>
+            <p>Error: ${escapeHtml(err instanceof Error ? err.message : String(err))}</p>
+            <p><a href="${siteUrl}/api/generate/case-decoder" style="padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Retry</a></p>`,
+          resendKey, fromEmail: resendFrom, operatorEmail,
+        });
       }
+
+      return new Response(JSON.stringify({ error: "Report generation failed" }), { status: 500, headers });
     }
+
+    console.log(`[generate-report] Claude done (${markdown.length} chars), rendering HTML...`);
 
     // --- Render HTML ---
     const reportToken = crypto.randomUUID();
-    const reportDate = new Date().toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    const reportDate = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
     let daysSinceArrest: number | null = null;
     if (intake.arrest_date) {
       const arrestDate = new Date(intake.arrest_date);
       if (!isNaN(arrestDate.getTime())) {
-        daysSinceArrest = Math.floor(
-          (Date.now() - arrestDate.getTime()) / (1000 * 60 * 60 * 24)
-        );
+        daysSinceArrest = Math.floor((Date.now() - arrestDate.getTime()) / (1000 * 60 * 60 * 24));
       }
     }
 
     const reportHtml = renderReportHtml(markdown, {
       firstName: intake.first_name,
       charges: intake.charge_type,
-      jurisdiction:
-        `${intake.state || ""}${intake.incident_location ? ` / ${intake.incident_location}` : ""}`.trim() ||
-        "Not specified",
+      jurisdiction: `${intake.state || ""}${intake.incident_location ? ` / ${intake.incident_location}` : ""}`.trim() || "Not specified",
       reportDate,
       reportId: reportToken.slice(0, 8).toUpperCase(),
       caseNumber: intake.case_number || undefined,
@@ -681,19 +550,18 @@ Deno.serve(async (req) => {
     });
 
     // --- Save to Supabase ---
-    await supabase
-      .from("cases")
-      .update({
-        report_html: reportHtml,
-        report_token: reportToken,
-        generated_at: new Date().toISOString(),
-        status: "review",
-        charge_type: intake.charge_type,
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", caseId);
+    await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
+      report_html: reportHtml,
+      report_token: reportToken,
+      generated_at: new Date().toISOString(),
+      status: "review",
+      charge_type: intake.charge_type,
+      updated_at: new Date().toISOString(),
+    });
 
-    // --- Send operator review email ---
+    console.log(`[generate-report] Saved to DB, sending operator email...`);
+
+    // --- Operator review email ---
     if (resendKey) {
       await sendEmail({
         to: operatorEmail,
@@ -708,46 +576,25 @@ Deno.serve(async (req) => {
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Generated:</strong> ${reportDate}</p>
           </div>
-
           <div style="margin: 24px 0; display: flex; gap: 12px;">
             <a href="${siteUrl}/api/deliver?token=${operatorSecret}&case=${caseId}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Approve &amp; Deliver</a>
             <a href="${siteUrl}/report/${reportToken}" style="display: inline-block; padding: 14px 28px; background: #3B82F6; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Preview Report</a>
           </div>
-
-          <details style="margin-top: 24px;">
-            <summary style="color: #F59E0B; cursor: pointer; font-weight: bold;">Full Report Preview</summary>
-            <div style="margin-top: 16px; max-height: 600px; overflow-y: auto; border: 1px solid #27272A; border-radius: 8px; padding: 16px;">
-              ${reportHtml}
-            </div>
-          </details>
-
-          <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #27272A;">
-            <p style="color: #71717A; font-size: 12px;">
-              To regenerate: POST to ${siteUrl}/api/generate/case-decoder with {"caseId": "${caseId}"}
-            </p>
-          </div>
         `,
-        resendKey,
-        fromEmail: resendFrom,
-        operatorEmail,
+        resendKey, fromEmail: resendFrom, operatorEmail,
       });
     }
 
+    console.log(`[generate-report] Complete! Case ${caseId} → review`);
+
     return new Response(
-      JSON.stringify({
-        success: true,
-        caseId,
-        reportToken,
-        status: "review",
-      }),
+      JSON.stringify({ success: true, caseId, reportToken, status: "review" }),
       { headers }
     );
   } catch (error) {
     console.error("[generate-report] Unhandled error:", error);
     return new Response(
-      JSON.stringify({
-        error: error instanceof Error ? error.message : "Internal error",
-      }),
+      JSON.stringify({ error: error instanceof Error ? error.message : "Internal error" }),
       { status: 500, headers }
     );
   }

@@ -134,19 +134,34 @@ async function run() {
     console.log("Raw response: " + genText.substring(0, 500));
   }
 
-  // STEP 5: Check case status after generation attempt
+  // STEP 5: Poll for generation completion (async — edge function runs in background)
   console.log("");
-  console.log("--- STEP 5: Check case status ---");
-  const { data: caseAfter } = await supabase
-    .from("cases")
-    .select("status, report_html, report_token, generated_at")
-    .eq("id", caseId)
-    .single();
+  console.log("--- STEP 5: Waiting for report generation (polling every 15s, max 3min) ---");
+  let caseAfter = null;
+  const pollStart = Date.now();
+  const maxWait = 180000; // 3 minutes
+  while (Date.now() - pollStart < maxWait) {
+    const { data } = await supabase
+      .from("cases")
+      .select("status, report_html, report_token, generated_at")
+      .eq("id", caseId)
+      .single();
+    caseAfter = data;
+    const elapsed = ((Date.now() - pollStart) / 1000).toFixed(0);
+    console.log(`  [${elapsed}s] Status: ${data?.status}`);
+    if (data?.status === "review" || data?.status === "delivered" || data?.status === "generation-failed") {
+      break;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 15000));
+  }
 
-  console.log("Status: " + caseAfter?.status);
+  console.log("Final status: " + caseAfter?.status);
   console.log("Has report_html: " + Boolean(caseAfter?.report_html));
   console.log("Has report_token: " + Boolean(caseAfter?.report_token));
   console.log("Generated at: " + (caseAfter?.generated_at || "null"));
+  if (caseAfter?.report_html) {
+    console.log("Report HTML length: " + caseAfter.report_html.length + " chars");
+  }
 
   // STEP 6: If report generated, test viewing + delivery
   if (caseAfter?.report_token) {
