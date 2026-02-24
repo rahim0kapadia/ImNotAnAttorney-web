@@ -8,10 +8,12 @@ import Link from "next/link";
 function UploadContent() {
   const searchParams = useSearchParams();
   const caseId = searchParams.get("case");
+  const prefillEmail = searchParams.get("email") || "";
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [fileCount, setFileCount] = useState(0);
+  const [email, setEmail] = useState(prefillEmail);
 
   if (!caseId) {
     return (
@@ -87,6 +89,21 @@ function UploadContent() {
           </ul>
         </div>
 
+        <div className="mt-6">
+          <label htmlFor="upload-email" className="block text-sm font-semibold text-zinc-300">
+            Your email address
+          </label>
+          <input
+            id="upload-email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com"
+            className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none"
+          />
+          <p className="mt-1 text-xs text-zinc-500">Must match the email you used at checkout.</p>
+        </div>
+
         <div className="mt-8">
           <FileUpload
             caseId={caseId}
@@ -105,7 +122,7 @@ function UploadContent() {
                   const res = await fetch("/api/upload/finalize", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ caseId }),
+                    body: JSON.stringify({ caseId, email: email || undefined }),
                   });
                   if (res.ok) {
                     setSubmitted(true);

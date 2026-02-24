@@ -236,7 +236,7 @@ export async function generateCaseDecoderReport(intake: IntakeData): Promise<str
     },
     body: JSON.stringify({
       model: "claude-sonnet-4-6-20250514",
-      max_tokens: 8000,
+      max_tokens: 16000,
       temperature: 0.3,
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: userPrompt }],
@@ -257,6 +257,8 @@ export async function generateCaseDecoderReport(intake: IntakeData): Promise<str
   return content.text;
 }
 
+import { escapeHtml } from "@/lib/email";
+
 /**
  * Wraps markdown report in branded HTML with dark theme + print-friendly CSS.
  */
@@ -266,6 +268,9 @@ export function renderReportHtml(markdown: string, meta: {
   jurisdiction: string;
   reportDate: string;
   reportId: string;
+  caseNumber?: string;
+  courtDate?: string;
+  daysSinceArrest?: number | null;
 }): string {
   // Simple markdown → HTML conversion for report sections
   let html = markdown
@@ -279,13 +284,13 @@ export function renderReportHtml(markdown: string, meta: {
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     // Blockquotes
     .replace(/^> (.+)$/gm, '<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">$1</blockquote>')
+    // Checkboxes (must come before unordered lists)
+    .replace(/^- \[x\] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9745; $1</li>')
+    .replace(/^- \[ \] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9744; $1</li>')
     // Unordered lists
     .replace(/^- (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
     // Ordered lists
     .replace(/^\d+\. (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
-    // Checkboxes
-    .replace(/^- \[x\] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9745; $1</li>')
-    .replace(/^- \[ \] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9744; $1</li>')
     // Tables (simple conversion)
     .replace(/\|(.+)\|/g, (match) => {
       const cells = match.split("|").filter(Boolean).map((c) => c.trim());
@@ -330,11 +335,14 @@ export function renderReportHtml(markdown: string, meta: {
     <h1 style="color: #F59E0B; font-size: 28px; margin: 0;">CASE DECODER REPORT</h1>
     <p style="color: #A1A1AA; margin: 8px 0 0; font-size: 14px;">ImNotAnAttorney | We Research. You Ask.</p>
     <div style="margin-top: 24px; text-align: left;">
-      <p style="margin: 4px 0;"><strong style="color: white;">Prepared for:</strong> ${meta.firstName}</p>
-      <p style="margin: 4px 0;"><strong style="color: white;">Charge(s):</strong> ${meta.charges}</p>
-      <p style="margin: 4px 0;"><strong style="color: white;">Jurisdiction:</strong> ${meta.jurisdiction}</p>
-      <p style="margin: 4px 0;"><strong style="color: white;">Report Date:</strong> ${meta.reportDate}</p>
-      <p style="margin: 4px 0;"><strong style="color: white;">Report ID:</strong> ${meta.reportId}</p>
+      <p style="margin: 4px 0;"><strong style="color: white;">Prepared for:</strong> ${escapeHtml(meta.firstName)}</p>
+      <p style="margin: 4px 0;"><strong style="color: white;">Charge(s):</strong> ${escapeHtml(meta.charges)}</p>
+      <p style="margin: 4px 0;"><strong style="color: white;">Jurisdiction:</strong> ${escapeHtml(meta.jurisdiction)}</p>
+      ${meta.caseNumber ? `<p style="margin: 4px 0;"><strong style="color: white;">Case Number:</strong> ${escapeHtml(meta.caseNumber)}</p>` : ""}
+      ${meta.courtDate ? `<p style="margin: 4px 0;"><strong style="color: white;">Next Court Date:</strong> ${escapeHtml(meta.courtDate)}</p>` : ""}
+      ${meta.daysSinceArrest != null ? `<p style="margin: 4px 0;"><strong style="color: white;">Days Since Arrest:</strong> ${meta.daysSinceArrest}</p>` : ""}
+      <p style="margin: 4px 0;"><strong style="color: white;">Report Date:</strong> ${escapeHtml(meta.reportDate)}</p>
+      <p style="margin: 4px 0;"><strong style="color: white;">Report ID:</strong> ${escapeHtml(meta.reportId)}</p>
     </div>
   </div>
 

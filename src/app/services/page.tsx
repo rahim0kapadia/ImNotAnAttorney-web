@@ -201,7 +201,7 @@ const faqSchema = {
 
 const serviceSchema = {
   "@context": "https://schema.org",
-  "@type": "LegalService",
+  "@type": "ProfessionalService",
   name: "ImNotAnAttorney Case Review Services",
   description:
     "Legal research and case analysis for criminal defendants. Five tiers from $197 Case Decoder to $9,997 Situation Room.",

@@ -187,6 +187,16 @@ function getChargeLabel(charge: string): string {
   return labels[charge] ?? charge;
 }
 
+const ALLOWED_VALUES: Record<string, string[]> = {
+  chargeType: ["drug", "dui", "white-collar", "other-felony", "other-misdemeanor"],
+  timeSinceArrest: ["less-than-1-month", "1-3-months", "3-6-months", "6-12-months", "12-plus-months"],
+  hasAttorney: ["private", "public-defender", "no", "not-sure"],
+  motionsFiled: ["yes", "no", "dont-know"],
+  hasDiscovery: ["yes", "no", "dont-know"],
+  communicationFrequency: ["weekly", "monthly", "rarely", "never"],
+  strategyDiscussed: ["yes-detail", "briefly", "no"],
+};
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -208,12 +218,19 @@ export async function POST(req: NextRequest) {
           { status: 400 }
         );
       }
+      if (ALLOWED_VALUES[field] && !ALLOWED_VALUES[field].includes(body[field])) {
+        return NextResponse.json(
+          { error: `Invalid value for ${field}: ${body[field]}` },
+          { status: 400 }
+        );
+      }
     }
 
     const result = calculateScore(body as ScoreInput);
 
     return NextResponse.json(result);
-  } catch {
+  } catch (error) {
+    console.error("[Score] Error:", error);
     return NextResponse.json(
       { error: "Something went wrong" },
       { status: 500 }

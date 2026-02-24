@@ -104,12 +104,17 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Send intake confirmation email
-    await sendEmail({
-      to: email.toLowerCase().trim(),
-      subject: `We Received Your Case Details, ${escapeHtml(firstName)}`,
-      unsubscribeEmail: email.toLowerCase().trim(),
-      html: `
+    // Send intake confirmation email — context-aware based on whether they already paid
+    const confirmationHtml = pendingCase
+      ? `
+        <h1 style="color: #F59E0B;">Case Details Received</h1>
+        <p>Thank you, ${escapeHtml(firstName)}. We've received your intake form and your report is being generated.</p>
+        <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
+          <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(chargeType)}</p>
+        </div>
+        <p style="color: #D4D4D8;">You'll receive an email when your report is ready to view. Keep an eye on your inbox.</p>
+      `
+      : `
         <h1 style="color: #F59E0B;">Case Details Received</h1>
         <p>Thank you, ${escapeHtml(firstName)}. We've received your intake form.</p>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
@@ -122,7 +127,13 @@ export async function POST(req: NextRequest) {
           <li style="margin-bottom: 8px;">We'll analyze your case and deliver your report within the guaranteed timeframe</li>
         </ol>
         <p style="color: #A1A1AA;">Not sure which tier? Start with the <a href="https://imnotanattorney.com/checkout?tier=case-decoder" style="color: #F59E0B;">Case Decoder ($197)</a> — it covers the essentials and every dollar counts toward an upgrade.</p>
-      `,
+      `;
+
+    await sendEmail({
+      to: email.toLowerCase().trim(),
+      subject: `We Received Your Case Details, ${escapeHtml(firstName)}`,
+      unsubscribeEmail: email.toLowerCase().trim(),
+      html: confirmationHtml,
     });
 
     // Send operator notification
@@ -160,7 +171,8 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ message: "Intake received" });
-  } catch {
+  } catch (error) {
+    console.error("[Intake] Error:", error);
     return NextResponse.json(
       { error: "Something went wrong" },
       { status: 500 }

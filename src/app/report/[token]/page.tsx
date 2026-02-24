@@ -1,4 +1,5 @@
 import { createAdminClient } from "@/lib/supabase/admin";
+import sanitizeHtml from "sanitize-html";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -63,10 +64,58 @@ export default async function ReportPage({
     );
   }
 
+  const cleanHtml = sanitizeHtml(caseData.report_html, {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+      "h1", "h2", "h3", "h4", "img", "style", "html", "head", "body", "meta", "title", "div", "span",
+    ]),
+    allowedAttributes: {
+      ...sanitizeHtml.defaults.allowedAttributes,
+      "*": ["style", "class", "id", "lang"],
+      a: ["href", "style", "class"],
+      meta: ["charset", "name", "content"],
+      link: ["rel", "href"],
+    },
+    allowedStyles: {
+      "*": {
+        color: [/.*/],
+        "background-color": [/.*/],
+        background: [/.*/],
+        "font-size": [/.*/],
+        "font-weight": [/.*/],
+        "font-family": [/.*/],
+        "text-align": [/.*/],
+        "text-decoration": [/.*/],
+        margin: [/.*/],
+        "margin-top": [/.*/],
+        "margin-bottom": [/.*/],
+        "margin-left": [/.*/],
+        "margin-right": [/.*/],
+        padding: [/.*/],
+        "padding-top": [/.*/],
+        "padding-bottom": [/.*/],
+        "padding-left": [/.*/],
+        "padding-right": [/.*/],
+        border: [/.*/],
+        "border-top": [/.*/],
+        "border-left": [/.*/],
+        "border-right": [/.*/],
+        "border-bottom": [/.*/],
+        "border-radius": [/.*/],
+        "border-collapse": [/.*/],
+        "border-color": [/.*/],
+        "max-width": [/.*/],
+        width: [/.*/],
+        display: [/.*/],
+        "line-height": [/.*/],
+        "list-style": [/.*/],
+      },
+    },
+  });
+
   return (
     <div
       className="report-container"
-      dangerouslySetInnerHTML={{ __html: caseData.report_html }}
+      dangerouslySetInnerHTML={{ __html: cleanHtml }}
     />
   );
 }

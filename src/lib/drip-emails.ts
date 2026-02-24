@@ -40,8 +40,8 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p><strong style="color: white;">1. Reviewed ALL discovery with you</strong> — not summarized it. Reviewed every page and explained what matters.</p>
       <p><strong style="color: white;">2. Identified at least one issue</strong> — weight discrepancies, witness contradictions, procedural errors. Every case has them.</p>
       <p><strong style="color: white;">3. Filed or discussed motions</strong> — suppression, dismissal, compelling discovery. If none have been discussed, ask why.</p>
-      <p>If all three are done, you have a good attorney. Hold onto them.</p>
-      <p>If even one is missing, your next meeting should include: <em>"Why hasn't this been done yet?"</em></p>
+      <p>If all three are done, those are positive signs of active representation.</p>
+      <p>If even one is missing, some defendants ask: <em>"Why hasn't this been done yet?"</em></p>
       ${cta("See what informed defendants find →", "/sample")}
     `,
   },
@@ -130,7 +130,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
 // ============================================================
 
 export const POST_PURCHASE_EMAILS: DripEmail[] = [
-  // --- Case Decoder ($97) ---
+  // --- Case Decoder ($197) ---
   {
     key: "post_case_decoder_delivery",
     delayDays: 0,
@@ -368,7 +368,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       </ol>
       <p>Your dedicated communication channel is now active. Use it for urgent questions at any time.</p>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">What to expect:</strong> Full War Room deliverables on a priority timeline, plus complete trial preparation — voir dire, opening/closing frameworks, JOA motion packages, witness battle scripts, and daily trial support.
+        <strong style="color: white;">What to expect:</strong> Full War Room deliverables on a priority timeline, plus complete trial preparation — research-based questions about JOA standards, witness background research for your attorney, and daily trial support.
       </p>
     `,
   },

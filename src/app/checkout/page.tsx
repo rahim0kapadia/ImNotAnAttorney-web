@@ -55,7 +55,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "The right place to start. Understand exactly what you are facing before your next attorney meeting.",
     whyThisWorks:
-      "Every question generated using documented tactics from elite defense attorneys — Barry Scheck's chain of custody protocol. F. Lee Bailey's witness analysis framework. Jeffrey Lichtman's informant reliability methodology. These are the questions a $500/hour defense attorney would ask if they were reading your file. You're getting them for $197.",
+      "Every question generated using documented tactics from elite defense attorneys — Barry Scheck's chain of custody protocol. F. Lee Bailey's witness analysis framework. Jeffrey Lichtman's informant reliability methodology. These are questions informed by the same methodologies elite defense attorneys use. You're getting them for $197.",
     pullquote: {
       quote:
         "Forensic evidence is only as reliable as the humans who handle it.",
@@ -298,6 +298,8 @@ function CheckoutContent() {
   }
 
   async function handleCheckout() {
+    if (loading) return;
+
     if (tier === "situation-room") {
       window.location.href = "/intake?interest=situation-room";
       return;
@@ -560,8 +562,8 @@ function CheckoutContent() {
               />
               <span className="text-xs text-zinc-400">
                 I understand this service involves custom research specific to my case. Work begins
-                upon intake submission. Non-refundable once research commences. If deliverables are
-                not completed within the stated timeframe, I receive a full refund.
+                upon intake submission and is non-refundable once delivered. If we miss the stated
+                delivery deadline, I receive a full refund.
               </span>
             </label>
           )}
@@ -587,7 +589,7 @@ function CheckoutContent() {
               </span>
             ) : tier === "situation-room"
               ? "Apply for The Situation Room"
-              : `Pay ${info.price} — Secure Checkout`}
+              : `Pay ${priorityDelivery && info.priorityPriceNum ? `$${info.priceNum + info.priorityPriceNum}` : info.price} — Secure Checkout`}
           </button>
 
           <p className="mt-3 text-center text-sm text-zinc-300">

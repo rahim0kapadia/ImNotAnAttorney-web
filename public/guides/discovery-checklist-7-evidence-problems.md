@@ -213,7 +213,7 @@ When you ask the questions in this guide, write down the answers. If your attorn
 
 ## Want Case-Specific Questions?
 
-This guide teaches you what to look for. Our **Case Decoder ($97)** does the looking for you.
+This guide teaches you what to look for. Our **Case Decoder ($197)** does the looking for you.
 
 We analyze your actual case details — your charges, your stage, your jurisdiction — and generate 10-15 specific, pointed questions built from the same elite defense frameworks used in this guide.
 

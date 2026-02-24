@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
     }
 
     const productName = session.metadata?.product_name || tier;
-    const origin = "https://imnotanattorney.com";
+    const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
 
     const supabase = createAdminClient();
     const tierConfig = isValidTier(tier) ? TIERS[tier] : null;
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
     const { data: orderData, error: orderError } = await supabase
       .from("orders")
       .insert({
-        email,
+        email: email.toLowerCase(),
         tier,
         amount,
         status: "paid",
@@ -85,22 +85,32 @@ export async function POST(req: NextRequest) {
             ? session.payment_intent
             : null,
         paid_at: new Date().toISOString(),
+        priority_delivery: session.metadata?.priority_delivery === "true",
+        court_date: session.metadata?.court_date || null,
+        consent_timestamp: session.metadata?.consent_timestamp || null,
       })
       .select("id")
       .single();
 
     if (orderError) {
+      // Check if this is a duplicate (unique constraint violation) — Stripe retries webhooks
+      const isDuplicate = orderError.code === "23505" || orderError.message?.includes("duplicate");
+      if (isDuplicate) {
+        console.log("[Stripe Webhook] Duplicate webhook event, skipping:", session.id);
+        return NextResponse.json({ received: true });
+      }
+
       console.error("[Stripe Webhook] Order insert error:", orderError);
       await sendEmail({
         to: OPERATOR_EMAIL,
-        subject: `URGENT: Order insert failed for ${email}`,
+        subject: `URGENT: Order insert failed for ${escapeHtml(email)}`,
         html: `<h1 style="color: #EF4444;">Order Insert Failed</h1>
           <p>Payment received but order record failed to create.</p>
-          <p><strong>Customer:</strong> ${email}</p>
-          <p><strong>Tier:</strong> ${tier}</p>
+          <p><strong>Customer:</strong> ${escapeHtml(email)}</p>
+          <p><strong>Tier:</strong> ${escapeHtml(tier)}</p>
           <p><strong>Amount:</strong> $${(amount / 100).toFixed(2)}</p>
-          <p><strong>Stripe Session:</strong> ${session.id}</p>
-          <p><strong>Error:</strong> ${orderError.message}</p>
+          <p><strong>Stripe Session:</strong> ${escapeHtml(session.id)}</p>
+          <p><strong>Error:</strong> ${escapeHtml(orderError.message)}</p>
           <p><strong>Action:</strong> Manually create order record in Supabase.</p>`,
       });
     }
@@ -191,7 +201,7 @@ export async function POST(req: NextRequest) {
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border: 1px solid #F59E0B;">
           <p style="margin: 0; color: white; font-weight: bold;">Next Step: Upload Your Discovery Documents</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${escapeHtml(productName)} requires discovery documents for analysis. Upload them here:</p>
-          <a href="${origin}/upload?case=${caseId}" style="display: inline-block; margin-top: 16px; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Upload Discovery Documents</a>
+          <a href="${origin}/upload?case=${caseId}&email=${encodeURIComponent(email)}" style="display: inline-block; margin-top: 16px; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Upload Discovery Documents</a>
         </div>
       `
       : "";
@@ -227,10 +237,10 @@ export async function POST(req: NextRequest) {
         <h1 style="color: #F59E0B;">New Order Received</h1>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
           <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Product:</strong> ${escapeHtml(productName)}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${email}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(email)}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Amount:</strong> $${(amount / 100).toFixed(2)}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${tier}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Stripe Session:</strong> ${session.id}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(tier)}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Stripe Session:</strong> ${escapeHtml(session.id)}</p>
           ${caseId ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>` : ""}
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Requires Discovery:</strong> ${requiresDiscovery ? "Yes" : "No"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Intake Found:</strong> ${caseId ? (requiresDiscovery ? "N/A (discovery tier)" : "Check case status") : "Case creation failed"}</p>
@@ -251,17 +261,28 @@ export async function POST(req: NextRequest) {
     if (paymentIntentId) {
       const supabase = createAdminClient();
 
-      // Update order status
-      const { error: refundError } = await supabase
-        .from("orders")
-        .update({
-          status: "refunded",
-          refunded_at: new Date().toISOString(),
-        })
-        .eq("stripe_payment_intent_id", paymentIntentId);
+      // Determine if full or partial refund
+      const isFullRefund = charge.amount_refunded === charge.amount;
 
-      if (refundError) {
-        console.error("[Stripe Webhook] Refund update error:", refundError);
+      if (isFullRefund) {
+        // Full refund: mark order as refunded, revoke report access
+        const { error: refundError } = await supabase
+          .from("orders")
+          .update({
+            status: "refunded",
+            refunded_at: new Date().toISOString(),
+          })
+          .eq("stripe_payment_intent_id", paymentIntentId);
+
+        if (refundError) {
+          console.error("[Stripe Webhook] Refund update error:", refundError);
+        }
+      } else {
+        // Partial refund: log refunded_at for audit but keep status "paid"
+        await supabase
+          .from("orders")
+          .update({ refunded_at: new Date().toISOString() })
+          .eq("stripe_payment_intent_id", paymentIntentId);
       }
 
       // Get the refunded order to find linked case
@@ -272,24 +293,30 @@ export async function POST(req: NextRequest) {
         .single();
 
       if (refundedOrder) {
-        // Update linked case status to refunded
-        await supabase
-          .from("cases")
-          .update({
-            status: "refunded",
-            updated_at: new Date().toISOString(),
-          })
-          .eq("order_id", refundedOrder.id);
+        if (isFullRefund) {
+          // Update linked case status to refunded
+          await supabase
+            .from("cases")
+            .update({
+              status: "refunded",
+              updated_at: new Date().toISOString(),
+            })
+            .eq("order_id", refundedOrder.id);
+        }
 
         // Notify operator
+        const refundAmount = (charge.amount_refunded / 100).toFixed(2);
+        const totalAmount = ((refundedOrder.amount || 0) / 100).toFixed(2);
         await sendEmail({
           to: OPERATOR_EMAIL,
-          subject: `Refund Processed: ${refundedOrder.tier} — $${((refundedOrder.amount || 0) / 100).toFixed(2)}`,
-          html: `<h1 style="color: #EF4444;">Refund Processed</h1>
-            <p><strong>Customer:</strong> ${refundedOrder.email}</p>
-            <p><strong>Tier:</strong> ${refundedOrder.tier}</p>
-            <p><strong>Amount:</strong> $${((refundedOrder.amount || 0) / 100).toFixed(2)}</p>
-            <p><strong>Note:</strong> Upgrade credits for this purchase are now void per refund policy. Linked case status updated to 'refunded'.</p>`,
+          subject: `${isFullRefund ? "Full" : "Partial"} Refund: ${escapeHtml(refundedOrder.tier)} — $${refundAmount}`,
+          html: `<h1 style="color: #EF4444;">${isFullRefund ? "Full" : "Partial"} Refund Processed</h1>
+            <p><strong>Customer:</strong> ${escapeHtml(refundedOrder.email)}</p>
+            <p><strong>Tier:</strong> ${escapeHtml(refundedOrder.tier)}</p>
+            <p><strong>Refunded:</strong> $${refundAmount} of $${totalAmount}</p>
+            ${isFullRefund
+              ? "<p><strong>Note:</strong> Upgrade credits voided. Case status updated to 'refunded'. Report access revoked.</p>"
+              : "<p><strong>Note:</strong> Partial refund — order remains 'paid'. Upgrade credits and report access preserved.</p>"}`,
         });
       }
     }

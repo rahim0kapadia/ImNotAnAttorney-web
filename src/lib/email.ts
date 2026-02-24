@@ -58,6 +58,7 @@ export async function sendEmail(params: EmailParams): Promise<EmailResult> {
         from: FROM_EMAIL,
         to: [params.to],
         subject: params.subject,
+        reply_to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
         headers: Object.keys(headers).length > 0 ? headers : undefined,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0C0A09; color: #D4D4D8; padding: 32px;">

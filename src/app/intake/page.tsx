@@ -105,6 +105,8 @@ const labelClass = "block text-xs text-zinc-400";
 function IntakeForm() {
   const searchParams = useSearchParams();
   const interest = searchParams.get("interest");
+  const prefillEmail = searchParams.get("email") || "";
+  const prefillTier = searchParams.get("tier") || "";
 
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
@@ -115,7 +117,7 @@ function IntakeForm() {
   const [form, setForm] = useState<Record<string, string | string[]>>({
     firstName: "",
     lastName: "",
-    email: "",
+    email: prefillEmail,
     phone: "",
     chargeType: "",
     state: "",
@@ -130,7 +132,7 @@ function IntakeForm() {
     courtDate: "",
     situation: "",
     specificQuestion: "",
-    services: interest ? [`The Situation Room ($9,997)`] : ([] as string[]),
+    services: interest ? [`The Situation Room ($9,997)`] : prefillTier ? [prefillTier === "case-decoder" ? "Case Decoder ($197)" : prefillTier] : ([] as string[]),
     pleaOffered: "",
     pleaTerms: "",
     communicationFrequency: "",

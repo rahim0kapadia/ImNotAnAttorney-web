@@ -5,6 +5,11 @@ import { sendEmail, escapeHtml } from "@/lib/email";
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
 
+function getOrigin(req: NextRequest): string {
+  return process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+}
+
+// GET: Show confirmation page (safe for email prefetch)
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const token = searchParams.get("token");
@@ -26,7 +31,98 @@ export async function GET(req: NextRequest) {
 
   const supabase = createAdminClient();
 
-  // Fetch case
+  const { data: caseData, error: caseError } = await supabase
+    .from("cases")
+    .select("id, email, tier, status, charge_type, report_token")
+    .eq("id", caseId)
+    .single();
+
+  if (caseError || !caseData) {
+    return new NextResponse(
+      "<h1>Case not found</h1>",
+      { status: 404, headers: { "Content-Type": "text/html" } }
+    );
+  }
+
+  if (caseData.status === "delivered") {
+    return new NextResponse(
+      `<h1>Already Delivered</h1><p>This case has already been delivered to ${escapeHtml(caseData.email)}.</p>`,
+      { status: 200, headers: { "Content-Type": "text/html" } }
+    );
+  }
+
+  if (caseData.status !== "review") {
+    return new NextResponse(
+      `<h1>Case not in review status</h1><p>Current status: ${escapeHtml(caseData.status)}</p>`,
+      { status: 400, headers: { "Content-Type": "text/html" } }
+    );
+  }
+
+  const origin = getOrigin(req);
+
+  // Return confirmation page — no state change on GET
+  return new NextResponse(
+    `<!DOCTYPE html>
+<html>
+<head><title>Confirm Delivery</title></head>
+<body style="font-family: Arial, sans-serif; background: #0C0A09; color: #D4D4D8; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0;">
+  <div style="text-align: center; max-width: 500px; padding: 32px;">
+    <h1 style="color: #F59E0B;">Confirm Report Delivery</h1>
+    <div style="text-align: left; background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
+      <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(caseData.email)}</p>
+      <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(caseData.tier)}</p>
+      <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge:</strong> ${escapeHtml(caseData.charge_type || "N/A")}</p>
+      <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${escapeHtml(caseId)}</p>
+    </div>
+    <p style="color: #A1A1AA;">This will send the delivery email to the customer and update case status to "delivered".</p>
+    ${caseData.report_token ? `<p style="margin: 12px 0;"><a href="${origin}/report/${caseData.report_token}" style="color: #3B82F6; text-decoration: underline;">Preview Report</a></p>` : ""}
+    <form method="POST" action="${origin}/api/deliver">
+      <input type="hidden" name="token" value="${escapeHtml(token)}" />
+      <input type="hidden" name="case" value="${escapeHtml(caseId)}" />
+      <button type="submit" style="margin-top: 16px; padding: 14px 32px; background: #22C55E; color: white; font-weight: bold; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">
+        Confirm Delivery
+      </button>
+    </form>
+  </div>
+</body>
+</html>`,
+    { status: 200, headers: { "Content-Type": "text/html" } }
+  );
+}
+
+// POST: Actually deliver the report
+export async function POST(req: NextRequest) {
+  let token: string | null = null;
+  let caseId: string | null = null;
+
+  const contentType = req.headers.get("content-type") || "";
+  if (contentType.includes("application/x-www-form-urlencoded")) {
+    const formData = await req.formData();
+    token = formData.get("token") as string | null;
+    caseId = formData.get("case") as string | null;
+  } else {
+    const body = await req.json().catch(() => ({}));
+    token = body.token || null;
+    caseId = body.case || body.caseId || null;
+  }
+
+  if (!token || token !== process.env.OPERATOR_SECRET) {
+    return new NextResponse(
+      "<h1>Unauthorized</h1><p>Invalid operator token.</p>",
+      { status: 401, headers: { "Content-Type": "text/html" } }
+    );
+  }
+
+  if (!caseId) {
+    return new NextResponse(
+      "<h1>Missing case ID</h1>",
+      { status: 400, headers: { "Content-Type": "text/html" } }
+    );
+  }
+
+  const supabase = createAdminClient();
+  const origin = getOrigin(req);
+
   const { data: caseData, error: caseError } = await supabase
     .from("cases")
     .select("*")
@@ -40,15 +136,22 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  if (caseData.status === "delivered") {
+    return new NextResponse(
+      `<h1>Already Delivered</h1><p>This case was already delivered to ${escapeHtml(caseData.email)}.</p>`,
+      { status: 200, headers: { "Content-Type": "text/html" } }
+    );
+  }
+
   if (caseData.status !== "review") {
     return new NextResponse(
-      `<h1>Case not in review status</h1><p>Current status: ${caseData.status}</p>`,
+      `<h1>Case not in review status</h1><p>Current status: ${escapeHtml(caseData.status)}</p>`,
       { status: 400, headers: { "Content-Type": "text/html" } }
     );
   }
 
   const now = new Date().toISOString();
-  const reportUrl = `https://imnotanattorney.com/report/${caseData.report_token}`;
+  const reportUrl = `${origin}/report/${caseData.report_token}`;
 
   // Update case to delivered
   await supabase
@@ -95,7 +198,7 @@ export async function GET(req: NextRequest) {
       </div>
       <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">
         <p style="margin: 0; color: #F59E0B; font-weight: bold;">Ready to go deeper?</p>
-        <p style="margin: 8px 0 0; color: #D4D4D8;">Your $197 is credited toward any higher tier within 12 months. <a href="https://imnotanattorney.com/services" style="color: #F59E0B;">View upgrade options</a></p>
+        <p style="margin: 8px 0 0; color: #D4D4D8;">Your $197 is credited toward any higher tier within 12 months. <a href="${origin}/services" style="color: #F59E0B;">View upgrade options</a></p>
       </div>
     `,
   });
@@ -113,9 +216,9 @@ export async function GET(req: NextRequest) {
     if (!retryResult.success) {
       await sendEmail({
         to: OPERATOR_EMAIL,
-        subject: `ALERT: Delivery email failed for ${caseData.email}`,
+        subject: `ALERT: Delivery email failed for ${escapeHtml(caseData.email)}`,
         html: `<p>Delivery email failed after 2 attempts.</p>
-          <p><strong>Customer:</strong> ${caseData.email}</p>
+          <p><strong>Customer:</strong> ${escapeHtml(caseData.email)}</p>
           <p><strong>Report URL:</strong> ${reportUrl}</p>
           <p>Case status is updated to 'delivered' but customer has NOT been notified.</p>`,
       });
@@ -147,7 +250,7 @@ export async function GET(req: NextRequest) {
     <h1 style="color: #22C55E;">Report Delivered</h1>
     <p>Delivery email sent to <strong style="color: white;">${escapeHtml(caseData.email)}</strong></p>
     <p>Report URL: <a href="${reportUrl}" style="color: #F59E0B;">${reportUrl}</a></p>
-    <p style="margin-top: 24px; color: #71717A;">Case ID: ${caseId}</p>
+    <p style="margin-top: 24px; color: #71717A;">Case ID: ${escapeHtml(caseId)}</p>
   </div>
 </body>
 </html>`,

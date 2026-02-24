@@ -129,7 +129,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
       {/* Optional email capture */}
       {!emailSent && (
         <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
-          <p className="font-semibold text-white">Get your score + 3 bonus questions emailed</p>
+          <p className="font-semibold text-white">Get our free Discovery Checklist emailed to you</p>
           <p className="mt-1 text-sm text-zinc-400">Optional — no obligation.</p>
           <form onSubmit={async (e) => {
             e.preventDefault();

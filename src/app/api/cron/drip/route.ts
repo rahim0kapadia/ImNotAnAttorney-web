@@ -134,7 +134,7 @@ export async function GET(req: NextRequest) {
             .from("subscribers")
             .select("id")
             .eq("email", order.email.toLowerCase())
-            .single();
+            .maybeSingle();
 
           const subscriberId = subMatch?.id;
 

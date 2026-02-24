@@ -8,7 +8,7 @@ const OPERATOR_EMAIL =
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { caseId } = body;
+    const { caseId, email } = body;
 
     if (!caseId) {
       return NextResponse.json(
@@ -29,6 +29,14 @@ export async function POST(req: NextRequest) {
     if (caseError || !caseRecord) {
       return NextResponse.json(
         { error: "Invalid case ID" },
+        { status: 403 }
+      );
+    }
+
+    // Ownership check: verify email matches case
+    if (email && caseRecord.email.toLowerCase() !== email.toLowerCase().trim()) {
+      return NextResponse.json(
+        { error: "Email does not match this case" },
         { status: 403 }
       );
     }

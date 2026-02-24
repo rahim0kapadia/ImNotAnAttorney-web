@@ -65,13 +65,57 @@ export async function POST(req: NextRequest) {
         .eq("tier", "war-room")
         .eq("status", "paid")
         .limit(1)
-        .single();
+        .maybeSingle();
 
       if (!warRoomOrder) {
         prerequisiteSkipped = true;
       }
     } else if (tier === "situation-room" && !email) {
       prerequisiteSkipped = true;
+    }
+
+    // Server-side consent validation for $1,497+ tiers
+    if (tierConfig.price >= 149700 && !consent) {
+      return NextResponse.json(
+        { error: "Consent required for this tier" },
+        { status: 400 }
+      );
+    }
+
+    // Calculate upgrade credits from prior paid orders (12-month window)
+    let upgradeCreditCents = 0;
+    let stripeCouponId: string | undefined;
+    if (email && !upgradeCreditVoided) {
+      const twelveMonthsAgo = new Date();
+      twelveMonthsAgo.setFullYear(twelveMonthsAgo.getFullYear() - 1);
+
+      const { data: priorOrders } = await supabase
+        .from("orders")
+        .select("amount")
+        .eq("email", email.toLowerCase())
+        .eq("status", "paid")
+        .gte("paid_at", twelveMonthsAgo.toISOString());
+
+      if (priorOrders && priorOrders.length > 0) {
+        upgradeCreditCents = priorOrders.reduce(
+          (sum: number, o: { amount: number }) => sum + (o.amount || 0),
+          0
+        );
+      }
+
+      if (upgradeCreditCents > 0) {
+        // Cap credit at total session price
+        const sessionTotal = tierConfig.price + (priorityDelivery && tierConfig.priorityPrice ? tierConfig.priorityPrice : 0);
+        const cappedCredit = Math.min(upgradeCreditCents, sessionTotal);
+
+        const coupon = await stripe.coupons.create({
+          amount_off: cappedCredit,
+          currency: "usd",
+          duration: "once",
+          name: "Upgrade Credit",
+        });
+        stripeCouponId = coupon.id;
+      }
     }
 
     // Build line items
@@ -113,6 +157,7 @@ export async function POST(req: NextRequest) {
       payment_method_types: ["card"],
       customer_email: email || undefined,
       line_items: lineItems,
+      ...(stripeCouponId && { discounts: [{ coupon: stripeCouponId }] }),
       metadata: {
         tier,
         product_name: tierConfig.name,
@@ -122,6 +167,7 @@ export async function POST(req: NextRequest) {
         ...(priorityDelivery && { priority_delivery: "true" }),
         ...(courtDate && { court_date: courtDate }),
         ...(resolvedChargeType && { charge_type: resolvedChargeType }),
+        ...(upgradeCreditCents > 0 && { upgrade_credit_applied: String(upgradeCreditCents) }),
       },
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
       cancel_url: `${origin}/checkout?tier=${tier}`,

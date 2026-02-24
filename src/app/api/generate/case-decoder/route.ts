@@ -13,13 +13,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { caseId } = await req.json();
+  const body = await req.json();
+  const { caseId, force } = body;
   if (!caseId) {
     return NextResponse.json({ error: "caseId required" }, { status: 400 });
   }
 
   const supabase = createAdminClient();
-  const origin = req.headers.get("origin") || "https://imnotanattorney.com";
+  const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
 
   // Fetch case
   const { data: caseData, error: caseError } = await supabase
@@ -30,6 +31,18 @@ export async function POST(req: NextRequest) {
 
   if (caseError || !caseData) {
     return NextResponse.json({ error: "Case not found" }, { status: 404 });
+  }
+
+  // Idempotency: skip if already generated/delivered (unless force=true)
+  if (!force && (caseData.status === "review" || caseData.status === "delivered")) {
+    return NextResponse.json({
+      success: true,
+      caseId,
+      reportToken: caseData.report_token,
+      status: caseData.status,
+      skipped: true,
+      message: `Report already ${caseData.status}. Pass force:true to regenerate.`,
+    });
   }
 
   // Find linked intake
@@ -122,12 +135,26 @@ export async function POST(req: NextRequest) {
     day: "numeric",
   });
 
+  // Calculate days since arrest
+  let daysSinceArrest: number | null = null;
+  if (intake.arrest_date) {
+    const arrestDate = new Date(intake.arrest_date);
+    if (!isNaN(arrestDate.getTime())) {
+      daysSinceArrest = Math.floor(
+        (Date.now() - arrestDate.getTime()) / (1000 * 60 * 60 * 24)
+      );
+    }
+  }
+
   const reportHtml = renderReportHtml(markdown, {
     firstName: intake.first_name,
     charges: intake.charge_type,
     jurisdiction: `${intake.state || ""}${intake.incident_location ? ` / ${intake.incident_location}` : ""}`.trim() || "Not specified",
     reportDate,
     reportId: reportToken.slice(0, 8).toUpperCase(),
+    caseNumber: intake.case_number || undefined,
+    courtDate: intake.court_date || undefined,
+    daysSinceArrest,
   });
 
   // Update case with report
