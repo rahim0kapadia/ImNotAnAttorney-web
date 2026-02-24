@@ -77,9 +77,29 @@ export default async function ReportPage({
 
   const { data: caseData } = await supabase
     .from("cases")
-    .select("report_html, status, tier")
+    .select("report_html, status, tier, report_token_expires_at")
     .eq("report_token", token)
     .single();
+
+  // ACCESS CONTROL 0: Token expiration — reports expire after 12 months.
+  if (caseData?.report_token_expires_at && new Date(caseData.report_token_expires_at) < new Date()) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center px-4">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-white">Report Link Expired</h1>
+          <p className="mt-3 text-zinc-400">
+            This report link has expired. Contact us to request a new link.
+          </p>
+          <p className="mt-4 text-sm text-zinc-400">
+            Email us at{" "}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-amber-400 underline decoration-amber-400/50">
+              {CONTACT_EMAIL}
+            </a>
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   // ACCESS CONTROL 1: Refunded cases — customer loses report access after full refund.
   // This is enforced here (not just in the webhook) as a defense-in-depth measure.
@@ -116,9 +136,9 @@ export default async function ReportPage({
             Report Not Available
           </h1>
           <p className="mt-3 text-zinc-400">
-            This report is not available yet. If you recently purchased a Case
-            Decoder, your report is being prepared and you&apos;ll receive an
-            email when it&apos;s ready.
+            This report is not available yet. If you recently made a purchase,
+            your report is being prepared and you&apos;ll receive an email when
+            it&apos;s ready.
           </p>
           <p className="mt-4 text-sm text-zinc-400">
             Questions? Email us at{" "}

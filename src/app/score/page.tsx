@@ -136,6 +136,8 @@ type ScoreResult = {
  * CTA to Case Decoder, and a "take again" reset link.
  */
 function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void }) {
+  const [emailSubmitting, setEmailSubmitting] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
   // Band-to-color mapping: Critical (red) through Excellent (emerald)
   const bandColors: Record<string, string> = {
     Critical: "text-red-400 border-red-500/50",
@@ -190,6 +192,9 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
           <p className="mt-1 text-sm text-zinc-400">Optional — no obligation.</p>
           <form onSubmit={async (e) => {
             e.preventDefault();
+            if (emailSubmitting) return;
+            setEmailSubmitting(true);
+            setEmailError(null);
             const form = e.target as HTMLFormElement;
             const emailInput = (form.elements.namedItem("scoreEmail") as HTMLInputElement).value;
             try {
@@ -200,18 +205,23 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
               });
               if (res.ok) {
                 setEmailSent(true);
+              } else {
+                setEmailError("Something went wrong. Please try again.");
               }
             } catch {
-              // Silently fail — non-critical email capture
+              setEmailError("Could not connect. Please try again.");
+            } finally {
+              setEmailSubmitting(false);
             }
           }} className="mt-3 flex gap-2">
             <input name="scoreEmail" type="email" required placeholder="you@example.com"
               className="flex-1 rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none" />
-            <button type="submit"
-              className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-bold text-black hover:bg-amber-400">
-              Send
+            <button type="submit" disabled={emailSubmitting}
+              className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-bold text-black hover:bg-amber-400 disabled:opacity-50">
+              {emailSubmitting ? "..." : "Send"}
             </button>
           </form>
+          {emailError && <p className="mt-2 text-sm text-red-400">{emailError}</p>}
         </div>
       )}
       {emailSent && (

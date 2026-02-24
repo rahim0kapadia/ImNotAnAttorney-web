@@ -6,7 +6,7 @@ import { SITE_URL } from "@/lib/site";
  * This page is a lead magnet and should be indexed by search engines.
  */
 export const metadata: Metadata = {
-  title: "Free Attorney Accountability Score — ImNotAnAttorney",
+  title: "Free Attorney Accountability Score",
   description:
     "Is your attorney doing their job? Answer 7 questions and get your free Attorney Accountability Score in 60 seconds. No email required.",
   alternates: {

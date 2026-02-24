@@ -55,7 +55,7 @@ const resources = [
   {
     title: "10 Questions Your Attorney Hopes You Never Ask",
     desc: "The original questions that separate informed defendants from easy clients. These force accountability.",
-    type: "PDF Guide",
+    type: "Free Guide",
     gated: true,
   },
 ];
@@ -118,7 +118,7 @@ export default function ResourcesPage() {
             Guides &amp; Templates
           </h2>
           <p className="mt-1 text-sm text-zinc-400">
-            Enter your email to access. No spam. No selling your data.
+            Enter your email to get access. No spam. No selling your data.
           </p>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {resources.map((r) => (
