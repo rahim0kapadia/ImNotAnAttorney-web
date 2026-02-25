@@ -355,9 +355,9 @@ The generated report is a 13-section markdown document (plus Letter and Limitati
 4. **Case Stage Benchmark** -- Timeline, milestone status, next-30-day priorities
 5. **Communication Playbook** -- Score-tiered scripts, escalation ladder, email templates
 6. **Verify These Facts** -- 5 key intake facts to confirm
-7. **Targeted Questions for Your Attorney** -- 15-20 calibrated questions in 4 clusters
-8. **Evidence Pattern Checklist** -- 10-15 patterns specific to charge type
-9. **Red Flags** -- 8-12 flags in 3 categories with severity indicators
+7. **Targeted Questions for Your Attorney** -- 15 calibrated questions in 4 clusters
+8. **Evidence Pattern Checklist** -- 10 patterns specific to charge type
+9. **Red Flags** -- 8 flags in 3 categories (3 Attorney + 3 Evidence + 2 Procedural) with severity indicators
 10. **Plea Deal Assessment** -- Terms analysis or what-to-expect content
 11. **Motions That May Apply** -- Table with deadlines and strategic notes
 12. **What's Next** -- Upgrade recommendations based on actual findings (ONLY section with upgrade language)
