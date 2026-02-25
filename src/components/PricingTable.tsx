@@ -34,7 +34,7 @@ const tiers = [
       "Plain-English charge breakdown",
       "Case stage benchmark",
       "Defense milestone checklist",
-      "15-20 targeted questions for your attorney",
+      "15 targeted questions for your attorney",
       "Red flags for your stage",
       "Common motion types for your charge category",
       "Defense Milestone Score — 0-100 rating",

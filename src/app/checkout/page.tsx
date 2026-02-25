@@ -103,14 +103,14 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Case stage benchmark",
       "Defense milestone checklist",
       "Defense Milestone Score — 0-100 rating of defense milestones for your case stage",
-      "15-20 targeted questions for your attorney",
+      "15 targeted questions for your attorney",
       "Red flags for your stage",
       "Common motion types for your charge category",
       "BONUS: Attorney Meeting Prep Guide — how to present these questions for maximum impact",
       "BONUS: Motion Deadline Awareness — which deadlines may apply to your charge type",
     ],
     guarantee:
-      "Delivered within 24 hours with 15+ targeted questions — or your money back.",
+      "Delivered within 24 hours with 15 targeted questions — or your money back.",
     priorityPrice: "$97",
     priorityDesc: "Same-day delivery (4 hours)",
     priorityPriceNum: 97,
@@ -129,7 +129,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       nextTierPrice: "$797",
       upgradeCost: "$600",
       unlocks:
-        "Adds your judge's actual sentencing patterns, a motion landscape report, and 35-50 questions instead of 15-20.",
+        "Adds your judge's actual sentencing patterns, a motion landscape report, and 35-50 questions instead of 15.",
       bestFor:
         "Worth it if you already have an attorney and want to evaluate how they're handling your specific judge.",
     },

@@ -299,7 +299,7 @@ function SuccessContent() {
                   Upgrade to Intelligence Brief
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $197 is already credited. Get judge intelligence, jurisdiction profile, and 35-50 questions instead of 15-20.
+                  Your $197 is already credited. Get judge intelligence, jurisdiction profile, and 35-50 questions instead of 15.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: judge sentencing patterns, motion landscape report, attorney accountability timeline.
