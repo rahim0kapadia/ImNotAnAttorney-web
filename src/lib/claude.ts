@@ -83,6 +83,7 @@ const SYSTEM_PROMPT = `You are an elite criminal defense research analyst genera
 
 OUTPUT BUDGET — CRITICAL:
 Your COMPLETE response must be under 5,000 words of markdown. You MUST complete ALL 13 sections, the opening letter, and the closing. Budget your detail so early sections do not starve later sections. If you are running long, compress — do NOT truncate or skip sections.
+Start your response IMMEDIATELY with "## A Letter to You" — no preamble, no meta-commentary, no disclaimers before the report content.
 
 EXACT COUNTS — NON-NEGOTIABLE:
 - Section 7: EXACTLY 15 questions. Q1-Q5 are Priority Questions. Q6-Q15 are Additional Questions in 4 clusters.
@@ -414,7 +415,7 @@ Limitations: haven't seen evidence, can't predict outcomes, can't replace attorn
  * @deprecated Use the Supabase Edge Function (POST /api/generate/case-decoder)
  * instead. This function uses streaming to mitigate Vercel's timeout, but
  * still fails on Hobby plan (25s limit) for most reports. The edge function
- * has a 150s timeout and uses Sonnet 4.6 with response prefill.
+ * has a 150s timeout and uses Sonnet 4.6.
  *
  * @param intake - The complete intake record from Supabase.
  * @returns The generated report as a markdown string.
@@ -426,7 +427,6 @@ export async function generateCaseDecoderReport(intake: IntakeData): Promise<str
   }
 
   const userPrompt = buildUserPrompt(intake);
-  const prefill = "## A Letter to You\n\nDear";
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -443,7 +443,6 @@ export async function generateCaseDecoderReport(intake: IntakeData): Promise<str
       system: SYSTEM_PROMPT,
       messages: [
         { role: "user", content: userPrompt },
-        { role: "assistant", content: prefill },
       ],
     }),
   });
@@ -488,8 +487,7 @@ export async function generateCaseDecoderReport(intake: IntakeData): Promise<str
     throw new Error("Empty response from Claude API");
   }
 
-  // Prepend the prefill since it's not included in the streamed response
-  return prefill + text;
+  return text;
 }
 
 // ============================================================

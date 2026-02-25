@@ -255,6 +255,7 @@ const SYSTEM_PROMPT = `You are an elite criminal defense research analyst genera
 
 OUTPUT BUDGET — CRITICAL:
 Your COMPLETE response must be under 5,000 words of markdown. You MUST complete ALL 13 sections, the opening letter, and the closing. Budget your detail so early sections do not starve later sections. If you are running long, compress — do NOT truncate or skip sections.
+Start your response IMMEDIATELY with "## A Letter to You" — no preamble, no meta-commentary, no disclaimers before the report content.
 
 EXACT COUNTS — NON-NEGOTIABLE:
 - Section 7: EXACTLY 15 questions. Q1-Q5 are Priority Questions. Q6-Q15 are Additional Questions in 4 clusters.
@@ -531,54 +532,63 @@ Limitations: haven't seen evidence, can't predict outcomes, can't replace attorn
  * Calls the Claude API to generate a Case Decoder report.
  *
  * Uses claude-sonnet-4-6 with 16k max tokens and temperature 0.3 (low
- * creativity, high consistency). Response prefill starts the output with
- * "## A Letter to You\n\nDear" to lock Claude into the template structure
- * from the first token. Does NOT use streaming — Sonnet completes well
- * within the 150s edge function timeout with per-section word budgets.
+ * creativity, high consistency). Does NOT use streaming — Sonnet completes
+ * well within the 150s edge function timeout with per-section word budgets.
+ * Retries up to 3 times on 529 (overloaded) with exponential backoff.
+ * Note: Sonnet 4.6 does not support assistant message prefill, so structure
+ * is enforced via system prompt and XML section tags instead.
  *
  * @param intake - Intake data to build the prompt from.
  * @param apiKey - Anthropic API key.
- * @returns The generated markdown report (prefill + completion).
+ * @returns The generated markdown report.
  * @throws If the API returns an error or an empty response.
  */
 async function callClaudeAPI(intake: IntakeData, apiKey: string): Promise<string> {
   const userPrompt = buildUserPrompt(intake);
-
-  // Response prefill: forces Claude to start in the template structure
-  // immediately, preventing meta-commentary or disclaimers before content.
-  const prefill = "## A Letter to You\n\nDear";
-
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-6",
-      max_tokens: 16000,
-      temperature: 0.3,
-      system: SYSTEM_PROMPT,
-      messages: [
-        { role: "user", content: userPrompt },
-        { role: "assistant", content: prefill },
-      ],
-    }),
+  const body = JSON.stringify({
+    model: "claude-sonnet-4-6",
+    max_tokens: 16000,
+    temperature: 0.3,
+    system: SYSTEM_PROMPT,
+    messages: [
+      { role: "user", content: userPrompt },
+    ],
   });
 
-  if (!response.ok) {
-    const err = await response.text();
-    throw new Error(`Claude API error (${response.status}): ${err}`);
+  // Retry on 529 (overloaded) — up to 3 attempts with exponential backoff.
+  // Each attempt takes ~5s for 529, so 3 retries fit well within 150s timeout.
+  const MAX_RETRIES = 3;
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json",
+      },
+      body,
+    });
+
+    if (response.status === 529 && attempt < MAX_RETRIES) {
+      console.log(`[generate-report] Claude API overloaded (attempt ${attempt}/${MAX_RETRIES}), retrying in ${attempt * 5}s...`);
+      await new Promise((r) => setTimeout(r, attempt * 5000));
+      continue;
+    }
+
+    if (!response.ok) {
+      const err = await response.text();
+      throw new Error(`Claude API error (${response.status}): ${err}`);
+    }
+
+    // deno-lint-ignore no-explicit-any
+    const result: any = await response.json();
+    const text = result.content?.[0]?.text || "";
+    if (!text.trim()) throw new Error("Empty response from Claude API");
+
+    return text;
   }
 
-  // deno-lint-ignore no-explicit-any
-  const result: any = await response.json();
-  const text = result.content?.[0]?.text || "";
-  if (!text.trim()) throw new Error("Empty response from Claude API");
-
-  // Prepend the prefill since it's not included in the response
-  return prefill + text;
+  throw new Error("Claude API exhausted all retries");
 }
 
 // ============================================================
