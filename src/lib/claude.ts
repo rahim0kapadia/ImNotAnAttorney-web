@@ -14,9 +14,8 @@
  *   40-90 seconds to complete. The Supabase Edge Function has a 150-second
  *   timeout, which is sufficient for full report generation.
  *
- * This file used claude-sonnet-4-6 (slower, more expensive); the edge
- * function uses claude-haiku-4-5 (fastest Claude model, adequate quality for
- * structured report generation, stays well under 150s).
+ * Both this file and the edge function use claude-sonnet-4-6. The edge
+ * function is preferred because it has a 150s timeout vs Vercel's 25s.
  *
  * The renderReportHtml() function at the bottom IS still imported by other
  * modules (it's the shared HTML renderer for report preview pages), so
@@ -69,13 +68,56 @@ interface IntakeData {
 // ============================================================
 
 /**
- * System prompt sent with every Claude API call. Encodes the full "persona"
- * of the report generator: expertise attributions, formatting rules, UPL
- * safeguards (questions + information, never directives), scoring rubrics,
- * and minimum output requirements (15+ questions, 10-15 evidence patterns).
+ * System prompt for Case Decoder report generation.
+ *
+ * PRIORITY ORDER (Claude follows early instructions most reliably):
+ *   1. Total output budget + section completeness requirement
+ *   2. Exact counts (15 questions, 10 patterns, 8 flags)
+ *   3. Per-section word budgets
+ *   4. Self-verification checklist
+ *   5. Attorney methodologies + output categories
+ *
+ * Kept in sync with supabase/functions/generate-report/index.ts.
  */
-const SYSTEM_PROMPT = `You are an elite criminal defense research analyst with the combined expertise of 40+ legendary defense attorneys. Your analysis draws from documented winning methods including:
+const SYSTEM_PROMPT = `You are an elite criminal defense research analyst generating a Case Decoder report.
 
+OUTPUT BUDGET — CRITICAL:
+Your COMPLETE response must be under 5,000 words of markdown. You MUST complete ALL 13 sections, the opening letter, and the closing. Budget your detail so early sections do not starve later sections. If you are running long, compress — do NOT truncate or skip sections.
+
+EXACT COUNTS — NON-NEGOTIABLE:
+- Section 7: EXACTLY 15 questions. Q1-Q5 are Priority Questions. Q6-Q15 are Additional Questions in 4 clusters.
+- Section 8: EXACTLY 10 evidence patterns.
+- Section 9: EXACTLY 8 red flags (3 Attorney + 3 Evidence + 2 Procedural).
+No more, no fewer. These are hard constraints.
+
+PER-SECTION WORD BUDGETS:
+| Section | Max Words |
+|---------|-----------|
+| Letter | 150 |
+| S1: Defense Milestone Score | 350 |
+| S2: Case Clock | 100 |
+| S3: Charges | 500 |
+| S4: Case Stage | 300 |
+| S5: Communication Playbook | 500 |
+| S6: Verify Facts | 100 |
+| S7: Questions (15 total) | 750 |
+| S8: Evidence Patterns (10) | 400 |
+| S9: Red Flags (8) | 400 |
+| S10: Plea | 350 |
+| S11: Motions | 350 |
+| S12: What's Next | 250 |
+| S13: Meeting Ready Sheet | 200 |
+| Closing | 100 |
+| Total | ~4,800 |
+
+SELF-VERIFICATION — Before outputting your response, verify:
+1. All 13 sections + letter + closing are present
+2. Section 7 has exactly 15 questions (count them)
+3. Section 8 has exactly 10 evidence patterns
+4. Section 9 has exactly 8 red flags
+If any check fails, revise before outputting.
+
+EXPERTISE — Your analysis draws from documented winning methods:
 - Jeffrey Lichtman's 7-pillar CI destruction protocol (3 Gotti mistrials, El Chapo defense)
 - Barry Scheck's chain of custody methodology (375+ Innocence Project exonerations)
 - Alan Dershowitz's appellate preservation framework (von Bulow reversal)
@@ -84,7 +126,7 @@ const SYSTEM_PROMPT = `You are an elite criminal defense research analyst with t
 - Robert Shapiro's plea negotiation framework
 - Chris Voss's calibrated question design (FBI lead hostage negotiator)
 
-You are NOT providing legal advice. You provide:
+OUTPUT CATEGORIES — You are NOT providing legal advice. You provide:
 1. Legal INFORMATION about charges and procedures
 2. QUESTIONS the defendant should ask (calibrated to presuppose a substantive answer — never yes/no)
 3. RED FLAGS and EVIDENCE PATTERNS to watch for
@@ -95,15 +137,10 @@ RULES:
 - Frame everything as questions and information, never directives
 - Never say "you should file" or "your attorney needs to" — instead say "Ask your attorney: Have you considered filing X? If not, why not?"
 - Every question must force a substantive answer (not yes/no). Use calibrated format: "What specific issues did you identify when you reviewed the evidence?" instead of "Have you reviewed the evidence?"
-- Attribute key insights to the specific attorney methodology they come from, with case citations where possible
-- Rate typical prosecution difficulty with specific ratings (Strong / Moderate / Weak / Requires Evidence Review)
-- Generate Defense Milestone Score with specific category scores (Communication, Preparation, Strategy, Filing Activity — each out of 25)
-- Include conditional sections based on case specifics (CI involved? Plea offered? Which charge type?)
-- Use the "Certainty Transfer Principle" — no hedging language. State observations with conviction. Say "This pattern indicates" not "This might possibly suggest"
-- Generate a minimum of 15 questions (target 20) organized by category
-- Generate 10-15 evidence patterns for the Evidence Pattern Checklist tailored to charge type
-- Generate 8-12 red flags organized by category (Attorney, Evidence, Procedural)
-- Always end with specific upgrade triggers based on actual findings in the report — reference specific scores, patterns, or gaps
+- Attribute key insights to the specific attorney methodology they come from
+- Rate typical prosecution difficulty: Strong / Moderate / Weak / Requires Evidence Review
+- Generate Defense Milestone Score with category scores (Communication, Preparation, Strategy, Filing Activity — each out of 25)
+- Use the "Certainty Transfer Principle" — no hedging. Say "This pattern indicates" not "This might possibly suggest"
 - Each question MUST include: the question itself, why it matters, what a good answer sounds like, the Red Flag Response, and the source methodology
 - Label the 4th question part as "Red Flag Response" (not "what a bad answer reveals")
 - All upgrade language is consolidated in Section 12 (What's Next) ONLY — do NOT include upgrade triggers in any other section
@@ -223,14 +260,9 @@ function getEvidenceSpecificQuestions(evidenceTypes: string[]): string {
 // ============================================================
 
 /**
- * Assembles the full user prompt from intake data, including:
- *   - All intake fields formatted as labeled key-value pairs
- *   - Charge-specific instruction block (drug, DUI, assault, etc.)
- *   - Evidence-specific question instructions
- *   - Plea and communication conditional instructions
- *   - The full 13-section report template with per-section expectations
- *
- * The resulting prompt is what Claude receives as the "user" message.
+ * Assembles the full user prompt from intake data.
+ * Uses XML section boundaries with per-section word budgets and exact counts.
+ * Kept in sync with supabase/functions/generate-report/index.ts.
  *
  * @param intake - The complete intake record from Supabase.
  * @returns The assembled user prompt string.
@@ -243,34 +275,38 @@ function buildUserPrompt(intake: IntakeData): string {
   const chargeBlock = getChargeSpecificBlock(intake.charge_type);
   const evidenceBlock = getEvidenceSpecificQuestions(intake.evidence_type || []);
 
-  const pleaInstruction = intake.plea_offered === "yes" || intake.plea_offered === "Yes"
+  const plea = intake.plea_offered;
+  const pleaInstruction = plea === "yes" || plea === "Yes"
     ? `\nPlea has been offered. Terms: "${intake.plea_terms || "Not specified"}". Generate full Section 10 (Plea Deal Assessment) with terms analysis.`
-    : intake.plea_offered === "no" || intake.plea_offered === "No" || intake.plea_offered === "not yet" || intake.plea_offered === "Not yet"
-    ? `\nNo plea offered yet. Generate Section 10 with "If No Plea Yet" content for this charge type.`
-    : `\nPlea status unknown. Generate Section 10 with general plea information for this charge type.`;
+    : plea === "no" || plea === "No" || plea === "not yet" || plea === "Not yet"
+    ? `\nNo plea offered yet. Generate Section 10 with "If No Plea Yet" content.`
+    : `\nPlea status unknown. Generate Section 10 with general plea information.`;
 
-  const commInstruction = intake.communication_frequency === "Rarely" || intake.communication_frequency === "Never returned calls"
-    ? `\nAttorney communication is poor (${intake.communication_frequency}). Include FULL 8-level escalation ladder in Section 5 Communication Playbook.`
-    : `\nAttorney communication frequency: ${intake.communication_frequency || "Not specified"}. Include appropriate Communication Playbook in Section 5.`;
+  const comm = intake.communication_frequency;
+  const commInstruction = comm === "Rarely" || comm === "Never returned calls"
+    ? `\nAttorney communication is poor (${comm}). Include FULL 8-level escalation ladder in Section 5.`
+    : `\nAttorney communication frequency: ${comm || "Not specified"}.`;
 
-  return `Analyze the following case intake and generate a complete Case Decoder report with ALL sections listed below.
+  const pleaSection10 = plea === "yes" || plea === "Yes"
+    ? "Full plea terms analysis, comparison using Below average/Typical range/Above average"
+    : "If No Plea Yet: what to expect, typical plea structures";
+
+  return `Analyze the following case intake and generate a complete Case Decoder report.
 
 **INTAKE DATA:**
 - Client First Name: ${intake.first_name}
 - Charges: ${intake.charge_type}
 - State/County: ${intake.state || "Not provided"}${intake.incident_location ? ` / ${intake.incident_location}` : ""}
-- Case Stage: Derived from intake responses
 - Arrest Date: ${intake.arrest_date || "Not provided"}
 - Days Since Arrest: ${daysSinceArrest !== null ? daysSinceArrest : "Unknown"}
 - Attorney Type: ${intake.has_attorney || "Not specified"}
-- Attorney Strategy Discussion: ${intake.attorney_strategy || "Not provided"}
-- Communication Frequency: ${intake.communication_frequency || "Not specified"}
+- Attorney Strategy: ${intake.attorney_strategy || "Not provided"}
+- Communication Frequency: ${comm || "Not specified"}
 - Last Attorney Contact: ${intake.last_attorney_contact || "Not provided"}
-- Motions Filed: Not specified in intake
 - Discovery Status: ${intake.has_discovery || "Not specified"}
 - Plea Offered: ${intake.plea_offered || "Not specified"}
 - Plea Terms: ${intake.plea_terms || "N/A"}
-- Evidence Types Involved: ${(intake.evidence_type || []).join(", ") || "Not specified"}
+- Evidence Types: ${(intake.evidence_type || []).join(", ") || "Not specified"}
 - Arrest Circumstances: ${(intake.arrest_circumstances || []).join(", ") || "Not provided"}
 - Co-Defendants: ${intake.co_defendants || "Not specified"}
 - Case Number: ${intake.case_number || "Not provided"}
@@ -278,57 +314,94 @@ function buildUserPrompt(intake: IntakeData): string {
 - Time Since Arrest: ${intake.time_since_arrest || "Not provided"}
 - Primary Frustration: ${intake.situation || "Not provided"}
 - Specific Concerns: ${intake.specific_question || "Not provided"}
-${chargeBlock}
-${pleaInstruction}
-${commInstruction}
-${evidenceBlock}
+${chargeBlock}${pleaInstruction}${commInstruction}${evidenceBlock}
 
-**GENERATE ALL SECTIONS IN THIS ORDER:**
+**GENERATE ALL SECTIONS BELOW. Stay within each section's word budget.**
 
-## A Letter to You
+<section id="letter" title="A Letter to You" max_words="150">
 Brief compassionate opening: validate emotions, set expectations, warn about report confidentiality ("Do NOT show this report or your score to your attorney"), use client first name.
+</section>
 
-## Section 1: Defense Milestone Score
+<section id="1" title="Defense Milestone Score" max_words="350">
 Score out of 100 with band (Critical/Concerning/Average/Strong/Excellent), category breakdown (Communication/Preparation/Strategy/Filing Activity each X/25), "What This Score Does NOT Mean" statement, accountability checklist with charge-specific items. Frame as milestones typically completed by this case stage.
+</section>
 
-## Section 2: Case Clock
+<section id="2" title="Case Clock" max_words="100">
 ONLY if speedy trial deadline is relevant. Calculate from arrest date. Include tolling caveat. URGENT/APPROACHING/not applicable classification.
+</section>
 
-## Section 3: Your Charges & The Case Against You
+<section id="3" title="Your Charges and The Case Against You" max_words="500">
 Plain-English explanation, prosecution elements with typical prosecution difficulty ratings (Strong/Moderate/Weak/Requires Evidence Review), realistic penalty range, defense approaches with attorney attribution, charge interactions, caveat row.
+</section>
 
-## Section 4: Case Stage Benchmark
+<section id="4" title="Case Stage Benchmark" max_words="300">
 Days since arrest, timeline table with Milestone Status AND Time Sensitivity columns, "3 Priority Milestones for the Next 30 Days" with deadline consequence statements.
+</section>
 
-## Section 5: Communication Playbook
+<section id="5" title="Communication Playbook" max_words="500">
 Opening script (collaborative for 51+, record-creation for 50-), "I've been learning about my case" framing, 8-Level Escalation Ladder, Defensive Attorney Protocol scripts, 4 score-tiered email templates, pre-meeting and post-meeting protocols, "Never show the report" warning.
+</section>
 
-## Section 6: Verify These Facts Before Your Meeting
+<section id="6" title="Verify These Facts Before Your Meeting" max_words="100">
 5 key intake facts to confirm before using the questions.
+</section>
 
-## Section 7: Targeted Questions for Your Attorney
-Minimum 15 questions (target 20). "START HERE — 5 Priority Questions" box. 4 conversational clusters. Each question: calibrated question, why it matters, good answer, Red Flag Response, source methodology.
+<section id="7" title="Targeted Questions for Your Attorney" max_words="750" question_count="15">
+Generate EXACTLY 15 questions using this structure:
 
-## Section 8: Evidence Pattern Checklist
-10-15 patterns for charge type. Table: pattern name, what to look for, where in documents, why it matters. Include "How to Use This Checklist" subsection. NO upgrade triggers.
+### START HERE — 5 Priority Questions
+Q1: [Priority — MOST critical question for THIS defendant's situation]
+Q2: [Priority — about the specific evidence/charges]
+Q3: [Priority — about attorney communication gap]
+Q4: [Priority — about upcoming deadline or court date]
+Q5: [Priority — about plea or next decision point]
 
-## Section 9: Red Flags
-8-12 red flags in 3 categories (Attorney, Evidence, Procedural). Each with severity (CRITICAL/SERIOUS/MONITOR), what it looks like, what to do, which question from Section 7 addresses it. NO upgrade triggers.
+### Additional Questions
+Q6-Q8: [Cluster 1 — Understanding Your Case] (3 questions)
+Q9-Q11: [Cluster 2 — Evaluating Your Defense] (3 questions)
+Q12-Q13: [Cluster 3 — Checking the Timeline] (2 questions)
+Q14-Q15: [Cluster 4 — Planning Next Steps] (2 questions)
 
-## Section 10: Plea Deal Assessment
-${intake.plea_offered === "yes" || intake.plea_offered === "Yes" ? "Full plea terms analysis, comparison using Below average/Typical range/Above average" : "If No Plea Yet: what to expect, typical plea structures"}. Alternatives (diversion, drug court, PTI). Collateral consequences with "Question for Your Attorney" column. 3 questions before signing anything. What Documented Defense Practices Show. NO upgrade triggers.
+Each question MUST include: the calibrated question, why it matters, what a good answer sounds like, Red Flag Response, and source methodology. Target ~50 words per question block.
 
-## Section 11: Motions That May Apply
+<example>
+**Q1: "What specific issues did you identify when you reviewed the forensic lab report, and what challenges did you find with their testing methodology?"**
+*Why it matters:* Lab errors are the #1 reversible issue in drug cases. Scheck's methodology shows 23% of labs have significant error rates.
+*Good answer:* "I found three issues with the chain of custody and have retained an independent expert."
+*Red Flag Response:* Vague deflection like "the lab report looks standard" — indicates no independent review was conducted.
+*Source:* Barry Scheck — chain of custody methodology
+</example>
+
+After writing all 15, count them. If not exactly 15, revise.
+</section>
+
+<section id="8" title="Evidence Pattern Checklist" max_words="400" pattern_count="10">
+EXACTLY 10 patterns for this charge type. Table: pattern name, what to look for, where in documents, why it matters. Include "How to Use This Checklist" subsection. NO upgrade triggers.
+</section>
+
+<section id="9" title="Red Flags" max_words="400" flag_count="8">
+EXACTLY 8 red flags: 3 Attorney Red Flags + 3 Evidence Red Flags + 2 Procedural Red Flags. Each with severity (CRITICAL/SERIOUS/MONITOR), what it looks like, what to do, which question from Section 7 addresses it. NO upgrade triggers.
+</section>
+
+<section id="10" title="Plea Deal Assessment" max_words="350">
+${pleaSection10}. Alternatives (diversion, drug court, PTI). Collateral consequences with "Question for Your Attorney" column. 3 questions before signing anything. What Documented Defense Practices Show. NO upgrade triggers.
+</section>
+
+<section id="11" title="Motions That May Apply" max_words="350">
 Table: motion, what it does, legal basis, deadline sensitivity, asymmetric value. "How These Motions Typically Interact — Educational Overview" with attorney attribution. NO upgrade triggers.
+</section>
 
-## Section 12: What's Next
+<section id="12" title="What's Next" max_words="250">
 Findings-based narrative pulling SPECIFIC data from this report. "What Problem It Solves" column. 7-day action timeline. Upgrade path table ($197 credited, 12-month window). THIS IS THE ONLY SECTION WITH UPGRADE LANGUAGE.
+</section>
 
-## Section 13: Meeting Ready Sheet
-One-page printable: 5 Priority Questions (JUST questions, no analysis), blank answer lines, 3 Priority Milestones, Post-Meeting Checklist. SAFE if attorney sees it.
+<section id="13" title="Meeting Ready Sheet" max_words="200">
+One-page printable: 5 Priority Questions (JUST questions from Section 7, no analysis), blank answer lines, 3 Priority Milestones, Post-Meeting Checklist. SAFE if attorney sees it.
+</section>
 
-## What This Report Cannot Tell You
-Limitations: haven't seen evidence, can't predict outcomes, can't replace attorney, can't account for unshared facts, can't guarantee outcomes, attorney's judgment takes priority.`;
+<section id="closing" title="What This Report Cannot Tell You" max_words="100">
+Limitations: haven't seen evidence, can't predict outcomes, can't replace attorney, can't account for unshared facts, can't guarantee outcomes, attorney's judgment takes priority.
+</section>`;
 }
 
 // ============================================================
@@ -341,7 +414,7 @@ Limitations: haven't seen evidence, can't predict outcomes, can't replace attorn
  * @deprecated Use the Supabase Edge Function (POST /api/generate/case-decoder)
  * instead. This function uses streaming to mitigate Vercel's timeout, but
  * still fails on Hobby plan (25s limit) for most reports. The edge function
- * has a 150s timeout and uses Haiku 4.5 for faster generation.
+ * has a 150s timeout and uses Sonnet 4.6 with response prefill.
  *
  * @param intake - The complete intake record from Supabase.
  * @returns The generated report as a markdown string.
@@ -353,6 +426,7 @@ export async function generateCaseDecoderReport(intake: IntakeData): Promise<str
   }
 
   const userPrompt = buildUserPrompt(intake);
+  const prefill = "## A Letter to You\n\nDear";
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -367,7 +441,10 @@ export async function generateCaseDecoderReport(intake: IntakeData): Promise<str
       temperature: 0.3,
       stream: true,
       system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: userPrompt }],
+      messages: [
+        { role: "user", content: userPrompt },
+        { role: "assistant", content: prefill },
+      ],
     }),
   });
 
@@ -411,7 +488,8 @@ export async function generateCaseDecoderReport(intake: IntakeData): Promise<str
     throw new Error("Empty response from Claude API");
   }
 
-  return text;
+  // Prepend the prefill since it's not included in the streamed response
+  return prefill + text;
 }
 
 // ============================================================
