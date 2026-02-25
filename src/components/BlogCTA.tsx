@@ -25,7 +25,7 @@ export function BlogCTA() {
       <p className="mt-2 text-sm text-zinc-400">
         They use case-specific research — questions built from their
         actual charges, their actual discovery, their actual judge. Our
-        Case Decoder gives you 10-15 targeted questions your attorney
+        Case Decoder gives you 15-20 targeted questions your attorney
         isn&apos;t expecting. Starting at $197.
       </p>
       <div className="mt-4 flex flex-col gap-3 sm:flex-row">

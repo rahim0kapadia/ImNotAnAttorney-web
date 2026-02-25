@@ -129,7 +129,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       nextTierPrice: "$797",
       upgradeCost: "$600",
       unlocks:
-        "Adds your judge's actual sentencing patterns, a motion landscape report, and 35-50 questions instead of 10-15.",
+        "Adds your judge's actual sentencing patterns, a motion landscape report, and 35-50 questions instead of 15-20.",
       bestFor:
         "Worth it if you already have an attorney and want to evaluate how they're handling your specific judge.",
     },

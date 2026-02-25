@@ -252,7 +252,7 @@ function calculateScore(input: ScoreInput): ScoreResult {
   if (observations.length < 3) {
     if (score >= 70) {
       observations.push(
-        "Based on your answers, your attorney appears to be meeting basic accountability benchmarks. A detailed Case Decoder report can verify this with 10-15 case-specific questions."
+        "Based on your answers, your attorney appears to be meeting basic accountability benchmarks. A detailed Case Decoder report can verify this with 15-20 case-specific questions."
       );
     }
     if (observations.length < 3 && input.chargeType) {
@@ -262,7 +262,7 @@ function calculateScore(input: ScoreInput): ScoreResult {
     }
     if (observations.length < 3) {
       observations.push(
-        "Every case has defense opportunities. The question is whether your attorney is finding them. Our Case Decoder identifies 10-15 specific questions for your situation."
+        "Every case has defense opportunities. The question is whether your attorney is finding them. Our Case Decoder identifies 15-20 specific questions for your situation."
       );
     }
   }

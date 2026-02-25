@@ -258,13 +258,13 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Ready to go deeper?",
     html: `
       <h1 style="color: #F59E0B;">Ready to Go Deeper?</h1>
-      <p>Your Case Decoder gave you the foundation — charges explained, accountability measured, and 10-15 targeted questions.</p>
+      <p>Your Case Decoder gave you the foundation — charges explained, milestones measured, and 15-20 targeted questions.</p>
       <p>The <strong style="color: white;">Intelligence Brief ($797)</strong> goes deeper:</p>
       <ul style="padding-left: 20px;">
         <li>Your judge's actual sentencing patterns</li>
         <li>Jurisdiction-specific plea statistics</li>
         <li>Motion landscape report</li>
-        <li>35-50 targeted questions (vs. 10-15)</li>
+        <li>35-50 targeted questions (vs. 15-20)</li>
         <li>BONUS: Judge Tendencies Card</li>
       </ul>
       <p><strong style="color: white;">Your $197 is already credited.</strong> Upgrade for just $600.</p>

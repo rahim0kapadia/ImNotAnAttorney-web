@@ -14,7 +14,7 @@
  *   1. Answer 7 questions (zero friction — no email, no account)
  *   2. See score + observations (immediate value)
  *   3. Optional email capture — "Get our free Discovery Checklist" (soft ask)
- *   4. CTA to Case Decoder ($197) — "Want the full breakdown + 10-15 questions?"
+ *   4. CTA to Case Decoder ($197) — "Want the full breakdown + 15-20 questions?"
  *
  * The 7 questions map to key attorney accountability indicators:
  *   1. chargeType — What charge (drug, DUI, white collar, etc.)
@@ -234,7 +234,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
       {/* from the free score. Secondary CTA to free Discovery Checklist.   */}
       <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
         <h3 className="font-bold text-white">
-          Want the full breakdown + 10-15 questions for your attorney?
+          Want the full breakdown + 15-20 questions for your attorney?
         </h3>
         <p className="mt-2 text-sm text-zinc-400">
           Your Defense Milestone Score is just the surface. The full Case
