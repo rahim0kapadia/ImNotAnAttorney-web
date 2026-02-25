@@ -14,25 +14,25 @@
  * with names, case numbers, and dates changed. The findings and discrepancy
  * magnitudes are real.
  *
- * Report sections shown:
+ * Report sections shown (subset of the full 13-section report):
  *   1. Report header — Client name, charges, jurisdiction, case stage (all redacted)
  *   2. Methodology note — Names the specific attorney methods used
  *      (Lichtman CI protocol, Scheck chain of custody, Dershowitz constitutional,
  *       Chapman drug forensics)
- *   3. Section 1: Charges in Plain English — Statute, elements, penalties,
+ *   3. Section 3: Charges in Plain English — Statute, elements, penalties,
  *      FATAL VARIANCE callout (amphetamine charged vs MDMA/MDA found)
- *   4. Section 2: Case Stage Benchmark — Timeline table with status indicators
+ *   4. Section 4: Case Stage Benchmark — Timeline table with status indicators
  *      (green=done, amber=partial, red=not done). "BEHIND SCHEDULE" assessment.
- *   5. Section 3: Attorney Accountability Checklist — 10-item checklist (3/10 done).
- *      Highlights the gaps between expected and actual attorney behavior.
+ *   5. Defense Milestone Checklist — 10-item checklist (3/10 done).
+ *      Highlights the gaps between expected and actual defense milestones.
  *   6. Mid-page CTA (InlineCTA variant="mid") — Conversion point
- *   7. Section 4: Questions (5 of 15 shown) — Each with:
+ *   7. Section 7: Questions (5 of 15 shown) — Each with:
  *      - Category tag (weight, substance, fingerprints, CI, identity)
  *      - The actual question to ask the attorney
  *      - "Why this matters" explanation
  *      - SOURCE attribution to named attorney methodology
- *   8. Section 5: Red Flags — 5 flags with descriptions
- *   9. Section 6: Motions That May Apply — Table with motion name, purpose, deadline
+ *   8. Section 9: Red Flags — 5 flags with descriptions
+ *   9. Section 11: Motions That May Apply — Table with motion name, purpose, deadline
  *  10. End-page CTA (InlineCTA variant="end") — Final conversion point
  *
  * Two inline CTAs strategically placed:
@@ -192,12 +192,12 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* SECTION 1: CHARGES — Plain-English charge explanation with        */}
+          {/* SECTION 3: CHARGES — Plain-English charge explanation with        */}
           {/* statute reference, elements, penalties, and FATAL VARIANCE       */}
           {/* callout (amphetamine charged vs MDMA/MDA found).                 */}
           <section>
             <h2 className="text-xl font-bold text-white">
-              Section 1: Your Charges — In Plain English
+              Section 3: Your Charges — In Plain English
             </h2>
             <div className="mt-4">
               <h3 className="font-semibold text-amber-400">
@@ -255,12 +255,12 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* SECTION 2: CASE STAGE — Timeline benchmark table showing where   */}
+          {/* SECTION 4: CASE STAGE — Timeline benchmark table showing where   */}
           {/* the case should be vs where it actually is. Color-coded status:  */}
           {/* green = done, amber = partial/pending, red = missing/overdue.    */}
           <section>
             <h2 className="text-xl font-bold text-white">
-              Section 2: Where Your Case Should Be Right Now
+              Section 4: Where Your Case Should Be Right Now
             </h2>
             <div className="mt-4 overflow-x-auto">
               <table className="w-full text-sm">
@@ -322,12 +322,12 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* SECTION 3: ATTORNEY ACCOUNTABILITY CHECKLIST — 10-item yes/no    */}
-          {/* assessment. Score: 3/10 (deliberately low to show the product's  */}
-          {/* value in identifying attorney gaps).                              */}
+          {/* DEFENSE MILESTONE CHECKLIST — 10-item yes/no assessment.          */}
+          {/* Score: 3/10 (deliberately low to show the product's value in     */}
+          {/* identifying defense milestone gaps).                              */}
           <section>
             <h2 className="text-xl font-bold text-white">
-              Section 3: Attorney Accountability Checklist
+              Defense Milestone Checklist
             </h2>
             <div className="mt-4 space-y-2">
               {[
@@ -397,14 +397,14 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* SECTION 4: QUESTIONS — Shows 5 of the 15 questions from the full */}
+          {/* SECTION 7: QUESTIONS — Shows 5 of the 15 questions from the full */}
           {/* report. Each question has category tag, the verbatim question,   */}
           {/* "why this matters" context, and SOURCE attribution to a named    */}
           {/* attorney methodology. Showing 5/15 creates intrigue for the full */}
           {/* report while demonstrating the quality and specificity.           */}
           <section>
             <h2 className="text-xl font-bold text-white">
-              Section 4: 15 Questions to Ask Your Attorney
+              Section 7: 15 Questions to Ask Your Attorney
             </h2>
             <p className="mt-2 text-sm text-zinc-400">
               Showing 5 of 15 questions from this report. Each is built from
@@ -536,11 +536,11 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* SECTION 5: RED FLAGS — 5 critical findings that the attorney     */}
+          {/* SECTION 9: RED FLAGS — 5 critical findings that the attorney     */}
           {/* should have caught. Each with severity description.               */}
           <section>
             <h2 className="text-xl font-bold text-white">
-              Section 5: Red Flags
+              Section 9: Red Flags
             </h2>
             <div className="mt-4 space-y-4">
               {[
@@ -583,12 +583,12 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* SECTION 6: MOTIONS — Table of applicable motions with plain-     */}
+          {/* SECTION 11: MOTIONS — Table of applicable motions with plain-    */}
           {/* English explanations and deadline urgency. Shows the type of     */}
           {/* actionable output the customer will receive.                      */}
           <section>
             <h2 className="text-xl font-bold text-white">
-              Section 6: Motions That May Apply
+              Section 11: Motions That May Apply
             </h2>
             <div className="mt-4 overflow-x-auto">
               <table className="w-full text-sm">

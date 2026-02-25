@@ -1,7 +1,7 @@
 /**
- * @fileoverview Attorney Accountability Score Calculator
+ * @fileoverview Defense Milestone Score Calculator
  *
- * Free lead magnet that scores how well a defendant's attorney is performing
+ * Free lead magnet that scores defense milestones based on a defendant's
  * based on 7 self-reported questions. Lives at /score on the frontend.
  *
  * Funnel position:
@@ -318,7 +318,7 @@ const ALLOWED_VALUES: Record<string, string[]> = {
 
 /**
  * Validates all 7 required inputs against the allowlist, then computes and
- * returns the Attorney Accountability Score. No data is persisted to any
+ * returns the Defense Milestone Score. No data is persisted to any
  * database -- the score is computed and returned in the response only.
  *
  * @param req - JSON body with all 7 ScoreInput fields

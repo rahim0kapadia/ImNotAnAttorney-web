@@ -4,7 +4,7 @@
  * Primary conversion entry point for the entire site. This page is designed to
  * take a cold visitor (typically arriving from Reddit, Google, or a blog post)
  * and move them toward purchasing the Case Decoder ($197) or entering the free
- * Attorney Accountability Score funnel.
+ * Defense Milestone Score funnel.
  *
  * User journey position:
  *   Traffic source -> THIS PAGE -> /checkout?tier=case-decoder (primary CTA)
@@ -541,7 +541,7 @@ export default function Home() {
               href="/score"
               className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
             >
-              Check your Attorney Accountability Score — free, no email required.
+              Check your Defense Milestone Score — free, no email required.
             </Link>
           </p>
         </div>

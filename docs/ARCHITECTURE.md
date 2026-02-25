@@ -242,7 +242,7 @@ src/
       subscribe/              ← Email subscription
       unsubscribe/            ← CAN-SPAM unsubscribe
       upload/ + finalize/     ← Discovery document upload
-      score/                  ← Attorney Accountability Score
+      score/                  ← Defense Milestone Score
     blog/                     ← MDX blog (20 posts)
     checkout/                 ← Checkout + success pages
     report/[token]/           ← Token-gated report viewer

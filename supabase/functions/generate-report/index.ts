@@ -13,7 +13,7 @@
  * FLOW:
  *   1. Fetch case record from Supabase (with idempotency check)
  *   2. Find linked intake record (by intake_id or email fallback)
- *   3. Call Claude API (Haiku 4.5) to generate the 9-section report
+ *   3. Call Claude API (Haiku 4.5) to generate the 13-section report
  *   4. Render markdown to branded HTML
  *   5. Save report_html + report_token to Supabase
  *   6. Email operator with review/approve links
@@ -267,15 +267,17 @@ RULES:
 - Never say "you should file" or "your attorney needs to" — instead say "Ask your attorney: Have you considered filing X? If not, why not?"
 - Every question must force a substantive answer (not yes/no). Use calibrated format: "What specific issues did you identify when you reviewed the evidence?" instead of "Have you reviewed the evidence?"
 - Attribute key insights to the specific attorney methodology they come from, with case citations where possible
-- Rate prosecution burden elements with specific ratings (Strong / Moderate / Weak / Unknown without discovery)
-- Score attorney accountability with specific category scores (Communication, Preparation, Strategy, Filing Activity — each out of 25)
+- Rate typical prosecution difficulty with specific ratings (Strong / Moderate / Weak / Requires Evidence Review)
+- Generate Defense Milestone Score with specific category scores (Communication, Preparation, Strategy, Filing Activity — each out of 25)
 - Include conditional sections based on case specifics (CI involved? Plea offered? Which charge type?)
 - Use the "Certainty Transfer Principle" — no hedging language. State observations with conviction. Say "This pattern indicates" not "This might possibly suggest"
 - Generate a minimum of 15 questions (target 20) organized by category
 - Generate 10-15 evidence patterns for the Evidence Pattern Checklist tailored to charge type
 - Generate 8-12 red flags organized by category (Attorney, Evidence, Procedural)
 - Always end with specific upgrade triggers based on actual findings in the report — reference specific scores, patterns, or gaps
-- Each question MUST include: the question itself, why it matters, what a good answer sounds like, what a bad answer reveals, and the source methodology
+- Each question MUST include: the question itself, why it matters, what a good answer sounds like, the Red Flag Response, and the source methodology
+- Label the 4th question part as "Red Flag Response" (not "what a bad answer reveals")
+- All upgrade language is consolidated in Section 12 (What's Next) ONLY — do NOT include upgrade triggers in any other section
 - Output the report in clean markdown with proper headings (## for sections, ### for subsections)`;
 
 // deno-lint-ignore no-explicit-any
@@ -346,7 +348,7 @@ function getEvidenceQuestions(types: string[]): string {
 /**
  * Assembles the full user prompt from intake data for the Claude API call.
  * Includes all intake fields, charge-specific blocks, evidence blocks,
- * plea/communication conditional instructions, and the 9-section template.
+ * plea/communication conditional instructions, and the 13-section template.
  *
  * @param intake - The intake record from Supabase.
  * @returns The complete user prompt string.
@@ -360,17 +362,17 @@ function buildUserPrompt(intake: IntakeData): string {
 
   const plea = intake.plea_offered;
   const pleaInstruction = plea === "yes" || plea === "Yes"
-    ? `\nPlea has been offered. Terms: "${intake.plea_terms || "Not specified"}". Generate full Section 4 with terms analysis.`
+    ? `\nPlea has been offered. Terms: "${intake.plea_terms || "Not specified"}". Generate full Section 10 (Plea Deal Assessment) with terms analysis.`
     : plea === "no" || plea === "No" || plea === "not yet" || plea === "Not yet"
-    ? `\nNo plea offered yet. Generate Section 4 with "what to expect" content.`
-    : `\nPlea status unknown. Generate Section 4 with general plea information.`;
+    ? `\nNo plea offered yet. Generate Section 10 with "If No Plea Yet" content.`
+    : `\nPlea status unknown. Generate Section 10 with general plea information.`;
 
   const comm = intake.communication_frequency;
   const commInstruction = comm === "Rarely" || comm === "Never returned calls"
-    ? `\nAttorney communication is poor (${comm}). Include FULL 7-level escalation ladder.`
+    ? `\nAttorney communication is poor (${comm}). Include FULL 8-level escalation ladder in Section 5.`
     : `\nAttorney communication frequency: ${comm || "Not specified"}.`;
 
-  return `Analyze the following case intake and generate a complete 9-section Case Decoder report in markdown.
+  return `Analyze the following case intake and generate a complete Case Decoder report with ALL sections listed below.
 
 **INTAKE DATA:**
 - Client First Name: ${intake.first_name}
@@ -395,34 +397,52 @@ function buildUserPrompt(intake: IntakeData): string {
 - Specific Concerns: ${intake.specific_question || "Not provided"}
 ${chargeBlock}${pleaInstruction}${commInstruction}${evidenceBlock}
 
-**GENERATE ALL 9 SECTIONS:**
+**GENERATE ALL SECTIONS IN THIS ORDER:**
 
-## Section 1: Your Charges & The Case Against You
-Plain-English explanation, prosecution burden map (Strong/Moderate/Weak/Unknown), realistic penalty range, common defense strategies with attorney attribution.
+## A Letter to You
+Brief compassionate opening: validate emotions, set expectations, warn about report confidentiality ("Do NOT show this report or your score to your attorney"), use client first name.
 
-## Section 2: Case Stage Benchmark
-Days since arrest, speedy trial calculation, timeline table, "What should happen NEXT" (3 things in next 30 days), deadline alerts.
+## Section 1: Defense Milestone Score
+Score out of 100 with band (Critical/Concerning/Average/Strong/Excellent), category breakdown (Communication/Preparation/Strategy/Filing Activity each X/25), "What This Score Does NOT Mean" statement, accountability checklist with charge-specific items. Frame as milestones typically completed by this case stage.
 
-## Section 3: Attorney Accountability & Communication Playbook
-Score out of 100 with band, category breakdown (Communication/Preparation/Strategy/Filing Activity each X/25), accountability checklist, Communication Playbook, opening script.
+## Section 2: Case Clock
+ONLY if speedy trial deadline is relevant. Calculate from arrest date. Include tolling caveat. URGENT/APPROACHING/not applicable classification.
 
-## Section 4: Plea Deal Assessment
-${plea === "yes" || plea === "Yes" ? "Full plea terms analysis" : "What to expect, typical plea structures"}. Alternatives (diversion, drug court, PTI). Collateral consequences. 3 questions before signing.
+## Section 3: Your Charges & The Case Against You
+Plain-English explanation, prosecution elements with typical prosecution difficulty ratings (Strong/Moderate/Weak/Requires Evidence Review), realistic penalty range, defense approaches with attorney attribution, charge interactions, caveat row.
 
-## Section 5: 15-20 Targeted Questions for Your Attorney
-Minimum 15 questions, target 20. By category. Each with: calibrated question, why it matters, good answer, bad answer, source methodology.
+## Section 4: Case Stage Benchmark
+Days since arrest, timeline table with Milestone Status AND Time Sensitivity columns, "3 Priority Milestones for the Next 30 Days" with deadline consequence statements.
 
-## Section 6: Evidence Pattern Checklist
-10-15 patterns for charge type. Table: pattern name, what to look for, where in documents, why it matters.
+## Section 5: Communication Playbook
+Opening script (collaborative for 51+, record-creation for 50-), "I've been learning about my case" framing, 8-Level Escalation Ladder, Defensive Attorney Protocol scripts, 4 score-tiered email templates, pre-meeting and post-meeting protocols, "Never show the report" warning.
 
-## Section 7: Red Flags
-8-12 red flags in 3 categories (Attorney, Evidence, Procedural). Each with: what it looks like, what to do, which question addresses it.
+## Section 6: Verify These Facts Before Your Meeting
+5 key intake facts to confirm before using the questions.
 
-## Section 8: Motions That May Apply
-Table: motion, what it does, legal basis, deadline sensitivity, asymmetric value. Strategic sequencing notes.
+## Section 7: Targeted Questions for Your Attorney
+Minimum 15 questions (target 20). "START HERE — 5 Priority Questions" box. 4 conversational clusters. Each question: calibrated question, why it matters, good answer, Red Flag Response, source methodology.
 
-## Section 9: What's Next
-2-3 findings → upgrade recommendations. Upgrade path table ($197 credited, 12-month window). Immediate action items.`;
+## Section 8: Evidence Pattern Checklist
+10-15 patterns for charge type. Table: pattern name, what to look for, where in documents, why it matters. Include "How to Use This Checklist" subsection. NO upgrade triggers.
+
+## Section 9: Red Flags
+8-12 red flags in 3 categories (Attorney, Evidence, Procedural). Each with severity (CRITICAL/SERIOUS/MONITOR), what it looks like, what to do, which question from Section 7 addresses it. NO upgrade triggers.
+
+## Section 10: Plea Deal Assessment
+${plea === "yes" || plea === "Yes" ? "Full plea terms analysis, comparison using Below average/Typical range/Above average" : "If No Plea Yet: what to expect, typical plea structures"}. Alternatives (diversion, drug court, PTI). Collateral consequences with "Question for Your Attorney" column. 3 questions before signing anything. What Documented Defense Practices Show. NO upgrade triggers.
+
+## Section 11: Motions That May Apply
+Table: motion, what it does, legal basis, deadline sensitivity, asymmetric value. "How These Motions Typically Interact — Educational Overview" with attorney attribution. NO upgrade triggers.
+
+## Section 12: What's Next
+Findings-based narrative pulling SPECIFIC data from this report. "What Problem It Solves" column. 7-day action timeline. Upgrade path table ($197 credited, 12-month window). THIS IS THE ONLY SECTION WITH UPGRADE LANGUAGE.
+
+## Section 13: Meeting Ready Sheet
+One-page printable: 5 Priority Questions (JUST questions, no analysis), blank answer lines, 3 Priority Milestones, Post-Meeting Checklist. SAFE if attorney sees it.
+
+## What This Report Cannot Tell You
+Limitations: haven't seen evidence, can't predict outcomes, can't replace attorney, can't account for unshared facts, can't guarantee outcomes, attorney's judgment takes priority.`;
 }
 
 /**

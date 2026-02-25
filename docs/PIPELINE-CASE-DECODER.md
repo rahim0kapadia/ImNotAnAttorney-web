@@ -340,23 +340,29 @@ The Edge Function has NO npm/esm.sh imports. Importing `@supabase/supabase-js` v
 
 **Model:** `claude-haiku-4-5-20251001`
 
-Haiku 4.5 was chosen over Sonnet 4 because speed is critical for staying under the 150-second timeout. Report quality is adequate because the system prompt is highly prescriptive (9 specific sections, minimum question counts, required formats).
+Haiku 4.5 was chosen over Sonnet 4 because speed is critical for staying under the 150-second timeout. Report quality is adequate because the system prompt is highly prescriptive (13 specific sections + Letter + Limitations, minimum question counts, required formats).
 
-**Parameters:** `max_tokens: 8000`, `temperature: 0.3`
+**Parameters:** `max_tokens: 12000`, `temperature: 0.3`
 
 ### Report Format
 
-The generated report is a 9-section markdown document rendered to branded HTML:
+The generated report is a 13-section markdown document (plus Letter and Limitations) rendered to branded HTML:
 
-1. **Your Charges & The Case Against You** -- Plain-English explanation, prosecution burden map
-2. **Case Stage Benchmark** -- Timeline, speedy trial calculation, next-30-day actions
-3. **Attorney Accountability & Communication Playbook** -- Score out of 100, category breakdown
-4. **Plea Deal Assessment** -- Terms analysis or what-to-expect content
-5. **15-20 Targeted Questions for Your Attorney** -- Calibrated questions with source methodology
-6. **Evidence Pattern Checklist** -- 10-15 patterns specific to charge type
-7. **Red Flags** -- 8-12 flags in 3 categories (Attorney, Evidence, Procedural)
-8. **Motions That May Apply** -- Table with deadlines and strategic notes
-9. **What's Next** -- Upgrade recommendations based on actual findings
+- **A Letter to You** -- Compassionate opening, sets expectations, confidentiality warning
+1. **Defense Milestone Score** -- Score out of 100, category breakdown, accountability checklist
+2. **Case Clock** -- Speedy trial status (conditional)
+3. **Your Charges & The Case Against You** -- Plain-English explanation, prosecution difficulty ratings
+4. **Case Stage Benchmark** -- Timeline, milestone status, next-30-day priorities
+5. **Communication Playbook** -- Score-tiered scripts, escalation ladder, email templates
+6. **Verify These Facts** -- 5 key intake facts to confirm
+7. **Targeted Questions for Your Attorney** -- 15-20 calibrated questions in 4 clusters
+8. **Evidence Pattern Checklist** -- 10-15 patterns specific to charge type
+9. **Red Flags** -- 8-12 flags in 3 categories with severity indicators
+10. **Plea Deal Assessment** -- Terms analysis or what-to-expect content
+11. **Motions That May Apply** -- Table with deadlines and strategic notes
+12. **What's Next** -- Upgrade recommendations based on actual findings (ONLY section with upgrade language)
+13. **Meeting Ready Sheet** -- One-page printable with questions and milestones
+- **What This Report Cannot Tell You** -- Limitations and attorney deference
 
 The HTML includes:
 - Dark theme (`#0C0A09` background, `#D4D4D8` text, `#F59E0B` amber accents)

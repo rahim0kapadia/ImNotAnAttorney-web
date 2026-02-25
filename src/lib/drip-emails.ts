@@ -162,8 +162,8 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <ul style="padding-left: 20px;">
         <li>Your charges explained in plain English</li>
         <li>A timeline of where your case should be right now</li>
-        <li>Attorney accountability checklist (10 items)</li>
-        <li>10-15 targeted questions built from YOUR case details</li>
+        <li>Defense milestone checklist</li>
+        <li>15-20 targeted questions built from YOUR case details</li>
         <li>Red flags for your specific stage and charges</li>
         <li>Motion types that may apply to your case</li>
         <li>BONUS: Attorney Meeting Prep Guide</li>

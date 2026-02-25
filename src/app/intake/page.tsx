@@ -119,7 +119,7 @@ const coDefendantOptions = [
   "I may have been misidentified / wrong target",
 ];
 
-/** Attorney strategy communication — feeds into Attorney Accountability Score. */
+/** Attorney strategy communication — feeds into Defense Milestone Score. */
 const strategyOptions = [
   "Yes — attorney explained clearly",
   "Mentioned something but unclear",

@@ -1,5 +1,5 @@
 /**
- * Attorney Accountability Score Page (/score)
+ * Defense Milestone Score Page (/score)
  *
  * Free lead magnet — no email required, no login, no paywall. Users answer
  * 7 multiple-choice questions about their attorney's behavior and receive a
@@ -49,7 +49,7 @@ import Link from "next/link";
  * The 7 scoring questions. Each has a unique id (used as the key in the
  * answers object sent to /api/score) and radio-button options.
  * Question order is deliberate: starts with charge type (context),
- * then progressively probes attorney behavior.
+ * then progressively probes defense milestones.
  */
 const questions = [
   {
@@ -237,7 +237,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
           Want the full breakdown + 10-15 questions for your attorney?
         </h3>
         <p className="mt-2 text-sm text-zinc-400">
-          Your Attorney Accountability Score is just the surface. The full Case
+          Your Defense Milestone Score is just the surface. The full Case
           Decoder report gives you a plain-English charge breakdown, specific
           questions built from your case details, and red flags for your case
           stage.
@@ -318,7 +318,7 @@ export default function ScorePage() {
       <div className="mx-auto max-w-2xl">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-white md:text-4xl">
-            Attorney Accountability Score
+            Defense Milestone Score
           </h1>
           <p className="mt-3 text-zinc-400">
             Is your attorney doing their job? Answer 7 questions and find out in

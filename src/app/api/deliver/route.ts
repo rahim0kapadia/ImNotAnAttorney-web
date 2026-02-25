@@ -338,9 +338,9 @@ export async function POST(req: NextRequest) {
         <p style="margin: 0; color: white; font-weight: bold;">How to use your report:</p>
         <ol style="color: #D4D4D8; padding-left: 20px; margin-top: 12px;">
           <li style="margin-bottom: 8px;"><strong style="color: white;">Print it</strong> and bring it to your next attorney meeting</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Start with the Targeted Questions</strong> (Section 5) — lead with Q1-Q5</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Start with the Targeted Questions</strong> (Section 7) — lead with the 5 Priority Questions</li>
           <li style="margin-bottom: 8px;"><strong style="color: white;">Document every answer</strong> — email your attorney a summary after the meeting</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Use the Evidence Pattern Checklist</strong> (Section 6) when you receive discovery</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Use the Evidence Pattern Checklist</strong> (Section 8) when you receive discovery</li>
         </ol>
       </div>
       <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">
