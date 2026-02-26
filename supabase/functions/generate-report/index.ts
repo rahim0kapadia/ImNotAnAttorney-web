@@ -13,7 +13,7 @@
  * FLOW:
  *   1. Fetch case record from Supabase (with idempotency check)
  *   2. Find linked intake record (by intake_id or email fallback)
- *   3. Call Claude API (Sonnet 4.6) to generate the 13-section report
+ *   3. Call Claude API (Sonnet 4.6) to generate the 7+3 section report
  *   4. Render markdown to branded HTML
  *   5. Save report_html + report_token to Supabase
  *   6. Email operator with review/approve links
@@ -245,183 +245,256 @@ async function sendEmail(params: {
  * System prompt for Case Decoder report generation.
  *
  * PRIORITY ORDER (Claude follows early instructions most reliably):
- *   1. Total output budget + section completeness requirement
- *   2. Exact counts (15 questions, 10 patterns, 8 flags)
- *   3. Per-section word budgets
- *   4. Self-verification checklist
- *   5. Attorney methodologies + output categories
+ *   1. What we have/don't have + empowerment framing
+ *   2. Empower don't blame principle + intake reflection rules
+ *   3. Section structure (7 always + 0-3 conditional) + removed sections
+ *   4. Output budget + exact counts (15 questions, 5-6 items)
+ *   5. Per-section word budgets + conditional section rules
+ *   6. Self-verification checklist (no ratings, no scores, no blame)
  */
 const SYSTEM_PROMPT = `You are an elite criminal defense research analyst generating a Case Decoder report.
 
 CRITICAL CONTEXT — WHAT YOU HAVE AND DON'T HAVE:
 This is a $197 Case Decoder. You have ONLY the defendant's intake answers.
 You have NOT seen evidence, police reports, lab results, or discovery.
-This report is an ATTORNEY ACCOUNTABILITY tool. Every question is directed
-at the ATTORNEY, demanding specific verifiable answers and documentation.
-Evidence types from intake are the defendant's BELIEF — not confirmed facts.
+This report is an EMPOWERMENT AND COMMUNICATION TOOLKIT — not a case
+analysis tool. It gives the defendant the right questions, communication
+tools, and a clear picture of what they know vs. what they need to ask about.
+
+CORE DESIGN PRINCIPLE — EMPOWER, DON'T BLAME:
+The report NEVER blames the attorney. The defendant still needs that
+attorney — turning them against each other hurts the defense. Instead:
+- Gaps are framed as THINGS TO CLARIFY ("Communication gaps happen —
+  sometimes attorneys are working behind the scenes")
+- The QUESTIONS are the tool — they let the defendant discover the
+  truth through dialogue
+- "Don't know" answers are NORMALIZED ("Most defendants aren't told
+  proactively — that's why we ask")
+- The goal is a BETTER-INFORMED CLIENT who walks into their next
+  meeting prepared, not adversarial
 
 THE DEFENDANT'S CORE PAIN — BEING UNHEARD:
 The defendant paying for this report feels IGNORED by their attorney.
-Their attorney won't return calls, won't explain decisions, won't
-acknowledge concerns. This report must do what their attorney is NOT
-doing: LISTEN to every detail they shared and respond to each one.
+This report must do what their attorney is NOT doing: LISTEN to every
+detail they shared and respond to each one.
 
 MANDATORY — REFLECT EVERY INTAKE ANSWER:
 Every piece of data the defendant provided MUST appear somewhere in the
-report, connected to expert methodology and why it matters. Nothing
-they shared should be silently absorbed. They need to see that someone
-heard them.
+report, connected to expert methodology and why it matters.
 
 Rules for reflecting intake data:
-1. REFERENCE their specific answers: "You indicated your BAC was
-   0.08-0.10" not "DUI defendants with BAC near the limit."
+1. ALWAYS attribute data source: "You reported..." / "You indicated..." /
+   "You selected..." — never present intake data as our assessment.
 2. EXPLAIN WHY IT MATTERS: connect to expert methodology.
-3. VALIDATE OR CONTEXTUALIZE: If their concern is well-founded, say so
-   with expert backing. If it may not be as significant as they fear,
-   explain why gently while noting what to verify with their attorney.
-4. FREE TEXT FIELDS are the defendant's own voice. Quote their words
-   from "biggest frustration" and "specific question" and respond
-   directly. These are the moments they felt most unheard.
-5. "DON'T KNOW" ANSWERS are themselves significant — they indicate
-   the attorney hasn't explained something the defendant has a right
-   to understand. Flag each "don't know" as an accountability point.
-6. CONNECT each answer to a specific question in Section 7 where
-   possible. The defendant should see: "I told them X → here's why
-   X matters → here's the question to ask my attorney about X."
+3. VALIDATE OR CONTEXTUALIZE gently. Never alarm. Never blame.
+4. FREE TEXT FIELDS (situation, specific_question) are the defendant's
+   own voice. QUOTE their words and respond directly.
+5. "DON'T KNOW" ANSWERS are normalized: "Most defendants aren't told
+   proactively — that's why we ask." Each becomes a question to ask.
+6. CONNECT each answer to a specific question in S4 (Targeted Questions).
 
 JURISDICTION AWARENESS:
 The intake identifies whether this is a FEDERAL or STATE case.
-- Federal: U.S. Sentencing Guidelines, mandatory minimums, 5K1.1 cooperation,
-  grand jury process, BOP designation. Reference federal-specific experts.
-- State: Jurisdiction-specific rules, state sentencing, plea practices,
-  state constitutional protections (may exceed federal).
-- Unknown: Note the importance of determining jurisdiction and include questions
-  that help identify it.
+- Federal: U.S. Sentencing Guidelines, mandatory minimums, 5K1.1,
+  grand jury process. Reference federal-specific experts.
+- State: Jurisdiction-specific rules, state sentencing, plea practices.
+- Unknown: Note importance of determining jurisdiction.
 
 OUTPUT BUDGET — CRITICAL:
-Under 5,000 words. ALL 13 sections + letter + closing. Budget detail
-so early sections don't starve later. Compress, don't truncate.
+Under 4,000 words total. 7 always-present sections (S1-S7) + Letter +
+Closing + Postscript + 0-3 conditional sections (C1/C2/C3).
 Start IMMEDIATELY with "## A Letter to You".
+Budget carefully so early sections don't starve later ones.
 
 EXACT COUNTS — NON-NEGOTIABLE:
-- Section 7: EXACTLY 15 questions (Q1-Q5 Priority + Q6-Q15 Additional)
-- Section 8: EXACTLY 10 evidence accountability checkpoints
-- Section 9: EXACTLY 8 red flags (3 Attorney + 3 Case Progress + 2 Procedural)
+- S4 (Targeted Questions): EXACTLY 15 questions (Q1-Q15)
+- S5 (Things Worth Asking About): 5-6 items max
 
 PER-SECTION WORD BUDGETS:
 | Section | Max Words |
 |---------|-----------|
 | Letter | 150 |
-| S1: Defense Milestone Score | 350 |
-| S2: Case Clock | 100 |
-| S3: Charges | 500 |
-| S4: Case Stage | 300 |
-| S5: Communication Playbook | 500 |
-| S6: Verify Facts | 100 |
-| S7: Questions (15) | 750 |
-| S8: Evidence Accountability (10) | 400 |
-| S9: Red Flags (8) | 400 |
-| S10: Plea | 350 |
-| S11: Motions | 350 |
-| S12: What's Next | 250 |
-| S13: Meeting Ready Sheet | 200 |
+| S1: Where Things Stand | 400 |
+| S2: Your Charges | 400 |
+| S3: Communication Playbook | 500 |
+| S4: Targeted Questions (15) | 750 |
+| S5: Things Worth Asking About | 350 |
+| S6: Is There Something We Missed? | 100 |
+| S7: Your Action Blueprint | 300 |
+| C1: Case Clock (conditional) | 100 |
+| C2: Plea Landscape (conditional) | 300 |
+| C3: Discovery Readiness Guide (conditional) | 300 |
 | Closing | 100 |
+| Postscript | 100 |
 
-ANALYSIS FRAMEWORK — Complete BEFORE generating any section:
+SECTION STRUCTURE — 7 ALWAYS + 0-3 CONDITIONAL:
+
+Always present (in this order):
+1. A Letter to You (before S1)
+2. S1: Where Things Stand — 4-area diagnostic table, NO aggregate score
+3. S2: Your Charges — What You're Facing — elements, penalties, rights
+4. [C1: Case Clock — ONLY IF arrest_date exists AND charge has speedy trial]
+5. S3: Communication Playbook — email templates, scripts, escalation
+6. S4: Targeted Questions for Your Attorney — 15 questions
+7. S5: Things Worth Asking About — 5-6 prioritized items
+8. [C2: Plea Landscape — ONLY IF plea offered or attorney pushing plea]
+9. [C3: Discovery Readiness Guide — ONLY IF discovery relevant or case 60+ days]
+10. S6: Is There Something We Missed? — open channel
+11. S7: Your Action Blueprint — 7-day plan + Meeting Ready Sheet
+12. Closing: What This Report Cannot Tell You
+13. Postscript: What Comes Next (upgrade language HERE ONLY)
+
+REMOVED SECTIONS (do NOT generate these):
+- NO prosecution difficulty ratings (Strong/Moderate/Weak) — we haven't
+  seen the evidence. Replace with "Question for Your Attorney" per element.
+- NO plea quality ratings (Below average/Typical/Above average) — we
+  have no plea outcome data.
+- NO motion recommendation tables — cannot recommend motions without
+  case files. Motion questions go in S4.
+- NO aggregate X/100 score — NO defense milestone score. Replace with
+  the 4-area diagnostic table in S1.
+- NO fixed evidence accountability checklist — replaced by conditional
+  Discovery Readiness Guide (C3).
+- NO "Verify Facts" as its own section — moved to callout box in S4.
+
+ANALYSIS FRAMEWORK — Complete BEFORE generating:
 
 1. CHARGE ELEMENT DECOMPOSITION:
-   From the charges, jurisdiction, and charge-specific intake details:
-   - What elements must the prosecution prove?
-   - Which are typically hardest to prove?
-   - What defense strategies attack each element?
+   What elements must prosecution prove? For each element, generate a
+   "Question for Your Attorney" — NOT a difficulty rating.
 
 2. EXPERT TRIANGULATION:
-   The intake includes 3 God Mode defense attorneys for THIS charge type.
-   Each expert represents a DIFFERENT defense axis. Use their specific
-   published methodology to ground questions and analysis. Name them.
-   Attribute recommendations to their work.
+   3 God Mode experts per charge type. Use their methodology to ground
+   questions. Name and attribute.
 
-3. CASE STAGE GAP ANALYSIS:
-   What SHOULD have happened by now vs what intake shows HAS happened.
-   Gaps = basis for red flags, questions, and scoring.
+3. INTAKE GAP ANALYSIS:
+   What has the defendant told us vs. what they don't know? Every gap
+   becomes a question or a "Thing Worth Asking About."
 
-DEFENSE MILESTONE SCORE — Rubric:
-COMMUNICATION (out of 25):
-- Last contact ≤7 days: 22-25 | ≤14 days: 17-21 | ≤30 days: 12-16
-- 30-60 days: 6-11 | 60+ days or never: 0-5
-- +3 if strategy explained, -3 if "never returned calls"
-- PD: +5 (higher caseload norm)
+CONDITIONAL SECTION RULES:
+- C1 (Case Clock): Include ONLY if intake.arrest_date exists AND
+  daysSinceArrest > 0 AND charge type has speedy trial rules.
+  NO "URGENT" red box. Informational + question. Always caveat
+  waivers/continuances/tolling.
+- C2 (Plea Landscape): Include ONLY if intake.plea_offered === "yes"
+  OR intake.attorney_strategy contains "plea". Educational, not
+  evaluative. Collateral consequences + alternatives + 3 questions.
+- C3 (Discovery Readiness Guide): Include ONLY if
+  intake.has_discovery !== "no" OR daysSinceArrest >= 60.
+  Future-looking checklist: "When you get discovery, look for these."
 
-PREPARATION (out of 25):
-- Discovery received + discussed: 22-25 | Received, not discussed: 14-18
-- Requested, normal timeline: 12-16 | Not requested, case >60 days: 0-8
-- Just arrested (<30 days): 15 (neutral)
-
-STRATEGY (out of 25):
-- Theory explained + options discussed: 22-25 | General approach: 14-18
-- Plea only: 8-12 | No communication: 0-5
-
-FILING ACTIVITY (out of 25):
-- Motions filed, appropriate: 20-25 | No motions, <60 days: 15
-- No motions, 60-120 days, warranted: 5-10 | >120 days: 0-5
-- "Don't know": 8-12
-
-BANDS: 0-30 Critical | 31-50 Concerning | 51-70 Average |
-71-85 Strong | 86-100 Excellent
-Show brief reasoning per category.
-
-CASE STAGE CONDITIONING:
-- Just arrested / <30 days: Preservation, initial strategy. No evidence review Qs.
-- Pre-discovery: Why hasn't discovery been demanded? Timeline benchmarks.
-- Discovery phase: Has attorney reviewed? What did they find?
-- Plea negotiations: Plea analysis Q1-Q2 priority.
-- Trial scheduled: Preparation, witnesses, motion deadlines.
-Q1-Q5 MUST reflect THIS defendant's most urgent needs.
-
-ATTORNEY TYPE:
-- Public defender: 2-4 week communication gaps may be normal. Score accordingly.
-- Private attorney: Paid retainer. Gaps >2 weeks concerning.
-- No attorney: Focus on selection criteria, consultation questions.
+EMOTIONAL ARC:
+Letter (Relief) → S1 (Clarity) → S2 (Understanding) → S3 (Tools) →
+S4 (Agency) → S5 (Focus) → S6 (Trust) → S7 (Determination) →
+Closing (Honest limits) → Postscript (Natural next step)
 
 LETTER TO YOU — ACKNOWLEDGE THEIR PAIN:
-The defendant shared their "biggest frustration" and "specific question"
-in free text. The Letter MUST:
-- Reference their stated frustration by name (quote their words if appropriate)
-- Validate that frustration with expert context
-- Preview what this report gives them
-- If they asked a specific question, acknowledge it: "You asked about [X].
-  Section [N] addresses this directly."
-Do NOT write a generic letter. Write it TO THIS defendant.
+- Quote their "biggest frustration" and "specific question" directly
+- Validate their instinct: "the fact that you're doing this research
+  tells us something important"
+- Preview what this report gives them (questions, tools, clarity)
+- If they asked a specific question, point to the section that addresses it
+- Normalize: "you're not alone in this"
+- Permission to be scared: reframe fear as caring
+- NO blaming the attorney
+- Do NOT write a generic letter — write it TO THIS defendant
+
+S1: WHERE THINGS STAND:
+4-area diagnostic table (Communication, Preparation, Strategy, Filing Activity).
+Each row: "What You Told Us" | "What to Ask About" | "Priority Questions" (→ Q refs)
+NO aggregate score. Gain-framed: emphasis on what they CAN DO.
+Every row says "You reported..." / "You indicated..." / "You selected..."
+
+S2: YOUR CHARGES — WHAT YOU'RE FACING:
+Elements table with "Question for Your Attorney" column per element —
+NOT difficulty ratings. Penalty ranges with statutory citations.
+"Your Rights in This Process" box: concrete, enforceable rights with
+state-specific citations (right to see discovery, right to be consulted
+before plea, right to understand strategy, right to second opinion,
+right to fire attorney).
+
+S3: COMMUNICATION PLAYBOOK:
+Ready-to-send email template (copy, personalize, send). Opening script.
+If-no-response follow-up template. 8-level escalation ladder with
+pacing note: "5-7 business days per level." Calibrated to communication
+gap length. "Never show this report to your attorney" warning.
+
+S4: TARGETED QUESTIONS — 15 questions. Each with:
+1. Calibrated question (substantive, never yes/no, asks the ATTORNEY)
+2. Why it matters (expert methodology + "You indicated..." data link)
+3. Good answer (specific deliverable)
+4. Red flag response (evasion + what to DO: document, email template,
+   escalation level)
+5. Source methodology (which God Mode expert)
+Q1-Q5 are PRIORITY — drawn from the defendant's specific intake answers.
+Each "don't know" from intake becomes a question.
+Callout box at top: "Before your meeting, verify these 5 facts..."
+
+S5: THINGS WORTH ASKING ABOUT:
+5-6 items max. Split into:
+- "Based on What You Told Us" (directly from intake)
+- "Things You Told Us You Don't Know" (gaps to fill)
+Labels: ADDRESS FIRST / LOOK INTO / ASK ABOUT — NOT ACT NOW / INVESTIGATE
+Every item: "You reported..." + link to specific Q in S4 and/or tool in S3
+NEVER blame the attorney: "This may have a simple explanation"
+
+S6: IS THERE SOMETHING WE MISSED?
+Short, warm, non-transactional. Opens communication channel (reply to
+delivery email or help@imnotanattorney.com). No upgrade pitch.
+
+S7: YOUR ACTION BLUEPRINT:
+7-day action plan (Day 1-2: send email, Day 3: follow up, etc.)
+Meeting Ready Sheet (safe if attorney sees it): 5 Priority Questions
+(just the questions, no analysis), blank answer lines, post-meeting checklist.
+Future pacing: "In two weeks, you will be the most prepared defendant
+your attorney has ever worked with."
+
+CLOSING: What This Report Cannot Tell You.
+Honest limitations. "We haven't seen your evidence..."
+
+POSTSCRIPT: What Comes Next.
+ONLY place with upgrade language. Framed as natural next step AFTER
+the defendant has done the work: "Once you've asked these questions
+and heard your attorney's answers, the Case Intelligence Brief ($797)
+takes those answers as input and cross-references them." Permission
+NOT to upgrade: "You don't need to decide now." $197 credited, 12 months.
 
 QUESTION FORMAT — Every question demands accountability:
 Each question asks the ATTORNEY. Five parts:
 1. Calibrated question (substantive answer, never yes/no)
-2. Why it matters (expert methodology grounding)
+2. Why it matters (expert methodology grounding + "You indicated..." link)
 3. Good answer (specific DELIVERABLE: notes, filings, correspondence)
 4. Red Flag Response (evasion + what to DO: document, email, escalation level)
 5. Source methodology (which God Mode expert's approach)
 
 SELF-VERIFICATION — Before output:
-1. All 13 sections + letter + closing present
-2. Section 7 = exactly 15 questions
-3. Section 8 = exactly 10 checkpoints
-4. Section 9 = exactly 8 red flags
+1. All 7 always-present sections + letter + closing + postscript present
+2. Conditional sections included ONLY when conditions met
+3. S4 = exactly 15 questions
+4. S5 = 5-6 items max
+5. NO prosecution difficulty ratings anywhere
+6. NO plea quality ratings (Below average/Typical/Above average) anywhere
+7. NO aggregate X/100 score anywhere
+8. Every "Where Things Stand" row says "You reported/indicated/selected"
+9. NO attorney-blaming language — gaps framed as things to clarify
+10. Upgrade language ONLY in Postscript
 Revise if any check fails.
 
 OUTPUT CATEGORIES — You are NOT providing legal advice. You provide:
 1. Legal INFORMATION about charges and procedures
 2. QUESTIONS the defendant should ask (calibrated, never yes/no)
-3. RED FLAGS and EVIDENCE PATTERNS to watch for
-4. BENCHMARKS of what should have happened by this case stage
-5. SCRIPTS for attorney communication
+3. COMMUNICATION TOOLS (email templates, scripts, escalation ladder)
+4. PRIORITIZED ITEMS to ask about (not "red flags" — things worth asking about)
+5. ACTION PLAN with specific daily steps
 
 RULES:
 - Questions and information, never directives
-- Never "you should file" — "Ask: Have you considered filing X?"
+- Never "you should file" — ask your attorney about filing
 - Attribute to specific expert methodology
-- Typical prosecution difficulty: Strong / Moderate / Vulnerable / Case-Specific (ask attorney)
-- "This pattern indicates" not "might suggest"
-- Upgrade language in Section 12 ONLY
+- "You reported..." / "You indicated..." — always source data
+- Gain-frame everything: what they CAN do, not what's wrong
+- Never inform without empowering — every fact includes a next step
+- Upgrade language in Postscript ONLY
 - Clean markdown: ## sections, ### subsections`;
 
 // deno-lint-ignore no-explicit-any
@@ -604,21 +677,40 @@ function buildUserPrompt(intake: IntakeData): string {
   const chargeBlock = getChargeContext(intake.charge_type, jurisdictionLevel, chargeSpecificData);
   const evidenceBlock = getEvidenceContext(intake.evidence_type || []);
 
-  const plea = intake.plea_offered;
-  const pleaInstruction = plea === "yes" || plea === "Yes"
-    ? `\nPlea has been offered. Terms: "${intake.plea_terms || "Not specified"}". Generate full Section 10 (Plea Deal Assessment) with terms analysis.`
-    : plea === "no" || plea === "No" || plea === "not yet" || plea === "Not yet"
-    ? `\nNo plea offered yet. Generate Section 10 with "If No Plea Yet" content.`
-    : `\nPlea status unknown. Generate Section 10 with general plea information.`;
-
   const comm = intake.communication_frequency;
   const commInstruction = comm === "Rarely" || comm === "Never returned calls"
-    ? `\nAttorney communication is poor (${comm}). Include FULL 8-level escalation ladder in Section 5.`
+    ? `\nAttorney communication is poor (${comm}). Use RE-ENGAGEMENT tier templates in S3 (long gap). Include FULL 8-level escalation ladder.`
     : `\nAttorney communication frequency: ${comm || "Not specified"}.`;
 
-  const pleaSection10 = plea === "yes" || plea === "Yes"
-    ? "Full plea terms analysis, comparison using Below average/Typical range/Above average"
-    : "If No Plea Yet: what to expect, typical plea structures";
+  // Conditional section flags
+  const plea = intake.plea_offered;
+  const attorneyStrategy = (intake.attorney_strategy || "").toLowerCase();
+  const includePleaLandscape = plea === "yes" || plea === "Yes" || attorneyStrategy.includes("plea");
+  const includeDiscoveryGuide = intake.has_discovery !== "no" || (daysSinceArrest !== null && daysSinceArrest >= 60);
+  const includeCaseClock = intake.arrest_date && daysSinceArrest !== null && daysSinceArrest > 0;
+
+  const conditionalInstructions: string[] = [];
+  if (includeCaseClock) {
+    conditionalInstructions.push(`\nINCLUDE C1 (Case Clock): arrest_date exists, ${daysSinceArrest} days since arrest. Generate informational speedy trial status with question and waiver/tolling caveat. NO "URGENT" red box.`);
+  } else {
+    conditionalInstructions.push(`\nOMIT C1 (Case Clock): No arrest date or not applicable.`);
+  }
+  if (includePleaLandscape) {
+    const pleaReason = plea === "yes" || plea === "Yes"
+      ? `plea_offered = "yes", terms: "${intake.plea_terms || "Not specified"}"`
+      : `attorney_strategy mentions plea: "${intake.attorney_strategy}"`;
+    conditionalInstructions.push(`\nINCLUDE C2 (Plea Landscape): ${pleaReason}. Educational, NOT evaluative. NO Below average/Typical/Above average ratings. Collateral consequences table with "Question for Your Attorney" column. Alternatives (diversion, drug court, PTI). 3 questions before signing.`);
+  } else {
+    conditionalInstructions.push(`\nOMIT C2 (Plea Landscape): No plea offered and attorney not pushing plea.`);
+  }
+  if (includeDiscoveryGuide) {
+    const discReason = intake.has_discovery !== "no"
+      ? `has_discovery = "${intake.has_discovery}"`
+      : `case is ${daysSinceArrest}+ days old`;
+    conditionalInstructions.push(`\nINCLUDE C3 (Discovery Readiness Guide): ${discReason}. Future-looking: "When you get discovery, look for these items." Charge-specific checklist. Reflect evidence types from intake. NEVER say "we analyzed your evidence."`);
+  } else {
+    conditionalInstructions.push(`\nOMIT C3 (Discovery Readiness Guide): has_discovery = "no" and case < 60 days.`);
+  }
 
   return `Analyze the following case intake and generate a complete Case Decoder report.
 
@@ -644,101 +736,163 @@ function buildUserPrompt(intake: IntakeData): string {
 - Time Since Arrest: ${intake.time_since_arrest || "Not provided"}
 - Primary Frustration (their words): ${intake.situation || "Not provided"}
 - Specific Question (their words): ${intake.specific_question || "Not provided"}
-${chargeBlock}${pleaInstruction}${commInstruction}${evidenceBlock}
+${chargeBlock}${commInstruction}${evidenceBlock}
+${conditionalInstructions.join("")}
 
 **GENERATE ALL SECTIONS BELOW. Stay within each section's word budget.**
 
 <section id="letter" title="A Letter to You" max_words="150">
-Reference their specific frustration and question by name. Validate with expert context. Preview what this report gives them. If they asked a specific question, tell them which section addresses it. This is NOT a generic letter — it is written TO THIS defendant about THEIR situation. Warn about report confidentiality ("Do NOT show this report or your score to your attorney"). Use client first name.
+Quote their "Primary Frustration" and "Specific Question" directly. Validate their instinct: "the fact that you're doing this research tells us something important." If they asked a specific question, tell them which section addresses it. Normalize: "you're not alone in this." NO blaming the attorney — frame gaps as things to clarify. Use client first name. This is NOT generic — write it TO THIS defendant. Warn: "Do NOT show this report to your attorney."
 </section>
 
-<section id="1" title="Defense Milestone Score" max_words="350">
-Score out of 100 using the RUBRIC from the system prompt. Show category breakdown (Communication X/25, Preparation X/25, Strategy X/25, Filing Activity X/25) with brief reasoning per category. Band classification. "What This Score Does NOT Mean" statement.
+<section id="s1" title="Where Things Stand" max_words="400">
+4-area diagnostic table. NO aggregate score (no X/100). Each row:
+
+| Area | What You Told Us | What to Ask About | Priority Questions |
+|------|-----------------|-------------------|-------------------|
+| Communication | "You reported [specific intake answer]..." | "[Specific thing to ask]" | → Q[N], Q[N] |
+| Preparation | "You indicated [specific intake answer]..." | "[Specific thing to ask]" | → Q[N], Q[N] |
+| Strategy | "You said [specific intake answer]..." | "[Specific thing to ask]" | → Q[N], Q[N] |
+| Filing Activity | "You selected [specific intake answer]..." | "[Specific thing to ask]" | → Q[N], Q[N] |
+
+EVERY row must start with "You reported..." / "You indicated..." / "You selected..." / "You said..."
+NEVER blame the attorney. Frame gaps as things to CLARIFY: "Communication gaps happen — sometimes attorneys are working behind the scenes."
+End with: "This is not a grade on your attorney or your case. It's a map of what you know and don't know."
 </section>
 
-<section id="2" title="Case Clock" max_words="100">
-ONLY if speedy trial deadline is relevant. Calculate from arrest date. Include tolling caveat. URGENT/APPROACHING/not applicable classification.
+<section id="s2" title="Your Charges — What You're Facing" max_words="400">
+Elements table with "Question for Your Attorney" column — NOT difficulty ratings:
+
+| Element Prosecution Must Prove | Plain English | Question for Your Attorney |
+|-------------------------------|---------------|---------------------------|
+| [Element] | [Plain English explanation] | "[What to ask]" |
+
+Penalty range with statutory citation. Charge-specific intake data reflected: "You indicated your substance was [X]..."
+"Your Rights in This Process" box: right to see discovery, right to be consulted before plea, right to understand strategy, right to second opinion, right to fire attorney — with state-specific citations.
 </section>
 
-<section id="3" title="Your Charges and The Case Against You" max_words="500">
-Plain-English explanation, prosecution elements with typical prosecution difficulty ratings (Strong/Moderate/Vulnerable/Case-Specific), realistic penalty range, defense approaches attributed to the God Mode experts from the charge-specific context, charge interactions, caveat row.
+${includeCaseClock ? `<section id="c1" title="Case Clock" max_words="100">
+Based on arrest date of ${intake.arrest_date} and jurisdiction speedy trial rules. NO "URGENT" red box. Informational + question: "Ask your attorney: What is our current speedy trial status, and have any waivers been filed?" ALWAYS caveat: "This does NOT account for waivers, continuances, or tolling."
+</section>` : "<!-- C1 Case Clock: OMITTED (conditions not met) -->"}
+
+<section id="s3" title="Communication Playbook" max_words="500">
+Ready-to-send email template for attorney (Subject: Case Update Request — [Name], Case #[Number]):
+"Dear [Attorney Name], I've been doing some research on my case and have put together a few questions... Could we schedule 30 minutes this week?"
+
+Opening script: "I've been doing research on my case and I have some questions I'd like to discuss. When can we schedule 30 minutes?"
+
+If-no-response follow-up template (5-7 business days).
+
+8-Level Escalation Ladder with pacing note ("Work through these levels in order. Give each level 5-7 business days"):
+1. Friendly call with specific questions prepared
+2. Follow-up email referencing the call attempt
+3. Written record of unanswered questions (email, timestamped)
+4. Formal letter requesting case status update
+5. Request meeting with supervising partner (if at a firm)
+6. Written request to firm management for case review
+7. State bar inquiry about communication obligations
+8. Consultation with a second attorney for a case review
+
+"Most situations resolve at Levels 1-3. Levels 6-8 are there so you know you always have a next step."
+Warn: "Never show this report to your attorney."
 </section>
 
-<section id="4" title="Case Stage Benchmark" max_words="300">
-Days since arrest, timeline table with Milestone Status AND Time Sensitivity columns, "3 Priority Milestones for the Next 30 Days" with deadline consequence statements.
-</section>
+<section id="s4" title="Targeted Questions for Your Attorney" max_words="750" question_count="15">
+Generate EXACTLY 15 questions. Every question asks the ATTORNEY.
 
-<section id="5" title="Communication Playbook" max_words="500">
-Opening script (collaborative for 51+, record-creation for 50-), "I've been learning about my case" framing, 8-Level Escalation Ladder, Defensive Attorney Protocol scripts, 4 score-tiered email templates, pre-meeting and post-meeting protocols, "Never show the report" warning.
-</section>
+Callout box at top: "Before your meeting, verify these 5 facts from your intake are still accurate: [arrest_date, charges, attorney_type, discovery_status, plea_status]"
 
-<section id="6" title="Verify These Facts Before Your Meeting" max_words="100">
-5 key intake facts to confirm before using the questions.
-</section>
+Q1-Q5 are PRIORITY questions drawn from THIS defendant's specific intake answers. Each "don't know" from intake becomes a priority question.
 
-<section id="7" title="Targeted Questions for Your Attorney" max_words="750" question_count="15">
-Generate EXACTLY 15 questions. Every question asks the ATTORNEY and demands a paper trail.
-
-### START HERE — 5 Priority Questions
-Q1-Q5 MUST reflect THIS defendant's most urgent needs based on their charge type, case stage, and charge-specific intake data.
-
-### Additional Questions
-Q6-Q8: [Cluster 1 — Understanding Your Case] (3 questions)
-Q9-Q11: [Cluster 2 — Evaluating Your Defense] (3 questions)
-Q12-Q13: [Cluster 3 — Checking the Timeline] (2 questions)
-Q14-Q15: [Cluster 4 — Planning Next Steps] (2 questions)
+Q6-Q15: Additional questions organized by topic.
 
 Each question MUST include all 5 parts:
-1. Calibrated question (substantive, never yes/no)
-2. Why it matters (grounded in the named expert's methodology)
+1. Calibrated question (substantive, never yes/no) — references intake data: "You indicated..."
+2. Why it matters (grounded in named expert's methodology)
 3. Good answer (specific deliverable: notes, filings, correspondence)
-4. Red Flag Response (evasion pattern + what to DO: "Document this in writing. Email your attorney: [template]. This is Escalation Level [N].")
+4. Red Flag Response (evasion pattern + what to DO: "Document this in writing. Email your attorney: '[template].' This is Escalation Level [N].")
 5. Source methodology (which God Mode expert)
-
-<example>
-**Q1: "What specific margin-of-error analysis have you done on my BAC result of 0.08-0.10, and what is the instrument's documented precision range?"**
-*Why it matters:* Per Justin McShane's forensic chemistry methodology, breathalyzer instruments have a precision range of ±0.005-0.02. At your reported BAC, the true value may fall below the legal limit.
-*Good answer:* "I've reviewed the instrument's calibration records and the margin of error is [X]. I've filed a motion to suppress based on [specific grounds]."
-*Red Flag Response:* "The BAC is what it is" or "I haven't looked at the calibration records" — Document this response in writing. Email: "Per our conversation on [date], you indicated you have not reviewed the breathalyzer calibration records for my BAC result. Please confirm in writing what analysis you've done on the instrument's margin of error." Escalation Level 3.
-*Source:* Justin McShane — forensic chemistry / instrument precision methodology
-</example>
 
 After writing all 15, count them. If not exactly 15, revise.
 </section>
 
-<section id="8" title="Evidence Accountability Checklist" max_words="400" checkpoint_count="10">
-EXACTLY 10 checkpoints. For each evidence type the defendant indicated, what should the ATTORNEY have examined, requested, or challenged? Frame as accountability — "Has your attorney..." not "review your documents." Table: checkpoint, what attorney should have done, question to ask, why it matters. NO upgrade triggers.
+<section id="s5" title="Things Worth Asking About" max_words="350">
+5-6 items max. Two categories:
+
+**Based on What You Told Us** (directly from intake):
+Each item starts with "You reported..." and uses labels: ADDRESS FIRST / LOOK INTO / ASK ABOUT (NOT ACT NOW / INVESTIGATE / MONITOR — no panic triggers).
+
+**Things You Told Us You Don't Know** (gaps to fill):
+Each "don't know" answer from intake. Normalize: "Most defendants aren't told proactively — that's why we ask."
+
+EVERY item links to a specific Q in S4 and/or tool in S3.
+NEVER blame the attorney: "This may have a simple explanation — sometimes attorneys are working behind the scenes."
 </section>
 
-<section id="9" title="Red Flags" max_words="400" flag_count="8">
-EXACTLY 8 red flags from INTAKE GAP ANALYSIS: 3 Attorney Performance + 3 Case Progress + 2 Procedural. Each flag MUST include:
-- Severity (CRITICAL/SERIOUS/MONITOR)
-- What the intake data shows
-- What to do (specific action)
-- Which question from Section 7 addresses it (Q number)
-- Escalation Level (1-8)
-- Defendant's right that this implicates
-NO upgrade triggers.
+${includePleaLandscape ? `<section id="c2" title="Plea Landscape" max_words="300">
+${plea === "yes" || plea === "Yes" ? `Plea has been offered. Terms: "${intake.plea_terms || "Not specified"}".` : `Attorney is discussing a plea (from attorney_strategy: "${intake.attorney_strategy}").`}
+Educational, NOT evaluative. NO Below average/Typical/Above average ratings.
+
+"Before signing anything, understand what a plea means beyond the sentence itself."
+
+Collateral Consequences Table:
+| Area | Impact of Conviction | Question for Your Attorney |
+Each row has a question, not our assessment.
+
+Alternatives Worth Asking About: Drug court/diversion, PTI, deferred adjudication (state-specific).
+
+3 Questions Before Signing Anything:
+1. "What is the WORST realistic outcome if we go to trial?"
+2. "What specific evidence makes you recommend this plea?"
+3. "Have you explored diversion or drug court options?"
+</section>` : "<!-- C2 Plea Landscape: OMITTED (conditions not met) -->"}
+
+${includeDiscoveryGuide ? `<section id="c3" title="Discovery Readiness Guide" max_words="300">
+Future-looking: "When discovery arrives — or if it already has and hasn't been shared with you — here is what it SHOULD contain for a [charge type] case."
+
+Charge-specific discovery checklist (checkboxes):
+- [ ] Lab report (if drug case)
+- [ ] Chain of custody
+- [ ] Body camera footage (if defendant indicated this exists: "You indicated body camera footage exists — this should be in discovery")
+- [ ] Police report / arrest affidavit
+- [ ] Search warrant or consent documentation
+- [ ] CI disclosure (if applicable)
+- [ ] Officer disciplinary records (Giglio material)
+- [Add charge-specific items]
+
+Each item links to a question: "If [item] is missing, ask your attorney Q[N]."
+NEVER say "we analyzed your evidence." Frame as: "When you get discovery, look for these items."
+</section>` : "<!-- C3 Discovery Readiness Guide: OMITTED (conditions not met) -->"}
+
+<section id="s6" title="Is There Something We Missed?" max_words="100">
+Short, warm, non-transactional. "We built this report from what you shared — but intake forms can't capture everything." Invite follow-up: reply to delivery email or help@imnotanattorney.com. Ask: "What's keeping you up at night that this report didn't address?" NO upgrade pitch here.
 </section>
 
-<section id="10" title="Plea Deal Assessment" max_words="350">
-${pleaSection10}. Alternatives (diversion, drug court, PTI). Collateral consequences with "Question for Your Attorney" column. 3 questions before signing anything. What Documented Defense Practices Show. NO upgrade triggers.
-</section>
+<section id="s7" title="Your Action Blueprint" max_words="300">
+7-day action plan:
+Day 1-2: Send the email template from S3.
+Day 3: If no response, follow Escalation Level 3.
+Day 4-5: Prepare using the Meeting Ready Sheet below.
+Day 6-7: Attend meeting. Ask Priority Questions. Document answers.
 
-<section id="11" title="Motions That May Apply" max_words="350">
-Table: motion, what it does, legal basis, deadline sensitivity, asymmetric value. "How These Motions Typically Interact — Educational Overview" attributed to the God Mode experts. NO upgrade triggers.
-</section>
+Meeting Ready Sheet (safe if attorney sees it):
+- 5 Priority Questions (just the questions from S4, NO analysis)
+- Blank answer lines
+- Post-meeting checklist: Got answers? Documented responses? Understand next steps?
 
-<section id="12" title="What's Next" max_words="250">
-Findings-based narrative pulling SPECIFIC data from this report. "What Problem It Solves" column. 7-day action timeline. Upgrade path framed as VERIFICATION: "The questions in this report revealed [X gaps]. The Intelligence Brief ($797) provides independent verification of what you find when you ask these questions." ($197 credited, 12-month window). THIS IS THE ONLY SECTION WITH UPGRADE LANGUAGE.
-</section>
-
-<section id="13" title="Meeting Ready Sheet" max_words="200">
-One-page printable: 5 Priority Questions (JUST questions from Section 7, no analysis), blank answer lines, 3 Priority Milestones, Post-Meeting Checklist. SAFE if attorney sees it.
+Future pacing: "In two weeks, you will be the most prepared defendant your attorney has ever worked with."
 </section>
 
 <section id="closing" title="What This Report Cannot Tell You" max_words="100">
-Limitations: haven't seen evidence, can't predict outcomes, can't replace attorney, can't account for unshared facts, can't guarantee outcomes, attorney's judgment takes priority.
+Honest limitations: haven't seen evidence, can't predict outcomes, can't replace attorney, can't account for unshared facts. "What we CAN do is give you the right questions and the tools to get the answers you deserve."
+</section>
+
+<section id="postscript" title="What Comes Next" max_words="100">
+"After Your Meeting" — framed as natural next step AFTER doing the work.
+"Once you've asked these questions and heard your attorney's answers, you'll be in a much stronger position."
+The Case Intelligence Brief ($797) takes attorney ANSWERS as input — verification of what they learned.
+"You don't need to decide now. Your $197 is fully credited toward any tier within 12 months."
+THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
 </section>`;
 }
 
@@ -908,8 +1062,9 @@ function renderReportHtml(
     <p style="margin: 4px 0 0; font-size: 12px; color: #52525B;">Report ID: ${meta.reportId} | Generated: ${meta.reportDate}</p>
   </div>
   <div class="no-print" style="margin-top: 32px; text-align: center;">
-    <a href="https://imnotanattorney.com/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Upgrade — 100% Credit Applied</a>
-    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is credited toward any higher tier within 12 months.</p>
+    <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">After your meeting, if you want to verify your attorney's answers against the evidence:</p>
+    <a href="https://imnotanattorney.com/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $797 ($600 after credit)</a>
+    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure — decide after your meeting.</p>
   </div>
 </div>
 </body>

@@ -318,7 +318,7 @@ Dispatcher (force=true bypasses idempotency check) --> Edge Function --> Report 
 
 ### Why Supabase Edge Function Instead of Vercel
 
-Vercel Hobby plan has a **10-second function timeout**. Claude Haiku 4.5 API calls typically take 40-90 seconds for the 9-section Case Decoder report (8000 max tokens). The Supabase Edge Function has a **150-second timeout**, which is sufficient.
+Vercel Hobby plan has a **10-second function timeout**. Claude Sonnet 4.6 API calls typically take 40-90 seconds for the 7+3-section Case Decoder report (16000 max tokens). The Supabase Edge Function has a **150-second timeout**, which is sufficient.
 
 ### Fire-and-Forget Pattern
 
@@ -338,38 +338,54 @@ The Edge Function has NO npm/esm.sh imports. Importing `@supabase/supabase-js` v
 
 ### Model Choice
 
-**Model:** `claude-haiku-4-5-20251001`
+**Model:** `claude-sonnet-4-6`
 
-Haiku 4.5 was chosen over Sonnet 4 because speed is critical for staying under the 150-second timeout. Report quality is adequate because the system prompt is highly prescriptive (13 specific sections + Letter + Limitations, minimum question counts, required formats).
+Sonnet 4.6 chosen for structured report quality. At ~$0.10/report with ~3-4K word output, cost is negligible vs $197 price. Haiku 4.5 had weak instruction-following (67 questions instead of 15, missing sections). Sonnet completes well within 150s with per-section word budgets.
 
-**Parameters:** `max_tokens: 12000`, `temperature: 0.3`
+**Parameters:** `max_tokens: 16000`, `temperature: 0.3`
 
-### Report Format
+### Report Format (v2 — 7+3 Empowerment Architecture)
 
-The generated report is a 13-section markdown document (plus Letter and Limitations) rendered to branded HTML:
+The generated report is a 7-section + 0-3 conditional section markdown document rendered to branded HTML.
 
-- **A Letter to You** -- Compassionate opening, sets expectations, confidentiality warning
-1. **Defense Milestone Score** -- Score out of 100, category breakdown, accountability checklist
-2. **Case Clock** -- Speedy trial status (conditional)
-3. **Your Charges & The Case Against You** -- Plain-English explanation, prosecution difficulty ratings
-4. **Case Stage Benchmark** -- Timeline, milestone status, next-30-day priorities
-5. **Communication Playbook** -- Score-tiered scripts, escalation ladder, email templates
-6. **Verify These Facts** -- 5 key intake facts to confirm
-7. **Targeted Questions for Your Attorney** -- 15 calibrated questions in 4 clusters
-8. **Evidence Pattern Checklist** -- 10 patterns specific to charge type
-9. **Red Flags** -- 8 flags in 3 categories (3 Attorney + 3 Evidence + 2 Procedural) with severity indicators
-10. **Plea Deal Assessment** -- Terms analysis or what-to-expect content
-11. **Motions That May Apply** -- Table with deadlines and strategic notes
-12. **What's Next** -- Upgrade recommendations based on actual findings (ONLY section with upgrade language)
-13. **Meeting Ready Sheet** -- One-page printable with questions and milestones
-- **What This Report Cannot Tell You** -- Limitations and attorney deference
+**Core design principle:** Empower, don't blame. The report never blames the attorney. Gaps are framed as things to clarify. Questions are the tool.
+
+**Always Present (7 sections + Letter + Closing + Postscript):**
+
+- **A Letter to You** -- Quotes defendant's own words, validates instinct, previews report
+1. **Where Things Stand** -- 4-area diagnostic table (Communication, Preparation, Strategy, Filing Activity). NO aggregate X/100 score. Each row says "You reported..." and links to specific questions.
+2. **Your Charges — What You're Facing** -- Elements with "Question for Your Attorney" column (NOT difficulty ratings), penalty ranges, "Your Rights" box
+3. **Communication Playbook** -- Ready-to-send email template, opening script, escalation ladder (8 levels, 5-7 days between), follow-up template
+4. **Targeted Questions for Your Attorney** -- 15 calibrated questions, each referencing intake data with 5-part format (question, why it matters, good answer, red flag response, source)
+5. **Things Worth Asking About** -- 5-6 items with labels: ADDRESS FIRST / LOOK INTO / ASK ABOUT. Never blames attorney.
+6. **Is There Something We Missed?** -- Open channel for follow-up (help@imnotanattorney.com). No upgrade pitch.
+7. **Your Action Blueprint** -- 7-day plan + Meeting Ready Sheet (safe for attorney) + future pacing
+- **What This Report Cannot Tell You** -- Honest limitations
+- **What Comes Next** (Postscript) -- ONLY upgrade language. Pipeline: questions → answers → verification via Intelligence Brief ($797)
+
+**Conditional Sections (0-3, based on intake data):**
+
+- **C1: Case Clock** -- ONLY if `arrest_date` exists. Informational speedy trial status + question. No "URGENT" alerts.
+- **C2: Plea Landscape** -- ONLY if `plea_offered = "yes"` OR `attorney_strategy` mentions plea. Educational, not evaluative. Collateral consequences + alternatives.
+- **C3: Discovery Readiness Guide** -- ONLY if `has_discovery != "no"` OR case 60+ days old. Future-looking checklist.
+
+**Removed Sections (from v1):**
+- Defense Milestone Score (X/100) -- replaced by diagnostic table
+- Prosecution Difficulty Ratings -- replaced by "Question for Your Attorney"
+- Plea Quality Ratings -- replaced by educational content
+- Motion Recommendations -- integrated into S4 questions
+- Evidence Accountability Checklist -- replaced by conditional Discovery Guide
+- Case Stage Benchmark -- merged into S1 and S7
+- Verify Facts (standalone) -- moved to S4 callout
+
+**Section Budget:** 2,950 words (minimum) to 3,750 words (all conditionals). Down from ~4,800 in v1.
 
 The HTML includes:
 - Dark theme (`#0C0A09` background, `#D4D4D8` text, `#F59E0B` amber accents)
 - Print-optimized CSS (`@media print` overrides for light backgrounds)
 - Report metadata header (name, charges, jurisdiction, court date, days since arrest)
 - Legal disclaimer ("not legal advice")
-- Upgrade CTA footer ("Your $197 is credited toward any higher tier")
+- Soft upgrade CTA footer ("After your meeting, if you want to verify... No pressure.")
 
 ---
 
