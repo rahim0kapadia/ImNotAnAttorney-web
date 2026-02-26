@@ -36,6 +36,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { CONTACT_EMAIL } from "@/lib/site";
 import sanitizeHtml from "sanitize-html";
 import type { Metadata } from "next";
+import PrintButton from "./PrintButton";
 
 /** Maps tier slugs to display names for the page title. */
 const TIER_NAMES: Record<string, string> = {
@@ -321,9 +322,39 @@ export default async function ReportPage({
   });
 
   return (
-    <div
-      className="report-container"
-      dangerouslySetInnerHTML={{ __html: cleanHtml }}
-    />
+    <>
+      {/* Print-friendly styles — lives OUTSIDE sanitized HTML so the sanitizer
+          can't strip it. Mirrors the @media print block from renderReportHtml()
+          which sanitize-html removes (it strips <style> tags for XSS safety). */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+@media print {
+  body { background: white !important; color: #1a1a1a !important; }
+  .report-container, .report-container * { color: #1a1a1a !important; background: white !important; }
+  .report-container h2, .report-container h3, .report-container h4 { color: #92400e !important; }
+  .report-container strong { color: #1a1a1a !important; }
+  .report-container blockquote { border-left-color: #92400e !important; }
+  .report-container table { border-color: #d4d4d8 !important; }
+  .report-container td, .report-container th { border-color: #d4d4d8 !important; color: #1a1a1a !important; }
+  nav, footer, .print-hidden { display: none !important; }
+  .report-container h2 { page-break-before: auto; page-break-after: avoid; }
+  .report-container table, .report-container blockquote { page-break-inside: avoid; }
+}
+`,
+        }}
+      />
+      <div className="print-hidden mb-4 flex flex-col items-start gap-2">
+        <PrintButton />
+        <p className="text-xs text-zinc-500">
+          Click &quot;Download as PDF&quot; then select &quot;Save as PDF&quot;
+          in your browser&apos;s print dialog.
+        </p>
+      </div>
+      <div
+        className="report-container"
+        dangerouslySetInnerHTML={{ __html: cleanHtml }}
+      />
+    </>
   );
 }
