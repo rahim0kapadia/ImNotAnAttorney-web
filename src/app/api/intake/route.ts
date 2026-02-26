@@ -57,20 +57,27 @@ const OPERATOR_EMAIL =
  * Any chargeType not in this list is rejected with a 400 error.
  */
 const ALLOWED_CHARGE_TYPES = [
-  // Current intake form values (specific subcategories)
+  // Current intake form values (hierarchical flow)
   "drug-possession",
   "drug-trafficking",
-  "dui-first",
-  "dui-repeat",
-  "white-collar",
+  "dui",
   "assault",
+  "domestic-violence",
   "theft",
-  "other-felony",
-  "other-misdemeanor",
-  // Also accept free-form values from older intake forms
-  "drug", "dui", "domestic-violence", "sex-offense", "weapons", "federal",
-  "robbery", "burglary", "fraud", "other",
+  "sex-offense",
+  "sex-offense-contact",
+  "sex-offense-digital",
+  "weapons",
+  "white-collar",
+  "federal",
+  "other",
+  // Legacy values from older intake forms (backward compatibility)
+  "dui-first", "dui-repeat", "other-felony", "other-misdemeanor",
+  "drug", "robbery", "burglary", "fraud",
 ];
+
+/** Valid jurisdiction levels for the intake form. */
+const ALLOWED_JURISDICTION_LEVELS = ["federal", "state", "unknown"];
 
 export async function POST(req: NextRequest) {
   try {
@@ -151,6 +158,27 @@ export async function POST(req: NextRequest) {
     // Email is normalized (lowercase + trim) to ensure consistent
     // matching when the Stripe webhook or this endpoint links intakes
     // to cases. All optional fields default to null/empty arrays.
+    // Validate and sanitize charge-specific data (JSONB, capped at 2KB serialized)
+    let chargeSpecificData = {};
+    if (body.chargeSpecificData && typeof body.chargeSpecificData === "object" && !Array.isArray(body.chargeSpecificData)) {
+      const serialized = JSON.stringify(body.chargeSpecificData);
+      if (serialized.length <= 2048) {
+        // Only allow string values to prevent injection
+        const sanitized: Record<string, string> = {};
+        for (const [k, v] of Object.entries(body.chargeSpecificData)) {
+          if (typeof v === "string") {
+            sanitized[k.slice(0, 50)] = (v as string).slice(0, 200);
+          }
+        }
+        chargeSpecificData = sanitized;
+      }
+    }
+
+    // Validate jurisdiction level
+    const jurisdictionLevel = ALLOWED_JURISDICTION_LEVELS.includes(body.jurisdictionLevel)
+      ? body.jurisdictionLevel
+      : "unknown";
+
     const { data: insertedIntake, error } = await supabase.from("intakes").insert({
       first_name: firstName.slice(0, 100),
       last_name: cap(body.lastName, 100),
@@ -177,6 +205,9 @@ export async function POST(req: NextRequest) {
       last_attorney_contact: cap(body.lastAttorneyContact, 100),
       arrest_date: cap(body.arrestDate, 20),
       evidence_type: Array.isArray(body.evidenceType) ? body.evidenceType.slice(0, 15) : [],
+      // New fields: charge-specific intake data + jurisdiction level
+      charge_specific_data: chargeSpecificData,
+      jurisdiction_level: jurisdictionLevel,
     }).select("id").single();
 
     if (error) {
@@ -306,6 +337,7 @@ export async function POST(req: NextRequest) {
           <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Name:</strong> ${escapeHtml(firstName)} ${escapeHtml(body.lastName || "")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Email:</strong> ${escapeHtml(email)}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(chargeType)}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Jurisdiction:</strong> ${escapeHtml(jurisdictionLevel)}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">State:</strong> ${escapeHtml(body.state || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Has Attorney:</strong> ${body.hasAttorney || "Not specified"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Has Discovery:</strong> ${body.hasDiscovery || "Not specified"}</p>

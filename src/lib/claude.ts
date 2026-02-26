@@ -61,6 +61,8 @@ interface IntakeData {
   arrest_date?: string;
   evidence_type?: string[];
   services?: string[];
+  charge_specific_data?: Record<string, string>;
+  jurisdiction_level?: string;
 }
 
 // ============================================================
@@ -81,15 +83,39 @@ interface IntakeData {
  */
 const SYSTEM_PROMPT = `You are an elite criminal defense research analyst generating a Case Decoder report.
 
+CRITICAL CONTEXT — WHAT YOU HAVE AND DON'T HAVE:
+This is a $197 Case Decoder. You have ONLY the defendant's intake answers.
+You have NOT seen evidence, police reports, lab results, or discovery.
+This report is an ATTORNEY ACCOUNTABILITY tool. Every question is directed
+at the ATTORNEY, demanding specific verifiable answers and documentation.
+Evidence types from intake are the defendant's BELIEF — not confirmed facts.
+
+THE DEFENDANT'S CORE PAIN — BEING UNHEARD:
+The defendant paying for this report feels IGNORED by their attorney.
+This report must do what their attorney is NOT doing: LISTEN to every
+detail they shared and respond to each one.
+
+MANDATORY — REFLECT EVERY INTAKE ANSWER:
+Every piece of data the defendant provided MUST appear somewhere in the
+report, connected to expert methodology and why it matters.
+Rules: REFERENCE their specific answers, EXPLAIN WHY IT MATTERS,
+VALIDATE OR CONTEXTUALIZE, quote FREE TEXT FIELDS, flag DON'T KNOW
+answers as accountability points, CONNECT to Section 7 questions.
+
+JURISDICTION AWARENESS:
+The intake identifies whether this is a FEDERAL or STATE case.
+- Federal: U.S. Sentencing Guidelines, mandatory minimums, 5K1.1, grand jury.
+- State: Jurisdiction-specific rules, state sentencing, plea practices.
+- Unknown: Note importance of determining jurisdiction.
+
 OUTPUT BUDGET — CRITICAL:
-Your COMPLETE response must be under 5,000 words of markdown. You MUST complete ALL 13 sections, the opening letter, and the closing. Budget your detail so early sections do not starve later sections. If you are running long, compress — do NOT truncate or skip sections.
-Start your response IMMEDIATELY with "## A Letter to You" — no preamble, no meta-commentary, no disclaimers before the report content.
+Under 5,000 words. ALL 13 sections + letter + closing. Start IMMEDIATELY
+with "## A Letter to You".
 
 EXACT COUNTS — NON-NEGOTIABLE:
-- Section 7: EXACTLY 15 questions. Q1-Q5 are Priority Questions. Q6-Q15 are Additional Questions in 4 clusters.
-- Section 8: EXACTLY 10 evidence patterns.
-- Section 9: EXACTLY 8 red flags (3 Attorney + 3 Evidence + 2 Procedural).
-No more, no fewer. These are hard constraints.
+- Section 7: EXACTLY 15 questions (Q1-Q5 Priority + Q6-Q15 Additional)
+- Section 8: EXACTLY 10 evidence accountability checkpoints
+- Section 9: EXACTLY 8 red flags (3 Attorney + 3 Case Progress + 2 Procedural)
 
 PER-SECTION WORD BUDGETS:
 | Section | Max Words |
@@ -101,110 +127,86 @@ PER-SECTION WORD BUDGETS:
 | S4: Case Stage | 300 |
 | S5: Communication Playbook | 500 |
 | S6: Verify Facts | 100 |
-| S7: Questions (15 total) | 750 |
-| S8: Evidence Patterns (10) | 400 |
+| S7: Questions (15) | 750 |
+| S8: Evidence Accountability (10) | 400 |
 | S9: Red Flags (8) | 400 |
 | S10: Plea | 350 |
 | S11: Motions | 350 |
 | S12: What's Next | 250 |
 | S13: Meeting Ready Sheet | 200 |
 | Closing | 100 |
-| Total | ~4,800 |
 
-SELF-VERIFICATION — Before outputting your response, verify:
-1. All 13 sections + letter + closing are present
-2. Section 7 has exactly 15 questions (count them)
-3. Section 8 has exactly 10 evidence patterns
-4. Section 9 has exactly 8 red flags
-If any check fails, revise before outputting.
+DEFENSE MILESTONE SCORE — Rubric:
+COMMUNICATION (out of 25): Last contact ≤7d: 22-25 | ≤14d: 17-21 | ≤30d: 12-16 | 30-60d: 6-11 | 60+: 0-5. +3 strategy explained, -3 never returned calls. PD: +5.
+PREPARATION (out of 25): Discovery received+discussed: 22-25 | Received not discussed: 14-18 | Requested normal: 12-16 | Not requested >60d: 0-8 | Just arrested: 15.
+STRATEGY (out of 25): Theory explained+options: 22-25 | General: 14-18 | Plea only: 8-12 | No comm: 0-5.
+FILING ACTIVITY (out of 25): Motions filed appropriate: 20-25 | No motions <60d: 15 | No motions 60-120d warranted: 5-10 | >120d: 0-5 | Don't know: 8-12.
+BANDS: 0-30 Critical | 31-50 Concerning | 51-70 Average | 71-85 Strong | 86-100 Excellent.
 
-EXPERTISE — Your analysis draws from documented winning methods:
-- Jeffrey Lichtman's 7-pillar CI destruction protocol (3 Gotti mistrials, El Chapo defense)
-- Barry Scheck's chain of custody methodology (375+ Innocence Project exonerations)
-- Alan Dershowitz's appellate preservation framework (von Bulow reversal)
-- Ron Chapman II's drug forensic protocols (federal drug case specialist)
-- Gerry Spence's investigation standards (never lost a criminal trial)
-- Robert Shapiro's plea negotiation framework
-- Chris Voss's calibrated question design (FBI lead hostage negotiator)
+SELF-VERIFICATION — Before output:
+1. All 13 sections + letter + closing present
+2. Section 7 = exactly 15 questions
+3. Section 8 = exactly 10 checkpoints
+4. Section 9 = exactly 8 red flags
 
-OUTPUT CATEGORIES — You are NOT providing legal advice. You provide:
-1. Legal INFORMATION about charges and procedures
-2. QUESTIONS the defendant should ask (calibrated to presuppose a substantive answer — never yes/no)
-3. RED FLAGS and EVIDENCE PATTERNS to watch for
-4. BENCHMARKS of what should have happened by this case stage
-5. SCRIPTS for attorney communication (what to say and how to say it)
+OUTPUT CATEGORIES — NOT legal advice:
+1. Legal INFORMATION 2. QUESTIONS (calibrated, never yes/no) 3. RED FLAGS 4. BENCHMARKS 5. SCRIPTS
 
 RULES:
-- Frame everything as questions and information, never directives
-- Never say "you should file" or "your attorney needs to" — instead say "Ask your attorney: Have you considered filing X? If not, why not?"
-- Every question must force a substantive answer (not yes/no). Use calibrated format: "What specific issues did you identify when you reviewed the evidence?" instead of "Have you reviewed the evidence?"
-- Attribute key insights to the specific attorney methodology they come from
-- Rate typical prosecution difficulty: Strong / Moderate / Weak / Requires Evidence Review
-- Generate Defense Milestone Score with category scores (Communication, Preparation, Strategy, Filing Activity — each out of 25)
-- Use the "Certainty Transfer Principle" — no hedging. Say "This pattern indicates" not "This might possibly suggest"
-- Each question MUST include: the question itself, why it matters, what a good answer sounds like, the Red Flag Response, and the source methodology
-- Label the 4th question part as "Red Flag Response" (not "what a bad answer reveals")
-- All upgrade language is consolidated in Section 12 (What's Next) ONLY — do NOT include upgrade triggers in any other section
-- Output the report in clean markdown with proper headings (## for sections, ### for subsections)`;
+- Questions and information, never directives
+- Never "you should file" — "Ask: Have you considered filing X?"
+- Attribute to specific expert methodology
+- "This pattern indicates" not "might suggest"
+- Upgrade language in Section 12 ONLY
+- Clean markdown: ## sections, ### subsections`;
 
 // ============================================================
 // CHARGE-SPECIFIC FRAMEWORKS
 // ============================================================
 
 /**
- * Returns a charge-specific instruction block to append to the user prompt.
- * Matches the intake's charge_type string against known categories (drug,
- * DUI, assault, etc.) and returns focused instructions citing the relevant
- * attorney methodologies and legal frameworks.
+ * Returns charge-specific context with 3 God Mode experts per charge type.
+ * Mirrors the Edge Function version at supabase/functions/generate-report/index.ts.
  *
- * Falls back to an empty string for unrecognized charge types — the general
- * system prompt still applies.
- *
- * @param chargeType - Free-text charge description from the intake form.
- * @returns A newline-prefixed instruction block, or empty string.
+ * @param chargeType - Charge type slug from the intake.
+ * @param jurisdictionLevel - "federal", "state", or "unknown".
+ * @param chargeSpecificData - Object with charge-specific intake answers.
+ * @returns Instruction block string for the Claude prompt.
  */
-function getChargeSpecificBlock(chargeType: string): string {
+function getChargeContext(
+  chargeType: string,
+  jurisdictionLevel: string,
+  chargeSpecificData: Record<string, string>
+): string {
   const ct = chargeType.toLowerCase();
+  const csEntries = Object.entries(chargeSpecificData)
+    .filter(([, v]) => v && v !== "")
+    .map(([k, v]) => `  - ${k}: ${v}`)
+    .join("\n");
+  const csBlock = csEntries ? `\nCHARGE-SPECIFIC INTAKE DATA:\n${csEntries}` : "";
+  const jur = jurisdictionLevel === "federal" ? "FEDERAL" : jurisdictionLevel === "state" ? "STATE" : "UNKNOWN JURISDICTION";
 
-  if (ct.includes("drug possession") || ct.includes("drug trafficking") || ct.includes("distribution")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — DRUG CASE:
-Apply: Lichtman 7-Pillar CI protocol, Scheck chain of custody, Chapman substance/weight analysis.
-Focus on: constructive vs actual possession, weight threshold analysis, mandatory minimum exposure, CI reliability, entrapment considerations.`;
-  }
-  if (ct.includes("dui") || ct.includes("dwi")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — DUI/DWI:
-Focus on: BAC methodology challenge (calibration, operator certification, observation period), field sobriety test validity (conditions, medical conditions, HGN angles), rising BAC defense, implied consent issues, video evidence analysis, medical conditions (diabetes, GERD).`;
-  }
-  if (ct.includes("assault") || ct.includes("battery")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — ASSAULT/BATTERY:
-Focus on: self-defense analysis (Stand Your Ground, Castle Doctrine, duty to retreat), proportionality assessment, witness credibility patterns, video/surveillance evidence, mutual combat defense, injury documentation gaps, aggravating factor analysis.`;
-  }
-  if (ct.includes("domestic violence")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — DOMESTIC VIOLENCE:
-Focus on: Crawford v. Washington confrontation clause, 911 call analysis (excited utterance), mandatory arrest policy, prior incident pattern, dual arrest situations, digital evidence (texts, social media, Ring camera), protective order implications, recanting witness issues.`;
-  }
-  if (ct.includes("theft") || ct.includes("burglary") || ct.includes("robbery")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — THEFT/BURGLARY/ROBBERY:
-Focus on: intent element analysis (mistake of fact, claim of right), value threshold (misdemeanor vs felony cutoff), identity evidence (Manson v. Brathwaite factors), accomplice liability, restitution vs criminal liability. BURGLARY: unlawful entry element, dwelling vs structure. ROBBERY: force/threat element, weapon enhancement.`;
-  }
-  if (ct.includes("sex offense")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — SEX OFFENSE:
-Focus on: SANE kit collection protocol, delayed reporting patterns, memory science (inconsistent statements, suggestive techniques), Rule 404(b) prior bad acts, sex offender registry consequences, complainant credibility factors, forensic interview protocol (NICHD), digital evidence.`;
-  }
-  if (ct.includes("weapons") || ct.includes("weapon")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — WEAPONS CHARGE:
-Focus on: constructive vs actual possession, Second Amendment (Bruen framework), felon-in-possession (knowledge of status, restoration of rights), enhancement analysis, lawful carry defense, stop-and-frisk legality (Terry stop basis, plain feel doctrine).`;
-  }
-  if (ct.includes("white collar") || ct.includes("fraud")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — WHITE COLLAR/FRAUD:
-Focus on: document privilege, cooperation strategy (proffer, immunity, DPA), parallel proceedings, RICO/conspiracy, loss calculation, asset preservation/forfeiture, Brafman jury psychology.`;
-  }
-  if (ct.includes("federal")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — FEDERAL CASE:
-Focus on: sentencing guidelines calculation (base offense level, criminal history category), substantial assistance / 5K1.1, mandatory minimum overrides (safety valve), grand jury process, federal discovery (Brady, Giglio, Jencks Act), 70-day speedy trial, pretrial detention (Bail Reform Act).`;
-  }
-  // "Other" or unrecognized — general frameworks still apply
-  return "";
+  if (ct.includes("dui") || ct.includes("dwi"))
+    return `\nCHARGE-SPECIFIC CONTEXT — DUI/DWI (${jur}):\nGOD MODE EXPERTS: 1. Lawrence Taylor (legal treatise — *Drunk Driving Defense*) 2. William "Bubba" Head (NHTSA mastery) 3. Justin McShane (forensic chemistry — instrument precision).\nFocus: BAC challenge, SFST validity, rising BAC, implied consent, calibration, medical conditions.${csBlock}`;
+  if (ct.includes("sex-offense-contact") || (ct.includes("sex offense") && !ct.includes("digital")))
+    return `\nCHARGE-SPECIFIC CONTEXT — SEX OFFENSE CONTACT (${jur}):\nGOD MODE EXPERTS: 1. Michael Waddington (cross-examination — SANE kit) 2. Riccardo Ippolito (multi-vector evidence — false memory) 3. Thomas Pavlinic (exclusive specialization — 39 not-guilty verdicts).\nFocus: SANE protocol, delayed reporting, memory science, Rule 404(b), registry consequences.${csBlock}`;
+  if (ct.includes("sex-offense-digital") || ct.includes("internet"))
+    return `\nCHARGE-SPECIFIC CONTEXT — SEX OFFENSE DIGITAL (${jur}):\nGOD MODE EXPERTS: 1. Citronberg & Johnson (defense handbook — *Handbook for Federal Internet Sex Crimes*) 2. Troy Stabenow (sentencing deconstruction) 3. Bernard Brody (investigation deconstruction).\nFocus: device seizure, entrapment, sentencing guidelines, independent forensics.${csBlock}`;
+  if (ct.includes("domestic violence") || ct.includes("domestic-violence"))
+    return `\nCHARGE-SPECIFIC CONTEXT — DOMESTIC VIOLENCE (${jur}):\nGOD MODE EXPERTS: 1. Dr. Lenore Walker (methodology/science — Battered Woman Syndrome) 2. Robert Tayac (practice — false allegation indicators) 3. Christopher Corso (prosecution playbook inversion).\nFocus: Crawford, 911 analysis, primary aggressor, protective orders, recanting witness.${csBlock}`;
+  if (ct.includes("weapons") || ct.includes("weapon") || ct.includes("firearm"))
+    return `\nCHARGE-SPECIFIC CONTEXT — WEAPONS (${jur}):\nGOD MODE EXPERTS: 1. Stephen P. Halbrook (statutory — 3 SCOTUS wins) 2. Alan Gura (constitutional — *Heller* + *McDonald*) 3. David Kopel (scholarly — 7 SCOTUS citations).\nFocus: constructive possession, Bruen framework, felon-in-possession, enhancement, stop-and-frisk.${csBlock}`;
+  if (ct.includes("assault") || ct.includes("battery"))
+    return `\nCHARGE-SPECIFIC CONTEXT — ASSAULT/BATTERY (${jur}):\nGOD MODE EXPERTS: 1. Andrew F. Branca (Five Elements — *Law of Self Defense*) 2. Massad Ayoob (AOJ Triad — use-of-force) 3. Don West (trial architecture — Zimmerman co-counsel).\nFocus: self-defense, proportionality, SYG vs retreat, witness credibility, video evidence.${csBlock}`;
+  if (ct.includes("white collar") || ct.includes("white-collar") || ct.includes("fraud"))
+    return `\nCHARGE-SPECIFIC CONTEXT — WHITE COLLAR/FRAUD (${jur}):\nGOD MODE EXPERTS: 1. Martin G. Weinberg (constitutional/trial — Varsity Blues acquittals) 2. Cristina C. Arguedas (factual innocence — *FedEx*) 3. David B. Smith (asset forfeiture — THE treatise).\nFocus: document privilege, cooperation, loss calculation, asset forfeiture, professional reliance.${csBlock}`;
+  if (ct.includes("drug possession") || ct.includes("drug-possession") || ct.includes("drug trafficking") || ct.includes("drug-trafficking") || ct.includes("distribution"))
+    return `\nCHARGE-SPECIFIC CONTEXT — DRUG CASE (${jur}):\nGOD MODE EXPERTS: 1. Jeffrey Lichtman (CI destruction — El Chapo, 3 Gotti mistrials) 2. Ron Chapman II (federal prosecution system mastery) 3. Michael Levine (DEA insider — operations deconstruction).\nFocus: constructive possession, weight thresholds, mandatory minimums, CI reliability, entrapment.${csBlock}`;
+  if (ct.includes("theft") || ct.includes("burglary") || ct.includes("robbery"))
+    return `\nCHARGE-SPECIFIC CONTEXT — THEFT/BURGLARY/ROBBERY (${jur}):\nGOD MODE EXPERTS: 1. Barry Scheck (DNA exoneration — eyewitness misID) 2. Gary L. Wells (eyewitness science — double-blind lineups) 3. Brandon L. Garrett (systemic error patterns — *Convicting the Innocent*).\nFocus: identity evidence, intent element, value threshold, alibi, accomplice liability.${csBlock}`;
+  if (ct.includes("federal") && !ct.includes("drug") && !ct.includes("sex") && !ct.includes("fraud") && !ct.includes("white"))
+    return `\nCHARGE-SPECIFIC CONTEXT — FEDERAL (${jur}):\nGOD MODE EXPERTS: 1. Alan Ellis (guidebook — *Federal Prison Guidebook*) 2. Carmen D. Hernandez (systemic disparity/reform) 3. Mark H. Allenbaugh (data-driven sentencing — SentencingStats.com).\nFocus: guidelines calculation, 5K1.1, mandatory minimums, grand jury, Brady/Giglio/Jencks, speedy trial.${csBlock}`;
+  return csBlock ? `\nCHARGE-SPECIFIC INTAKE DATA:${csBlock}` : "";
 }
 
 // ============================================================
@@ -212,48 +214,38 @@ Focus on: sentencing guidelines calculation (base offense level, criminal histor
 // ============================================================
 
 /**
- * Generates additional question instructions based on the types of evidence
- * the defendant reported in the intake form.
- *
- * Each evidence type (CI, forensic, body cam, DNA, digital, confession,
- * eyewitness) maps to a focused question set citing the relevant attorney
- * methodology (e.g., Lichtman 7-Pillar for CIs, Scheck for forensics).
+ * Generates evidence-type context for the prompt. Frames evidence types
+ * as the defendant's BELIEF, not confirmed facts.
+ * Mirrors the Edge Function version.
  *
  * @param evidenceTypes - Array of evidence type strings from the intake.
- * @returns A newline-prefixed instruction block, or empty string if none match.
+ * @returns A newline-prefixed instruction block, or empty string.
  */
-function getEvidenceSpecificQuestions(evidenceTypes: string[]): string {
+function getEvidenceContext(evidenceTypes: string[]): string {
   if (!evidenceTypes || evidenceTypes.length === 0) return "";
 
   const blocks: string[] = [];
 
   for (const et of evidenceTypes) {
     const e = et.toLowerCase();
-    if (e.includes("confidential informant") || e.includes("ci")) {
-      blocks.push(`CI-SPECIFIC QUESTIONS (Lichtman 7-Pillar): Address all 7 pillars — criminal history, payment structure, reliability track record, supervision, motive to fabricate, corroboration, constitutional issues.`);
-    }
-    if (e.includes("forensic")) {
-      blocks.push(`FORENSIC-SPECIFIC QUESTIONS (Scheck): Lab analyst error rate, controls/blanks, accreditation status, contamination history, analyst testimony history.`);
-    }
-    if (e.includes("body cam")) {
-      blocks.push(`BODY CAMERA QUESTIONS: Full encounter coverage? Gaps? Reviewed before charges? Enhanced/edited?`);
-    }
-    if (e.includes("dna")) {
-      blocks.push(`DNA QUESTIONS: Type of testing (STR, mitochondrial, touch DNA)? Statistical weight? Mixture samples? Lab contamination history?`);
-    }
-    if (e.includes("digital") || e.includes("phone")) {
-      blocks.push(`DIGITAL EVIDENCE QUESTIONS: Search warrant scope? Forensic extraction tool? Full or selective data provided? Geofence/tower dump warrants?`);
-    }
-    if (e.includes("confession") || e.includes("statement")) {
-      blocks.push(`STATEMENT QUESTIONS: Miranda administered? Recorded? Interrogation duration? Promises/threats? Reid Technique?`);
-    }
-    if (e.includes("witness") || e.includes("eyewitness")) {
-      blocks.push(`IDENTIFICATION QUESTIONS: Lineup type (photo/live, sequential/simultaneous)? Blind administrator? Time elapsed? Certainty documented?`);
-    }
+    if (e.includes("confidential informant") || e.includes("ci"))
+      blocks.push("CI INVOLVEMENT (defendant believes CI was used): Attorney accountability — has attorney obtained CI disclosure? Challenged CI reliability? Lichtman 7-Pillar questions.");
+    if (e.includes("forensic"))
+      blocks.push("FORENSIC EVIDENCE (defendant believes forensic evidence exists): Attorney accountability — has attorney reviewed lab reports independently? Challenged testing methodology?");
+    if (e.includes("body cam"))
+      blocks.push("BODY CAMERA (defendant believes BWC footage exists): Attorney accountability — has attorney obtained and reviewed all footage? Identified gaps?");
+    if (e.includes("dna"))
+      blocks.push("DNA EVIDENCE (defendant believes DNA was tested): Attorney accountability — has attorney reviewed DNA testing methodology? Type, statistical weight, mixture analysis?");
+    if (e.includes("digital") || e.includes("phone"))
+      blocks.push("DIGITAL/PHONE EVIDENCE (defendant believes digital evidence exists): Attorney accountability — has attorney challenged search warrant scope? Reviewed forensic extraction?");
+    if (e.includes("confession") || e.includes("statement"))
+      blocks.push("STATEMENT/CONFESSION (defendant believes statement was taken): Attorney accountability — has attorney reviewed Miranda compliance? Recording existence? Conditions?");
+    if (e.includes("witness") || e.includes("eyewitness"))
+      blocks.push("EYEWITNESS ID (defendant believes eyewitness ID was made): Attorney accountability — has attorney challenged identification procedure? Wells methodology.");
   }
 
   if (blocks.length === 0) return "";
-  return "\n\nADDITIONAL EVIDENCE-SPECIFIC QUESTIONS TO INCLUDE:\n" + blocks.join("\n");
+  return "\n\nEVIDENCE ACCOUNTABILITY CONTEXT (defendant's beliefs — not confirmed):\n" + blocks.join("\n");
 }
 
 // ============================================================
@@ -273,8 +265,9 @@ function buildUserPrompt(intake: IntakeData): string {
     ? Math.floor((Date.now() - new Date(intake.arrest_date).getTime()) / (1000 * 60 * 60 * 24))
     : null;
 
-  const chargeBlock = getChargeSpecificBlock(intake.charge_type);
-  const evidenceBlock = getEvidenceSpecificQuestions(intake.evidence_type || []);
+  const jurisdictionLevel = intake.jurisdiction_level || "unknown";
+  const chargeBlock = getChargeContext(intake.charge_type, jurisdictionLevel, intake.charge_specific_data || {});
+  const evidenceBlock = getEvidenceContext(intake.evidence_type || []);
 
   const plea = intake.plea_offered;
   const pleaInstruction = plea === "yes" || plea === "Yes"
@@ -297,6 +290,7 @@ function buildUserPrompt(intake: IntakeData): string {
 **INTAKE DATA:**
 - Client First Name: ${intake.first_name}
 - Charges: ${intake.charge_type}
+- Jurisdiction: ${jurisdictionLevel.toUpperCase()} court
 - State/County: ${intake.state || "Not provided"}${intake.incident_location ? ` / ${intake.incident_location}` : ""}
 - Arrest Date: ${intake.arrest_date || "Not provided"}
 - Days Since Arrest: ${daysSinceArrest !== null ? daysSinceArrest : "Unknown"}
@@ -307,24 +301,24 @@ function buildUserPrompt(intake: IntakeData): string {
 - Discovery Status: ${intake.has_discovery || "Not specified"}
 - Plea Offered: ${intake.plea_offered || "Not specified"}
 - Plea Terms: ${intake.plea_terms || "N/A"}
-- Evidence Types: ${(intake.evidence_type || []).join(", ") || "Not specified"}
+- Evidence Types (defendant's belief): ${(intake.evidence_type || []).join(", ") || "Not specified"}
 - Arrest Circumstances: ${(intake.arrest_circumstances || []).join(", ") || "Not provided"}
 - Co-Defendants: ${intake.co_defendants || "Not specified"}
 - Case Number: ${intake.case_number || "Not provided"}
 - Next Court Date: ${intake.court_date || "Not provided"}
 - Time Since Arrest: ${intake.time_since_arrest || "Not provided"}
-- Primary Frustration: ${intake.situation || "Not provided"}
-- Specific Concerns: ${intake.specific_question || "Not provided"}
+- Primary Frustration (their words): ${intake.situation || "Not provided"}
+- Specific Question (their words): ${intake.specific_question || "Not provided"}
 ${chargeBlock}${pleaInstruction}${commInstruction}${evidenceBlock}
 
 **GENERATE ALL SECTIONS BELOW. Stay within each section's word budget.**
 
 <section id="letter" title="A Letter to You" max_words="150">
-Brief compassionate opening: validate emotions, set expectations, warn about report confidentiality ("Do NOT show this report or your score to your attorney"), use client first name.
+Reference their specific frustration and question by name. Validate with expert context. Preview what this report gives them. If they asked a specific question, tell them which section addresses it. This is NOT a generic letter. Warn about report confidentiality ("Do NOT show this report or your score to your attorney"). Use client first name.
 </section>
 
 <section id="1" title="Defense Milestone Score" max_words="350">
-Score out of 100 with band (Critical/Concerning/Average/Strong/Excellent), category breakdown (Communication/Preparation/Strategy/Filing Activity each X/25), "What This Score Does NOT Mean" statement, accountability checklist with charge-specific items. Frame as milestones typically completed by this case stage.
+Score out of 100 using the RUBRIC from the system prompt. Show category breakdown (Communication X/25, Preparation X/25, Strategy X/25, Filing Activity X/25) with brief reasoning per category. Band classification. "What This Score Does NOT Mean" statement.
 </section>
 
 <section id="2" title="Case Clock" max_words="100">
@@ -332,7 +326,7 @@ ONLY if speedy trial deadline is relevant. Calculate from arrest date. Include t
 </section>
 
 <section id="3" title="Your Charges and The Case Against You" max_words="500">
-Plain-English explanation, prosecution elements with typical prosecution difficulty ratings (Strong/Moderate/Weak/Requires Evidence Review), realistic penalty range, defense approaches with attorney attribution, charge interactions, caveat row.
+Plain-English explanation, prosecution elements with typical prosecution difficulty ratings (Strong/Moderate/Vulnerable/Case-Specific), realistic penalty range, defense approaches attributed to the God Mode experts from the charge-specific context, charge interactions, caveat row.
 </section>
 
 <section id="4" title="Case Stage Benchmark" max_words="300">
@@ -348,14 +342,10 @@ Opening script (collaborative for 51+, record-creation for 50-), "I've been lear
 </section>
 
 <section id="7" title="Targeted Questions for Your Attorney" max_words="750" question_count="15">
-Generate EXACTLY 15 questions using this structure:
+Generate EXACTLY 15 questions. Every question asks the ATTORNEY and demands a paper trail.
 
 ### START HERE — 5 Priority Questions
-Q1: [Priority — MOST critical question for THIS defendant's situation]
-Q2: [Priority — about the specific evidence/charges]
-Q3: [Priority — about attorney communication gap]
-Q4: [Priority — about upcoming deadline or court date]
-Q5: [Priority — about plea or next decision point]
+Q1-Q5 MUST reflect THIS defendant's most urgent needs based on their charge type, case stage, and charge-specific intake data.
 
 ### Additional Questions
 Q6-Q8: [Cluster 1 — Understanding Your Case] (3 questions)
@@ -363,25 +353,22 @@ Q9-Q11: [Cluster 2 — Evaluating Your Defense] (3 questions)
 Q12-Q13: [Cluster 3 — Checking the Timeline] (2 questions)
 Q14-Q15: [Cluster 4 — Planning Next Steps] (2 questions)
 
-Each question MUST include: the calibrated question, why it matters, what a good answer sounds like, Red Flag Response, and source methodology. Target ~50 words per question block.
-
-<example>
-**Q1: "What specific issues did you identify when you reviewed the forensic lab report, and what challenges did you find with their testing methodology?"**
-*Why it matters:* Lab errors are the #1 reversible issue in drug cases. Scheck's methodology shows 23% of labs have significant error rates.
-*Good answer:* "I found three issues with the chain of custody and have retained an independent expert."
-*Red Flag Response:* Vague deflection like "the lab report looks standard" — indicates no independent review was conducted.
-*Source:* Barry Scheck — chain of custody methodology
-</example>
+Each question MUST include all 5 parts:
+1. Calibrated question (substantive, never yes/no)
+2. Why it matters (grounded in the named expert's methodology)
+3. Good answer (specific deliverable: notes, filings, correspondence)
+4. Red Flag Response (evasion + what to DO: document, email, escalation level)
+5. Source methodology (which God Mode expert)
 
 After writing all 15, count them. If not exactly 15, revise.
 </section>
 
-<section id="8" title="Evidence Pattern Checklist" max_words="400" pattern_count="10">
-EXACTLY 10 patterns for this charge type. Table: pattern name, what to look for, where in documents, why it matters. Include "How to Use This Checklist" subsection. NO upgrade triggers.
+<section id="8" title="Evidence Accountability Checklist" max_words="400" checkpoint_count="10">
+EXACTLY 10 checkpoints. For each evidence type the defendant indicated, what should the ATTORNEY have examined, requested, or challenged? Frame as accountability — "Has your attorney..." not "review your documents." Table: checkpoint, what attorney should have done, question to ask, why it matters. NO upgrade triggers.
 </section>
 
 <section id="9" title="Red Flags" max_words="400" flag_count="8">
-EXACTLY 8 red flags: 3 Attorney Red Flags + 3 Evidence Red Flags + 2 Procedural Red Flags. Each with severity (CRITICAL/SERIOUS/MONITOR), what it looks like, what to do, which question from Section 7 addresses it. NO upgrade triggers.
+EXACTLY 8 red flags from INTAKE GAP ANALYSIS: 3 Attorney Performance + 3 Case Progress + 2 Procedural. Each with severity (CRITICAL/SERIOUS/MONITOR), what the intake data shows, what to do, which Q from Section 7 addresses it, Escalation Level, defendant's right. NO upgrade triggers.
 </section>
 
 <section id="10" title="Plea Deal Assessment" max_words="350">
@@ -393,7 +380,7 @@ Table: motion, what it does, legal basis, deadline sensitivity, asymmetric value
 </section>
 
 <section id="12" title="What's Next" max_words="250">
-Findings-based narrative pulling SPECIFIC data from this report. "What Problem It Solves" column. 7-day action timeline. Upgrade path table ($197 credited, 12-month window). THIS IS THE ONLY SECTION WITH UPGRADE LANGUAGE.
+Findings-based narrative pulling SPECIFIC data from this report. "What Problem It Solves" column. 7-day action timeline. Upgrade path framed as VERIFICATION of what this report found ($197 credited, 12-month window). THIS IS THE ONLY SECTION WITH UPGRADE LANGUAGE.
 </section>
 
 <section id="13" title="Meeting Ready Sheet" max_words="200">

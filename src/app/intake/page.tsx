@@ -19,22 +19,24 @@
  *
  * 3-Step wizard structure:
  *   Step 1 — Contact & Charges:
- *     Required: First name, email, charge type, state, time since arrest
- *     Optional: Last name, phone, incident location, arrest circumstances (multi-select)
+ *     Required: First name, email, jurisdiction level, charge type, state,
+ *     time since arrest
+ *     Conditional: Sex offense sub-routing, 3-4 charge-specific questions
+ *     Optional: Last name, phone, incident location, arrest circumstances
  *
  *   Step 2 — Your Situation:
  *     Required: Has attorney?
  *     Optional: Has discovery, co-defendants, attorney strategy, communication
- *     frequency, last attorney contact, arrest date (speedy trial), plea offered
- *     (conditionally shows plea terms textarea), evidence types (multi-select),
- *     case number, court date, service interest checkboxes, free-text situation
+ *     frequency, last attorney contact, arrest date, plea offered, plea terms,
+ *     evidence types, case number, court date, service interest, situation
  *
  *   Step 3 — One More Thing:
- *     Optional: One specific question (max 300 chars, addressed first in report)
+ *     Optional: One specific question (max 300 chars)
  *     Legal disclaimer + submit button
  *
  * Data flow:
  *   All form fields stored in a single `form` state object.
+ *   Charge-specific answers stored in `chargeSpecific` sub-object.
  *   On submit, entire form object POSTed to /api/intake as JSON.
  *   API inserts into Supabase `intakes` table and sends operator notification.
  *
@@ -51,10 +53,41 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
-/** Charge type options — covers main criminal case categories we serve.
- * Values are slugs matching ALLOWED_CHARGE_TYPES in /api/intake.
- * Labels are human-readable for the dropdown display. */
-const chargeTypes = [
+// ============================================================
+// JURISDICTION + CHARGE TYPE CONFIGURATION
+// ============================================================
+
+/** Jurisdiction level — determines which charge categories and experts apply. */
+const jurisdictionOptions = [
+  { value: "federal", label: "Federal court" },
+  { value: "state", label: "State or local court" },
+  { value: "unknown", label: "I don\u2019t know" },
+];
+
+/** Federal charge categories. */
+const federalChargeTypes = [
+  { value: "drug-trafficking", label: "Drug Trafficking or Distribution" },
+  { value: "white-collar", label: "Fraud or Financial Crime" },
+  { value: "weapons", label: "Firearms Charge" },
+  { value: "sex-offense-digital", label: "Sex Offense (Internet/Digital)" },
+  { value: "federal", label: "Other Federal Charge" },
+];
+
+/** State charge categories. */
+const stateChargeTypes = [
+  { value: "drug-possession", label: "Drug Possession" },
+  { value: "drug-trafficking", label: "Drug Trafficking / Distribution" },
+  { value: "dui", label: "DUI / DWI" },
+  { value: "assault", label: "Assault / Battery" },
+  { value: "domestic-violence", label: "Domestic Violence" },
+  { value: "theft", label: "Theft / Burglary / Robbery" },
+  { value: "sex-offense", label: "Sex Offense" },
+  { value: "weapons", label: "Weapons Charge" },
+  { value: "other", label: "Other" },
+];
+
+/** Combined list (shown when jurisdiction is "unknown"). */
+const allChargeTypes = [
   { value: "drug-possession", label: "Drug Possession" },
   { value: "drug-trafficking", label: "Drug Trafficking / Distribution" },
   { value: "dui", label: "DUI / DWI" },
@@ -67,6 +100,273 @@ const chargeTypes = [
   { value: "federal", label: "Federal Charges" },
   { value: "other", label: "Other" },
 ];
+
+/** Sex offense sub-routing (contact vs digital). */
+const sexOffenseSubTypes = [
+  { value: "sex-offense-contact", label: "Physical/contact allegation" },
+  { value: "sex-offense-digital", label: "Internet or digital allegation" },
+  { value: "sex-offense", label: "Don\u2019t know" },
+];
+
+// ============================================================
+// CHARGE-SPECIFIC QUESTION DEFINITIONS
+// Each charge type gets 3-4 expert-grounded questions with "Don't know" option.
+// ============================================================
+
+interface ChargeQuestion {
+  id: string;
+  label: string;
+  options: string[];
+}
+
+const chargeSpecificQuestions: Record<string, ChargeQuestion[]> = {
+  dui: [
+    {
+      id: "bacLevel",
+      label: "BAC level (if known)",
+      options: ["Under 0.08", "0.08\u20130.10", "0.10\u20130.15", "0.15\u20130.20", "Over 0.20", "Refused test", "Don\u2019t know"],
+    },
+    {
+      id: "testType",
+      label: "What type of test was administered?",
+      options: ["Breathalyzer (roadside)", "Breathalyzer (at station)", "Blood draw", "Urine", "Refused all tests", "Don\u2019t know"],
+    },
+    {
+      id: "fieldSobriety",
+      label: "Were you asked to do field sobriety tests?",
+      options: ["Yes, I performed them", "Yes, but I refused some", "I refused all", "Not asked to do them", "Don\u2019t know"],
+    },
+    {
+      id: "priorDUI",
+      label: "Prior DUI history",
+      options: ["First offense", "Second offense", "Third or more", "Don\u2019t know"],
+    },
+  ],
+  "sex-offense-contact": [
+    {
+      id: "relationship",
+      label: "Relationship to accuser",
+      options: ["Stranger", "Acquaintance", "Dating/romantic partner", "Ex-partner", "Family member", "Authority figure", "Online contact only", "Don\u2019t know"],
+    },
+    {
+      id: "reportTiming",
+      label: "When was the incident reported?",
+      options: ["Same day", "Within a week", "Weeks later", "Months later", "Years later", "Don\u2019t know"],
+    },
+    {
+      id: "saneKit",
+      label: "Was a forensic exam (SANE kit) conducted?",
+      options: ["Yes", "No", "Don\u2019t know"],
+    },
+    {
+      id: "substanceInvolvement",
+      label: "Was alcohol or drugs involved?",
+      options: ["Both parties", "Only me", "Only the accuser", "No substances", "Don\u2019t know"],
+    },
+  ],
+  "sex-offense-digital": [
+    {
+      id: "offenseType",
+      label: "Type of allegation",
+      options: ["Online sting or undercover operation", "Possession of illegal material", "Distribution or sharing", "Online solicitation", "Don\u2019t know"],
+    },
+    {
+      id: "investigationOrigin",
+      label: "How did the investigation start?",
+      options: ["Police/agents came to my home", "Arrested in a sting", "ISP or tech company reported", "Employer reported", "Don\u2019t know"],
+    },
+    {
+      id: "devicesSeized",
+      label: "Were devices seized?",
+      options: ["Yes, all devices taken", "Yes, some devices", "No, but may be searched", "Don\u2019t know"],
+    },
+    {
+      id: "stingOperation",
+      label: "Was this a sting operation?",
+      options: ["Yes, law enforcement initiated contact", "Yes, but I initiated contact", "No", "Don\u2019t know"],
+    },
+  ],
+  "domestic-violence": [
+    {
+      id: "relationship",
+      label: "Relationship to alleged victim",
+      options: ["Spouse or partner", "Ex-spouse or ex-partner", "Dating", "Family member", "Roommate", "Other"],
+    },
+    {
+      id: "initiator",
+      label: "Who initiated physical contact?",
+      options: ["I did", "The other person did", "It was mutual", "No physical contact occurred", "Don\u2019t know"],
+    },
+    {
+      id: "protectiveOrder",
+      label: "Protective order in place?",
+      options: ["Yes, against me", "Yes, I have one against them", "No", "Previously had one", "Don\u2019t know"],
+    },
+    {
+      id: "motive",
+      label: "Do you believe the allegations are motivated by something other than truth?",
+      options: ["No", "Custody or divorce leverage", "Retaliation or revenge", "Immigration benefit", "Other", "Prefer not to say"],
+    },
+  ],
+  weapons: [
+    {
+      id: "discoveryMethod",
+      label: "How was the weapon discovered?",
+      options: ["Traffic stop search", "Search warrant on home", "Warrantless search", "Plain view", "Consent search", "Informant tip", "During another arrest", "Don\u2019t know"],
+    },
+    {
+      id: "weaponLocation",
+      label: "Where was the weapon?",
+      options: ["On my person", "In my vehicle", "In my home", "In a shared space", "Not near me", "Don\u2019t know"],
+    },
+    {
+      id: "carryPermit",
+      label: "Do you have a carry permit?",
+      options: ["Yes, valid permit", "Expired permit", "No permit", "State doesn\u2019t require one", "Don\u2019t know"],
+    },
+    {
+      id: "prohibitedStatus",
+      label: "Anything that may prohibit you from possessing firearms?",
+      options: ["No prohibitions", "Prior felony", "DV misdemeanor conviction", "Active restraining order", "Don\u2019t know"],
+    },
+  ],
+  assault: [
+    {
+      id: "selfDefense",
+      label: "Self-defense claimed?",
+      options: ["Yes, I was defending myself", "Yes, defending someone else", "No self-defense claim", "Haven\u2019t discussed with attorney"],
+    },
+    {
+      id: "initiator",
+      label: "Who initiated physical contact?",
+      options: ["The other person attacked me first", "I made first contact", "It was mutual", "A third party started it", "Unclear"],
+    },
+    {
+      id: "forceLevel",
+      label: "What level of force did you use?",
+      options: ["Hands or fists only", "Pushed or shoved", "Used an object", "Used a knife", "Used a firearm", "Restrained or held down"],
+    },
+    {
+      id: "couldLeave",
+      label: "Could you have safely left the situation?",
+      options: ["No, I was cornered or trapped", "No, protecting someone who couldn\u2019t leave", "Yes, but I stood my ground", "I tried to leave and couldn\u2019t"],
+    },
+  ],
+  "white-collar": [
+    {
+      id: "investigationDiscovery",
+      label: "How did you learn about the investigation?",
+      options: ["Search warrant executed", "Subpoena received", "Target letter received", "Federal agent contacted me", "Arrested", "Learned from media or employer", "Don\u2019t know"],
+    },
+    {
+      id: "professionalAdvice",
+      label: "Did you rely on professional advice for the actions in question?",
+      options: ["Yes, had attorney advising", "Yes, had accountant or CPA", "Yes, had compliance department", "No professional advice", "Not sure"],
+    },
+    {
+      id: "lossAmount",
+      label: "Alleged loss amount",
+      options: ["Under $10,000", "$10,000\u2013$100,000", "$100,000\u2013$1M", "Over $1M", "Unknown or disputed", "Don\u2019t know"],
+    },
+    {
+      id: "assetsSeized",
+      label: "Have any assets been seized or frozen?",
+      options: ["Yes, bank accounts frozen", "Yes, property seized", "Restraining order on assets", "No seizures yet", "Don\u2019t know"],
+    },
+  ],
+  federal: [
+    {
+      id: "mandatoryMinimum",
+      label: "Does your charge carry a mandatory minimum?",
+      options: ["Yes", "No", "Don\u2019t know"],
+    },
+    {
+      id: "cooperation",
+      label: "Has cooperation been discussed?",
+      options: ["Yes, active cooperation (proffer done)", "Considering it", "Declined", "Government hasn\u2019t asked", "Don\u2019t know"],
+    },
+    {
+      id: "chargingMethod",
+      label: "How were you charged?",
+      options: ["Grand jury indictment", "Information (no grand jury)", "Don\u2019t know"],
+    },
+    {
+      id: "mitigating",
+      label: "Mitigating circumstances (select the most relevant)",
+      options: ["Mental health condition", "Substance abuse history", "Military veteran", "Primary caregiver", "First-time offender", "Serious medical condition", "None of these"],
+    },
+  ],
+  theft: [
+    {
+      id: "identification",
+      label: "How were you identified as a suspect?",
+      options: ["Caught at scene", "Eyewitness identification", "Photo array or lineup", "Surveillance footage", "Fingerprints or DNA", "Informant tip", "Found with property", "Don\u2019t know"],
+    },
+    {
+      id: "weaponAlleged",
+      label: "Was a weapon alleged?",
+      options: ["Firearm", "Knife or weapon", "Weapon implied but not seen", "No weapon", "Don\u2019t know"],
+    },
+    {
+      id: "propertyValue",
+      label: "Alleged value of property",
+      options: ["Under $500", "$500\u2013$1,000", "$1,000\u2013$10,000", "Over $10,000", "Don\u2019t know"],
+    },
+    {
+      id: "alibi",
+      label: "Do you have an alibi?",
+      options: ["Yes, with witnesses", "Yes, with digital evidence (phone, receipts, cameras)", "Partial alibi", "No alibi", "Not sure"],
+    },
+  ],
+  "drug-possession": [
+    {
+      id: "substanceType",
+      label: "Substance type",
+      options: ["Marijuana", "Cocaine", "Methamphetamine", "Fentanyl or opioids", "Prescription drugs", "Other", "Don\u2019t know"],
+    },
+    {
+      id: "allegedAmount",
+      label: "Alleged amount",
+      options: ["Personal use quantity", "Near threshold amount", "Trafficking quantity", "Large quantity", "Don\u2019t know"],
+    },
+    {
+      id: "evidenceFound",
+      label: "How was evidence found?",
+      options: ["Search warrant", "Consent search", "Traffic stop", "Plain view", "Informant tip", "Controlled buy", "Don\u2019t know"],
+    },
+    {
+      id: "ciInvolved",
+      label: "Were confidential informants involved?",
+      options: ["Yes", "I think so", "No", "Don\u2019t know"],
+    },
+  ],
+  "drug-trafficking": [
+    {
+      id: "substanceType",
+      label: "Substance type",
+      options: ["Marijuana", "Cocaine", "Methamphetamine", "Fentanyl or opioids", "Prescription drugs", "Other", "Don\u2019t know"],
+    },
+    {
+      id: "allegedAmount",
+      label: "Alleged amount",
+      options: ["Personal use quantity", "Near threshold amount", "Trafficking quantity", "Large quantity", "Don\u2019t know"],
+    },
+    {
+      id: "evidenceFound",
+      label: "How was evidence found?",
+      options: ["Search warrant", "Consent search", "Traffic stop", "Plain view", "Informant tip", "Controlled buy", "Don\u2019t know"],
+    },
+    {
+      id: "ciInvolved",
+      label: "Were confidential informants involved?",
+      options: ["Yes", "I think so", "No", "Don\u2019t know"],
+    },
+  ],
+};
+
+// ============================================================
+// STATIC OPTION LISTS
+// ============================================================
 
 /** US states + DC for jurisdiction selection. */
 const usStates = [
@@ -87,7 +387,7 @@ const serviceInterests = [
   "The X-Ray ($1,497)",
   "The War Room ($3,497)",
   "The Situation Room ($9,997)",
-  "Not sure — help me decide",
+  "Not sure \u2014 help me decide",
 ];
 
 /** How law enforcement got involved — helps determine applicable motions. */
@@ -121,11 +421,11 @@ const coDefendantOptions = [
 
 /** Attorney strategy communication — feeds into Defense Milestone Score. */
 const strategyOptions = [
-  "Yes — attorney explained clearly",
+  "Yes \u2014 attorney explained clearly",
   "Mentioned something but unclear",
-  "No — no strategy discussed",
+  "No \u2014 no strategy discussed",
   "I asked but got no real answer",
-  "It hasn't come up",
+  "It hasn\u2019t come up",
 ];
 
 /** How often attorney communicates — key metric for accountability scoring. */
@@ -154,13 +454,33 @@ const evidenceTypeOptions = [
   "Witness identification / eyewitness",
   "DNA evidence",
   "Digital / phone evidence (texts, social media, GPS)",
-  "I don't know",
+  "I don\u2019t know",
 ];
 
 /** Shared Tailwind classes for form inputs, selects, and labels. */
 const inputClass = "mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none";
 const selectClass = inputClass;
 const labelClass = "block text-xs text-zinc-400";
+
+/**
+ * Returns the effective charge type for charge-specific question lookup.
+ * Handles sex offense sub-routing and jurisdiction-based routing.
+ */
+function getEffectiveChargeType(chargeType: string, sexOffenseSubType: string): string {
+  if (chargeType === "sex-offense" && sexOffenseSubType) {
+    return sexOffenseSubType;
+  }
+  return chargeType;
+}
+
+/**
+ * Returns the list of charge types based on jurisdiction level.
+ */
+function getChargeTypesForJurisdiction(jurisdictionLevel: string) {
+  if (jurisdictionLevel === "federal") return federalChargeTypes;
+  if (jurisdictionLevel === "state") return stateChargeTypes;
+  return allChargeTypes;
+}
 
 /**
  * IntakeForm — multi-step wizard component.
@@ -184,7 +504,9 @@ function IntakeForm() {
     lastName: "",
     email: prefillEmail,
     phone: "",
+    jurisdictionLevel: "",
     chargeType: "",
+    sexOffenseSubType: "",
     state: "",
     timeSinceArrest: "",
     incidentLocation: "",
@@ -212,9 +534,32 @@ function IntakeForm() {
     evidenceType: [] as string[],
   });
 
+  // Charge-specific answers stored separately to avoid polluting the flat form
+  const [chargeSpecific, setChargeSpecific] = useState<Record<string, string>>({});
+
   function setField(name: string, value: string | string[]) {
     setForm((prev) => ({ ...prev, [name]: value }));
   }
+
+  function setChargeField(id: string, value: string) {
+    setChargeSpecific((prev) => ({ ...prev, [id]: value }));
+  }
+
+  // Determine effective charge type for questions
+  const effectiveChargeType = getEffectiveChargeType(
+    form.chargeType as string,
+    form.sexOffenseSubType as string
+  );
+
+  // Get charge-specific questions for the current charge type
+  const currentChargeQuestions = chargeSpecificQuestions[effectiveChargeType] || [];
+
+  // Determine which charge type list to show
+  const availableChargeTypes = getChargeTypesForJurisdiction(form.jurisdictionLevel as string);
+
+  // Show sex offense sub-routing if sex-offense is selected (state/unknown jurisdiction)
+  const showSexOffenseSubRouting =
+    form.chargeType === "sex-offense" && form.jurisdictionLevel !== "federal";
 
   // Step validation gates — each step's "Continue" button is disabled until these are met
   const canProceedStep1 =
@@ -229,7 +574,15 @@ function IntakeForm() {
       const res = await fetch("/api/intake", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          chargeSpecificData: chargeSpecific,
+          jurisdictionLevel: form.jurisdictionLevel || "unknown",
+          // If sex offense sub-type was selected, use that as the effective charge type
+          chargeType: effectiveChargeType === "sex-offense-contact" || effectiveChargeType === "sex-offense-digital"
+            ? effectiveChargeType
+            : form.chargeType,
+        }),
       });
       if (res.ok) {
         setSubmitted(true);
@@ -237,7 +590,7 @@ function IntakeForm() {
         setError("Something went wrong submitting your case. Please try again.");
       }
     } catch {
-      setError("Couldn't reach our servers. Check your connection and try again.");
+      setError("Couldn\u2019t reach our servers. Check your connection and try again.");
     } finally {
       setSubmitting(false);
     }
@@ -248,8 +601,8 @@ function IntakeForm() {
     const paidTierMessages: Record<string, string> = {
       "case-decoder": "Your Case Decoder report is being generated. You\u2019ll receive it via email within 24 hours.",
       "intelligence-brief": "Your Intelligence Brief is being prepared. You\u2019ll receive it via email within 48\u201372 hours.",
-      "x-ray": "Your X-Ray analysis has been queued. Upload your discovery documents to begin — check your email for the upload link.",
-      "war-room": "Your War Room engagement has begun. Upload your discovery documents to start — check your email for the upload link.",
+      "x-ray": "Your X-Ray analysis has been queued. Upload your discovery documents to begin \u2014 check your email for the upload link.",
+      "war-room": "Your War Room engagement has begun. Upload your discovery documents to start \u2014 check your email for the upload link.",
       "situation-room": "Your Situation Room application has been received. We\u2019ll contact you within 24 hours.",
     };
     const tierMessage = prefillTier ? paidTierMessages[prefillTier] : null;
@@ -269,7 +622,7 @@ function IntakeForm() {
             <a href="/blog" className="text-amber-400 underline decoration-amber-400/50 hover:decoration-amber-400">
               blog
             </a>{" "}
-            — it&apos;s full of free information about your rights.
+            &mdash; it&apos;s full of free information about your rights.
           </p>
         </div>
       </div>
@@ -300,8 +653,7 @@ function IntakeForm() {
         </div>
 
         <div className="mt-10 space-y-8">
-          {/* STEP 1 — Contact info and charge details.                       */}
-          {/* Gate: firstName + email + chargeType + state + timeSinceArrest  */}
+          {/* STEP 1 — Contact info, jurisdiction, charge details, charge-specific Qs */}
           {step === 1 && (
             <>
               <fieldset>
@@ -338,15 +690,90 @@ function IntakeForm() {
 
               <fieldset>
                 <legend className="text-sm font-semibold text-zinc-300">Your Case</legend>
+
+                {/* Jurisdiction level — determines which charge categories appear */}
                 <div className="mt-4">
-                  <label htmlFor="chargeType" className={labelClass}>Type of Charges <span className="text-red-400">*</span></label>
-                  <select id="chargeType" required value={form.chargeType as string}
-                    onChange={(e) => setField("chargeType", e.target.value)}
+                  <label htmlFor="jurisdictionLevel" className={labelClass}>
+                    Is your case in federal or state court? <span className="text-red-400">*</span>
+                  </label>
+                  <select id="jurisdictionLevel" value={form.jurisdictionLevel as string}
+                    onChange={(e) => {
+                      setField("jurisdictionLevel", e.target.value);
+                      // Reset charge type when jurisdiction changes
+                      setField("chargeType", "");
+                      setField("sexOffenseSubType", "");
+                      setChargeSpecific({});
+                    }}
                     className={selectClass}>
-                    <option value="">Select charge type</option>
-                    {chargeTypes.map((ct) => <option key={ct.value} value={ct.value}>{ct.label}</option>)}
+                    <option value="">Select</option>
+                    {jurisdictionOptions.map((opt) => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
                   </select>
+                  {form.jurisdictionLevel === "unknown" && (
+                    <p className="mt-2 text-xs text-zinc-500">
+                      Federal cases are prosecuted by the U.S. Attorney&apos;s office.
+                      If you were arrested by local or state police, your case is
+                      likely in state court. If FBI, DEA, ATF, or other federal
+                      agents were involved, it may be federal.
+                    </p>
+                  )}
                 </div>
+
+                {/* Charge type — filtered by jurisdiction */}
+                {form.jurisdictionLevel && (
+                  <div className="mt-4">
+                    <label htmlFor="chargeType" className={labelClass}>Type of Charges <span className="text-red-400">*</span></label>
+                    <select id="chargeType" required value={form.chargeType as string}
+                      onChange={(e) => {
+                        setField("chargeType", e.target.value);
+                        setField("sexOffenseSubType", "");
+                        setChargeSpecific({});
+                      }}
+                      className={selectClass}>
+                      <option value="">Select charge type</option>
+                      {availableChargeTypes.map((ct) => <option key={ct.value} value={ct.value}>{ct.label}</option>)}
+                    </select>
+                  </div>
+                )}
+
+                {/* Sex offense sub-routing */}
+                {showSexOffenseSubRouting && (
+                  <div className="mt-4">
+                    <label htmlFor="sexOffenseSubType" className={labelClass}>Which best describes the allegation?</label>
+                    <select id="sexOffenseSubType" value={form.sexOffenseSubType as string}
+                      onChange={(e) => {
+                        setField("sexOffenseSubType", e.target.value);
+                        setChargeSpecific({});
+                      }}
+                      className={selectClass}>
+                      <option value="">Select</option>
+                      {sexOffenseSubTypes.map((st) => <option key={st.value} value={st.value}>{st.label}</option>)}
+                    </select>
+                  </div>
+                )}
+
+                {/* Charge-specific questions — appear after charge type selection */}
+                {currentChargeQuestions.length > 0 && (
+                  <div className="mt-6 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+                    <p className="mb-3 text-xs font-semibold text-amber-500">
+                      A few questions specific to your charge type
+                    </p>
+                    <div className="space-y-4">
+                      {currentChargeQuestions.map((q) => (
+                        <div key={q.id}>
+                          <label htmlFor={`cs-${q.id}`} className={labelClass}>{q.label}</label>
+                          <select id={`cs-${q.id}`}
+                            value={chargeSpecific[q.id] || ""}
+                            onChange={(e) => setChargeField(q.id, e.target.value)}
+                            className={selectClass}>
+                            <option value="">Select</option>
+                            {q.options.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                          </select>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <div className="mt-4">
                   <label htmlFor="state" className={labelClass}>State <span className="text-red-400">*</span></label>
                   <select id="state" required value={form.state as string}
@@ -405,8 +832,6 @@ function IntakeForm() {
 
           {/* STEP 2 — Attorney status, case details, evidence, plea info.    */}
           {/* Gate: hasAttorney must be selected.                              */}
-          {/* Conditional: plea terms textarea appears only when plea = "yes". */}
-          {/* Multi-selects: arrest circumstances, evidence types, services.   */}
           {step === 2 && (
             <>
               <fieldset>
@@ -421,7 +846,7 @@ function IntakeForm() {
                     onChange={(e) => setField("hasAttorney", e.target.value)}
                     className={selectClass}>
                     <option value="">Select</option>
-                    <option value="yes">Yes — private attorney</option>
+                    <option value="yes">Yes &mdash; private attorney</option>
                     <option value="public">Public defender</option>
                     <option value="no">No attorney yet</option>
                   </select>
@@ -597,8 +1022,6 @@ function IntakeForm() {
           )}
 
           {/* STEP 3 — Optional specific question + disclaimer + submit.      */}
-          {/* No validation gate — all fields optional. The specific question  */}
-          {/* (max 300 chars) gets prioritized first in the delivered report.  */}
           {step === 3 && (
             <>
               <fieldset>
@@ -626,7 +1049,7 @@ function IntakeForm() {
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
                 <p className="text-xs text-zinc-400">
                   By submitting this form, you understand that ImNotAnAttorney
-                  provides legal information and research — not legal advice. We are
+                  provides legal information and research &mdash; not legal advice. We are
                   not a law firm and do not create an attorney-client relationship.
                   Your information is kept private. Communications are not protected by attorney-client privilege.
                 </p>
@@ -650,7 +1073,7 @@ function IntakeForm() {
                 <button type="button" onClick={handleSubmit}
                   disabled={submitting}
                   className="flex-1 rounded-lg bg-amber-500 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50">
-                  {submitting ? "Submitting..." : "Submit — Get Your Case Reviewed"}
+                  {submitting ? "Submitting..." : "Submit \u2014 Get Your Case Reviewed"}
                 </button>
               </div>
 
