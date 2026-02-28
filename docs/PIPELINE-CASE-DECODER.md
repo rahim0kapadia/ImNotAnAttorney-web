@@ -55,7 +55,7 @@ This document describes the full automated pipeline for the Case Decoder product
                                                       /functions/v1/generate-report
                                                       |
                                                       |-- Fetch case + intake from Supabase
-                                                      |-- Call Claude Haiku 4.5 API (~60-120s)
+                                                      |-- Call Claude Sonnet 4.6 API (~60-120s)
                                                       |-- Render markdown to branded HTML
                                                       |-- Save report_html + report_token
                                                       |-- case.status = "review"
@@ -162,7 +162,7 @@ This is the heavy-lift function that runs in the Supabase Deno runtime with a 15
 1. **Fetches case record** from Supabase via raw PostgREST (no SDK -- avoids 60-90s cold start from esm.sh imports).
 2. **Idempotency check** -- If case is already `"review"` or `"delivered"`, returns early (unless `force: true`).
 3. **Finds linked intake** -- First by `intake_id` FK, then by email fallback. If no intake found, emails operator and returns 404.
-4. **Calls Claude Haiku 4.5 API** -- Model `claude-haiku-4-5-20251001`, max 8000 tokens, temperature 0.3. The system prompt encodes expertise from 40+ defense attorneys. The user prompt is built from all intake fields and includes charge-specific blocks and evidence-specific question prompts.
+4. **Calls Claude Sonnet 4.6 API** -- Model `claude-sonnet-4-6`, max 16000 tokens, temperature 0.3. The system prompt encodes expertise from 40+ defense attorneys. The user prompt is built from all intake fields and includes charge-specific blocks and evidence-specific question prompts.
 5. **Renders markdown to branded HTML** -- Dark theme (#0C0A09 background), amber accents (#F59E0B), print-optimized CSS, 9-section report structure.
 6. **Saves to Supabase** -- Updates the case record with `report_html`, `report_token` (UUID for URL-safe access), `generated_at`, `status: "review"`, and the `charge_type` from intake.
 7. **Emails operator** -- Subject: "Review Report: [charge] -- [name]". Contains two action buttons:

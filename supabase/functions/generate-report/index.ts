@@ -334,7 +334,7 @@ The intake identifies whether this is a FEDERAL or STATE case.
 - Unknown: Note importance of determining jurisdiction.
 
 OUTPUT BUDGET — CRITICAL:
-Under 5,500 words total. 7 always-present sections + Letter +
+Under 6,700 words total. 7 always-present sections + Letter +
 Closing + Postscript + 0-2 conditional sections.
 Start with the Methodology Note blockquote, then IMMEDIATELY proceed to "## A Letter to You".
 Budget carefully so early sections don't starve later ones.
@@ -628,6 +628,11 @@ SELF-VERIFICATION — Before output:
 28. Report positioned as preparation tool (Jayadev). Attorney = partner. No oversight or watchdog framing anywhere.
 29. Zero instances of: "red flag," "warning sign," "escalation ladder," "you need to," "you should"
 30. Every section maintains 2:1 efficacy-to-threat ratio. No section ends on threat — always ends on action or reassurance.
+31. Every non-empty intake answer is reflected in at least one section.
+32. All 15 questions are distinct (no near-duplicates).
+33. Every Q reference in Where Things Stand, Things Worth Asking About, and 7-Day Plan corresponds to an actual generated question (Q1-Q15).
+34. Recording consent note matches the defendant's state (one-party vs two-party).
+35. Email templates include the case number if provided by the defendant.
 Revise if any check fails.
 
 OUTPUT CATEGORIES — You are NOT providing legal advice. You provide:
@@ -861,7 +866,7 @@ function buildUserPrompt(intake: IntakeData): string {
 - State/County: ${intake.state || "Not provided"}${intake.incident_location ? ` / ${intake.incident_location}` : ""}
 - Arrest Date: ${intake.arrest_date || "Not provided"}
 - Days Since Arrest: ${daysSinceArrest !== null ? daysSinceArrest : "Unknown"}
-- Attorney Type: ${intake.has_attorney || "Not specified"}
+- Attorney Type: ${intake.has_attorney === "public" ? "Public Defender" : intake.has_attorney === "yes" ? "Private Attorney" : intake.has_attorney === "no" ? "No Attorney" : intake.has_attorney || "Not specified"}
 - Attorney Strategy: ${intake.attorney_strategy || "Not provided"}
 - Communication Frequency: ${comm || "Not specified"}
 - Last Attorney Contact: ${intake.last_attorney_contact || "Not provided"}
@@ -917,6 +922,7 @@ Elements table with "Question for Your Attorney" column — NOT difficulty ratin
 
 Penalty range with statutory citation. Charge-specific intake data reflected: "You told us your substance was [X]..."
 BRIDGING — MANDATORY after penalty range: "These are statutory maximums, not predictions. The questions in this report help you understand the realistic range for YOUR case."
+After the penalty range and bridging, add a "**What this means:**" paragraph — plain English explanation of the charge with zero legalese. This is the defendant's anchor for understanding their situation.
 "Your Rights in This Process" box: right to see discovery, right to be consulted before plea, right to understand strategy, right to second opinion, right to fire attorney — with state-specific citations.
 
 ADMIN PROCESS CALLOUT — CONDITIONAL:
@@ -931,7 +937,7 @@ Use ONLY the section title as the heading — never prefix with internal id.
 Based on arrest date of ${intake.arrest_date} and jurisdiction speedy trial rules. NO "URGENT" red box. Informational + question: "Ask your attorney: What is our current speedy trial status, and have any waivers been filed?" ALWAYS caveat: "This does NOT account for waivers, continuances, or tolling."
 </section>` : "<!-- Time and Deadlines: OMITTED (conditions not met) -->"}
 
-<section id="s3" title="Exactly What to Say" max_words="1000">
+<section id="s3" title="Exactly What to Say" max_words="1400">
 Use ONLY the section title as the heading — never prefix with internal id.
 
 **1. DO NOT SHOW WARNING:**
@@ -974,7 +980,7 @@ Scenarios: "Trust me, I'm handling it" / "You don't need to worry about that" / 
 Notes during meeting (what to write down). Post-meeting summary email template (send within 24 hours). Recording consent note (state-specific: one-party vs two-party consent). Case journal (what to track over time).
 </section>
 
-<section id="s4" title="Questions for Your Attorney" max_words="1800" question_count="15">
+<section id="s4" title="Questions for Your Attorney" max_words="2200" question_count="15">
 Use ONLY the section title as the heading — never prefix with internal id.
 Generate EXACTLY 15 questions. Every question asks the ATTORNEY.
 
@@ -1050,7 +1056,7 @@ This is a REDIRECT, not a deflation. Frame it as: your attorney has information 
 Honest limitations: haven't seen evidence, can't predict outcomes, can't replace attorney. "If anything in this report contradicts what your attorney tells you, your attorney's judgment — informed by your full case file — should take priority. Use this report to ask better questions, not to overrule your attorney."
 </section>
 
-<section id="s7" title="Your Next 7 Days" max_words="500">
+<section id="s7" title="Your Next 7 Days" max_words="900">
 Use ONLY the section title as the heading — never prefix with internal id.
 This is the EMOTIONAL CLIMAX — the report ends here on determination, not disclaimers.
 
