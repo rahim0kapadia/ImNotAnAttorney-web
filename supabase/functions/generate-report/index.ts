@@ -47,8 +47,8 @@
  *   ATTORNEY WOUND, HOPE SIGNAL, ISOLATION, CHARGE PATTERN, CO-DEFENDANT,
  *   READING ARC) before generating, producing stance-calibrated reports.
  *
- *   Parameters: max_tokens=32000 (thinking + output), thinking={type:"enabled",
- *   budget_tokens:16000}. Temperature is NOT set (incompatible with thinking).
+ *   Parameters: max_tokens=32000 (thinking + output), thinking={type:"adaptive"}.
+ *   Temperature is NOT set (incompatible with thinking).
  *   Cost: ~$0.40-0.60/report, still negligible vs $197 price.
  *   Timing: 60-120s (within 150s edge function timeout).
  *
@@ -1283,7 +1283,7 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string): Promise<string
   const body = JSON.stringify({
     model: "claude-opus-4-6",
     max_tokens: 32000,
-    thinking: { type: "enabled", budget_tokens: 16000 },
+    thinking: { type: "adaptive" },
     system: SYSTEM_PROMPT,
     messages: [
       { role: "user", content: userPrompt },

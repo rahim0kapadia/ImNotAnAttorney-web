@@ -350,7 +350,7 @@ Upgraded from Sonnet 4.6 to Opus 4.6 for emotional intelligence. Sonnet produced
 
 At ~$0.40-0.60/report, cost is still negligible vs $197 price (0.2-0.3%). Timing: 60-120s within the 150s edge function timeout.
 
-**Parameters:** `max_tokens: 32000` (thinking + output combined), `thinking: { type: "enabled", budget_tokens: 16000 }`. Temperature is NOT set (incompatible with thinking mode).
+**Parameters:** `max_tokens: 32000` (thinking + output combined), `thinking: { type: "adaptive" }`. Temperature is NOT set (incompatible with thinking mode).
 
 **Response parsing:** Response `content` array contains `{ type: "thinking" }` and `{ type: "text" }` blocks. Code filters for `type === "text"` only — thinking blocks contain the emotional profiling analysis and are not included in the report.
 
