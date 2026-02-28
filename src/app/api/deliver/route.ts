@@ -332,15 +332,15 @@ export async function POST(req: NextRequest) {
     html: `
       <h1 style="color: #F59E0B;">Your ${escapeHtml(tierName)} Report is Ready</h1>
       <p>Hi ${escapeHtml(firstName)},</p>
-      <p>Your personalized ${escapeHtml(tierName)} report is ready to view. It contains targeted questions, evidence patterns, and accountability benchmarks built specifically from your case details.</p>
+      <p>Your personalized ${escapeHtml(tierName)} report is ready to view. It contains targeted questions, communication tools, and a clear picture of where things stand — built specifically from your case details.</p>
       <a href="${reportUrl}" style="display: inline-block; margin: 24px 0; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">View Your Report</a>
       <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
         <p style="margin: 0; color: white; font-weight: bold;">How to use your report:</p>
         <ol style="color: #D4D4D8; padding-left: 20px; margin-top: 12px;">
           <li style="margin-bottom: 8px;"><strong style="color: white;">Print it</strong> and bring it to your next attorney meeting</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Start with the Targeted Questions</strong> (Section 7) — lead with the 5 Priority Questions</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Document every answer</strong> — email your attorney a summary after the meeting</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Use the Evidence Pattern Checklist</strong> (Section 8) when you receive discovery</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Start with the 5 Priority Questions</strong> in "Questions for Your Attorney" — if you only ask one, ask the Golden Question</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Send the email</strong> from "Exactly What to Say" — it's already written for you, just copy-paste and hit send</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Follow Your Next 7 Days</strong> — one simple action per day, starting with sending that email</li>
         </ol>
       </div>
       <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">

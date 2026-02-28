@@ -99,25 +99,24 @@ const TIER_INFO: Record<string, TierInfo> = {
     delivery: "24 hours",
     requiresDiscovery: false,
     features: [
-      "Plain-English charge breakdown",
-      "Case stage benchmark",
-      "Defense milestone checklist",
-      "Defense Milestone Score — 0-100 rating of defense milestones for your case stage",
-      "15 targeted questions for your attorney",
-      "Red flags for your stage",
-      "Common motion types for your charge category",
-      "BONUS: Attorney Meeting Prep Guide — how to present these questions for maximum impact",
-      "BONUS: Motion Deadline Awareness — which deadlines may apply to your charge type",
+      "Plain-English charge breakdown with elements the prosecution must prove",
+      "15 calibrated questions for your attorney (6-part format with follow-up probes)",
+      "Ready-to-send email template + phone script + follow-up template",
+      "Your Advocacy Steps — 8-step communication playbook",
+      "Where Things Stand — 4-area diagnostic of what you know vs. what to ask about",
+      "Your Next 7 Days — one action per day, with Meeting Ready Sheet to print and bring",
+      "Expert methodology from elite defense attorneys (3 per charge type)",
+      "BONUS: When the Conversation Gets Difficult — scripts for 4 common scenarios",
     ],
     guarantee:
-      "Delivered within 24 hours with 15 targeted questions — or your money back.",
+      "Delivered within 24 hours with 15 calibrated questions + communication tools — or your money back.",
     priorityPrice: "$97",
     priorityDesc: "Same-day delivery (4 hours)",
     priorityPriceNum: 97,
     validation:
       "The right place to start. Understand exactly what you are facing before your next attorney meeting.",
     whyThisWorks:
-      "Every question generated using documented tactics from elite defense attorneys — Barry Scheck's chain of custody protocol. F. Lee Bailey's witness analysis framework. Jeffrey Lichtman's informant reliability methodology. These are questions informed by the same methodologies elite defense attorneys use. You're getting them for $197.",
+      "Every question generated using documented tactics from elite defense attorneys — Barry Scheck's chain of custody protocol, Jeffrey Lichtman's informant reliability methodology, Ron Chapman II's drug forensic framework. 15 calibrated questions + ready-to-send email templates + a 7-day action plan. You're getting a communication playbook informed by the same methodologies elite defense attorneys use — for $197.",
     pullquote: {
       quote:
         "Forensic evidence is only as reliable as the humans who handle it.",
