@@ -94,6 +94,10 @@ const PERSONAS = [
       ["DUI experts mentioned (Taylor, Head, McShane)", has(text, "Taylor") || has(text, "Head") || has(text, "McShane")],
       ["Has Time and Deadlines (arrest_date exists)", has(text, "Time and Deadlines") || has(text, "speedy trial")],
       ["OMITS What a Plea Really Means (no plea offered)", hasNone(text, "What a Plea Really Means")],
+      // ---- Opus 4.6 emotional profiling checks ----
+      ["Addresses career-identity fear (nursing license specifically)", has(text, "nursing license") || has(text, "nursing career") || (has(text, "nurse") && has(text, "license"))],
+      ["Validates abandonment wound (PD not calling back / unheard)", has(text, "listening") || has(text, "heard") || has(text, "unheard") || has(text, "hasn't returned") || has(text, "haven't heard")],
+      ["DUI shame/normalization (identity affirmation / courage / not alone)", has(text, "does not define") || has(text, "not who you are") || has(text, "your identity") || has(text, "not alone") || has(text, "took courage") || has(text, "not giving up") || has(text, "because you are")],
     ],
   },
   {
@@ -137,6 +141,11 @@ const PERSONAS = [
       ["Drug experts mentioned (Lichtman, Chapman, Levine)", has(text, "Lichtman") || has(text, "Chapman") || has(text, "Levine")],
       ["Has Time and Deadlines (arrest_date exists)", has(text, "Time and Deadlines") || has(text, "speedy trial")],
       ["OMITS What a Plea Really Means (no plea offered)", hasNone(text, "What a Plea Really Means")],
+      // ---- Opus 4.6 emotional profiling checks ----
+      ["Addresses co-defendant dynamics (cooperation/flip/testify)", has(text, "co-defendant") || has(text, "cooperat") || has(text, "flip") || has(text, "testify") || has(text, "other person")],
+      ["Catastrophizer containment (range not prediction / realistic / not everything)", has(text, "range") || has(text, "not everything") || has(text, "not the prediction") || has(text, "does not mean") || has(text, "doesn't mean")],
+      ["Kept-in-dark wound validation (hasn't explained / understand / clarity)", has(text, "hasn't explained") || has(text, "understand") || has(text, "clarity") || has(text, "information") || has(text, "know what")],
+      ["Consent search addressed (voluntariness/withdraw/challenge)", has(text, "consent") || has(text, "voluntary") || has(text, "withdraw") || has(text, "search")],
     ],
   },
   {
@@ -180,6 +189,11 @@ const PERSONAS = [
       ["White collar experts mentioned (Weinberg, Arguedas, Smith)", has(text, "Weinberg") || has(text, "Arguedas") || has(text, "Smith")],
       ["Has Time and Deadlines (arrest_date exists)", has(text, "Time and Deadlines") || has(text, "speedy trial") || has(text, "Speedy Trial Act")],
       ["INCLUDES What a Plea Really Means (plea offered = yes)", has(text, "What a Plea Really Means") || has(text, "Collateral Consequences") || has(text, "collateral consequences")],
+      // ---- Opus 4.6 emotional profiling checks ----
+      ["Addresses co-defendant dynamics (cooperation/flip/partners)", has(text, "co-defendant") || has(text, "cooperat") || has(text, "flip") || has(text, "partner") || has(text, "separately")],
+      ["Identity crisis validation (not a criminal / who you are / business owner)", has(text, "not a criminal") || has(text, "who you are") || has(text, "identity") || has(text, "business owner") || has(text, "define you")],
+      ["Betrayal wound validation (pushing plea / paid for defense / trust)", has(text, "pushing") || has(text, "trust") || has(text, "paid") || has(text, "disconnect") || has(text, "expectation")],
+      ["Intellectualizer-matched tone (precise / specific / elements / framework)", has(text, "elements") || has(text, "specific") || has(text, "precisely") || has(text, "framework") || has(text, "analysis")],
     ],
   },
 ];
@@ -576,6 +590,8 @@ function commonChecks(text) {
     ["Letter uses defendant's actual words (quotes from situation)", has(text, '"') || has(text, "\u201C") || has(text, "you told us") || has(text, "you said") || has(text, "you wrote")],
     ["Has reading pacing/overwhelm permission", has(text, "don't have to read") || has(text, "start with") || has(text, "start here") || has(text, "rest will be here") || has(text, "at your own pace") || has(text, "one section at a time")],
     ["Has charge-specific emotional calibration", has(text, "shame") || has(text, "injustice") || has(text, "identity") || has(text, "license") || has(text, "career") || has(text, "profession") || has(text, "stigma") || has(text, "reputation")],
+    ["Has stance-calibrated bridging (range/prediction/check/explore)", has(text, "not the prediction") || has(text, "not predictions") || has(text, "range") || has(text, "what you can") || has(text, "explore with your attorney")],
+    ["NO banned alarm language (red flag/warning sign)", hasNone(text, "red flag") && hasNone(text, "warning sign")],
   ];
 }
 
@@ -606,21 +622,40 @@ async function main() {
     console.log(`  Calling Claude API (Opus 4.6 with adaptive thinking)... this takes 60-120 seconds\n`);
 
     const start = Date.now();
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "x-api-key": ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "claude-opus-4-6",
-        max_tokens: 32000,
-        thinking: { type: "enabled", budget_tokens: 16000 },
-        system: SYSTEM_PROMPT,
-        messages: [{ role: "user", content: userPrompt }],
-      }),
-    });
+    let response;
+    const maxRetries = 2;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        response = await fetch("https://api.anthropic.com/v1/messages", {
+          method: "POST",
+          headers: {
+            "x-api-key": ANTHROPIC_API_KEY,
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "claude-opus-4-6",
+            max_tokens: 32000,
+            thinking: { type: "enabled", budget_tokens: 16000 },
+            system: SYSTEM_PROMPT,
+            messages: [{ role: "user", content: userPrompt }],
+          }),
+        });
+        break; // success — exit retry loop
+      } catch (fetchErr) {
+        const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+        if (attempt < maxRetries) {
+          console.warn(`  Network error (attempt ${attempt}/${maxRetries}, ${elapsed}s): ${fetchErr.message} — retrying in 5s...`);
+          await new Promise((r) => setTimeout(r, 5000));
+        } else {
+          console.error(`  Network error after ${maxRetries} attempts (${elapsed}s): ${fetchErr.message}`);
+          results.push({ persona: persona.id, label: persona.label, pass: 0, fail: 0, total: 0, error: fetchErr.message });
+          response = null;
+        }
+      }
+    }
+
+    if (!response) continue; // all retries failed — skip to next persona
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
 
