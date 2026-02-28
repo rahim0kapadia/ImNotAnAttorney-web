@@ -1646,7 +1646,24 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    console.log(`[generate-report] Complete! Case ${caseId} → review`);
+    // --- Fire-and-forget: trigger evaluation ---
+    // The evaluate-report Edge Function runs UPL + Psych evaluation asynchronously.
+    // Non-awaited — if this fails silently, the cron safety net catches cases with
+    // NULL eval_results after 15 minutes and re-triggers evaluation.
+    try {
+      fetch(`${supabaseUrl}/functions/v1/evaluate-report`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${supabaseKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ caseId }),
+      }).catch((err) => console.error("[generate-report] Eval trigger failed:", err));
+    } catch {
+      // Silently ignore — cron safety net will catch missed evaluations
+    }
+
+    console.log(`[generate-report] Complete! Case ${caseId} → review (eval triggered)`);
 
     return new Response(
       JSON.stringify({ success: true, caseId, reportToken, status: "review" }),

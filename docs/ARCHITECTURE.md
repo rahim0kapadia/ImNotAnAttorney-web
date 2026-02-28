@@ -87,7 +87,9 @@ Customer Journey:
 | reviewed_at | timestamptz | When approved |
 | deliverable_url | text | Full report URL |
 | file_urls | text[] | Discovery file storage paths |
+| eval_results | jsonb | Evaluation scorecard (UPL + Psych teams) |
 | review_reminder_sent | boolean | Prevents duplicate review reminders |
+| report_token_expires_at | timestamptz | 12-month report access expiry |
 | updated_at | timestamptz | Auto-updated via trigger |
 
 ### `intakes`
@@ -204,6 +206,7 @@ Centralized in `src/lib/site.ts`:
 | 3 | Review reminders | 12 hours in "review" | Alert operator (24h guarantee at risk) |
 | 4 | Stuck intake detection | 2 hours in "intake" | Mark intake-stalled, alert operator |
 | 5 | Stuck generation detection | 30 minutes in "generating" | Mark generation-failed, alert operator with retry command |
+| 12 | Missed evaluation safety net | 15 minutes in "review" with NULL eval_results | Re-trigger evaluate-report Edge Function (limit 5/run) |
 
 ## Email System
 
@@ -223,7 +226,7 @@ Configured in `next.config.ts`:
 
 ## Known Code Duplications (Intentional)
 
-1. **`escapeHtml()` + `sendEmail()` + `PHYSICAL_ADDRESS`** — Duplicated in the Supabase Edge Function (`generate-report/index.ts`). This is intentional because the edge function runs in Deno and cannot import from the Next.js codebase.
+1. **`escapeHtml()` + `sendEmail()` + `PHYSICAL_ADDRESS`** — Duplicated in both Supabase Edge Functions (`generate-report/index.ts` and `evaluate-report/index.ts`). This is intentional because edge functions run in Deno and cannot import from the Next.js codebase.
 
 2. **Tier pricing data** — Exists in 3 places: `stripe.ts` (source of truth for checkout), `PricingTable.tsx` (display), `services/page.tsx` (display). Changes must be synced manually.
 
@@ -234,6 +237,7 @@ src/
   app/
     api/
       generate/case-decoder/  ← Report generation dispatcher
+      evaluate/case-decoder/  ← Evaluation dispatcher (fire-and-forget to Edge Function)
       webhooks/stripe/         ← Payment + refund handling
       deliver/                 ← Operator report delivery
       cron/drip/              ← Daily cron (5 parts)
@@ -258,6 +262,7 @@ src/
   components/                 ← Shared UI components
 supabase/
   functions/
-    generate-report/          ← Edge function (Deno, 150s timeout)
+    generate-report/          ← Report generation Edge Function (Opus 4.6, Deno, 150s timeout)
+    evaluate-report/          ← Report evaluation Edge Function (Sonnet 4.6, UPL + Psych teams)
   migrations/                 ← SQL migration files
 ```

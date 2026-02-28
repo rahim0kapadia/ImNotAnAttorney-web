@@ -66,6 +66,93 @@ function getOrigin(req: NextRequest): string {
   return process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
 }
 
+/**
+ * Renders eval scorecard HTML for the operator confirmation page.
+ * Shows UPL gate status (red/green/yellow) and team-by-team results.
+ */
+// deno-lint-ignore no-explicit-any
+function renderEvalScorecard(evalResults: any): string {
+  if (!evalResults) {
+    return `<div style="background: #422006; padding: 12px 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #F59E0B;">
+      <p style="margin: 0; color: #FDE68A; font-weight: bold;">Evaluation: Pending</p>
+      <p style="margin: 4px 0 0; color: #D4D4D8; font-size: 13px;">Evaluation has not completed yet. Results will appear here once ready.</p>
+    </div>`;
+  }
+
+  const gatePassed = evalResults.gate_passed;
+  const teams = evalResults.teams || {};
+
+  // Gate banner
+  let banner: string;
+  if (gatePassed === false) {
+    banner = `<div style="background: #7F1D1D; padding: 12px 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #EF4444;">
+      <p style="margin: 0; color: #FCA5A5; font-weight: bold;">UPL GATE FAILED — Review evaluation below before delivering</p>
+    </div>`;
+  } else {
+    const uplScore = teams.upl?.score || "N/A";
+    const psychScore = teams.psych?.score || "N/A";
+    banner = `<div style="background: #052E16; padding: 12px 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #22C55E;">
+      <p style="margin: 0; color: #86EFAC; font-weight: bold;">Evaluation: PASSED</p>
+      <p style="margin: 4px 0 0; color: #D4D4D8; font-size: 13px;">UPL ${escapeHtml(String(uplScore))} | Psych ${escapeHtml(String(psychScore))}</p>
+    </div>`;
+  }
+
+  // Team details (collapsible)
+  let details = "";
+  for (const [key, team] of Object.entries(teams)) {
+    // deno-lint-ignore no-explicit-any
+    const t = team as any;
+    if (t.error) {
+      details += `<div style="margin: 8px 0;"><strong style="color: #EF4444;">${escapeHtml(t.name || key)}: ERROR</strong> — ${escapeHtml(t.error)}</div>`;
+      continue;
+    }
+    if (t.skipped) {
+      details += `<div style="margin: 8px 0;"><strong style="color: #F59E0B;">${escapeHtml(t.name || key)}: SKIPPED</strong> — ${escapeHtml(t.reason || "")}</div>`;
+      continue;
+    }
+    if (!t.criteria) continue;
+
+    const teamBadge = t.failed > 0 ? "color: #EF4444;" : t.needs_work > 0 ? "color: #F59E0B;" : "color: #22C55E;";
+    details += `<div style="margin: 12px 0;">
+      <strong style="${teamBadge}">${escapeHtml(t.name || key)} (${escapeHtml(t.weight || "")}): ${escapeHtml(t.score || "")}</strong>
+      <span style="color: #71717A; font-size: 12px;"> — ${t.passed} pass, ${t.needs_work} needs_work, ${t.failed} fail</span>`;
+
+    if (t.summary) {
+      details += `<p style="margin: 4px 0 0; color: #A1A1AA; font-size: 13px;">${escapeHtml(t.summary)}</p>`;
+    }
+
+    // Show failed/needs_work criteria
+    // deno-lint-ignore no-explicit-any
+    const issues = (t.criteria as any[]).filter((c: any) => c.result !== "PASS");
+    if (issues.length > 0) {
+      details += `<ul style="margin: 8px 0 0; padding-left: 20px;">`;
+      // deno-lint-ignore no-explicit-any
+      for (const c of issues as any[]) {
+        const color = c.result === "FAIL" ? "#EF4444" : "#F59E0B";
+        details += `<li style="margin: 4px 0; font-size: 13px;"><span style="color: ${color};">${escapeHtml(c.result)}</span> <strong>${escapeHtml(c.id)}</strong>: ${escapeHtml(c.justification || "")}`;
+        if (c.problematic_text) {
+          details += `<br><em style="color: #EF4444; font-size: 12px;">"${escapeHtml(String(c.problematic_text).slice(0, 150))}"</em>`;
+        }
+        details += `</li>`;
+      }
+      details += `</ul>`;
+    }
+
+    details += `</div>`;
+  }
+
+  const costInfo = evalResults.cost_usd ? ` | Cost: $${evalResults.cost_usd.toFixed(4)}` : "";
+  const durationInfo = evalResults.duration_ms ? ` | Duration: ${(evalResults.duration_ms / 1000).toFixed(1)}s` : "";
+
+  return `${banner}
+    <details style="margin: 8px 0 16px; cursor: pointer;">
+      <summary style="color: #A1A1AA; font-size: 13px;">Evaluation Details (v${escapeHtml(evalResults.eval_version || "1.0")}${costInfo}${durationInfo})</summary>
+      <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 8px;">
+        ${details}
+      </div>
+    </details>`;
+}
+
 // ================================================================
 // GET: Render delivery confirmation page (safe for email prefetch)
 // ================================================================
@@ -121,7 +208,7 @@ export async function GET(req: NextRequest) {
 
   const { data: caseData, error: caseError } = await supabase
     .from("cases")
-    .select("id, email, tier, status, charge_type, report_token")
+    .select("id, email, tier, status, charge_type, report_token, eval_results")
     .eq("id", caseId)
     .single();
 
@@ -172,6 +259,7 @@ export async function GET(req: NextRequest) {
       <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge:</strong> ${escapeHtml(caseData.charge_type || "N/A")}</p>
       <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${escapeHtml(caseId)}</p>
     </div>
+    ${renderEvalScorecard(caseData.eval_results)}
     <p style="color: #A1A1AA;">This will send the delivery email to the customer and update case status to "delivered".</p>
     ${caseData.report_token ? `<p style="margin: 12px 0;"><a href="${origin}/report/${caseData.report_token}" style="color: #3B82F6; text-decoration: underline;">Preview Report</a></p>` : ""}
     <form method="POST" action="${origin}/api/deliver">

@@ -60,6 +60,12 @@ This document describes the full automated pipeline for the Case Decoder product
                                                       |-- Save report_html + report_token
                                                       |-- case.status = "review"
                                                       |
+                                                      |-- Fire-and-forget: /functions/v1/evaluate-report
+                                                      |     |-- Run UPL eval (Sonnet 4.6, ~30-45s)
+                                                      |     |-- Run Psych eval (Sonnet 4.6, ~30-45s)
+                                                      |     |-- Save eval_results JSONB to cases
+                                                      |     |-- UPL FAIL → operator alert email
+                                                      |
                                                       v
                                                    Operator email:                ------>  3. Review report
                                                    "Review Report: [charge] — [name]"        (Preview link)
@@ -72,6 +78,7 @@ This document describes the full automated pipeline for the Case Decoder product
                                                       v
                                                    GET /api/deliver
                                                       |-- Render confirmation page (safe for email prefetch)
+                                                      |-- Show eval scorecard (green/red/yellow badge)
                                                       |
                                                    Operator clicks "Confirm Delivery"
                                                       |
@@ -409,13 +416,32 @@ When the Edge Function completes generation, the operator gets a "Review Report"
 - **"Approve & Deliver" button** -- Links to `GET /api/deliver?token={OPERATOR_SECRET}&case={caseId}`
 - **"Preview Report" button** -- Links to `/report/{report_token}` (the same URL the customer will receive)
 
+### Automated Evaluation Gate
+
+After saving the report (status = "review"), the generate-report Edge Function fires a non-awaited request to the evaluate-report Edge Function. This runs two evaluation teams:
+
+1. **UPL Compliance (GATE)** — 10 criteria checking for advice language, attorney judgment, disclaimer presence, etc. Any FAIL = `gate_passed: false` + operator alert email.
+2. **Psychological Architecture (HIGH)** — 10 criteria checking trauma-informed design, efficacy pairing, emotional progression, etc.
+
+**Model:** Sonnet 4.6, temperature 0, no thinking mode. ~60-90s total for both teams.
+
+**Results** are saved to `cases.eval_results` JSONB column. If the fire-and-forget trigger is dropped, the cron safety net (Part 12) re-triggers evaluation for cases with NULL eval_results after 15 minutes.
+
+**Dev tool:** `node evaluate-report.mjs` runs all 5 evaluation teams (UPL, Psych, Legal, Defendant, Conversion) using Opus 4.6 for highest-quality evaluation. See `system/EVALUATION-TEAM.md` for full criteria.
+
 ### Delivery Approval
 
 1. Operator clicks "Approve & Deliver" in the email.
-2. A confirmation page renders showing case details and a "Preview Report" link.
-3. Operator can preview the report, then clicks "Confirm Delivery".
+2. A confirmation page renders showing case details, a "Preview Report" link, and the **evaluation scorecard**:
+   - **Green badge** — "Evaluation: PASSED" with team scores (e.g., "UPL 10/10, Psych 9/10")
+   - **Red banner** — "UPL GATE FAILED — Review evaluation below before delivering" with specific failed criteria
+   - **Yellow badge** — "Evaluation pending" (eval hasn't completed yet)
+   - Collapsible details section with criterion-by-criterion results
+3. Operator can preview the report, review the eval scorecard, then clicks "Confirm Delivery".
 4. The POST handler sends the delivery email to the customer and updates the case status.
 5. Operator sees a confirmation page: "Report Delivered" with the report URL.
+
+**Note:** The evaluation scorecard is advisory — operators can still deliver even if UPL gate fails, if they believe the evaluation is wrong.
 
 ### Review Reminder (24-hour guarantee protection)
 
@@ -620,9 +646,12 @@ The delivery endpoint uses an upsert with `onConflict: "subscriber_id,email_key"
 | `src/app/api/webhooks/stripe/route.ts` | Order + case creation, intake linking, generation trigger (Path A), payment emails |
 | `src/app/api/intake/route.ts` | Intake form submission, pending case detection, generation trigger (Path B) |
 | `src/app/api/generate/case-decoder/route.ts` | Auth, idempotency, atomic guard, fire-and-forget to Edge Function |
-| `supabase/functions/generate-report/index.ts` | Claude API call, HTML rendering, DB save, operator review email |
-| `src/app/api/deliver/route.ts` | Operator review confirmation page (GET), actual delivery (POST) |
-| `src/app/api/cron/drip/route.ts` | Daily cron: drip emails, review reminders, stuck case detection |
+| `supabase/functions/generate-report/index.ts` | Claude API call (Opus 4.6), HTML rendering, DB save, operator email, eval trigger |
+| `supabase/functions/evaluate-report/index.ts` | UPL + Psych evaluation (Sonnet 4.6), saves eval_results JSONB, UPL FAIL alerts |
+| `src/app/api/evaluate/case-decoder/route.ts` | Evaluation dispatcher (fire-and-forget to Edge Function) |
+| `src/app/api/deliver/route.ts` | Operator review + eval scorecard (GET), actual delivery (POST) |
+| `src/app/api/cron/drip/route.ts` | Daily cron: drip emails, review reminders, stuck detection, eval safety net |
+| `evaluate-report.mjs` | Dev tool: all 5 evaluation teams (Opus 4.6), CLI interface |
 | `src/lib/drip-emails.ts` | Email templates and sequences (nurture + post-purchase) |
 | `src/lib/email.ts` | Resend API wrapper, branded HTML template, CAN-SPAM footer |
 | `src/lib/stripe.ts` | Stripe client, tier config (prices, delivery timeframes) |

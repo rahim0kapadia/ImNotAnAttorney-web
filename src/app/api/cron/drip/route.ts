@@ -4,7 +4,7 @@
  * Schedule: Runs daily at 9 AM EST (14:00 UTC) via Vercel Cron.
  * Protected by CRON_SECRET bearer token (Vercel sets this automatically).
  *
- * This cron does 7 things, in order:
+ * This cron does 12 things, in order:
  *
  * PART 1 — Nurture emails (subscribers who haven't bought yet)
  *   Sends the next unsent email in the nurture sequence based on days since signup.
@@ -35,6 +35,12 @@
  *   Function has a 150s timeout, so 30 minutes means it crashed or timed out
  *   without updating the status. Alerts operator with a curl retry command.
  *   Transitions status to "generation-failed" to prevent re-alerting.
+ *
+ * PART 12 — Missed evaluation safety net
+ *   Detects cases in "review" status with NULL eval_results and generated_at > 15 min ago.
+ *   Re-triggers the evaluate-report Edge Function for up to 5 cases per cron run.
+ *   The eval trigger is fire-and-forget from generate-report — this catches cases
+ *   where that trigger was silently dropped.
  *
  * CAN-SPAM compliance:
  *   - All emails include unsubscribe links (via unsubscribeEmail param)
@@ -1016,6 +1022,44 @@ export async function GET(req: NextRequest) {
           errors++;
         }
       }
+    }
+
+    // PART 12: MISSED EVALUATION SAFETY NET
+    // ============================================================
+    // The evaluate-report Edge Function is triggered fire-and-forget
+    // after report generation. If that trigger was dropped (network
+    // error, edge function crash), the case will have status="review"
+    // but eval_results=NULL. Re-trigger evaluation for these cases.
+    // Limit: 5 per cron run to avoid overwhelming the eval function.
+    // ============================================================
+    const fifteenMinAgo = new Date(Date.now() - 15 * 60 * 1000).toISOString();
+    const { data: missingEvals } = await supabase
+      .from("cases")
+      .select("id")
+      .eq("status", "review")
+      .is("eval_results", null)
+      .lt("generated_at", fifteenMinAgo)
+      .limit(5);
+
+    if (missingEvals && missingEvals.length > 0) {
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+      for (const c of missingEvals) {
+        try {
+          fetch(`${siteUrl}/api/evaluate/case-decoder`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ caseId: c.id }),
+          }).catch((err) =>
+            console.error(`[Drip Cron] Eval re-trigger failed for ${c.id}:`, err)
+          );
+        } catch {
+          // Silently continue — next cron run will retry
+        }
+      }
+      console.log(`[Drip Cron] Part 12: Re-triggered evaluation for ${missingEvals.length} cases`);
     }
 
     // ============================================================
