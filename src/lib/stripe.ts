@@ -66,6 +66,9 @@ export const stripe = new Stripe(stripeKey, {
  *
  * NOTE: 100% upgrade credit policy — any purchase amount is credited toward
  * the next tier within 12 months. Refunded purchases forfeit upgrade credit.
+ *
+ * Canonical pricing source of truth is the `tiers` Supabase table.
+ * This object must be kept in sync until the frontend reads from DB.
  */
 export const TIERS = {
   "case-decoder": {
