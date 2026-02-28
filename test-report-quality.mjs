@@ -689,14 +689,38 @@ async function main() {
       continue;
     }
 
-    const result = response.json();
+    let result = response.json();
     // Response contains thinking + text blocks — extract text only
-    const textBlocks = (result.content || []).filter((b) => b.type === "text");
-    const text = textBlocks.map((b) => b.text).join("") || "";
-    const words = text.split(" ").filter((w) => w.length > 0);
+    let textBlocks = (result.content || []).filter((b) => b.type === "text");
+    let text = textBlocks.map((b) => b.text).join("") || "";
 
-    console.log(`  Done in ${elapsed}s — ${text.length} chars, ~${words.length} words`);
+    console.log(`  Done in ${elapsed}s — ${text.length} chars, stop_reason: ${result.stop_reason}`);
     console.log(`  API usage: ${JSON.stringify(result.usage)}`);
+
+    // Opus can nondeterministically produce a thinking-only response. Retry once.
+    if (!text.trim()) {
+      console.warn(`  Empty text (${result.usage?.output_tokens} output tokens were all thinking). Retrying...`);
+      try {
+        const raw2 = await callClaudeHTTPS({
+          model: "claude-opus-4-6",
+          max_tokens: 32000,
+          thinking: { type: "enabled", budget_tokens: 16000 },
+          system: SYSTEM_PROMPT,
+          messages: [{ role: "user", content: userPrompt }],
+        });
+        const retryElapsed = ((Date.now() - start) / 1000).toFixed(1);
+        const r2 = JSON.parse(raw2.body);
+        textBlocks = (r2.content || []).filter((b) => b.type === "text");
+        text = textBlocks.map((b) => b.text).join("") || "";
+        result = r2;
+        console.log(`  Retry done in ${retryElapsed}s — ${text.length} chars, stop_reason: ${r2.stop_reason}`);
+        console.log(`  Retry usage: ${JSON.stringify(r2.usage)}`);
+      } catch (retryErr) {
+        console.error(`  Retry failed: ${retryErr.message}`);
+      }
+    }
+
+    const words = text.split(" ").filter((w) => w.length > 0);
 
     // Save markdown
     const mdPath = path.join(OUT_DIR, `${persona.id}.md`);

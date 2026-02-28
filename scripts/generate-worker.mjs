@@ -705,10 +705,20 @@ async function main() {
       // Extract text blocks (filter out thinking blocks)
       const textBlocks = (result.content || []).filter((b) => b.type === "text");
       const text = textBlocks.map((b) => b.text).join("") || "";
-      if (!text.trim()) throw new Error("Empty response from Claude API");
 
       const apiDuration = ((Date.now() - apiStart) / 1000).toFixed(1);
-      console.log(`[worker] Claude API completed in ${apiDuration}s — input: ${usage?.input_tokens}, output: ${usage?.output_tokens}`);
+      console.log(`[worker] Claude API completed in ${apiDuration}s — input: ${usage?.input_tokens}, output: ${usage?.output_tokens}, stop: ${result.stop_reason}`);
+
+      // Opus can nondeterministically produce a thinking-only response (all
+      // output tokens go to the thinking block, zero text). Retry — next attempt
+      // almost always succeeds.
+      if (!text.trim()) {
+        if (attempt < MAX_RETRIES) {
+          console.warn(`[worker] Empty text response (${usage?.output_tokens} output tokens were all thinking). Retrying (attempt ${attempt}/${MAX_RETRIES})...`);
+          continue;
+        }
+        throw new Error(`Empty response from Claude API after ${MAX_RETRIES} attempts (${usage?.output_tokens} output tokens were all thinking)`);
+      }
 
       markdown = text;
       break;

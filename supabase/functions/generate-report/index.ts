@@ -1439,9 +1439,19 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: st
     // text blocks contain the actual report markdown.
     const textBlocks = (result.content || []).filter((b: { type: string }) => b.type === "text");
     const text = textBlocks.map((b: { text: string }) => b.text).join("") || "";
-    if (!text.trim()) throw new Error("Empty response from Claude API");
 
-    console.log(`[generate-report] Usage — input: ${result.usage?.input_tokens}, output: ${result.usage?.output_tokens}`);
+    console.log(`[generate-report] Usage — input: ${result.usage?.input_tokens}, output: ${result.usage?.output_tokens}, stop: ${result.stop_reason}`);
+
+    // Opus can nondeterministically produce a thinking-only response (all
+    // output tokens go to the thinking block, zero text). Retry on empty text
+    // just like we retry on 529 — the next attempt almost always succeeds.
+    if (!text.trim()) {
+      if (attempt < MAX_RETRIES) {
+        console.warn(`[generate-report] Empty text response (${result.usage?.output_tokens} output tokens were all thinking). Retrying (attempt ${attempt}/${MAX_RETRIES})...`);
+        continue;
+      }
+      throw new Error(`Empty response from Claude API after ${MAX_RETRIES} attempts (${result.usage?.output_tokens} output tokens were all thinking)`);
+    }
 
     return text;
   }
