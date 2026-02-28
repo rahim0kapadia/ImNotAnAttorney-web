@@ -17,13 +17,13 @@
  *          This is the destructive action. Only triggered by the operator clicking
  *          the confirmation button.
  *
- * Email-before-status pattern:
- *   The delivery email is sent BEFORE updating case status to "delivered".
- *   Rationale: If we mark "delivered" first and the email fails, the case looks
- *   complete but the customer never got notified — a silent failure. By sending
- *   the email first, we know whether notification succeeded. If it fails after
- *   retries, the operator is alerted, but the case is still marked "delivered"
- *   so the report URL is accessible (the operator can share it manually).
+ * Atomic-claim-then-email pattern:
+ *   The case status is atomically updated to "delivered" BEFORE sending the
+ *   delivery email. This prevents the TOCTOU race where two concurrent POST
+ *   requests both pass a bare status check and both send delivery emails.
+ *   The atomic conditional UPDATE (.eq("status", "review")) acts as a mutex —
+ *   only one request wins. If the email fails after the status update, the
+ *   operator is alerted and the report URL still works (manual forwarding).
  *
  * Retry logic:
  *   1. First email attempt (full HTML template)
@@ -195,13 +195,13 @@ export async function GET(req: NextRequest) {
 // "Confirm Delivery" on the GET page above.
 //
 // Execution order (intentional):
-//   1. Validate auth + case status
-//   2. Send delivery email to customer (with retry)
-//   3. Update case status to "delivered"
+//   1. Validate auth + fetch case data
+//   2. Atomic claim: UPDATE status to "delivered" WHERE status = "review" (mutex)
+//   3. Send delivery email to customer (with retry)
 //   4. Record drip to prevent duplicate delivery emails from cron
 //   5. Return confirmation HTML to operator
 //
-// The email-before-status ordering is critical — see file-level JSDoc.
+// The atomic-claim-before-email ordering prevents duplicate emails — see file-level JSDoc.
 export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
   // PARSE INPUT: Support both form-encoded (from GET page button)
@@ -269,25 +269,52 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // ──────────────────────────────────────────────────────────────
-  // STATUS GUARDS: Same checks as GET — prevent re-delivery or
-  // delivery of cases not yet in "review" status
-  // ──────────────────────────────────────────────────────────────
-  if (caseData.status === "delivered") {
-    return new NextResponse(
-      `<h1>Already Delivered</h1><p>This case was already delivered to ${escapeHtml(caseData.email)}.</p>`,
-      { status: 200, headers: { "Content-Type": "text/html" } }
-    );
-  }
+  const now = new Date().toISOString();
 
-  if (caseData.status !== "review") {
+  // ──────────────────────────────────────────────────────────────
+  // ATOMIC DELIVERY GUARD: Claim the case for delivery
+  // ──────────────────────────────────────────────────────────────
+  // Uses a conditional UPDATE (eq status "review") as a database-level
+  // mutex. Only one concurrent POST can win this UPDATE — the loser
+  // gets null back and returns early. This prevents the TOCTOU race
+  // where two requests both pass a bare status check and both send
+  // delivery emails.
+  //
+  // The UPDATE is placed BEFORE the email send so that duplicate
+  // requests are rejected before any emails go out.
+  // E3: Set report token expiry to 12 months from now
+  const expiresAt = new Date();
+  expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+
+  const { data: deliverGuard } = await supabase
+    .from("cases")
+    .update({
+      status: "delivered",
+      delivered_at: now,
+      reviewed_by: "operator",
+      reviewed_at: now,
+      deliverable_url: `${getOrigin(req)}/report/${caseData.report_token || ""}`,
+      updated_at: now,
+      report_token_expires_at: expiresAt.toISOString(),
+    })
+    .eq("id", caseId)
+    .eq("status", "review")
+    .select("id")
+    .single();
+
+  if (!deliverGuard) {
+    // Case was not in "review" status — either already delivered or not ready
+    if (caseData.status === "delivered") {
+      return new NextResponse(
+        `<h1>Already Delivered</h1><p>This case was already delivered to ${escapeHtml(caseData.email)}.</p>`,
+        { status: 200, headers: { "Content-Type": "text/html" } }
+      );
+    }
     return new NextResponse(
       `<h1>Case not in review status</h1><p>Current status: ${escapeHtml(caseData.status)}</p>`,
       { status: 400, headers: { "Content-Type": "text/html" } }
     );
   }
-
-  const now = new Date().toISOString();
   // B11: Validate report_token is a UUID before interpolating into HTML
   const reportToken = caseData.report_token;
   if (!reportToken || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(reportToken)) {
@@ -312,13 +339,13 @@ export async function POST(req: NextRequest) {
   }
 
   // ──────────────────────────────────────────────────────────────
-  // STEP 1: SEND DELIVERY EMAIL (before status update)
+  // STEP 2: SEND DELIVERY EMAIL (after atomic status claim)
   // ──────────────────────────────────────────────────────────────
-  // IMPORTANT: Email is sent FIRST, then status is updated.
-  // If we mark "delivered" first and email fails, the customer never
-  // gets notified but the case looks complete — a silent failure.
-  // Email-first ensures we know if notification worked before
-  // claiming the case is delivered.
+  // The status was already atomically updated to "delivered" by the
+  // guard above. This prevents duplicate emails from concurrent
+  // requests (the guard is the mutex, not the email send).
+  // If the email fails, the report URL still works and the operator
+  // is alerted to forward it manually.
   //
   // The email includes:
   //   - Report view link (primary CTA)
@@ -386,30 +413,10 @@ export async function POST(req: NextRequest) {
   }
 
   // ──────────────────────────────────────────────────────────────
-  // STEP 2: UPDATE CASE STATUS → "delivered"
+  // NOTE: Case status was already updated to "delivered" by the
+  // atomic guard above (before email send). This prevents the
+  // TOCTOU race where two concurrent POSTs both send emails.
   // ──────────────────────────────────────────────────────────────
-  // This happens AFTER the email attempt (regardless of success).
-  // Even if the email failed, we mark delivered because:
-  //   1. The report URL is live and accessible
-  //   2. The operator was alerted to send it manually
-  //   3. Not marking delivered would leave the case in "review" limbo
-  //      and the cron would send review reminder alerts
-  // E3: Set report token expiry to 12 months from now
-  const expiresAt = new Date();
-  expiresAt.setFullYear(expiresAt.getFullYear() + 1);
-
-  await supabase
-    .from("cases")
-    .update({
-      status: "delivered",
-      delivered_at: now,
-      reviewed_by: "operator",
-      reviewed_at: now,
-      deliverable_url: reportUrl,
-      updated_at: now,
-      report_token_expires_at: expiresAt.toISOString(),
-    })
-    .eq("id", caseId);
 
   // ──────────────────────────────────────────────────────────────
   // STEP 3: RECORD DRIP to prevent duplicate delivery emails

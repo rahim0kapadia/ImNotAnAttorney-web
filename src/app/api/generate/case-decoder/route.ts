@@ -108,13 +108,19 @@ export async function POST(req: NextRequest) {
   //   - Supabase/Postgres guarantees atomicity — only one UPDATE can match.
   //   - The loser gets zero rows back (guardData === null) and bails out.
   // This is cheaper and more reliable than advisory locks for our use case.
-  const { data: guardData } = await supabase
+  // When force=true, skip the status filter so stuck-generating or failed
+  // cases can be retried immediately. Without this, the atomic guard rejects
+  // force retries because the case is already in "generating" status.
+  let guardQuery = supabase
     .from("cases")
     .update({ status: "generating", updated_at: new Date().toISOString() })
-    .eq("id", caseId)
-    .not("status", "in", '("generating","review","delivered")')
-    .select("id")
-    .single();
+    .eq("id", caseId);
+
+  if (!force) {
+    guardQuery = guardQuery.not("status", "in", '("generating","review","delivered")');
+  }
+
+  const { data: guardData } = await guardQuery.select("id").single();
 
   if (!guardData) {
     return NextResponse.json({
