@@ -147,9 +147,9 @@ Two witness-related add-on products are available. These are standalone Stripe p
 | Prior Purchase | War Room Price | Credit | Customer Pays |
 |---------------|---------------|--------|---------------|
 | Case Decoder ($197) | $3,497 | $197 | $3,300 |
-| Intelligence Brief ($797) | $3,497 | $797 | $2,700 |
+| Intelligence Brief ($997) | $3,497 | $997 | $2,500 |
 | X-Ray ($1,497) | $3,497 | $1,497 | $2,000 |
-| Case Decoder + Intelligence Brief | $3,497 | $994 | $2,503 |
+| Case Decoder + Intelligence Brief | $3,497 | $1,194 | $2,303 |
 | Case Decoder + X-Ray | $3,497 | $1,694 | $1,803 |
 
 ### Credit Calculation Logic (in /api/checkout)

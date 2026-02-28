@@ -383,7 +383,7 @@ const usStates = [
 /** Service interest options — maps to the 5 tiers + "help me decide" fallback. */
 const serviceInterests = [
   "Case Decoder ($197)",
-  "Intelligence Brief ($797)",
+  "Intelligence Brief ($997)",
   "The X-Ray ($1,497)",
   "The War Room ($3,497)",
   "The Situation Room ($9,997)",
@@ -428,6 +428,16 @@ const strategyOptions = [
   "It hasn\u2019t come up",
 ];
 
+/** When defendant last heard from attorney — key signal for report framing. */
+const lastAttorneyContactOptions = [
+  "This week",
+  "1-2 weeks ago",
+  "3-4 weeks ago",
+  "1-3 months ago",
+  "More than 3 months ago",
+  "I\u2019ve never spoken with them",
+];
+
 /** How often attorney communicates — key metric for accountability scoring. */
 const communicationFrequencyOptions = [
   "Weekly",
@@ -437,11 +447,12 @@ const communicationFrequencyOptions = [
   "Never returned calls",
 ];
 
-/** Plea deal status — if "yes", conditionally shows plea terms textarea. */
+/** Plea deal status — if "yes" or "discussing", conditionally shows plea terms textarea. */
 const pleaOfferedOptions = [
-  { value: "yes", label: "Yes" },
-  { value: "no", label: "No" },
+  { value: "yes", label: "Yes \u2014 a specific offer has been made" },
+  { value: "discussing", label: "We\u2019re discussing options" },
   { value: "not yet", label: "Not yet" },
+  { value: "dont-know", label: "I don\u2019t know" },
 ];
 
 /** Evidence types (multi-select) — determines which attorney frameworks apply. */
@@ -508,6 +519,7 @@ function IntakeForm() {
     chargeType: "",
     sexOffenseSubType: "",
     state: "",
+    county: "",
     timeSinceArrest: "",
     incidentLocation: "",
     arrestCircumstances: [] as string[],
@@ -521,7 +533,7 @@ function IntakeForm() {
     specificQuestion: "",
     services: interest ? [`The Situation Room ($9,997)`] : prefillTier ? [({
       "case-decoder": "Case Decoder ($197)",
-      "intelligence-brief": "Intelligence Brief ($797)",
+      "intelligence-brief": "Intelligence Brief ($997)",
       "x-ray": "The X-Ray ($1,497)",
       "war-room": "The War Room ($3,497)",
       "situation-room": "The Situation Room ($9,997)",
@@ -784,6 +796,14 @@ function IntakeForm() {
                   </select>
                 </div>
                 <div className="mt-4">
+                  <label htmlFor="county" className={labelClass}>
+                    County <span className="text-zinc-500">(helps us research your specific judge and local court patterns)</span>
+                  </label>
+                  <input id="county" type="text" value={form.county as string}
+                    onChange={(e) => setField("county", e.target.value)}
+                    className={inputClass} placeholder="e.g. Pinellas, Harris, Los Angeles" />
+                </div>
+                <div className="mt-4">
                   <label htmlFor="timeSinceArrest" className={labelClass}>
                     When were you arrested or charged? <span className="text-red-400">*</span>
                   </label>
@@ -859,9 +879,10 @@ function IntakeForm() {
                     onChange={(e) => setField("hasDiscovery", e.target.value)}
                     className={selectClass}>
                     <option value="">Select</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                    <option value="unsure">Not sure</option>
+                    <option value="yes">Yes — I&apos;ve received discovery documents</option>
+                    <option value="requested">Not yet — my attorney requested it</option>
+                    <option value="no">Not yet — discovery hasn&apos;t been discussed</option>
+                    <option value="dont-know">I don&apos;t know</option>
                   </select>
                 </div>
                 <div className="mt-4">
@@ -901,9 +922,12 @@ function IntakeForm() {
                   <label htmlFor="lastAttorneyContact" className={labelClass}>
                     When did you last hear from your attorney?
                   </label>
-                  <input id="lastAttorneyContact" type="text" value={form.lastAttorneyContact as string}
+                  <select id="lastAttorneyContact" value={form.lastAttorneyContact as string}
                     onChange={(e) => setField("lastAttorneyContact", e.target.value)}
-                    className={inputClass} placeholder="e.g. 2 weeks ago, last month, etc." />
+                    className={selectClass}>
+                    <option value="">Select</option>
+                    {lastAttorneyContactOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
                 </div>
                 <div className="mt-4">
                   <label htmlFor="arrestDate" className={labelClass}>
@@ -925,7 +949,7 @@ function IntakeForm() {
                     {pleaOfferedOptions.map((opt) => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
                   </select>
                 </div>
-                {form.pleaOffered === "yes" && (
+                {(form.pleaOffered === "yes" || form.pleaOffered === "discussing") && (
                   <div className="mt-4">
                     <label htmlFor="pleaTerms" className={labelClass}>
                       What are the terms of the plea offer?
@@ -999,7 +1023,7 @@ function IntakeForm() {
               {/* Situation */}
               <div>
                 <label htmlFor="situation" className={labelClass}>
-                  Tell us more about your situation (optional)
+                  What&apos;s your biggest frustration right now? (optional)
                 </label>
                 <textarea id="situation" rows={4} value={form.situation as string}
                   onChange={(e) => setField("situation", e.target.value)}
@@ -1033,14 +1057,14 @@ function IntakeForm() {
                     One specific question you need answered
                   </label>
                   <textarea id="specificQuestion" rows={3}
-                    maxLength={300}
+                    maxLength={500}
                     value={form.specificQuestion as string}
                     onChange={(e) => setField("specificQuestion", e.target.value)}
                     className={inputClass}
                     placeholder="What's the one thing keeping you up at night about your case?" />
                   <p className="mt-1 text-xs text-zinc-500">
                     Optional. If provided, we&apos;ll address this first in your report.
-                    <span className="ml-2 tabular-nums">{(form.specificQuestion as string).length}/300</span>
+                    <span className="ml-2 tabular-nums">{(form.specificQuestion as string).length}/500</span>
                   </p>
                 </div>
               </fieldset>

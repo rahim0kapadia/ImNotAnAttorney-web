@@ -75,8 +75,8 @@ const caseTypes = [
       {
         name: "Intelligence Brief",
         slug: "intelligence-brief",
-        price: "$797",
-        desc: "Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 35-50 targeted questions. Includes Prosecution Case Strength Map — Strong/Moderate/Weak for every element of every charge.",
+        price: "$997",
+        desc: "Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 35+ targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios based on your county's actual case data, plus where the prosecution's case has exploitable gaps.",
         discovery: false,
       },
       {
@@ -121,8 +121,8 @@ const caseTypes = [
       {
         name: "Intelligence Brief",
         slug: "intelligence-brief",
-        price: "$797",
-        desc: "Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 35-50 targeted questions. Includes Prosecution Case Strength Map — Strong/Moderate/Weak for every element of every charge.",
+        price: "$997",
+        desc: "Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 35+ targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios based on your county's actual case data, plus where the prosecution's case has exploitable gaps.",
         discovery: false,
       },
       {
@@ -167,8 +167,8 @@ const caseTypes = [
       {
         name: "Intelligence Brief",
         slug: "intelligence-brief",
-        price: "$797",
-        desc: "Judge sentencing patterns, AUSA profile, guidelines calculation review, questions about the cooperation decision for your attorney. 35-50 targeted questions. Includes Prosecution Case Strength Map — Strong/Moderate/Weak for every element of every charge.",
+        price: "$997",
+        desc: "Judge sentencing patterns, AUSA profile, guidelines calculation review, questions about the cooperation decision for your attorney. 35+ targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios based on your county's actual case data, plus where the prosecution's case has exploitable gaps.",
         discovery: false,
       },
       {
@@ -223,7 +223,7 @@ const faqs = [
   {
     question: "What if I already bought a lower tier?",
     answer:
-      "100% of what you paid is credited toward the next tier. Buy the Case Decoder for $197, then upgrade to the Intelligence Brief for just $600. No money wasted. Credits are valid for 12 months.",
+      "100% of what you paid is credited toward the next tier. Buy the Case Decoder for $197, then upgrade to the Intelligence Brief for just $800. No money wasted. Credits are valid for 12 months.",
   },
   {
     question: "How is this different from a second opinion?",
@@ -306,7 +306,7 @@ export default function ServicesPage() {
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {[
               { attorney: "$10K", ours: "$197-$1,497", pct: "2-15%" },
-              { attorney: "$30K", ours: "$797-$3,497", pct: "3-12%" },
+              { attorney: "$30K", ours: "$997-$3,497", pct: "3-12%" },
               { attorney: "$100K", ours: "$1,497-$9,997", pct: "1-10%" },
             ].map((row) => (
               <div key={row.attorney} className="rounded-lg bg-zinc-800/50 p-4">
@@ -341,7 +341,7 @@ export default function ServicesPage() {
         </div>
 
         {/* DECISION GUIDE — Routes visitors based on discovery status.       */}
-        {/* No discovery: Case Decoder ($197) or Intelligence Brief ($797).  */}
+        {/* No discovery: Case Decoder ($197) or Intelligence Brief ($997).  */}
         {/* Has discovery: X-Ray ($1,497) recommended as starting point.     */}
         {/* This reduces confusion from the 5-tier display below.            */}
         <div className="mt-8 grid gap-4 md:grid-cols-2">
@@ -356,7 +356,7 @@ export default function ServicesPage() {
               </Link>{" "}
               or{" "}
               <Link href="/checkout?tier=intelligence-brief" className="text-white underline">
-                Intelligence Brief ($797)
+                Intelligence Brief ($997)
               </Link>
               . Both work without discovery documents. Get charge analysis,
               judge intel, and targeted questions for your next attorney meeting.
@@ -506,7 +506,7 @@ export default function ServicesPage() {
               </p>
               <p>
                 <span className="font-semibold text-white">
-                  Intelligence Brief ($797):
+                  Intelligence Brief ($997):
                 </span>{" "}
                 Delivered within 72 hours. 35+ targeted questions with judge intelligence.
               </p>

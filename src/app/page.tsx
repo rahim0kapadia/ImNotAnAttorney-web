@@ -78,7 +78,7 @@ const homeFaqs = [
   {
     question: "What if I don't have my discovery documents yet?",
     answer:
-      "That's fine — our Case Decoder ($197) and Intelligence Brief ($797) don't require discovery. We can analyze your charges, research your judge, and generate targeted questions with just your case information. When you get discovery, upgrade to The X-Ray with full credit.",
+      "That's fine — our Case Decoder ($197) and Intelligence Brief ($997) don't require discovery. We can analyze your charges, research your judge, and generate targeted questions with just your case information. When you get discovery, upgrade to The X-Ray with full credit.",
   },
   {
     question: "Do you work on federal cases?",
@@ -93,7 +93,7 @@ const homeFaqs = [
   {
     question: "What if I already bought a lower tier?",
     answer:
-      "100% of what you paid is credited toward the next tier. Buy the Case Decoder for $197, then upgrade to the Intelligence Brief for just $600. No money wasted. Credits are valid for 12 months.",
+      "100% of what you paid is credited toward the next tier. Buy the Case Decoder for $197, then upgrade to the Intelligence Brief for just $800. No money wasted. Credits are valid for 12 months.",
   },
   {
     question: "Can I get a refund?",
@@ -466,7 +466,7 @@ export default function Home() {
       </section>
 
       {/* GUARANTEE SECTION — Tiered guarantees to reduce purchase risk.     */}
-      {/* Lower tiers ($197/$797): Full cash refund if delivery or question */}
+      {/* Lower tiers ($197/$997): Full cash refund if delivery or question */}
       {/* count missed + 100% credit toward upgrade within 30 days.         */}
       {/* Higher tiers ($1,497+): Delivery guarantee only (custom research  */}
       {/* begins on intake, non-refundable once delivered).                  */}
@@ -478,7 +478,7 @@ export default function Home() {
             </h2>
             <div className="mt-6 space-y-4 text-left">
               <div>
-                <p className="text-sm font-semibold text-amber-400">Case Decoder ($197) &amp; Intelligence Brief ($797)</p>
+                <p className="text-sm font-semibold text-amber-400">Case Decoder ($197) &amp; Intelligence Brief ($997)</p>
                 <p className="mt-1 text-sm text-zinc-300">
                   Delivered within the stated timeframe with the guaranteed question
                   count — or a full cash refund. Not satisfied? 100% credit toward

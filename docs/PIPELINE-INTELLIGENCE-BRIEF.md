@@ -1,8 +1,8 @@
-# Intelligence Brief ($797) — Pipeline Documentation
+# Intelligence Brief ($997) — Pipeline Documentation
 
 ## Pipeline Overview
 
-The Case Intelligence Brief is the $797 tier (`intelligence-brief` slug). It provides deeper case analysis than the Case Decoder: judge tendencies, jurisdiction-specific plea statistics, motion landscape, and 35-50 targeted questions.
+The Case Intelligence Brief is the $997 tier (`intelligence-brief` slug). It provides deeper case analysis than the Case Decoder: judge tendencies, jurisdiction-specific plea statistics, motion landscape, and 35+ targeted questions.
 
 **Delivery target:** 48-72 hours (24 hours with priority add-on at $297).
 
@@ -21,7 +21,7 @@ The `intelligence-brief` tier is fully defined in the `TIERS` constant:
 ```ts
 "intelligence-brief": {
   name: "Case Intelligence Brief",
-  price: 79700,           // $797.00
+  price: 99700,           // $997.00
   delivery: "48-72 hours",
   requiresDiscovery: false,
   priorityPrice: 29700,   // $297 priority add-on
@@ -85,12 +85,12 @@ Three post-purchase emails are defined for this tier:
 |-----|-------|-------------|---------|---------|
 | `post_intelligence_brief_delivery` | Day 0 | Purchase | "Your Intelligence Brief is ready -- here's how to use it in your next meeting" | Sent at delivery time by `/api/deliver` |
 | `post_intelligence_brief_story_harvest` | Day 5 | `delivered_at` | "You met with your attorney -- what was the first question they stopped to think about?" | Story harvest / feedback |
-| `post_intelligence_brief_upsell` | Day 10 | Purchase | "When you get discovery -- we're ready" | Upsell to X-Ray ($1,497), credits $797 |
+| `post_intelligence_brief_upsell` | Day 10 | Purchase | "When you get discovery -- we're ready" | Upsell to X-Ray ($1,497), credits $997 |
 
 Notes:
 - The day-0 delivery email is sent by the `/api/deliver` endpoint at delivery time, not by the cron.
 - The story harvest email uses `relativeToDelivery: true`, so the 5-day delay starts from `cases.delivered_at`.
-- The upsell email promotes the X-Ray tier with full upgrade credit ($797 applied, customer pays $700).
+- The upsell email promotes the X-Ray tier with full upgrade credit ($997 applied, customer pays $500).
 
 ### 5. Delivery Endpoint (Reusable)
 
@@ -153,7 +153,7 @@ The cron's stuck-case detection (Parts 4 and 5) monitors `"intake"` and `"genera
 Given the gaps above, the current Intelligence Brief delivery workflow is:
 
 ```
-1. Customer pays $797 via Stripe Checkout
+1. Customer pays $997 via Stripe Checkout
 2. Webhook creates order (paid) + case (awaiting-intake or intake)
 3. Customer receives payment confirmation email
 4. Operator receives new order notification email
@@ -195,7 +195,7 @@ Given the gaps above, the current Intelligence Brief delivery workflow is:
 **Day 10 after purchase** (`post_intelligence_brief_upsell`)
 - Triggered: Cron Part 2, relative to purchase date
 - Content: Promotes X-Ray ($1,497) for when customer receives discovery
-- CTA: "Upgrade to The X-Ray -- $700" (after $797 credit)
+- CTA: "Upgrade to The X-Ray -- $500" (after $997 credit)
 
 Additionally, if the customer subscribed to the email list, they may also receive nurture sequence emails (days 1, 3, 5, 7, 10, 14 after subscribe). The nurture sequence is independent of purchases.
 

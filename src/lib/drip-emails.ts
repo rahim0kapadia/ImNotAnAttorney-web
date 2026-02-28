@@ -257,16 +257,17 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">Ready to Go Deeper?</h1>
       <p>Your Case Decoder gave you the foundation — charges explained, 15 calibrated questions, and a 7-day action plan.</p>
-      <p>The <strong style="color: white;">Intelligence Brief ($797)</strong> goes deeper:</p>
+      <p>The <strong style="color: white;">Intelligence Brief ($997)</strong> goes deeper:</p>
       <ul style="padding-left: 20px;">
         <li>Your judge's actual sentencing patterns</li>
         <li>Jurisdiction-specific plea statistics</li>
         <li>Motion landscape report</li>
-        <li>35-50 targeted questions (vs. 15)</li>
-        <li>BONUS: Judge Tendencies Card</li>
+        <li>35+ targeted questions (vs. 15)</li>
+        <li>Judge Intelligence Card — one-page print reference for hearings</li>
+        <li>Plea Decision Checklist</li>
       </ul>
-      <p><strong style="color: white;">Your $197 is already credited.</strong> Upgrade for just $600.</p>
-      ${cta("Upgrade to Intelligence Brief — $600 →", "/checkout?tier=intelligence-brief")}
+      <p><strong style="color: white;">Your $197 is already credited.</strong> Upgrade for just $800.</p>
+      ${cta("Upgrade to Intelligence Brief — $800 →", "/checkout?tier=intelligence-brief")}
     `,
   },
 
@@ -284,7 +285,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
 
-  // --- Intelligence Brief ($797) ---
+  // --- Intelligence Brief ($997) ---
   {
     key: "post_intelligence_brief_delivery",
     delayDays: 0,
@@ -294,9 +295,9 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">Your Intelligence Brief Is Ready</h1>
       <p>Your full Intelligence Brief has been delivered — check your inbox for the report link. Here's how to use it:</p>
       <ol>
-        <li><strong style="color: white;">Start with the Judge Tendencies Card</strong> — know your judge before your next hearing</li>
+        <li><strong style="color: white;">Start with the Judge Intelligence Card</strong> — know your judge before your next hearing</li>
         <li><strong style="color: white;">Review the motion landscape</strong> — which motions apply and what the deadlines look like</li>
-        <li><strong style="color: white;">Pick 10 questions from the 35-50 generated</strong> — bring them to your next meeting</li>
+        <li><strong style="color: white;">Pick 10 questions from the 35+ generated</strong> — bring them to your next meeting</li>
       </ol>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
         After your next attorney meeting, reply to this email and tell me: <strong style="color: white;">which question got the most reaction?</strong> Real cases make this service better for every defendant who comes after you.
@@ -334,8 +335,8 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li>Discovery Health Score — completeness rated out of 100</li>
         <li>Defense Opportunity Index — defense openings ranked by strength</li>
       </ul>
-      <p><strong style="color: white;">Your $797 is already credited.</strong> Upgrade for just $700.</p>
-      ${cta("Upgrade to The X-Ray — $700 →", "/checkout?tier=x-ray")}
+      <p><strong style="color: white;">Your $997 is already credited.</strong> Upgrade for just $500.</p>
+      ${cta("Upgrade to The X-Ray — $500 →", "/checkout?tier=x-ray")}
     `,
   },
 

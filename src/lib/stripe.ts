@@ -81,7 +81,7 @@ export const TIERS = {
   },
   "intelligence-brief": {
     name: "Case Intelligence Brief",
-    price: 79700,
+    price: 99700,
     delivery: "48-72 hours",
     requiresDiscovery: false,
     priorityPrice: 29700,

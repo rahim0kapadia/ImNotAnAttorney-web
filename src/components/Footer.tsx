@@ -129,7 +129,7 @@ export function Footer() {
                 href="/checkout?tier=intelligence-brief"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                Intelligence Brief ($797)
+                Intelligence Brief ($997)
               </Link>
               <Link
                 href="/checkout?tier=x-ray"

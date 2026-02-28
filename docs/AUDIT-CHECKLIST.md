@@ -72,7 +72,7 @@ Reusable per-tier checklist for auditing the entire customer pipeline. Created 2
 | Tier | Price | Checklist Status | Last Audited |
 |------|-------|-----------------|-------------|
 | Case Decoder | $197 | COMPLETE | 2026-02-24 |
-| Intelligence Brief | $797 | Pending | -- |
+| Intelligence Brief | $997 | Pending | -- |
 | X-Ray | $1,497 | Pending | -- |
 | War Room | $3,497 | Pending | -- |
 | Situation Room | $9,997 | Pending | -- |

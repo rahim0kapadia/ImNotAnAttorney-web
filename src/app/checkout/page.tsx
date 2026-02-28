@@ -89,7 +89,7 @@ type TierInfo = {
  *   - nudge (next tier up with upgrade cost calculation)
  *
  * The nudge.upgradeCost accounts for 100% upgrade credit policy.
- * Example: Case Decoder ($197) -> Intelligence Brief ($797) = $600 upgrade.
+ * Example: Case Decoder ($197) -> Intelligence Brief ($997) = $800 upgrade.
  */
 const TIER_INFO: Record<string, TierInfo> = {
   "case-decoder": {
@@ -125,8 +125,8 @@ const TIER_INFO: Record<string, TierInfo> = {
     nudge: {
       nextTierSlug: "intelligence-brief",
       nextTierName: "Intelligence Brief",
-      nextTierPrice: "$797",
-      upgradeCost: "$600",
+      nextTierPrice: "$997",
+      upgradeCost: "$800",
       unlocks:
         "Adds your judge's actual sentencing patterns, a motion landscape report, and 35-50 questions instead of 15.",
       bestFor:
@@ -135,23 +135,23 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "intelligence-brief": {
     name: "Case Intelligence Brief",
-    price: "$797",
-    priceNum: 797,
+    price: "$997",
+    priceNum: 997,
     delivery: "48-72 hours",
     requiresDiscovery: false,
     features: [
       "Everything in Case Decoder",
-      "Defense Milestone Score — milestone-by-milestone tracking",
-      "Prosecution Case Strength Map — Strong/Moderate/Weak per charge element",
+      "Attorney Accountability Score — 6-dimension tracking with milestone timeline",
+      "Prosecution Case Vulnerability Report — where the prosecution's case has gaps, based on your county's outcome data",
       "Charge exposure map",
       "Judge intelligence profile",
       "Jurisdiction profile",
       "Attorney accountability timeline",
       "Motion landscape report",
-      "Pre-discovery red flags",
-      "35-50 targeted questions",
-      "BONUS: Judge Tendencies Card — one-page quick-reference for your assigned judge",
-      "BONUS: Plea vs. Trial Question Framework — questions to help evaluate the cooperation decision",
+      "Case preservation protocol",
+      "35+ attorney questions across all 6 sections + Appendix D",
+      "Included: Judge Intelligence Card — one-page print reference for hearings",
+      "Included: Plea Decision Checklist — before you sign anything, run this",
     ],
     guarantee:
       "Delivered within 72 hours with 35+ targeted questions — or your money back.",
@@ -159,7 +159,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     priorityDesc: "24-hour delivery",
     priorityPriceNum: 297,
     validation:
-      "Everything you need to hold your attorney accountable — without needing discovery yet.",
+      "Everything you need to understand your case — without needing discovery yet.",
     whyThisWorks:
       "Your judge's actual sentencing patterns. Your jurisdiction's plea statistics. Built on Benjamin Brafman's jury psychology methodology and Alan Dershowitz's constitutional framework. A single hour with an attorney who knows this costs $500+. You're getting a complete intelligence file.",
     pullquote: {
@@ -171,7 +171,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       nextTierSlug: "x-ray",
       nextTierName: "The X-Ray",
       nextTierPrice: "$1,497",
-      upgradeCost: "$700",
+      upgradeCost: "$500",
       unlocks:
         "Adds full discovery analysis — timelines, discrepancies, red flags inside the documents your attorney already has.",
       bestFor:

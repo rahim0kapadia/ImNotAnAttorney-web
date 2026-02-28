@@ -2,7 +2,7 @@
 
 ## Pipeline Overview
 
-The X-Ray is a discovery-analysis tier priced at $1,497. Unlike the Case Decoder ($197) and Intelligence Brief ($797), which operate on intake questionnaire data alone, The X-Ray requires the customer to upload actual discovery documents (police reports, lab results, witness statements, etc.) for manual expert analysis. Delivery is 10 business days from document submission.
+The X-Ray is a discovery-analysis tier priced at $1,497. Unlike the Case Decoder ($197) and Intelligence Brief ($997), which operate on intake questionnaire data alone, The X-Ray requires the customer to upload actual discovery documents (police reports, lab results, witness statements, etc.) for manual expert analysis. Delivery is 10 business days from document submission.
 
 ### End-to-End Flow
 

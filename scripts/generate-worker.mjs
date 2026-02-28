@@ -486,7 +486,7 @@ Future pacing using name: "In two weeks, ${intake.first_name}, you will be the m
 <section id="postscript" title="What Comes Next" max_words="100">
 FIRST acknowledge: "For many people, this report and those conversations are enough."
 Then redirect to action: "That's a decision for later. Right now, Day 1 is tomorrow."
-If mentioning Intelligence Brief ($797), frame as verification.
+If mentioning Intelligence Brief ($997), frame as verification.
 "You don't need to decide now." THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
 </section>`;
 }
@@ -572,7 +572,7 @@ function renderReportHtml(markdown, meta) {
   </div>
   <div class="no-print" style="margin-top: 32px; text-align: center;">
     <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">After your meeting, if you want to verify your attorney's answers against the evidence:</p>
-    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $797 ($600 after credit)</a>
+    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $997 ($800 after credit)</a>
     <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure — decide after your meeting.</p>
   </div>
 </div>

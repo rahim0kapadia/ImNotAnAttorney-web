@@ -321,7 +321,7 @@ function SuccessContent() {
                   Upgrade to The X-Ray
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $797 is already credited. Get full discovery analysis — every page, every discrepancy, every red flag mapped.
+                  Your $997 is already credited. Get full discovery analysis — every page, every discrepancy, every red flag mapped.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: discovery document index, comprehensive timeline, discrepancy report, 35+ case-specific questions.

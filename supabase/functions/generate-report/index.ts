@@ -746,7 +746,7 @@ ONLY place with upgrade language. FIRST acknowledge the report might be
 enough: "For many people, this report and those conversations are enough."
 Then redirect to action: "That's a decision for later. Right now, Day 1
 is tomorrow."
-If mentioning the Intelligence Brief ($797), frame as verification of
+If mentioning the Intelligence Brief ($997), frame as verification of
 what they learned. "You don't need to decide now." $197 credited, 12 months.
 
 BRIDGING AFTER HARD INFORMATION — MANDATORY:
@@ -1110,7 +1110,7 @@ async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabase
   // Conditional section flags
   const plea = intake.plea_offered;
   const attorneyStrategy = (intake.attorney_strategy || "").toLowerCase();
-  const includePleaLandscape = plea === "yes" || plea === "Yes" || attorneyStrategy.includes("plea");
+  const includePleaLandscape = plea === "yes" || plea === "Yes" || plea === "discussing" || attorneyStrategy.includes("plea");
   const includeCaseClock = intake.arrest_date && daysSinceArrest !== null && daysSinceArrest > 0;
 
   const conditionalInstructions: string[] = [];
@@ -1122,6 +1122,8 @@ async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabase
   if (includePleaLandscape) {
     const pleaReason = plea === "yes" || plea === "Yes"
       ? `plea_offered = "yes", terms: "${intake.plea_terms || "Not specified"}"`
+      : plea === "discussing"
+      ? `plea_offered = "discussing", terms: "${intake.plea_terms || "Not specified"}"`
       : `attorney_strategy mentions plea: "${intake.attorney_strategy}"`;
     conditionalInstructions.push(`\nINCLUDE "What a Plea Really Means": ${pleaReason}. Educational, NOT evaluative. NO Below average/Typical/Above average ratings. Collateral consequences table with "Question for Your Attorney" column. Alternatives (diversion, drug court, PTI). 3 questions before signing.`);
   } else {
@@ -1296,7 +1298,7 @@ NEVER blame the attorney: "This may have a simple explanation — sometimes atto
 
 ${includePleaLandscape ? `<section id="c2" title="What a Plea Really Means" max_words="300">
 Use ONLY the section title as the heading — never prefix with internal id.
-${plea === "yes" || plea === "Yes" ? `Plea has been offered. Terms: "${intake.plea_terms || "Not specified"}".` : `Attorney is discussing a plea (from attorney_strategy: "${intake.attorney_strategy}").`}
+${plea === "yes" || plea === "Yes" ? `Plea has been offered. Terms: "${intake.plea_terms || "Not specified"}".` : plea === "discussing" ? `Plea discussions in progress. Details: "${intake.plea_terms || "Not specified"}".` : `Attorney is discussing a plea (from attorney_strategy: "${intake.attorney_strategy}").`}
 Educational, NOT evaluative. NO Below average/Typical/Above average ratings.
 
 "Before signing anything, understand what a plea means beyond the sentence itself."
@@ -1364,7 +1366,7 @@ End on empowerment, NOT disclaimers.
 <section id="postscript" title="What Comes Next" max_words="100">
 FIRST acknowledge: "For many people, this report and those conversations are enough."
 Then redirect to action: "That's a decision for later. Right now, Day 1 is tomorrow."
-If mentioning the Intelligence Brief ($797), frame as verification of what they learned.
+If mentioning the Intelligence Brief ($997), frame as verification of what they learned.
 "You don't need to decide now. Your $197 is fully credited toward any tier within 12 months."
 THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
 </section>`;
@@ -1551,7 +1553,7 @@ function renderReportHtml(
   </div>
   <div class="no-print" style="margin-top: 32px; text-align: center;">
     <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">After your meeting, if you want to verify your attorney's answers against the evidence:</p>
-    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $797 ($600 after credit)</a>
+    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $997 ($800 after credit)</a>
     <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure — decide after your meeting.</p>
   </div>
 </div>

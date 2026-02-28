@@ -132,7 +132,7 @@ case-decoder (0) < intelligence-brief (1) < x-ray (2) < war-room (3) < situation
 
 Only orders with a lower tier index qualify for credit. A customer who purchased all prior tiers would receive credit for:
 - Case Decoder: $197
-- Intelligence Brief: $797
+- Intelligence Brief: $997
 - X-Ray: $1,497
 - War Room: $3,497
 - **Total credit: $5,988** (applied as a one-time Stripe coupon, net price: $4,009)

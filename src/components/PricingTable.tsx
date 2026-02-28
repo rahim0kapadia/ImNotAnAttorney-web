@@ -47,10 +47,10 @@ const tiers = [
   },
   {
     name: "Intelligence Brief",
-    price: "$797",
+    price: "$997",
     anchor: "vs. $1,500+ for a second-opinion attorney",
     description:
-      "Judge intel + 35-50 questions. No discovery needed.",
+      "Judge intel + 35+ questions. No discovery needed.",
     features: [
       "Everything in Case Decoder",
       "Charge exposure map",
@@ -58,10 +58,11 @@ const tiers = [
       "Jurisdiction profile",
       "Attorney accountability timeline",
       "Motion landscape report",
-      "Pre-discovery red flags",
-      "35-50 targeted questions",
-      "Where Things Stand diagnostic",
-      "Prosecution Case Strength Map",
+      "Case preservation protocol",
+      "35+ targeted questions",
+      "Prosecution Case Vulnerability Report",
+      "Judge Intelligence Card",
+      "Plea Decision Checklist",
     ],
     cta: "Get Your Intelligence Brief",
     featured: true,
