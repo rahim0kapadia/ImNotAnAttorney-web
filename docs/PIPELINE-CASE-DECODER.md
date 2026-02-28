@@ -187,13 +187,12 @@ This is the heavy-lift function that runs in the Supabase Deno runtime with a 15
 
 **POST** (actual delivery):
 1. **Auth validation** -- Same dual-token support (raw secret or HMAC-signed).
-2. **Status guard** -- Only cases in `"review"` status can be delivered. Already-delivered cases return a friendly idempotent message.
+2. **Atomic status claim** -- Conditionally updates case to `"delivered"` with `.eq("status", "review")` guard. Only one request wins — duplicates get a friendly idempotent message.
 3. **Send delivery email** to customer -- "Your Case Decoder Report is Ready" with report view link, usage instructions (print it, start with priority questions, document answers), and upgrade upsell ($197 credit).
 4. **Retry on failure** -- If first email fails, waits 2s and retries with a simplified HTML template. If both fail, alerts operator with the report URL for manual forwarding.
-5. **Update case status** -- Sets `status: "delivered"`, `delivered_at`, `reviewed_by: "operator"`, `reviewed_at`, and `deliverable_url`.
-6. **Record drip** -- Inserts `"post_case_decoder_delivery"` into `drip_emails` table via upsert. This prevents the cron from re-sending the delivery notification.
+5. **Record drip** -- Inserts `"post_case_decoder_delivery"` into `drip_emails` table via upsert. This prevents the cron from re-sending the delivery notification.
 
-**Email-before-status pattern:** The delivery email is sent BEFORE the status update to "delivered". If the email fails silently, the case would otherwise look complete but the customer would never be notified. By sending email first, the system knows whether notification succeeded.
+**Atomic-claim-then-email pattern:** The status is atomically updated to "delivered" (with `.eq("status", "review")` guard) BEFORE sending the delivery email. This prevents double-click races — only one request wins the atomic UPDATE, so duplicate emails are impossible. If the email fails after the status claim, the operator can see the case is "delivered" but re-trigger notification.
 
 ---
 

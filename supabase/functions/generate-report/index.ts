@@ -358,12 +358,12 @@ PER-SECTION WORD BUDGETS:
 | A Letter to You | 150 |
 | Where Things Stand | 400 |
 | Understanding Your Charges | 500 |
-| Exactly What to Say | 1,000 |
-| Questions for Your Attorney (15) | 1,800 |
+| Exactly What to Say | 1,400 |
+| Questions for Your Attorney (15) | 2,200 |
 | Things Worth Asking About | 450 |
 | Is There Something We Missed? | 100 |
 | What Only Your Attorney Can Tell You | 100 |
-| Your Next 7 Days | 500 |
+| Your Next 7 Days | 900 |
 | Time and Deadlines (conditional) | 100 |
 | What a Plea Really Means (conditional) | 300 |
 | What Comes Next | 100 |
