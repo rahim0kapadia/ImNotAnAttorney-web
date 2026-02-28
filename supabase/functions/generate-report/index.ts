@@ -13,7 +13,7 @@
  * FLOW:
  *   1. Fetch case record from Supabase (with idempotency check)
  *   2. Find linked intake record (by intake_id or email fallback)
- *   3. Call Claude API (Sonnet 4.6) to generate the 7+2 section report
+ *   3. Call Claude API (Sonnet 4.6) to generate the 7 + 0-2 conditional section report
  *   4. Render markdown to branded HTML
  *   5. Save report_html + report_token to Supabase
  *   6. Email operator with review/approve links
@@ -194,7 +194,7 @@ async function sendEmail(params: {
   resendKey: string;
   fromEmail: string;
   operatorEmail: string;
-}): Promise<{ success: boolean; error?: string }> {
+}): Promise<{ success: boolean; error?: string; id?: string }> {
   try {
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -225,7 +225,8 @@ async function sendEmail(params: {
       throw new Error(err.message || "Failed to send email");
     }
 
-    return { success: true };
+    const data = await response.json();
+    return { success: true, id: data.id };
   } catch (error) {
     console.error("[Email] Failed to send:", error);
     return {
@@ -333,13 +334,22 @@ The intake identifies whether this is a FEDERAL or STATE case.
 - Unknown: Note importance of determining jurisdiction.
 
 OUTPUT BUDGET — CRITICAL:
-Under 5,500 words total. 7 always-present sections (S1-S7) + Letter +
-Closing + Postscript + 0-2 conditional sections (C1/C2).
-Start IMMEDIATELY with "## A Letter to You".
+Under 5,500 words total. 7 always-present sections + Letter +
+Closing + Postscript + 0-2 conditional sections.
+Start with the Methodology Note blockquote, then IMMEDIATELY proceed to "## A Letter to You".
 Budget carefully so early sections don't starve later ones.
 
+METHODOLOGY NOTE — MANDATORY FIRST ELEMENT:
+Before "A Letter to You," output this blockquote (personalized with the
+3 God Mode experts selected for this charge type):
+> **METHODOLOGY NOTE**
+> Every question and framework in this report traces to documented
+> winning methods from elite criminal defense attorneys. Your report
+> draws on [Expert 1], [Expert 2], and [Expert 3] — selected for
+> [charge type] cases. Expert attributions appear throughout.
+
 EXACT COUNTS — NON-NEGOTIABLE:
-- S4 (Targeted Questions): EXACTLY 15 questions (Q1-Q15)
+- Questions for Your Attorney: EXACTLY 15 questions (Q1-Q15)
 - S5 (Things Worth Asking About): 5-6 items max
 
 PER-SECTION WORD BUDGETS:
@@ -371,7 +381,7 @@ Always present (in this order):
 2. Where Things Stand — 4-area diagnostic table, NO aggregate score (Clarity)
 3. Understanding Your Charges — elements, penalties, rights (Knowledge)
 4. [Time and Deadlines — ONLY IF arrest_date exists AND charge has speedy trial] (Awareness)
-5. Exactly What to Say — email templates, scripts, escalation (Empowerment)
+5. Exactly What to Say — email templates, scripts, advocacy tools (Empowerment)
 6. Questions for Your Attorney — 15 questions (Agency)
 7. Things Worth Asking About — 5-6 prioritized items (Focus)
 8. [What a Plea Really Means — ONLY IF plea offered or attorney pushing plea] (Understanding)
@@ -491,19 +501,20 @@ EXACTLY WHAT TO SAY — 7 SUBSECTIONS:
    case journal (what to track over time).
 
 QUESTIONS FOR YOUR ATTORNEY — 15 questions. 6-part format per question:
-1. Calibrated question (conversational, never yes/no) — references
+1. Calibrated question (substantive answer, never yes/no, sounds like
+   a CLIENT asking for help — conversational, not legalistic) — references
    intake data: "You told us..."
-2. Why it matters (expert methodology + intake data link)
-3. Good answer (specific deliverable)
+2. Why it matters (expert methodology grounding + "You told us..." link)
+3. Good answer (specific deliverable: notes, filings, correspondence)
 4. If the answer is vague (empathetic follow-up probe for in-meeting use)
 5. What to listen for (pattern + in-meeting response + post-meeting
    action sequence + Step reference in Your Advocacy Steps)
-6. Source methodology (which God Mode expert)
+6. Source methodology (which God Mode expert's approach)
 Q1 = Golden Question — "If you only ask one question, ask this one."
 Q1-Q5 are PRIORITY — drawn from the defendant's specific intake answers.
 Each "don't know" from intake becomes a question.
 Verify-facts callout SPLIT into two boxes:
-- "Confirm these facts from your intake" (case #, court date, charges)
+- "Confirm these facts from your intake" (arrest date, charges, attorney type)
 - "Get these facts before your meeting" (charge-specific discovery items)
 
 QUESTION TONE — CLIENT ASKING FOR HELP:
@@ -558,6 +569,7 @@ This section is the DETERMINATION payoff. The report ends here.
    Steps. Day 1: Send email. Day 2: Review priority questions. Day 3:
    Follow up. Day 4: Gather materials. Day 5: Practice questions aloud.
    Day 6-7: Attend meeting.
+   Full Advocacy Steps = long-term playbook (weeks 2+) — there in Exactly What to Say if needed.
 3. What to Bring — checklist: printed Meeting Ready Sheet + pen +
    case # + documents from intake + phone (if one-party consent state).
 4. What to Expect — 2-3 sentences based on attorney type (PD: shorter
@@ -577,17 +589,6 @@ Then redirect to action: "That's a decision for later. Right now, Day 1
 is tomorrow."
 If mentioning the Intelligence Brief ($797), frame as verification of
 what they learned. "You don't need to decide now." $197 credited, 12 months.
-
-QUESTION FORMAT — Every question enables preparation:
-Each question asks the ATTORNEY. Six parts:
-1. Calibrated question (substantive answer, never yes/no, sounds like
-   a CLIENT asking for help — conversational, not legalistic)
-2. Why it matters (expert methodology grounding + "You told us..." link)
-3. Good answer (specific DELIVERABLE: notes, filings, correspondence)
-4. If the answer is vague (empathetic follow-up probe for in-meeting use)
-5. What to listen for (pattern + in-meeting response + post-meeting
-   action sequence + Step reference in Your Advocacy Steps)
-6. Source methodology (which God Mode expert's approach)
 
 BRIDGING AFTER HARD INFORMATION — MANDATORY:
 After any difficult information (penalty ranges, collateral consequences,
@@ -828,7 +829,7 @@ function buildUserPrompt(intake: IntakeData): string {
 
   const comm = intake.communication_frequency;
   const commInstruction = comm === "Rarely" || comm === "Never returned calls"
-    ? `\nAttorney communication is poor (${comm}). Use RE-ENGAGEMENT tier templates in Exactly What to Say (long gap). Include FULL Your Advocacy Steps (8 steps).`
+    ? `\nCommunication has been poor (${comm}). Emphasize urgency in the email template and include the follow-up template. Include all 8 Advocacy Steps with emphasis on Steps 1-3 for immediate action.`
     : `\nAttorney communication frequency: ${comm || "Not specified"}.`;
 
   // Conditional section flags
@@ -866,6 +867,7 @@ function buildUserPrompt(intake: IntakeData): string {
 - Last Attorney Contact: ${intake.last_attorney_contact || "Not provided"}
 - Plea Offered: ${intake.plea_offered || "Not specified"}
 - Plea Terms: ${intake.plea_terms || "N/A"}
+- Discovery Status: ${intake.has_discovery || "Not specified"}
 - Evidence Types (defendant's belief): ${(intake.evidence_type || []).join(", ") || "Not specified"}
 - Arrest Circumstances: ${(intake.arrest_circumstances || []).join(", ") || "Not provided"}
 - Co-Defendants: ${intake.co_defendants || "Not specified"}
@@ -881,8 +883,10 @@ ${conditionalInstructions.join("")}
 
 <section id="letter" title="A Letter to You" max_words="150">
 Use ONLY the section title as the heading — never prefix with internal id.
-Quote their "Primary Frustration" and "Specific Question" directly. Validate their instinct: "the fact that you're doing this research tells us something important." If they asked a specific question, tell them which section addresses it (by name, e.g., "Questions for Your Attorney"). Normalize: "you're not alone in this." NO blaming the attorney — frame gaps as things to clarify. Use client first name. This is NOT generic — write it TO THIS defendant.
+Quote their "Primary Frustration" and "Specific Question" directly. Validate their instinct: "the fact that you're doing this research tells us something important." If they asked a specific question, tell them which section addresses it (by name, e.g., "Questions for Your Attorney"). Normalize: "you're not alone in this." Permission to be scared: reframe fear as caring about their future. NO blaming the attorney — frame gaps as things to clarify. Use client first name. This is NOT generic — write it TO THIS defendant.
+Preview what this report gives: "This report gives you three things: a clear picture of where things stand, 15 questions that will get you real answers from your attorney, and exact scripts to start the conversation."
 Include "Do NOT show this report to your attorney" WITH this explanation: "If your attorney sees this analysis, they may anchor their responses to it rather than giving you their independent assessment. You want their unfiltered answers first. The questions are appropriate for any client — the analysis is for your eyes only."
+"The Meeting Ready Sheet in Your Next 7 Days is designed to be safe if your attorney sees it — it contains only questions, not analysis."
 </section>
 
 <section id="s1" title="Where Things Stand" max_words="400">
@@ -899,7 +903,8 @@ Use ONLY the section title as the heading — never prefix with internal id.
 EVERY row must use warm language: "You told us..." / "You said..." / "You mentioned..." / "You shared..."
 NEVER use "You indicated" / "You reported" / "You selected" — these sound clinical.
 NEVER blame the attorney. Frame gaps as things to CLARIFY: "Communication gaps happen — sometimes attorneys are working behind the scenes."
-End with: "This is not a grade on your attorney or your case. It's a map of what you know and don't know."
+End with: "This is not a grade on your attorney or your case. It's a map of what you know and what you don't know — based on what you shared with us."
+After the closing line, add: "**What this tells you:** The 'What to Ask About' column is the starting point for your next conversation. The questions in Questions for Your Attorney go deeper."
 </section>
 
 <section id="s2" title="Understanding Your Charges" max_words="500">
@@ -942,19 +947,22 @@ Subject: "Case Update Request — [Name], Case #[Number]"
 Read-aloud ready. Personalized with name, case #, court date. For defendants who prefer calling.
 
 **4. FOLLOW-UP TEMPLATE:**
-If no response within 5-7 business days. References Step 2 of Your Advocacy Steps.
+If no response within 5-7 business days. References Step 3 of Your Advocacy Steps.
 
 **5. YOUR ADVOCACY STEPS (8 steps — NOT "escalation ladder"):**
 Contextualized to attorney type (PD vs private) + jurisdiction (state bar complaint process).
-Step 1: Friendly call with questions prepared
-Step 2: Follow-up email referencing the call
-Step 3: Written record of unanswered questions (email, timestamped)
+**Steps 1-5 — Collaborative (start here):**
+Step 1: Send the email from subsection 2 above
+Step 2: Follow up by phone — reference your email, request a specific time
+Step 3: Send the follow-up email template — written record with timestamped questions
 Step 4: Formal letter requesting case status update
 Step 5: Request meeting with supervising partner/PD office
+
+**Steps 6-8 — Structural safety nets (so you always have a next step):**
 Step 6: Written request to management for case review
 Step 7: State bar inquiry about communication obligations
 Step 8: Consultation with second attorney for case review
-"Most situations resolve at Steps 1-3. Steps 4-8 are there so you always have a next step."
+"Most situations resolve at Steps 1-3. Steps 4-5 are there when you need more structure. Steps 6-8 are structural safety nets — so you always have a next step."
 If PD: Step 8 includes legal aid organizations, PD substitution process, cost acknowledgment.
 
 **6. WHEN THE CONVERSATION GETS DIFFICULT:**
@@ -971,7 +979,7 @@ Use ONLY the section title as the heading — never prefix with internal id.
 Generate EXACTLY 15 questions. Every question asks the ATTORNEY.
 
 **SPLIT VERIFY-FACTS — Two callout boxes at top:**
-Box 1: "✅ Confirm these facts from your intake" — case #, court date, charges as filed, attorney name (intake verification).
+Box 1: "✅ Confirm these facts from your intake" — arrest date, charges as filed, attorney type (intake verification).
 Box 2: "📋 Get these facts before your meeting" — charge-specific discovery items the defendant should request or confirm (new tasks).
 
 Q1 = GOLDEN QUESTION — marked: "(Golden Question — if you only ask one question, ask this one)"
@@ -979,6 +987,7 @@ Q1-Q5 are PRIORITY questions drawn from THIS defendant's specific intake answers
 Q6-Q15: Additional questions organized by topic.
 
 QUESTION TONE: Questions sound like a CLIENT asking for help — conversational, respectful. Keep legal jargon in "Why it matters" only. No yes/no questions — every question must require a substantive answer.
+Overall methodology: Calibrated questions adapted from Chris Voss (FBI lead hostage negotiator) — repurposed for attorney communication.
 
 Each question MUST include all 6 parts:
 1. Calibrated question (conversational, never yes/no) — references intake data: "You told us..."
@@ -1054,11 +1063,12 @@ Shine moment: "You've just done something most defendants never do."
 |-----|--------|------|
 | Day 1 | Send the email | Copy-paste from Exactly What to Say. Done. |
 | Day 2 | Review your priority questions | Read the 5 Priority Questions. Highlight what matters most. |
-| Day 3 | Follow up if no response | Send the follow-up template. Step 2 of Your Advocacy Steps. |
+| Day 3 | Follow up if no response | Send the follow-up template. Step 3 of Your Advocacy Steps. |
 | Day 4 | Gather your materials | Use the What to Bring checklist below. |
 | Day 5 | Practice your questions | Read them aloud once. It helps. |
 | Day 6-7 | Attend your meeting | Bring your Meeting Ready Sheet. Ask, listen, write. |
 Each day ends with a Shine moment ("You've just...").
+After the table: "Days 1-7 = Steps 1-3 of Your Advocacy Steps. If you need Steps 4-8, they're in Exactly What to Say — but most people never need to go past Step 3."
 
 **WHAT TO BRING TO YOUR MEETING:**
 Checklist: printed Meeting Ready Sheet + pen + case # + documents referenced in intake + phone (for recording if one-party consent state).
@@ -1069,9 +1079,9 @@ Checklist: printed Meeting Ready Sheet + pen + case # + documents referenced in 
 **MEETING READY SHEET** (safe if attorney sees it):
 Pre-filled with 5 Priority Questions (not blank lines). Q1 = Golden Question marked.
 Space for attorney's answers after each question.
-Post-Meeting Checklist: Got answers? Documented responses? Sent summary email to attorney? Understand next steps?
+Post-Meeting Checklist: Got answers? Documented responses? Sent summary email to attorney? Updated your case journal with dates and next steps? Understand what happens next?
 
-Future pacing using their name: "In two weeks, [Name], you will be the most prepared defendant your attorney has ever worked with."
+Future pacing using their name: "In two weeks, [Name], you will be the most prepared defendant your attorney has ever worked with. You'll have asked the right questions, documented the answers, and have a clear picture of where your defense stands — not from guessing, but from direct conversation with your attorney."
 End on empowerment, NOT disclaimers.
 </section>
 
@@ -1208,7 +1218,7 @@ function renderReportHtml(
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Case Decoder Report — ${meta.firstName}</title>
+<title>Case Decoder Report — ${escapeHtml(meta.firstName)}</title>
 <style>
   @media print {
     body { background: white !important; color: #1a1a1a !important; }
@@ -1251,7 +1261,7 @@ function renderReportHtml(
   </div>
   <div class="no-print" style="margin-top: 32px; text-align: center;">
     <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">After your meeting, if you want to verify your attorney's answers against the evidence:</p>
-    <a href="https://imnotanattorney.com/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $797 ($600 after credit)</a>
+    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $797 ($600 after credit)</a>
     <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure — decide after your meeting.</p>
   </div>
 </div>
@@ -1278,8 +1288,11 @@ Deno.serve(async (req: Request) => {
   const headers = { "Content-Type": "application/json" };
 
   try {
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (!supabaseUrl || !supabaseKey) {
+      return new Response(JSON.stringify({ error: "Supabase env vars not configured" }), { status: 500, headers });
+    }
     const anthropicKey = Deno.env.get("ANTHROPIC_API_KEY");
     const resendKey = Deno.env.get("RESEND_API_KEY");
     const resendFrom = Deno.env.get("RESEND_FROM_EMAIL") || "noreply@imnotanattorney.com";
@@ -1292,8 +1305,8 @@ Deno.serve(async (req: Request) => {
     }
 
     const { caseId, force } = await req.json();
-    if (!caseId) {
-      return new Response(JSON.stringify({ error: "caseId required" }), { status: 400, headers });
+    if (!caseId || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(caseId)) {
+      return new Response(JSON.stringify({ error: "Valid caseId (UUID) required" }), { status: 400, headers });
     }
 
     console.log(`[generate-report] Starting for case ${caseId}`);
@@ -1310,7 +1323,7 @@ Deno.serve(async (req: Request) => {
     // Prevents duplicate report generation if this function is called again
     // for a case that already has a report (e.g., webhook retry, operator re-click).
     // The `force` flag allows manual regeneration via the retry curl command.
-    if (!force && (caseData.status === "review" || caseData.status === "delivered")) {
+    if (!force && (caseData.status === "generating" || caseData.status === "review" || caseData.status === "delivered")) {
       return new Response(JSON.stringify({
         success: true, caseId, reportToken: caseData.report_token,
         status: caseData.status, skipped: true,
@@ -1439,14 +1452,17 @@ Deno.serve(async (req: Request) => {
           <h1 style="color: #F59E0B;">Case Decoder Report Ready for Review</h1>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
             <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(intake.first_name)} ${escapeHtml(intake.last_name || "")}</p>
-            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Email:</strong> ${caseData.email}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Email:</strong> ${escapeHtml(caseData.email)}</p>
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(intake.charge_type)}</p>
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">State:</strong> ${escapeHtml(intake.state || "Not provided")}</p>
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Generated:</strong> ${reportDate}</p>
           </div>
           <div style="margin: 24px 0; display: flex; gap: 12px;">
-            <a href="${siteUrl}/api/deliver?token=${await signOperatorTokenDeno(caseId, operatorSecret)}&case=${caseId}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Approve &amp; Deliver</a>
+            ${operatorSecret
+              ? `<a href="${siteUrl}/api/deliver?token=${await signOperatorTokenDeno(caseId, operatorSecret)}&case=${caseId}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Approve &amp; Deliver</a>`
+              : `<p style="color: #EF4444;">OPERATOR_SECRET not configured — approve via dashboard</p>`
+            }
             <a href="${siteUrl}/report/${reportToken}" style="display: inline-block; padding: 14px 28px; background: #3B82F6; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Preview Report</a>
           </div>
         `,
