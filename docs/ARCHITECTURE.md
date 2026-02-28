@@ -18,7 +18,7 @@ Customer Journey:
 |-------|-----------|-----|
 | **Frontend** | Next.js 16 (App Router) | SSR for SEO, React for forms |
 | **Hosting** | Vercel (Hobby plan) | Free tier, edge functions, cron |
-| **Database** | Supabase (PostgreSQL) | 4 tables, storage bucket, edge functions |
+| **Database** | Supabase (PostgreSQL) | 18 tables, storage bucket, edge functions |
 | **Payments** | Stripe (test mode) | Checkout sessions, webhooks, refunds |
 | **Email** | Resend API | Transactional emails, CAN-SPAM compliance |
 | **AI** | Claude Sonnet 4.6 | Report generation (via Supabase Edge Function) |
@@ -88,6 +88,7 @@ Customer Journey:
 | deliverable_url | text | Full report URL |
 | file_urls | text[] | Discovery file storage paths |
 | eval_results | jsonb | Evaluation scorecard (UPL + Psych teams) |
+| buyer_states | jsonb | Detected buyer states from intake (distrust, double-checking, information-vacuum, etc.) |
 | review_reminder_sent | boolean | Prevents duplicate review reminders |
 | report_token_expires_at | timestamptz | 12-month report access expiry |
 | updated_at | timestamptz | Auto-updated via trigger |
@@ -120,8 +121,30 @@ Customer Journey:
 | created_at | timestamptz | When sent |
 | **Unique constraint:** | `(subscriber_id, email_key)` | Prevents duplicate sends |
 
+### Reference Data Tables (12 tables — migrated from markdown, Feb 2026)
+
+Source of truth for structured data previously scattered across 10+ markdown files. Seeded via `scripts/seed/run-all-seeds.mjs` in ImNotAnAttorney repo. Migration: `supabase/migrations/004-data-normalization.sql`.
+
+| Table | Rows | Source | Purpose |
+|-------|------|--------|---------|
+| `experts` | 63 | `system/EXPERT-REFERENCE.md` | .01% expert roster (attorneys, psychology, marketing) |
+| `eval_criteria` | 58 | `system/EVALUATION-TEAM.md` | 5-team evaluation criteria (U1-U10, P1-P10, L1-L10, D1-D11, C1-C10, X1-X7) |
+| `pipeline_eval_weights` | 40 | `system/EVALUATION-TEAM.md` | Per-pipeline team weights (GATE/HIGH/MEDIUM/LOW) |
+| `buyer_states` | 6 | `system/BUYER-STATES.md` | Why defendants buy (distrust, double-checking, information-vacuum, etc.) |
+| `content_pain_points` | 20 | `content/REDDIT-PAIN-POINTS.md` | Reddit/Avvo defendant pain points with SEO data |
+| `content_assets` | 15 | `content/READY-TO-POST/` | Ready-to-post content (email teasers, Reddit comments, Twitter threads) |
+| `intake_questions` | 40 | `system/templates/case-decoder/intake-questionnaire.md` | Charge-specific intake questions (10 types × 4 questions) |
+| `tiers` | 7 | `src/lib/stripe.ts` | Product tiers with pricing, delivery, features |
+| `charge_types` | 21 | `checkout/route.ts` + intake questionnaire | Charge type catalog with expert mappings |
+| `content_posts` | 23 | `content/CONTENT-FLYWHEEL.md` | Blog post catalog with subreddit targeting |
+| `subreddits` | 5 | `content/CONTENT-FLYWHEEL.md` | Subreddit profiles (rules, best post times) |
+| `emotional_profiles` | 33 | `system/EMOTIONAL-INTELLIGENCE.md` | Emotional calibration (fears, stances, attorney wounds, banned terms) |
+
+All reference tables have `created_at`, `updated_at` (auto-trigger), and `active` boolean for soft-delete. Markdown files remain as human-readable references with "Source of truth" headers pointing to DB.
+
 ### Database Triggers
 - `update_cases_updated_at` — Automatically sets `updated_at = now()` on every cases row update. This ensures stuck-case detection (cron Parts 4 & 5) works even when code paths forget to set updated_at explicitly.
+- `update_<table>_updated_at` — All 12 reference data tables have `moddatetime` triggers (via `extensions.moddatetime()`) for automatic `updated_at` management.
 
 ### Indexes
 - `idx_orders_stripe_payment_intent` on `orders(stripe_payment_intent_id)` — Used by refund webhook to find the order being refunded.
@@ -228,7 +251,7 @@ Configured in `next.config.ts`:
 
 1. **`escapeHtml()` + `sendEmail()` + `PHYSICAL_ADDRESS`** — Duplicated in both Supabase Edge Functions (`generate-report/index.ts` and `evaluate-report/index.ts`). This is intentional because edge functions run in Deno and cannot import from the Next.js codebase.
 
-2. **Tier pricing data** — Exists in 3 places: `stripe.ts` (source of truth for checkout), `PricingTable.tsx` (display), `services/page.tsx` (display). Changes must be synced manually.
+2. **Tier pricing data** — Canonical source of truth is the `tiers` Supabase table. Code-level copies exist in `stripe.ts` (checkout), `PricingTable.tsx` (display), `services/page.tsx` (display). The `stripe.ts` object must be kept in sync with the DB until the frontend reads from DB directly.
 
 ## File Organization
 
