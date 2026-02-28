@@ -13,6 +13,7 @@
 
 import fs from "fs";
 import path from "path";
+import https from "https";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -624,23 +625,45 @@ async function main() {
     const start = Date.now();
     let response;
     const maxRetries = 2;
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        response = await fetch("https://api.anthropic.com/v1/messages", {
+
+    // Use Node.js https module instead of fetch — Node v25 undici has a ~300s
+    // socket timeout that kills long-running Opus requests (250-294s).
+    function callClaudeHTTPS(body) {
+      return new Promise((resolve, reject) => {
+        const data = JSON.stringify(body);
+        const req = https.request({
+          hostname: "api.anthropic.com",
+          path: "/v1/messages",
           method: "POST",
           headers: {
             "x-api-key": ANTHROPIC_API_KEY,
             "anthropic-version": "2023-06-01",
             "content-type": "application/json",
+            "content-length": Buffer.byteLength(data),
           },
-          body: JSON.stringify({
-            model: "claude-opus-4-6",
-            max_tokens: 32000,
-            thinking: { type: "adaptive" },
-            system: SYSTEM_PROMPT,
-            messages: [{ role: "user", content: userPrompt }],
-          }),
+          timeout: 600_000, // 10 minutes
+        }, (res) => {
+          let body = "";
+          res.on("data", (chunk) => body += chunk);
+          res.on("end", () => resolve({ status: res.statusCode, body }));
         });
+        req.on("timeout", () => { req.destroy(); reject(new Error("Request timed out (10 min)")); });
+        req.on("error", reject);
+        req.write(data);
+        req.end();
+      });
+    }
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        const raw = await callClaudeHTTPS({
+          model: "claude-opus-4-6",
+          max_tokens: 32000,
+          thinking: { type: "enabled", budget_tokens: 16000 },
+          system: SYSTEM_PROMPT,
+          messages: [{ role: "user", content: userPrompt }],
+        });
+        response = { status: raw.status, json: () => JSON.parse(raw.body) };
         break; // success — exit retry loop
       } catch (fetchErr) {
         const elapsed = ((Date.now() - start) / 1000).toFixed(1);
@@ -659,14 +682,14 @@ async function main() {
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
 
-    if (!response.ok) {
-      const err = await response.text();
-      console.error(`  API Error (${response.status}): ${err}`);
-      results.push({ persona: persona.id, label: persona.label, pass: 0, fail: 0, total: 0, error: err });
+    if (response.status !== 200) {
+      const errBody = typeof response.json === "function" ? JSON.stringify(response.json()) : String(response.body || "");
+      console.error(`  API Error (${response.status}): ${errBody}`);
+      results.push({ persona: persona.id, label: persona.label, pass: 0, fail: 0, total: 0, error: errBody });
       continue;
     }
 
-    const result = await response.json();
+    const result = response.json();
     // Response contains thinking + text blocks — extract text only
     const textBlocks = (result.content || []).filter((b) => b.type === "text");
     const text = textBlocks.map((b) => b.text).join("") || "";

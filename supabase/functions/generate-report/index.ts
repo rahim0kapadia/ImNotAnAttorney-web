@@ -38,7 +38,7 @@
  *   avoids cross-runtime import issues and makes the function deployable
  *   independently.
  *
- * MODEL CHOICE — claude-opus-4-6 with adaptive thinking:
+ * MODEL CHOICE — claude-opus-4-6 with extended thinking (budget_tokens: 16000):
  *   Upgraded from Sonnet 4.6 to Opus 4.6 for emotional intelligence.
  *   Sonnet produced structurally correct reports but with mechanical emotional
  *   calibration — every defendant got the same warm-language cadence regardless
@@ -47,8 +47,10 @@
  *   ATTORNEY WOUND, HOPE SIGNAL, ISOLATION, CHARGE PATTERN, CO-DEFENDANT,
  *   READING ARC) before generating, producing stance-calibrated reports.
  *
- *   Parameters: max_tokens=32000 (thinking + output), thinking={type:"adaptive"}.
- *   Temperature is NOT set (incompatible with thinking).
+ *   Parameters: max_tokens=32000 (thinking + output), thinking={type:"enabled",
+ *   budget_tokens:16000}. Temperature is NOT set (incompatible with thinking).
+ *   Note: "adaptive" thinking was tested but removed — it caused 600s+ generation
+ *   times (vs 60-120s with 16K budget) without meaningful quality improvement.
  *   Cost: ~$0.40-0.60/report, still negligible vs $197 price.
  *   Timing: 60-294s. Supabase Free tier has 150s hard kill — Opus sometimes
  *   exceeds this (250-294s for complex cases). This Edge Function is the PRIMARY
@@ -1395,7 +1397,7 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: st
   const body = JSON.stringify({
     model: "claude-opus-4-6",
     max_tokens: 32000,
-    thinking: { type: "adaptive" },
+    thinking: { type: "enabled", budget_tokens: 16000 },
     system: SYSTEM_PROMPT,
     messages: [
       { role: "user", content: userPrompt },

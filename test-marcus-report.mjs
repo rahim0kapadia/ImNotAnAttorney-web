@@ -291,7 +291,7 @@ async function main() {
     body: JSON.stringify({
       model: "claude-opus-4-6",
       max_tokens: 32000,
-      thinking: { type: "adaptive" },
+      thinking: { type: "enabled", budget_tokens: 16000 },
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: userPrompt }],
     }),

@@ -169,7 +169,7 @@ This is the heavy-lift function that runs in the Supabase Deno runtime with a 15
 1. **Fetches case record** from Supabase via raw PostgREST (no SDK -- avoids 60-90s cold start from esm.sh imports).
 2. **Idempotency check** -- If case is already `"review"` or `"delivered"`, returns early (unless `force: true`).
 3. **Finds linked intake** -- First by `intake_id` FK, then by email fallback. If no intake found, emails operator and returns 404.
-4. **Calls Claude Opus 4.6 API with adaptive thinking** -- Model `claude-opus-4-6`, max 32000 tokens (thinking + output), `thinking: { type: "adaptive" }`. No temperature (incompatible with thinking). The system prompt encodes expertise from 40+ defense attorneys plus an 8-dimension emotional profiling framework. Opus uses its thinking budget to build an emotional profile (PRIMARY FEAR, EMOTIONAL STANCE, ATTORNEY WOUND, HOPE SIGNAL, ISOLATION, CHARGE PATTERN, CO-DEFENDANT DYNAMIC, READING ARC) before generating, producing stance-calibrated reports. See `system/EMOTIONAL-INTELLIGENCE.md` for the full framework.
+4. **Calls Claude Opus 4.6 API with extended thinking (budget_tokens: 16000)** -- Model `claude-opus-4-6`, max 32000 tokens (thinking + output), `thinking: { type: "enabled", budget_tokens: 16000 }`. No temperature (incompatible with thinking). The system prompt encodes expertise from 40+ defense attorneys plus an 8-dimension emotional profiling framework. Opus uses its thinking budget to build an emotional profile (PRIMARY FEAR, EMOTIONAL STANCE, ATTORNEY WOUND, HOPE SIGNAL, ISOLATION, CHARGE PATTERN, CO-DEFENDANT DYNAMIC, READING ARC) before generating, producing stance-calibrated reports. See `system/EMOTIONAL-INTELLIGENCE.md` for the full framework.
 5. **Loads charge-specific expert data from Supabase** -- `getChargeContext()` queries `charge_types` and `experts` tables for dynamic prompt enrichment (expert names, methodologies, focus areas). Falls back to hardcoded data if DB query fails.
 6. **Renders markdown to branded HTML** -- Dark theme (#0C0A09 background), amber accents (#F59E0B), print-optimized CSS, 9-section report structure.
 7. **Saves to Supabase** -- Updates the case record with `report_html`, `report_token` (UUID for URL-safe access), `generated_at`, `status: "review"`, and the `charge_type` from intake.
@@ -218,7 +218,7 @@ GitHub Actions (every 5 min) → picks up "generating" cases >3 min old
 3. Fetches linked intake (intake_id FK, then email fallback).
 4. Extracts `SYSTEM_PROMPT` from `index.ts` at runtime (single source of truth).
 5. Queries `charge_types` + `experts` tables for dynamic charge context (same pattern as Edge Function).
-6. Calls Claude Opus 4.6 API: `max_tokens: 32000`, `thinking: { type: "adaptive" }`, **no timeout constraint**.
+6. Calls Claude Opus 4.6 API: `max_tokens: 32000`, `thinking: { type: "enabled", budget_tokens: 16000 }`, **no timeout constraint**.
 7. Renders markdown to branded HTML (same dark theme).
 8. Saves report to Supabase: `report_html`, `report_token`, `generated_at`, `status: "review"`, `report_token_expires_at` (12 months).
 9. Sends operator review email with HMAC-signed approve link.
@@ -403,13 +403,13 @@ The Edge Function has NO npm/esm.sh imports. Importing `@supabase/supabase-js` v
 
 ### Model Choice
 
-**Model:** `claude-opus-4-6` with adaptive thinking
+**Model:** `claude-opus-4-6` with extended thinking (budget_tokens: 16000)
 
 Upgraded from Sonnet 4.6 to Opus 4.6 for emotional intelligence. Sonnet produced structurally correct reports but with mechanical emotional calibration — every defendant got the same warm-language cadence regardless of their emotional state. Opus uses its thinking budget to build an 8-dimension emotional profile before generating, producing stance-calibrated reports (minimizer vs catastrophizer vs intellectualizer vs dissociater).
 
 At ~$0.40-0.60/report, cost is still negligible vs $197 price (0.2-0.3%). Timing: 60-120s within the 150s edge function timeout.
 
-**Parameters:** `max_tokens: 32000` (thinking + output combined), `thinking: { type: "adaptive" }`. Temperature is NOT set (incompatible with thinking mode).
+**Parameters:** `max_tokens: 32000` (thinking + output combined), `thinking: { type: "enabled", budget_tokens: 16000 }`. Temperature is NOT set (incompatible with thinking mode). Note: "adaptive" thinking was tested but reverted — it caused 600s+ generation times without meaningful quality improvement.
 
 **Response parsing:** Response `content` array contains `{ type: "thinking" }` and `{ type: "text" }` blocks. Code filters for `type === "text"` only — thinking blocks contain the emotional profiling analysis and are not included in the report.
 
