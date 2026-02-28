@@ -815,73 +815,171 @@ RULES:
 type IntakeData = Record<string, any>;
 
 /**
- * Returns charge-specific context with 3 God Mode experts per charge type,
- * jurisdiction awareness, and charge-specific intake data interpretation.
+ * Resolves raw intake charge_type text to a DB slug.
+ * Intake data has inconsistent casing (e.g., "dui" vs "White Collar / Fraud").
+ * This normalizes to the slug format used in the charge_types table.
+ */
+function resolveChargeSlug(raw: string): string {
+  const ct = raw.toLowerCase().replace(/[\s\/]+/g, "-");
+  if (ct.includes("dui") || ct.includes("dwi")) {
+    if (ct.includes("first")) return "dui-first";
+    if (ct.includes("repeat") || ct.includes("second") || ct.includes("third")) return "dui-repeat";
+    return "dui";
+  }
+  if (ct.includes("drug") && (ct.includes("traffick") || ct.includes("distribut"))) return "drug-trafficking";
+  if (ct.includes("drug")) return "drug-possession";
+  if (ct.includes("sex") && (ct.includes("digital") || ct.includes("internet"))) return "sex-offense-digital";
+  if (ct.includes("sex")) return "sex-offense-contact";
+  if (ct.includes("domestic")) return "domestic-violence";
+  if (ct.includes("assault") || ct.includes("battery")) return "assault";
+  if (ct.includes("weapon") || ct.includes("firearm")) return "weapons";
+  if (ct.includes("white-collar") || ct.includes("white collar") || ct.includes("fraud")) return "white-collar";
+  if (ct.includes("theft")) return "theft";
+  if (ct.includes("burglary")) return "burglary";
+  if (ct.includes("robbery")) return "robbery";
+  if (ct.includes("federal")) return "federal";
+  return raw.toLowerCase().replace(/[\s\/]+/g, "-");
+}
+
+/**
+ * Formats the charge-specific intake data block for the prompt.
+ * Shared by both dynamic and fallback getChargeContext functions.
+ */
+function formatChargeSpecificData(chargeSpecificData: Record<string, string>): string {
+  const csEntries = Object.entries(chargeSpecificData)
+    .filter(([, v]) => v && v !== "")
+    .map(([k, v]) => `  - ${k}: ${v}`)
+    .join("\n");
+  return csEntries ? `\nCHARGE-SPECIFIC INTAKE DATA:\n${csEntries}` : "";
+}
+
+/**
+ * Dynamic getChargeContext — queries charge_types + experts from Supabase.
+ * Single source of truth: expert data lives in the DB, not hardcoded.
+ * Falls back to getChargeContextFallback() on any DB error.
  *
- * @param chargeType - Charge type slug from the intake.
+ * @param chargeType - Raw charge type string from the intake.
  * @param jurisdictionLevel - "federal", "state", or "unknown".
  * @param chargeSpecificData - Object with charge-specific intake answers.
+ * @param url - Supabase project URL.
+ * @param key - Supabase service role key.
  * @returns Instruction block string for the Claude prompt.
  */
-function getChargeContext(
+async function getChargeContext(
+  chargeType: string,
+  jurisdictionLevel: string,
+  chargeSpecificData: Record<string, string>,
+  url: string,
+  key: string,
+): Promise<string> {
+  const csBlock = formatChargeSpecificData(chargeSpecificData);
+  const jur = jurisdictionLevel === "federal" ? "FEDERAL" : jurisdictionLevel === "state" ? "STATE" : "UNKNOWN JURISDICTION";
+  const slug = resolveChargeSlug(chargeType);
+
+  try {
+    // Step 1: Get charge type with prompt_label, focus_areas, expert_slugs
+    const cts = await supabaseSelect(url, key, "charge_types",
+      `slug=eq.${encodeURIComponent(slug)}&select=prompt_label,focus_areas,expert_slugs`);
+
+    // deno-lint-ignore no-explicit-any
+    const ct = (cts as any[])[0];
+    if (!ct || !ct.prompt_label || !ct.expert_slugs || ct.expert_slugs.length === 0) {
+      console.log(`[generate-report] No DB data for charge slug "${slug}", using fallback`);
+      return getChargeContextFallback(chargeType, jurisdictionLevel, chargeSpecificData);
+    }
+
+    // Step 2: Get expert details for matched slugs (limit to 3 for prompt)
+    const expertIds = ct.expert_slugs.slice(0, 3);
+    const experts = await supabaseSelect(url, key, "experts",
+      `id=in.(${expertIds.map(encodeURIComponent).join(",")})&select=id,name,why_elite,key_framework`);
+
+    // Sort by position in expert_slugs array to preserve triangulation order
+    // deno-lint-ignore no-explicit-any
+    const sorted = expertIds.map((s: string) => (experts as any[]).find(e => e.id === s)).filter(Boolean);
+
+    if (sorted.length === 0) {
+      console.log(`[generate-report] No experts found for slug "${slug}", using fallback`);
+      return getChargeContextFallback(chargeType, jurisdictionLevel, chargeSpecificData);
+    }
+
+    // Step 3: Format the same output string as the hardcoded version
+    // deno-lint-ignore no-explicit-any
+    const expertLines = sorted.map((e: any, i: number) =>
+      `${i + 1}. ${e.name} — ${e.why_elite}. Methodology: ${e.key_framework}.`
+    ).join("\n");
+
+    const focusLine = ct.focus_areas ? `\nFocus: ${ct.focus_areas}` : "";
+
+    return `\nCHARGE-SPECIFIC CONTEXT — ${ct.prompt_label} (${jur}):
+GOD MODE EXPERTS (triangulated — use their methodology):
+${expertLines}
+${focusLine}${csBlock}`;
+  } catch (err) {
+    console.error(`[generate-report] Dynamic getChargeContext failed, using fallback:`, err);
+    return getChargeContextFallback(chargeType, jurisdictionLevel, chargeSpecificData);
+  }
+}
+
+/**
+ * FALLBACK: Hardcoded charge-specific context. Used when DB query fails.
+ * This is the original getChargeContext() preserved as a safety net.
+ * Data should be kept in sync with the charge_types + experts tables.
+ */
+function getChargeContextFallback(
   chargeType: string,
   jurisdictionLevel: string,
   chargeSpecificData: Record<string, string>
 ): string {
   const ct = chargeType.toLowerCase();
-  const csEntries = Object.entries(chargeSpecificData)
-    .filter(([, v]) => v && v !== "")
-    .map(([k, v]) => `  - ${k}: ${v}`)
-    .join("\n");
-  const csBlock = csEntries ? `\nCHARGE-SPECIFIC INTAKE DATA:\n${csEntries}` : "";
+  const csBlock = formatChargeSpecificData(chargeSpecificData);
   const jur = jurisdictionLevel === "federal" ? "FEDERAL" : jurisdictionLevel === "state" ? "STATE" : "UNKNOWN JURISDICTION";
 
   if (ct.includes("dui") || ct.includes("dwi")) {
     return `\nCHARGE-SPECIFIC CONTEXT — DUI/DWI (${jur}):
 GOD MODE EXPERTS (triangulated — use their methodology):
-1. Lawrence Taylor — Legal treatise axis. Author of *Drunk Driving Defense* (9th Ed, Wolters Kluwer); cited by SCOTUS in *Missouri v. McNeely*; NCDD co-founder. Methodology: systematic challenge of every procedural step from stop to test.
-2. William "Bubba" Head — NHTSA mastery axis. *101 Ways to Avoid a Drunk Driving Conviction*; voted Best DUI Attorney in America by NCDD; sponsored first NHTSA defense training (1997). Methodology: SFST administration error exploitation, officer training gaps.
-3. Justin McShane — Forensic chemistry axis. First attorney designated "Forensic Lawyer Scientist" by American Chemical Society; co-authored SCOTUS amicus in *Bullcoming v. New Mexico*. Methodology: instrument precision challenges, scientific reliability attacks.
+1. Lawrence Taylor — Wrote Drunk Driving Defense (9th Ed), cited by SCOTUS in Missouri v. McNeely, NCDD co-founder. Methodology: systematic challenge of every procedural step from stop to test.
+2. William "Bubba" Head — Voted Best DUI Attorney in America (NCDD), 48+ years. Methodology: SFST administration error exploitation, officer training gaps.
+3. Justin McShane — First attorney designated "Forensic Lawyer Scientist" by American Chemical Society. Methodology: instrument precision challenges, scientific reliability attacks.
 
 Focus: BAC methodology challenge, field sobriety test validity, rising BAC defense, implied consent, calibration records, medical conditions (diabetes, GERD).${csBlock}`;
   }
 
-  if (ct.includes("sex-offense-contact") || (ct.includes("sex offense") && !ct.includes("digital"))) {
-    return `\nCHARGE-SPECIFIC CONTEXT — SEX OFFENSE (CONTACT) (${jur}):
-GOD MODE EXPERTS (triangulated):
-1. Michael Waddington — Cross-examination methodology axis. *Pattern Cross-Examination for Sexual Assault Cases* (NACDL-published); co-chairs NACDL Military Law Committee. Methodology: systematic SANE exam cross-examination, complainant statement inconsistency mapping.
-2. Riccardo Ippolito — Multi-vector evidence deconstruction axis. *Strategies for Defending Sex Crimes* (Thomson Reuters/Aspatore); 20+ years exclusive sex offense defense. Methodology: forensic DNA challenge, false memory framework, interview critique.
-3. Thomas Pavlinic — Exclusive specialization axis. 40+ years defending ONLY sex crime allegations; 39 not-guilty verdicts across 14+ states. Methodology: timeline-first evaluation, team approach model.
-
-Focus: SANE kit protocol, delayed reporting patterns, memory science, Rule 404(b), sex offender registry consequences, complainant credibility, forensic interview protocol (NICHD).${csBlock}`;
-  }
-
-  if (ct.includes("sex-offense-digital") || ct.includes("internet")) {
+  if (ct.includes("sex") && (ct.includes("digital") || ct.includes("internet"))) {
     return `\nCHARGE-SPECIFIC CONTEXT — SEX OFFENSE (DIGITAL/INTERNET) (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Citronberg & Johnson — Defense handbook axis. *Handbook for Federal Internet Sex Crimes* (13 chapters) — only comprehensive treatise; obtained federal dismissals via independent forensics. Methodology: 4th Amendment device seizure challenges, entrapment framework.
-2. Troy Stabenow — Sentencing guideline deconstruction axis. *Deconstructing the Myth of Careful Study* — changed federal judiciary sentencing attitudes; cited by U.S. Sentencing Commission and nearly every circuit. Methodology: guideline departure arguments, empirical sentencing data.
-3. Bernard Brody — Investigation deconstruction axis. Exclusive sex offense defense practice; *Georgia Sex Offense Law*; multiple federal internet sting acquittals. Methodology: government forensic analysis challenge, independent expert engagement.
+1. Citronberg & Johnson — Authors of Handbook for Federal Internet Sex Crimes (13 chapters). Methodology: 4th Amendment device seizure challenges, entrapment framework.
+2. Troy Stabenow — Author of Deconstructing the Myth of Careful Study; cited by U.S. Sentencing Commission. Methodology: guideline departure arguments, empirical sentencing data.
+3. Bernard Brody — Exclusive sex offense defense practice; multiple federal internet sting acquittals. Methodology: government forensic analysis challenge, independent expert engagement.
 
-Focus: device seizure methodology, entrapment defense (government inducement + predisposition), sentencing guideline application, independent forensic analysis, investigation origin.${csBlock}`;
+Focus: device seizure methodology, entrapment defense, sentencing guideline application, independent forensic analysis, investigation origin.${csBlock}`;
+  }
+
+  if (ct.includes("sex")) {
+    return `\nCHARGE-SPECIFIC CONTEXT — SEX OFFENSE (CONTACT) (${jur}):
+GOD MODE EXPERTS (triangulated):
+1. Michael Waddington — Pattern Cross-Examination for Sexual Assault Cases (NACDL). Methodology: systematic SANE exam cross-examination, complainant statement inconsistency mapping.
+2. Riccardo Ippolito — Strategies for Defending Sex Crimes (Thomson Reuters); 20+ years exclusive. Methodology: forensic DNA challenge, false memory framework, interview critique.
+3. Thomas Pavlinic — 40+ years defending ONLY sex crime allegations; 39 not-guilty verdicts. Methodology: timeline-first evaluation, team approach model.
+
+Focus: SANE kit protocol, delayed reporting patterns, memory science, Rule 404(b), sex offender registry consequences, complainant credibility.${csBlock}`;
   }
 
   if (ct.includes("domestic violence") || ct.includes("domestic-violence")) {
     return `\nCHARGE-SPECIFIC CONTEXT — DOMESTIC VIOLENCE (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Dr. Lenore Walker — Methodology/Science axis. Coined Battered Woman Syndrome; APF Gold Medal; primary aggressor analysis framework. Methodology: relationship dynamics assessment, power pattern analysis.
-2. Robert Tayac — Practice axis. Only DV-exclusive defense attorney; former SFPD DV detective; false allegation indicators. Methodology: primary aggressor determination challenge, mandatory arrest policy critique.
-3. Christopher Corso — Prosecution playbook inversion axis. Certified Criminal Law Specialist; former DV-specific prosecutor who helped draft prosecution DV manual. Methodology: knows exactly what prosecution will do at every stage; inverts their playbook.
+1. Dr. Lenore Walker — Coined Battered Woman Syndrome; APF Gold Medal. Methodology: relationship dynamics assessment, power pattern analysis.
+2. Robert Tayac — Only DV-exclusive defense attorney; former SFPD DV detective. Methodology: primary aggressor determination challenge, mandatory arrest policy critique.
+3. Christopher Corso — Former DV-specific prosecutor who helped draft prosecution DV manual. Methodology: knows exactly what prosecution will do at every stage; inverts their playbook.
 
 Focus: Crawford v. Washington confrontation clause, 911 call analysis, mandatory arrest policy, primary aggressor determination, protective order implications, recanting witness, false allegation indicators.${csBlock}`;
   }
 
-  if (ct.includes("weapons") || ct.includes("weapon") || ct.includes("firearm")) {
+  if (ct.includes("weapon") || ct.includes("firearm")) {
     return `\nCHARGE-SPECIFIC CONTEXT — WEAPONS CHARGE (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Stephen P. Halbrook — Statutory encyclopedia axis. *Firearms Law Deskbook* (Thomson/West, 30 years); 3 SCOTUS wins (*Printz*, *Thompson-Center*, *Castillo*). Methodology: search legality as threshold question, 4th Amendment suppression.
-2. Alan Gura — Constitutional framework axis. Lead counsel *District of Columbia v. Heller* + *McDonald v. Chicago*; 2 SCOTUS wins that redefined all firearms law. Methodology: post-Bruen constitutionality challenges to underlying statute.
-3. David Kopel — Historical/scholarly depth axis. Co-author *Firearms Law and the Second Amendment* (Aspen, 3rd Ed) — THE leading treatise; cited in 7 SCOTUS opinions. Methodology: historical tradition analysis for sensitive places, prohibited person constitutional challenge.
+1. Stephen P. Halbrook — Firearms Law Deskbook (30 years); 3 SCOTUS wins. Methodology: search legality as threshold question, 4th Amendment suppression.
+2. Alan Gura — Lead counsel Heller + McDonald; 2 SCOTUS wins. Methodology: post-Bruen constitutionality challenges.
+3. David Kopel — Firearms Law and the Second Amendment (Aspen, 3rd Ed); cited in 7 SCOTUS opinions. Methodology: historical tradition analysis, prohibited person constitutional challenge.
 
 Focus: constructive vs actual possession, Second Amendment (Bruen framework), felon-in-possession, enhancement analysis, lawful carry defense, stop-and-frisk legality.${csBlock}`;
   }
@@ -889,9 +987,9 @@ Focus: constructive vs actual possession, Second Amendment (Bruen framework), fe
   if (ct.includes("assault") || ct.includes("battery")) {
     return `\nCHARGE-SPECIFIC CONTEXT — ASSAULT/BATTERY (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Andrew F. Branca — Legal framework axis. *The Law of Self Defense* (3rd Ed); Five Elements framework; FBI National Academy instructor. Methodology: Five Elements analysis (Innocence, Imminence, Proportionality, Avoidance, Reasonableness).
-2. Massad Ayoob — Use-of-force dynamics axis. *Deadly Force*; AOJ Triad (Ability-Opportunity-Jeopardy); 45+ years expert witness. Methodology: threat assessment framework, force proportionality analysis.
-3. Don West — Trial architecture axis. Co-counsel in Zimmerman acquittal (most scrutinized self-defense trial in modern history); 35+ years Board Certified. Methodology: self-defense trial narrative construction, jury persuasion architecture.
+1. Andrew F. Branca — The Law of Self Defense (3rd Ed); Five Elements framework. Methodology: Five Elements analysis (Innocence, Imminence, Proportionality, Avoidance, Reasonableness).
+2. Massad Ayoob — Deadly Force; AOJ Triad; 45+ years expert witness. Methodology: threat assessment framework, force proportionality analysis.
+3. Don West — Co-counsel in Zimmerman acquittal; 35+ years Board Certified. Methodology: self-defense trial narrative construction, jury persuasion architecture.
 
 Focus: self-defense analysis (Stand Your Ground vs duty to retreat), proportionality, witness credibility, video evidence, mutual combat, injury documentation, aggravating factors.${csBlock}`;
   }
@@ -899,19 +997,19 @@ Focus: self-defense analysis (Stand Your Ground vs duty to retreat), proportiona
   if (ct.includes("white collar") || ct.includes("white-collar") || ct.includes("fraud")) {
     return `\nCHARGE-SPECIFIC CONTEXT — WHITE COLLAR/FRAUD (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Martin G. Weinberg — Constitutional rights / trial axis. NACDL 2022 Lifetime Achievement; *Chadwick* + *Warshak* (SCOTUS/4A); Varsity Blues acquittals. Methodology: good faith reliance on counsel as intent defense, constitutional rights challenges.
-2. Cristina C. Arguedas — Factual innocence / corporate liability axis. 2017 NACDL White Collar Award; Trial Lawyers Hall of Fame; *U.S. v. FedEx* — "factually innocent" ruling. Methodology: pre-indictment intervention, professional advice documentation.
-3. David B. Smith — Asset forfeiture / financial warfare axis. *Prosecution and Defense of Forfeiture Cases* (Matthew Bender) — THE treatise; NACDL Forfeiture Committee Chair 35+ years. Methodology: early asset restraint challenge, right to counsel preservation.
+1. Martin G. Weinberg — NACDL 2022 Lifetime Achievement; Varsity Blues acquittals. Methodology: good faith reliance on counsel as intent defense, constitutional rights challenges.
+2. Cristina C. Arguedas — Trial Lawyers Hall of Fame; U.S. v. FedEx "factually innocent." Methodology: pre-indictment intervention, professional advice documentation.
+3. David B. Smith — Prosecution and Defense of Forfeiture Cases (Matthew Bender). Methodology: early asset restraint challenge, right to counsel preservation.
 
 Focus: document privilege, cooperation strategy, parallel proceedings, loss calculation, asset forfeiture, professional reliance defense.${csBlock}`;
   }
 
-  if (ct.includes("drug possession") || ct.includes("drug-possession") || ct.includes("drug trafficking") || ct.includes("drug-trafficking") || ct.includes("distribution")) {
+  if (ct.includes("drug")) {
     return `\nCHARGE-SPECIFIC CONTEXT — DRUG CASE (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Jeffrey Lichtman — CI destruction / cross-exam axis. El Chapo defense; 3 Gotti mistrials; 30+ years high-profile drug acquittals. Methodology: 7-Pillar CI Destruction Protocol (criminal history, payment, reliability, supervision, motive to fabricate, corroboration, constitutional issues).
-2. Ron Chapman II — Federal drug prosecution system mastery axis. Multiple federal acquittals including Rule 29 mid-trial wins; former Marine JAG + federal prosecutor. Methodology: forensic substance analysis challenge, prosecution system exploitation.
-3. Michael Levine — DEA insider / operations deconstruction axis. 25-year DEA veteran ("America's top undercover cop" — *60 Minutes*); *Deep Cover*; 500+ expert witness appearances. Methodology: government case construction deconstruction, CI handling procedure critique.
+1. Jeffrey Lichtman — El Chapo defense; 3 Gotti mistrials. Methodology: 7-Pillar CI Destruction Protocol.
+2. Ron Chapman II — Multiple federal acquittals including Rule 29 mid-trial wins. Methodology: forensic substance analysis challenge, prosecution system exploitation.
+3. Michael Levine — 25-year DEA veteran; 500+ expert witness appearances. Methodology: government case construction deconstruction, CI handling procedure critique.
 
 Focus: constructive vs actual possession, weight threshold analysis, mandatory minimum exposure, CI reliability, entrapment, search legality.${csBlock}`;
   }
@@ -919,19 +1017,19 @@ Focus: constructive vs actual possession, weight threshold analysis, mandatory m
   if (ct.includes("theft") || ct.includes("burglary") || ct.includes("robbery")) {
     return `\nCHARGE-SPECIFIC CONTEXT — THEFT/BURGLARY/ROBBERY (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Barry Scheck — DNA exoneration method axis. *Actual Innocence*; Innocence Project co-founder; 254+ exonerations. Methodology: eyewitness misidentification challenge (84% of wrongful convictions), modern alibi evidence.
-2. Gary L. Wells, Ph.D. — Eyewitness science axis. Invented double-blind lineups; co-founded DOJ eyewitness evidence group. Methodology: lineup procedure evaluation, identification reliability factors.
-3. Brandon L. Garrett — Systemic error patterns axis. *Convicting the Innocent* (Harvard); proved 70% of wrongful convictions involved eyewitness misID. Methodology: multiple unreliable evidence stacking pattern, wrongful prosecution indicators.
+1. Barry Scheck — Innocence Project co-founder; 254+ exonerations. Methodology: eyewitness misidentification challenge, modern alibi evidence.
+2. Gary L. Wells, Ph.D. — Invented double-blind lineups. Methodology: lineup procedure evaluation, identification reliability factors.
+3. Brandon L. Garrett — Convicting the Innocent (Harvard). Methodology: multiple unreliable evidence stacking pattern, wrongful prosecution indicators.
 
 Focus: identity evidence reliability, intent element, value threshold (felony/misdemeanor), alibi evidence, accomplice liability.${csBlock}`;
   }
 
-  if (ct.includes("federal") && !ct.includes("drug") && !ct.includes("sex") && !ct.includes("fraud") && !ct.includes("white")) {
+  if (ct.includes("federal")) {
     return `\nCHARGE-SPECIFIC CONTEXT — FEDERAL (GENERAL/SENTENCING) (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Alan Ellis — Guidebook / judicial insight axis. *Federal Prison Guidebook* (14th Ed); Past NACDL President; 9th Circuit: "nationally recognized expert in federal sentencing." Methodology: "mitigation starts at intake" — 3553(a) factor mapping.
-2. Carmen D. Hernandez — Systemic disparity / reform axis. Past NACDL President; Heeney Award (NACDL's most prestigious). Methodology: safety valve and substantial assistance as mandatory minimum escape routes, disparity arguments.
-3. Mark H. Allenbaugh — Data-driven sentencing analytics axis. Former U.S. Sentencing Commission staff attorney; founded SentencingStats.com (1.6M cases). Methodology: empirical variance analysis by district and judge, below-guidelines departure data.
+1. Alan Ellis — Federal Prison Guidebook (14th Ed); Past NACDL President. Methodology: "mitigation starts at intake" — 3553(a) factor mapping.
+2. Carmen D. Hernandez — Past NACDL President; Heeney Award. Methodology: safety valve and substantial assistance as mandatory minimum escape routes.
+3. Mark H. Allenbaugh — Former U.S. Sentencing Commission staff; SentencingStats.com. Methodology: empirical variance analysis by district and judge.
 
 Focus: sentencing guidelines calculation, 5K1.1 cooperation, mandatory minimum overrides, grand jury process, federal discovery (Brady, Giglio, Jencks Act), 70-day speedy trial, pretrial detention.${csBlock}`;
   }
@@ -978,16 +1076,18 @@ function getEvidenceContext(types: string[]): string {
  * Includes jurisdiction level, charge-specific data, and expert triangulation.
  *
  * @param intake - The intake record from Supabase.
+ * @param supabaseUrl - Supabase project URL (for dynamic charge context).
+ * @param supabaseKey - Supabase service role key.
  * @returns The complete user prompt string.
  */
-function buildUserPrompt(intake: IntakeData): string {
+async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabaseKey: string): Promise<string> {
   const daysSinceArrest = intake.arrest_date
     ? Math.floor((Date.now() - new Date(intake.arrest_date).getTime()) / (1000 * 60 * 60 * 24))
     : null;
 
   const jurisdictionLevel = intake.jurisdiction_level || "unknown";
   const chargeSpecificData = intake.charge_specific_data || {};
-  const chargeBlock = getChargeContext(intake.charge_type, jurisdictionLevel, chargeSpecificData);
+  const chargeBlock = await getChargeContext(intake.charge_type, jurisdictionLevel, chargeSpecificData, supabaseUrl, supabaseKey);
   const evidenceBlock = getEvidenceContext(intake.evidence_type || []);
 
   const comm = intake.communication_frequency;
@@ -1275,11 +1375,13 @@ THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
  *
  * @param intake - Intake data to build the prompt from.
  * @param apiKey - Anthropic API key.
+ * @param supabaseUrl - Supabase project URL (for dynamic charge context).
+ * @param supabaseKey - Supabase service role key.
  * @returns The generated markdown report.
  * @throws If the API returns an error or an empty response.
  */
-async function callClaudeAPI(intake: IntakeData, apiKey: string): Promise<string> {
-  const userPrompt = buildUserPrompt(intake);
+async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: string, supabaseKey: string): Promise<string> {
+  const userPrompt = await buildUserPrompt(intake, supabaseUrl, supabaseKey);
   const body = JSON.stringify({
     model: "claude-opus-4-6",
     max_tokens: 32000,
@@ -1552,7 +1654,7 @@ Deno.serve(async (req: Request) => {
     // and email the operator a retry curl command for manual recovery.
     let markdown: string;
     try {
-      markdown = await callClaudeAPI(intake, anthropicKey);
+      markdown = await callClaudeAPI(intake, anthropicKey, supabaseUrl, supabaseKey);
     } catch (err) {
       console.error("[generate-report] Claude API failed:", err);
 
