@@ -160,25 +160,82 @@ This is a thin dispatcher running on Vercel Hobby (10s timeout). It cannot do th
 
 ---
 
-### Step 4: Supabase Edge Function — Report Generation
+### Step 4: Supabase Edge Function — Report Generation (Primary Path)
 
 **File:** `supabase/functions/generate-report/index.ts`
 
-This is the heavy-lift function that runs in the Supabase Deno runtime with a 150-second timeout.
+This is the heavy-lift function that runs in the Supabase Deno runtime with a 150-second timeout. It is the **primary** generation path — most reports complete within this window. For cases that exceed the timeout (Opus 4.6 can take 250-294s on complex charges), the GitHub Actions backup worker picks them up (see Step 4B below).
 
 1. **Fetches case record** from Supabase via raw PostgREST (no SDK -- avoids 60-90s cold start from esm.sh imports).
 2. **Idempotency check** -- If case is already `"review"` or `"delivered"`, returns early (unless `force: true`).
 3. **Finds linked intake** -- First by `intake_id` FK, then by email fallback. If no intake found, emails operator and returns 404.
-4. **Calls Claude Opus 4.6 API with adaptive thinking** -- Model `claude-opus-4-6`, max 32000 tokens (thinking + output), thinking enabled with 16000 token budget. No temperature (incompatible with thinking). The system prompt encodes expertise from 40+ defense attorneys plus an 8-dimension emotional profiling framework. Opus uses its thinking budget to build an emotional profile (PRIMARY FEAR, EMOTIONAL STANCE, ATTORNEY WOUND, HOPE SIGNAL, ISOLATION, CHARGE PATTERN, CO-DEFENDANT DYNAMIC, READING ARC) before generating, producing stance-calibrated reports. See `system/EMOTIONAL-INTELLIGENCE.md` for the full framework.
-5. **Renders markdown to branded HTML** -- Dark theme (#0C0A09 background), amber accents (#F59E0B), print-optimized CSS, 9-section report structure.
-6. **Saves to Supabase** -- Updates the case record with `report_html`, `report_token` (UUID for URL-safe access), `generated_at`, `status: "review"`, and the `charge_type` from intake.
-7. **Emails operator** -- Subject: "Review Report: [charge] -- [name]". Contains two action buttons:
+4. **Calls Claude Opus 4.6 API with adaptive thinking** -- Model `claude-opus-4-6`, max 32000 tokens (thinking + output), `thinking: { type: "adaptive" }`. No temperature (incompatible with thinking). The system prompt encodes expertise from 40+ defense attorneys plus an 8-dimension emotional profiling framework. Opus uses its thinking budget to build an emotional profile (PRIMARY FEAR, EMOTIONAL STANCE, ATTORNEY WOUND, HOPE SIGNAL, ISOLATION, CHARGE PATTERN, CO-DEFENDANT DYNAMIC, READING ARC) before generating, producing stance-calibrated reports. See `system/EMOTIONAL-INTELLIGENCE.md` for the full framework.
+5. **Loads charge-specific expert data from Supabase** -- `getChargeContext()` queries `charge_types` and `experts` tables for dynamic prompt enrichment (expert names, methodologies, focus areas). Falls back to hardcoded data if DB query fails.
+6. **Renders markdown to branded HTML** -- Dark theme (#0C0A09 background), amber accents (#F59E0B), print-optimized CSS, 9-section report structure.
+7. **Saves to Supabase** -- Updates the case record with `report_html`, `report_token` (UUID for URL-safe access), `generated_at`, `status: "review"`, and the `charge_type` from intake.
+8. **Emails operator** -- Subject: "Review Report: [charge] -- [name]". Contains two action buttons:
    - **"Approve & Deliver"** -- Links to `GET /api/deliver?token={OPERATOR_SECRET}&case={caseId}`
    - **"Preview Report"** -- Links to `/report/{report_token}`
 
 **On Claude API failure:**
 - Sets `case.status = "generation-failed"`
 - Emails operator with error details and a working curl retry command
+
+**On Edge Function timeout (150s wall clock):**
+- Case remains in `"generating"` status (no error handler runs — the process is hard-killed)
+- The backup worker (Step 4B) detects and completes the report
+
+---
+
+### Step 4B: GitHub Actions Backup Worker (Timeout Recovery)
+
+**Files:** `scripts/generate-worker.mjs` + `.github/workflows/generate-report.yml`
+
+The Supabase Edge Function Free tier has a **150-second hard timeout**. Claude Opus 4.6 sometimes takes 250-294 seconds on complex charge types (drug trafficking, federal cases, sex offenses). When this happens, the Edge Function is killed mid-request and the case is left with `status = "generating"` forever. The backup worker catches these.
+
+**Architecture (belt-and-suspenders):**
+
+```
+Dispatcher → fire-and-forget → Edge Function (tries within 150s)
+                                     ↓
+                                succeeded? → status="review" ✓
+                                timed out? → status still "generating"
+                                                    ↓
+GitHub Actions (every 5 min) → picks up "generating" cases >3 min old
+                                     ↓
+                                generates (no timeout) → status="review" ✓
+```
+
+**GitHub Actions Workflow (`.github/workflows/generate-report.yml`):**
+- **Schedule:** Every 5 minutes via cron (`*/5 * * * *`)
+- **Early exit:** Curl checks Supabase for `status=generating` cases before `npm ci`. No-work runs take ~10 seconds.
+- **Sparse checkout:** Only pulls `scripts/` and `supabase/functions/generate-report/` directories.
+- **Manual trigger:** `workflow_dispatch` for testing.
+
+**Worker Script (`scripts/generate-worker.mjs`):**
+1. Queries cases with `status = "generating"` and `updated_at` older than 3 minutes (`LIMIT 1`, oldest first).
+2. If no cases → logs "No timed-out cases to process", exits 0.
+3. Fetches linked intake (intake_id FK, then email fallback).
+4. Extracts `SYSTEM_PROMPT` from `index.ts` at runtime (single source of truth).
+5. Queries `charge_types` + `experts` tables for dynamic charge context (same pattern as Edge Function).
+6. Calls Claude Opus 4.6 API: `max_tokens: 32000`, `thinking: { type: "adaptive" }`, **no timeout constraint**.
+7. Renders markdown to branded HTML (same dark theme).
+8. Saves report to Supabase: `report_html`, `report_token`, `generated_at`, `status: "review"`, `report_token_expires_at` (12 months).
+9. Sends operator review email with HMAC-signed approve link.
+10. Fire-and-forget: triggers evaluate-report Edge Function.
+
+**On Claude API failure:** Sets `status: "generation-failed"`, sends operator alert with retry curl.
+
+**3-minute buffer:** Gives the Edge Function time to complete. Most runs finish in 60-120s.
+
+**LIMIT 1:** One case per worker run prevents overlap.
+
+**Minutes budget (private repo, 2,000/month free):**
+- No-work runs: ~10s each × 288/day × 30 ≈ 1,469 min/month
+- Generation runs: ~6 min each × ~30/month ≈ 180 min/month
+- **Total: ~1,649 min/month** (within 2,000 limit)
+
+**Upgrade path:** When Supabase is upgraded to Pro ($25/month), the Edge Function timeout extends to 400s. The worker can then be deleted.
 
 ---
 
@@ -310,7 +367,9 @@ Dispatcher (force=true bypasses idempotency check) --> Edge Function --> Report 
 | `awaiting-intake` | `intake` | Intake submitted post-payment | `intake/route.ts` |
 | `intake` | `generating` | Dispatcher atomic guard | `generate/case-decoder/route.ts` |
 | `generating` | `review` | Edge function: report saved successfully | `generate-report/index.ts` |
+| `generating` | `review` | Backup worker: timeout recovery (>3 min stuck) | `scripts/generate-worker.mjs` |
 | `generating` | `generation-failed` | Edge function: Claude API error | `generate-report/index.ts` |
+| `generating` | `generation-failed` | Backup worker: Claude API error | `scripts/generate-worker.mjs` |
 | `generating` | `generation-failed` | Cron Part 5: stuck for 30+ minutes | `cron/drip/route.ts` |
 | `intake` | `intake-stalled` | Cron Part 4: stuck for 2+ hours | `cron/drip/route.ts` |
 | `review` | `delivered` | Operator clicks Confirm Delivery | `deliver/route.ts` |
@@ -521,13 +580,15 @@ Separate from the post-purchase flow, free subscribers receive a 6-email nurture
 
 ### Stuck in "generating" (Edge Function Crash/Timeout)
 
-**Detection:** Cron Part 5 runs daily and queries cases with `status = "generating"` and `updated_at` older than 30 minutes.
+**Primary recovery: GitHub Actions backup worker** (every 5 minutes). Picks up cases stuck in `"generating"` for >3 minutes and completes them with no timeout constraint. See Step 4B above.
 
-**Response:**
+**Secondary detection:** Cron Part 5 runs daily and queries cases with `status = "generating"` and `updated_at` older than 30 minutes. This catches cases that both the Edge Function AND the worker failed to process.
+
+**Response (cron):**
 1. Sets `case.status = "generation-failed"`.
 2. Emails operator with the case details, minutes stuck, and a curl retry command.
 
-**Why 30 minutes?** The Edge Function has a 150-second timeout. Normal generation takes 60-120 seconds. If a case is still "generating" after 30 minutes, the Edge Function definitely crashed, timed out, or never ran. The 30-minute threshold provides generous margin.
+**Why 30 minutes for cron?** The worker checks every 5 minutes. If a case is still "generating" after 30 minutes, both the Edge Function and several worker cycles have failed — something is genuinely wrong.
 
 ### Stuck in "intake" (Generation Never Triggered)
 
@@ -651,6 +712,8 @@ The delivery endpoint uses an upsert with `onConflict: "subscriber_id,email_key"
 | `src/app/api/evaluate/case-decoder/route.ts` | Evaluation dispatcher (fire-and-forget to Edge Function) |
 | `src/app/api/deliver/route.ts` | Operator review + eval scorecard (GET), actual delivery (POST) |
 | `src/app/api/cron/drip/route.ts` | Daily cron: drip emails, review reminders, stuck detection, eval safety net |
+| `scripts/generate-worker.mjs` | Backup worker: timeout recovery for timed-out Edge Function runs (GitHub Actions) |
+| `.github/workflows/generate-report.yml` | GitHub Actions cron: runs worker every 5 min, early-exit when no generating cases |
 | `evaluate-report.mjs` | Dev tool: all 5 evaluation teams (Opus 4.6), CLI interface |
 | `src/lib/drip-emails.ts` | Email templates and sequences (nurture + post-purchase) |
 | `src/lib/email.ts` | Resend API wrapper, branded HTML template, CAN-SPAM footer |

@@ -21,7 +21,8 @@ Customer Journey:
 | **Database** | Supabase (PostgreSQL) | 18 tables, storage bucket, edge functions |
 | **Payments** | Stripe (test mode) | Checkout sessions, webhooks, refunds |
 | **Email** | Resend API | Transactional emails, CAN-SPAM compliance |
-| **AI** | Claude Sonnet 4.6 | Report generation (via Supabase Edge Function) |
+| **AI** | Claude Opus 4.6 | Report generation (Edge Function primary + GitHub Actions backup) |
+| **CI/CD** | GitHub Actions | Backup worker cron for timed-out Edge Function runs |
 | **DNS** | Cloudflare | CNAME to Vercel (DNS only, no proxy) |
 | **Cron** | cron-job.org (external) | Free alternative to Vercel Pro native cron |
 
@@ -49,6 +50,31 @@ Customer Journey:
 | `CRON_SECRET` | cron/drip | Authenticate cron requests |
 | `SUPABASE_ACCESS_TOKEN` | Supabase CLI | Edge function deployment |
 | `CRONJOB_API_KEY` | setup script | cron-job.org management |
+
+## Backup Worker (GitHub Actions)
+
+The Supabase Edge Function Free tier has a 150-second hard timeout. Claude Opus 4.6 can take 250-294s on complex charges. A GitHub Actions cron workflow runs every 5 minutes to catch timed-out cases.
+
+**Files:** `scripts/generate-worker.mjs` + `.github/workflows/generate-report.yml`
+
+**Flow:** Checks for cases stuck in `"generating"` status for >3 minutes → generates report with no timeout constraint → saves to Supabase → emails operator for review.
+
+**Minutes budget:** ~1,649/2,000 free monthly minutes (most runs are no-ops that exit in ~10 seconds).
+
+See `docs/PIPELINE-CASE-DECODER.md` Step 4B for full details.
+
+### GitHub Actions Secrets
+
+| Secret | Purpose |
+|--------|---------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | Full DB access (bypasses RLS) |
+| `ANTHROPIC_API_KEY` | Claude API for report generation |
+| `RESEND_API_KEY` | Send operator review emails |
+| `RESEND_FROM_EMAIL` | Sender address |
+| `OPERATOR_EMAIL` | Operator notification recipient |
+| `OPERATOR_SECRET` | HMAC signing for approve links |
+| `NEXT_PUBLIC_SITE_URL` | Base URL for email links |
 
 ## Database Schema
 
@@ -283,9 +309,14 @@ src/
     site.ts                   ← Shared constants + helpers
     supabase/admin.ts         ← Supabase admin client
   components/                 ← Shared UI components
+scripts/
+    generate-worker.mjs       ← Backup worker for timed-out Edge Function runs (GitHub Actions)
 supabase/
   functions/
     generate-report/          ← Report generation Edge Function (Opus 4.6, Deno, 150s timeout)
     evaluate-report/          ← Report evaluation Edge Function (Sonnet 4.6, UPL + Psych teams)
   migrations/                 ← SQL migration files
+.github/
+  workflows/
+    generate-report.yml       ← Cron: runs backup worker every 5 min
 ```

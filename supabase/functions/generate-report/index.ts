@@ -50,14 +50,24 @@
  *   Parameters: max_tokens=32000 (thinking + output), thinking={type:"adaptive"}.
  *   Temperature is NOT set (incompatible with thinking).
  *   Cost: ~$0.40-0.60/report, still negligible vs $197 price.
- *   Timing: 60-120s (within 150s edge function timeout).
+ *   Timing: 60-294s. Supabase Free tier has 150s hard kill — Opus sometimes
+ *   exceeds this (250-294s for complex cases). This Edge Function is the PRIMARY
+ *   generation path. A GitHub Actions backup worker (scripts/generate-worker.mjs)
+ *   picks up cases that time out here (status still "generating" after 3 min).
+ *
+ * CHARGE CONTEXT — dynamic from Supabase:
+ *   getChargeContext() queries the charge_types + experts tables for expert data
+ *   instead of hardcoding it. Falls back to getChargeContextFallback() on DB error.
+ *   Single source of truth: change expert data in the DB, not in this code.
  *
  * ERROR STRATEGY:
  *   On Claude API failure, the function:
  *     1. Sets case status to "generation-failed" in Supabase
  *     2. Emails the operator with error details and a curl retry command
- *   This ensures failures are visible and manually recoverable without
- *   requiring a dashboard login.
+ *   On timeout (Supabase kills the function at 150s):
+ *     3. Case remains in "generating" status
+ *     4. GitHub Actions worker picks it up within 5 minutes
+ *   This ensures failures are visible and recoverable without dashboard login.
  */
 
 // ============================================================
@@ -1361,13 +1371,13 @@ THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
 /**
  * Calls the Claude API to generate a Case Decoder report.
  *
- * Uses claude-opus-4-6 with adaptive thinking (effort: "high") and 32k max
- * tokens (thinking + output combined). Temperature is NOT set — it is
- * incompatible with thinking mode. Opus uses its thinking budget to build
- * the 8-dimension emotional profile before generating, producing reports
- * with genuine emotional calibration instead of generic warm language.
+ * Uses claude-opus-4-6 with adaptive thinking and 32k max tokens (thinking
+ * + output combined). Temperature is NOT set — incompatible with thinking.
+ * Opus uses its thinking budget to build the 8-dimension emotional profile
+ * before generating, producing stance-calibrated reports.
  *
- * Expected timing: 60-120s (within 150s edge function timeout).
+ * Timing: 60-294s. May exceed Supabase Free 150s timeout on complex cases.
+ * If killed, the GitHub Actions worker picks up the case within 5 minutes.
  * Cost: ~$0.40-0.60/report at ~5K word output with thinking overhead.
  *
  * Retries up to 3 times on 529 (overloaded) with exponential backoff.
