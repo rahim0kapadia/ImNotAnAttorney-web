@@ -160,17 +160,15 @@ export const NURTURE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">Here's What a Case Decoder Includes</h1>
       <ul style="padding-left: 20px;">
-        <li>Your charges explained in plain English</li>
-        <li>A timeline of where your case should be right now</li>
-        <li>Defense milestone checklist</li>
-        <li>15 targeted questions built from YOUR case details</li>
-        <li>Red flags for your specific stage and charges</li>
-        <li>Motion types that may apply to your case</li>
-        <li>BONUS: Attorney Meeting Prep Guide</li>
-        <li>BONUS: Motion Deadline Awareness</li>
+        <li>Your charges explained in plain English — with what the prosecution must prove</li>
+        <li>15 calibrated questions for your attorney (6-part format with follow-up probes)</li>
+        <li>Ready-to-send email template + phone script for your attorney</li>
+        <li>Where Things Stand — 4-area diagnostic of your case</li>
+        <li>Your Next 7 Days — one action per day with Meeting Ready Sheet</li>
+        <li>BONUS: Scripts for when the conversation gets difficult</li>
       </ul>
       <p>Every question generated using tactics from elite defense attorneys — Barry Scheck, Jeffrey Lichtman, F. Lee Bailey.</p>
-      <p>Delivered within 24 hours with 10+ targeted questions — or full cash refund. Delivered and not satisfied? 100% credit toward any higher tier.</p>
+      <p>Delivered within 24 hours with 15 calibrated questions + communication tools — or full cash refund. Delivered and not satisfied? 100% credit toward any higher tier.</p>
       <p><strong style="color: white;">$197.</strong> Less than one hour of your attorney's time.</p>
       ${cta("Find What's in My Case — $197 →", "/checkout?tier=case-decoder")}
     `,
@@ -225,9 +223,9 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">Your Attorney Meeting Prep Kit Is Ready</h1>
       <p>Your Case Decoder report has been delivered — check your inbox for the report link. Here's how to use it:</p>
       <ol>
-        <li><strong style="color: white;">Read sections 1-3 first</strong> — charges, timeline, accountability checklist</li>
-        <li><strong style="color: white;">Pick your top 5 questions</strong> from section 4 — start with the ones that surprised you most</li>
-        <li><strong style="color: white;">Bring them to your next attorney meeting</strong> — document every answer</li>
+        <li><strong style="color: white;">Start with "Where Things Stand"</strong> — see exactly where your case is right now</li>
+        <li><strong style="color: white;">Read "Questions for Your Attorney"</strong> — pick your top 5, start with the Golden Question</li>
+        <li><strong style="color: white;">Send the email from "Exactly What to Say"</strong> — it's already written, just copy-paste</li>
       </ol>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
         After your next attorney meeting, reply to this email and tell me: <strong style="color: white;">which question got the most reaction?</strong> Real cases make this service better for every defendant who comes after you.
@@ -244,7 +242,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">How Did It Go?</h1>
       <p>You had your attorney meeting. I have one question:</p>
       <p style="font-size: 18px; color: white;"><strong>Which question got the most reaction?</strong></p>
-      <p>Was it the one about weight discrepancies? The motion deadline? The accountability checklist score?</p>
+      <p>Was it the one about elements the prosecution must prove? The email template? The 7-day action plan?</p>
       <p>Just reply to this email. One sentence is fine. Your experience helps us build better questions for every defendant who comes after you.</p>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
         <strong style="color: white;">Need to find your report?</strong> <a href="{{REPORT_URL}}" style="color: #F59E0B; text-decoration: underline;">View your Case Decoder report here</a>
@@ -258,7 +256,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Ready to go deeper?",
     html: `
       <h1 style="color: #F59E0B;">Ready to Go Deeper?</h1>
-      <p>Your Case Decoder gave you the foundation — charges explained, milestones measured, and 15 targeted questions.</p>
+      <p>Your Case Decoder gave you the foundation — charges explained, 15 calibrated questions, and a 7-day action plan.</p>
       <p>The <strong style="color: white;">Intelligence Brief ($797)</strong> goes deeper:</p>
       <ul style="padding-left: 20px;">
         <li>Your judge's actual sentencing patterns</li>

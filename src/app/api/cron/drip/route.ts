@@ -1000,7 +1000,7 @@ export async function GET(req: NextRequest) {
           html: `
             <h1 style="color: #F59E0B;">You Were Close</h1>
             <p>You started checkout but didn't finish. No pressure — but if you're still thinking about it, the Case Decoder is the right place to start.</p>
-            <p>For $197, you get a plain-English charge breakdown, 15 targeted questions for your attorney, and red flags specific to your case stage.</p>
+            <p>For $197, you get a plain-English charge breakdown, 15 calibrated questions for your attorney, ready-to-send email templates, and a 7-day action plan.</p>
             <a href="${checkoutOrigin}/checkout?tier=case-decoder" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Continue to Checkout</a>
             <p style="color: #A1A1AA;">Questions? Reply to this email — a real person reads every message.</p>
           `,

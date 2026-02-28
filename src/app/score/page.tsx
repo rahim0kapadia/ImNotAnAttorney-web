@@ -238,9 +238,9 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
         </h3>
         <p className="mt-2 text-sm text-zinc-400">
           Your Defense Milestone Score is just the surface. The full Case
-          Decoder report gives you a plain-English charge breakdown, specific
-          questions built from your case details, and red flags for your case
-          stage.
+          Decoder report gives you a plain-English charge breakdown, 15
+          calibrated questions built from your case details, ready-to-send
+          email templates, and a 7-day action plan.
         </p>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row">
           <Link

@@ -21,7 +21,7 @@ Customer Journey:
 | **Database** | Supabase (PostgreSQL) | 4 tables, storage bucket, edge functions |
 | **Payments** | Stripe (test mode) | Checkout sessions, webhooks, refunds |
 | **Email** | Resend API | Transactional emails, CAN-SPAM compliance |
-| **AI** | Claude Haiku 4.5 | Report generation (via Supabase Edge Function) |
+| **AI** | Claude Sonnet 4.6 | Report generation (via Supabase Edge Function) |
 | **DNS** | Cloudflare | CNAME to Vercel (DNS only, no proxy) |
 | **Cron** | cron-job.org (external) | Free alternative to Vercel Pro native cron |
 

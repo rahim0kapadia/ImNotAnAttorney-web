@@ -125,7 +125,7 @@ The token-gated report viewer renders whatever HTML is stored in `cases.report_h
 There is no `/api/generate/intelligence-brief` endpoint. The only generation endpoint is `/api/generate/case-decoder/route.ts`, which:
 
 - Dispatches to the Supabase Edge Function `generate-report`.
-- The Edge Function runs Claude Haiku 4.5 with a Case Decoder-specific prompt.
+- The Edge Function runs Claude Sonnet 4.6 with a Case Decoder-specific prompt.
 - The prompt template generates a 9-section Case Decoder report.
 
 None of this infrastructure has been adapted for the Intelligence Brief. Specifically missing:
