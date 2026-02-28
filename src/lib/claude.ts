@@ -14,8 +14,10 @@
  *   40-90 seconds to complete. The Supabase Edge Function has a 150-second
  *   timeout, which is sufficient for full report generation.
  *
- * Both this file and the edge function use claude-sonnet-4-6. The edge
- * function is preferred because it has a 150s timeout vs Vercel's 25s.
+ * The edge function now uses claude-opus-4-6 with adaptive thinking for
+ * emotional intelligence. This legacy file still references sonnet-4-6
+ * but is NOT used in production. The edge function is preferred because
+ * it has a 150s timeout vs Vercel's 25s.
  *
  * The renderReportHtml() function at the bottom IS still imported by other
  * modules (it's the shared HTML renderer for report preview pages), so
@@ -402,7 +404,7 @@ Limitations: haven't seen evidence, can't predict outcomes, can't replace attorn
  * @deprecated Use the Supabase Edge Function (POST /api/generate/case-decoder)
  * instead. This function uses streaming to mitigate Vercel's timeout, but
  * still fails on Hobby plan (25s limit) for most reports. The edge function
- * has a 150s timeout and uses Sonnet 4.6.
+ * has a 150s timeout and uses Opus 4.6 with adaptive thinking.
  *
  * @param intake - The complete intake record from Supabase.
  * @returns The generated report as a markdown string.

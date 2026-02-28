@@ -55,7 +55,7 @@ This document describes the full automated pipeline for the Case Decoder product
                                                       /functions/v1/generate-report
                                                       |
                                                       |-- Fetch case + intake from Supabase
-                                                      |-- Call Claude Sonnet 4.6 API (~60-120s)
+                                                      |-- Call Claude Opus 4.6 API with thinking (~60-120s)
                                                       |-- Render markdown to branded HTML
                                                       |-- Save report_html + report_token
                                                       |-- case.status = "review"
@@ -162,7 +162,7 @@ This is the heavy-lift function that runs in the Supabase Deno runtime with a 15
 1. **Fetches case record** from Supabase via raw PostgREST (no SDK -- avoids 60-90s cold start from esm.sh imports).
 2. **Idempotency check** -- If case is already `"review"` or `"delivered"`, returns early (unless `force: true`).
 3. **Finds linked intake** -- First by `intake_id` FK, then by email fallback. If no intake found, emails operator and returns 404.
-4. **Calls Claude Sonnet 4.6 API** -- Model `claude-sonnet-4-6`, max 16000 tokens, temperature 0.3. The system prompt encodes expertise from 40+ defense attorneys. The user prompt is built from all intake fields and includes charge-specific blocks and evidence-specific question prompts.
+4. **Calls Claude Opus 4.6 API with adaptive thinking** -- Model `claude-opus-4-6`, max 32000 tokens (thinking + output), thinking enabled with 16000 token budget. No temperature (incompatible with thinking). The system prompt encodes expertise from 40+ defense attorneys plus an 8-dimension emotional profiling framework. Opus uses its thinking budget to build an emotional profile (PRIMARY FEAR, EMOTIONAL STANCE, ATTORNEY WOUND, HOPE SIGNAL, ISOLATION, CHARGE PATTERN, CO-DEFENDANT DYNAMIC, READING ARC) before generating, producing stance-calibrated reports. See `system/EMOTIONAL-INTELLIGENCE.md` for the full framework.
 5. **Renders markdown to branded HTML** -- Dark theme (#0C0A09 background), amber accents (#F59E0B), print-optimized CSS, 9-section report structure.
 6. **Saves to Supabase** -- Updates the case record with `report_html`, `report_token` (UUID for URL-safe access), `generated_at`, `status: "review"`, and the `charge_type` from intake.
 7. **Emails operator** -- Subject: "Review Report: [charge] -- [name]". Contains two action buttons:
@@ -317,7 +317,7 @@ Dispatcher (force=true bypasses idempotency check) --> Edge Function --> Report 
 
 ### Why Supabase Edge Function Instead of Vercel
 
-Vercel Hobby plan has a **10-second function timeout**. Claude Sonnet 4.6 API calls typically take 40-90 seconds for the 7+2-section Case Decoder report (16000 max tokens). The Supabase Edge Function has a **150-second timeout**, which is sufficient.
+Vercel Hobby plan has a **10-second function timeout**. Claude Opus 4.6 API calls with adaptive thinking typically take 60-120 seconds for the 7+2-section Case Decoder report (32000 max tokens including thinking). The Supabase Edge Function has a **150-second timeout**, which is sufficient.
 
 ### Fire-and-Forget Pattern
 
@@ -337,11 +337,15 @@ The Edge Function has NO npm/esm.sh imports. Importing `@supabase/supabase-js` v
 
 ### Model Choice
 
-**Model:** `claude-sonnet-4-6`
+**Model:** `claude-opus-4-6` with adaptive thinking
 
-Sonnet 4.6 chosen for structured report quality. At ~$0.10/report with ~3-4K word output, cost is negligible vs $197 price. Haiku 4.5 had weak instruction-following (67 questions instead of 15, missing sections). Sonnet completes well within 150s with per-section word budgets.
+Upgraded from Sonnet 4.6 to Opus 4.6 for emotional intelligence. Sonnet produced structurally correct reports but with mechanical emotional calibration — every defendant got the same warm-language cadence regardless of their emotional state. Opus uses its thinking budget to build an 8-dimension emotional profile before generating, producing stance-calibrated reports (minimizer vs catastrophizer vs intellectualizer vs dissociater).
 
-**Parameters:** `max_tokens: 16000`, `temperature: 0.3`
+At ~$0.40-0.60/report, cost is still negligible vs $197 price (0.2-0.3%). Timing: 60-120s within the 150s edge function timeout.
+
+**Parameters:** `max_tokens: 32000` (thinking + output combined), `thinking: { type: "enabled", budget_tokens: 16000 }`. Temperature is NOT set (incompatible with thinking mode).
+
+**Response parsing:** Response `content` array contains `{ type: "thinking" }` and `{ type: "text" }` blocks. Code filters for `type === "text"` only — thinking blocks contain the emotional profiling analysis and are not included in the report.
 
 ### Report Format (v2 — 7+2 Empowerment Architecture)
 

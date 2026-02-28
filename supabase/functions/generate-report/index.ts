@@ -13,7 +13,7 @@
  * FLOW:
  *   1. Fetch case record from Supabase (with idempotency check)
  *   2. Find linked intake record (by intake_id or email fallback)
- *   3. Call Claude API (Sonnet 4.6) to generate the 7 + 0-2 conditional section report
+ *   3. Call Claude API (Opus 4.6 with adaptive thinking) to generate the 7 + 0-2 conditional section report
  *   4. Render markdown to branded HTML
  *   5. Save report_html + report_token to Supabase
  *   6. Email operator with review/approve links
@@ -38,11 +38,19 @@
  *   avoids cross-runtime import issues and makes the function deployable
  *   independently.
  *
- * MODEL CHOICE — claude-sonnet-4-6:
- *   Sonnet 4.6 chosen for structured report quality. At ~$0.10/report with
- *   ~5K word output, cost is negligible vs $197 price. Haiku 4.5 had weak
- *   instruction-following (67 questions instead of 15, missing sections 11-13).
- *   Sonnet completes well within 150s with per-section word budgets.
+ * MODEL CHOICE — claude-opus-4-6 with adaptive thinking:
+ *   Upgraded from Sonnet 4.6 to Opus 4.6 for emotional intelligence.
+ *   Sonnet produced structurally correct reports but with mechanical emotional
+ *   calibration — every defendant got the same warm-language cadence regardless
+ *   of their actual emotional state. Opus with thinking uses the thinking budget
+ *   to build an 8-dimension emotional profile (PRIMARY FEAR, EMOTIONAL STANCE,
+ *   ATTORNEY WOUND, HOPE SIGNAL, ISOLATION, CHARGE PATTERN, CO-DEFENDANT,
+ *   READING ARC) before generating, producing stance-calibrated reports.
+ *
+ *   Parameters: max_tokens=32000 (thinking + output), thinking={type:"enabled",
+ *   budget_tokens:16000}. Temperature is NOT set (incompatible with thinking).
+ *   Cost: ~$0.40-0.60/report, still negligible vs $197 price.
+ *   Timing: 60-120s (within 150s edge function timeout).
  *
  * ERROR STRATEGY:
  *   On Claude API failure, the function:
@@ -424,6 +432,145 @@ CONDITIONAL SECTION RULES:
 - What a Plea Really Means: Include ONLY if intake.plea_offered === "yes"
   OR intake.attorney_strategy contains "plea". Educational, not
   evaluative. Collateral consequences + alternatives + 3 questions.
+
+EMOTIONAL PROFILING FRAMEWORK — Complete DURING thinking:
+
+Before generating the report, profile this defendant across 8 dimensions
+using their intake answers. Use your thinking/reasoning to build this
+profile — it informs EVERY section's tone, validation, and pacing.
+
+1. PRIMARY FEAR — What are they MOST afraid of losing?
+   - Job/career/identity: When someone mentions their profession (nurse,
+     teacher, CDL driver, business owner, military), losing that career
+     often IS the primary fear — bigger than prison. A nurse who says
+     "a DUI conviction could cost me my license" fears career death
+     more than jail time. Acknowledge the SPECIFIC career threat, not
+     generic consequences.
+   - Prison/freedom: Most common for serious charges with mandatory minimums.
+   - Family: Custody, children seeing them arrested, spouse leaving.
+   - Financial: Restitution, fines, asset forfeiture, bankruptcy.
+   - Reputation: Public record, news coverage, community standing.
+
+2. EMOTIONAL STANCE — How are they processing this?
+   - MINIMIZER: "It's not that big a deal" / "I only had two drinks" /
+     "It was just a small amount." They're protecting themselves from
+     the full weight. Don't puncture the defense — build alongside it.
+   - CATASTROPHIZER: "This will ruin my entire life" / "I'll lose everything."
+     They need CONTAINMENT — scope it, temporalize it, show the bounded
+     reality without dismissing their fear.
+   - INTELLECTUALIZER: "What are the statutory elements?" / precise legal
+     questions / trying to control through understanding. Honor the
+     approach — give them the information they're seeking, then gently
+     introduce the emotional reality they're avoiding.
+   - DISSOCIATER: Flat affect, minimal detail, "whatever happens happens."
+     They've shut down. Use concrete, simple actions — not emotional
+     language. One step at a time. The 7-Day Plan IS their lifeline.
+
+3. ATTORNEY RELATIONSHIP AS WOUND — Not just status, but what it MEANS:
+   - PD who hasn't called in 3+ weeks = ABANDONMENT wound.
+     "Nobody is listening to me" = being invisible in a system that
+     controls your life.
+   - Private attorney pushing unwanted plea = BETRAYAL of trust.
+     "I paid for a defense and got a surrender" = money wasted + hope
+     betrayed.
+   - Attorney who "hasn't explained" = being KEPT IN THE DARK.
+     "I don't know what's happening in my own case" = loss of control.
+   These feel VERY different and need different calibration in the Letter
+   and throughout.
+
+4. HOPE SIGNAL — What are they clinging to?
+   Read their specific question — it reveals what they hope is true.
+   ".09 when the limit is .08" = hope the evidence is weak.
+   "The drugs weren't mine" = hope innocence will matter.
+   "What are the collateral consequences?" = hope they can plan around it.
+   Mirror and BUILD on their hope signal — don't extinguish it.
+
+5. ISOLATION LEVEL — Who knows about this?
+   If they mention family, friends, employer — they have support.
+   If the intake reads like someone carrying this alone at 2 AM —
+   this report may be the first time anyone has LISTENED. Calibrate
+   the Letter accordingly.
+
+6. CHARGE-SPECIFIC EMOTIONAL PATTERN:
+   - DUI: Shame + "it could happen to anyone" tension. Honor both.
+   - Drug: Injustice ("it wasn't mine") OR despair (mandatory minimums).
+   - White collar: Identity crisis ("I'm not a criminal"). The charge
+     threatens WHO THEY ARE, not just their freedom.
+   - Sex offense: Stigma overwhelming everything else. Registry = life sentence.
+   - Assault: "They started it" / self-defense righteousness.
+   - Domestic: Relationship complexity + possible false allegation.
+
+7. CO-DEFENDANT DYNAMIC — If co_defendants = "Yes":
+   - Fear of betrayal: "Will they flip on me?"
+   - Cooperation pressure: "Should I cooperate first?"
+   - Feeling singled out: "Why am I the one being charged?"
+   Address this directly — it's consuming them even if they don't say so.
+
+8. READING ARC AWARENESS — Each section shifts emotional state:
+   - Section 2 (penalty ranges) spikes anxiety
+   - Section 3 (communication tools) must absorb that spike
+   - Section 4 (questions) rebuilds agency
+   - Section 7 (7-Day Plan) resolves to determination
+   Be aware of the CUMULATIVE emotional journey, not just each section
+   in isolation.
+
+STANCE-CALIBRATED GUIDANCE:
+
+For MINIMIZERS:
+  - Validation: "You're approaching this practically — that clarity will
+    serve you." Don't say "this is more serious than you think."
+  - Bridging: After hard info, ground in what they CAN control.
+  - Letter: Validate their measured approach, then gently expand scope.
+  - Pacing: They'll move faster through the report. Make sure hard facts
+    still land — don't let the report enable avoidance.
+
+For CATASTROPHIZERS:
+  - Validation: "What you're feeling makes sense — this IS serious, and
+    the fact that you're taking action matters." Don't minimize.
+  - Bridging: After hard info, IMMEDIATELY contain: "This is the range,
+    not the prediction. Here's what determines where YOUR case falls."
+  - Letter: Acknowledge the weight, then shift to what they're DOING
+    about it (buying this report = first action).
+  - Pacing: They need more reassurance between sections. Every hard fact
+    needs a longer bridge to action.
+
+For INTELLECTUALIZERS:
+  - Validation: "You're asking exactly the right questions — that precision
+    is an asset." Meet them where they are.
+  - Bridging: Provide the information, then add: "The question your
+    attorney can answer is how this applies to YOUR specific facts."
+  - Letter: Lead with the substantive answers to their questions, then
+    gently note: "The questions in this report are designed to get you
+    those answers — from the one person who has your full case file."
+  - Pacing: They want density. Don't pad with emotional language they'll
+    skip. Put emotion in the Letter and the 7-Day Plan where they'll
+    accept it.
+
+For DISSOCIATERS:
+  - Validation: Keep it simple. "You're here. That's the first step."
+  - Bridging: Minimal. State fact → state action. No elaborate emotional
+    transitions — they'll feel performative.
+  - Letter: Short. Concrete. "Here's what this report gives you. Here's
+    where to start."
+  - Pacing: The 7-Day Plan is everything. Make Day 1 absurdly simple.
+    "Send this email. It takes 30 seconds."
+
+READING PACING / OVERWHELM PERMISSION:
+In the Letter to You, include something like: "You don't have to read
+this all at once. If you're reading this at 2 AM and it's a lot — start
+with the Letter and Your Next 7 Days. The rest will be here when you're
+ready." This is NOT a throwaway line — it's a safety valve for the
+defendant who is panicking.
+
+CAREER-IDENTITY ACKNOWLEDGMENT:
+If the defendant mentions their profession (nurse, teacher, CDL driver,
+engineer, military, business owner, etc.), the Letter to You MUST
+acknowledge that their career IS at stake and that this report addresses
+it specifically. Don't bury career consequences in a generic collateral
+consequences list — elevate it. "You told us you're a nurse. We know
+what that means — your license, your career, your identity. The questions
+in this report are designed to help you protect all of it."
+
 EMOTIONAL ARC:
 A Letter to You (Relief) → Where Things Stand (Clarity) →
 Understanding Your Charges (Knowledge) → Exactly What to Say (Empowerment) →
@@ -597,6 +744,14 @@ Never leave the defendant sitting with fear — always point to the
 question or tool that addresses it.
 Pattern: Hard fact → Bridging context → "Here's what you can do"
 
+Stance-calibrated bridging:
+- MINIMIZER: Hard fact → "Here's what you can check on" (practical frame)
+- CATASTROPHIZER: Hard fact → "This is the range, not the prediction.
+  Here's what determines where YOUR case falls" → action (contain first)
+- INTELLECTUALIZER: Hard fact → legal context → "The question for your
+  attorney is..." (information-forward)
+- DISSOCIATER: Hard fact → action (skip the emotional bridge — go direct)
+
 SELF-VERIFICATION — Before output:
 1. All 7 always-present sections + letter + closing + postscript present
 2. Conditional sections included ONLY when conditions met
@@ -633,6 +788,9 @@ SELF-VERIFICATION — Before output:
 33. Every Q reference in Where Things Stand, Things Worth Asking About, and 7-Day Plan corresponds to an actual generated question (Q1-Q15).
 34. Recording consent note matches the defendant's state (one-party vs two-party).
 35. Email templates include the case number if provided by the defendant.
+36. Report tone is calibrated to THIS defendant's emotional stance (minimizer/catastrophizer/intellectualizer/dissociater) — not generic warm language.
+37. If defendant mentions a career/profession, the Letter and report address career-identity loss SPECIFICALLY (nursing license, CDL, teaching certificate, professional license, security clearance) — not buried in a generic collateral consequences list.
+38. If co_defendants = "Yes", co-defendant dynamics are addressed (cooperation pressure, betrayal fear, feeling singled out) in Questions for Your Attorney and Things Worth Asking About.
 Revise if any check fails.
 
 OUTPUT CATEGORIES — You are NOT providing legal advice. You provide:
@@ -1103,12 +1261,17 @@ THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
 /**
  * Calls the Claude API to generate a Case Decoder report.
  *
- * Uses claude-sonnet-4-6 with 16k max tokens and temperature 0.3 (low
- * creativity, high consistency). Does NOT use streaming — Sonnet completes
- * well within the 150s edge function timeout with per-section word budgets.
+ * Uses claude-opus-4-6 with adaptive thinking (effort: "high") and 32k max
+ * tokens (thinking + output combined). Temperature is NOT set — it is
+ * incompatible with thinking mode. Opus uses its thinking budget to build
+ * the 8-dimension emotional profile before generating, producing reports
+ * with genuine emotional calibration instead of generic warm language.
+ *
+ * Expected timing: 60-120s (within 150s edge function timeout).
+ * Cost: ~$0.40-0.60/report at ~5K word output with thinking overhead.
+ *
  * Retries up to 3 times on 529 (overloaded) with exponential backoff.
- * Note: Sonnet 4.6 does not support assistant message prefill, so structure
- * is enforced via system prompt and XML section tags instead.
+ * Response contains thinking + text blocks — we filter for text only.
  *
  * @param intake - Intake data to build the prompt from.
  * @param apiKey - Anthropic API key.
@@ -1118,9 +1281,9 @@ THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
 async function callClaudeAPI(intake: IntakeData, apiKey: string): Promise<string> {
   const userPrompt = buildUserPrompt(intake);
   const body = JSON.stringify({
-    model: "claude-sonnet-4-6",
-    max_tokens: 16000,
-    temperature: 0.3,
+    model: "claude-opus-4-6",
+    max_tokens: 32000,
+    thinking: { type: "enabled", budget_tokens: 16000 },
     system: SYSTEM_PROMPT,
     messages: [
       { role: "user", content: userPrompt },
@@ -1154,8 +1317,15 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string): Promise<string
 
     // deno-lint-ignore no-explicit-any
     const result: any = await response.json();
-    const text = result.content?.[0]?.text || "";
+
+    // Response contains thinking + text blocks — extract text only.
+    // Thinking blocks contain the emotional profiling analysis;
+    // text blocks contain the actual report markdown.
+    const textBlocks = (result.content || []).filter((b: { type: string }) => b.type === "text");
+    const text = textBlocks.map((b: { text: string }) => b.text).join("") || "";
     if (!text.trim()) throw new Error("Empty response from Claude API");
+
+    console.log(`[generate-report] Usage — input: ${result.usage?.input_tokens}, output: ${result.usage?.output_tokens}`);
 
     return text;
   }
