@@ -318,7 +318,7 @@ Dispatcher (force=true bypasses idempotency check) --> Edge Function --> Report 
 
 ### Why Supabase Edge Function Instead of Vercel
 
-Vercel Hobby plan has a **10-second function timeout**. Claude Sonnet 4.6 API calls typically take 40-90 seconds for the 7+3-section Case Decoder report (16000 max tokens). The Supabase Edge Function has a **150-second timeout**, which is sufficient.
+Vercel Hobby plan has a **10-second function timeout**. Claude Sonnet 4.6 API calls typically take 40-90 seconds for the 7+2-section Case Decoder report (16000 max tokens). The Supabase Edge Function has a **150-second timeout**, which is sufficient.
 
 ### Fire-and-Forget Pattern
 
@@ -344,9 +344,9 @@ Sonnet 4.6 chosen for structured report quality. At ~$0.10/report with ~3-4K wor
 
 **Parameters:** `max_tokens: 16000`, `temperature: 0.3`
 
-### Report Format (v2 — 7+3 Empowerment Architecture)
+### Report Format (v2 — 7+2 Empowerment Architecture)
 
-The generated report is a 7-section + 0-3 conditional section markdown document rendered to branded HTML.
+The generated report is a 7-section + 0-2 conditional section markdown document rendered to branded HTML.
 
 **Core design principle:** Empower, don't blame. The report never blames the attorney. Gaps are framed as things to clarify. Questions are the tool.
 
@@ -363,22 +363,22 @@ The generated report is a 7-section + 0-3 conditional section markdown document 
 - **What This Report Cannot Tell You** -- Honest limitations
 - **What Comes Next** (Postscript) -- ONLY upgrade language. Pipeline: questions → answers → verification via Intelligence Brief ($797)
 
-**Conditional Sections (0-3, based on intake data):**
+**Conditional Sections (0-2, based on intake data):**
 
 - **C1: Case Clock** -- ONLY if `arrest_date` exists. Informational speedy trial status + question. No "URGENT" alerts.
 - **C2: Plea Landscape** -- ONLY if `plea_offered = "yes"` OR `attorney_strategy` mentions plea. Educational, not evaluative. Collateral consequences + alternatives.
-- **C3: Discovery Readiness Guide** -- ONLY if `has_discovery != "no"` OR case 60+ days old. Future-looking checklist.
 
 **Removed Sections (from v1):**
 - Defense Milestone Score (X/100) -- replaced by diagnostic table
 - Prosecution Difficulty Ratings -- replaced by "Question for Your Attorney"
 - Plea Quality Ratings -- replaced by educational content
 - Motion Recommendations -- integrated into S4 questions
-- Evidence Accountability Checklist -- replaced by conditional Discovery Guide
+- Evidence Accountability Checklist -- we haven't seen the evidence
+- Discovery Readiness Guide -- discovery analysis belongs in X-Ray ($1,497+)
 - Case Stage Benchmark -- merged into S1 and S7
 - Verify Facts (standalone) -- moved to S4 callout
 
-**Section Budget:** 2,950 words (minimum) to 3,750 words (all conditionals). Down from ~4,800 in v1.
+**Section Budget:** 2,950 words (minimum) to 3,550 words (all conditionals). Down from ~4,800 in v1.
 
 The HTML includes:
 - Dark theme (`#0C0A09` background, `#D4D4D8` text, `#F59E0B` amber accents)
@@ -396,7 +396,7 @@ The HTML includes:
 When payment is received, the operator gets an email with:
 - Product name, customer email, amount, tier, Stripe session ID
 - Case ID (if created successfully)
-- Whether discovery is required
+- Whether discovery upload is required (for $1,497+ tiers only)
 - Timestamp
 
 ### Report Review

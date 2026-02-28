@@ -595,15 +595,15 @@ export function renderReportHtml(markdown: string, meta: {
     </div>
   </div>
 
-  <!-- Disclaimer -->
-  <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-bottom: 32px; border-left: 4px solid #EF4444;">
-    <p style="margin: 0; font-size: 13px; color: #A1A1AA;">
-      <strong style="color: #EF4444;">DISCLAIMER:</strong> This report contains legal INFORMATION and QUESTIONS — not legal advice. Always consult with your licensed attorney before taking action.
-    </p>
-  </div>
-
   <!-- Report Content -->
   ${html}
+
+  <!-- A note on what this is -->
+  <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 40px; border-left: 4px solid #A1A1AA;">
+    <p style="margin: 0; font-size: 13px; color: #71717A;">
+      <strong style="color: #A1A1AA;">A note on what this is:</strong> This report gives you legal information, context, and questions — not legal advice. We can't tell you what to do. What we can do is make sure you walk into your next conversation informed, prepared, and asking the right things. Your attorney has your case file, your courtroom, and your judge. This report makes sure you know what to ask them — and why it matters.
+    </p>
+  </div>
 
   <!-- Footer -->
   <div style="margin-top: 48px; padding-top: 24px; border-top: 2px solid #27272A; text-align: center;">
