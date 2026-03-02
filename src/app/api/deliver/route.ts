@@ -43,7 +43,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
-import { verifyOperatorToken } from "@/lib/site";
+import { verifyOperatorToken, caseThreadId } from "@/lib/site";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
@@ -491,6 +491,10 @@ export async function POST(req: NextRequest) {
     to: caseData.email,
     subject: emailSubject,
     unsubscribeEmail: caseData.email,
+    threadingHeaders: {
+      inReplyTo: caseThreadId(caseId!),
+      references: caseThreadId(caseId!),
+    },
     html: `
       <h1 style="color: #F59E0B;">Your ${escapeHtml(tierName)} Report is Ready</h1>
       <p>Hi ${escapeHtml(firstName)},</p>
@@ -516,6 +520,10 @@ export async function POST(req: NextRequest) {
       to: caseData.email,
       subject: `Your ${tierName} Report is Ready`,
       unsubscribeEmail: caseData.email,
+      threadingHeaders: {
+        inReplyTo: caseThreadId(caseId!),
+        references: caseThreadId(caseId!),
+      },
       html: `<h1 style="color: #F59E0B;">Your Report is Ready</h1>
         <p>View your ${escapeHtml(tierName)} report: <a href="${reportUrl}" style="color: #F59E0B;">${reportUrl}</a></p>`,
     });
@@ -566,6 +574,10 @@ export async function POST(req: NextRequest) {
             to: caseData.email,
             subject: `Your Case Decoder is Ready — Next: Complete Your ${siblingTierName} Details`,
             unsubscribeEmail: caseData.email,
+            threadingHeaders: {
+              inReplyTo: caseThreadId(sibling.id),
+              references: caseThreadId(sibling.id),
+            },
             html: `
               <h1 style="color: #F59E0B;">Part 1 Complete: Your Case Decoder Report</h1>
               <p>Hi ${escapeHtml(firstName)},</p>

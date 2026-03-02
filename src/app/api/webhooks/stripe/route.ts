@@ -33,7 +33,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe, TIERS, isValidTier } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
-import { signOperatorToken } from "@/lib/site";
+import { signOperatorToken, caseThreadId } from "@/lib/site";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
@@ -385,6 +385,10 @@ export async function POST(req: NextRequest) {
           to: email,
           subject: `Next Step: Complete Your ${escapeHtml(productName)} Intake`,
           unsubscribeEmail: email,
+          threadingHeaders: {
+            inReplyTo: caseThreadId(caseId),
+            references: caseThreadId(caseId),
+          },
           html: `
             <h1 style="color: #F59E0B;">Your Upgrade is Active</h1>
             <p>Since you already have your Case Decoder report, we can start building your ${escapeHtml(productName)} right away.</p>
@@ -421,6 +425,10 @@ export async function POST(req: NextRequest) {
             to: email,
             subject: "Complete Your Case Details to Start Your Report",
             unsubscribeEmail: email,
+            threadingHeaders: {
+              inReplyTo: caseThreadId(caseId),
+              references: caseThreadId(caseId),
+            },
             html: `
               <h1 style="color: #F59E0B;">One More Step</h1>
               <p>Thank you for purchasing the Case Decoder. Before we can generate your personalized report, we need your case details.</p>
@@ -437,6 +445,10 @@ export async function POST(req: NextRequest) {
           to: email,
           subject: `Complete Your Case Details — Your ${escapeHtml(productName)} Package`,
           unsubscribeEmail: email,
+          threadingHeaders: {
+            inReplyTo: caseThreadId(caseId),
+            references: caseThreadId(caseId),
+          },
           html: `
             <h1 style="color: #F59E0B;">One More Step</h1>
             <p>Thank you for purchasing the ${escapeHtml(productName)}. Before we can start generating your reports, we need your case details.</p>

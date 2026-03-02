@@ -80,6 +80,12 @@ interface EmailParams {
    * Omit for operator/internal emails that should not have unsubscribe.
    */
   unsubscribeEmail?: string;
+  /** RFC 2822 threading headers for email conversation grouping. */
+  threadingHeaders?: {
+    messageId?: string;
+    inReplyTo?: string;
+    references?: string;
+  };
 }
 
 /** Result returned by sendEmail — always resolves (never throws). */
@@ -137,6 +143,15 @@ export async function sendEmail(params: EmailParams): Promise<EmailResult> {
   if (unsubscribeUrl) {
     headers["List-Unsubscribe"] = `<${unsubscribeUrl}>`;
     headers["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click";
+  }
+  if (params.threadingHeaders?.messageId) {
+    headers["Message-ID"] = params.threadingHeaders.messageId;
+  }
+  if (params.threadingHeaders?.inReplyTo) {
+    headers["In-Reply-To"] = params.threadingHeaders.inReplyTo;
+  }
+  if (params.threadingHeaders?.references) {
+    headers["References"] = params.threadingHeaders.references;
   }
 
   try {

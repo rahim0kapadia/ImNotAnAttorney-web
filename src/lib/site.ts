@@ -173,3 +173,11 @@ export function verifyOperatorToken(
   }
   return mismatch === 0;
 }
+
+/**
+ * Generates a deterministic RFC 2822 Message-ID for email threading.
+ * All emails about the same case will thread in the customer's inbox.
+ */
+export function caseThreadId(caseId: string): string {
+  return `<case-${caseId}@imnotanattorney.com>`;
+}

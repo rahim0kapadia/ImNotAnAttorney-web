@@ -405,6 +405,9 @@ export async function POST(req: NextRequest) {
           existing_case_state: existingCaseState,
         }),
         ...(caseNumberEmail && { case_number_matched_email: caseNumberEmail }),
+        ...(tierConfig.includesTiers.length > 0 && {
+          includes_tiers: tierConfig.includesTiers.join(","),
+        }),
       },
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
       cancel_url: `${origin}/checkout?tier=${tier}`,

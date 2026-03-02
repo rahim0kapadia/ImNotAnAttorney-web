@@ -779,8 +779,9 @@ This section is the DETERMINATION payoff. The report ends here.
 4. What to Expect — 2-3 sentences based on attorney type (PD: shorter
    meetings, may happen at courthouse / private: scheduled office visit).
    Doctor analogy framing (Jayadev).
-5. Meeting Ready Sheet — pre-filled with 5 Priority Questions (not
+5. Meeting Ready Sheet — pre-filled with Q1 through Q5 (not
    blank lines). Q1 = Golden Question marked. Space for answers.
+   Model may add more questions if relevant to this defendant.
    Post-Meeting Checklist includes "Sent summary email to attorney."
 Future pacing: "In two weeks, [Name], you will be the most prepared
 defendant your attorney has ever worked with." Use their name.
@@ -842,7 +843,7 @@ SELF-VERIFICATION — Before output:
 24. Meeting logistics ("What to Bring" + "What to Expect") present in Your Next 7 Days
 25. "If You're Feeling Overwhelmed, Start Here" callout present with ONE action (send email, 30 seconds)
 26. 7-day plan: ONE action per day, sequenced. Golden Question marked on Q1. Shine moments after each day.
-27. Meeting Ready Sheet pre-filled with 5 Priority Questions (not blank lines). Golden Question marked.
+27. Meeting Ready Sheet pre-filled with Q1-Q5 (not blank lines). Golden Question marked. May add more.
 28. Report positioned as preparation tool (Jayadev). Attorney = partner. No oversight or watchdog framing anywhere.
 29. Zero instances of: "red flag," "warning sign," "escalation ladder," "you need to," "you should"
 30. Every section maintains 2:1 efficacy-to-threat ratio. No section ends on threat — always ends on action or reassurance.
@@ -1462,10 +1463,8 @@ Checklist: printed Meeting Ready Sheet + pen + case # + documents referenced in 
 2-3 sentences based on attorney type (PD: shorter meetings, may happen at courthouse, be focused / private: scheduled office visit, more time). Doctor analogy (Jayadev): "Just as you'd prepare for a doctor's appointment..."
 
 **MEETING READY SHEET** (safe if attorney sees it):
-Pre-filled with Q1 through Q5 by default (the priority questions). Q1 = Golden Question
-marked. If a question outside Q1-Q5 is more critical for THIS defendant's specific
-situation, substitute it and note why in a parenthetical (e.g., "Q6 replaces Q5 here
-because good-faith reliance is the central defense question").
+Always include Q1, Q2, Q3, Q4, and Q5. Q1 = Golden Question marked.
+If additional questions are relevant for this defendant, add them after Q5.
 Space for attorney's answers after each question.
 Post-Meeting Checklist: Got answers? Documented responses? Sent summary email to attorney? Updated your case journal with dates and next steps? Understand what happens next?
 
@@ -1858,9 +1857,16 @@ Deno.serve(async (req: Request) => {
 
     // --- Operator review email ---
     if (resendKey) {
+      const inclusionBadge = caseData.is_included_deliverable
+        ? `<div style="background: #422006; padding: 8px 16px; border-radius: 8px; margin: 8px 0; border-left: 4px solid #F59E0B;">
+             <p style="margin: 0; color: #FDE68A; font-weight: bold;">INCLUDED DELIVERABLE</p>
+             <p style="margin: 4px 0 0; color: #D4D4D8; font-size: 13px;">Auto-generated as part of a higher-tier purchase (Order: ${caseData.parent_order_id || "unknown"})</p>
+           </div>`
+        : "";
+
       await sendEmail({
         to: operatorEmail,
-        subject: `Review Report: ${escapeHtml(intake.charge_type)} — ${escapeHtml(intake.first_name)}`,
+        subject: `Review Report: ${escapeHtml(intake.charge_type)} — ${escapeHtml(intake.first_name)}${caseData.is_included_deliverable ? " (Included)" : ""}`,
         html: `
           <h1 style="color: #F59E0B;">Case Decoder Report Ready for Review</h1>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
@@ -1871,6 +1877,7 @@ Deno.serve(async (req: Request) => {
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Generated:</strong> ${reportDate}</p>
           </div>
+          ${inclusionBadge}
           <div style="margin: 24px 0; display: flex; gap: 12px;">
             ${operatorSecret
               ? `<a href="${siteUrl}/api/deliver?token=${await signOperatorTokenDeno(caseId, operatorSecret)}&case=${caseId}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Approve &amp; Deliver</a>`

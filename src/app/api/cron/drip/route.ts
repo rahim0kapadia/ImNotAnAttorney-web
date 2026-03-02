@@ -62,7 +62,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, sendEmailWithRetry, escapeHtml } from "@/lib/email";
 import { getNextNurtureEmail, getPostPurchaseEmails } from "@/lib/drip-emails";
 import type { DripEmail } from "@/lib/drip-emails";
-import { signOperatorToken, SITE_URL } from "@/lib/site";
+import { signOperatorToken, SITE_URL, caseThreadId } from "@/lib/site";
 import { stripe } from "@/lib/stripe";
 
 /**
@@ -373,17 +373,19 @@ export async function GET(req: NextRequest) {
             continue;
           }
 
+          // ── LINKED CASE (for threading + placeholder resolution) ──
+          const { data: linkedCase } = await supabase
+            .from("cases")
+            .select("id, report_token")
+            .eq("email", order.email.toLowerCase())
+            .eq("tier", order.tier)
+            .order("created_at", { ascending: false })
+            .limit(1)
+            .maybeSingle();
+
           // ── RESOLVE PLACEHOLDERS (e.g., upload reminder needs case ID) ──
           let emailHtml = nextEmail.html;
           if (emailHtml.includes("{{CASE_ID}}") || emailHtml.includes("{{EMAIL}}") || emailHtml.includes("{{REPORT_URL}}")) {
-            const { data: linkedCase } = await supabase
-              .from("cases")
-              .select("id, report_token")
-              .eq("email", order.email.toLowerCase())
-              .eq("tier", order.tier)
-              .order("created_at", { ascending: false })
-              .limit(1)
-              .maybeSingle();
             const reportOrigin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
             const reportUrl = linkedCase?.report_token
               ? `${reportOrigin}/report/${linkedCase.report_token}`
@@ -400,6 +402,12 @@ export async function GET(req: NextRequest) {
             subject: nextEmail.subject,
             html: emailHtml,
             unsubscribeEmail: order.email,
+            ...(linkedCase?.id && {
+              threadingHeaders: {
+                inReplyTo: caseThreadId(linkedCase.id),
+                references: caseThreadId(linkedCase.id),
+              },
+            }),
           });
 
           if (result.success) {
