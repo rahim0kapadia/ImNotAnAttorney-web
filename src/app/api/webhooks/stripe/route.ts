@@ -33,6 +33,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe, TIERS, isValidTier } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
+import { signOperatorToken } from "@/lib/site";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
@@ -220,6 +221,7 @@ export async function POST(req: NextRequest) {
     //      form BEFORE paying. The charge_type from the intake is copied
     //      to the case for quick reference in operator dashboards.
     let caseId: string | null = null;
+    let cdSkippedDueToDedup = false;
     if (orderData) {
       caseId = crypto.randomUUID();
 
@@ -289,6 +291,8 @@ export async function POST(req: NextRequest) {
       const existingCaseNumber = session.metadata?.existing_case_number;
       const existingCaseState = session.metadata?.existing_case_state;
 
+      // Track if CD was skipped due to upgrade dedup — if so, send Phase 2
+      // intake email immediately (no CD delivery to trigger it later).
       if (caseId && tierConfig?.includesTiers && tierConfig.includesTiers.length > 0) {
         for (const includedTier of tierConfig.includesTiers) {
           // Check if customer already has a delivered case for this tier (by email)
@@ -303,6 +307,7 @@ export async function POST(req: NextRequest) {
 
           if (existingCase) {
             console.log(`[Webhook] Skipping included ${includedTier} — customer already has delivered case ${existingCase.id} (email match)`);
+            if (includedTier === "case-decoder") cdSkippedDueToDedup = true;
             continue;
           }
 
@@ -320,6 +325,7 @@ export async function POST(req: NextRequest) {
 
             if (caseNumberMatch) {
               console.log(`[Webhook] Skipping included ${includedTier} — customer already has delivered case ${caseNumberMatch.id} (case number match)`);
+              if (includedTier === "case-decoder") cdSkippedDueToDedup = true;
               continue;
             }
           }
@@ -364,6 +370,29 @@ export async function POST(req: NextRequest) {
             );
           }
         }
+      }
+
+      // ──────────────────────────────────────────────────────────────
+      // UPGRADE FLOW: CD already delivered, send Phase 2 immediately
+      // ──────────────────────────────────────────────────────────────
+      // When a CD-delivered customer upgrades to IB+, the included CD
+      // is skipped (dedup). Since there's no CD delivery to trigger the
+      // Phase 2 email, we send it now. The primary case (IB) is already
+      // created as awaiting-intake.
+      if (cdSkippedDueToDedup && caseId && tier !== "case-decoder") {
+        const phase2Token = signOperatorToken(caseId);
+        await sendEmailWithRetry({
+          to: email,
+          subject: `Next Step: Complete Your ${escapeHtml(productName)} Intake`,
+          unsubscribeEmail: email,
+          html: `
+            <h1 style="color: #F59E0B;">Your Upgrade is Active</h1>
+            <p>Since you already have your Case Decoder report, we can start building your ${escapeHtml(productName)} right away.</p>
+            <p>We just need a few additional details about your judge, your attorney, and your case situation:</p>
+            <a href="${origin}/intake/intelligence-brief?case=${caseId}&token=${phase2Token}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Intelligence Brief Details</a>
+            <p style="color: #A1A1AA;">This takes about 5 minutes. Your ${escapeHtml(productName)} will be delivered within 72 hours after you submit.</p>
+          `,
+        }, `phase 2 intake for upgrade ${email} (${tier})`);
       }
 
       // ──────────────────────────────────────────────────────────────
@@ -484,6 +513,7 @@ export async function POST(req: NextRequest) {
           ${caseId ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>` : ""}
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Requires Discovery:</strong> ${requiresDiscovery ? "Yes" : "No"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Intake Found:</strong> ${caseId ? (requiresDiscovery ? "N/A (discovery tier)" : "Check case status") : "Case creation failed"}</p>
+          ${tierConfig?.includesTiers && tierConfig.includesTiers.length > 0 ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Included tiers:</strong> ${tierConfig.includesTiers.join(", ")}${cdSkippedDueToDedup ? " (CD skipped — upgrade)" : ""}</p>` : ""}
           ${session.metadata?.prerequisite_skipped === "true" ? '<p style="margin: 8px 0 0; color: #EF4444;"><strong>WARNING: War Room prerequisite NOT confirmed — customer may not have completed War Room.</strong></p>' : ""}
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Time:</strong> ${new Date().toISOString()}</p>
         </div>
