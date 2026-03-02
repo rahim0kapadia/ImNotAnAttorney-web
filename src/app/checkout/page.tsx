@@ -106,7 +106,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Where Things Stand — 4-area diagnostic of what you know vs. what to ask about",
       "Your Next 7 Days — one action per day, with Meeting Ready Sheet to print and bring",
       "Expert methodology from elite defense attorneys (3 per charge type)",
-      "BONUS: When the Conversation Gets Difficult — scripts for 4 common scenarios",
+      "Included: When the Conversation Gets Difficult — scripts for 4 common scenarios",
     ],
     guarantee:
       "Delivered within 24 hours with 15 calibrated questions + communication tools — or your money back.",
@@ -128,7 +128,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       nextTierPrice: "$997",
       upgradeCost: "$800",
       unlocks:
-        "Adds your judge's actual sentencing patterns, a motion landscape report, and 35-50 questions instead of 15.",
+        "Adds your judge's actual sentencing patterns, a motion landscape report, and 10-15 targeted questions.",
       bestFor:
         "Worth it if you already have an attorney and want to evaluate how they're handling your specific judge.",
     },
@@ -137,7 +137,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     name: "Case Intelligence Brief",
     price: "$997",
     priceNum: 997,
-    delivery: "48-72 hours",
+    delivery: "72 hours",
     requiresDiscovery: false,
     features: [
       "Everything in Case Decoder",
@@ -149,12 +149,12 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Attorney accountability timeline",
       "Motion landscape report",
       "Case preservation protocol",
-      "35+ attorney questions across all 6 sections + Appendix D",
+      "10-15 targeted questions across all sections + Appendix D",
       "Included: Judge Intelligence Card — one-page print reference for hearings",
       "Included: Plea Decision Checklist — before you sign anything, run this",
     ],
     guarantee:
-      "Delivered within 72 hours with 35+ targeted questions — or your money back.",
+      "Delivered within 72 hours with 10-15 targeted questions — or your money back.",
     priorityPrice: "$297",
     priorityDesc: "24-hour delivery",
     priorityPriceNum: 297,

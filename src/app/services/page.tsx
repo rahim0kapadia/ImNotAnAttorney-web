@@ -76,7 +76,7 @@ const caseTypes = [
         name: "Intelligence Brief",
         slug: "intelligence-brief",
         price: "$997",
-        desc: "Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 35+ targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios based on your county's actual case data, plus where the prosecution's case has exploitable gaps.",
+        desc: "Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios based on your county's actual case data, plus where the prosecution's case has exploitable gaps.",
         discovery: false,
       },
       {
@@ -122,7 +122,7 @@ const caseTypes = [
         name: "Intelligence Brief",
         slug: "intelligence-brief",
         price: "$997",
-        desc: "Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 35+ targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios based on your county's actual case data, plus where the prosecution's case has exploitable gaps.",
+        desc: "Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios based on your county's actual case data, plus where the prosecution's case has exploitable gaps.",
         discovery: false,
       },
       {
@@ -168,7 +168,7 @@ const caseTypes = [
         name: "Intelligence Brief",
         slug: "intelligence-brief",
         price: "$997",
-        desc: "Judge sentencing patterns, AUSA profile, guidelines calculation review, questions about the cooperation decision for your attorney. 35+ targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios based on your county's actual case data, plus where the prosecution's case has exploitable gaps.",
+        desc: "Judge sentencing patterns, AUSA profile, guidelines calculation review, questions about the cooperation decision for your attorney. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios based on your county's actual case data, plus where the prosecution's case has exploitable gaps.",
         discovery: false,
       },
       {
@@ -508,7 +508,7 @@ export default function ServicesPage() {
                 <span className="font-semibold text-white">
                   Intelligence Brief ($997):
                 </span>{" "}
-                Delivered within 72 hours. 35+ targeted questions with judge intelligence.
+                Delivered within 72 hours. 10-15 targeted questions with judge intelligence.
               </p>
               <p>
                 <span className="font-semibold text-white">The X-Ray ($1,497):</span>{" "}

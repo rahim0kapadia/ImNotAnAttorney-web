@@ -38,7 +38,7 @@ const tiers = [
       "Where Things Stand — 4-area diagnostic",
       "Your Next 7 Days — one action per day with Meeting Ready Sheet",
       "Expert methodology from elite defense attorneys",
-      "BONUS: Difficult Conversation scripts for 4 common scenarios",
+      "Included: Difficult Conversation scripts for 4 common scenarios",
     ],
     cta: "Get Your Case Decoder",
     featured: false,
@@ -50,7 +50,7 @@ const tiers = [
     price: "$997",
     anchor: "vs. $1,500+ for a second-opinion attorney",
     description:
-      "Judge intel + 35+ questions. No discovery needed.",
+      "Judge intel + 10-15 targeted questions. No discovery needed.",
     features: [
       "Everything in Case Decoder",
       "Charge exposure map",
@@ -59,7 +59,7 @@ const tiers = [
       "Attorney accountability timeline",
       "Motion landscape report",
       "Case preservation protocol",
-      "35+ targeted questions",
+      "10-15 targeted questions",
       "Prosecution Case Vulnerability Report",
       "Judge Intelligence Card",
       "Plea Decision Checklist",

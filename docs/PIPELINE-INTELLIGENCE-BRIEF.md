@@ -1,10 +1,12 @@
 # Intelligence Brief ($997) — Pipeline Documentation
 
+> **STALE DOC WARNING:** This document predates the v3 delivery SOP and the tier inclusion restructure. The canonical SOP is `system/templates/intelligence-brief/delivery-sop.md` in the ImNotAnAttorney repo. Some details below (question counts, delivery timelines, pipeline steps) may be outdated.
+
 ## Pipeline Overview
 
-The Case Intelligence Brief is the $997 tier (`intelligence-brief` slug). It provides deeper case analysis than the Case Decoder: judge tendencies, jurisdiction-specific plea statistics, motion landscape, and 35+ targeted questions.
+The Case Intelligence Brief is the $997 tier (`intelligence-brief` slug). It provides deeper case analysis than the Case Decoder: judge tendencies, jurisdiction-specific plea statistics, motion landscape, and 10-15 targeted questions.
 
-**Delivery target:** 48-72 hours (24 hours with priority add-on at $297).
+**Delivery target:** 72 hours (24 hours with priority add-on at $297).
 
 This document maps every step of the pipeline, flagging what is built and operational versus what is NOT built and requires manual intervention.
 
@@ -22,7 +24,7 @@ The `intelligence-brief` tier is fully defined in the `TIERS` constant:
 "intelligence-brief": {
   name: "Case Intelligence Brief",
   price: 99700,           // $997.00
-  delivery: "48-72 hours",
+  delivery: "72 hours",
   requiresDiscovery: false,
   priorityPrice: 29700,   // $297 priority add-on
   priorityDelivery: "24 hours",
@@ -184,7 +186,7 @@ Given the gaps above, the current Intelligence Brief delivery workflow is:
 
 **Day 0 — Delivery** (`post_intelligence_brief_delivery`)
 - Triggered: At delivery time by `/api/deliver` drip recording
-- Content: Instructions to start with Judge Tendencies Card, review motion landscape, pick 10 questions from the 35-50 generated
+- Content: Instructions to start with 48-Hour Priority List, read Attorney Accountability Score, review 10-15 questions in Appendix D
 - CTA: Reply with which question got the most reaction (story harvest)
 
 **Day 5 after delivery** (`post_intelligence_brief_story_harvest`)
@@ -211,7 +213,7 @@ Create Claude prompt template(s) that generate the Intelligence Brief report sec
 - Judge tendencies and sentencing patterns
 - Jurisdiction-specific plea statistics
 - Motion landscape report
-- 35-50 targeted questions (vs. 10-15 for Case Decoder)
+- 10-15 targeted questions
 - Attorney accountability analysis
 - Judge Tendencies Card (bonus)
 

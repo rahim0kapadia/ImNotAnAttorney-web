@@ -88,7 +88,7 @@ const homeFaqs = [
   {
     question: "How fast do I get my report?",
     answer:
-      "Case Decoder: 24 hours. Intelligence Brief: 48-72 hours. The X-Ray: 10 business days. War Room: 25-28 days initial + weekly updates. Situation Room: 24-48hr priority turnaround with Trial Intelligence Operations.",
+      "Case Decoder: 24 hours. Intelligence Brief: 72 hours. The X-Ray: 10 business days. War Room: 25-28 days initial + weekly updates. Situation Room: 24-48hr priority turnaround with Trial Intelligence Operations.",
   },
   {
     question: "What if I already bought a lower tier?",

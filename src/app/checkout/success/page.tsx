@@ -26,8 +26,8 @@
  * OTO (One-Time Offer) logic:
  *   - 24-hour countdown timer starts on first page load
  *   - Timer end time persisted in localStorage keyed by `oto_${tier}_${sessionId}`
- *   - Shows tier-specific upgrade: Case Decoder -> Intelligence Brief ($600),
- *     Intelligence Brief -> X-Ray ($700), X-Ray -> War Room ($2,000),
+ *   - Shows tier-specific upgrade: Case Decoder -> Intelligence Brief ($800),
+ *     Intelligence Brief -> X-Ray ($500), X-Ray -> War Room ($2,000),
  *     War Room -> Situation Room ($6,500)
  *   - Disappears when timer expires ("Expired")
  *   - Prices reflect 100% upgrade credit from current purchase
@@ -68,7 +68,7 @@ const TIER_NEXT_STEPS: Record<
   },
   "intelligence-brief": {
     name: "Case Intelligence Brief",
-    delivery: "48-72 hours",
+    delivery: "72 hours",
     action:
       "Check your email — we'll send your Intelligence Brief within 72 hours.",
     showUpload: false,
@@ -299,7 +299,7 @@ function SuccessContent() {
                   Upgrade to Intelligence Brief
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $197 is already credited. Get judge intelligence, jurisdiction profile, and 35-50 questions instead of 15.
+                  Your $197 is already credited. Get judge intelligence, jurisdiction profile, and 10-15 targeted questions.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: judge sentencing patterns, motion landscape report, attorney accountability timeline.
@@ -308,7 +308,7 @@ function SuccessContent() {
                   href="/checkout?tier=intelligence-brief"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Claim Your Upgrade Credit — $600 &rarr;
+                  Claim Your Upgrade Credit — $800 &rarr;
                 </Link>
               </div>
             )}
@@ -330,7 +330,7 @@ function SuccessContent() {
                   href="/checkout?tier=x-ray"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Claim Your Upgrade Credit — $700 &rarr;
+                  Claim Your Upgrade Credit — $500 &rarr;
                 </Link>
               </div>
             )}

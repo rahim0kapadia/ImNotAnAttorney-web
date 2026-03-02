@@ -165,7 +165,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
         <li>Ready-to-send email template + phone script for your attorney</li>
         <li>Where Things Stand — 4-area diagnostic of your case</li>
         <li>Your Next 7 Days — one action per day with Meeting Ready Sheet</li>
-        <li>BONUS: Scripts for when the conversation gets difficult</li>
+        <li>Included: Scripts for when the conversation gets difficult</li>
       </ul>
       <p>Every question generated using tactics from elite defense attorneys — Barry Scheck, Jeffrey Lichtman, F. Lee Bailey.</p>
       <p>Delivered within 24 hours with 15 calibrated questions + communication tools — or full cash refund. Delivered and not satisfied? 100% credit toward any higher tier.</p>
@@ -262,7 +262,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li>Your judge's actual sentencing patterns</li>
         <li>Jurisdiction-specific plea statistics</li>
         <li>Motion landscape report</li>
-        <li>35+ targeted questions (vs. 15)</li>
+        <li>10-15 targeted questions</li>
         <li>Judge Intelligence Card — one-page print reference for hearings</li>
         <li>Plea Decision Checklist</li>
       </ul>
@@ -295,9 +295,9 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">Your Intelligence Brief Is Ready</h1>
       <p>Your full Intelligence Brief has been delivered — check your inbox for the report link. Here's how to use it:</p>
       <ol>
-        <li><strong style="color: white;">Start with the Judge Intelligence Card</strong> — know your judge before your next hearing</li>
-        <li><strong style="color: white;">Review the motion landscape</strong> — which motions apply and what the deadlines look like</li>
-        <li><strong style="color: white;">Pick 10 questions from the 35+ generated</strong> — bring them to your next meeting</li>
+        <li><strong style="color: white;">Start with the 48-Hour Priority List</strong> — your three most urgent actions right now</li>
+        <li><strong style="color: white;">Read the Attorney Accountability Score in Section 2</strong> — see where your representation stands</li>
+        <li><strong style="color: white;">Review the 10-15 questions in Appendix D — pick your top 5</strong> for your next attorney meeting</li>
       </ol>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
         After your next attorney meeting, reply to this email and tell me: <strong style="color: white;">which question got the most reaction?</strong> Real cases make this service better for every defendant who comes after you.
@@ -312,7 +312,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "You met with your attorney — what was the first question they stopped to think about?",
     html: `
       <h1 style="color: #F59E0B;">How Did It Go?</h1>
-      <p>You had your attorney meeting with 35-50 questions in hand. I have one question:</p>
+      <p>You had your attorney meeting with your Intelligence Brief questions in hand. I have one question:</p>
       <p style="font-size: 18px; color: white;"><strong>Which question made your attorney pause?</strong></p>
       <p>Just reply to this email. Your experience helps us refine every report for every defendant who comes after you.</p>
     `,
