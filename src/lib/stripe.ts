@@ -78,6 +78,7 @@ export const TIERS = {
     requiresDiscovery: false,
     priorityPrice: 9700,
     priorityDelivery: "Same-day (4 hours)",
+    includesTiers: [] as readonly string[],
   },
   "intelligence-brief": {
     name: "Case Intelligence Brief",
@@ -86,6 +87,7 @@ export const TIERS = {
     requiresDiscovery: false,
     priorityPrice: 29700,
     priorityDelivery: "24 hours",
+    includesTiers: ["case-decoder"] as readonly string[],
   },
   "x-ray": {
     name: "The X-Ray",
@@ -94,6 +96,7 @@ export const TIERS = {
     requiresDiscovery: true,
     priorityPrice: 49700,
     priorityDelivery: "5 business days",
+    includesTiers: ["case-decoder", "intelligence-brief"] as readonly string[],
   },
   "war-room": {
     name: "The War Room",
@@ -102,6 +105,7 @@ export const TIERS = {
     requiresDiscovery: true,
     priorityPrice: 99700,
     priorityDelivery: "Expedited 20-day delivery",
+    includesTiers: ["case-decoder", "intelligence-brief", "x-ray"] as readonly string[],
   },
   "situation-room": {
     name: "The Situation Room",
@@ -110,6 +114,7 @@ export const TIERS = {
     requiresDiscovery: true,
     priorityPrice: null,
     priorityDelivery: null,
+    includesTiers: ["case-decoder", "intelligence-brief", "x-ray", "war-room"] as readonly string[],
   },
   "extra-witness": {
     name: "Extra Witness Intel",
@@ -118,6 +123,8 @@ export const TIERS = {
     requiresDiscovery: false,
     priorityPrice: null,
     priorityDelivery: null,
+    // Add-ons do NOT participate in tier inclusion — they are standalone purchases
+    includesTiers: [] as readonly string[],
   },
   "witness-pack": {
     name: "Standalone Witness Pack",
@@ -126,6 +133,8 @@ export const TIERS = {
     requiresDiscovery: true,
     priorityPrice: null,
     priorityDelivery: null,
+    // Add-ons do NOT participate in tier inclusion — they are standalone purchases
+    includesTiers: [] as readonly string[],
   },
 } as const;
 

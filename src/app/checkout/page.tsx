@@ -140,7 +140,8 @@ const TIER_INFO: Record<string, TierInfo> = {
     delivery: "72 hours",
     requiresDiscovery: false,
     features: [
-      "Everything in Case Decoder",
+      "Case Decoder report delivered within 24 hours",
+      "Everything in Case Decoder, plus:",
       "Attorney Accountability Score — 6-dimension tracking with milestone timeline",
       "Prosecution Case Vulnerability Report — where the prosecution's case has gaps, based on your county's outcome data",
       "Charge exposure map",
@@ -185,7 +186,8 @@ const TIER_INFO: Record<string, TierInfo> = {
     delivery: "10 business days",
     requiresDiscovery: true,
     features: [
-      "Everything in Intelligence Brief",
+      "Case Decoder + Intelligence Brief delivered first",
+      "Everything in Intelligence Brief, plus:",
       "Discovery document index",
       "Comprehensive timeline",
       "Discrepancy report",
@@ -226,7 +228,8 @@ const TIER_INFO: Record<string, TierInfo> = {
     delivery: "25-28 days + weekly updates",
     requiresDiscovery: true,
     features: [
-      "Everything in The X-Ray",
+      "Includes Case Decoder + Intelligence Brief + X-Ray delivered progressively",
+      "Everything in The X-Ray, plus:",
       "Judge & prosecution dossiers",
       "Witness analysis (up to 8)",
       "Questions about motion timing for your attorney",
@@ -270,7 +273,8 @@ const TIER_INFO: Record<string, TierInfo> = {
     requiresDiscovery: true,
     requiresWarRoom: true,
     features: [
-      "Everything in The War Room",
+      "Includes all lower-tier reports delivered progressively",
+      "Everything in The War Room, plus:",
       "Trial Intelligence Operations — evening debrief + morning prep brief every trial day",
       "Research on all witness backgrounds and credibility questions for your attorney",
       "Research summaries your attorney can use when drafting reply briefs",
@@ -337,6 +341,9 @@ function CheckoutContent() {
   const [consentChecked, setConsentChecked] = useState(false);
   const [courtDate, setCourtDate] = useState("");
   const [priorityDelivery, setPriorityDelivery] = useState(false);
+  const [returningCustomer, setReturningCustomer] = useState(false);
+  const [existingCaseNumber, setExistingCaseNumber] = useState("");
+  const [existingCaseState, setExistingCaseState] = useState("");
 
   const info = TIER_INFO[tier];
 
@@ -386,7 +393,12 @@ function CheckoutContent() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tier, email, consent: consentChecked, priorityDelivery, courtDate: courtDate || undefined }),
+        body: JSON.stringify({
+          tier, email, consent: consentChecked, priorityDelivery, courtDate: courtDate || undefined,
+          ...(returningCustomer && existingCaseNumber && existingCaseState && {
+            existingCaseNumber, existingCaseState,
+          }),
+        }),
       });
 
       const data = await res.json();
@@ -593,6 +605,55 @@ function CheckoutContent() {
             {emailError && <p className="mt-1 text-xs text-red-400">{emailError}</p>}
             <p className="mt-1 text-xs text-zinc-400">No spam — ever. Just your report and delivery updates.</p>
           </div>
+
+          {/* RETURNING CUSTOMER — For IB+ tiers, allow linking to existing CD. */}
+          {/* If they already bought a Case Decoder under a different email,   */}
+          {/* they can enter their court case number + state to link it.       */}
+          {info.priceNum >= 997 && (
+            <div className="mt-4">
+              <label className="flex items-start gap-3 rounded-lg border border-zinc-700 bg-zinc-800/50 p-4 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={returningCustomer}
+                  onChange={(e) => setReturningCustomer(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
+                />
+                <div>
+                  <span className="text-sm font-semibold text-white">Already have a Case Decoder?</span>
+                  <p className="mt-0.5 text-xs text-zinc-400">Enter your court case number and state to link your existing report and receive upgrade credit.</p>
+                </div>
+              </label>
+              {returningCustomer && (
+                <div className="mt-3 grid grid-cols-2 gap-3">
+                  <div>
+                    <label htmlFor="existingCaseNumber" className="block text-xs text-zinc-400">Court case number</label>
+                    <input
+                      id="existingCaseNumber"
+                      type="text"
+                      value={existingCaseNumber}
+                      onChange={(e) => setExistingCaseNumber(e.target.value)}
+                      placeholder="e.g. 23-01773-CF"
+                      className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="existingCaseState" className="block text-xs text-zinc-400">State</label>
+                    <select
+                      id="existingCaseState"
+                      value={existingCaseState}
+                      onChange={(e) => setExistingCaseState(e.target.value)}
+                      className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-base text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                    >
+                      <option value="">Select state</option>
+                      {["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"].map((st) => (
+                        <option key={st} value={st}>{st}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* COURT DATE — Optional input. If set and <14 days away,            */}
           {/* courtDateUrgent triggers a warning on the priority delivery      */}

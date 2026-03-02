@@ -117,6 +117,11 @@ See `docs/PIPELINE-CASE-DECODER.md` Step 4B for full details.
 | buyer_states | jsonb | Detected buyer states from intake (distrust, double-checking, information-vacuum, etc.) |
 | review_reminder_sent | boolean | Prevents duplicate review reminders |
 | report_token_expires_at | timestamptz | 12-month report access expiry |
+| is_included_deliverable | boolean | `true` for auto-created lower-tier cases in higher-tier orders |
+| parent_order_id | uuid (FK) | Links included case back to the order that created it |
+| court_case_number | text | Court-assigned case number (e.g. "23-01773-CF") |
+| court_state | text | Jurisdiction state for case number matching |
+| court_county | text | County within state |
 | updated_at | timestamptz | Auto-updated via trigger |
 
 ### `intakes`
@@ -174,6 +179,7 @@ All reference tables have `created_at`, `updated_at` (auto-trigger), and `active
 
 ### Indexes
 - `idx_orders_stripe_payment_intent` on `orders(stripe_payment_intent_id)` — Used by refund webhook to find the order being refunded.
+- `idx_cases_court_lookup` on `cases(court_case_number, court_state)` — Used for customer identity matching across emails (upgrade dedup).
 
 ## Case Status State Machine
 
@@ -225,6 +231,40 @@ All reference tables have `created_at`, `updated_at` (auto-trigger), and `active
 | `pending` | Discovery tier, waiting for upload | x-ray, war-room, situation-room | Customer uploads files |
 | `submitted` | Files uploaded and finalized | x-ray, war-room, situation-room | Manual analysis |
 | `refunded` | Full refund processed | All | Report access revoked |
+
+## Multi-Case Order Model (Tier Inclusion)
+
+Higher tiers include lower-tier deliverables. When a customer buys Intelligence Brief ($997), they receive both a Case Decoder report (delivered within 24 hours) AND their Intelligence Brief. Each deliverable gets its own `case` record.
+
+### Inclusion Map
+
+| Purchased Tier | Cases Created | Included Deliverables |
+|---|---|---|
+| Case Decoder ($197) | 1 case | None |
+| Intelligence Brief ($997) | 2 cases | Case Decoder (`is_included_deliverable=true`) |
+| X-Ray ($1,497) | 3 cases | Case Decoder + Intelligence Brief |
+| War Room ($3,497) | 4 cases | Case Decoder + Intelligence Brief + X-Ray |
+| Situation Room ($9,997) | 5 cases | Case Decoder + IB + X-Ray + War Room |
+
+### How It Works
+
+1. **Webhook** creates the primary case AND loops through `tierConfig.includesTiers` to create additional cases with `is_included_deliverable=true` and `parent_order_id` set.
+2. **Upgrade dedup**: Before creating an included case, checks if the customer already has a delivered case for that tier (by email OR court case number match). If so, skips creation.
+3. **Included CD auto-generates** immediately if intake exists (same fire-and-forget pattern as standalone CD).
+4. **CD delivery triggers Phase 2 email**: When an included CD is delivered, the deliver route finds sibling cases still awaiting intake and sends the Phase 2 intake email.
+5. **Refund cascade** works unchanged — `cases.eq("order_id")` catches all cases on the order.
+
+### Two-Phase Intake Flow
+
+- **Phase 1 (standard intake)**: Collected post-purchase. Used to generate the included Case Decoder.
+- **Phase 2 (IB-specific intake)**: After CD delivery, customer receives email with link to `/intake/intelligence-brief`. Collects judge, attorney, hearing details needed for the full Intelligence Brief.
+
+### Customer Identity
+
+Email-only matching is fragile (different emails = different "customer"). Court case numbers are court-assigned and unique per jurisdiction:
+- `court_case_number` + `court_state` on the `cases` table
+- Collected in intake form (required field)
+- Checkout page has "Returning customer?" section for IB+ tiers to enter case number + state for cross-email upgrade credit
 
 ## Shared Constants
 

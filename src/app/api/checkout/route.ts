@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { tier, email, consent, priorityDelivery, courtDate, chargeType } = body;
+    const { tier, email, consent, priorityDelivery, courtDate, chargeType, existingCaseNumber, existingCaseState } = body;
 
     // =========================================================================
     // 1. TIER VALIDATION
@@ -205,6 +205,28 @@ export async function POST(req: NextRequest) {
     }
 
     // =========================================================================
+    // 6b. RETURNING CUSTOMER: CASE NUMBER LOOKUP
+    // If the customer provided a court case number + state (indicating they
+    // previously purchased a Case Decoder, possibly under a different email),
+    // find the original order email to include in upgrade credit calculation.
+    // =========================================================================
+    let caseNumberEmail: string | null = null;
+    if (existingCaseNumber && existingCaseState) {
+      const { data: matchedCase } = await supabase
+        .from("cases")
+        .select("email")
+        .eq("court_case_number", existingCaseNumber.trim())
+        .eq("court_state", existingCaseState)
+        .eq("status", "delivered")
+        .limit(1)
+        .maybeSingle();
+
+      if (matchedCase?.email) {
+        caseNumberEmail = matchedCase.email;
+      }
+    }
+
+    // =========================================================================
     // 7. UPGRADE CREDIT CALCULATION
     // Customers who upgrade get 100% credit from prior purchases toward the new
     // tier, within a 12-month rolling window. Key safeguards:
@@ -227,6 +249,7 @@ export async function POST(req: NextRequest) {
       const twelveMonthsAgo = new Date();
       twelveMonthsAgo.setFullYear(twelveMonthsAgo.getFullYear() - 1);
 
+      // Look up orders from current email
       const { data: priorOrders, error: creditError } = await supabase
         .from("orders")
         .select("amount, tier")
@@ -236,6 +259,26 @@ export async function POST(req: NextRequest) {
 
       if (creditError) {
         console.error("[Checkout] Credit lookup error:", creditError);
+      }
+
+      // Also include orders from case-number-matched email (different email, same case)
+      if (caseNumberEmail && caseNumberEmail !== normalizedEmail) {
+        const { data: caseOrders } = await supabase
+          .from("orders")
+          .select("amount, tier")
+          .eq("email", caseNumberEmail)
+          .eq("status", "paid")
+          .gte("paid_at", twelveMonthsAgo.toISOString());
+
+        if (caseOrders && priorOrders) {
+          // Merge, dedup by tier (take the higher amount per tier)
+          const existingTiers = new Set(priorOrders.map((o: { tier: string }) => o.tier));
+          for (const co of caseOrders) {
+            if (!existingTiers.has(co.tier)) {
+              priorOrders.push(co);
+            }
+          }
+        }
       }
 
       if (priorOrders && priorOrders.length > 0) {
@@ -357,6 +400,11 @@ export async function POST(req: NextRequest) {
         ...(validCourtDate && { court_date: validCourtDate }),
         ...(resolvedChargeType && { charge_type: resolvedChargeType }),
         ...(upgradeCreditCents > 0 && { upgrade_credit_applied: String(upgradeCreditCents) }),
+        ...(existingCaseNumber && existingCaseState && {
+          existing_case_number: existingCaseNumber.trim(),
+          existing_case_state: existingCaseState,
+        }),
+        ...(caseNumberEmail && { case_number_matched_email: caseNumberEmail }),
       },
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
       cancel_url: `${origin}/checkout?tier=${tier}`,

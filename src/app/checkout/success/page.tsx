@@ -70,29 +70,41 @@ const TIER_NEXT_STEPS: Record<
     name: "Case Intelligence Brief",
     delivery: "72 hours",
     action:
-      "Check your email — we'll send your Intelligence Brief within 72 hours.",
+      "Your package includes a Case Decoder report delivered within 24 hours, followed by your full Intelligence Brief within 72 hours. Complete your case details to get started.",
     showUpload: false,
+    noIntakeAction:
+      "Complete your case details so we can generate your Case Decoder report within 24 hours.",
+    intakeUrl: "/intake?tier=intelligence-brief",
   },
   "x-ray": {
     name: "The X-Ray",
     delivery: "10 business days",
     action:
-      "Upload your discovery documents so we can begin analysis. You'll receive a link via email.",
+      "Your package includes a Case Decoder (24 hours) and Intelligence Brief (72 hours) delivered first, then your full X-Ray analysis after you upload discovery documents.",
     showUpload: true,
+    noIntakeAction:
+      "Complete your case details to start receiving your included reports while we prepare for your discovery analysis.",
+    intakeUrl: "/intake?tier=x-ray",
   },
   "war-room": {
     name: "The War Room",
     delivery: "25-28 business days",
     action:
-      "Upload your discovery documents and we'll begin your full intelligence operation. Expect your first update within 7 days.",
+      "Your package includes Case Decoder + Intelligence Brief delivered first, then your full War Room intelligence operation after discovery upload. Expect your first update within 7 days of upload.",
     showUpload: true,
+    noIntakeAction:
+      "Complete your case details to start receiving your included reports.",
+    intakeUrl: "/intake?tier=war-room",
   },
   "situation-room": {
     name: "The Situation Room",
     delivery: "24-48 hours per stage",
     action:
-      "Upload your discovery documents to begin. We'll contact you within 24 hours to schedule your priority onboarding.",
+      "Your package includes all lower-tier reports delivered progressively. Upload your discovery documents to begin the full Situation Room operation. We'll contact you within 24 hours.",
     showUpload: true,
+    noIntakeAction:
+      "Complete your case details to start receiving your included reports.",
+    intakeUrl: "/intake?tier=situation-room",
   },
   "extra-witness": {
     name: "Extra Witness Intel",

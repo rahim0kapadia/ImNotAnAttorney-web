@@ -713,7 +713,7 @@ QUESTIONS FOR YOUR ATTORNEY — 15 questions. 6-part format per question:
 4. If the answer is vague (empathetic follow-up probe for in-meeting use)
 5. What to listen for (pattern + in-meeting response + post-meeting
    action sequence + Step reference in Your Advocacy Steps)
-6. Source methodology (which God Mode expert's approach)
+Expert attribution goes in part 2 ("Why it matters"), not as a separate line.
 Q1 = Golden Question — "If you only ask one question, ask this one."
 Q1-Q5 are PRIORITY — drawn from the defendant's specific intake answers.
 Each "don't know" from intake becomes a question.
@@ -1361,22 +1361,12 @@ Each question has EXACTLY 5 parts — no more, no less:
 2. **Why it matters:** Grounded in named expert's methodology + "You told us..." link.
    Weave expert attributions NATURALLY into this paragraph (e.g., "This
    question draws on Martin Weinberg's framework for evaluating intent
-   defenses"). The expert name goes HERE — this is the only attribution needed.
+   defenses"). This paragraph is where the expert name appears.
 3. **Good answer:** Specific deliverable (notes, filings, correspondence)
 4. **If the answer is vague:** "[empathetic follow-up probe for in-meeting use]"
 5. **What to listen for:** "[pattern]" — Here's what to do: [in-meeting response] + [post-meeting action: document, send summary email] + [Step reference in Your Advocacy Steps]
-Then a --- separator and the next question. NOTHING between part 5 and the ---. Here is the EXACT structure:
 
-### Q[N]
-**Question:** "..."
-**Why it matters:** ... [expert name woven in here] ...
-**Good answer:** ...
-**If the answer is vague:** *"..."*
-**What to listen for:** ...
----
-### Q[N+1]
-
-^^^ That is the COMPLETE question. There is no 6th line. No "**Source:**". No "**Source methodology:**". No attribution after "What to listen for." The expert is named INSIDE "Why it matters" — that is sufficient.
+Then --- and the next question heading. The question structure has EXACTLY these 5 bold-labeled parts. No additional bold-labeled lines of any kind after part 5 — the --- separator follows immediately.
 
 After writing all 15, count them. If not exactly 15, revise.
 </section>

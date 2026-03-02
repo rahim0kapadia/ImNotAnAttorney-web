@@ -285,6 +285,29 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
 
+  // --- Included Case Decoder (delivered as part of IB+ package) ---
+  // When a customer buys IB or higher, a CD is auto-generated and delivered
+  // within 24 hours. This drip is for that included delivery — no upsell
+  // since the customer already bought the higher tier.
+  {
+    key: "included_case_decoder_delivery",
+    delayDays: 0,
+    tier: "case-decoder",
+    subject: "Part 1 of your package is ready — Your Case Decoder Report",
+    html: `
+      <h1 style="color: #F59E0B;">Part 1: Your Case Decoder Report Is Ready</h1>
+      <p>Your Case Decoder report has been delivered — this is the first part of your package. Here's how to use it:</p>
+      <ol>
+        <li><strong style="color: white;">Start with "Where Things Stand"</strong> — see exactly where your case is right now</li>
+        <li><strong style="color: white;">Read "Questions for Your Attorney"</strong> — pick your top 5, start with the Golden Question</li>
+        <li><strong style="color: white;">Send the email from "Exactly What to Say"</strong> — it's already written, just copy-paste</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">What's next:</strong> Check your email for details on completing your full Intelligence Brief intake — a few more questions so we can build your complete report with judge intelligence, motion landscape, and more.
+      </p>
+    `,
+  },
+
   // --- Intelligence Brief ($997) ---
   {
     key: "post_intelligence_brief_delivery",

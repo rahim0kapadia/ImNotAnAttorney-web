@@ -275,21 +275,108 @@ export async function POST(req: NextRequest) {
       }
 
       // ──────────────────────────────────────────────────────────────
-      // AUTO-TRIGGER: Case Decoder report generation
+      // INCLUDED-TIER CASE CREATION (tier inclusion model)
       // ──────────────────────────────────────────────────────────────
-      // Only case-decoder tier gets auto-triggered here. Higher tiers
-      // require discovery documents or manual operator action.
+      // When a customer buys IB ($997), they also get a Case Decoder
+      // delivered within 24 hours. When they buy X-Ray ($1,497), they
+      // get CD + IB. Each included tier gets its own case record with
+      // is_included_deliverable=true so the system can track and
+      // deliver them independently.
+      //
+      // Upgrade dedup: If the customer already has a delivered case
+      // for an included tier (matched by email OR court case number),
+      // skip creating a duplicate — link to the existing one instead.
+      const existingCaseNumber = session.metadata?.existing_case_number;
+      const existingCaseState = session.metadata?.existing_case_state;
+
+      if (caseId && tierConfig?.includesTiers && tierConfig.includesTiers.length > 0) {
+        for (const includedTier of tierConfig.includesTiers) {
+          // Check if customer already has a delivered case for this tier (by email)
+          const { data: existingCase } = await supabase
+            .from("cases")
+            .select("id")
+            .eq("email", email)
+            .eq("tier", includedTier)
+            .eq("status", "delivered")
+            .limit(1)
+            .maybeSingle();
+
+          if (existingCase) {
+            console.log(`[Webhook] Skipping included ${includedTier} — customer already has delivered case ${existingCase.id} (email match)`);
+            continue;
+          }
+
+          // Also check by court case number (different email, same defendant)
+          if (existingCaseNumber && existingCaseState) {
+            const { data: caseNumberMatch } = await supabase
+              .from("cases")
+              .select("id")
+              .eq("court_case_number", existingCaseNumber)
+              .eq("court_state", existingCaseState)
+              .eq("tier", includedTier)
+              .eq("status", "delivered")
+              .limit(1)
+              .maybeSingle();
+
+            if (caseNumberMatch) {
+              console.log(`[Webhook] Skipping included ${includedTier} — customer already has delivered case ${caseNumberMatch.id} (case number match)`);
+              continue;
+            }
+          }
+
+          const includedCaseId = crypto.randomUUID();
+          const includedTierConfig = isValidTier(includedTier) ? TIERS[includedTier] : null;
+          const includedRequiresDiscovery = includedTierConfig?.requiresDiscovery ?? false;
+
+          const includedCaseStatus = hasIntake
+            ? (includedRequiresDiscovery ? "pending" : "intake")
+            : "awaiting-intake";
+
+          const { error: includedCaseError } = await supabase.from("cases").insert({
+            id: includedCaseId,
+            order_id: orderData.id,
+            email: email,
+            tier: includedTier,
+            status: includedCaseStatus,
+            intake_id: linkedIntake?.id || null,
+            charge_type: chargeType,
+            file_urls: [],
+            is_included_deliverable: true,
+            parent_order_id: orderData.id,
+          });
+
+          if (includedCaseError) {
+            console.error(`[Webhook] Included case insert error (${includedTier}):`, includedCaseError);
+            continue;
+          }
+
+          // Auto-trigger CD generation for included case-decoder
+          if (includedTier === "case-decoder" && hasIntake) {
+            fetch(`${origin}/api/generate/case-decoder`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
+              },
+              body: JSON.stringify({ caseId: includedCaseId }),
+            }).catch((err) =>
+              console.error("[Webhook] Auto-trigger included CD generation failed:", err)
+            );
+          }
+        }
+      }
+
+      // ──────────────────────────────────────────────────────────────
+      // AUTO-TRIGGER: Case Decoder report generation (standalone)
+      // ──────────────────────────────────────────────────────────────
+      // Only standalone case-decoder tier gets auto-triggered here.
+      // Included CDs are triggered in the inclusion loop above.
       //
       // Two paths:
       //   A. Intake exists → Fire-and-forget to /api/generate/case-decoder
-      //      The generate endpoint handles its own idempotency + atomic guard,
-      //      so duplicate triggers are safe.
       //   B. No intake → Email customer with a link to the intake form.
-      //      When they submit, /api/intake will detect the awaiting-intake case
-      //      and trigger generation at that point.
       if (caseId && tier === "case-decoder") {
         if (hasIntake) {
-          // Fire-and-forget report generation — don't block the webhook response
           fetch(`${origin}/api/generate/case-decoder`, {
             method: "POST",
             headers: {
@@ -301,8 +388,6 @@ export async function POST(req: NextRequest) {
             console.error("[Webhook] Auto-trigger report generation failed:", err)
           );
         } else {
-          // No intake — email customer to complete intake form
-          // The intake form URL includes email + tier so the form can pre-populate
           await sendEmailWithRetry({
             to: email,
             subject: "Complete Your Case Details to Start Your Report",
@@ -315,6 +400,22 @@ export async function POST(req: NextRequest) {
             `,
           }, `intake request for ${email}`);
         }
+      }
+
+      // For IB+ tiers without intake, email customer to complete intake
+      if (caseId && tier !== "case-decoder" && tierConfig?.includesTiers && tierConfig.includesTiers.length > 0 && !hasIntake) {
+        await sendEmailWithRetry({
+          to: email,
+          subject: `Complete Your Case Details — Your ${escapeHtml(productName)} Package`,
+          unsubscribeEmail: email,
+          html: `
+            <h1 style="color: #F59E0B;">One More Step</h1>
+            <p>Thank you for purchasing the ${escapeHtml(productName)}. Before we can start generating your reports, we need your case details.</p>
+            <p style="color: #D4D4D8;">Your package includes a Case Decoder report delivered within 24 hours, followed by your full ${escapeHtml(productName)}.</p>
+            <a href="${origin}/intake?email=${encodeURIComponent(email)}&tier=${encodeURIComponent(tier)}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
+            <p style="color: #A1A1AA;">Once you submit your case details, your Case Decoder report will be generated within 24 hours.</p>
+          `,
+        }, `intake request for ${email} (${tier})`);
       }
     }
 

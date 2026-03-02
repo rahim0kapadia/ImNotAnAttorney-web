@@ -219,53 +219,48 @@ export async function POST(req: NextRequest) {
     }
 
     // ──────────────────────────────────────────────────────────────
-    // LINK TO EXISTING CASE (Flow B: customer already paid)
+    // LINK TO EXISTING CASES (Flow B: customer already paid)
     // ──────────────────────────────────────────────────────────────
-    // Check if a case exists for this email with status "awaiting-intake".
-    // This handles the post-payment flow:
-    //   1. Customer pays → webhook creates case with "awaiting-intake"
-    //   2. Customer receives "complete your details" email
-    //   3. Customer submits intake → THIS CODE links it to the waiting case
+    // Check if cases exist for this email with status "awaiting-intake".
+    // With tier inclusion, a single order can create multiple cases
+    // (e.g., IB purchase creates CD case + IB case). This code links
+    // the intake to ALL waiting cases, not just one.
     //
-    // We match by email (normalized) and take the most recent case if
-    // multiple exist (edge case: customer purchased twice before filling intake).
+    // Also copies court case identifiers to cases table for customer
+    // identity matching on future purchases.
     const normalizedEmail = email.toLowerCase().trim();
-    const { data: pendingCase } = await supabase
+    const { data: pendingCases } = await supabase
       .from("cases")
       .select("id, tier")
       .eq("email", normalizedEmail)
       .eq("status", "awaiting-intake")
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle();
+      .order("created_at", { ascending: false });
 
-    if (pendingCase) {
-      // C10: Use the ID returned from the insert instead of re-querying by email.
-      // Re-querying was race-prone: two concurrent intakes from the same email
-      // could return the wrong intake ID.
-      if (insertedIntake) {
-        const latestIntake = insertedIntake;
+    if (pendingCases && pendingCases.length > 0 && insertedIntake) {
+      const latestIntake = insertedIntake;
+      const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+
+      for (const pendingCase of pendingCases) {
         // ── STATUS TRANSITION: awaiting-intake → intake ──
         // Links the intake record to the case and copies the charge_type
-        // to the case for operator dashboard visibility. The "intake" status
-        // signals that the case has all the information needed for generation.
+        // and court identifiers to the case for operator dashboard visibility.
         await supabase
           .from("cases")
           .update({
             intake_id: latestIntake.id,
             status: "intake",
             charge_type: chargeType,
+            court_case_number: body.caseNumber ? body.caseNumber.slice(0, 50) : null,
+            court_state: body.state ? body.state.slice(0, 50) : null,
+            court_county: body.county ? body.county.slice(0, 100) : null,
             updated_at: new Date().toISOString(),
           })
           .eq("id", pendingCase.id);
 
         // ── AUTO-TRIGGER: Case Decoder report generation ──
-        // Only case-decoder tier gets auto-triggered. Higher tiers require
-        // discovery documents or manual operator action.
-        // Fire-and-forget: the generate endpoint handles its own idempotency,
-        // so duplicate triggers from webhook + intake are safe.
+        // case-decoder tier gets auto-triggered (both standalone and included).
+        // Higher tiers require discovery documents or manual operator action.
         if (pendingCase.tier === "case-decoder") {
-          const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
           fetch(`${origin}/api/generate/case-decoder`, {
             method: "POST",
             headers: {
@@ -290,7 +285,8 @@ export async function POST(req: NextRequest) {
     //   Not yet paid (Flow A): "Here's what happens next: browse services, purchase..."
     //     - Guides them toward the purchase funnel with upgrade incentive
     //     - Links to services page and Case Decoder checkout directly
-    const confirmationHtml = pendingCase
+    const hasPendingCase = pendingCases && pendingCases.length > 0;
+    const confirmationHtml = hasPendingCase
       ? `
         <h1 style="color: #F59E0B;">Case Details Received</h1>
         <p>Thank you, ${escapeHtml(firstName)}. We've received your intake form and your report is being generated.</p>

@@ -440,15 +440,31 @@ export async function POST(req: NextRequest) {
   //   - Usage instructions (print, priority questions, document answers)
   //   - Upgrade upsell (100% credit toward higher tiers within 12 months)
   const tierName = TIER_NAMES[caseData.tier] || "Case Decoder";
-  const emailResult = await sendEmail({
-    to: caseData.email,
-    subject: `Your ${tierName} Report is Ready`,
-    unsubscribeEmail: caseData.email,
-    html: `
-      <h1 style="color: #F59E0B;">Your ${escapeHtml(tierName)} Report is Ready</h1>
-      <p>Hi ${escapeHtml(firstName)},</p>
-      <p>Your personalized ${escapeHtml(tierName)} report is ready to view. It contains targeted questions, communication tools, and a clear picture of where things stand — built specifically from your case details.</p>
-      <a href="${reportUrl}" style="display: inline-block; margin: 24px 0; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">View Your Report</a>
+  const isIncluded = caseData.is_included_deliverable === true;
+
+  // Tier-specific delivery email instructions
+  let instructionsHtml: string;
+  let upgradeHtml: string;
+
+  if (caseData.tier === "intelligence-brief") {
+    instructionsHtml = `
+      <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
+        <p style="margin: 0; color: white; font-weight: bold;">How to use your Intelligence Brief:</p>
+        <ol style="color: #D4D4D8; padding-left: 20px; margin-top: 12px;">
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Start with the 48-Hour Priority List</strong> — three actions ranked by urgency</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Read the Attorney Accountability Score</strong> in Section 2 — understand where communication stands</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Review the 10-15 questions in Appendix D</strong> — pick your top 5 for your next attorney meeting</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Use the Meeting Ready Sheet</strong> in Section 6 — bring it to your next appointment</li>
+        </ol>
+      </div>`;
+    upgradeHtml = `
+      <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">
+        <p style="margin: 0; color: #F59E0B; font-weight: bold;">When you get discovery — we're ready.</p>
+        <p style="margin: 8px 0 0; color: #D4D4D8;">Your $997 is credited toward The X-Ray ($1,497). Pay only $500. <a href="${origin}/services" style="color: #F59E0B;">View upgrade options</a></p>
+      </div>`;
+  } else {
+    // Case Decoder (default)
+    instructionsHtml = `
       <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
         <p style="margin: 0; color: white; font-weight: bold;">How to use your report:</p>
         <ol style="color: #D4D4D8; padding-left: 20px; margin-top: 12px;">
@@ -457,11 +473,31 @@ export async function POST(req: NextRequest) {
           <li style="margin-bottom: 8px;"><strong style="color: white;">Send the email</strong> from "Exactly What to Say" — it's already written for you, just copy-paste and hit send</li>
           <li style="margin-bottom: 8px;"><strong style="color: white;">Follow Your Next 7 Days</strong> — one simple action per day, starting with sending that email</li>
         </ol>
-      </div>
+      </div>`;
+    // Skip upgrade CTA if this is an included deliverable (customer already bought higher tier)
+    upgradeHtml = isIncluded ? "" : `
       <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">
         <p style="margin: 0; color: #F59E0B; font-weight: bold;">Ready to go deeper?</p>
         <p style="margin: 8px 0 0; color: #D4D4D8;">Your $197 is credited toward any higher tier within 12 months. <a href="${origin}/services" style="color: #F59E0B;">View upgrade options</a></p>
-      </div>
+      </div>`;
+  }
+
+  // For included deliverables, adjust the subject and intro
+  const emailSubject = isIncluded
+    ? `Part 1 of Your ${escapeHtml(TIER_NAMES[caseData.tier] || "")} Package is Ready — Your Case Decoder Report`
+    : `Your ${tierName} Report is Ready`;
+
+  const emailResult = await sendEmail({
+    to: caseData.email,
+    subject: emailSubject,
+    unsubscribeEmail: caseData.email,
+    html: `
+      <h1 style="color: #F59E0B;">Your ${escapeHtml(tierName)} Report is Ready</h1>
+      <p>Hi ${escapeHtml(firstName)},</p>
+      <p>Your personalized ${escapeHtml(tierName)} report is ready to view. It contains targeted questions, communication tools, and a clear picture of where things stand — built specifically from your case details.</p>
+      <a href="${reportUrl}" style="display: inline-block; margin: 24px 0; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">View Your Report</a>
+      ${instructionsHtml}
+      ${upgradeHtml}
     `,
   });
 
@@ -507,6 +543,47 @@ export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
 
   // ──────────────────────────────────────────────────────────────
+  // PHASE 2 TRIGGER: When delivering an included CD, notify
+  // customer about the next step for their higher-tier product
+  // ──────────────────────────────────────────────────────────────
+  // If this is an is_included_deliverable case (e.g., CD included
+  // with an IB purchase), find sibling cases on the same order
+  // that are still awaiting intake and send Phase 2 intake emails.
+  if (caseData.is_included_deliverable && caseData.order_id) {
+    const { data: siblingCases } = await supabase
+      .from("cases")
+      .select("id, tier, status")
+      .eq("order_id", caseData.order_id)
+      .neq("id", caseId)
+      .in("status", ["awaiting-intake", "intake"]);
+
+    if (siblingCases && siblingCases.length > 0) {
+      for (const sibling of siblingCases) {
+        const siblingTierName = TIER_NAMES[sibling.tier] || sibling.tier;
+        // Send Phase 2 intake email for IB+ tiers
+        if (sibling.tier === "intelligence-brief" && sibling.status === "awaiting-intake") {
+          await sendEmail({
+            to: caseData.email,
+            subject: `Your Case Decoder is Ready — Next: Complete Your ${siblingTierName} Details`,
+            unsubscribeEmail: caseData.email,
+            html: `
+              <h1 style="color: #F59E0B;">Part 1 Complete: Your Case Decoder Report</h1>
+              <p>Hi ${escapeHtml(firstName)},</p>
+              <p>Your Case Decoder report is ready — <a href="${reportUrl}" style="color: #F59E0B;">view it here</a>.</p>
+              <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
+                <p style="margin: 0; color: white; font-weight: bold;">Next Step: Complete Your ${escapeHtml(siblingTierName)}</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${escapeHtml(siblingTierName)} includes judge intelligence, motion landscape analysis, and 10-15 targeted questions — but we need a few more details about your case.</p>
+                <a href="${origin}/intake/intelligence-brief?case=${sibling.id}" style="display: inline-block; margin-top: 16px; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Intelligence Brief Details</a>
+              </div>
+              <p style="color: #A1A1AA;">This takes about 3-5 minutes. Your full ${escapeHtml(siblingTierName)} will be delivered within 72 hours after you complete this form.</p>
+            `,
+          });
+        }
+      }
+    }
+  }
+
+  // ──────────────────────────────────────────────────────────────
   // STEP 3: RECORD DRIP to prevent duplicate delivery emails
   // ──────────────────────────────────────────────────────────────
   // The cron (/api/cron/drip Part 2) sends post-purchase emails based
@@ -526,10 +603,19 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (subData?.id) {
+    const dripKey = `post_${caseData.tier.replace(/-/g, "_")}_delivery`;
     await supabase.from("drip_emails").upsert(
-      { subscriber_id: subData.id, email_key: `post_${caseData.tier.replace(/-/g, "_")}_delivery` },
+      { subscriber_id: subData.id, email_key: dripKey },
       { onConflict: "subscriber_id,email_key" }
     );
+    // For included deliverables, also record that the included delivery drip was sent
+    // so the cron doesn't re-send it
+    if (isIncluded) {
+      await supabase.from("drip_emails").upsert(
+        { subscriber_id: subData.id, email_key: `included_${dripKey}` },
+        { onConflict: "subscriber_id,email_key" }
+      );
+    }
   }
 
   // ──────────────────────────────────────────────────────────────

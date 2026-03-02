@@ -20,15 +20,16 @@
  * 3-Step wizard structure:
  *   Step 1 — Contact & Charges:
  *     Required: First name, email, jurisdiction level, charge type, state,
- *     time since arrest
- *     Conditional: Sex offense sub-routing, 3-4 charge-specific questions
+ *     court case number, time since arrest
+ *     Conditional: Sex offense sub-routing, 3-4 charge-specific questions,
+ *     county (required when jurisdiction_level = "state")
  *     Optional: Last name, phone, incident location, arrest circumstances
  *
  *   Step 2 — Your Situation:
  *     Required: Has attorney?
  *     Optional: Has discovery, co-defendants, attorney strategy, communication
  *     frequency, last attorney contact, arrest date, plea offered, plea terms,
- *     evidence types, case number, court date, service interest, situation
+ *     evidence types, court date, service interest, situation
  *
  *   Step 3 — One More Thing:
  *     Optional: One specific question (max 300 chars)
@@ -41,7 +42,7 @@
  *   API inserts into Supabase `intakes` table and sends operator notification.
  *
  * Validation:
- *   Step 1 gate: firstName + email + chargeType + state + timeSinceArrest
+ *   Step 1 gate: firstName + email + chargeType + state + caseNumber + timeSinceArrest + county (if state court)
  *   Step 2 gate: hasAttorney
  *   Step 3: No gate (all optional), submit always available
  *
@@ -575,7 +576,9 @@ function IntakeForm() {
 
   // Step validation gates — each step's "Continue" button is disabled until these are met
   const canProceedStep1 =
-    form.firstName && form.email && form.chargeType && form.state && form.timeSinceArrest;
+    form.firstName && form.email && form.chargeType && form.state && form.timeSinceArrest
+    && form.caseNumber
+    && (form.jurisdictionLevel !== "state" || form.county);
   const canProceedStep2 = form.hasAttorney;
 
   /** Submit all form data to /api/intake. API inserts into Supabase and notifies operator. */
@@ -797,11 +800,23 @@ function IntakeForm() {
                 </div>
                 <div className="mt-4">
                   <label htmlFor="county" className={labelClass}>
-                    County <span className="text-zinc-500">(helps us research your specific judge and local court patterns)</span>
+                    County {form.jurisdictionLevel === "state" ? <span className="text-red-400">*</span> : <span className="text-zinc-500">(helps us research your specific judge and local court patterns)</span>}
                   </label>
                   <input id="county" type="text" value={form.county as string}
                     onChange={(e) => setField("county", e.target.value)}
                     className={inputClass} placeholder="e.g. Pinellas, Harris, Los Angeles" />
+                </div>
+                <div className="mt-4">
+                  <label htmlFor="caseNumber" className={labelClass}>
+                    Court case number <span className="text-red-400">*</span>
+                  </label>
+                  <input id="caseNumber" type="text" required value={form.caseNumber as string}
+                    onChange={(e) => setField("caseNumber", e.target.value)}
+                    className={inputClass} placeholder="e.g. 23-01773-CF" />
+                  <p className="mt-1 text-xs text-zinc-500">
+                    Your case number is on any court document &mdash; arraignment papers, bond paperwork, or court notices.
+                    It helps us look up your public docket and match your records if you upgrade later.
+                  </p>
                 </div>
                 <div className="mt-4">
                   <label htmlFor="timeSinceArrest" className={labelClass}>
@@ -976,17 +991,6 @@ function IntakeForm() {
                       </label>
                     ))}
                   </div>
-                </div>
-                <div className="mt-4">
-                  <label htmlFor="caseNumber" className={labelClass}>
-                    Case number <span className="text-zinc-500">(optional but recommended)</span>
-                  </label>
-                  <input id="caseNumber" type="text" value={form.caseNumber as string}
-                    onChange={(e) => setField("caseNumber", e.target.value)}
-                    className={inputClass} placeholder="e.g. 23-01234-CF" />
-                  <p className="mt-1 text-xs text-zinc-500">
-                    If provided, we pull your public docket record to verify charges, judge assignment, and hearing dates.
-                  </p>
                 </div>
                 <div className="mt-4">
                   <label htmlFor="courtDate" className={labelClass}>

@@ -290,6 +290,25 @@ export async function GET(req: NextRequest) {
             );
           }
 
+          // ── SKIP UPSELL FOR INCLUDED DELIVERABLES ──
+          // If the customer bought IB+, the included CD case shouldn't get
+          // upsell emails nudging them to buy IB — they already have it.
+          // Check if any case for this order is an included deliverable.
+          let skipUpsell = false;
+          if (order.tier === "case-decoder") {
+            const { data: higherOrder } = await supabase
+              .from("orders")
+              .select("id")
+              .eq("email", order.email.toLowerCase())
+              .eq("status", "paid")
+              .neq("tier", "case-decoder")
+              .neq("tier", "extra-witness")
+              .neq("tier", "witness-pack")
+              .limit(1)
+              .maybeSingle();
+            if (higherOrder) skipUpsell = true;
+          }
+
           // ── FIND NEXT UNSENT POST-PURCHASE EMAIL ──
           // Iterates through the tier's email sequence in order and finds
           // the first email that is both due (enough days have passed) and
@@ -304,6 +323,9 @@ export async function GET(req: NextRequest) {
             // Skip relativeToMeeting emails — we don't track meeting dates yet.
             // These will be enabled when meeting scheduling is implemented.
             if (email.relativeToMeeting) continue;
+
+            // Skip upsell emails if customer already has a higher-tier purchase
+            if (skipUpsell && email.key.includes("upsell")) continue;
 
             // ── RELATIVE-TO-DELIVERY TIMING ──
             // Some emails are timed relative to when the report was delivered,
@@ -500,10 +522,15 @@ export async function GET(req: NextRequest) {
     const twoHoursAgo = new Date();
     twoHoursAgo.setHours(twoHoursAgo.getHours() - 2);
 
+    // Only flag case-decoder tier. Higher tiers (IB+) legitimately sit in
+    // "intake" status while waiting for operator processing or Phase 2 intake.
+    // Also skip is_included_deliverable cases — they have longer processing times.
     const { data: stuckIntakes } = await supabase
       .from("cases")
       .select("id, email, charge_type, tier, updated_at")
       .eq("status", "intake")
+      .eq("tier", "case-decoder")
+      .eq("is_included_deliverable", false)
       .lt("updated_at", twoHoursAgo.toISOString());
 
     if (stuckIntakes && stuckIntakes.length > 0) {
@@ -854,13 +881,16 @@ export async function GET(req: NextRequest) {
 
       if (recentOrders) {
         for (const order of recentOrders) {
-          const { data: linkedCase } = await supabase
+          // Use .limit(1) instead of .maybeSingle() — multi-case orders
+          // (IB+) create multiple cases per order, and .maybeSingle()
+          // throws when more than one row matches.
+          const { data: linkedCases } = await supabase
             .from("cases")
             .select("id")
             .eq("order_id", order.id)
-            .maybeSingle();
+            .limit(1);
 
-          if (!linkedCase) {
+          if (!linkedCases || linkedCases.length === 0) {
             // Orphan order — create case and alert
             const caseId = crypto.randomUUID();
             await supabase.from("cases").insert({
