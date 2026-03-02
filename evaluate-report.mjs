@@ -369,30 +369,43 @@ function parseArgs() {
 }
 
 async function callClaude(systemPrompt, userPrompt) {
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "x-api-key": ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      model: "claude-opus-4-6",
-      max_tokens: 4096,
-      temperature: 0,
-      system: systemPrompt,
-      messages: [{ role: "user", content: userPrompt }],
-    }),
-  });
+  const MAX_RETRIES = 3;
+  const RETRY_DELAY_MS = 10000;
 
-  if (!response.ok) {
-    const err = await response.text();
-    throw new Error(`API Error (${response.status}): ${err}`);
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "x-api-key": ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "claude-opus-4-6",
+        max_tokens: 4096,
+        temperature: 0,
+        system: systemPrompt,
+        messages: [{ role: "user", content: userPrompt }],
+      }),
+    });
+
+    if (response.status === 529 && attempt < MAX_RETRIES) {
+      console.log(`    [529 overloaded] Retrying in ${RETRY_DELAY_MS / 1000}s (attempt ${attempt}/${MAX_RETRIES})...`);
+      await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
+      continue;
+    }
+
+    if (!response.ok) {
+      const err = await response.text();
+      throw new Error(`API Error (${response.status}): ${err}`);
+    }
+
+    const result = await response.json();
+    const text = result.content?.[0]?.text || "";
+    return { text, usage: result.usage };
   }
 
-  const result = await response.json();
-  const text = result.content?.[0]?.text || "";
-  return { text, usage: result.usage };
+  throw new Error("Claude API exhausted all retries (529 overloaded)");
 }
 
 function parseEvalResponse(text) {

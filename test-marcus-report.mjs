@@ -248,7 +248,7 @@ Future pacing using name: "In two weeks, ${intake.first_name}, you will be the m
 <section id="postscript" title="What Comes Next" max_words="100">
 FIRST acknowledge: "For many people, this report and those conversations are enough."
 Then redirect to action: "That's a decision for later. Right now, Day 1 is tomorrow."
-If mentioning Intelligence Brief ($797), frame as verification.
+If mentioning Intelligence Brief ($997), frame as verification.
 "You don't need to decide now." THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
 </section>`;
 }
@@ -358,7 +358,7 @@ async function main() {
     ["Has Your Next 7 Days or Day 1", has(text, "Your Next 7 Days") || has(text, "Next 7 Days") || has(text, "Day 1")],
     ["Has Meeting Ready Sheet", has(text, "Meeting Ready")],
     ["Has future pacing with name", has(text, "Danielle") && has(text, "most prepared")],
-    ["Has What Comes Next or $797", has(text, "What Comes Next") || has(text, "$797")],
+    ["Has What Comes Next or $997", has(text, "What Comes Next") || has(text, "$997")],
     ["Quotes Danielle's frustration", has(text, "nurse") || has(text, "license") || has(text, "career") || has(text, "nobody is listening")],
     ["Quotes Danielle's specific question", has(text, "breathalyzer") || has(text, ".09") || has(text, "0.09") || has(text, ".08")],
     ["Has 'don't need to decide' or 'no pressure'", has(text, "don't need to decide") || has(text, "no pressure")],

@@ -290,7 +290,7 @@ function buildUserPrompt(intake) {
 
   const comm = intake.communication_frequency;
   const commInstruction = comm === "Rarely" || comm === "Never returned calls"
-    ? `\nAttorney communication is poor (${comm}). Use RE-ENGAGEMENT tier templates in Exactly What to Say (long gap). Include FULL 8-level escalation ladder.`
+    ? `\nAttorney communication is poor (${comm}). Use RE-ENGAGEMENT tier templates in Your Attorney Meeting Toolkit (long gap). Include FULL 8-level escalation ladder.`
     : `\nAttorney communication frequency: ${comm || "Not specified"}.`;
 
   const plea = intake.plea_offered;
@@ -341,10 +341,13 @@ ${conditionalInstructions.join("")}
 
 **GENERATE ALL SECTIONS BELOW. Stay within each section's word budget.**
 
-<section id="letter" title="A Letter to You" max_words="150">
-Use ONLY the section title as the heading — never prefix with internal id.
+<section id="letter" title="Letter" max_words="150">
+NO section heading — do NOT write "## A Letter to You" or any heading.
+Start directly with the defendant's first name and a comma (e.g., "Jennifer,").
 Quote their "Primary Frustration" and "Specific Question" directly. Validate their instinct: "the fact that you're doing this research tells us something important." If they asked a specific question, tell them which section addresses it (by name, e.g., "Questions for Your Attorney"). Normalize: "you're not alone in this." NO blaming the attorney — frame gaps as things to clarify. Use client first name. This is NOT generic — write it TO THIS defendant.
-Include "Do NOT show this report to your attorney" WITH this explanation: "If your attorney sees this analysis, they may anchor their responses to it rather than giving you their independent assessment. You want their unfiltered answers first. The questions are appropriate for any client — the analysis is for your eyes only."
+DEMONSTRATE understanding by reflecting specific details — do NOT announce empathy ("We heard every word").
+Include "Do NOT show this report to your attorney" WITH this explanation: "If your attorney sees this analysis, they may anchor their responses to it rather than giving you their independent assessment."
+After the letter, output the METHODOLOGY NOTE blockquote.
 </section>
 
 <section id="s1" title="Where Things Stand" max_words="400">
@@ -382,7 +385,7 @@ Use ONLY the section title as the heading — never prefix with internal id.
 Based on arrest date of ${intake.arrest_date} and ${intake.jurisdiction_level === "federal" ? "federal Speedy Trial Act" : `${intake.state} speedy trial rules`}. NO "URGENT" red box. Informational + question. ALWAYS caveat waivers/continuances/tolling.
 </section>` : "<!-- Time and Deadlines: OMITTED -->"}
 
-<section id="s3" title="Exactly What to Say" max_words="500">
+<section id="s3" title="Your Attorney Meeting Toolkit" max_words="500">
 Use ONLY the section title as the heading — never prefix with internal id.
 Ready-to-send email template. Opening script. Follow-up template. 8-Level Escalation Ladder with pacing note ("5-7 business days per level").
 Include "Do NOT show this report to your attorney" with explanation: "If your attorney sees this analysis, they may anchor their responses to it rather than giving you their independent assessment. The Meeting Ready Sheet in Your Next 7 Days is designed to be safe if your attorney sees it — it contains only questions, not analysis."
@@ -398,7 +401,7 @@ Each with 5 parts using "You told us..." (not "You indicated"). Count and verify
 <section id="s5" title="Things Worth Asking About" max_words="350">
 Use ONLY the section title as the heading — never prefix with internal id.
 5-6 items max. Labels: ADDRESS FIRST / LOOK INTO / ASK ABOUT. Two categories: "Based on What You Told Us" + "Things You Told Us You Don't Know."
-Use "You told us..." / "You mentioned..." (not "You reported"). Link to sections by name (Questions for Your Attorney, Exactly What to Say). Never blame attorney.
+Use "You told us..." / "You mentioned..." (not "You reported"). Link to sections by name (Questions for Your Attorney, Your Attorney Meeting Toolkit). Never blame attorney.
 </section>
 
 ${includePleaLandscape ? `<section id="c2" title="What a Plea Really Means" max_words="300">
@@ -422,14 +425,14 @@ Redirect, not deflation. Attorney has info we don't — which is why the questio
 <section id="s7" title="Your Next 7 Days" max_words="300">
 Use ONLY the section title as the heading — never prefix with internal id.
 EMOTIONAL CLIMAX — report ends here on determination, not disclaimers.
-7-day plan referencing Exactly What to Say (not S3). Meeting Ready Sheet (safe for attorney) with questions from Questions for Your Attorney (not S4).
+7-day plan referencing Your Attorney Meeting Toolkit (not S3). Meeting Ready Sheet (safe for attorney) with questions from Questions for Your Attorney (not S4).
 Future pacing using name: "In two weeks, ${intake.first_name}, you will be the most prepared defendant your attorney has ever worked with."
 </section>
 
 <section id="postscript" title="What Comes Next" max_words="100">
 FIRST acknowledge: "For many people, this report and those conversations are enough."
 Then redirect to action: "That's a decision for later. Right now, Day 1 is tomorrow."
-If mentioning Intelligence Brief ($797), frame as verification.
+If mentioning Intelligence Brief ($997), frame as verification.
 "You don't need to decide now." THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
 </section>`;
 }
@@ -567,10 +570,10 @@ function commonChecks(text) {
     ["Has 'Your Rights'", has(text, "Your Rights")],
 
     // ---- SECTION HEADINGS (all must appear) ----
-    ["Has 'A Letter to You' heading", has(text, "A Letter to You")],
+    ["Letter starts with defendant name (no heading)", hasNone(text, "A Letter to You") || has(text, intake.first_name + ",")],
     ["Has 'Where Things Stand' heading", has(text, "Where Things Stand")],
     ["Has 'Understanding Your Charges' heading", has(text, "Understanding Your Charges")],
-    ["Has 'Exactly What to Say' heading", has(text, "Exactly What to Say")],
+    ["Has 'Your Attorney Meeting Toolkit' heading", has(text, "Your Attorney Meeting Toolkit")],
     ["Has 'Questions for Your Attorney' heading", has(text, "Questions for Your Attorney")],
     ["Has 'Things Worth Asking About' heading", has(text, "Things Worth Asking About")],
     ["Has 'Is There Something We Missed'", has(text, "Something We Missed") || has(text, "something we missed")],
@@ -593,6 +596,11 @@ function commonChecks(text) {
     ["Has charge-specific emotional calibration", has(text, "shame") || has(text, "injustice") || has(text, "identity") || has(text, "license") || has(text, "career") || has(text, "profession") || has(text, "stigma") || has(text, "reputation")],
     ["Has stance-calibrated bridging (range/prediction/check/explore)", has(text, "not the prediction") || has(text, "not predictions") || has(text, "range") || has(text, "what you can") || has(text, "explore with your attorney")],
     ["NO banned alarm language (red flag/warning sign)", hasNone(text, "red flag") && hasNone(text, "warning sign")],
+
+    // ---- UPL FIX VALIDATION ----
+    ["Has legal information disclaimer in methodology note", has(text, "does not constitute legal") || has(text, "does not provide legal") || (has(text, "legal INFORMATION") && has(text, "not") && has(text, "ADVICE"))],
+    ["NO 'We heard every word' or announced empathy", hasNone(text, "We heard every word") && hasNone(text, "We listened carefully") && hasNone(text, "We hear you")],
+    ["Has section transitions (bridge sentences)", has(text, "next section") || has(text, "now that you") || has(text, "here are") || has(text, "paired with")],
   ];
 }
 
@@ -605,9 +613,20 @@ async function main() {
   console.log("  CASE DECODER — REPORT QUALITY AUDIT (3 Personas)");
   console.log("═══════════════════════════════════════════════════════\n");
 
+  // CLI filter: node test-report-quality.mjs c  (runs only persona C)
+  const filterArg = process.argv[2]?.toLowerCase();
+  const filtered = filterArg
+    ? PERSONAS.filter((p) => p.id.includes(filterArg) || p.label.toLowerCase().includes(filterArg))
+    : PERSONAS;
+
+  if (filterArg && filtered.length === 0) {
+    console.error(`No persona matching "${filterArg}". IDs: ${PERSONAS.map((p) => p.id).join(", ")}`);
+    process.exit(1);
+  }
+
   const results = [];
 
-  for (const persona of PERSONAS) {
+  for (const persona of filtered) {
     console.log(`\n${"─".repeat(60)}`);
     console.log(`  ${persona.label}`);
     console.log(`${"─".repeat(60)}`);
@@ -624,7 +643,7 @@ async function main() {
 
     const start = Date.now();
     let response;
-    const maxRetries = 2;
+    const maxRetries = 3;
 
     // Use Node.js https module instead of fetch — Node v25 undici has a ~300s
     // socket timeout that kills long-running Opus requests (250-294s).
@@ -654,22 +673,33 @@ async function main() {
       });
     }
 
+    const requestBody = {
+      model: "claude-opus-4-6",
+      max_tokens: 32000,
+      thinking: { type: "enabled", budget_tokens: 16000 },
+      system: SYSTEM_PROMPT,
+      messages: [{ role: "user", content: userPrompt }],
+    };
+
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
-        const raw = await callClaudeHTTPS({
-          model: "claude-opus-4-6",
-          max_tokens: 32000,
-          thinking: { type: "enabled", budget_tokens: 16000 },
-          system: SYSTEM_PROMPT,
-          messages: [{ role: "user", content: userPrompt }],
-        });
+        const raw = await callClaudeHTTPS(requestBody);
+
+        // Retry on 529 (overloaded) or 500 (internal error)
+        if ((raw.status === 529 || raw.status === 500) && attempt < maxRetries) {
+          const delay = attempt * 10;
+          console.warn(`  API ${raw.status} (attempt ${attempt}/${maxRetries}) — retrying in ${delay}s...`);
+          await new Promise((r) => setTimeout(r, delay * 1000));
+          continue;
+        }
+
         response = { status: raw.status, json: () => JSON.parse(raw.body) };
-        break; // success — exit retry loop
+        break; // success or final attempt — exit retry loop
       } catch (fetchErr) {
         const elapsed = ((Date.now() - start) / 1000).toFixed(1);
         if (attempt < maxRetries) {
-          console.warn(`  Network error (attempt ${attempt}/${maxRetries}, ${elapsed}s): ${fetchErr.message} — retrying in 5s...`);
-          await new Promise((r) => setTimeout(r, 5000));
+          console.warn(`  Network error (attempt ${attempt}/${maxRetries}, ${elapsed}s): ${fetchErr.message} — retrying in 10s...`);
+          await new Promise((r) => setTimeout(r, 10000));
         } else {
           console.error(`  Network error after ${maxRetries} attempts (${elapsed}s): ${fetchErr.message}`);
           results.push({ persona: persona.id, label: persona.label, pass: 0, fail: 0, total: 0, error: fetchErr.message });

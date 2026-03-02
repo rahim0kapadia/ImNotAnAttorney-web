@@ -285,8 +285,8 @@ tools, and a clear picture of what they know vs. what they need to ask about.
 CORE DESIGN PRINCIPLE — EMPOWER, DON'T BLAME:
 The report NEVER blames the attorney. The defendant still needs that
 attorney — turning them against each other hurts the defense. Instead:
-- Gaps are framed as THINGS TO CLARIFY ("Communication gaps happen —
-  sometimes attorneys are working behind the scenes")
+- Gaps are framed as THINGS TO CLARIFY ("Communication gaps are common but not acceptable —
+  you're entitled to understand what's happening in your case")
 - The QUESTIONS are the tool — they let the defendant discover the
   truth through dialogue
 - "Don't know" answers are NORMALIZED ("Most defendants aren't told
@@ -341,10 +341,31 @@ CROSS-CUTTING FRAMEWORKS — Apply to EVERY section:
 BANNED TERMINOLOGY — ENFORCED:
 NEVER use: "red flag," "warning sign," "escalation ladder," "you need to,"
 "you should," "you indicated," "you reported," "you selected,"
-"Red Flag Response," "Escalation Level."
+"Red Flag Response," "Escalation Level," "We heard every word,"
+"We listened carefully," "We hear you."
 INSTEAD use: "what to listen for," "Your Advocacy Steps," "Step [N] in
 Your Advocacy Steps," "here's your next step," "you can," "you told us" /
 "you said" / "you mentioned" / "you shared."
+
+LEGAL JARGON — ALWAYS DEFINE ON FIRST USE:
+Define ALL legal terms in plain English on first use with a parenthetical.
+Never use a legal term without an inline plain-English definition. Examples:
+- "allocute" (formally state in court what you did)
+- "proffer" (a meeting where you share information with prosecutors,
+  usually in exchange for potential leniency)
+- "joint-and-several liability" (each person can be held responsible
+  for the full amount, not just their share)
+- "5K1.1" (a government request for a reduced sentence based on your
+  cooperation — named after the federal sentencing guideline section)
+- "waive" (voluntarily give up a legal right)
+- "suppression" (asking the court to exclude evidence that was
+  improperly obtained)
+- "discovery" (the evidence and documents the prosecution has about
+  your case)
+- "mandatory minimum" (the lowest sentence a judge can give, by law,
+  regardless of circumstances)
+This applies to ALL legal terms — not just these examples. If a term
+would confuse someone without legal training, define it.
 
 JURISDICTION AWARENESS:
 The intake identifies whether this is a FEDERAL or STATE case.
@@ -356,7 +377,10 @@ The intake identifies whether this is a FEDERAL or STATE case.
 OUTPUT BUDGET — CRITICAL:
 Under 6,700 words total. 7 always-present sections + Letter +
 Closing + Postscript + 0-2 conditional sections.
-Start with the Methodology Note blockquote, then IMMEDIATELY proceed to "## A Letter to You".
+Start with the Letter (NO "## A Letter to You" heading — a letter
+doesn't announce itself; just open with the defendant's first name
+followed by a comma, e.g., "Jennifer,"). The Methodology Note
+blockquote goes AFTER the letter, BEFORE "Where Things Stand."
 Budget carefully so early sections don't starve later ones.
 
 METHODOLOGY NOTE — MANDATORY FIRST ELEMENT:
@@ -367,6 +391,11 @@ Before "A Letter to You," output this blockquote (personalized with the
 > winning methods from elite criminal defense attorneys. Your report
 > draws on [Expert 1], [Expert 2], and [Expert 3] — selected for
 > [charge type] cases. Expert attributions appear throughout.
+>
+> **Important:** This report provides legal INFORMATION based on publicly
+> available law, statutes, and documented defense methodologies. It does
+> not constitute legal ADVICE. For advice specific to your case, consult
+> your attorney.
 
 EXACT COUNTS — NON-NEGOTIABLE:
 - Questions for Your Attorney: EXACTLY 15 questions (Q1-Q15)
@@ -378,7 +407,9 @@ PER-SECTION WORD BUDGETS:
 | A Letter to You | 150 |
 | Where Things Stand | 400 |
 | Understanding Your Charges | 500 |
-| Exactly What to Say | 1,400 |
+| Your Attorney Meeting Toolkit | 1,400 |
+NOTE: The section heading is "Your Attorney Meeting Toolkit" — NOT
+"Exactly What to Say." The old heading implied scripting (UPL risk).
 | Questions for Your Attorney (15) | 2,200 |
 | Things Worth Asking About | 450 |
 | Is There Something We Missed? | 100 |
@@ -401,7 +432,7 @@ Always present (in this order):
 2. Where Things Stand — 4-area diagnostic table, NO aggregate score (Clarity)
 3. Understanding Your Charges — elements, penalties, rights (Knowledge)
 4. [Time and Deadlines — ONLY IF arrest_date exists AND charge has speedy trial] (Awareness)
-5. Exactly What to Say — email templates, scripts, advocacy tools (Empowerment)
+5. Your Attorney Meeting Toolkit — email templates, scripts, advocacy tools (Empowerment)
 6. Questions for Your Attorney — 15 questions (Agency)
 7. Things Worth Asking About — 5-6 prioritized items (Focus)
 8. [What a Plea Really Means — ONLY IF plea offered or attorney pushing plea] (Understanding)
@@ -584,13 +615,27 @@ what that means — your license, your career, your identity. The questions
 in this report are designed to help you protect all of it."
 
 EMOTIONAL ARC:
-A Letter to You (Relief) → Where Things Stand (Clarity) →
-Understanding Your Charges (Knowledge) → Exactly What to Say (Empowerment) →
+Letter (Relief) → Where Things Stand (Clarity) →
+Understanding Your Charges (Knowledge) → Your Attorney Meeting Toolkit (Empowerment) →
 Questions for Your Attorney (Agency) → Things Worth Asking About (Focus) →
 Is There Something We Missed? (Trust) →
 What Only Your Attorney Can Tell You (Honest redirect) →
 Your Next 7 Days (Determination — emotional climax) →
 What Comes Next (Natural next step)
+
+SECTION TRANSITIONS — MANDATORY:
+Every section MUST end with a 1-sentence bridge to the next section.
+The reader should never hit a hard stop followed by a new topic.
+Examples:
+- End of "Where Things Stand" → "The next section breaks down exactly
+  what those charges mean — and what questions they raise."
+- End of "Understanding Your Charges" → "Now that you know what the
+  prosecution has to prove, here are the tools to start the conversation
+  with your attorney."
+- End of "Your Attorney Meeting Toolkit" → "Those tools work best when
+  paired with the right questions — here are 15, starting with the one
+  that matters most."
+Bridge sentences should be natural, not formulaic. Vary the structure.
 
 LETTER TO YOU — ACKNOWLEDGE THEIR PAIN:
 - Quote their "biggest frustration" and "specific question" directly
@@ -699,10 +744,10 @@ THINGS WORTH ASKING ABOUT:
 Labels: ADDRESS FIRST / LOOK INTO / ASK ABOUT — NOT ACT NOW / INVESTIGATE
 TIME-SENSITIVE marker on ADDRESS FIRST items with deadlines (e.g., body
 cam footage retention, ALR hearing windows): "⏰ ADDRESS FIRST — [Topic]
-— TIME-SENSITIVE". Every item → specific Q number + Exactly What to Say
+— TIME-SENSITIVE". Every item → specific Q number + Your Attorney Meeting Toolkit
 tool reference.
 Every item: "You told us..." / "You mentioned..." + link to specific Q in
-Questions for Your Attorney and/or tool in Exactly What to Say
+Questions for Your Attorney and/or tool in Your Attorney Meeting Toolkit
 NEVER blame the attorney: "This may have a simple explanation"
 
 IS THERE SOMETHING WE MISSED?
@@ -721,14 +766,14 @@ overrule your attorney."
 YOUR NEXT 7 DAYS — EMOTIONAL CLIMAX (5 SUBSECTIONS):
 This section is the DETERMINATION payoff. The report ends here.
 1. "If You're Feeling Overwhelmed, Start Here" — ONE action: send the
-   pre-written email from Exactly What to Say. 30 seconds. Done.
+   pre-written email from Your Attorney Meeting Toolkit. 30 seconds. Done.
    Shine moment: "You've just done something most defendants never do."
 2. 7-Day Plan — ONE action per day, sequenced (Fogg). Each day ends
    with a Shine moment. Days 1-7 = Steps 1-3 sprint from Your Advocacy
    Steps. Day 1: Send email. Day 2: Review priority questions. Day 3:
    Follow up. Day 4: Gather materials. Day 5: Practice questions aloud.
    Day 6-7: Attend meeting.
-   Full Advocacy Steps = long-term playbook (weeks 2+) — there in Exactly What to Say if needed.
+   Full Advocacy Steps = long-term playbook (weeks 2+) — there in Your Attorney Meeting Toolkit if needed.
 3. What to Bring — checklist: printed Meeting Ready Sheet + pen +
    case # + documents from intake + phone (if one-party consent state).
 4. What to Expect — 2-3 sentences based on attorney type (PD: shorter
@@ -744,8 +789,8 @@ End on empowerment, not disclaimers.
 WHAT COMES NEXT (POSTSCRIPT):
 ONLY place with upgrade language. FIRST acknowledge the report might be
 enough: "For many people, this report and those conversations are enough."
-Then redirect to action: "That's a decision for later. Right now, Day 1
-is tomorrow."
+Then redirect to action: "That's a decision for later. Right now,
+your Day 1 action is ready — send that email."
 If mentioning the Intelligence Brief ($997), frame as verification of
 what they learned. "You don't need to decide now." $197 credited, 12 months.
 
@@ -780,13 +825,19 @@ SELF-VERIFICATION — Before output:
 13. Every hard section (penalty ranges, collateral consequences) has bridging language pointing to next action
 14. Report ends on empowerment (Your Next 7 Days), not disclaimers
 15. Every question requires a substantive answer (no yes/no questions)
-16. Methodology Note present in report header (mandatory)
+16. Methodology Note present AFTER the letter, BEFORE "Where Things Stand" (mandatory)
+38. Legal information disclaimer present in methodology note ("does not constitute legal ADVICE")
+39. Every section ends with a 1-sentence bridge to the next section
+40. Letter has NO "## A Letter to You" heading — starts directly with the defendant's name
+41. No "We heard every word" or similar announced-empathy phrases — understanding demonstrated via specific details
+42. All collateral consequences cite a specific statute, regulation, or source
+43. All legal jargon defined in plain English on first use
 17. "When the Conversation Gets Difficult" scripts present (3-4 scenarios with what you hear / what's happening / what you say / why it works)
 18. "How to Document Everything" guidance present (notes + summary email + recording consent + case journal)
 19. Admin process callout present when applicable (DUI→ALR, drug→forfeiture, sex→registry) — framed as efficacy, not alarm
 20. Verify-facts box split into "Confirm these facts from your intake" (verification) + "Get these facts before your meeting" (new tasks)
 21. Every "What to listen for" → in-meeting response + post-meeting action sequence + Step reference in Your Advocacy Steps
-22. Every question has "If the answer is vague" follow-up probe (6th part of question format)
+22. Every question has "If the answer is vague" follow-up probe (4th part of question format)
 23. TIME-SENSITIVE marker on ADDRESS FIRST items with deadlines
 24. Meeting logistics ("What to Bring" + "What to Expect") present in Your Next 7 Days
 25. "If You're Feeling Overwhelmed, Start Here" callout present with ONE action (send email, 30 seconds)
@@ -804,6 +855,19 @@ SELF-VERIFICATION — Before output:
 37. If defendant mentions a career/profession, the Letter and report address career-identity loss SPECIFICALLY (nursing license, CDL, teaching certificate, professional license, security clearance) — not buried in a generic collateral consequences list.
 38. If co_defendants = "Yes", co-defendant dynamics are addressed (cooperation pressure, betrayal fear, feeling singled out) in Questions for Your Attorney and Things Worth Asking About.
 Revise if any check fails.
+
+COLLATERAL CONSEQUENCES — ALWAYS CITE SOURCES:
+Every collateral consequence mentioned ANYWHERE in the report MUST cite
+a specific statute, regulation, or named source. Never make unsourced
+claims about employment, housing, immigration, voting, firearms, or
+civil rights consequences. Examples:
+- Debarment → FAR 9.406-2
+- Voting → state-specific election code (or "varies by state")
+- Firearms → 18 U.S.C. § 922(g)(1)
+- Immigration → *Padilla v. Kentucky*, 8 U.S.C. § 1101(a)(43)
+- Professional licensing → cite specific board/statute
+If no specific statute is known, frame as "ask your attorney about
+[consequence] under [state] law" instead of asserting the consequence.
 
 OUTPUT CATEGORIES — You are NOT providing legal advice. You provide:
 1. Legal INFORMATION about charges and procedures
@@ -1158,12 +1222,37 @@ ${conditionalInstructions.join("")}
 
 **GENERATE ALL SECTIONS BELOW. Stay within each section's word budget.**
 
-<section id="letter" title="A Letter to You" max_words="150">
-Use ONLY the section title as the heading — never prefix with internal id.
-Quote their "Primary Frustration" and "Specific Question" directly. Validate their instinct: "the fact that you're doing this research tells us something important." If they asked a specific question, tell them which section addresses it (by name, e.g., "Questions for Your Attorney"). Normalize: "you're not alone in this." Permission to be scared: reframe fear as caring about their future. NO blaming the attorney — frame gaps as things to clarify. Use client first name. This is NOT generic — write it TO THIS defendant.
-Preview what this report gives: "This report gives you three things: a clear picture of where things stand, 15 questions that will get you real answers from your attorney, and exact scripts to start the conversation."
-Include "Do NOT show this report to your attorney" WITH this explanation: "If your attorney sees this analysis, they may anchor their responses to it rather than giving you their independent assessment. You want their unfiltered answers first. The questions are appropriate for any client — the analysis is for your eyes only."
-"The Meeting Ready Sheet in Your Next 7 Days is designed to be safe if your attorney sees it — it contains only questions, not analysis."
+<section id="letter" title="Letter" max_words="150">
+NO section heading — do NOT write "## A Letter to You" or any heading.
+Start directly with the defendant's first name and a comma (e.g.,
+"Jennifer,") — a letter doesn't announce itself.
+
+Quote their "Primary Frustration" and "Specific Question" directly.
+Validate their instinct: "the fact that you're doing this research
+tells us something important." If they asked a specific question, tell
+them which section addresses it (by name, e.g., "Questions for Your
+Attorney"). Normalize: "you're not alone in this." Permission to be
+scared: reframe fear as caring about their future. NO blaming the
+attorney — frame gaps as things to clarify. Use client first name.
+This is NOT generic — write it TO THIS defendant.
+
+DEMONSTRATE understanding by reflecting specific details from their
+intake — do NOT announce empathy with phrases like "We heard every
+word" or "We listened carefully." Show you listened by responding to
+what they actually said.
+
+Preview what this report gives: "This report gives you three things:
+a clear picture of where things stand, 15 questions that will get you
+real answers from your attorney, and tools to start the conversation."
+Include "Do NOT show this report to your attorney" WITH this
+explanation: "If your attorney sees this analysis, they may anchor
+their responses to it rather than giving you their independent
+assessment. You want their unfiltered answers first. The questions are
+appropriate for any client — the analysis is for your eyes only."
+"The Meeting Ready Sheet in Your Next 7 Days is designed to be safe
+if your attorney sees it — it contains only questions, not analysis."
+
+After the letter, output the METHODOLOGY NOTE blockquote (see above).
 </section>
 
 <section id="s1" title="Where Things Stand" max_words="400">
@@ -1179,7 +1268,7 @@ Use ONLY the section title as the heading — never prefix with internal id.
 
 EVERY row must use warm language: "You told us..." / "You said..." / "You mentioned..." / "You shared..."
 NEVER use "You indicated" / "You reported" / "You selected" — these sound clinical.
-NEVER blame the attorney. Frame gaps as things to CLARIFY: "Communication gaps happen — sometimes attorneys are working behind the scenes."
+NEVER blame the attorney. Frame gaps as things to CLARIFY: "Communication gaps are common but not acceptable — you're entitled to understand what's happening in your case."
 End with: "This is not a grade on your attorney or your case. It's a map of what you know and what you don't know — based on what you shared with us."
 After the closing line, add: "**What this tells you:** The 'What to Ask About' column is the starting point for your next conversation. The questions in Questions for Your Attorney go deeper."
 </section>
@@ -1209,7 +1298,7 @@ Use ONLY the section title as the heading — never prefix with internal id.
 Based on arrest date of ${intake.arrest_date} and jurisdiction speedy trial rules. NO "URGENT" red box. Informational + question: "Ask your attorney: What is our current speedy trial status, and have any waivers been filed?" ALWAYS caveat: "This does NOT account for waivers, continuances, or tolling."
 </section>` : "<!-- Time and Deadlines: OMITTED (conditions not met) -->"}
 
-<section id="s3" title="Exactly What to Say" max_words="1400">
+<section id="s3" title="Your Attorney Meeting Toolkit" max_words="1400">
 Use ONLY the section title as the heading — never prefix with internal id.
 
 **1. DO NOT SHOW WARNING:**
@@ -1267,13 +1356,27 @@ Q6-Q15: Additional questions organized by topic.
 QUESTION TONE: Questions sound like a CLIENT asking for help — conversational, respectful. Keep legal jargon in "Why it matters" only. No yes/no questions — every question must require a substantive answer.
 Overall methodology: Calibrated questions adapted from Chris Voss (FBI lead hostage negotiator) — repurposed for attorney communication.
 
-Each question MUST include all 6 parts:
-1. Calibrated question (conversational, never yes/no) — references intake data: "You told us..."
-2. Why it matters (grounded in named expert's methodology + "You told us..." link)
-3. Good answer (specific deliverable: notes, filings, correspondence)
-4. If the answer is vague: "[empathetic follow-up probe for in-meeting use]"
-5. What to listen for: "[pattern]" — Here's what to do: [in-meeting response] + [post-meeting action: document, send summary email] + [Step reference in Your Advocacy Steps]
-6. Source methodology (which God Mode expert)
+Each question has EXACTLY 5 parts — no more, no less:
+1. **Question:** Calibrated question (conversational, never yes/no) — references intake data: "You told us..."
+2. **Why it matters:** Grounded in named expert's methodology + "You told us..." link.
+   Weave expert attributions NATURALLY into this paragraph (e.g., "This
+   question draws on Martin Weinberg's framework for evaluating intent
+   defenses"). The expert name goes HERE — this is the only attribution needed.
+3. **Good answer:** Specific deliverable (notes, filings, correspondence)
+4. **If the answer is vague:** "[empathetic follow-up probe for in-meeting use]"
+5. **What to listen for:** "[pattern]" — Here's what to do: [in-meeting response] + [post-meeting action: document, send summary email] + [Step reference in Your Advocacy Steps]
+Then a --- separator and the next question. NOTHING between part 5 and the ---. Here is the EXACT structure:
+
+### Q[N]
+**Question:** "..."
+**Why it matters:** ... [expert name woven in here] ...
+**Good answer:** ...
+**If the answer is vague:** *"..."*
+**What to listen for:** ...
+---
+### Q[N+1]
+
+^^^ That is the COMPLETE question. There is no 6th line. No "**Source:**". No "**Source methodology:**". No attribution after "What to listen for." The expert is named INSIDE "Why it matters" — that is sufficient.
 
 After writing all 15, count them. If not exactly 15, revise.
 </section>
@@ -1292,8 +1395,8 @@ ADDRESS FIRST items with deadlines get TIME-SENSITIVE marker:
 **Things You Told Us You Don't Know** (gaps to fill):
 Each "don't know" answer from intake. Normalize: "Most defendants aren't told proactively — that's why we ask."
 
-EVERY item links to a specific Q number in Questions for Your Attorney AND a specific tool in Exactly What to Say (reference by name, not S4/S3).
-NEVER blame the attorney: "This may have a simple explanation — sometimes attorneys are working behind the scenes."
+EVERY item links to a specific Q number in Questions for Your Attorney AND a specific tool in Your Attorney Meeting Toolkit (reference by name, not S4/S3).
+NEVER blame the attorney: "This may have a simple explanation — but you're entitled to know."
 </section>
 
 ${includePleaLandscape ? `<section id="c2" title="What a Plea Really Means" max_words="300">
@@ -1304,8 +1407,22 @@ Educational, NOT evaluative. NO Below average/Typical/Above average ratings.
 "Before signing anything, understand what a plea means beyond the sentence itself."
 
 Collateral Consequences Table:
-| Area | Impact of Conviction | Question for Your Attorney |
-Each row has a question, not our assessment.
+| Area | Impact of Conviction | Statute/Source | Question for Your Attorney |
+Each row has a question AND a statute citation, not our assessment.
+MANDATORY CITATIONS for collateral consequences:
+- Immigration: cite *Padilla v. Kentucky*, 559 U.S. 356 (2010) (attorney
+  must advise on immigration consequences). Cite 8 U.S.C. § 1101(a)(43)
+  for aggravated felony classification. ALWAYS direct: "Consult an
+  immigration attorney in addition to your criminal defense attorney."
+- Employment/debarment: cite FAR 9.406-2 (federal debarment grounds)
+  or applicable state licensing statute.
+- Voting rights: cite state-specific statute or note "varies by state —
+  see [state] election code."
+- Firearms: cite 18 U.S.C. § 922(g)(1) (federal prohibition on felons
+  possessing firearms).
+- Professional licensing: cite the specific licensing board statute for
+  the defendant's profession if mentioned in intake.
+Every consequence MUST have a statute or source — no unsourced claims.
 
 BRIDGING — MANDATORY after collateral consequences table: "Every consequence above applies only to a guilty plea conviction. The questions below determine whether a plea is the right path — or whether alternatives exist."
 
@@ -1333,20 +1450,20 @@ Use ONLY the section title as the heading — never prefix with internal id.
 This is the EMOTIONAL CLIMAX — the report ends here on determination, not disclaimers.
 
 **"IF YOU'RE FEELING OVERWHELMED, START HERE"** callout:
-ONE action: send the pre-written email from Exactly What to Say. 30 seconds. Done.
+ONE action: send the pre-written email from Your Attorney Meeting Toolkit. 30 seconds. Done.
 Shine moment: "You've just done something most defendants never do."
 
 **7-DAY PLAN** — ONE action per day (Fogg sequencing):
 | Day | Action | Note |
 |-----|--------|------|
-| Day 1 | Send the email | Copy-paste from Exactly What to Say. Done. |
+| Day 1 | Send the email | Copy-paste from Your Attorney Meeting Toolkit. Done. |
 | Day 2 | Review your priority questions | Read the 5 Priority Questions. Highlight what matters most. |
 | Day 3 | Follow up if no response | Send the follow-up template. Step 3 of Your Advocacy Steps. |
 | Day 4 | Gather your materials | Use the What to Bring checklist below. |
 | Day 5 | Practice your questions | Read them aloud once. It helps. |
 | Day 6-7 | Attend your meeting | Bring your Meeting Ready Sheet. Ask, listen, write. |
 Each day ends with a Shine moment ("You've just...").
-After the table: "Days 1-7 = Steps 1-3 of Your Advocacy Steps. If you need Steps 4-8, they're in Exactly What to Say — but most people never need to go past Step 3."
+After the table: "Days 1-7 = Steps 1-3 of Your Advocacy Steps. If you need Steps 4-8, they're in Your Attorney Meeting Toolkit — but most people never need to go past Step 3."
 
 **WHAT TO BRING TO YOUR MEETING:**
 Checklist: printed Meeting Ready Sheet + pen + case # + documents referenced in intake + phone (for recording if one-party consent state).
@@ -1355,7 +1472,10 @@ Checklist: printed Meeting Ready Sheet + pen + case # + documents referenced in 
 2-3 sentences based on attorney type (PD: shorter meetings, may happen at courthouse, be focused / private: scheduled office visit, more time). Doctor analogy (Jayadev): "Just as you'd prepare for a doctor's appointment..."
 
 **MEETING READY SHEET** (safe if attorney sees it):
-Pre-filled with 5 Priority Questions (not blank lines). Q1 = Golden Question marked.
+Pre-filled with Q1 through Q5 by default (the priority questions). Q1 = Golden Question
+marked. If a question outside Q1-Q5 is more critical for THIS defendant's specific
+situation, substitute it and note why in a parenthetical (e.g., "Q6 replaces Q5 here
+because good-faith reliance is the central defense question").
 Space for attorney's answers after each question.
 Post-Meeting Checklist: Got answers? Documented responses? Sent summary email to attorney? Updated your case journal with dates and next steps? Understand what happens next?
 
@@ -1365,7 +1485,8 @@ End on empowerment, NOT disclaimers.
 
 <section id="postscript" title="What Comes Next" max_words="100">
 FIRST acknowledge: "For many people, this report and those conversations are enough."
-Then redirect to action: "That's a decision for later. Right now, Day 1 is tomorrow."
+Then redirect to action: "That's a decision for later. Right now,
+your Day 1 action is ready — send that email."
 If mentioning the Intelligence Brief ($997), frame as verification of what they learned.
 "You don't need to decide now. Your $197 is fully credited toward any tier within 12 months."
 THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
