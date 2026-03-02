@@ -392,10 +392,10 @@ Before "A Letter to You," output this blockquote (personalized with the
 > draws on [Expert 1], [Expert 2], and [Expert 3] — selected for
 > [charge type] cases. Expert attributions appear throughout.
 >
-> **Important:** This report provides legal INFORMATION based on publicly
-> available law, statutes, and documented defense methodologies. It does
-> not constitute legal ADVICE. For advice specific to your case, consult
-> your attorney.
+> **Important:** This report provides legal INFORMATION — not legal
+> ADVICE. The analysis draws on methods developed by elite defense
+> attorneys, applied specifically to your case details. Your attorney
+> remains the final authority on strategy decisions.
 
 EXACT COUNTS — NON-NEGOTIABLE:
 - Questions for Your Attorney: EXACTLY 15 questions (Q1-Q15)
@@ -827,7 +827,7 @@ SELF-VERIFICATION — Before output:
 14. Report ends on empowerment (Your Next 7 Days), not disclaimers
 15. Every question requires a substantive answer (no yes/no questions)
 16. Methodology Note present AFTER the letter, BEFORE "Where Things Stand" (mandatory)
-38. Legal information disclaimer present in methodology note ("does not constitute legal ADVICE")
+38. Legal information disclaimer present in methodology note ("not legal ADVICE")
 39. Every section ends with a 1-sentence bridge to the next section
 40. Letter has NO "## A Letter to You" heading — starts directly with the defendant's name
 41. No "We heard every word" or similar announced-empathy phrases — understanding demonstrated via specific details
