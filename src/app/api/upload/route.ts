@@ -228,7 +228,7 @@ export async function POST(req: NextRequest) {
         </div>
         <p style="color: #A1A1AA;">You can upload additional files using the same link. When you've uploaded everything, your analysis begins.</p>
       `,
-    });
+    }, { category: "upload-receipt", case_id: caseId, metadata: { fileName: file.name } });
 
     return NextResponse.json({ path });
   } catch (error) {

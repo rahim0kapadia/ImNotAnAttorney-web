@@ -315,7 +315,7 @@ export async function POST(req: NextRequest) {
       subject: `We Received Your Case Details, ${escapeHtml(firstName)}`,
       unsubscribeEmail: email.toLowerCase().trim(),
       html: confirmationHtml,
-    });
+    }, { category: "intake-confirmation", metadata: { charge_type: chargeType } });
 
     // ──────────────────────────────────────────────────────────────
     // OPERATOR NOTIFICATION EMAIL
@@ -356,7 +356,7 @@ export async function POST(req: NextRequest) {
         ${body.specificQuestion ? `<div style="margin-top: 16px;"><p style="color: #F59E0B; font-weight: bold;">Their #1 Question:</p><p style="color: #D4D4D8;">${escapeHtml(body.specificQuestion)}</p></div>` : ""}
         ${body.situation ? `<div style="margin-top: 16px;"><p style="color: white; font-weight: bold;">Situation:</p><p style="color: #D4D4D8;">${escapeHtml(body.situation)}</p></div>` : ""}
       `,
-    });
+    }, { category: "intake-confirmation", metadata: { charge_type: chargeType, flow: "paid" } });
 
     return NextResponse.json({ message: "Intake received" });
   } catch (error) {

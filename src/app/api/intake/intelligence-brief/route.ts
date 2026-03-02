@@ -192,7 +192,7 @@ export async function POST(req: NextRequest) {
           ${formData.nextCourtDate ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Court date:</strong> ${escapeHtml(formData.nextCourtDate)}</p>` : ""}
         </div>
         <p><strong>Action:</strong> Begin Intelligence Brief preparation. Case has all required inputs.</p>`,
-    });
+    }, { category: "operator-phase2-intake", case_id: caseId });
 
     // Send confirmation email to customer
     await sendEmail({
@@ -211,7 +211,7 @@ export async function POST(req: NextRequest) {
           In the meantime, review your Case Decoder report and start preparing the questions it identified.
         </p>`,
       unsubscribeEmail: caseData.email,
-    });
+    }, { category: "phase2-intake-confirmation", case_id: caseId });
 
     return NextResponse.json({ success: true });
   } catch (error) {

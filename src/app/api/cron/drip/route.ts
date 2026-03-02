@@ -122,7 +122,7 @@ export async function GET(req: NextRequest) {
             <p>The daily cron job hasn't run in <strong>${Math.round(hoursSinceLastRun)} hours</strong>.</p>
             <p>Last successful run: ${new Date(lastRun.ran_at).toISOString()}</p>
             <p><strong>Action:</strong> Check Vercel cron configuration and logs.</p>`,
-        });
+        }, { category: "operator-alert", metadata: { reason: "cron-gap", hours_since_last: Math.round(hoursSinceLastRun) } });
       }
     }
 
@@ -189,7 +189,7 @@ export async function GET(req: NextRequest) {
             subject: nextEmail.subject,
             html: nextEmail.html,
             unsubscribeEmail: sub.email,
-          });
+          }, { category: "drip-nurture", email_key: nextEmail.key });
 
           if (result.success) {
             // Record the send to prevent duplicate delivery on next cron run
@@ -408,7 +408,7 @@ export async function GET(req: NextRequest) {
                 references: caseThreadId(linkedCase.id),
               },
             }),
-          });
+          }, { category: "drip-post-purchase", email_key: nextEmail.key, case_id: linkedCase?.id, metadata: { tier: order.tier } });
 
           if (result.success) {
             // Record send — need a subscriber record for the drip_emails FK.
@@ -504,7 +504,7 @@ export async function GET(req: NextRequest) {
               <a href="${reviewOrigin}/api/deliver?token=${signOperatorToken(staleCase.id)}&case=${staleCase.id}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px;">Approve &amp; Deliver</a>
             </div>
             <p style="color: #71717A; font-size: 12px;">This link expires in 24 hours.</p>`,
-        });
+        }, { category: "operator-review-reminder", case_id: staleCase.id });
 
         // Mark reminder as sent so this case doesn't trigger another alert
         await supabase
@@ -561,7 +561,7 @@ export async function GET(req: NextRequest) {
             <code>POST ${intakeOrigin}/api/generate/case-decoder</code><br/>
             <code>Body: {"caseId": "${stuck.id}"}</code><br/>
             <code>Header: Authorization: Bearer [OPERATOR_SECRET]</code>`,
-        });
+        }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-intake", hours: hoursStuck } });
 
         // Transition to "intake-stalled" to prevent re-alerting every cron run.
         // The operator must either manually trigger generation or investigate.
@@ -615,7 +615,7 @@ export async function GET(req: NextRequest) {
             </div>
             <p><strong>Retry command:</strong></p>
             <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${genOrigin}/api/generate/case-decoder -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${stuck.id}","force":true}'</code>`,
-        });
+        }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-generation", minutes: minutesStuck } });
 
         // Mark as failed to prevent re-alerting every cron run.
         // The operator can retry with force:true, which bypasses the
@@ -676,7 +676,7 @@ export async function GET(req: NextRequest) {
             <a href="${intakeOrigin}/intake?email=${encodeURIComponent(awCase.email)}&tier=${escapeHtml(awCase.tier)}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
             <p style="color: #A1A1AA;">Once you submit, your report will be generated within 24 hours.</p>
           `,
-        });
+        }, { category: "intake-reminder", case_id: awCase.id, metadata: { tier: awCase.tier } });
 
         if (result.success && existingSub?.id) {
           await supabase.from("drip_emails").insert({
@@ -748,7 +748,7 @@ export async function GET(req: NextRequest) {
               <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Paid:</strong> ${new Date(escCase.created_at).toISOString()}</p>
             </div>
             <p><strong>Action:</strong> ${isSevenDay ? "Consider reaching out directly or initiating a refund." : "Send a personal follow-up email."}</p>`,
-        });
+        }, { category: "operator-alert", case_id: escCase.id, metadata: { reason: "intake-escalation", days: daysSincePaid } });
 
         if (escSub?.id) {
           await supabase.from("drip_emails").insert({
@@ -871,7 +871,7 @@ export async function GET(req: NextRequest) {
                 <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Stripe Session:</strong> ${escapeHtml(session.id)}</p>
               </div>
               <p><strong>Action:</strong> Verify recovery + send customer their intake/upload email if needed.</p>`,
-          });
+          }, { category: "operator-alert", metadata: { reason: "webhook-recovery", stripe_session: session.id } });
           errors++; // Count as an anomaly
         }
       }
@@ -922,7 +922,7 @@ export async function GET(req: NextRequest) {
                   <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">New Case ID:</strong> ${caseId}</p>
                 </div>
                 <p><strong>Action:</strong> Verify and send customer their intake email.</p>`,
-            });
+            }, { category: "operator-alert", case_id: caseId, order_id: order.id, metadata: { reason: "orphan-order" } });
             errors++;
           }
         }
@@ -982,7 +982,7 @@ export async function GET(req: NextRequest) {
             <a href="${reportOrigin}/report/${expCase.report_token}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">View Your Report</a>
             <p style="color: #A1A1AA;">After expiration, contact us to request a new link.</p>
           `,
-        });
+        }, { category: "report-expiry-warning", case_id: expCase.id, metadata: { tier: expCase.tier } });
 
         if (result.success && expSub?.id) {
           await supabase.from("drip_emails").insert({
@@ -1048,7 +1048,7 @@ export async function GET(req: NextRequest) {
             <a href="${checkoutOrigin}/checkout?tier=case-decoder" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Continue to Checkout</a>
             <p style="color: #A1A1AA;">Questions? Reply to this email — a real person reads every message.</p>
           `,
-        });
+        }, { category: "abandoned-checkout", metadata: { subscriber_id: abSub.id } });
 
         if (result.success) {
           await supabase.from("drip_emails").insert({

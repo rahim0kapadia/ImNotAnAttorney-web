@@ -33,6 +33,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe, TIERS, isValidTier } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
+import type { EmailLogContext } from "@/lib/email";
 import { signOperatorToken, caseThreadId } from "@/lib/site";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
@@ -51,14 +52,15 @@ const OPERATOR_EMAIL =
  */
 async function sendEmailWithRetry(
   params: Parameters<typeof sendEmail>[0],
-  context: string
+  context: string,
+  logContext?: EmailLogContext
 ) {
-  const result = await sendEmail(params);
+  const result = await sendEmail(params, logContext);
   if (result.success) return result;
 
   // First attempt failed — wait 2s and retry (transient Resend API errors)
   await new Promise((resolve) => setTimeout(resolve, 2000));
-  const retry = await sendEmail(params);
+  const retry = await sendEmail(params, logContext);
   if (retry.success) return retry;
 
   // Both failed — notify operator so they can send manually
@@ -72,7 +74,7 @@ async function sendEmailWithRetry(
       <p><strong>Subject:</strong> ${escapeHtml(params.subject)}</p>
       <p><strong>Error:</strong> ${escapeHtml(retry.error || "Unknown")}</p>
       <p>Both attempts failed. Please send this email manually.</p>`,
-  });
+  }, logContext ? { category: "operator-alert", case_id: logContext.case_id, metadata: { original_category: logContext.category, error: retry.error } } : undefined);
   return retry;
 }
 
@@ -202,7 +204,7 @@ export async function POST(req: NextRequest) {
           <p><strong>Stripe Session:</strong> ${escapeHtml(session.id)}</p>
           <p><strong>Error:</strong> ${escapeHtml(orderError.message)}</p>
           <p><strong>Action:</strong> Manually create order record in Supabase.</p>`,
-      });
+      }, { category: "operator-alert", metadata: { reason: "order-insert-failed", tier, amount } });
     }
 
     // ──────────────────────────────────────────────────────────────
@@ -273,7 +275,7 @@ export async function POST(req: NextRequest) {
             <p><strong>Order ID:</strong> ${orderData.id}</p>
             <p><strong>Error:</strong> ${caseError.message}</p>
             <p><strong>Action:</strong> Manually create case.</p>`,
-        });
+        }, { category: "operator-alert", order_id: orderData.id, metadata: { reason: "case-insert-failed", tier } });
       }
 
       // ──────────────────────────────────────────────────────────────
@@ -396,7 +398,7 @@ export async function POST(req: NextRequest) {
             <a href="${origin}/intake/intelligence-brief?case=${caseId}&token=${phase2Token}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Intelligence Brief Details</a>
             <p style="color: #A1A1AA;">This takes about 5 minutes. Your ${escapeHtml(productName)} will be delivered within 72 hours after you submit.</p>
           `,
-        }, `phase 2 intake for upgrade ${email} (${tier})`);
+        }, `phase 2 intake for upgrade ${email} (${tier})`, { category: "phase2-intake", case_id: caseId!, metadata: { tier } });
       }
 
       // ──────────────────────────────────────────────────────────────
@@ -435,7 +437,7 @@ export async function POST(req: NextRequest) {
               <a href="${origin}/intake?email=${encodeURIComponent(email)}&tier=case-decoder" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
               <p style="color: #A1A1AA;">Once you submit your case details, your report will be generated within 24 hours.</p>
             `,
-          }, `intake request for ${email}`);
+          }, `intake request for ${email}`, { category: "intake-request", case_id: caseId!, metadata: { tier: "case-decoder" } });
         }
       }
 
@@ -456,7 +458,7 @@ export async function POST(req: NextRequest) {
             <a href="${origin}/intake?email=${encodeURIComponent(email)}&tier=${encodeURIComponent(tier)}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
             <p style="color: #A1A1AA;">Once you submit your case details, your Case Decoder report will be generated within 24 hours.</p>
           `,
-        }, `intake request for ${email} (${tier})`);
+        }, `intake request for ${email} (${tier})`, { category: "intake-request", case_id: caseId!, metadata: { tier } });
       }
     }
 
@@ -498,7 +500,7 @@ export async function POST(req: NextRequest) {
         ${uploadSection}
         <p style="color: #A1A1AA;">We'll email you when your report is ready. Keep an eye on your inbox.</p>
       `,
-    }, `payment confirmation for ${email}`);
+    }, `payment confirmation for ${email}`, { category: "payment-confirmation", case_id: caseId || undefined, order_id: orderData?.id, metadata: { tier, amount } });
 
     // NOTE: Drip recording was intentionally removed from this webhook.
     // Previously, we recorded post_{tier}_delivery here at payment time, which
@@ -530,7 +532,7 @@ export async function POST(req: NextRequest) {
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Time:</strong> ${new Date().toISOString()}</p>
         </div>
       `,
-    }, `operator notification for ${email}`);
+    }, `operator notification for ${email}`, { category: "operator-new-order", order_id: orderData?.id, metadata: { tier, amount } });
   }
 
   // ================================================================
@@ -630,7 +632,7 @@ export async function POST(req: NextRequest) {
               <p>You should see this reflected in 1-3 business days depending on your bank.</p>
               <p style="color: #A1A1AA;">Your report access and any upgrade credits remain active.</p>
             `,
-          }, `partial refund notification for ${refundedOrder.email}`);
+          }, `partial refund notification for ${refundedOrder.email}`, { category: "refund-notification", order_id: refundedOrder.id, metadata: { amount: charge.amount_refunded, tier: refundedOrder.tier } });
         }
 
         // ── OPERATOR NOTIFICATION ──
@@ -647,7 +649,7 @@ export async function POST(req: NextRequest) {
             ${isFullRefund
               ? "<p><strong>Note:</strong> Upgrade credits voided. Case status updated to 'refunded'. Report access revoked.</p>"
               : "<p><strong>Note:</strong> Partial refund — order remains 'paid'. Upgrade credits and report access preserved.</p>"}`,
-        });
+        }, { category: "operator-alert", order_id: refundedOrder.id, metadata: { reason: "refund", tier: refundedOrder.tier, amount: charge.amount_refunded } });
       }
     }
   }
@@ -671,7 +673,7 @@ export async function POST(req: NextRequest) {
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Status:</strong> ${escapeHtml(refund.status)}</p>
           </div>
           <p><strong>Action:</strong> Check Stripe dashboard and resolve manually.</p>`,
-      });
+      }, { category: "operator-alert", metadata: { reason: "refund-bounce", refund_id: refund.id, refund_status: refund.status } });
     }
   }
 

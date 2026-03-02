@@ -98,6 +98,49 @@ interface EmailResult {
   error?: string;
 }
 
+/** Optional context for the email audit log. When provided, a row is inserted
+ *  into the email_log table after each send attempt (fire-and-forget). */
+export interface EmailLogContext {
+  /** Category tag, e.g. "payment-confirmation", "delivery", "drip-nurture" */
+  category: string;
+  case_id?: string;
+  order_id?: string;
+  /** Drip email key when applicable (matches drip_emails.email_key) */
+  email_key?: string;
+  /** Catch-all for extra context (tier, amount, charge_type, etc.) */
+  metadata?: Record<string, unknown>;
+}
+
+// ============================================================
+// EMAIL AUDIT LOG (fire-and-forget)
+// ============================================================
+
+import { createAdminClient } from "@/lib/supabase/admin";
+
+async function logEmailSend(
+  params: EmailParams,
+  result: EmailResult,
+  context: EmailLogContext
+): Promise<void> {
+  try {
+    const supabase = createAdminClient();
+    await supabase.from("email_log").insert({
+      recipient: params.to,
+      subject: params.subject,
+      category: context.category,
+      email_key: context.email_key || null,
+      case_id: context.case_id || null,
+      order_id: context.order_id || null,
+      resend_id: result.id || null,
+      success: result.success,
+      error_message: result.error || null,
+      metadata: context.metadata || null,
+    });
+  } catch (err) {
+    console.error("[Email Log] Failed to log:", err);
+  }
+}
+
 // ============================================================
 // SEND EMAIL
 // ============================================================
@@ -114,13 +157,23 @@ interface EmailResult {
  * throwing, so the calling API route can still return a meaningful response.
  *
  * @param params - Email parameters (recipient, subject, HTML body, optional unsubscribe).
+ * @param logContext - Optional audit log context. When provided, logs the send result.
  * @returns A result object indicating success or failure. Never throws.
  */
-export async function sendEmail(params: EmailParams): Promise<EmailResult> {
+export async function sendEmail(
+  params: EmailParams,
+  logContext?: EmailLogContext
+): Promise<EmailResult> {
   // Graceful degradation: allow the app to run without email credentials
   if (!RESEND_API_KEY) {
     console.warn("[Email] RESEND_API_KEY not configured, skipping email");
-    return { success: false, error: "Email service not configured" };
+    const result: EmailResult = { success: false, error: "Email service not configured" };
+    if (logContext) {
+      logEmailSend(params, result, logContext).catch((err) =>
+        console.error("[Email Log] Fire-and-forget failed:", err)
+      );
+    }
+    return result;
   }
 
   // Build unsubscribe URL using env var so preview deploys point to the right host.
@@ -187,13 +240,25 @@ export async function sendEmail(params: EmailParams): Promise<EmailResult> {
     }
 
     const data = await response.json();
-    return { success: true, id: data.id };
+    const result: EmailResult = { success: true, id: data.id };
+    if (logContext) {
+      logEmailSend(params, result, logContext).catch((err) =>
+        console.error("[Email Log] Fire-and-forget failed:", err)
+      );
+    }
+    return result;
   } catch (error) {
     console.error("[Email] Failed to send:", error);
-    return {
+    const result: EmailResult = {
       success: false,
       error: error instanceof Error ? error.message : "Failed to send email",
     };
+    if (logContext) {
+      logEmailSend(params, result, logContext).catch((err) =>
+        console.error("[Email Log] Fire-and-forget failed:", err)
+      );
+    }
+    return result;
   }
 }
 
@@ -211,14 +276,15 @@ export async function sendEmail(params: EmailParams): Promise<EmailResult> {
  * @returns The result of the last send attempt. Never throws.
  */
 export async function sendEmailWithRetry(
-  params: EmailParams
+  params: EmailParams,
+  logContext?: EmailLogContext
 ): Promise<EmailResult> {
-  const result = await sendEmail(params);
+  const result = await sendEmail(params, logContext);
   if (result.success) return result;
 
   // First attempt failed — wait 2s and retry (transient Resend API errors)
   await new Promise((resolve) => setTimeout(resolve, 2000));
-  const retry = await sendEmail(params);
+  const retry = await sendEmail(params, logContext);
   if (!retry.success) {
     console.error(
       `[Email] Failed after retry: to=${params.to} subject="${params.subject}"`,

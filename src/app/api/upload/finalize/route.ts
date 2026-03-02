@@ -167,7 +167,7 @@ export async function POST(req: NextRequest) {
         </div>
         <p style="color: #A1A1AA;">Log into Supabase to access the uploaded files and begin analysis.</p>
       `,
-    });
+    }, { category: "operator-upload-ready", case_id: caseId, metadata: { tier: caseRecord.tier, fileCount } });
 
     // =========================================================================
     // 7. CUSTOMER CONFIRMATION EMAIL
@@ -189,7 +189,7 @@ export async function POST(req: NextRequest) {
         </div>
         <p style="color: #A1A1AA;">We'll email you when your report is ready. If you need to upload additional documents, you can still use your original upload link.</p>
       `,
-    });
+    }, { category: "upload-confirmation", case_id: caseId });
 
     return NextResponse.json({ success: true });
   } catch (error) {

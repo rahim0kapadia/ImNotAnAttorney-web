@@ -43,6 +43,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
+import type { EmailLogContext } from "@/lib/email";
 import { verifyOperatorToken, caseThreadId } from "@/lib/site";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
@@ -487,6 +488,7 @@ export async function POST(req: NextRequest) {
     ? `Part 1 of Your ${escapeHtml(TIER_NAMES[caseData.tier] || "")} Package is Ready — Your Case Decoder Report`
     : `Your ${tierName} Report is Ready`;
 
+  const deliveryLogContext: EmailLogContext = { category: "delivery", case_id: caseId! };
   const emailResult = await sendEmail({
     to: caseData.email,
     subject: emailSubject,
@@ -503,7 +505,7 @@ export async function POST(req: NextRequest) {
       ${instructionsHtml}
       ${upgradeHtml}
     `,
-  });
+  }, deliveryLogContext);
 
   let customerNotified = true;
 
@@ -526,7 +528,7 @@ export async function POST(req: NextRequest) {
       },
       html: `<h1 style="color: #F59E0B;">Your Report is Ready</h1>
         <p>View your ${escapeHtml(tierName)} report: <a href="${reportUrl}" style="color: #F59E0B;">${reportUrl}</a></p>`,
-    });
+    }, { category: "delivery-retry", case_id: caseId! });
     if (!retryResult.success) {
       // ── OPERATOR FALLBACK: Both email attempts failed ──
       // Mark customerNotified=false so the operator knows to send manually.
@@ -540,7 +542,7 @@ export async function POST(req: NextRequest) {
           <p><strong>Customer:</strong> ${escapeHtml(caseData.email)}</p>
           <p><strong>Report URL:</strong> ${reportUrl}</p>
           <p>Case status is updated to 'delivered' but customer was <strong>NOT notified</strong>. Please send the report link manually.</p>`,
-      });
+      }, { category: "operator-alert", case_id: caseId!, metadata: { reason: "delivery-failed" } });
     }
   }
 
@@ -589,7 +591,7 @@ export async function POST(req: NextRequest) {
               </div>
               <p style="color: #A1A1AA;">This takes about 3-5 minutes. Your full ${escapeHtml(siblingTierName)} will be delivered within 72 hours after you complete this form.</p>
             `,
-          });
+          }, { category: "phase2-intake", case_id: sibling.id, metadata: { tier: sibling.tier } });
         }
       }
     }

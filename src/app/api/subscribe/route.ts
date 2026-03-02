@@ -132,7 +132,7 @@ export async function POST(req: NextRequest) {
         <p style="color: #A1A1AA;">Inside: 7 evidence problems from a real trafficking case — the weight that disappeared, the substance that changed, the fingerprints nobody mentioned, and 4 more. Plus the exact questions that expose each one.</p>
         <p style="color: #A1A1AA;">When you're ready to go deeper, our <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com"}/services" style="color: #F59E0B;">case analysis services</a> start at $197.</p>
       `,
-    });
+    }, { category: "welcome" });
 
     return NextResponse.json({ message: "Subscribed successfully" });
   } catch {
