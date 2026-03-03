@@ -1,8 +1,8 @@
-# The X-Ray ($1,497) -- Pipeline Documentation
+# The X-Ray ($2,497) -- Pipeline Documentation
 
 ## Pipeline Overview
 
-The X-Ray is a discovery-analysis tier priced at $1,497. Unlike the Case Decoder ($197) and Intelligence Brief ($997), which operate on intake questionnaire data alone, The X-Ray requires the customer to upload actual discovery documents (police reports, lab results, witness statements, etc.) for manual expert analysis. Delivery is 10 business days from document submission.
+The X-Ray is a discovery-analysis tier priced at $2,497. Unlike the Case Decoder ($197) and Intelligence Brief ($997), which operate on intake questionnaire data alone, The X-Ray requires the customer to upload actual discovery documents (police reports, lab results, witness statements, etc.) for manual expert analysis. Delivery is 10 business days from document submission.
 
 ### End-to-End Flow
 
@@ -12,7 +12,7 @@ Customer clicks "Buy" on services page or checkout link
   v
 POST /api/checkout (tier=x-ray)
   - Validates tier slug against TIERS allowlist
-  - Enforces consent checkbox (server-side, required for tiers >= $1,497)
+  - Enforces consent checkbox (server-side, required for tiers >= $2,497)
   - Calculates upgrade credit from prior lower-tier purchases (100%, 12-month window)
   - Creates Stripe Checkout session with metadata: tier, consent_timestamp, upgrade_credit_applied, etc.
   |
@@ -161,14 +161,14 @@ A confirmation email is sent to the customer for each uploaded file, including t
 
 ### What It Is
 
-Tiers priced at $1,497 or above (The X-Ray, The War Room, The Situation Room) require the customer to check a consent box acknowledging the service provides legal INFORMATION, not legal ADVICE, and that no attorney-client relationship is created. This is a UPL (unauthorized practice of law) risk mitigation measure.
+Tiers priced at $2,497 or above (The X-Ray, The War Room, The Situation Room) require the customer to check a consent box acknowledging the service provides legal INFORMATION, not legal ADVICE, and that no attorney-client relationship is created. This is a UPL (unauthorized practice of law) risk mitigation measure.
 
 ### Enforcement
 
 **Server-side enforcement** in `POST /api/checkout` (`src/app/api/checkout/route.ts`):
 
 ```typescript
-if (tierConfig.price >= 149700 && !consent) {
+if (tierConfig.price >= 249700 && !consent) {
   return NextResponse.json(
     { error: "Consent required for this tier" },
     { status: 400 }
@@ -176,7 +176,7 @@ if (tierConfig.price >= 149700 && !consent) {
 }
 ```
 
-The threshold is `149700` cents ($1,497.00). This blocks checkout session creation entirely -- the customer cannot reach Stripe's payment form without providing consent.
+The threshold is `249700` cents ($2,497.00). This blocks checkout session creation entirely -- the customer cannot reach Stripe's payment form without providing consent.
 
 ### What Gets Recorded
 
@@ -285,7 +285,7 @@ Key implications:
 
 3. **Post-delivery refunds** -- If the report has been delivered, a full refund revokes access (the report page returns 403 for refunded cases). The customer retains whatever information they already extracted.
 
-4. **Upgrade credit forfeiture** -- If a customer upgrades from Case Decoder ($197) to X-Ray ($1,497) using upgrade credit, then refunds the X-Ray, the `refunded` status on the X-Ray order means any future checkout will detect the refund and void all upgrade credit (the checkout endpoint checks for any refunded order under that email).
+4. **Upgrade credit forfeiture** -- If a customer upgrades from Case Decoder ($197) to X-Ray ($2,497) using upgrade credit, then refunds the X-Ray, the `refunded` status on the X-Ray order means any future checkout will detect the refund and void all upgrade credit (the checkout endpoint checks for any refunded order under that email).
 
 There is no "analysis commenced" flag or time-gated refund window implemented in code. Refund policy enforcement for in-progress discovery analyses is an operator judgment call, executed via the Stripe Dashboard.
 

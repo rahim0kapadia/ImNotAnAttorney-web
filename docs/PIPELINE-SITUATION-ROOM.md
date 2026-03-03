@@ -1,6 +1,6 @@
 # The Situation Room ($9,997) — Pipeline Documentation
 
-The Situation Room is the premium tier at $9,997. It delivers Trial Intelligence Operations with priority response for customers approaching or actively in trial. It requires a prior paid War Room ($3,497) purchase, enforced via a soft prerequisite gate in the checkout route.
+The Situation Room is the premium tier at $9,997. It delivers Trial Intelligence Operations with priority response for customers approaching or actively in trial. It requires a prior paid War Room ($4,997) purchase, enforced via a soft prerequisite gate in the checkout route.
 
 ---
 
@@ -12,7 +12,7 @@ Customer (has prior War Room order)
   v
 POST /api/checkout (tier: "situation-room")
   |-- Prerequisite gate: query orders table for paid war-room order
-  |-- Consent validation ($1,497+ threshold)
+  |-- Consent validation ($2,497+ threshold)
   |-- Upgrade credit calculation (100% from all lower tiers, 12-month window)
   |-- Stripe Checkout Session created with metadata flags
   |
@@ -105,10 +105,10 @@ See section 2 above. No other tier has a prerequisite gate.
 
 ### Consent Requirement
 
-The Situation Room price ($999,700 cents = $9,997) exceeds the $1,497 consent threshold ($149,700 cents). The checkout route enforces server-side consent validation:
+The Situation Room price ($999,700 cents = $9,997) exceeds the $2,497 consent threshold ($249,700 cents). The checkout route enforces server-side consent validation:
 
 ```typescript
-if (tierConfig.price >= 149700 && !consent) {
+if (tierConfig.price >= 249700 && !consent) {
   return NextResponse.json(
     { error: "Consent required for this tier" },
     { status: 400 }
@@ -133,9 +133,9 @@ case-decoder (0) < intelligence-brief (1) < x-ray (2) < war-room (3) < situation
 Only orders with a lower tier index qualify for credit. A customer who purchased all prior tiers would receive credit for:
 - Case Decoder: $197
 - Intelligence Brief: $997
-- X-Ray: $1,497
-- War Room: $3,497
-- **Total credit: $5,988** (applied as a one-time Stripe coupon, net price: $4,009)
+- X-Ray: $2,497
+- War Room: $4,997
+- **Total credit: $8,688** (applied as a one-time Stripe coupon, net price: $1,309)
 
 Credit is voided entirely if any prior order was refunded (the refund check in step 4 of the checkout route sets `upgradeCreditVoided = true`).
 
@@ -209,7 +209,7 @@ This SLA is communicated in the post-purchase delivery email (`post_situation_ro
 | Component | Location | Status |
 |-----------|----------|--------|
 | Prerequisite gate (War Room check) | `src/app/api/checkout/route.ts` | Working — soft gate with metadata flag |
-| Consent enforcement | `src/app/api/checkout/route.ts` | Working — server-side, $1,497+ threshold |
+| Consent enforcement | `src/app/api/checkout/route.ts` | Working — server-side, $2,497+ threshold |
 | Upgrade credit calculation | `src/app/api/checkout/route.ts` | Working — 100% credit, 12-month window, refund voiding |
 | Stripe Checkout session creation | `src/app/api/checkout/route.ts` | Working — inline price_data, metadata, coupon |
 | Webhook order/case creation | `src/app/api/webhooks/stripe/route.ts` | Working — order + case records in Supabase |

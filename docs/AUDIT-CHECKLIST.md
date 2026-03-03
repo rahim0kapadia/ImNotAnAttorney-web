@@ -74,8 +74,8 @@ Reusable per-tier checklist for auditing the entire customer pipeline. Created 2
 |------|-------|-----------------|-------------|
 | Case Decoder | $197 | COMPLETE | 2026-02-24 |
 | Intelligence Brief | $997 | AUDITED | 2026-03-03 |
-| X-Ray | $1,497 | Pending | -- |
-| War Room | $3,497 | Pending | -- |
+| X-Ray | $2,497 | Pending | -- |
+| War Room | $4,997 | Pending | -- |
 | Situation Room | $9,997 | Pending | -- |
 
 ## Intelligence Brief ($997) — Audit Results (2026-03-03)
@@ -132,7 +132,7 @@ Reusable per-tier checklist for auditing the entire customer pipeline. Created 2
 | M2 | Tier data in 3 places (stripe.ts, services, PricingTable) | All | MEDIUM | From GAP-ANALYSIS — needs single source refactor |
 | M5 | No white-collar blog content | Content | LOW | 0 posts for a listed case type |
 | L4 | Additional PDF lead magnets | Content | LOW | 5 referenced in blog, only 1 exists |
-| L9 | Payment plans for $1,497+ tiers | Discovery | LOW | No installment logic |
+| L9 | Payment plans for $2,497+ tiers | Discovery | LOW | No installment logic |
 | L11 | Accessibility audit | All | LOW | Partial fixes (C8, C9 done), no formal audit |
 | L12 | Upload link expiration | Discovery | LOW | UUID-gated, no time limit |
 

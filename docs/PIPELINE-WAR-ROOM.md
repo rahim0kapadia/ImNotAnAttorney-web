@@ -1,8 +1,8 @@
-# The War Room ($3,497) — Pipeline Documentation
+# The War Room ($4,997) — Pipeline Documentation
 
 ## Pipeline Overview
 
-The War Room is the fourth service tier ($3,497). It shares the same discovery upload infrastructure as The X-Ray ($1,497) but adds multi-phase delivery with weekly updates over the life of the case. This is the prerequisite tier for The Situation Room ($9,997).
+The War Room is the fourth service tier ($4,997). It shares the same discovery upload infrastructure as The X-Ray ($2,497) but adds multi-phase delivery with weekly updates over the life of the case. This is the prerequisite tier for The Situation Room ($9,997).
 
 ### Purchase-to-Delivery Flow
 
@@ -60,10 +60,10 @@ War Room uses the same two-part upload infrastructure as X-Ray and Situation Roo
 
 ### Consent Requirement
 
-War Room ($3,497) requires the consent checkbox at checkout. This is enforced server-side in `/api/checkout`:
+War Room ($4,997) requires the consent checkbox at checkout. This is enforced server-side in `/api/checkout`:
 
 ```
-if (tierConfig.price >= 149700 && !consent) {
+if (tierConfig.price >= 249700 && !consent) {
   return NextResponse.json({ error: "Consent required for this tier" }, { status: 400 });
 }
 ```
@@ -135,7 +135,7 @@ Two witness-related add-on products are available. These are standalone Stripe p
 - Requires discovery upload (`requiresDiscovery: true` in `stripe.ts`)
 - Uses the same upload/finalize flow as War Room
 - Post-purchase drip: delivery confirmation (day 0) + upsell to X-Ray or War Room (day 7)
-- The day-7 upsell mentions War Room by name with credit applied: "Or go deeper with The War Room ($3,497)"
+- The day-7 upsell mentions War Room by name with credit applied: "Or go deeper with The War Room ($4,997)"
 - Source: `TIERS["witness-pack"]` in `src/lib/stripe.ts`
 
 ## Upgrade Credits
@@ -146,11 +146,11 @@ Two witness-related add-on products are available. These are standalone Stripe p
 
 | Prior Purchase | War Room Price | Credit | Customer Pays |
 |---------------|---------------|--------|---------------|
-| Case Decoder ($197) | $3,497 | $197 | $3,300 |
-| Intelligence Brief ($997) | $3,497 | $997 | $2,500 |
-| X-Ray ($1,497) | $3,497 | $1,497 | $2,000 |
-| Case Decoder + Intelligence Brief | $3,497 | $1,194 | $2,303 |
-| Case Decoder + X-Ray | $3,497 | $1,694 | $1,803 |
+| Case Decoder ($197) | $4,997 | $197 | $4,800 |
+| Intelligence Brief ($997) | $4,997 | $997 | $4,000 |
+| X-Ray ($2,497) | $4,997 | $2,497 | $2,500 |
+| Case Decoder + Intelligence Brief | $4,997 | $1,194 | $3,803 |
+| Case Decoder + X-Ray | $4,997 | $2,694 | $2,303 |
 
 ### Credit Calculation Logic (in /api/checkout)
 
@@ -172,8 +172,8 @@ The refund check happens before credit calculation in `/api/checkout`. If the ch
 ### Credit Metadata Flow
 
 ```
-/api/checkout → Stripe session metadata (upgrade_credit_applied: "79700")
-  → Stripe webhook → orders table (upgrade_credit_applied: 79700)
+/api/checkout → Stripe session metadata (upgrade_credit_applied: "99700")
+  → Stripe webhook → orders table (upgrade_credit_applied: 99700)
 ```
 
 ## Situation Room Prerequisite
@@ -213,8 +213,8 @@ This design allows edge cases (e.g., War Room purchased under a different email)
 ### War Room Upgrade Credit to Situation Room
 
 When a War Room customer upgrades to Situation Room:
-- The full $3,497 War Room payment is credited (within 12-month window)
-- Situation Room effective cost: $9,997 - $3,497 = $6,500
+- The full $4,997 War Room payment is credited (within 12-month window)
+- Situation Room effective cost: $9,997 - $4,997 = $5,000
 - All prior lower-tier credits also stack (e.g., Case Decoder + X-Ray + War Room)
 
 ## Drip Sequence
@@ -308,7 +308,7 @@ From `src/lib/stripe.ts`:
 ```typescript
 "war-room": {
   name: "The War Room",
-  price: 349700,                              // $3,497.00
+  price: 499700,                              // $4,997.00
   delivery: "25-28 days + weekly updates",
   requiresDiscovery: true,
   priorityPrice: 99700,                       // $997.00 add-on

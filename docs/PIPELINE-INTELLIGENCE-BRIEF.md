@@ -89,12 +89,12 @@ Three post-purchase emails are defined for this tier:
 |-----|-------|-------------|---------|---------|
 | `post_intelligence_brief_delivery` | Day 0 | Purchase | "Your Intelligence Brief is ready -- here's how to use it in your next meeting" | Sent at delivery time by `/api/deliver` |
 | `post_intelligence_brief_story_harvest` | Day 5 | `delivered_at` | "You met with your attorney -- what was the first question they stopped to think about?" | Story harvest / feedback |
-| `post_intelligence_brief_upsell` | Day 10 | Purchase | "When you get discovery -- we're ready" | Upsell to X-Ray ($1,497), credits $997 |
+| `post_intelligence_brief_upsell` | Day 10 | Purchase | "When you get discovery -- we're ready" | Upsell to X-Ray ($2,497), credits $997 |
 
 Notes:
 - The day-0 delivery email is sent by the `/api/deliver` endpoint at delivery time, not by the cron.
 - The story harvest email uses `relativeToDelivery: true`, so the 5-day delay starts from `cases.delivered_at`.
-- The upsell email promotes the X-Ray tier with full upgrade credit ($997 applied, customer pays $500).
+- The upsell email promotes the X-Ray tier with full upgrade credit ($997 applied, customer pays $1,500).
 
 ### 5. Delivery Endpoint (Reusable)
 
@@ -185,8 +185,8 @@ All items below have been built and deployed. Kept for historical reference.
 
 **Day 10 after purchase** (`post_intelligence_brief_upsell`)
 - Triggered: Cron Part 2, relative to purchase date
-- Content: Promotes X-Ray ($1,497) for when customer receives discovery
-- CTA: "Upgrade to The X-Ray -- $500" (after $997 credit)
+- Content: Promotes X-Ray ($2,497) for when customer receives discovery
+- CTA: "Upgrade to The X-Ray -- $1,500" (after $997 credit)
 
 Additionally, if the customer subscribed to the email list, they may also receive nurture sequence emails (days 1, 3, 5, 7, 10, 14 after subscribe). The nurture sequence is independent of purchases.
 

@@ -117,7 +117,7 @@ The checkout route performs these operations before creating the Stripe session:
 4. **Charge type auto-detection** -- If no `chargeType` provided, looks up the customer's most recent intake form.
 5. **Refund check** -- Customers with a prior refund forfeit all upgrade credit.
 6. **Situation Room prerequisite gate** -- Not applicable for Case Decoder, but runs for all tiers.
-7. **Consent validation** -- Not required for Case Decoder ($197 < $1,497 threshold).
+7. **Consent validation** -- Not required for Case Decoder ($197 < $2,497 threshold).
 8. **Upgrade credit calculation** -- 100% credit from prior lower-tier purchases (12-month window), implemented as a one-time Stripe coupon.
 9. **Stripe session creation** -- All business context (tier, credit, consent, charge type) is packed into session metadata so the webhook can create records without re-querying.
 
@@ -443,7 +443,7 @@ The generated report is a 7-section + 0-2 conditional section markdown document 
 - Plea Quality Ratings -- replaced by educational content
 - Motion Recommendations -- integrated into S4 questions
 - Evidence Accountability Checklist -- we haven't seen the evidence
-- Discovery Readiness Guide -- discovery analysis belongs in X-Ray ($1,497+)
+- Discovery Readiness Guide -- discovery analysis belongs in X-Ray ($2,497+)
 - Case Stage Benchmark -- merged into S1 and S7
 - Verify Facts (standalone) -- moved to S4 callout
 
@@ -465,7 +465,7 @@ The HTML includes:
 When payment is received, the operator gets an email with:
 - Product name, customer email, amount, tier, Stripe session ID
 - Case ID (if created successfully)
-- Whether discovery upload is required (for $1,497+ tiers only)
+- Whether discovery upload is required (for $2,497+ tiers only)
 - Timestamp
 
 ### Report Review

@@ -93,7 +93,7 @@ See `docs/PIPELINE-CASE-DECODER.md` Step 4B for full details.
 | refunded_at | timestamptz | Refund timestamp (null if not refunded) |
 | priority_delivery | boolean | Priority add-on purchased |
 | court_date | text | Customer's next court date |
-| consent_timestamp | text | Consent for $1,497+ tiers |
+| consent_timestamp | text | Consent for $2,497+ tiers |
 
 ### `cases`
 | Column | Type | Purpose |
@@ -293,8 +293,8 @@ Higher tiers include lower-tier deliverables. When a customer buys Intelligence 
 |---|---|---|
 | Case Decoder ($197) | 1 case | None |
 | Intelligence Brief ($997) | 2 cases | Case Decoder (`is_included_deliverable=true`) |
-| X-Ray ($1,497) | 3 cases | Case Decoder + Intelligence Brief |
-| War Room ($3,497) | 4 cases | Case Decoder + Intelligence Brief + X-Ray |
+| X-Ray ($2,497) | 3 cases | Case Decoder + Intelligence Brief |
+| War Room ($4,997) | 4 cases | Case Decoder + Intelligence Brief + X-Ray |
 | Situation Room ($9,997) | 5 cases | Case Decoder + IB + X-Ray + War Room |
 
 ### How It Works
