@@ -151,6 +151,9 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p><strong style="color: white;">The attorney had raised none of these issues.</strong></p>
       <p>We found all of them in the discovery documents. We generated 15 specific questions — each traced to a documented winning method from attorneys like Barry Scheck, Jeffrey Lichtman, and Alan Dershowitz.</p>
       ${cta("See the full sample report →", "/sample")}
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">DUI charges?</strong> Get the DUI Defense Playbook — $97, instant download. 23 questions your attorney hopes you never ask + breathalyzer checklist + attorney scorecard. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
+      </p>
     `,
   },
   {
@@ -171,6 +174,9 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p>Delivered within 24 hours with 15 calibrated questions + communication tools — or full cash refund. Delivered and not satisfied? 100% credit toward any higher tier.</p>
       <p><strong style="color: white;">$197.</strong> Less than one hour of your attorney's time.</p>
       ${cta("Find What's in My Case — $197 →", "/checkout?tier=case-decoder")}
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Not ready for case-specific?</strong> The DUI Defense Playbook ($97) gives you 23 general DUI questions instantly. Full credit toward Case Decoder within 30 days. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
+      </p>
     `,
   },
   {
@@ -198,6 +204,9 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p>The Case Decoder includes a motion deadline awareness section specific to your charges. It tells you what to ASK about — so nothing slips through the cracks.</p>
       <p><strong style="color: white;">$197. 24 hours.</strong> The cost of not knowing is higher.</p>
       ${cta("Find What's in My Case — $197 →", "/checkout?tier=case-decoder")}
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">DUI charges?</strong> Start with the DUI Defense Playbook — $97 instant download. 23 questions + attorney scorecard. Your $97 is credited toward any service tier. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
+      </p>
     `,
   },
 ];
@@ -493,6 +502,69 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>You're in the Situation Room — the most comprehensive intelligence package available. I have one question:</p>
       <p style="font-size: 18px; color: white;"><strong>What's made the biggest difference so far?</strong></p>
       <p>Just reply to this email. Your experience at this level is invaluable for refining every aspect of what we deliver.</p>
+    `,
+  },
+
+  // --- DUI Defense Playbook ($97) ---
+  // Digital product: no case table, no relativeToDelivery.
+  // All delays relative to paid_at (delivery is instant via webhook).
+  // Day 0 delivery email is sent by the webhook, not the cron.
+  {
+    key: "post_dui_playbook_dmv_deadline",
+    delayDays: 1,
+    tier: "dui-first-offense",
+    subject: "The 10-day DMV deadline — have you handled it?",
+    html: `
+      <h1 style="color: #F59E0B;">The 10-Day DMV Deadline</h1>
+      <p>The DMV administrative hearing is separate from your criminal case. Most defendants don't know this until it's too late.</p>
+      <p>In most states, you have <strong style="color: white;">10 days from your arrest</strong> to request a hearing to fight the automatic license suspension. If your attorney hasn't requested it, that window may already be closing.</p>
+      <p>Open your Playbook to the <strong style="color: white;">Case Stage Roadmap</strong> section. The DMV deadline is the first item. If you haven't acted on it yet, today is the day.</p>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Want case-specific research?</strong> Your $97 is fully credited toward the Case Decoder ($197). We'll research YOUR judge, YOUR jurisdiction, and generate 15 questions specific to your case.
+      </p>
+      ${cta("Upgrade to Case Decoder — $100 →", "/checkout?tier=case-decoder")}
+    `,
+  },
+  {
+    key: "post_dui_playbook_story_harvest",
+    delayDays: 3,
+    tier: "dui-first-offense",
+    subject: "Which question surprised you the most?",
+    html: `
+      <h1 style="color: #F59E0B;">Which Question Surprised You?</h1>
+      <p>You've had a few days with the Playbook. Which of the 23 questions surprised you most?</p>
+      <p>Was it the breathalyzer calibration question? The 15-minute observation period? The FST conditions?</p>
+      <p><strong style="color: white;">Reply to this email and tell me.</strong> Real feedback from real defendants makes this better for everyone who comes after you. Your reply is confidential.</p>
+    `,
+  },
+  {
+    key: "post_dui_playbook_upsell",
+    delayDays: 5,
+    tier: "dui-first-offense",
+    subject: "Generic questions are a start. Case-specific ones change the conversation.",
+    html: `
+      <h1 style="color: #F59E0B;">Generic vs. Case-Specific</h1>
+      <p>The Playbook gives you 23 questions that apply to DUI cases generally. The <strong style="color: white;">Case Decoder</strong> gives you 15 questions built from YOUR charges, YOUR state, YOUR stage, YOUR attorney situation.</p>
+      <p>Generic questions open the conversation. <strong style="color: white;">Case-specific questions change it.</strong></p>
+      <p>The difference: when your attorney hears a question from the Playbook, they know the answer. When they hear a question from your Case Decoder, they have to actually check the file.</p>
+      <p><strong style="color: white;">That's the meeting that changes everything.</strong></p>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        Your $97 is fully credited. Upgrade for $100. 24-hour delivery.
+      </p>
+      ${cta("Get Your Case Decoder — $100 →", "/checkout?tier=case-decoder")}
+    `,
+  },
+  {
+    key: "post_dui_playbook_referral",
+    delayDays: 10,
+    tier: "dui-first-offense",
+    subject: "Know someone facing a DUI?",
+    html: `
+      <h1 style="color: #F59E0B;">Know Someone Facing a DUI?</h1>
+      <p>If someone you know just got pulled over — or is about to go to court — forward them this email.</p>
+      <p>The DUI Defense Playbook is the thing I wish existed when I was in their position. 23 questions, a case stage roadmap, a red flag checklist, and an attorney scorecard. $97, instant download.</p>
+      ${cta("Share the DUI Defense Playbook →", "/playbook/dui-first-offense")}
+      <p style="margin-top: 16px; color: #71717A;">If they buy through your link, send me a receipt and I'll credit you $20 toward any of our services.</p>
     `,
   },
 

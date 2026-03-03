@@ -186,6 +186,60 @@ export default function ResourcesPage() {
           </div>
         </section>
 
+        {/* DUI DEFENSE PLAYBOOK — Paid product, not email-gated */}
+        <section className="mt-16">
+          <h2 className="text-2xl font-bold text-white">
+            DUI Defense Playbook
+          </h2>
+          <p className="mt-2 text-zinc-400">
+            Everything a first-time DUI defendant needs to hold their attorney
+            accountable — in one downloadable PDF.
+          </p>
+          <div className="mt-6 rounded-xl border border-amber-500/30 bg-zinc-900/50 p-6">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <span className="inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                  $97 &middot; Instant Download
+                </span>
+                <h3 className="mt-3 text-lg font-bold text-white">
+                  23 Questions Your Attorney Hopes You Never Ask
+                </h3>
+                <ul className="mt-3 space-y-1 text-sm text-zinc-300">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-0.5 text-amber-400">&#10003;</span>
+                    23 attorney-sourced questions with good/bad answer examples
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-0.5 text-amber-400">&#10003;</span>
+                    12-point evidence red flag checklist
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-0.5 text-amber-400">&#10003;</span>
+                    DUI case stage roadmap (arrest → resolution)
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-0.5 text-amber-400">&#10003;</span>
+                    Attorney Accountability Scorecard
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-0.5 text-amber-400">&#10003;</span>
+                    One-page cheat sheet for your attorney meeting
+                  </li>
+                </ul>
+                <p className="mt-3 text-xs text-zinc-500">
+                  $97 credited toward Case Decoder within 30 days.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/playbook/dui-first-offense"
+              className="mt-6 inline-block rounded-lg bg-amber-500 px-6 py-2.5 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+            >
+              Get the DUI Defense Playbook — $97
+            </Link>
+          </div>
+        </section>
+
         {/* CTA — Bridges from free resources to paid case-specific services */}
         <section className="mt-16 text-center">
           <h2 className="text-xl font-bold text-white">

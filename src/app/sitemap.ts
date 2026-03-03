@@ -85,6 +85,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${SITE_URL}/playbook/dui-first-offense`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE_URL}/contact`,
       lastModified: new Date(),
       changeFrequency: "yearly",

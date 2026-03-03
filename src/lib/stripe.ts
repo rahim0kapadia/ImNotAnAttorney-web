@@ -71,6 +71,15 @@ export const stripe = new Stripe(stripeKey, {
  * This object must be kept in sync until the frontend reads from DB.
  */
 export const TIERS = {
+  "dui-first-offense": {
+    name: "DUI Defense Playbook",
+    price: 9700, // cents
+    delivery: "Instant download",
+    requiresDiscovery: false,
+    priorityPrice: null,
+    priorityDelivery: null,
+    includesTiers: [] as readonly string[],
+  },
   "case-decoder": {
     name: "Case Decoder",
     price: 19700, // cents

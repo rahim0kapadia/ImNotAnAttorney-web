@@ -208,6 +208,70 @@ export async function POST(req: NextRequest) {
     }
 
     // ──────────────────────────────────────────────────────────────
+    // DIGITAL PRODUCT BRANCH (Defense Playbooks)
+    // ──────────────────────────────────────────────────────────────
+    // Digital products skip the entire case creation / intake / generation
+    // pipeline. They deliver a pre-built PDF via signed URL immediately.
+    const productType = session.metadata?.product_type || "service";
+
+    if (productType === "digital-product" && orderData) {
+      // Generate download token with 72-hour expiry
+      const downloadToken = crypto.randomUUID();
+      const expiresAt = new Date(Date.now() + 72 * 60 * 60 * 1000).toISOString();
+
+      await supabase
+        .from("orders")
+        .update({
+          product_type: "digital-product",
+          download_token: downloadToken,
+          download_token_expires_at: expiresAt,
+        })
+        .eq("id", orderData.id);
+
+      const downloadUrl = `${origin}/api/download/${downloadToken}`;
+
+      // Send delivery email with download link
+      await sendEmailWithRetry({
+        to: email,
+        subject: `Your ${escapeHtml(productName)} is ready — download now`,
+        unsubscribeEmail: email,
+        html: `
+          <h1 style="color: #F59E0B;">Your ${escapeHtml(productName)} Is Ready</h1>
+          <p>Your ${escapeHtml(productName)} is inside. Click below to download your PDF.</p>
+          <a href="${downloadUrl}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Download Your Playbook</a>
+          <p>Start with Section 2 — the 23 Questions. Go through them and put a checkmark next to every one you already know your attorney's answer to. Most people get through 4 or 5 checkmarks. Then the blanks start.</p>
+          <p>Those blanks are what your next attorney meeting is for.</p>
+          <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
+            <p style="margin: 0; color: white; font-weight: bold;">Want case-specific questions?</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;">Your $97 is fully credited toward the Case Decoder ($197). Get 15 questions built from YOUR charges, YOUR state, YOUR stage.</p>
+            <a href="${origin}/checkout?tier=case-decoder" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: transparent; color: #F59E0B; font-weight: bold; text-decoration: none; border: 1px solid #F59E0B; border-radius: 8px;">Upgrade for $100 →</a>
+          </div>
+          <p style="color: #A1A1AA;">This download link expires in 72 hours. Reply to this email if you have questions.</p>
+        `,
+      }, `playbook delivery for ${email}`, { category: "playbook-delivery", order_id: orderData.id, metadata: { tier, product_type: "digital-product" } });
+
+      // Simplified operator notification for digital products
+      await sendEmailWithRetry({
+        to: OPERATOR_EMAIL,
+        subject: `New Playbook Sale: ${escapeHtml(productName)} — $${(amount / 100).toFixed(2)}`,
+        html: `
+          <h1 style="color: #F59E0B;">New Digital Product Sale</h1>
+          <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
+            <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Product:</strong> ${escapeHtml(productName)}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(email)}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Amount:</strong> $${(amount / 100).toFixed(2)}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Type:</strong> Digital product (instant PDF delivery)</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Download token:</strong> ${downloadToken.slice(0, 8)}...</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Time:</strong> ${new Date().toISOString()}</p>
+          </div>
+        `,
+      }, `operator notification for playbook sale ${email}`, { category: "operator-new-order", order_id: orderData.id, metadata: { tier, product_type: "digital-product", amount } });
+
+      // Return early — skip case creation, intake linking, generation
+      return NextResponse.json({ received: true });
+    }
+
+    // ──────────────────────────────────────────────────────────────
     // CREATE CASE RECORD + LINK INTAKE
     // ──────────────────────────────────────────────────────────────
     // Cases are created for ALL tiers (not just discovery tiers) so every

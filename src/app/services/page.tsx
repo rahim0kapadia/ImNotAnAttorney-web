@@ -378,6 +378,80 @@ export default function ServicesPage() {
           </div>
         </div>
 
+        {/* INSTANT PRODUCTS — Charge-specific Playbooks for immediate help.  */}
+        {/* Pre-built PDFs, no intake form, instant delivery. Fills the gap */}
+        {/* between free content and the $197 Case Decoder.                 */}
+        <section className="mt-20">
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-white md:text-3xl">
+              Instant Products
+            </h2>
+            <p className="text-sm text-amber-400">
+              No intake form. No wait. Instant PDF download.
+            </p>
+            <p className="mt-2 text-zinc-400">
+              Charge-specific Defense Playbooks built from elite attorney
+              methodology. Get answers NOW — then upgrade to a personalized
+              service with full credit.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            <Link
+              href="/checkout?tier=dui-first-offense"
+              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+            >
+              <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                Available Now
+              </span>
+              <div className="flex items-baseline justify-between">
+                <h3 className="font-semibold text-white">
+                  DUI Defense Playbook
+                </h3>
+                <span className="text-lg font-bold text-amber-400">$97</span>
+              </div>
+              <p className="mt-2 text-sm text-zinc-400">
+                23 questions your DUI attorney hopes you never ask.
+                Breathalyzer calibration checklist, case stage roadmap, 12 red
+                flags, attorney accountability scorecard. Instant PDF.
+              </p>
+              <p className="mt-2 text-xs text-zinc-500">
+                $97 credited toward Case Decoder within 30 days.
+              </p>
+            </Link>
+            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 opacity-60">
+              <span className="mb-2 inline-block rounded-full bg-zinc-800 px-2 py-0.5 text-xs font-semibold text-zinc-400">
+                Coming Soon
+              </span>
+              <div className="flex items-baseline justify-between">
+                <h3 className="font-semibold text-white">
+                  Drug Possession Playbook
+                </h3>
+                <span className="text-lg font-bold text-zinc-500">$97</span>
+              </div>
+              <p className="mt-2 text-sm text-zinc-500">
+                Chain of custody, lab procedure challenges, weight discrepancy
+                analysis, CI reliability questions. Built from the founder's
+                real case.
+              </p>
+            </div>
+            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 opacity-60">
+              <span className="mb-2 inline-block rounded-full bg-zinc-800 px-2 py-0.5 text-xs font-semibold text-zinc-400">
+                Coming Soon
+              </span>
+              <div className="flex items-baseline justify-between">
+                <h3 className="font-semibold text-white">
+                  Domestic Violence Playbook
+                </h3>
+                <span className="text-lg font-bold text-zinc-500">$97</span>
+              </div>
+              <p className="mt-2 text-sm text-zinc-500">
+                Accuser credibility framework, protective order strategy,
+                evidence preservation, communication boundaries.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* CASE TYPE SECTIONS — One section per case type (Drug, DUI, WC).   */}
         {/* Each renders all 5 tiers with case-type-specific descriptions.   */}
         {/* First 3 tiers in 3-col grid, last 2 (War Room, Situation Room)  */}

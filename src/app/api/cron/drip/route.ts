@@ -67,6 +67,7 @@ import { stripe } from "@/lib/stripe";
 
 /** Maps tier slugs to display names for alert emails. */
 const TIER_NAMES: Record<string, string> = {
+  "dui-first-offense": "DUI Defense Playbook",
   "case-decoder": "Case Decoder",
   "intelligence-brief": "Intelligence Brief",
   "x-ray": "X-Ray",

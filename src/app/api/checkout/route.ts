@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { tier, email, consent, priorityDelivery, courtDate, chargeType, existingCaseNumber, existingCaseState } = body;
+    const { tier, email, consent, priorityDelivery, courtDate, chargeType, existingCaseNumber, existingCaseState, productType } = body;
 
     // =========================================================================
     // 1. TIER VALIDATION
@@ -281,6 +281,28 @@ export async function POST(req: NextRequest) {
         }
       }
 
+      // Also check for digital product (Playbook) purchases with 30-day credit window
+      if (normalizedEmail && tier === "case-decoder") {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+        const { data: playbookOrders } = await supabase
+          .from("orders")
+          .select("amount, tier")
+          .eq("email", normalizedEmail)
+          .eq("status", "paid")
+          .eq("product_type", "digital-product")
+          .gte("paid_at", thirtyDaysAgo.toISOString());
+
+        if (playbookOrders && playbookOrders.length > 0) {
+          const playbookCredit = playbookOrders.reduce(
+            (sum: number, o: { amount: number }) => sum + (o.amount || 0),
+            0
+          );
+          upgradeCreditCents += playbookCredit;
+        }
+      }
+
       if (priorOrders && priorOrders.length > 0) {
         // Tier ordering from lowest to highest price. indexOf() returns the
         // position; only orders with a lower index than the current tier qualify.
@@ -393,6 +415,7 @@ export async function POST(req: NextRequest) {
       metadata: {
         tier,
         product_name: tierConfig.name,
+        ...(productType === "digital-product" && { product_type: "digital-product" }),
         ...(prerequisiteSkipped && { prerequisite_skipped: "true" }),
         ...(upgradeCreditVoided && { upgrade_credit_voided: "true" }),
         ...(consent && { consent_timestamp: new Date().toISOString() }),

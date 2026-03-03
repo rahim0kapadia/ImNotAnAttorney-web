@@ -54,8 +54,16 @@ const CONTACT_EMAIL = "help@imnotanattorney.com";
  */
 const TIER_NEXT_STEPS: Record<
   string,
-  { name: string; delivery: string; action: string; showUpload: boolean; noIntakeAction?: string; intakeUrl?: string }
+  { name: string; delivery: string; action: string; showUpload: boolean; noIntakeAction?: string; intakeUrl?: string; isDigitalProduct?: boolean }
 > = {
+  "dui-first-offense": {
+    name: "DUI Defense Playbook",
+    delivery: "Instant",
+    action:
+      "Your DUI Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+    showUpload: false,
+    isDigitalProduct: true,
+  },
   "case-decoder": {
     name: "Case Decoder",
     delivery: "24 hours",
@@ -302,6 +310,28 @@ function SuccessContent() {
             {/* adds, and the upgrade cost (current purchase credited).     */}
             {/* Only visible while timeLeft is active (24h window).         */}
             {/* ------------------------------------------------------------ */}
+            {timeLeft && timeLeft !== "Expired" && tier === "dui-first-offense" && (
+              <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
+                <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
+                  Upgrade offer — {timeLeft} remaining
+                </p>
+                <p className="text-sm font-semibold text-amber-400">
+                  Get Case-Specific Questions — Case Decoder
+                </p>
+                <p className="mt-2 text-sm text-zinc-400">
+                  Your $97 is already credited. The Playbook gives you generic DUI questions — the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
+                </p>
+                <p className="mt-1 text-xs text-zinc-500">
+                  Adds: personalized charge breakdown, ready-to-send email templates, phone scripts, 7-day action plan, attorney meeting prep.
+                </p>
+                <Link
+                  href="/checkout?tier=case-decoder"
+                  className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
+                >
+                  Upgrade to Case Decoder — $100 &rarr;
+                </Link>
+              </div>
+            )}
             {timeLeft && timeLeft !== "Expired" && tier === "case-decoder" && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">

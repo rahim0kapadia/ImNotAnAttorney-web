@@ -492,8 +492,93 @@ If mentioning Intelligence Brief ($997), frame as verification.
 }
 
 // ============================================================
+// POST-GENERATION VALIDATION (synced from edge function)
+// ============================================================
+
+function validateReportContent(markdown) {
+  const violations = [];
+  const lower = markdown.toLowerCase();
+
+  // 1. Banned phrases — with informational-context exemptions
+  const bannedPhrases = [
+    { phrase: "fire your attorney", exemptions: [] },
+    { phrase: "publicly available", exemptions: [] },
+    { phrase: "consult your attorney", exemptions: [] },
+    { phrase: "you should", exemptions: ["you should know", "you should understand", "you should be aware", "you should never"] },
+    { phrase: "you need to", exemptions: ["you need to know", "you need to understand", "you need to be prepared", "you need to be ready", "what you need to", "whether you need to"] },
+    { phrase: "we recommend", exemptions: [] },
+    { phrase: "we advise", exemptions: [] },
+    { phrase: "file a complaint", exemptions: [] },
+  ];
+  for (const { phrase, exemptions } of bannedPhrases) {
+    if (lower.includes(phrase)) {
+      let idx = 0;
+      let hasReal = false;
+      while ((idx = lower.indexOf(phrase, idx)) !== -1) {
+        const contextStart = Math.max(0, idx - 40);
+        const contextEnd = Math.min(lower.length, idx + phrase.length + 40);
+        const context = lower.slice(contextStart, contextEnd);
+        const exempt = exemptions.some((e) => context.includes(e));
+        if (!exempt) {
+          hasReal = true;
+          break;
+        }
+        idx += phrase.length;
+      }
+      if (hasReal) {
+        violations.push(`Banned phrase detected: "${phrase}"`);
+      }
+    }
+  }
+
+  // 2. Unsourced collateral claims — exempts "Good answer:" example sections
+  const collateralTopics = [
+    "employment", "housing", "immigration", "financial aid",
+    "background check", "voting", "firearms",
+  ];
+  const sentences = markdown.split(/[.!?]\s+/);
+  for (const sentence of sentences) {
+    const sentLower = sentence.toLowerCase();
+    const mentionsTopic = collateralTopics.some((t) => sentLower.includes(t));
+    if (mentionsTopic) {
+      const hasCitation = /§|U\.S\.C\.|F\.S\.|C\.F\.R\.| v\. /.test(sentence);
+      const hasAskFrame = sentLower.includes("ask your attorney");
+      const isExampleAnswer = sentLower.includes("good answer") || sentLower.includes("bad answer");
+      if (!hasCitation && !hasAskFrame && !isExampleAnswer) {
+        const preview = sentence.trim().slice(0, 80);
+        violations.push(`Unsourced collateral claim: "${preview}..."`);
+      }
+    }
+  }
+
+  // 3. Pricing errors
+  if (markdown.includes("$797")) {
+    violations.push('Pricing error: "$797" found (should be "$800 after credit")');
+  }
+
+  return { valid: violations.length === 0, violations };
+}
+
+function stripModelMethodologyNote(markdown) {
+  return markdown.replace(
+    /^>[ \t]*\*{0,2}METHODOLOGY[^\n]*(?:\n>[ \t]*[^\n]*)*/im,
+    ""
+  ).replace(/^\s*---\s*$/m, "").trim();
+}
+
+function extractExpertNames(chargeContextBlock) {
+  const namePattern = /^\d+\.\s+([^—–\-]+)\s*[—–\-]/gm;
+  const names = [];
+  let match;
+  while ((match = namePattern.exec(chargeContextBlock)) !== null) {
+    names.push(match[1].trim());
+  }
+  return names.slice(0, 3).join(", ");
+}
+
+// ============================================================
 // HTML RENDERER
-// Replicates renderReportHtml() from test-report-quality.mjs
+// Replicates renderReportHtml() from edge function
 // Branded dark theme with print-friendly CSS
 // ============================================================
 
@@ -560,6 +645,11 @@ function renderReportHtml(markdown, meta) {
       <p style="margin: 4px 0;"><strong style="color: white;">Report ID:</strong> ${escapeHtml(meta.reportId)}</p>
     </div>
   </div>
+  ${meta.expertNames ? `<blockquote style="border-left: 3px solid #F59E0B; padding: 16px; margin: 24px 0; background: #1C1917; border-radius: 0 8px 8px 0;">
+    <p style="margin: 0 0 12px; color: #F59E0B; font-weight: bold;">METHODOLOGY NOTE</p>
+    <p style="margin: 0 0 12px; color: #A1A1AA;">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)} — selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
+    <p style="margin: 0; color: #A1A1AA;"><strong style="color: white;">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+  </blockquote>` : ""}
   ${html}
   <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 40px; border-left: 4px solid #A1A1AA;">
     <p style="margin: 0; font-size: 13px; color: #71717A;">
@@ -756,6 +846,25 @@ async function main() {
 
   console.log(`[worker] Claude done (${markdown.length} chars), rendering HTML...`);
 
+  // Strip model-generated methodology note (system injects the official one)
+  markdown = stripModelMethodologyNote(markdown);
+
+  // Post-generation validation (soft — log but don't block)
+  const validation = validateReportContent(markdown);
+  if (!validation.valid) {
+    console.warn(`[worker] Validation warnings (${validation.violations.length}):`,
+      validation.violations.join("; "));
+  }
+
+  // Extract expert names from charge context for methodology note
+  // Re-call getChargeContext (cheap, idempotent) since chargeBlock is scoped inside buildUserPrompt
+  const chargeContextForExperts = await getChargeContext(
+    intake.charge_type,
+    intake.jurisdiction_level || "unknown",
+    intake.charge_specific_data || {}
+  );
+  const expertNames = extractExpertNames(chargeContextForExperts);
+
   // Step 5: Render HTML
   const reportToken = crypto.randomUUID();
   const reportDate = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
@@ -777,6 +886,8 @@ async function main() {
     caseNumber: intake.case_number || undefined,
     courtDate: intake.court_date || undefined,
     daysSinceArrest,
+    expertNames: expertNames || undefined,
+    chargeType: intake.charge_type,
   });
 
   // Step 6: Save to Supabase
@@ -820,6 +931,10 @@ async function main() {
         <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseData.id}</p>
         <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Generated:</strong> ${reportDate}</p>
       </div>
+      ${!validation.valid ? `<div style="background: #422006; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #EF4444;">
+        <p style="margin: 0 0 8px; color: #FDE68A; font-weight: bold;">VALIDATION WARNINGS (${validation.violations.length})</p>
+        ${validation.violations.map(v => `<p style="margin: 4px 0; color: #D4D4D8; font-size: 13px;">• ${escapeHtml(v)}</p>`).join("")}
+      </div>` : ""}
       <div style="margin: 24px 0; display: flex; gap: 12px;">
         ${approveToken
           ? `<a href="${SITE_URL}/api/deliver?token=${approveToken}&case=${caseData.id}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Approve &amp; Deliver</a>`

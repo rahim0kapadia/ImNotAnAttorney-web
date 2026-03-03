@@ -58,6 +58,7 @@ type TierInfo = {
   delivery: string;
   requiresDiscovery: boolean;
   requiresWarRoom?: boolean;
+  isDigitalProduct?: boolean;
   features: string[];
   guarantee: string;
   validation?: string;
@@ -92,6 +93,42 @@ type TierInfo = {
  * Example: Case Decoder ($197) -> Intelligence Brief ($997) = $800 upgrade.
  */
 const TIER_INFO: Record<string, TierInfo> = {
+  "dui-first-offense": {
+    name: "DUI Defense Playbook",
+    price: "$97",
+    priceNum: 97,
+    delivery: "Instant download",
+    requiresDiscovery: false,
+    isDigitalProduct: true,
+    features: [
+      "Charge Reality Report — DUI first offense explained in plain English",
+      "23 Questions Your DUI Attorney Hopes You Never Ask (6-part format)",
+      "DUI Case Stage Roadmap — arrest through resolution timeline",
+      "Red Flag Checklist — 12 evidence and procedural red flags",
+      "Attorney Accountability Scorecard — rate your attorney on 10 behaviors",
+    ],
+    guarantee:
+      "5 questions you never thought to ask, or full refund. No explanation required.",
+    validation:
+      "Instant PDF. No intake form, no wait. Downloaded by DUI defendants within 60 seconds of purchase.",
+    whyThisWorks:
+      "Built from documented defense strategies used by Lawrence Taylor (the 'Dean of DUI Defense'), Barry Scheck's forensic evidence methodology, and NHTSA field sobriety test standards. 23 specific questions derived from 40+ elite DUI defense attorneys' techniques.",
+    pullquote: {
+      quote:
+        "The breathalyzer reading is not the case. The maintenance records are.",
+      author: "Lawrence Taylor",
+    },
+    nudge: {
+      nextTierSlug: "case-decoder",
+      nextTierName: "Case Decoder",
+      nextTierPrice: "$197",
+      upgradeCost: "$100",
+      unlocks:
+        "15 case-specific questions built from YOUR charges, YOUR state, YOUR stage. Plus email templates, phone scripts, and a 7-day action plan.",
+      bestFor:
+        "Worth it when you want questions tailored to your exact situation — not generic DUI questions.",
+    },
+  },
   "case-decoder": {
     name: "Case Decoder",
     price: "$197",
@@ -398,6 +435,7 @@ function CheckoutContent() {
           ...(returningCustomer && existingCaseNumber && existingCaseState && {
             existingCaseNumber, existingCaseState,
           }),
+          ...(info.isDigitalProduct && { productType: "digital-product" }),
         }),
       });
 
@@ -586,7 +624,7 @@ function CheckoutContent() {
           {/* even if the customer never completes Stripe checkout.            */}
           <div className="mt-6">
             <label htmlFor="email" className="block text-sm font-medium text-zinc-300">
-              Your email — we&apos;ll send your report here
+              Your email — we&apos;ll send your {info.isDigitalProduct ? "download link" : "report"} here
             </label>
             <input
               id="email"
@@ -609,7 +647,7 @@ function CheckoutContent() {
           {/* RETURNING CUSTOMER — For IB+ tiers, allow linking to existing CD. */}
           {/* If they already bought a Case Decoder under a different email,   */}
           {/* they can enter their court case number + state to link it.       */}
-          {info.priceNum >= 997 && (
+          {!info.isDigitalProduct && info.priceNum >= 997 && (
             <div className="mt-4">
               <label className="flex items-start gap-3 rounded-lg border border-zinc-700 bg-zinc-800/50 p-4 cursor-pointer">
                 <input
@@ -655,10 +693,8 @@ function CheckoutContent() {
             </div>
           )}
 
-          {/* COURT DATE — Optional input. If set and <14 days away,            */}
-          {/* courtDateUrgent triggers a warning on the priority delivery      */}
-          {/* checkbox ("Your court date is X days away").                      */}
-          <div className="mt-4">
+          {/* COURT DATE — Optional input. Hidden for digital products. */}
+          {!info.isDigitalProduct && <div className="mt-4">
             <label htmlFor="courtDate" className="block text-sm font-medium text-zinc-300">
               Next court date <span className="text-zinc-500">(optional)</span>
             </label>
@@ -670,12 +706,10 @@ function CheckoutContent() {
               min={new Date().toISOString().split("T")[0]}
               className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-base text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
-          </div>
+          </div>}
 
-          {/* PRIORITY DELIVERY ADD-ON — Checkbox upsell for expedited delivery.*/}
-          {/* Visually highlighted (amber border) when court date is urgent.  */}
-          {/* Adds priorityPrice to total shown on CTA button.               */}
-          {info.priorityPrice && (
+          {/* PRIORITY DELIVERY ADD-ON — Hidden for digital products (instant delivery). */}
+          {!info.isDigitalProduct && info.priorityPrice && (
             <label className={`mt-4 flex items-start gap-3 rounded-lg border p-4 cursor-pointer transition-colors ${
               courtDateUrgent
                 ? "border-amber-500 bg-amber-500/10"
@@ -701,11 +735,8 @@ function CheckoutContent() {
             </label>
           )}
 
-          {/* CONSENT GATE — Required for tiers >= $2,497 (X-Ray, War Room,   */}
-          {/* Situation Room). Customer must acknowledge that custom research  */}
-          {/* begins on intake and delivered work is non-refundable.           */}
-          {/* CTA button is disabled until this is checked.                    */}
-          {info.priceNum >= 2497 && (
+          {/* CONSENT GATE — Required for tiers >= $2,497. Hidden for digital products. */}
+          {!info.isDigitalProduct && info.priceNum >= 2497 && (
             <label className="mt-4 flex items-start gap-3 rounded-lg border border-zinc-700 bg-zinc-800/50 p-4 cursor-pointer">
               <input
                 type="checkbox"
@@ -731,7 +762,7 @@ function CheckoutContent() {
           {/* Price shown includes priority delivery add-on when selected.    */}
           <button
             onClick={handleCheckout}
-            disabled={loading || !email || (info.priceNum >= 2497 && !consentChecked)}
+            disabled={loading || !email || (!info.isDigitalProduct && info.priceNum >= 2497 && !consentChecked)}
             className="mt-4 w-full rounded-lg bg-amber-500 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? (
@@ -744,6 +775,8 @@ function CheckoutContent() {
               </span>
             ) : tier === "situation-room"
               ? "Apply for The Situation Room"
+              : info.isDigitalProduct
+              ? `Get Instant Access — ${info.price}`
               : `Pay ${priorityDelivery && info.priorityPriceNum ? `$${info.priceNum + info.priorityPriceNum}` : info.price} — Secure Checkout`}
           </button>
 

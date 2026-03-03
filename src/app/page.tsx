@@ -100,6 +100,11 @@ const homeFaqs = [
     answer:
       "Two guarantees. Delivery: if we miss the stated deadline or question count, full cash refund — no questions asked. Satisfaction: if your delivered report doesn't help, contact us within 30 days for 100% credit toward any higher tier. Upgrade credits apply to purchases you keep.",
   },
+  {
+    question: "What's the Defense Playbook?",
+    answer:
+      "The DUI Defense Playbook ($97) is an instant-download PDF with 23 questions your DUI attorney hopes you never ask, a breathalyzer calibration checklist, a case stage roadmap, 12 red flags, and an attorney accountability scorecard. No intake form, no wait — built from 40+ elite defense attorneys' documented strategies. Your $97 is fully credited toward the Case Decoder within 30 days.",
+  },
 ];
 
 /** FAQPage JSON-LD schema for Google rich snippets. Renders as a <script> tag in the page head. */
@@ -181,6 +186,15 @@ export default function Home() {
               className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
             >
               check your attorney&apos;s score — free →
+            </Link>
+          </p>
+          <p className="mt-2 text-sm text-zinc-400">
+            DUI?{" "}
+            <Link
+              href="/playbook/dui-first-offense"
+              className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+            >
+              Get the DUI Defense Playbook — $97 instant download →
             </Link>
           </p>
           <p className="mt-2 text-sm font-semibold text-amber-500">

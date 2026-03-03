@@ -135,7 +135,7 @@ type ScoreResult = {
  * Shows: score circle (color-coded by band), observations, optional email capture,
  * CTA to Case Decoder, and a "take again" reset link.
  */
-function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void }) {
+function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void; answers: Record<string, string> }) {
   const [emailSubmitting, setEmailSubmitting] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   // Band-to-color mapping: Critical (red) through Excellent (emerald)
@@ -229,9 +229,30 @@ function ScoreDisplay({ result, emailSent, setEmailSent }: { result: ScoreResult
         <p className="text-center text-sm text-green-400">Sent! Check your inbox.</p>
       )}
 
+      {/* PLAYBOOK CTA — DUI-specific, appears above Case Decoder when applicable */}
+      {answers.chargeType === "dui" && (
+        <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
+          <h3 className="font-bold text-white">
+            DUI Defense Playbook — $97, instant download
+          </h3>
+          <p className="mt-2 text-sm text-zinc-400">
+            23 DUI-specific questions for your attorney, a breathalyzer calibration
+            checklist, DMV deadline guide, case stage roadmap, and attorney
+            accountability scorecard. Instant PDF.
+          </p>
+          <p className="mt-2 text-xs text-zinc-500">
+            Full credit toward Case Decoder within 30 days.
+          </p>
+          <Link
+            href="/playbook/dui-first-offense"
+            className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+          >
+            Get the DUI Playbook — $97 →
+          </Link>
+        </div>
+      )}
+
       {/* CASE DECODER CTA — Primary conversion from free -> paid.           */}
-      {/* Positions the $197 Case Decoder as the "full breakdown" upgrade   */}
-      {/* from the free score. Secondary CTA to free Discovery Checklist.   */}
       <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
         <h3 className="font-bold text-white">
           Want the full breakdown + 15 questions for your attorney?
@@ -327,7 +348,7 @@ export default function ScorePage() {
         </div>
 
         {result ? (
-          <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} />
+          <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} />
         ) : (
           <form onSubmit={handleSubmit} className="mt-10 space-y-8">
             {questions.map((q, qIndex) => (

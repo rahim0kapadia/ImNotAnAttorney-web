@@ -26,6 +26,7 @@ import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { LeadCapture } from "@/components/LeadCapture";
 import { BlogCTA } from "@/components/BlogCTA";
 import { BlogCard } from "@/components/BlogCard";
+import { PlaybookCTA } from "@/components/PlaybookCTA";
 import { SourceIntelligence } from "@/components/SourceIntelligence";
 import { SITE_URL } from "@/lib/site";
 import { MDXRemote } from "next-mdx-remote/rsc";
@@ -187,6 +188,13 @@ export default async function BlogPostPage({ params }: PageProps) {
             </a>
           </div>
         </div>
+
+        {/* Playbook CTA — shown above BlogCTA for DUI posts */}
+        {post.category === "dui" && (
+          <div className="mt-12">
+            <PlaybookCTA />
+          </div>
+        )}
 
         {/* Service CTA */}
         <div className="mt-12">
