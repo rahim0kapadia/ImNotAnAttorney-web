@@ -71,7 +71,7 @@ const tiers = [
   },
   {
     name: "The X-Ray",
-    price: "$1,497",
+    price: "$2,497",
     anchor: null,
     description: "Full discovery analysis. 10 business days.",
     features: [
@@ -91,7 +91,7 @@ const tiers = [
   },
   {
     name: "The War Room",
-    price: "$3,497",
+    price: "$4,997",
     anchor: "Less than 10% of most retainers",
     description:
       "Full intelligence operation. 25-28 days + weekly updates.",

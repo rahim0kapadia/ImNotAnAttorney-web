@@ -135,13 +135,13 @@ export function Footer() {
                 href="/checkout?tier=x-ray"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                The X-Ray ($1,497)
+                The X-Ray ($2,497)
               </Link>
               <Link
                 href="/checkout?tier=war-room"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                The War Room ($3,497)
+                The War Room ($4,997)
               </Link>
               <Link
                 href="/checkout?tier=situation-room"

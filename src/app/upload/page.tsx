@@ -2,7 +2,7 @@
  * Upload Page (/upload?case=<caseId>&email=...)
  *
  * Discovery document upload page for customers who purchased discovery-tier
- * services (X-Ray $1,497+, War Room, Situation Room, Witness Pack).
+ * services (X-Ray $2,497+, War Room, Situation Room, Witness Pack).
  * Customers receive a personalized upload link via email after checkout.
  *
  * User journey position:

@@ -16,7 +16,7 @@
  * The `onUploadComplete` callback fires after each batch with the full cumulative
  * list of uploaded files, allowing parent components to track state.
  *
- * Used on: `/upload` page for tiers that include discovery analysis ($1,497+).
+ * Used on: `/upload` page for tiers that include discovery analysis ($2,497+).
  *
  * @param props.caseId           - Supabase case UUID, sent with each upload request.
  * @param props.onUploadComplete - Optional callback receiving the full list of uploaded files.

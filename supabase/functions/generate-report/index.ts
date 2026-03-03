@@ -2509,7 +2509,7 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
   </div>
   <div class="no-print" style="margin-top: 32px; text-align: center;">
     <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">When you get discovery evidence, we can go even deeper:</p>
-    <a href="/checkout?tier=x-ray" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">The X-Ray — $1,497 ($500 after credit)</a>
+    <a href="/checkout?tier=x-ray" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">The X-Ray — $2,497 ($1,500 after credit)</a>
     <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $997 is fully credited toward any tier within 12 months.</p>
   </div>
 </div>

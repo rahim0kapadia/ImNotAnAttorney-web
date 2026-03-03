@@ -461,7 +461,7 @@ export async function POST(req: NextRequest) {
     upgradeHtml = `
       <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">
         <p style="margin: 0; color: #F59E0B; font-weight: bold;">When you get discovery — we're ready.</p>
-        <p style="margin: 8px 0 0; color: #D4D4D8;">Your $997 is credited toward The X-Ray ($1,497). Pay only $500. <a href="${origin}/services" style="color: #F59E0B;">View upgrade options</a></p>
+        <p style="margin: 8px 0 0; color: #D4D4D8;">Your $997 is credited toward The X-Ray ($2,497). Pay only $1,500. <a href="${origin}/services" style="color: #F59E0B;">View upgrade options</a></p>
       </div>`;
   } else {
     // Case Decoder (default)

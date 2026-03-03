@@ -26,14 +26,14 @@
  *  10. Email capture — Required field, enables cart abandonment recovery
  *  11. Court date input — Optional, triggers urgency nudge if <14 days away
  *  12. Priority delivery checkbox — Add-on upsell with dynamic pricing
- *  13. Consent checkbox — Required for $1,497+ tiers (custom research acknowledgment)
+ *  13. Consent checkbox — Required for $2,497+ tiers (custom research acknowledgment)
  *  14. CTA button — Dynamic label showing total price (base + priority if selected)
  *  15. Upgrade credits reminder — Below the card
  *
  * Business logic:
  *   - Email is captured BEFORE Stripe redirect for abandonment recovery
  *   - Court date <14 days auto-highlights priority delivery checkbox
- *   - Consent gate for $1,497+ tiers (priceNum >= 1497) blocks checkout until checked
+ *   - Consent gate for $2,497+ tiers (priceNum >= 2497) blocks checkout until checked
  *   - Situation Room tier redirects to intake form instead of Stripe (application flow)
  *   - Priority delivery add-on adds to base price dynamically
  *   - handleCheckout() POSTs to /api/checkout which creates a Stripe session
@@ -171,8 +171,8 @@ const TIER_INFO: Record<string, TierInfo> = {
     nudge: {
       nextTierSlug: "x-ray",
       nextTierName: "The X-Ray",
-      nextTierPrice: "$1,497",
-      upgradeCost: "$500",
+      nextTierPrice: "$2,497",
+      upgradeCost: "$1,500",
       unlocks:
         "Adds full discovery analysis — timelines, discrepancies, red flags inside the documents your attorney already has.",
       bestFor:
@@ -181,8 +181,8 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "x-ray": {
     name: "The X-Ray",
-    price: "$1,497",
-    priceNum: 1497,
+    price: "$2,497",
+    priceNum: 2497,
     delivery: "10 business days",
     requiresDiscovery: true,
     features: [
@@ -213,8 +213,8 @@ const TIER_INFO: Record<string, TierInfo> = {
     nudge: {
       nextTierSlug: "war-room",
       nextTierName: "The War Room",
-      nextTierPrice: "$3,497",
-      upgradeCost: "$2,000",
+      nextTierPrice: "$4,997",
+      upgradeCost: "$2,500",
       unlocks:
         "Adds judge and prosecution dossiers, witness analysis for up to 8 witnesses, a case law package, and weekly updates.",
       bestFor:
@@ -223,8 +223,8 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "war-room": {
     name: "The War Room",
-    price: "$3,497",
-    priceNum: 3497,
+    price: "$4,997",
+    priceNum: 4997,
     delivery: "25-28 days + weekly updates",
     requiresDiscovery: true,
     features: [
@@ -258,7 +258,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       nextTierSlug: "situation-room",
       nextTierName: "The Situation Room",
       nextTierPrice: "$9,997",
-      upgradeCost: "$6,500",
+      upgradeCost: "$5,000",
       unlocks:
         "Trial Intelligence Operations — all witnesses researched, daily trial prep, Priority Response Line, JOA + sentencing research.",
       bestFor:
@@ -701,11 +701,11 @@ function CheckoutContent() {
             </label>
           )}
 
-          {/* CONSENT GATE — Required for tiers >= $1,497 (X-Ray, War Room,   */}
+          {/* CONSENT GATE — Required for tiers >= $2,497 (X-Ray, War Room,   */}
           {/* Situation Room). Customer must acknowledge that custom research  */}
           {/* begins on intake and delivered work is non-refundable.           */}
           {/* CTA button is disabled until this is checked.                    */}
-          {info.priceNum >= 1497 && (
+          {info.priceNum >= 2497 && (
             <label className="mt-4 flex items-start gap-3 rounded-lg border border-zinc-700 bg-zinc-800/50 p-4 cursor-pointer">
               <input
                 type="checkbox"
@@ -726,12 +726,12 @@ function CheckoutContent() {
             ImNotAnAttorney provides legal information and research — not legal advice. No attorney-client relationship is created.
           </p>
 
-          {/* CTA BUTTON — Disabled until: email provided + consent (for $1,497+). */}
+          {/* CTA BUTTON — Disabled until: email provided + consent (for $2,497+). */}
           {/* Dynamic label: "Apply for The Situation Room" or "Pay $X — Secure Checkout". */}
           {/* Price shown includes priority delivery add-on when selected.    */}
           <button
             onClick={handleCheckout}
-            disabled={loading || !email || (info.priceNum >= 1497 && !consentChecked)}
+            disabled={loading || !email || (info.priceNum >= 2497 && !consentChecked)}
             className="mt-4 w-full rounded-lg bg-amber-500 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? (

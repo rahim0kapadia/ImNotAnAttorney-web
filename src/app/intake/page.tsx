@@ -385,8 +385,8 @@ const usStates = [
 const serviceInterests = [
   "Case Decoder ($197)",
   "Intelligence Brief ($997)",
-  "The X-Ray ($1,497)",
-  "The War Room ($3,497)",
+  "The X-Ray ($2,497)",
+  "The War Room ($4,997)",
   "The Situation Room ($9,997)",
   "Not sure \u2014 help me decide",
 ];
@@ -535,8 +535,8 @@ function IntakeForm() {
     services: interest ? [`The Situation Room ($9,997)`] : prefillTier ? [({
       "case-decoder": "Case Decoder ($197)",
       "intelligence-brief": "Intelligence Brief ($997)",
-      "x-ray": "The X-Ray ($1,497)",
-      "war-room": "The War Room ($3,497)",
+      "x-ray": "The X-Ray ($2,497)",
+      "war-room": "The War Room ($4,997)",
       "situation-room": "The Situation Room ($9,997)",
     } as Record<string, string>)[prefillTier] || prefillTier] : ([] as string[]),
     pleaOffered: "",

@@ -468,7 +468,7 @@ export default function Home() {
       {/* GUARANTEE SECTION — Tiered guarantees to reduce purchase risk.     */}
       {/* Lower tiers ($197/$997): Full cash refund if delivery or question */}
       {/* count missed + 100% credit toward upgrade within 30 days.         */}
-      {/* Higher tiers ($1,497+): Delivery guarantee only (custom research  */}
+      {/* Higher tiers ($2,497+): Delivery guarantee only (custom research  */}
       {/* begins on intake, non-refundable once delivered).                  */}
       <section className="border-t border-zinc-800 px-4 py-16">
         <div className="mx-auto max-w-3xl text-center">
@@ -486,7 +486,7 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <p className="text-sm font-semibold text-amber-400">The X-Ray ($1,497), War Room ($3,497) &amp; Situation Room ($9,997)</p>
+                <p className="text-sm font-semibold text-amber-400">The X-Ray ($2,497), War Room ($4,997) &amp; Situation Room ($9,997)</p>
                 <p className="mt-1 text-sm text-zinc-300">
                   Delivery guarantee — every deliverable completed on schedule, or a
                   full refund. These services involve substantial custom research

@@ -56,7 +56,7 @@ create table if not exists orders (
   refunded_at timestamptz, -- when refund was processed
   priority_delivery boolean default false, -- priority delivery add-on purchased
   court_date date, -- client's next court date (from checkout)
-  consent_timestamp timestamptz, -- when $1,497+ consent checkbox was accepted
+  consent_timestamp timestamptz, -- when $2,497+ consent checkbox was accepted
   created_at timestamptz default now() not null,
   paid_at timestamptz
 );
@@ -68,7 +68,7 @@ create table if not exists cases (
   email text not null,
   tier text not null,
   status text not null default 'intake', -- intake, commenced, in-progress, review, phase_1_delivered, phase_2_delivered, delivered, refunded
-  commenced_at timestamptz, -- when custom research began (refund policy trigger for $1,497+)
+  commenced_at timestamptz, -- when custom research began (refund policy trigger for $2,497+)
   intake_id uuid references intakes(id),
   file_urls text[], -- discovery document URLs in Supabase Storage
   deliverable_url text, -- URL to final report

@@ -7,7 +7,7 @@
  *   Upload Page --> POST /api/upload (per file) --> Supabase Storage
  *     --> POST /api/upload/finalize (once, after all files) --> Operator notification
  *
- * This endpoint is used by customers on the $1,497+ tiers (X-Ray, War Room,
+ * This endpoint is used by customers on the $2,497+ tiers (X-Ray, War Room,
  * Situation Room) who need to submit discovery packets (police reports, lab
  * results, witness statements, etc.) for analysis.
  *

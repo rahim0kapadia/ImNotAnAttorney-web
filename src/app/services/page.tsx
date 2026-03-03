@@ -82,7 +82,7 @@ const caseTypes = [
       {
         name: "The X-Ray",
         slug: "x-ray",
-        price: "$1,497",
+        price: "$2,497",
         desc: "Includes Case Decoder + Intelligence Brief delivered first. Full discovery analysis — weight discrepancies, lab methodology gaps, CI reliability, chain of custody. 35+ case-specific questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, your defense openings ranked by strength.",
         discovery: true,
         bestValue: true,
@@ -90,7 +90,7 @@ const caseTypes = [
       {
         name: "The War Room",
         slug: "war-room",
-        price: "$3,497",
+        price: "$4,997",
         desc: "Everything above + officer dossiers, witness analysis (up to 8), motion timing questions for your attorney, case law package, weekly updates. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
         discovery: true,
       },
@@ -128,7 +128,7 @@ const caseTypes = [
       {
         name: "The X-Ray",
         slug: "x-ray",
-        price: "$1,497",
+        price: "$2,497",
         desc: "Includes Case Decoder + Intelligence Brief delivered first. Full discovery analysis — BAC evidence, breathalyzer calibration, dashcam review, field sobriety compliance. 35+ questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, your defense openings ranked by strength.",
         discovery: true,
         bestValue: true,
@@ -136,7 +136,7 @@ const caseTypes = [
       {
         name: "The War Room",
         slug: "war-room",
-        price: "$3,497",
+        price: "$4,997",
         desc: "Officer dossiers, expert witness challenges, motion timing questions for your attorney, case law package, weekly updates until resolution. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
         discovery: true,
       },
@@ -174,7 +174,7 @@ const caseTypes = [
       {
         name: "The X-Ray",
         slug: "x-ray",
-        price: "$1,497",
+        price: "$2,497",
         desc: "Discovery indexing for massive cases. Financial document analysis, witness statement review, timeline reconstruction. 35+ questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, your defense openings ranked by strength.",
         discovery: true,
         bestValue: true,
@@ -182,7 +182,7 @@ const caseTypes = [
       {
         name: "The War Room",
         slug: "war-room",
-        price: "$3,497",
+        price: "$4,997",
         desc: "Full intelligence operation — AUSA dossier, cooperator analysis, sentencing guidelines deep dive, case law package, weekly updates. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
         discovery: true,
       },
@@ -305,9 +305,9 @@ export default function ServicesPage() {
           </p>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {[
-              { attorney: "$10K", ours: "$197-$1,497", pct: "2-15%" },
-              { attorney: "$30K", ours: "$997-$3,497", pct: "3-12%" },
-              { attorney: "$100K", ours: "$1,497-$9,997", pct: "1-10%" },
+              { attorney: "$10K", ours: "$197-$2,497", pct: "2-25%" },
+              { attorney: "$30K", ours: "$997-$4,997", pct: "3-17%" },
+              { attorney: "$100K", ours: "$2,497-$9,997", pct: "2-10%" },
             ].map((row) => (
               <div key={row.attorney} className="rounded-lg bg-zinc-800/50 p-4">
                 <div className="text-xs text-zinc-400">You paid attorney</div>
@@ -342,7 +342,7 @@ export default function ServicesPage() {
 
         {/* DECISION GUIDE — Routes visitors based on discovery status.       */}
         {/* No discovery: Case Decoder ($197) or Intelligence Brief ($997).  */}
-        {/* Has discovery: X-Ray ($1,497) recommended as starting point.     */}
+        {/* Has discovery: X-Ray ($2,497) recommended as starting point.     */}
         {/* This reduces confusion from the 5-tier display below.            */}
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
@@ -369,7 +369,7 @@ export default function ServicesPage() {
             <p className="mt-2 text-sm text-zinc-400">
               The{" "}
               <Link href="/checkout?tier=x-ray" className="text-white underline">
-                X-Ray ($1,497)
+                X-Ray ($2,497)
               </Link>{" "}
               is the most thorough starting point. Full discovery analysis —
               every page, every discrepancy, every red flag mapped. 35+
@@ -511,12 +511,12 @@ export default function ServicesPage() {
                 Delivered within 72 hours. 10-15 targeted questions with judge intelligence.
               </p>
               <p>
-                <span className="font-semibold text-white">The X-Ray ($1,497):</span>{" "}
+                <span className="font-semibold text-white">The X-Ray ($2,497):</span>{" "}
                 Delivered within 10 business days. Full discovery analysis with 35+ questions.
               </p>
               <p>
                 <span className="font-semibold text-white">
-                  The War Room ($3,497):
+                  The War Room ($4,997):
                 </span>{" "}
                 Initial package within 25-28 business days. Weekly updates thereafter.
               </p>

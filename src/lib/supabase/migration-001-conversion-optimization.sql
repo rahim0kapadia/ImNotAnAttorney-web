@@ -37,7 +37,7 @@ ALTER TABLE orders ADD COLUMN IF NOT EXISTS consent_timestamp timestamptz;
 CREATE INDEX IF NOT EXISTS idx_orders_email_status ON orders(email, status);
 
 -- =============================================================================
--- 4. CASES — Work-commenced trigger (refund policy for $1,497+ tiers)
+-- 4. CASES — Work-commenced trigger (refund policy for $2,497+ tiers)
 -- =============================================================================
 ALTER TABLE cases ADD COLUMN IF NOT EXISTS commenced_at timestamptz;
 

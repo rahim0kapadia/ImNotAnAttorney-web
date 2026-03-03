@@ -13,7 +13,7 @@
  * - Upgrade credit calculation: 100% of prior lower-tier purchases applied as a
  *   one-time Stripe coupon, with a 12-month expiration window
  * - Situation Room ($9,997) requires a prior paid War Room order (prerequisite gate)
- * - Consent checkbox required server-side for tiers >= $1,497 (legal risk mitigation)
+ * - Consent checkbox required server-side for tiers >= $2,497 (legal risk mitigation)
  * - Redirect URLs sourced from NEXT_PUBLIC_SITE_URL env var, never from the request
  *   Origin header, to prevent open-redirect attacks
  * - Every Supabase query has explicit error handling with console logging
@@ -161,7 +161,7 @@ export async function POST(req: NextRequest) {
 
     // =========================================================================
     // 5. SITUATION ROOM PREREQUISITE GATE
-    // The Situation Room ($9,997) requires a prior paid War Room ($3,497) order.
+    // The Situation Room ($9,997) requires a prior paid War Room ($4,997) order.
     // This is a "soft gate" -- we don't block the purchase, but flag it in the
     // Stripe session metadata (prerequisite_skipped: "true") and add a note to
     // the line item description. The operator can then follow up manually.
@@ -190,14 +190,14 @@ export async function POST(req: NextRequest) {
 
     // =========================================================================
     // 6. SERVER-SIDE CONSENT VALIDATION
-    // Tiers at $1,497+ (The X-Ray and above) require the customer to check a
+    // Tiers at $2,497+ (The X-Ray and above) require the customer to check a
     // consent box on the checkout page acknowledging they understand the service
     // provides legal INFORMATION, not legal ADVICE. This is enforced server-side
     // because client-side validation alone can be bypassed. The consent timestamp
     // is recorded in Stripe session metadata for compliance records.
-    // Price comparison is in cents: $1,497 = 149700 cents.
+    // Price comparison is in cents: $2,497 = 249700 cents.
     // =========================================================================
-    if (tierConfig.price >= 149700 && !consent) {
+    if (tierConfig.price >= 249700 && !consent) {
       return NextResponse.json(
         { error: "Consent required for this tier" },
         { status: 400 }

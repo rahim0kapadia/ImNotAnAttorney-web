@@ -91,7 +91,7 @@ export const TIERS = {
   },
   "x-ray": {
     name: "The X-Ray",
-    price: 149700,
+    price: 249700,
     delivery: "10 business days",
     requiresDiscovery: true,
     priorityPrice: 49700,
@@ -100,7 +100,7 @@ export const TIERS = {
   },
   "war-room": {
     name: "The War Room",
-    price: 349700,
+    price: 499700,
     delivery: "25-28 days + weekly updates",
     requiresDiscovery: true,
     priorityPrice: 99700,

@@ -27,8 +27,8 @@
  *   - 24-hour countdown timer starts on first page load
  *   - Timer end time persisted in localStorage keyed by `oto_${tier}_${sessionId}`
  *   - Shows tier-specific upgrade: Case Decoder -> Intelligence Brief ($800),
- *     Intelligence Brief -> X-Ray ($500), X-Ray -> War Room ($2,000),
- *     War Room -> Situation Room ($6,500)
+ *     Intelligence Brief -> X-Ray ($1,500), X-Ray -> War Room ($2,500),
+ *     War Room -> Situation Room ($5,000)
  *   - Disappears when timer expires ("Expired")
  *   - Prices reflect 100% upgrade credit from current purchase
  *
@@ -355,7 +355,7 @@ function SuccessContent() {
                   Upgrade to The War Room
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $1,497 is already credited. Get judge and prosecution dossiers, witness analysis, case law package, and weekly updates through resolution.
+                  Your $2,497 is already credited. Get judge and prosecution dossiers, witness analysis, case law package, and weekly updates through resolution.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: witness analysis (up to 8), officer dossiers, motion timing questions for your attorney, weekly intelligence updates.
@@ -364,7 +364,7 @@ function SuccessContent() {
                   href="/checkout?tier=war-room"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Claim Your Upgrade Credit — $2,000 &rarr;
+                  Claim Your Upgrade Credit — $2,500 &rarr;
                 </Link>
               </div>
             )}
@@ -377,7 +377,7 @@ function SuccessContent() {
                   Upgrade to The Situation Room
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $3,497 is already credited. Get Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line.
+                  Your $4,997 is already credited. Get Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: Trial Intelligence Operations, witness impeachment research packages, Priority Response Line (2hr trial prep, 4hr trial), direct access channel.
@@ -386,7 +386,7 @@ function SuccessContent() {
                   href="/checkout?tier=situation-room"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Claim Your Upgrade Credit — $6,500 &rarr;
+                  Claim Your Upgrade Credit — $5,000 &rarr;
                 </Link>
               </div>
             )}

@@ -282,7 +282,7 @@ export async function POST(req: NextRequest) {
       // INCLUDED-TIER CASE CREATION (tier inclusion model)
       // ──────────────────────────────────────────────────────────────
       // When a customer buys IB ($997), they also get a Case Decoder
-      // delivered within 24 hours. When they buy X-Ray ($1,497), they
+      // delivered within 24 hours. When they buy X-Ray ($2,497), they
       // get CD + IB. Each included tier gets its own case record with
       // is_included_deliverable=true so the system can track and
       // deliver them independently.
@@ -483,7 +483,7 @@ export async function POST(req: NextRequest) {
     // ──────────────────────────────────────────────────────────────
     // DISCOVERY UPLOAD SECTION (for payment confirmation email)
     // ──────────────────────────────────────────────────────────────
-    // Discovery tiers ($1,497+) require the customer to upload their
+    // Discovery tiers ($2,497+) require the customer to upload their
     // discovery documents. This section is injected into the payment
     // confirmation email only for those tiers.
     const uploadSection = (caseId && requiresDiscovery)

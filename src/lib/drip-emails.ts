@@ -348,7 +348,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">When You Get Discovery</h1>
       <p>Your Intelligence Brief covered charges, judge intel, and accountability. But the real power is in the discovery documents.</p>
-      <p>When you receive discovery, the <strong style="color: white;">X-Ray ($1,497)</strong> analyzes every page:</p>
+      <p>When you receive discovery, the <strong style="color: white;">X-Ray ($2,497)</strong> analyzes every page:</p>
       <ul style="padding-left: 20px;">
         <li>Complete document index</li>
         <li>Comprehensive timeline</li>
@@ -409,7 +409,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
 
-  // --- War Room ($3,497) ---
+  // --- War Room ($4,997) ---
   {
     key: "post_war_room_delivery",
     delayDays: 0,
@@ -526,16 +526,16 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">Your Witnesses Revealed Something Interesting</h1>
       <p>Witness analysis often uncovers patterns that go beyond individual testimony — contradictions that connect to the broader case, gaps that suggest missing evidence, statements that don't match the physical evidence.</p>
       <p>If your witness analysis raised more questions than it answered, a deeper dive might be worth it:</p>
-      <p><strong style="color: white;">The X-Ray ($1,497)</strong> — full discovery analysis:</p>
+      <p><strong style="color: white;">The X-Ray ($2,497)</strong> — full discovery analysis:</p>
       <ul style="padding-left: 20px;">
         <li>Complete document index and timeline</li>
         <li>Discrepancy report across ALL evidence</li>
         <li>35+ case-specific questions</li>
         <li>Discovery Health Score + Defense Opportunity Index</li>
       </ul>
-      <p><strong style="color: white;">Your $297 is already credited.</strong> Upgrade for $1,200.</p>
-      ${cta("Upgrade to The X-Ray — $1,200 →", "/checkout?tier=x-ray")}
-      <p style="margin-top: 16px;">Or go deeper with <strong style="color: white;">The War Room ($3,497)</strong> — full intelligence operation with weekly updates. Your $297 credit applies. ${link("Learn more →", "/services")}</p>
+      <p><strong style="color: white;">Your $297 is already credited.</strong> Upgrade for $2,200.</p>
+      ${cta("Upgrade to The X-Ray — $2,200 →", "/checkout?tier=x-ray")}
+      <p style="margin-top: 16px;">Or go deeper with <strong style="color: white;">The War Room ($4,997)</strong> — full intelligence operation with weekly updates. Your $297 credit applies. ${link("Learn more →", "/services")}</p>
     `,
   },
 
