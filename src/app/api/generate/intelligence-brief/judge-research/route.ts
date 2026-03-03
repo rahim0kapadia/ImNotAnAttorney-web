@@ -50,20 +50,38 @@ export async function POST(req: NextRequest) {
   const supabase = createAdminClient();
 
   // ── SAVE JUDGE RESEARCH ────────────────────────────────────
-  const { error: saveError } = await supabase
-    .from("cases")
-    .update({
-      judge_research_data: judgeResearch,
-      updated_at: new Date().toISOString(),
-    })
-    .eq("id", caseId);
+  // Skip save if judgeResearch is empty {} and case already has data (retry scenario)
+  const isEmptyResearch = Object.keys(judgeResearch).length === 0;
+  if (isEmptyResearch) {
+    const { data: existing } = await supabase
+      .from("cases")
+      .select("judge_research_data")
+      .eq("id", caseId)
+      .single();
+    if (existing?.judge_research_data && Object.keys(existing.judge_research_data).length > 0) {
+      console.log("[Judge-Research] Empty {} received but case already has research data — skipping save");
+    } else {
+      return NextResponse.json(
+        { error: "judgeResearch is empty and no existing data found on case" },
+        { status: 400 },
+      );
+    }
+  } else {
+    const { error: saveError } = await supabase
+      .from("cases")
+      .update({
+        judge_research_data: judgeResearch,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", caseId);
 
-  if (saveError) {
-    console.error("[Judge-Research] Failed to save research:", saveError);
-    return NextResponse.json(
-      { error: "Failed to save judge research" },
-      { status: 500 },
-    );
+    if (saveError) {
+      console.error("[Judge-Research] Failed to save research:", saveError);
+      return NextResponse.json(
+        { error: "Failed to save judge research" },
+        { status: 500 },
+      );
+    }
   }
 
   // ── ATOMIC GUARD ───────────────────────────────────────────

@@ -1,14 +1,16 @@
 # Intelligence Brief ($997) — Pipeline Documentation
 
-> **STALE DOC WARNING:** This document predates the v3 delivery SOP and the tier inclusion restructure. The canonical SOP is `system/templates/intelligence-brief/delivery-sop.md` in the ImNotAnAttorney repo. Some details below (question counts, delivery timelines, pipeline steps) may be outdated.
+> **STATUS (2026-03-03):** Pipeline is fully deployed and audited. Phase A (5 sections, parallel) + Phase B (4 sections, sequential) + static appendices + HTML rendering all automated. Operator intervenes only for judge research between phases. See `AUDIT-CHECKLIST.md` for the IB audit results.
+>
+> The canonical delivery SOP is `system/templates/intelligence-brief/delivery-sop.md` in the ImNotAnAttorney repo.
 
 ## Pipeline Overview
 
-The Case Intelligence Brief is the $997 tier (`intelligence-brief` slug). It provides deeper case analysis than the Case Decoder: judge tendencies, jurisdiction-specific plea statistics, motion landscape, and 10-15 targeted questions.
+The Case Intelligence Brief is the $997 tier (`intelligence-brief` slug). It includes the Case Decoder ($197) as Part 1, then generates a deeper 9-section + 3-appendix report as Part 2 via a two-phase pipeline.
 
 **Delivery target:** 72 hours (24 hours with priority add-on at $297).
 
-This document maps every step of the pipeline, flagging what is built and operational versus what is NOT built and requires manual intervention.
+**Pipeline flow:** Checkout → Webhook → CD auto-generation → Phase 2 intake → Phase A (5 sections parallel) → Operator judge research → Phase B (4 sections sequential) → HTML report compiled → Operator review → Delivery email.
 
 ---
 
@@ -120,63 +122,50 @@ The token-gated report viewer renders whatever HTML is stored in `cases.report_h
 
 ---
 
-## What Is NOT Built
+## ~~What Is NOT Built~~ — RESOLVED (2026-03-03)
 
-### 1. Generation Endpoint
+All items below have been built and deployed. Kept for historical reference.
 
-There is no `/api/generate/intelligence-brief` endpoint. The only generation endpoint is `/api/generate/case-decoder/route.ts`, which:
+### ~~1. Generation Endpoint~~ — BUILT
+- Phase A dispatcher: `src/app/api/generate/intelligence-brief/route.ts`
+- Phase B dispatcher: `src/app/api/generate/intelligence-brief/judge-research/route.ts`
+- Edge Function: `supabase/functions/generate-report/index.ts` (handles `tier=intelligence-brief`, `phase=A` and `phase=B`)
 
-- Dispatches to the Supabase Edge Function `generate-report`.
-- The Edge Function runs Claude Sonnet 4.6 with a Case Decoder-specific prompt.
-- The prompt template generates a 9-section Case Decoder report.
+### ~~2. Auto-Trigger from Webhook~~ — BUILT
+- Webhook auto-triggers CD generation for IB tier (included product)
+- Phase A auto-triggers after Phase 1 intake submission
+- Phase B triggered by operator via judge-research endpoint
 
-None of this infrastructure has been adapted for the Intelligence Brief. Specifically missing:
+### ~~3. Delivery Email Personalization~~ — BUILT
+- `/api/deliver` branches on tier for subject line and body copy
+- Post-purchase drip emails tier-aware in `drip-emails.ts`
 
-- **No dispatcher route** at `src/app/api/generate/intelligence-brief/route.ts`.
-- **No Edge Function** (or Edge Function branch) for Intelligence Brief prompts.
-- **No prompt template** deployed for generating an Intelligence Brief report.
-
-### 2. Auto-Trigger from Webhook
-
-The webhook only auto-triggers generation for `case-decoder`. Even if a generation endpoint existed for Intelligence Brief, the webhook would not call it. Both the webhook (line 290) and intake endpoint (line 123) have explicit `tier === "case-decoder"` guards.
-
-### 3. Delivery Email Personalization
-
-The `/api/deliver` endpoint's delivery email references "Case Decoder" specifically in the subject line and body. It does not branch on tier to send tier-appropriate copy. The drip email template `post_intelligence_brief_delivery` exists in `drip-emails.ts` but is only used by the cron's drip recording, not by the actual delivery email sent in `/api/deliver`.
-
-### 4. Case Decoder-Specific Cron Logic
-
-The cron's stuck-case detection (Parts 4 and 5) monitors `"intake"` and `"generating"` statuses. For Intelligence Brief cases that sit in `"intake"` status for 2+ hours (which is expected since there is no auto-generation), the cron will mark them `"intake-stalled"` and alert the operator. This is a false positive for this tier.
+### ~~4. Case Decoder-Specific Cron Logic~~ — FIXED
+- Cron stuck-intake detection skips IB-tier cases in `intake` status
+- IB-specific stuck detection: `researching` (24h) and `compiling` (30min)
 
 ---
 
-## What Happens Today (Manual Process)
-
-Given the gaps above, the current Intelligence Brief delivery workflow is:
+## Current Automated Pipeline
 
 ```
 1. Customer pays $997 via Stripe Checkout
-2. Webhook creates order (paid) + case (awaiting-intake or intake)
-3. Customer receives payment confirmation email
-4. Operator receives new order notification email
-5. Customer fills intake form (if not already done)
-   - Intake links to case, status becomes "intake"
-6. Operator receives intake notification email
-7. --- MANUAL ZONE ---
-8. Operator reads intake data from Supabase
-9. Operator manually creates the Intelligence Brief report
-   (using prompt templates from system/templates/ and elite skills)
-10. Operator manually sets report_html + report_token on the case in Supabase
-11. Operator manually updates case status to "review"
-12. Operator uses /api/deliver to send the report to the customer
-    (or sends the delivery email manually if the hardcoded Case Decoder
-    copy in /api/deliver is unacceptable)
-13. Case status becomes "delivered"
-14. Drip cron sends story harvest email 5 days after delivery
-15. Drip cron sends X-Ray upsell email 10 days after purchase
+2. Webhook creates order (paid) + case
+3. CD auto-generated (included Part 1) → delivered
+4. Customer completes Phase 2 intake (judge, county, case details)
+5. Phase A auto-triggers → 5 sections generated in parallel
+6. Phase A failure threshold: 4+/5 failures → generation-failed + operator alert
+7. Operator receives judge-research instructions email
+8. Operator researches judge → POSTs to judge-research endpoint
+9. Phase B auto-triggers → 4 sections generated sequentially
+10. HTML report compiled with ToC + 3 static appendices + page breaks
+11. Case → review, operator notified with delivery link
+12. Operator reviews → delivers via /api/deliver
+13. Customer receives delivery email with report link
+14. Drip: story harvest (day 5), X-Ray upsell (day 10)
 ```
 
-**Important caveat:** Step 5 may trigger a false "intake-stalled" alert from the cron if the case sits in `"intake"` for more than 2 hours. The operator should expect and ignore this alert for Intelligence Brief cases.
+**Operator touchpoints:** Judge research (step 8) and review/delivery (step 12). Everything else is automated.
 
 ---
 
@@ -203,49 +192,22 @@ Additionally, if the customer subscribed to the email list, they may also receiv
 
 ---
 
-## Next Steps for Full Automation
+## ~~Next Steps for Full Automation~~ — ALL COMPLETE (2026-03-03)
 
-To bring the Intelligence Brief pipeline to the same level of automation as Case Decoder, the following work is needed:
+All 6 items below are implemented and deployed. See `AUDIT-CHECKLIST.md` for the full IB audit.
 
-### 1. Prompt Template for Intelligence Brief
-Create Claude prompt template(s) that generate the Intelligence Brief report sections:
-- Charges explained (deeper than Case Decoder)
-- Judge tendencies and sentencing patterns
-- Jurisdiction-specific plea statistics
-- Motion landscape report
-- 10-15 targeted questions
-- Attorney accountability analysis
-- Judge Tendencies Card (bonus)
+1. ~~Prompt Template~~ — 9 section prompts in Edge Function (`buildIBPrompt`)
+2. ~~Edge Function~~ — Extended `generate-report` with `handleIBPhaseA` and `handleIBPhaseB`
+3. ~~Dispatcher Endpoints~~ — Phase A: `/api/generate/intelligence-brief/route.ts`, Phase B: `.../judge-research/route.ts`
+4. ~~Auto-Trigger~~ — Webhook and intake trigger CD generation; Phase A triggers after Phase 2 intake
+5. ~~Delivery Email~~ — `/api/deliver` branches on tier for subject and body
+6. ~~Cron Fix~~ — IB-specific stuck detection for `researching` (24h) and `compiling` (30min)
 
-### 2. Edge Function Update
-Either extend the existing `generate-report` Edge Function to branch on tier, or create a separate `generate-intelligence-brief` Edge Function. The function needs:
-- To read intake data from Supabase
-- To call Claude with the Intelligence Brief prompt template
-- To store `report_html` and `report_token` on the case
-- To update case status to `"review"`
-- To notify the operator with a delivery link
+---
 
-### 3. Dispatcher Endpoint
-Create `src/app/api/generate/intelligence-brief/route.ts` following the same pattern as the Case Decoder dispatcher:
-- Auth via OPERATOR_SECRET bearer token
-- Idempotency check (skip if already generating/review/delivered)
-- Atomic guard (conditional UPDATE to prevent race conditions)
-- Fire-and-forget call to the Edge Function
+## Remaining Deferred Items
 
-### 4. Auto-Trigger Wiring
-Update the webhook (`src/app/api/webhooks/stripe/route.ts`) and intake endpoint (`src/app/api/intake/route.ts`) to also trigger generation for `intelligence-brief` tier:
-- Webhook line ~290: Add `|| tier === "intelligence-brief"` to the guard
-- Intake line ~123: Add `|| pendingCase.tier === "intelligence-brief"` to the guard
-- Both need to call the new `/api/generate/intelligence-brief` endpoint
-
-### 5. Delivery Email Personalization
-Update `/api/deliver` to branch on `caseData.tier` and send tier-appropriate email copy:
-- Subject: "Your Intelligence Brief is Ready"
-- Body: Instructions specific to Intelligence Brief sections
-- Drip recording: Use `post_intelligence_brief_delivery` key instead of `post_case_decoder_delivery`
-
-### 6. Cron False Positive Fix
-Update the cron's stuck-intake detection (Part 4) to only flag `case-decoder` cases, or increase the threshold for higher tiers that have longer manual processing times.
+See `AUDIT-CHECKLIST.md` items IB1-IB8 for known low-severity gaps.
 
 ---
 
@@ -254,11 +216,14 @@ Update the cron's stuck-intake detection (Part 4) to only flag `case-decoder` ca
 | File | Role in Pipeline |
 |------|-----------------|
 | `src/lib/stripe.ts` | Tier definition (price, delivery, priority) |
-| `src/app/api/webhooks/stripe/route.ts` | Order + case creation on payment |
-| `src/app/api/intake/route.ts` | Intake submission + case linking |
-| `src/lib/drip-emails.ts` | Post-purchase email templates (3 emails) |
-| `src/app/api/deliver/route.ts` | Operator delivery endpoint (reusable) |
-| `src/app/api/generate/case-decoder/route.ts` | Generation dispatcher (Case Decoder only -- pattern to replicate) |
-| `src/app/api/cron/drip/route.ts` | Daily cron: drip emails + stuck-case detection |
+| `src/app/api/webhooks/stripe/route.ts` | Order + case creation on payment, CD auto-trigger |
+| `src/app/api/intake/route.ts` | Phase 1 intake + case linking |
+| `src/app/api/intake/intelligence-brief/route.ts` | Phase 2 intake (judge, county, case details) |
+| `src/app/api/generate/intelligence-brief/route.ts` | Phase A dispatcher |
+| `src/app/api/generate/intelligence-brief/judge-research/route.ts` | Phase B dispatcher (judge research + trigger) |
+| `supabase/functions/generate-report/index.ts` | Edge Function: Phase A (5 parallel) + Phase B (4 sequential) + HTML render |
+| `src/lib/drip-emails.ts` | Post-purchase email templates (delivery + story harvest + upsell) |
+| `src/app/api/deliver/route.ts` | Operator delivery endpoint (tier-aware) |
+| `src/app/api/cron/drip/route.ts` | Daily cron: drip emails + stuck-case detection (IB-aware) |
 | `src/app/report/[token]/page.tsx` | Token-gated report viewer (tier-agnostic) |
-| `supabase/functions/generate-report/` | Edge Function for LLM report generation (Case Decoder only) |
+| `src/lib/intelligence-brief/render.ts` | Canonical HTML renderer (reference — Edge Function has Deno duplicate) |

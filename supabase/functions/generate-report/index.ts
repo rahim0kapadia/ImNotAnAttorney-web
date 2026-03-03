@@ -1579,25 +1579,43 @@ function validateReportContent(markdown: string): { valid: boolean; violations: 
   const violations: string[] = [];
   const lower = markdown.toLowerCase();
 
-  // 1. Banned phrases
-  const bannedPhrases = [
-    "fire your attorney",
-    "publicly available",
-    "consult your attorney",
-    "you should",
-    "you need to",
-    "we recommend",
-    "we advise",
-    "file a complaint",
+  // 1. Banned phrases — with informational-context exemptions
+  // "you should know/understand/be aware" and "you need to know/understand/be prepared"
+  // are informational framing, not directive UPL advice.
+  const bannedPhrases: { phrase: string; exemptions: string[] }[] = [
+    { phrase: "fire your attorney", exemptions: [] },
+    { phrase: "publicly available", exemptions: [] },
+    { phrase: "consult your attorney", exemptions: [] },
+    { phrase: "you should", exemptions: ["you should know", "you should understand", "you should be aware", "you should never"] },
+    { phrase: "you need to", exemptions: ["you need to know", "you need to understand", "you need to be prepared", "you need to be ready", "what you need to", "whether you need to"] },
+    { phrase: "we recommend", exemptions: [] },
+    { phrase: "we advise", exemptions: [] },
+    { phrase: "file a complaint", exemptions: [] },
   ];
-  for (const phrase of bannedPhrases) {
+  for (const { phrase, exemptions } of bannedPhrases) {
     if (lower.includes(phrase)) {
-      violations.push(`Banned phrase detected: "${phrase}"`);
+      let idx = 0;
+      let hasReal = false;
+      while ((idx = lower.indexOf(phrase, idx)) !== -1) {
+        const contextStart = Math.max(0, idx - 40);
+        const contextEnd = Math.min(lower.length, idx + phrase.length + 40);
+        const context = lower.slice(contextStart, contextEnd);
+        const exempt = exemptions.some((e: string) => context.includes(e));
+        if (!exempt) {
+          hasReal = true;
+          break;
+        }
+        idx += phrase.length;
+      }
+      if (hasReal) {
+        violations.push(`Banned phrase detected: "${phrase}"`);
+      }
     }
   }
 
   // 2. Unsourced collateral claims — sentences mentioning collateral topics
   //    without a statute citation (§, U.S.C., F.S., or case name "v.")
+  //    Exempts "Good answer:" example sections (attorney response templates)
   const collateralTopics = [
     "employment", "housing", "immigration", "financial aid",
     "background check", "voting", "firearms",
@@ -1609,7 +1627,8 @@ function validateReportContent(markdown: string): { valid: boolean; violations: 
     if (mentionsTopic) {
       const hasCitation = /§|U\.S\.C\.|F\.S\.|C\.F\.R\.| v\. /.test(sentence);
       const hasAskFrame = sentLower.includes("ask your attorney");
-      if (!hasCitation && !hasAskFrame) {
+      const isExampleAnswer = sentLower.includes("good answer") || sentLower.includes("bad answer");
+      if (!hasCitation && !hasAskFrame && !isExampleAnswer) {
         const preview = sentence.trim().slice(0, 80);
         violations.push(`Unsourced collateral claim: "${preview}..."`);
       }
@@ -1920,6 +1939,32 @@ async function handleIBPhaseA(
     }
   }
 
+  // Failure threshold — if 4+ of 5 sections failed, abort
+  if (failures.length >= 4) {
+    console.error(`[IB-Phase-A] ABORT: ${failures.length}/5 sections failed — ${failures.join(", ")}`);
+    await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
+      status: "generation-failed",
+      section_outputs: sectionOutputs,
+      updated_at: new Date().toISOString(),
+    });
+    if (resendKey) {
+      await sendEmail({
+        to: operatorEmail,
+        subject: `IB Phase A FAILED: ${failures.length}/5 sections — ${escapeHtml(intake.first_name)}`,
+        html: `<h1 style="color: #EF4444;">Intelligence Brief Phase A Failed</h1>
+          <p><strong>${failures.length} of 5</strong> sections failed (${failures.join(", ")}). Case set to generation-failed.</p>
+          <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
+            <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(caseData.email)}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>
+          </div>
+          <p><strong>Action:</strong> Check Edge Function logs, then retry:</p>
+          <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${siteUrl}/functions/v1/generate-report -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" -H "Content-Type: application/json" -d '{"caseId":"${caseId}","tier":"intelligence-brief","phase":"A","force":true}'</code>`,
+        resendKey, fromEmail: resendFrom, operatorEmail,
+      });
+    }
+    return new Response(JSON.stringify({ error: "Phase A: too many section failures", failures }), { status: 500, headers });
+  }
+
   // Save section outputs and transition to researching
   await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
     section_outputs: sectionOutputs,
@@ -2053,7 +2098,7 @@ async function handleIBPhaseB(
     console.log(`[IB-Phase-B] Generating ${section.key}...`);
     try {
       // For later sections, rebuild variables with latest outputs
-      if (section.key === "questions" || section.key === "48hr-priorities") {
+      if (section.key === "your-plan" || section.key === "questions" || section.key === "48hr-priorities") {
         const updatedV = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, allOutputs);
         const prompt = buildIBPrompt(section.key, updatedV);
         section.system = prompt.system;
@@ -2300,6 +2345,86 @@ function buildIBPrompt(sectionKey: string, v: Record<string, string>): { system:
 }
 
 // ============================================================
+// INTELLIGENCE BRIEF: Static appendices (Deno-local)
+// Duplicated from src/lib/intelligence-brief/render.ts
+// ============================================================
+
+function buildTableOfContents(): string {
+  return `## Table of Contents
+
+- **START HERE: Your 48-Hour Priority List** — 3 actions for the next 48 hours
+- **Section 1: Your Case Roadmap** — Where you are, what happens next, the two paths
+- **Section 2: What's Working + What Needs Attention** — Attorney Accountability Score, decoded statements, gaps to clarify
+- **Section 3: Your Case Intelligence** — Outcome map, defense theories, judge profile, prosecution preview
+- **Section 4: Legal Options & Deadlines** — Motion landscape, deadline calendar, plea framework
+- **Section 5: Protecting Your Case and Life** — Case protection, life impact map, pending-case management
+- **Section 6: Your Plan** — Email template, phone script, 14-day plan, meeting prep, difficult conversations
+- **Appendix A: Brady/Giglio Checklist** — Evidence the prosecution must disclose
+- **Appendix B: Next Court Date Prep** — What to expect, wear, bring, and do
+- **Appendix C: Your Rights** — Key rights during criminal proceedings
+- **Appendix D: Questions for Your Attorney** — 10-15 targeted, gap-based questions`;
+}
+
+function buildBradyGiglioChecklist(): string {
+  return `## Appendix A: Brady/Giglio Checklist
+
+**What This Is:** Under *Brady v. Maryland* (1963) and *Giglio v. United States* (1972), the prosecution is constitutionally required to disclose evidence that is favorable to the defense. This includes exculpatory evidence (Brady) and impeachment evidence (Giglio).
+
+**Ask your attorney:** "Have you received all Brady/Giglio material? Is there anything outstanding?"
+
+### Evidence the Prosecution Must Disclose:
+
+- [ ] Exculpatory evidence (anything suggesting innocence)
+- [ ] Impeachment evidence (anything undermining prosecution witnesses)
+- [ ] Prior inconsistent statements by witnesses
+- [ ] Deals, promises, or inducements to witnesses
+- [ ] Criminal records of prosecution witnesses
+- [ ] Evidence of witness bias or motive to lie
+- [ ] Lab reports, forensic analysis, chain of custody documentation
+- [ ] Surveillance footage, body camera footage, dashcam footage
+- [ ] 911 calls and dispatch records
+- [ ] Prior complaints against arresting officers
+- [ ] Internal affairs investigations of involved officers
+- [ ] Evidence contradicting the prosecution's theory
+
+### What to Ask Your Attorney:
+
+1. "Have you filed a specific Brady demand or are you relying on the general obligation?"
+2. "Is there a standing discovery order in this case?"
+3. "Have you received all police reports, including supplemental reports?"
+4. "Are there any witnesses the prosecution hasn't disclosed?"`;
+}
+
+function buildYourRights(state: string): string {
+  return `## Appendix C: Your Rights During Criminal Proceedings
+
+**These rights exist regardless of your charge, your attorney, or your county.**
+
+### Constitutional Rights:
+- **Right to remain silent** (5th Amendment) — You cannot be compelled to testify against yourself
+- **Right to an attorney** (6th Amendment) — If you cannot afford one, one will be appointed
+- **Right to a speedy trial** (6th Amendment) — Timelines vary by state and jurisdiction
+- **Right to confront witnesses** (6th Amendment) — You can cross-examine anyone who testifies against you
+- **Right against unreasonable search and seizure** (4th Amendment) — Evidence obtained illegally may be suppressed
+- **Right to a jury trial** (6th Amendment) — For serious offenses, you have the right to be judged by a jury of your peers
+- **Right to due process** (14th Amendment) — Fair procedures must be followed
+- **Right against double jeopardy** (5th Amendment) — You cannot be tried twice for the same offense
+- **Right to be presumed innocent** — The prosecution must prove guilt beyond a reasonable doubt
+
+### Your Rights With Your Attorney:
+- You have the right to know what is happening in your case at all times
+- You have the right to be consulted before major decisions are made
+- You have the right to make the final decision on whether to accept a plea or go to trial
+- You have the right to effective assistance of counsel (Strickland v. Washington)
+- You have the right to fire your attorney and hire a new one (though timing matters)
+
+### If You Feel Your Rights Are Being Violated:
+- Document everything in writing (dates, times, what was said)
+- Follow the Advocacy Steps in Section 6j of this brief
+- Contact your state bar association's client protection hotline`;
+}
+
+// ============================================================
 // INTELLIGENCE BRIEF: HTML renderer (Deno-local)
 // Duplicated from src/lib/intelligence-brief/render.ts
 // ============================================================
@@ -2334,17 +2459,21 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
     return h;
   }
 
+  const stateForRights = meta.stateCounty.split(",")[0]?.trim() || "your state";
   const sections = [
     sectionOutputs["48hr-priorities"] || "",
+    buildTableOfContents(),
     sectionOutputs["case-roadmap"] || "",
     sectionOutputs["whats-working"] || "",
     sectionOutputs["case-intelligence"] || "",
     sectionOutputs["legal-options"] || "",
     sectionOutputs["protection"] || "",
     sectionOutputs["your-plan"] || "",
+    buildBradyGiglioChecklist(),
     sectionOutputs["court-prep"] || "",
+    buildYourRights(stateForRights),
     sectionOutputs["questions"] || "",
-  ].filter((s) => s.trim()).map((s) => md2html(s)).join("\n");
+  ].filter((s) => s.trim()).map((s) => md2html(s)).join('\n<div style="page-break-after: always;"></div>\n');
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -2546,6 +2675,15 @@ Deno.serve(async (req: Request) => {
     }
 
     console.log(`[generate-report] Claude done (${markdown.length} chars), rendering HTML...`);
+
+    // --- Strip model-generated methodology note (system injects the official one) ---
+    // The prompt tells Claude not to generate one, but ~5% of the time it does anyway.
+    // This regex matches a blockquote starting with "> **METHODOLOGY" through all
+    // continuation lines (lines starting with ">"), plus any trailing "---" separator.
+    markdown = markdown.replace(
+      /^>[ \t]*\*{0,2}METHODOLOGY[^\n]*(?:\n>[ \t]*[^\n]*)*/im,
+      ""
+    ).replace(/^\s*---\s*$/m, "").trim();
 
     // --- Post-generation validation (soft — log but don't block) ---
     const validation = validateReportContent(markdown);

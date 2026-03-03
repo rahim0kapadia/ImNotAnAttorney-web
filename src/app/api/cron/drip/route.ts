@@ -702,7 +702,8 @@ export async function GET(req: NextRequest) {
               <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(stuck.email)}</p>
               <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${stuck.id}</p>
             </div>
-            <p><strong>Action:</strong> Check Edge Function logs. Re-trigger Phase B via judge-research endpoint with auto_trigger_phase_b: true.</p>`,
+            <p><strong>Action:</strong> Check Edge Function logs. Re-trigger Phase B (judge research data is preserved):</p>
+            <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${ibOrigin}/api/generate/intelligence-brief/judge-research -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${stuck.id}","judgeResearch":{},"force":true}'</code>`,
         }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-compiling", minutes: minutesStuck } });
 
         await supabase
@@ -809,7 +810,7 @@ export async function GET(req: NextRequest) {
             <p>You purchased your report — but we still need your case details before we can generate it.</p>
             <p>It only takes 3 minutes:</p>
             <a href="${intakeOrigin}/intake?email=${encodeURIComponent(awCase.email)}&tier=${escapeHtml(awCase.tier)}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
-            <p style="color: #A1A1AA;">Once you submit, your report will be generated within 24 hours.</p>
+            <p style="color: #A1A1AA;">${awCase.tier === "intelligence-brief" ? "Your Case Decoder will be delivered within 24 hours. After that, we&#39;ll send a short follow-up form for your full Intelligence Brief." : "Once you submit, your report will be generated within 24 hours."}</p>
           `,
         }, { category: "intake-reminder", case_id: awCase.id, metadata: { tier: awCase.tier } });
 
