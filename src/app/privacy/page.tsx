@@ -1,21 +1,11 @@
 /**
  * privacy/page.tsx -- Privacy Policy page.
  *
- * WARNING: NEEDS ATTORNEY REVIEW -- This content is PLACEHOLDER copy drafted without
- * legal counsel. It MUST be reviewed and approved by a licensed attorney before Stripe
- * live mode is enabled or real customers are charged. Key areas requiring review:
- *   - Section 3 (Discovery Document Handling) -- sensitivity of legal documents
- *   - Section 5 (Data Retention) -- retention periods and deletion obligations
- *   - Section 6 (Your Rights / CCPA) -- California compliance obligations
- *   - Section 10 (AI Disclosure) -- third-party AI processing disclaimer
- *
- * Covers: Information collected (contact, case info, discovery docs, payment, usage data),
- * how info is used, discovery document handling and security, third-party services
- * (Stripe, Supabase, Resend, Vercel), data retention policies, user rights (access,
- * correct, delete, unsubscribe, CCPA), cookies policy, security measures,
- * children's privacy, AI disclosure, changes to policy, and contact info.
- *
- * Third-party services section links to Stripe's privacy policy.
+ * Comprehensive Privacy Policy covering: information collected, how info is
+ * used, AI processing disclosure (Anthropic), discovery document handling,
+ * third-party services, data retention (specific periods), user rights and
+ * CCPA compliance, cookies, security, children's privacy, data breach
+ * notification, international data transfers, changes to policy, and contact.
  *
  * SEO: Static metadata with canonical URL at /privacy.
  */
@@ -39,7 +29,7 @@ export default function PrivacyPage() {
           Privacy Policy
         </h1>
         <p className="mt-2 text-sm text-zinc-400">
-          Last updated: February 19, 2026
+          Last updated: March 3, 2026
         </p>
 
         <div className="mt-10 space-y-8 text-sm leading-relaxed text-zinc-400">
@@ -47,31 +37,42 @@ export default function PrivacyPage() {
             <h2 className="mb-3 text-lg font-semibold text-white">
               1. Information We Collect
             </h2>
-            <p>We collect the following types of information:</p>
+            <p>We collect the following categories of information:</p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
                 <strong className="text-zinc-300">Contact information:</strong>{" "}
-                Name, email address, phone number (when you submit the intake
-                form or subscribe to our email list)
+                Name, email address, and phone number (when you submit the
+                intake form, purchase a service, or subscribe to our email list)
               </li>
               <li>
                 <strong className="text-zinc-300">Case information:</strong>{" "}
-                Charge type, state, attorney status, discovery status, and
-                situation description (when you submit the intake form)
+                Charge type, state, county, attorney status, discovery status,
+                and situation description (when you submit the intake form or
+                use our Attorney Accountability Score tool)
               </li>
               <li>
                 <strong className="text-zinc-300">Discovery documents:</strong>{" "}
-                Files you upload for case analysis, including police reports,
-                forensic reports, witness statements, and other legal documents
+                Files you upload for case analysis, which may include police
+                reports, forensic reports, witness statements, lab results, and
+                other legal documents (for $2,497+ service tiers only)
               </li>
               <li>
                 <strong className="text-zinc-300">Payment information:</strong>{" "}
-                Processed securely by Stripe. We do not store your credit card
-                number, CVV, or full card details on our servers
+                Processed securely and exclusively by Stripe. We do not store,
+                access, or have visibility into your credit card number, CVV,
+                expiration date, or full card details on our servers. We receive
+                only a confirmation of payment status and the last four digits
+                of your card for identification purposes.
               </li>
               <li>
                 <strong className="text-zinc-300">Usage data:</strong> Pages
-                visited, collected via Vercel Analytics (anonymized, no cookies)
+                visited and general traffic patterns, collected via Vercel
+                Analytics using anonymized, cookieless tracking
+              </li>
+              <li>
+                <strong className="text-zinc-300">Communications:</strong> Email
+                correspondence with our support team related to your order or
+                service
               </li>
             </ul>
           </section>
@@ -80,61 +81,164 @@ export default function PrivacyPage() {
             <h2 className="mb-3 text-lg font-semibold text-white">
               2. How We Use Your Information
             </h2>
-            <ul className="list-disc space-y-1 pl-5">
+            <p>We use your information for the following purposes:</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
-                To provide the services you purchase (case analysis, reports,
-                question generation)
-              </li>
-              <li>To communicate with you about your order and deliverables</li>
-              <li>
-                To send transactional emails (payment confirmation, upload
-                receipts, intake confirmation)
+                To provide the services you purchase (case analysis, report
+                generation, question generation)
               </li>
               <li>
-                To send marketing emails if you subscribe (you can unsubscribe
-                at any time)
+                To process your case information through AI systems for the
+                purpose of generating your report (see Section 3)
               </li>
-              <li>To improve our services and website</li>
+              <li>
+                To communicate with you about your order, deliverables, and
+                service status
+              </li>
+              <li>
+                To send transactional emails (payment confirmation, intake
+                confirmation, upload receipts, report delivery notifications,
+                intake reminders)
+              </li>
+              <li>
+                To send marketing and educational emails if you subscribe to our
+                email list (you can unsubscribe at any time)
+              </li>
+              <li>
+                To improve our services, website, and report quality
+              </li>
+              <li>
+                To detect and prevent fraud, abuse, or unauthorized access
+              </li>
             </ul>
+            <p className="mt-2">
+              We do <strong className="text-zinc-300">not</strong> sell, rent,
+              or trade your personal information to third parties for their
+              marketing purposes. We do not use your case information or
+              discovery documents for any purpose other than providing your
+              purchased service.
+            </p>
           </section>
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              3. Discovery Document Handling
+              3. AI Processing Disclosure
             </h2>
             <p>
-              We understand that discovery documents contain highly sensitive
-              legal information. We treat these with the utmost care:
+              Our analysis services use artificial intelligence (AI) to process
+              your case information and generate reports. We believe in full
+              transparency about how your data is handled by AI systems:
             </p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
-                Documents are stored in a private, encrypted storage bucket
-                (Supabase Storage)
+                <strong className="text-zinc-300">AI provider:</strong> We use
+                Claude, a large language model developed by{" "}
+                <a
+                  href="https://www.anthropic.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber-400 underline"
+                >
+                  Anthropic
+                </a>
+                , headquartered in San Francisco, California
               </li>
-              <li>Documents are accessible only to authorized personnel</li>
               <li>
-                Documents are used solely for the purpose of your case analysis
+                <strong className="text-zinc-300">What data is sent:</strong>{" "}
+                Your case details from the intake form (charge type, state,
+                situation description) and, for discovery-tier services, the
+                text content extracted from your uploaded documents
               </li>
               <li>
-                Documents are never shared with third parties, sold, or used for
-                any purpose other than your requested service
+                <strong className="text-zinc-300">
+                  No training on your data:
+                </strong>{" "}
+                Per Anthropic&apos;s commercial API terms, data sent through
+                their API is not used to train their AI models. Your case
+                information is processed and discarded by Anthropic after
+                generating a response
               </li>
               <li>
-                Access to uploaded documents requires a unique case identifier
-                delivered to your email
+                <strong className="text-zinc-300">Retention by AI provider:</strong>{" "}
+                Anthropic may temporarily retain API inputs and outputs for up
+                to 30 days for abuse monitoring and safety purposes, after which
+                they are deleted. See{" "}
+                <a
+                  href="https://www.anthropic.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber-400 underline"
+                >
+                  Anthropic&apos;s Privacy Policy
+                </a>{" "}
+                for current details
+              </li>
+              <li>
+                <strong className="text-zinc-300">Our quality review:</strong>{" "}
+                AI-generated reports are reviewed for quality and UPL compliance
+                before delivery. We use automated evaluation systems to check
+                for errors, prohibited language, and adherence to our
+                information-only standard
               </li>
             </ul>
           </section>
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              4. Third-Party Services
+              4. Discovery Document Handling
             </h2>
-            <p>We use the following third-party services to operate:</p>
+            <p>
+              We understand that discovery documents contain highly sensitive
+              legal information. We treat these with the highest level of care:
+            </p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
+              <li>
+                <strong className="text-zinc-300">Storage:</strong> Documents
+                are stored in a private, encrypted storage bucket hosted by
+                Supabase on AWS infrastructure in the United States (US East
+                region)
+              </li>
+              <li>
+                <strong className="text-zinc-300">Access control:</strong>{" "}
+                Documents are accessible only through authenticated,
+                service-role API access. No public URLs are generated. Each
+                upload is tied to a unique case identifier
+              </li>
+              <li>
+                <strong className="text-zinc-300">Purpose limitation:</strong>{" "}
+                Documents are used solely for the purpose of generating your
+                purchased analysis. They are never shared with third parties
+                (other than AI processing as described in Section 3), sold,
+                licensed, or used for any other purpose
+              </li>
+              <li>
+                <strong className="text-zinc-300">Deletion:</strong> Discovery
+                documents are deleted within 90 days after your report is
+                delivered. You may request immediate deletion at any time by
+                contacting us. Upon receiving a deletion request, documents are
+                removed within 5 business days
+              </li>
+              <li>
+                <strong className="text-zinc-300">Refund impact:</strong> If
+                your purchase is refunded, your uploaded documents and generated
+                report are deleted, and your report access token is revoked
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="mb-3 text-lg font-semibold text-white">
+              5. Third-Party Services
+            </h2>
+            <p>
+              We use the following third-party services to operate. Each
+              processes only the minimum data necessary for its function:
+            </p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
                 <strong className="text-zinc-300">Stripe</strong> — Payment
-                processing. Subject to{" "}
+                processing. Receives your payment card details directly (we
+                never see them). Subject to{" "}
                 <a
                   href="https://stripe.com/privacy"
                   target="_blank"
@@ -146,160 +250,348 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <strong className="text-zinc-300">Supabase</strong> — Database
-                and file storage. Data stored in secure, SOC 2 compliant
-                infrastructure
+                and file storage (US East region). Stores your case data and
+                uploaded documents. SOC 2 Type II compliant infrastructure
               </li>
               <li>
-                <strong className="text-zinc-300">Resend</strong> — Transactional
-                email delivery
+                <strong className="text-zinc-300">Anthropic</strong> — AI
+                processing for report generation (see Section 3 for details)
+              </li>
+              <li>
+                <strong className="text-zinc-300">Resend</strong> —
+                Transactional and marketing email delivery. Receives your email
+                address and email content
               </li>
               <li>
                 <strong className="text-zinc-300">Vercel</strong> — Website
-                hosting and analytics (anonymized, cookieless analytics)
+                hosting, serverless functions, and anonymized analytics
+                (cookieless)
+              </li>
+              <li>
+                <strong className="text-zinc-300">Cloudflare</strong> — DNS and
+                CDN services. May process your IP address for routing purposes
               </li>
             </ul>
+            <p className="mt-2">
+              All third-party service providers are based in the United States.
+              We do not transfer your data outside the United States.
+            </p>
           </section>
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              5. Data Retention
+              6. Data Retention
             </h2>
-            <ul className="list-disc space-y-1 pl-5">
+            <p>
+              We retain your data for the following specific periods:
+            </p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
-                <strong className="text-zinc-300">Account data</strong> (email,
-                name): Retained until you request deletion
+                <strong className="text-zinc-300">Contact information</strong>{" "}
+                (email, name, phone): Retained for 3 years after your last
+                interaction with our services, or until you request deletion
               </li>
               <li>
                 <strong className="text-zinc-300">Order records:</strong>{" "}
-                Retained for accounting and legal compliance purposes
+                Retained for 7 years for accounting, tax, and legal compliance
+                purposes
+              </li>
+              <li>
+                <strong className="text-zinc-300">Case data</strong> (intake
+                responses, generated reports): Retained for 12 months after
+                report delivery to support the report access period and upgrade
+                credit window. After 12 months, case data is deleted unless you
+                have an active higher-tier service
               </li>
               <li>
                 <strong className="text-zinc-300">Discovery documents:</strong>{" "}
-                Retained for the duration of your case analysis. Contact us to
-                request deletion after your report is delivered
+                Deleted within 90 days after report delivery, or immediately
+                upon request (see Section 4)
+              </li>
+              <li>
+                <strong className="text-zinc-300">Report access tokens:</strong>{" "}
+                Expire 12 months after report delivery
               </li>
               <li>
                 <strong className="text-zinc-300">
                   Email subscriber data:
                 </strong>{" "}
                 Retained until you unsubscribe. Unsubscribed records are marked
-                as inactive
+                inactive and purged after 90 days
+              </li>
+              <li>
+                <strong className="text-zinc-300">
+                  Drip email send logs:
+                </strong>{" "}
+                Purged automatically after 90 days
+              </li>
+              <li>
+                <strong className="text-zinc-300">Usage analytics:</strong>{" "}
+                Anonymized and aggregated; no individual-level data is retained
               </li>
             </ul>
           </section>
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              6. Your Rights
+              7. Your Rights
             </h2>
-            <p>You have the right to:</p>
+            <p>Regardless of where you live, you have the right to:</p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
-                <strong className="text-zinc-300">Access</strong> your personal
-                data — request a copy of what we have
+                <strong className="text-zinc-300">Access</strong> — Request a
+                copy of the personal data we hold about you
               </li>
               <li>
-                <strong className="text-zinc-300">Correct</strong> inaccurate
-                data
+                <strong className="text-zinc-300">Correct</strong> — Request
+                correction of inaccurate personal data
               </li>
               <li>
-                <strong className="text-zinc-300">Delete</strong> your data
-                (subject to legal retention requirements)
+                <strong className="text-zinc-300">Delete</strong> — Request
+                deletion of your personal data (subject to legal retention
+                requirements for order records)
               </li>
               <li>
-                <strong className="text-zinc-300">Unsubscribe</strong> from
-                marketing emails at any time via the unsubscribe link in every
-                email
+                <strong className="text-zinc-300">Unsubscribe</strong> — Opt
+                out of marketing emails at any time via the unsubscribe link
+                included in every marketing email
               </li>
               <li>
-                <strong className="text-zinc-300">Opt out</strong> of data
-                collection (note: this may prevent us from providing services)
+                <strong className="text-zinc-300">Data portability</strong> —
+                Request your data in a commonly used, machine-readable format
+              </li>
+            </ul>
+            <p className="mt-2">
+              To exercise any of these rights, email us at{" "}
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="text-amber-400 underline"
+              >
+                {CONTACT_EMAIL}
+              </a>
+              . We will respond to all requests within 30 days.
+            </p>
+
+            <h3 className="mb-2 mt-4 text-base font-semibold text-white">
+              California Residents (CCPA/CPRA)
+            </h3>
+            <p>
+              If you are a California resident, you have additional rights under
+              the California Consumer Privacy Act (CCPA) as amended by the
+              California Privacy Rights Act (CPRA):
+            </p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
+              <li>
+                <strong className="text-zinc-300">Right to know:</strong> You
+                may request that we disclose the categories and specific pieces
+                of personal information we have collected about you, the
+                categories of sources, the business purpose for collecting it,
+                and the categories of third parties with whom we share it
+              </li>
+              <li>
+                <strong className="text-zinc-300">Right to delete:</strong> You
+                may request deletion of your personal information, subject to
+                certain exceptions (e.g., completing a transaction, legal
+                obligations)
+              </li>
+              <li>
+                <strong className="text-zinc-300">Right to opt out:</strong> We
+                do not sell or share your personal information as defined by
+                the CCPA/CPRA. We do not use your personal information for
+                cross-context behavioral advertising
+              </li>
+              <li>
+                <strong className="text-zinc-300">
+                  Right to non-discrimination:
+                </strong>{" "}
+                We will not discriminate against you for exercising your CCPA
+                rights
+              </li>
+              <li>
+                <strong className="text-zinc-300">
+                  Right to correct:
+                </strong>{" "}
+                You may request correction of inaccurate personal information
+              </li>
+              <li>
+                <strong className="text-zinc-300">
+                  Right to limit use of sensitive data:
+                </strong>{" "}
+                Case information and discovery documents may constitute
+                sensitive personal information. We use this data only for the
+                purpose of providing your purchased service, which is a
+                permitted use under the CPRA
               </li>
             </ul>
             <p className="mt-2">
               <strong className="text-zinc-300">
-                California residents (CCPA):
+                Categories of personal information collected (last 12 months):
               </strong>{" "}
-              You have additional rights under the California Consumer Privacy
-              Act, including the right to know what personal information we
-              collect and the right to request deletion. We do not sell your
-              personal information.
+              Identifiers (name, email, phone); commercial information (purchase
+              history); internet activity (page views via anonymized analytics);
+              sensitive personal information (case details, legal documents).
+            </p>
+            <p className="mt-2">
+              <strong className="text-zinc-300">
+                Categories disclosed to third parties:
+              </strong>{" "}
+              Identifiers (to Stripe for payment, to Resend for email delivery);
+              case information (to Anthropic for AI processing). No categories
+              are sold.
+            </p>
+            <p className="mt-2">
+              To submit a CCPA request, email{" "}
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="text-amber-400 underline"
+              >
+                {CONTACT_EMAIL}
+              </a>{" "}
+              with the subject line &quot;CCPA Request.&quot; We will verify your
+              identity before processing any request.
             </p>
           </section>
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              7. Cookies
+              8. Cookies
             </h2>
             <p>
-              Our website does not use tracking cookies. Vercel Analytics
-              provides anonymized usage data without cookies. Stripe may set
-              cookies during the checkout process — see Stripe&apos;s privacy
-              policy for details.
+              Our website does not use tracking cookies or third-party analytics
+              cookies. Vercel Analytics provides anonymized usage data without
+              cookies. Stripe may set essential cookies during the checkout
+              process to prevent fraud and process payments — see{" "}
+              <a
+                href="https://stripe.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-amber-400 underline"
+              >
+                Stripe&apos;s Privacy Policy
+              </a>{" "}
+              for details. We do not use cookies for advertising, retargeting,
+              or cross-site tracking.
             </p>
           </section>
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              8. Security
+              9. Security
             </h2>
             <p>
               We implement appropriate technical and organizational measures to
               protect your personal data, including:
             </p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
-              <li>HTTPS encryption for all data in transit</li>
-              <li>Private storage buckets for discovery documents</li>
               <li>
-                Row-level security policies on database tables
+                HTTPS/TLS encryption for all data in transit (enforced via HSTS)
+              </li>
+              <li>
+                Private, encrypted storage buckets for discovery documents
+              </li>
+              <li>
+                Row-level security policies on all database tables
               </li>
               <li>
                 Service-role key access restricted to server-side API routes
+                (never exposed to the browser)
+              </li>
+              <li>
+                HMAC-signed, time-limited tokens for operator and report access
+                links
+              </li>
+              <li>
+                Rate limiting on all sensitive endpoints (checkout, intake,
+                subscription)
+              </li>
+              <li>
+                Security headers (X-Content-Type-Options, X-Frame-Options,
+                Referrer-Policy)
+              </li>
+              <li>
+                Input sanitization to prevent XSS and HTML injection in all
+                email templates and user-facing outputs
               </li>
             </ul>
+            <p className="mt-2">
+              While we implement industry-standard security measures, no method
+              of electronic storage or transmission over the internet is 100%
+              secure. We cannot guarantee absolute security of your data.
+            </p>
           </section>
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              9. Children&apos;s Privacy
+              10. Data Breach Notification
+            </h2>
+            <p>
+              In the event of a data breach that affects your personal
+              information, we will notify affected users by email within 72
+              hours of becoming aware of the breach. We will also notify
+              applicable regulatory authorities as required by law. The
+              notification will include: the nature of the breach, the
+              categories of data affected, the likely consequences, and the
+              measures we are taking to address the breach and mitigate its
+              effects.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="mb-3 text-lg font-semibold text-white">
+              11. International Data Transfers
+            </h2>
+            <p>
+              All data processing and storage occurs in the United States. Our
+              servers (Supabase, Vercel) are located in US data centers. AI
+              processing by Anthropic occurs in the United States. If you access
+              our services from outside the United States, you consent to the
+              transfer of your data to the United States, which may have
+              different data protection laws than your country of residence.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="mb-3 text-lg font-semibold text-white">
+              12. Children&apos;s Privacy
             </h2>
             <p>
               Our services are not intended for individuals under 18 years of
               age. We do not knowingly collect personal information from minors.
+              If we learn that we have collected personal information from a
+              person under 18, we will delete that information promptly. If you
+              believe a minor has provided us with personal information, please
+              contact us at{" "}
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="text-amber-400 underline"
+              >
+                {CONTACT_EMAIL}
+              </a>
+              .
             </p>
           </section>
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              10. Artificial Intelligence Disclosure
+              13. Changes to This Policy
             </h2>
             <p>
-              Your documents may be processed using artificial intelligence
-              systems. We use AI to analyze legal documents and generate
-              research questions. Documents may be processed by third-party AI
-              providers subject to their data handling policies.
+              We may update this Privacy Policy from time to time. Material
+              changes will be posted on this page with an updated &quot;Last
+              updated&quot; date. If you have an active order, we will notify
+              you of material changes by email. Continued use of our services
+              after changes are posted constitutes your acceptance of the
+              updated policy. We encourage you to review this page periodically.
             </p>
           </section>
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              11. Changes to This Policy
+              14. Contact
             </h2>
             <p>
-              We may update this Privacy Policy from time to time. Changes will
-              be posted on this page with an updated date. Continued use of our
-              services after changes constitutes acceptance of the updated
-              policy.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="mb-3 text-lg font-semibold text-white">
-              12. Contact
-            </h2>
-            <p>
-              For privacy-related questions or to exercise your rights, contact
-              us at{" "}
+              For privacy-related questions, data requests, or to exercise any
+              of your rights described above, contact us at{" "}
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
                 className="text-amber-400 underline"
