@@ -4,7 +4,7 @@
  * Schedule: Runs daily at 9 AM EST (14:00 UTC) via Vercel Cron.
  * Protected by CRON_SECRET bearer token (Vercel sets this automatically).
  *
- * This cron does 12 things, in order:
+ * This cron does 14 things, in order:
  *
  * PART 1 — Nurture emails (subscribers who haven't bought yet)
  *   Sends the next unsent email in the nurture sequence based on days since signup.
@@ -35,6 +35,10 @@
  *   Function has a 150s timeout, so 30 minutes means it crashed or timed out
  *   without updating the status. Alerts operator with a curl retry command.
  *   Transitions status to "generation-failed" to prevent re-alerting.
+ *   PART 5b — IB multi-phase stuck detection (auto-generating, compiling, researching).
+ *   Includes 24h operator nudge + 72h escalation for stuck "researching" status.
+ *   PART 5c — IB Phase 2 intake reminder. Customer reminder at 48h, operator
+ *   escalation at 7d when customer hasn't submitted Phase 2 form.
  *
  * PART 12 — Missed evaluation safety net
  *   Detects cases in "review" status with NULL eval_results and generated_at > 15 min ago.
@@ -62,7 +66,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, sendEmailWithRetry, escapeHtml } from "@/lib/email";
 import { getNextNurtureEmail, getPostPurchaseEmails } from "@/lib/drip-emails";
 import type { DripEmail } from "@/lib/drip-emails";
-import { signOperatorToken, SITE_URL, caseThreadId } from "@/lib/site";
+import { signOperatorToken, signPhase2Token, SITE_URL, caseThreadId } from "@/lib/site";
 import { stripe } from "@/lib/stripe";
 
 /** Maps tier slugs to display names for alert emails. */
@@ -763,6 +767,187 @@ export async function GET(req: NextRequest) {
             { subscriber_id: existingSub.id, email_key: `researching_nudge_${stuck.id}` },
             { onConflict: "subscriber_id,email_key" }
           );
+        }
+      }
+    }
+
+    // Researching escalation (72h — judge research still not submitted)
+    // The 24h nudge above is a gentle reminder. This escalation fires at 72h
+    // with stronger language — the customer has been waiting 3+ days.
+    const researchEscThreshold = new Date();
+    researchEscThreshold.setHours(researchEscThreshold.getHours() - 72);
+    const { data: stuckResearching72h } = await supabase
+      .from("cases")
+      .select("id, email, charge_type, tier, updated_at")
+      .eq("status", "researching")
+      .lt("updated_at", researchEscThreshold.toISOString());
+
+    if (stuckResearching72h && stuckResearching72h.length > 0) {
+      for (const stuck of stuckResearching72h) {
+        const hoursStuck = Math.round(
+          (Date.now() - new Date(stuck.updated_at).getTime()) / (1000 * 60 * 60)
+        );
+
+        const { data: escSub } = await supabase
+          .from("subscribers")
+          .select("id")
+          .eq("email", stuck.email.toLowerCase())
+          .maybeSingle();
+
+        if (escSub?.id) {
+          const { data: alreadyEscalated } = await supabase
+            .from("drip_emails")
+            .select("id")
+            .eq("subscriber_id", escSub.id)
+            .eq("email_key", `researching_escalation_${stuck.id}`)
+            .maybeSingle();
+          if (alreadyEscalated) continue;
+        }
+
+        await sendEmail({
+          to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+          subject: `URGENT: Judge research pending ${hoursStuck}+ hours — customer waiting — ${escapeHtml(stuck.email)}`,
+          html: `<h1 style="color: #EF4444;">Intelligence Brief Blocked — Judge Research Overdue</h1>
+            <p>Phase A completed <strong>${hoursStuck} hours ago</strong> (${Math.round(hoursStuck / 24)} days). The customer is waiting for their Intelligence Brief but judge research hasn't been submitted.</p>
+            <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
+              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(stuck.email)}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${stuck.id}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge:</strong> ${escapeHtml(stuck.charge_type || "unknown")}</p>
+            </div>
+            <p><strong>Action:</strong> Submit judge research immediately or contact the customer about the delay.</p>`,
+        }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "researching-escalation", hours: hoursStuck } });
+
+        if (escSub?.id) {
+          await supabase.from("drip_emails").insert({
+            subscriber_id: escSub.id,
+            email_key: `researching_escalation_${stuck.id}`,
+          });
+        }
+      }
+    }
+
+    // ============================================================
+    // PART 5c: IB PHASE 2 INTAKE REMINDER (customer hasn't filled Phase 2)
+    // ============================================================
+    // After CD delivery, the customer gets ONE email with the Phase 2
+    // intake link. If they ignore it, the IB case sits in "intake" forever
+    // with no follow-up. This sends a reminder at 48h and escalates to
+    // the operator at 7 days.
+    //
+    // Identifies IB cases by checking:
+    //   - status = "intake" + tier = "intelligence-brief"
+    //   - updated_at > 48 hours ago (gives 2 days after CD delivery)
+    //   - linked intake has phase2_data IS NULL (hasn't submitted Phase 2)
+    //
+    // Dedup: drip_emails with key "phase2_reminder_{caseId}"
+    // Escalation: drip_emails with key "phase2_escalation_7d_{caseId}"
+    const fortyEightHoursAgo = new Date();
+    fortyEightHoursAgo.setHours(fortyEightHoursAgo.getHours() - 48);
+    const sevenDaysAgoP2 = new Date();
+    sevenDaysAgoP2.setDate(sevenDaysAgoP2.getDate() - 7);
+
+    const { data: ibWaitingPhase2 } = await supabase
+      .from("cases")
+      .select("id, email, intake_id, updated_at")
+      .eq("status", "intake")
+      .eq("tier", "intelligence-brief")
+      .lt("updated_at", fortyEightHoursAgo.toISOString());
+
+    if (ibWaitingPhase2 && ibWaitingPhase2.length > 0) {
+      const p2Origin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+      for (const ibCase of ibWaitingPhase2) {
+        // Verify Phase 2 hasn't been submitted yet
+        if (ibCase.intake_id) {
+          const { data: intake } = await supabase
+            .from("intakes")
+            .select("phase2_data")
+            .eq("id", ibCase.intake_id)
+            .maybeSingle();
+
+          if (intake?.phase2_data) continue; // Already submitted — skip
+        }
+
+        // Determine if this is a 7-day escalation or 48h reminder
+        const caseAge = Date.now() - new Date(ibCase.updated_at).getTime();
+        const isSevenDayEscalation = caseAge > 7 * 24 * 60 * 60 * 1000;
+
+        // Get subscriber for dedup
+        const { data: p2Sub } = await supabase
+          .from("subscribers")
+          .select("id")
+          .eq("email", ibCase.email.toLowerCase())
+          .maybeSingle();
+
+        if (isSevenDayEscalation) {
+          // 7-day operator escalation
+          const escalationKey = `phase2_escalation_7d_${ibCase.id}`;
+          if (p2Sub?.id) {
+            const { data: alreadyEscalated } = await supabase
+              .from("drip_emails")
+              .select("id")
+              .eq("subscriber_id", p2Sub.id)
+              .eq("email_key", escalationKey)
+              .maybeSingle();
+            if (alreadyEscalated) continue;
+          }
+
+          const daysSinceUpdate = Math.round(caseAge / (1000 * 60 * 60 * 24));
+          await sendEmail({
+            to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+            subject: `URGENT: IB Phase 2 pending ${daysSinceUpdate}+ days — ${escapeHtml(ibCase.email)}`,
+            html: `<h1 style="color: #EF4444;">Intelligence Brief Waiting for Phase 2</h1>
+              <p>Customer received their Case Decoder <strong>${daysSinceUpdate} days ago</strong> but has not submitted their Intelligence Brief details.</p>
+              <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
+                <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(ibCase.email)}</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${ibCase.id}</p>
+              </div>
+              <p><strong>Action:</strong> Reach out directly or consider whether to initiate a partial refund for the IB portion.</p>`,
+          }, { category: "operator-alert", case_id: ibCase.id, metadata: { reason: "phase2-escalation", days: daysSinceUpdate } });
+
+          if (p2Sub?.id) {
+            await supabase.from("drip_emails").insert({
+              subscriber_id: p2Sub.id,
+              email_key: escalationKey,
+            });
+          }
+        } else {
+          // 48-hour customer reminder
+          const reminderKey = `phase2_reminder_${ibCase.id}`;
+          if (p2Sub?.id) {
+            const { data: alreadySent } = await supabase
+              .from("drip_emails")
+              .select("id")
+              .eq("subscriber_id", p2Sub.id)
+              .eq("email_key", reminderKey)
+              .maybeSingle();
+            if (alreadySent) continue;
+          }
+
+          const phase2Token = signPhase2Token(ibCase.id);
+          const result = await sendEmailWithRetry({
+            to: ibCase.email,
+            subject: "Reminder: Complete your Intelligence Brief details",
+            unsubscribeEmail: ibCase.email,
+            threadingHeaders: {
+              inReplyTo: caseThreadId(ibCase.id),
+              references: caseThreadId(ibCase.id),
+            },
+            html: `
+              <h1 style="color: #F59E0B;">Your Intelligence Brief is Waiting on You</h1>
+              <p>Your Case Decoder report was delivered — now we need a few more details to build your full Intelligence Brief.</p>
+              <p>This short form takes about 5 minutes and helps us tailor the analysis to your specific situation:</p>
+              <a href="${p2Origin}/intake/intelligence-brief?case=${ibCase.id}&token=${phase2Token}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Intelligence Brief Details</a>
+              <p style="color: #A1A1AA;">Once you submit, your Intelligence Brief will be generated within 72 hours.</p>
+            `,
+          }, { category: "phase2-reminder", case_id: ibCase.id, metadata: { tier: "intelligence-brief" } });
+
+          if (result.success && p2Sub?.id) {
+            await supabase.from("drip_emails").insert({
+              subscriber_id: p2Sub.id,
+              email_key: reminderKey,
+            });
+            sent++;
+          }
         }
       }
     }
