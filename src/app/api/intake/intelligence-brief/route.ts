@@ -19,40 +19,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, verifyPhase2Token } from "@/lib/site";
 import { checkRateLimit } from "@/lib/rate-limit";
-import { createHmac } from "crypto";
 
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
-
-/**
- * Verify HMAC token for a case ID.
- * Token format: "<timestamp>.<hmac>" where hmac = SHA256(caseId:timestamp, OPERATOR_SECRET)
- * Tokens expire after 30 days (generous window for email links).
- */
-function verifyToken(caseId: string, token: string): boolean {
-  const secret = process.env.OPERATOR_SECRET;
-  if (!secret) return false;
-
-  const parts = token.split(".");
-  if (parts.length !== 2) return false;
-
-  const [timestampStr, providedHmac] = parts;
-  const timestamp = parseInt(timestampStr, 10);
-  if (isNaN(timestamp)) return false;
-
-  // Token expiry: 30 days
-  const now = Math.floor(Date.now() / 1000);
-  if (now - timestamp > 30 * 24 * 60 * 60) return false;
-
-  const payload = `${caseId}:${timestamp}`;
-  const expectedHmac = createHmac("sha256", secret)
-    .update(payload)
-    .digest("hex");
-
-  return providedHmac === expectedHmac;
-}
 
 export async function POST(req: NextRequest) {
   try {
@@ -76,7 +47,7 @@ export async function POST(req: NextRequest) {
     const { caseId, token, ...formData } = body;
 
     // Verify HMAC token
-    if (!caseId || !token || !verifyToken(caseId, token)) {
+    if (!caseId || !token || !verifyPhase2Token(token, caseId)) {
       return NextResponse.json(
         { error: "Invalid or expired link. Please use the link from your email." },
         { status: 403 }
@@ -84,9 +55,9 @@ export async function POST(req: NextRequest) {
     }
 
     // Validate required fields
-    if (!formData.judgeName || !formData.attorneyName) {
+    if (!formData.judgeName || !formData.county || !formData.attorneyName) {
       return NextResponse.json(
-        { error: "Judge name and attorney name are required." },
+        { error: "Judge name, county, and attorney name are required." },
         { status: 400 }
       );
     }
@@ -117,6 +88,7 @@ export async function POST(req: NextRequest) {
     // Store Phase 2 data — either update existing intake or create new one
     const phase2Data = {
       judge_name: formData.judgeName,
+      county: formData.county || null,
       case_number: formData.caseNumber || null,
       attorney_name: formData.attorneyName,
       attorney_firm: formData.attorneyFirm || null,
@@ -129,6 +101,7 @@ export async function POST(req: NextRequest) {
       dependents: formData.dependents || null,
       immigration_status: formData.immigrationStatus || null,
       prior_convictions: formData.priorConvictions || null,
+      on_probation_parole: formData.onProbationParole || null,
       co_defendant_details: formData.coDefendantDetails || null,
     };
 
@@ -212,6 +185,17 @@ export async function POST(req: NextRequest) {
         </p>`,
       unsubscribeEmail: caseData.email,
     }, { category: "phase2-intake-confirmation", case_id: caseId });
+
+    // Fire-and-forget: trigger Phase A generation
+    const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+    fetch(`${origin}/api/generate/intelligence-brief`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
+      },
+      body: JSON.stringify({ caseId }),
+    }).catch((err) => console.error("[Phase2] Phase A trigger error:", err));
 
     return NextResponse.json({ success: true });
   } catch (error) {

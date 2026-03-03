@@ -34,7 +34,7 @@ import { stripe, TIERS, isValidTier } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
-import { signOperatorToken, caseThreadId } from "@/lib/site";
+import { signOperatorToken, signPhase2Token, caseThreadId } from "@/lib/site";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
@@ -382,7 +382,25 @@ export async function POST(req: NextRequest) {
       // Phase 2 email, we send it now. The primary case (IB) is already
       // created as awaiting-intake.
       if (cdSkippedDueToDedup && caseId && tier !== "case-decoder") {
-        const phase2Token = signOperatorToken(caseId);
+        // Find the most recent delivered CD for this customer to set prior_case_id
+        const { data: priorCd } = await supabase
+          .from("cases")
+          .select("id")
+          .eq("email", email)
+          .eq("tier", "case-decoder")
+          .eq("status", "delivered")
+          .order("delivered_at", { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (priorCd) {
+          await supabase
+            .from("cases")
+            .update({ prior_case_id: priorCd.id })
+            .eq("id", caseId);
+        }
+
+        const phase2Token = signPhase2Token(caseId);
         await sendEmailWithRetry({
           to: email,
           subject: `Next Step: Complete Your ${escapeHtml(productName)} Intake`,

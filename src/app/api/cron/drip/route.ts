@@ -713,11 +713,13 @@ export async function GET(req: NextRequest) {
     }
 
     // Stuck researching (waiting for judge research — >24h operator nudge)
+    const researchThreshold = new Date();
+    researchThreshold.setHours(researchThreshold.getHours() - 24);
     const { data: stuckResearching } = await supabase
       .from("cases")
       .select("id, email, charge_type, tier, updated_at")
       .eq("status", "researching")
-      .lt("updated_at", twentyFourHoursAgo.toISOString());
+      .lt("updated_at", researchThreshold.toISOString());
 
     if (stuckResearching && stuckResearching.length > 0) {
       for (const stuck of stuckResearching) {

@@ -60,6 +60,7 @@ function Phase2IntakeForm() {
 
   const [form, setForm] = useState<Record<string, string>>({
     judgeName: "",
+    county: "",
     caseNumber: "",
     attorneyName: "",
     attorneyFirm: "",
@@ -72,6 +73,7 @@ function Phase2IntakeForm() {
     dependents: "",
     immigrationStatus: "",
     priorConvictions: "",
+    onProbationParole: "",
     coDefendantDetails: "",
   });
 
@@ -79,7 +81,7 @@ function Phase2IntakeForm() {
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  const canSubmit = form.judgeName && form.attorneyName;
+  const canSubmit = form.judgeName && form.county && form.attorneyName;
 
   async function handleSubmit() {
     if (!canSubmit || submitting) return;
@@ -192,6 +194,23 @@ function Phase2IntakeForm() {
               <p className="mt-1 text-xs text-zinc-500">
                 We research your judge&apos;s sentencing patterns, rulings, and
                 tendencies for your charge type.
+              </p>
+            </div>
+            <div className="mt-4">
+              <label htmlFor="county" className={labelClass}>
+                County <span className="text-red-400">*</span>
+              </label>
+              <input
+                id="county"
+                type="text"
+                required
+                value={form.county}
+                onChange={(e) => setField("county", e.target.value)}
+                className={inputClass}
+                placeholder="e.g. Pinellas County"
+              />
+              <p className="mt-1 text-xs text-zinc-500">
+                County where your case is being heard. Used for judge research.
               </p>
             </div>
             <div className="mt-4">
@@ -402,6 +421,30 @@ function Phase2IntakeForm() {
                 className={inputClass}
                 placeholder="Type, year, and outcome (e.g. 'DUI 2019, probation completed')"
               />
+            </div>
+            <div className="mt-4">
+              <label htmlFor="onProbationParole" className={labelClass}>
+                Currently on probation or parole?
+              </label>
+              <select
+                id="onProbationParole"
+                value={form.onProbationParole}
+                onChange={(e) =>
+                  setField("onProbationParole", e.target.value)
+                }
+                className={selectClass}
+              >
+                <option value="">Select</option>
+                <option value="no">No</option>
+                <option value="probation">Yes — Probation</option>
+                <option value="parole">Yes — Parole</option>
+                <option value="both">Yes — Both</option>
+                <option value="unsure">Not sure</option>
+              </select>
+              <p className="mt-1 text-xs text-zinc-500">
+                Active supervision affects potential consequences and defense
+                strategy.
+              </p>
             </div>
             <div className="mt-4">
               <label htmlFor="coDefendantDetails" className={labelClass}>

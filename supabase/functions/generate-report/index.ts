@@ -342,7 +342,8 @@ BANNED TERMINOLOGY — ENFORCED:
 NEVER use: "red flag," "warning sign," "escalation ladder," "you need to,"
 "you should," "you indicated," "you reported," "you selected,"
 "Red Flag Response," "Escalation Level," "We heard every word,"
-"We listened carefully," "We hear you."
+"We listened carefully," "We hear you," "fire your attorney,"
+"file a complaint," "publicly available," "consult your attorney."
 INSTEAD use: "what to listen for," "Your Advocacy Steps," "Step [N] in
 Your Advocacy Steps," "here's your next step," "you can," "you told us" /
 "you said" / "you mentioned" / "you shared."
@@ -379,23 +380,15 @@ Under 6,700 words total. 7 always-present sections + Letter +
 Closing + Postscript + 0-2 conditional sections.
 Start with the Letter (NO "## A Letter to You" heading — a letter
 doesn't announce itself; just open with the defendant's first name
-followed by a comma, e.g., "Jennifer,"). The Methodology Note
-blockquote goes AFTER the letter, BEFORE "Where Things Stand."
+followed by a comma, e.g., "Jennifer,"). The Methodology Note is
+injected automatically by the system — do NOT generate one.
 Budget carefully so early sections don't starve later ones.
 
-METHODOLOGY NOTE — MANDATORY FIRST ELEMENT:
-Before "A Letter to You," output this blockquote (personalized with the
-3 God Mode experts selected for this charge type):
-> **METHODOLOGY NOTE**
-> Every question and framework in this report traces to documented
-> winning methods from elite criminal defense attorneys. Your report
-> draws on [Expert 1], [Expert 2], and [Expert 3] — selected for
-> [charge type] cases. Expert attributions appear throughout.
->
-> **Important:** This report provides legal INFORMATION — not legal
-> ADVICE. The analysis draws on methods developed by elite defense
-> attorneys, applied specifically to your case details. Your attorney
-> remains the final authority on strategy decisions.
+METHODOLOGY NOTE — INJECTED AUTOMATICALLY:
+The methodology note with legal disclaimer is injected by the system
+after your output. Do NOT generate a methodology note or disclaimer.
+Start your output directly with the personal letter (defendant's first
+name followed by a comma).
 
 EXACT COUNTS — NON-NEGOTIABLE:
 - Questions for Your Attorney: EXACTLY 15 questions (Q1-Q15)
@@ -666,14 +659,13 @@ NOT difficulty ratings. Penalty ranges with statutory citations.
 "Your Rights in This Process" box: concrete, enforceable rights with
 state-specific citations (right to see discovery, right to be consulted
 before plea, right to understand strategy, right to second opinion,
-right to fire attorney).
+right to a second legal opinion).
 
 ADMIN PROCESS CALLOUT (charge-type conditional):
 If DUI → ALR/implied consent hearing. If drug → asset forfeiture.
 If sex offense → registry requirements. Framed as "Something Your
 Attorney Can Help With" — efficacy-first, not "DEADLINE MISSED."
-Always ends with question + Q reference. Include Methodology Note
-attribution in report header (mandatory).
+Always ends with question + Q reference.
 
 BRIDGING AFTER PENALTY RANGE — MANDATORY:
 After any penalty range: "These are statutory maximums, not predictions.
@@ -826,8 +818,8 @@ SELF-VERIFICATION — Before output:
 13. Every hard section (penalty ranges, collateral consequences) has bridging language pointing to next action
 14. Report ends on empowerment (Your Next 7 Days), not disclaimers
 15. Every question requires a substantive answer (no yes/no questions)
-16. Methodology Note present AFTER the letter, BEFORE "Where Things Stand" (mandatory)
-38. Legal information disclaimer present in methodology note ("not legal ADVICE")
+16. No methodology note or disclaimer generated (injected automatically by the system)
+38. Output starts directly with the defendant's first name (personal letter — no heading, no methodology note)
 39. Every section ends with a 1-sentence bridge to the next section
 40. Letter has NO "## A Letter to You" heading — starts directly with the defendant's name
 41. No "We heard every word" or similar announced-empathy phrases — understanding demonstrated via specific details
@@ -1253,7 +1245,8 @@ appropriate for any client — the analysis is for your eyes only."
 "The Meeting Ready Sheet in Your Next 7 Days is designed to be safe
 if your attorney sees it — it contains only questions, not analysis."
 
-After the letter, output the METHODOLOGY NOTE blockquote (see above).
+Do NOT generate a methodology note or disclaimer — it is injected
+automatically by the system after your output is rendered.
 </section>
 
 <section id="s1" title="Where Things Stand" max_words="400">
@@ -1285,13 +1278,13 @@ Elements table with "Question for Your Attorney" column — NOT difficulty ratin
 Penalty range with statutory citation. Charge-specific intake data reflected: "You told us your substance was [X]..."
 BRIDGING — MANDATORY after penalty range: "These are statutory maximums, not predictions. The questions in this report help you understand the realistic range for YOUR case."
 After the penalty range and bridging, add a "**What this means:**" paragraph — plain English explanation of the charge with zero legalese. This is the defendant's anchor for understanding their situation.
-"Your Rights in This Process" box: right to see discovery, right to be consulted before plea, right to understand strategy, right to second opinion, right to fire attorney — with state-specific citations.
+"Your Rights in This Process" box: right to see discovery, right to be consulted before plea, right to understand strategy, right to second opinion, right to a second legal opinion — with state-specific citations.
 
 ADMIN PROCESS CALLOUT — CONDITIONAL:
 If DUI/DWI → Include ALR/implied consent hearing deadline. Frame as "Something Your Attorney Can Help With" — efficacy-first. End with question + Q reference.
 If drug charge → Include asset forfeiture possibility. Same framing.
 If sex offense → Include registry requirements. Same framing.
-Methodology Note: attribute to the 3 God Mode experts named in the charge context. This is MANDATORY in the report header.
+Expert attributions should appear throughout the report where specific methods are referenced.
 </section>
 
 ${includeCaseClock ? `<section id="c1" title="Time and Deadlines" max_words="100">
@@ -1570,6 +1563,68 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: st
 }
 
 // ============================================================
+// POST-GENERATION VALIDATION
+// Soft validation: logs violations but does not block delivery.
+// Future: can be upgraded to a hard gate that triggers re-generation.
+// ============================================================
+
+/**
+ * Validates Claude's report output for banned phrases, unsourced claims,
+ * and pricing errors. Returns violations for operator review.
+ *
+ * @param markdown - Raw markdown report from Claude.
+ * @returns Object with valid flag and array of violation descriptions.
+ */
+function validateReportContent(markdown: string): { valid: boolean; violations: string[] } {
+  const violations: string[] = [];
+  const lower = markdown.toLowerCase();
+
+  // 1. Banned phrases
+  const bannedPhrases = [
+    "fire your attorney",
+    "publicly available",
+    "consult your attorney",
+    "you should",
+    "you need to",
+    "we recommend",
+    "we advise",
+    "file a complaint",
+  ];
+  for (const phrase of bannedPhrases) {
+    if (lower.includes(phrase)) {
+      violations.push(`Banned phrase detected: "${phrase}"`);
+    }
+  }
+
+  // 2. Unsourced collateral claims — sentences mentioning collateral topics
+  //    without a statute citation (§, U.S.C., F.S., or case name "v.")
+  const collateralTopics = [
+    "employment", "housing", "immigration", "financial aid",
+    "background check", "voting", "firearms",
+  ];
+  const sentences = markdown.split(/[.!?]\s+/);
+  for (const sentence of sentences) {
+    const sentLower = sentence.toLowerCase();
+    const mentionsTopic = collateralTopics.some(t => sentLower.includes(t));
+    if (mentionsTopic) {
+      const hasCitation = /§|U\.S\.C\.|F\.S\.|C\.F\.R\.| v\. /.test(sentence);
+      const hasAskFrame = sentLower.includes("ask your attorney");
+      if (!hasCitation && !hasAskFrame) {
+        const preview = sentence.trim().slice(0, 80);
+        violations.push(`Unsourced collateral claim: "${preview}..."`);
+      }
+    }
+  }
+
+  // 3. Pricing errors — $797 should be $800
+  if (markdown.includes("$797")) {
+    violations.push('Pricing error: "$797" found (should be "$800 after credit")');
+  }
+
+  return { valid: violations.length === 0, violations };
+}
+
+// ============================================================
 // HTML RENDERER
 // Duplicated from src/lib/claude.ts renderReportHtml().
 // Must stay in sync if the report template changes.
@@ -1597,6 +1652,8 @@ function renderReportHtml(
     caseNumber?: string;
     courtDate?: string;
     daysSinceArrest?: number | null;
+    expertNames?: string;
+    chargeType?: string;
   }
 ): string {
   let html = markdown
@@ -1661,6 +1718,11 @@ function renderReportHtml(
       <p style="margin: 4px 0;"><strong style="color: white;">Report ID:</strong> ${escapeHtml(meta.reportId)}</p>
     </div>
   </div>
+  ${meta.expertNames ? `<blockquote style="border-left: 3px solid #F59E0B; padding: 16px; margin: 24px 0; background: #1C1917; border-radius: 0 8px 8px 0;">
+    <p style="margin: 0 0 12px; color: #F59E0B; font-weight: bold;">METHODOLOGY NOTE</p>
+    <p style="margin: 0 0 12px; color: #A1A1AA;">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)} — selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
+    <p style="margin: 0; color: #A1A1AA;"><strong style="color: white;">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+  </blockquote>` : ""}
   ${html}
   <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 40px; border-left: 4px solid #A1A1AA;">
     <p style="margin: 0; font-size: 13px; color: #71717A;">
@@ -1682,8 +1744,653 @@ function renderReportHtml(
 }
 
 // ============================================================
+// INTELLIGENCE BRIEF: Section-level Claude API call
+// ============================================================
+
+/**
+ * Calls Claude API for a single Intelligence Brief section.
+ * Uses Sonnet with temperature (no thinking mode).
+ * Same retry logic as callClaudeAPI (529 retry, exponential backoff).
+ *
+ * @param systemPrompt - The system prompt for this section
+ * @param userPrompt - The user prompt with variables interpolated
+ * @param model - Model to use (e.g., "claude-sonnet-4-6")
+ * @param temperature - Temperature for generation
+ * @param maxTokens - Maximum tokens for this section
+ * @param apiKey - Anthropic API key
+ * @returns Generated text content
+ */
+async function callClaudeForSection(
+  systemPrompt: string,
+  userPrompt: string,
+  model: string,
+  temperature: number,
+  maxTokens: number,
+  apiKey: string
+): Promise<string> {
+  const body = JSON.stringify({
+    model,
+    max_tokens: maxTokens,
+    temperature,
+    system: systemPrompt,
+    messages: [{ role: "user", content: userPrompt }],
+  });
+
+  const MAX_RETRIES = 3;
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json",
+      },
+      body,
+    });
+
+    if (response.status === 529 && attempt < MAX_RETRIES) {
+      console.log(`[IB-section] Overloaded (attempt ${attempt}/${MAX_RETRIES}), retrying in ${attempt * 3}s...`);
+      await new Promise((r) => setTimeout(r, attempt * 3000));
+      continue;
+    }
+
+    if (!response.ok) {
+      const err = await response.text();
+      throw new Error(`Claude API error (${response.status}): ${err}`);
+    }
+
+    // deno-lint-ignore no-explicit-any
+    const result: any = await response.json();
+    const textBlocks = (result.content || []).filter((b: { type: string }) => b.type === "text");
+    const text = textBlocks.map((b: { text: string }) => b.text).join("") || "";
+
+    console.log(`[IB-section] Usage — input: ${result.usage?.input_tokens}, output: ${result.usage?.output_tokens}`);
+
+    if (!text.trim() && attempt < MAX_RETRIES) {
+      console.warn(`[IB-section] Empty response, retrying...`);
+      continue;
+    }
+
+    if (!text.trim()) {
+      throw new Error("Empty response from Claude API after retries");
+    }
+
+    return text;
+  }
+
+  throw new Error("Claude API exhausted all retries");
+}
+
+// ============================================================
+// INTELLIGENCE BRIEF: Phase A handler
+// Runs 5 parallel Sonnet calls for Phase A sections.
+// ============================================================
+
+async function handleIBPhaseA(
+  caseId: string,
+  // deno-lint-ignore no-explicit-any
+  caseData: any,
+  intake: IntakeData,
+  apiKey: string,
+  supabaseUrl: string,
+  supabaseKey: string,
+  resendKey: string | undefined,
+  resendFrom: string,
+  operatorEmail: string,
+  siteUrl: string,
+): Promise<Response> {
+  const headers = { "Content-Type": "application/json" };
+  console.log(`[IB-Phase-A] Starting for case ${caseId}`);
+
+  // Fetch phase2_data from intake
+  const phase2 = intake.phase2_data || null;
+  if (!phase2 || !phase2.judge_name) {
+    return new Response(JSON.stringify({ error: "Phase 2 data missing — customer must complete Phase 2 form" }), { status: 400, headers });
+  }
+
+  // Fetch prior CD context if available
+  let priorCdHtml = "";
+  if (caseData.prior_case_id) {
+    const priorCases = await supabaseSelect(supabaseUrl, supabaseKey, "cases", `id=eq.${caseData.prior_case_id}&select=report_html`);
+    // deno-lint-ignore no-explicit-any
+    const priorCase = (priorCases as any[])[0];
+    if (priorCase?.report_html) {
+      // Strip HTML tags, keep text for context (capped at 8000 chars)
+      priorCdHtml = priorCase.report_html
+        .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
+        .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
+        .replace(/<[^>]+>/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 8000);
+    }
+  }
+
+  // Build charge context
+  const jurisdictionLevel = intake.jurisdiction_level || "state";
+  const chargeSpecificData = intake.charge_specific_data || {};
+  let chargeContext = "";
+  try {
+    chargeContext = await getChargeContext(intake.charge_type, jurisdictionLevel, chargeSpecificData, supabaseUrl, supabaseKey);
+  } catch {
+    chargeContext = getChargeContextFallback(intake.charge_type);
+  }
+
+  // Build variables
+  const v = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, "", null);
+
+  // Phase A sections (parallel)
+  const phaseASections = [
+    { key: "case-roadmap", system: buildIBPrompt("case-roadmap", v).system, user: buildIBPrompt("case-roadmap", v).user, model: "claude-sonnet-4-6", temp: 0.3, max: 4000 },
+    { key: "whats-working", system: buildIBPrompt("whats-working", v).system, user: buildIBPrompt("whats-working", v).user, model: "claude-sonnet-4-6", temp: 0.3, max: 4000 },
+    { key: "legal-options", system: buildIBPrompt("legal-options", v).system, user: buildIBPrompt("legal-options", v).user, model: "claude-sonnet-4-6", temp: 0.3, max: 5000 },
+    { key: "protection", system: buildIBPrompt("protection", v).system, user: buildIBPrompt("protection", v).user, model: "claude-sonnet-4-6", temp: 0.3, max: 3500 },
+    { key: "court-prep", system: buildIBPrompt("court-prep", v).system, user: buildIBPrompt("court-prep", v).user, model: "claude-sonnet-4-6", temp: 0.3, max: 2000 },
+  ];
+
+  console.log(`[IB-Phase-A] Running ${phaseASections.length} parallel Sonnet calls...`);
+
+  const results = await Promise.allSettled(
+    phaseASections.map(async (s) => {
+      const text = await callClaudeForSection(s.system, s.user, s.model, s.temp, s.max, apiKey);
+      return { key: s.key, text };
+    })
+  );
+
+  // Collect outputs, retry failures once
+  const sectionOutputs: Record<string, string> = {};
+  const failures: string[] = [];
+
+  for (const result of results) {
+    if (result.status === "fulfilled") {
+      sectionOutputs[result.value.key] = result.value.text;
+    } else {
+      const section = phaseASections[results.indexOf(result)];
+      console.error(`[IB-Phase-A] Section ${section.key} failed:`, result.reason);
+
+      // One retry for failed sections
+      try {
+        const retryText = await callClaudeForSection(section.system, section.user, section.model, section.temp, section.max, apiKey);
+        sectionOutputs[section.key] = retryText;
+      } catch (retryErr) {
+        console.error(`[IB-Phase-A] Section ${section.key} retry failed:`, retryErr);
+        failures.push(section.key);
+        sectionOutputs[section.key] = `[Section generation failed — will be regenerated]`;
+      }
+    }
+  }
+
+  // Save section outputs and transition to researching
+  await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
+    section_outputs: sectionOutputs,
+    status: "researching",
+    phase_a_completed_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  });
+
+  console.log(`[IB-Phase-A] Complete! ${Object.keys(sectionOutputs).length} sections saved, ${failures.length} failures.`);
+
+  // Operator email — judge research needed
+  if (resendKey) {
+    await sendEmail({
+      to: operatorEmail,
+      subject: `IB Phase A Complete — Judge Research Needed: ${escapeHtml(intake.first_name)}`,
+      html: `<h1 style="color: #F59E0B;">Intelligence Brief Phase A Complete</h1>
+        <p>${Object.keys(sectionOutputs).length} of 5 sections generated successfully${failures.length > 0 ? ` (${failures.join(", ")} failed)` : ""}.</p>
+        <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
+          <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(caseData.email)}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Judge:</strong> ${escapeHtml(phase2.judge_name)}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">County:</strong> ${escapeHtml(phase2.county || "Not specified")}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>
+        </div>
+        <p><strong style="color: #F59E0B;">Action:</strong> Research Judge ${escapeHtml(phase2.judge_name)} and submit findings via the judge-research endpoint to trigger Phase B.</p>
+        <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${siteUrl}/api/generate/intelligence-brief/judge-research -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${caseId}","judgeResearch":{...}}'</code>`,
+      resendKey, fromEmail: resendFrom, operatorEmail,
+    });
+  }
+
+  // Customer micro-delivery email
+  if (resendKey) {
+    await sendEmail({
+      to: caseData.email,
+      subject: "Your Intelligence Brief is in Progress",
+      html: `<h1 style="color: #F59E0B;">Your Intelligence Brief Has Begun</h1>
+        <p>Hi ${escapeHtml(intake.first_name)},</p>
+        <p>We've started analyzing your case. Here's where things stand:</p>
+        <ul style="color: #D4D4D8; padding-left: 20px;">
+          <li>Your case roadmap and legal options analysis are complete</li>
+          <li>We're now researching Judge ${escapeHtml(phase2.judge_name)}'s patterns and rulings</li>
+          <li>Your full Intelligence Brief will be ready within 72 hours</li>
+        </ul>
+        <p style="color: #A1A1AA;">No action needed from you — we'll email you when your complete report is ready.</p>`,
+      resendKey, fromEmail: resendFrom, operatorEmail,
+    });
+  }
+
+  return new Response(
+    JSON.stringify({ success: true, caseId, status: "researching", sections: Object.keys(sectionOutputs), failures }),
+    { headers }
+  );
+}
+
+// ============================================================
+// INTELLIGENCE BRIEF: Phase B handler
+// Runs 4 sequential Sonnet calls for Phase B sections.
+// ============================================================
+
+async function handleIBPhaseB(
+  caseId: string,
+  // deno-lint-ignore no-explicit-any
+  caseData: any,
+  intake: IntakeData,
+  apiKey: string,
+  supabaseUrl: string,
+  supabaseKey: string,
+  resendKey: string | undefined,
+  resendFrom: string,
+  operatorEmail: string,
+  siteUrl: string,
+  operatorSecret: string | undefined,
+): Promise<Response> {
+  const headers = { "Content-Type": "application/json" };
+  console.log(`[IB-Phase-B] Starting for case ${caseId}`);
+
+  const phase2 = intake.phase2_data || null;
+  if (!phase2) {
+    return new Response(JSON.stringify({ error: "Phase 2 data missing" }), { status: 400, headers });
+  }
+
+  // Load Phase A section outputs
+  const phaseAOutputs: Record<string, string> = caseData.section_outputs || {};
+  if (Object.keys(phaseAOutputs).length === 0) {
+    return new Response(JSON.stringify({ error: "Phase A outputs missing — run Phase A first" }), { status: 400, headers });
+  }
+
+  // Get judge research data
+  const judgeResearch = caseData.judge_research_data
+    ? (typeof caseData.judge_research_data === "string" ? caseData.judge_research_data : JSON.stringify(caseData.judge_research_data, null, 2))
+    : "";
+
+  // Fetch prior CD context
+  let priorCdHtml = "";
+  if (caseData.prior_case_id) {
+    const priorCases = await supabaseSelect(supabaseUrl, supabaseKey, "cases", `id=eq.${caseData.prior_case_id}&select=report_html`);
+    // deno-lint-ignore no-explicit-any
+    const priorCase = (priorCases as any[])[0];
+    if (priorCase?.report_html) {
+      priorCdHtml = priorCase.report_html
+        .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
+        .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
+        .replace(/<[^>]+>/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 8000);
+    }
+  }
+
+  // Build charge context
+  let chargeContext = "";
+  try {
+    chargeContext = await getChargeContext(intake.charge_type, intake.jurisdiction_level || "state", intake.charge_specific_data || {}, supabaseUrl, supabaseKey);
+  } catch {
+    chargeContext = getChargeContextFallback(intake.charge_type);
+  }
+
+  // Build variables with Phase A outputs included
+  const v = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, phaseAOutputs);
+
+  // Phase B sections (sequential — each may depend on prior outputs)
+  const phaseBSections = [
+    { key: "case-intelligence", system: buildIBPrompt("case-intelligence", v).system, user: buildIBPrompt("case-intelligence", v).user, model: "claude-sonnet-4-6", temp: 0.3, max: 3500 },
+    { key: "your-plan", system: buildIBPrompt("your-plan", v).system, user: buildIBPrompt("your-plan", v).user, model: "claude-sonnet-4-6", temp: 0.3, max: 5000 },
+    { key: "questions", system: buildIBPrompt("questions", v).system, user: buildIBPrompt("questions", v).user, model: "claude-sonnet-4-6", temp: 0.4, max: 3000 },
+    { key: "48hr-priorities", system: buildIBPrompt("48hr-priorities", v).system, user: buildIBPrompt("48hr-priorities", v).user, model: "claude-sonnet-4-6", temp: 0.2, max: 1000 },
+  ];
+
+  const allOutputs = { ...phaseAOutputs };
+
+  for (const section of phaseBSections) {
+    console.log(`[IB-Phase-B] Generating ${section.key}...`);
+    try {
+      // For later sections, rebuild variables with latest outputs
+      if (section.key === "questions" || section.key === "48hr-priorities") {
+        const updatedV = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, allOutputs);
+        const prompt = buildIBPrompt(section.key, updatedV);
+        section.system = prompt.system;
+        section.user = prompt.user;
+      }
+
+      const text = await callClaudeForSection(section.system, section.user, section.model, section.temp, section.max, apiKey);
+      allOutputs[section.key] = text;
+    } catch (err) {
+      console.error(`[IB-Phase-B] Section ${section.key} failed:`, err);
+      allOutputs[section.key] = `[Section ${section.key} generation failed]`;
+    }
+  }
+
+  // Compile HTML report
+  console.log(`[IB-Phase-B] Compiling HTML report...`);
+  const reportToken = crypto.randomUUID();
+  const reportDate = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+  const reportHtml = renderIBReportHtml(allOutputs, {
+    firstName: intake.first_name,
+    charges: intake.charge_type,
+    stateCounty: `${intake.state || ""}${phase2.county ? `, ${phase2.county}` : ""}`.trim() || "Not specified",
+    caseNumber: phase2.case_number || intake.case_number || "Not provided",
+    nextCourtDate: phase2.next_court_date || intake.court_date || "Not provided",
+    judgeName: phase2.judge_name,
+    attorneyName: phase2.attorney_name,
+    reportDate,
+    reportId: reportToken.slice(0, 8).toUpperCase(),
+    monthsSinceArrest: intake.arrest_date
+      ? String(Math.floor((Date.now() - new Date(intake.arrest_date).getTime()) / (1000 * 60 * 60 * 24 * 30)))
+      : "Unknown",
+  });
+
+  // Save to DB
+  const tokenExpiry = new Date();
+  tokenExpiry.setFullYear(tokenExpiry.getFullYear() + 1);
+
+  await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
+    section_outputs: allOutputs,
+    report_html: reportHtml,
+    report_token: reportToken,
+    generated_at: new Date().toISOString(),
+    status: "review",
+    charge_type: intake.charge_type,
+    phase_b_completed_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    report_token_expires_at: tokenExpiry.toISOString(),
+  });
+
+  console.log(`[IB-Phase-B] Complete! Case ${caseId} → review`);
+
+  // Operator review email
+  if (resendKey) {
+    await sendEmail({
+      to: operatorEmail,
+      subject: `Review Intelligence Brief: ${escapeHtml(intake.charge_type)} — ${escapeHtml(intake.first_name)}`,
+      html: `<h1 style="color: #F59E0B;">Intelligence Brief Ready for Review</h1>
+        <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
+          <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(intake.first_name)} ${escapeHtml(intake.last_name || "")}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Email:</strong> ${escapeHtml(caseData.email)}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge:</strong> ${escapeHtml(intake.charge_type)}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Judge:</strong> ${escapeHtml(phase2.judge_name)}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>
+        </div>
+        <div style="margin: 24px 0; display: flex; gap: 12px;">
+          ${operatorSecret
+            ? `<a href="${siteUrl}/api/deliver?token=${await signOperatorTokenDeno(caseId, operatorSecret)}&case=${caseId}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px;">Approve &amp; Deliver</a>`
+            : ""
+          }
+          <a href="${siteUrl}/report/${reportToken}" style="display: inline-block; padding: 14px 28px; background: #3B82F6; color: white; font-weight: bold; text-decoration: none; border-radius: 8px;">Preview Report</a>
+        </div>`,
+      resendKey, fromEmail: resendFrom, operatorEmail,
+    });
+  }
+
+  // Fire-and-forget: trigger evaluation
+  try {
+    fetch(`${supabaseUrl}/functions/v1/evaluate-report`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${supabaseKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ caseId }),
+    }).catch((err) => console.error("[IB-Phase-B] Eval trigger failed:", err));
+  } catch { /* Safety net cron catches missed evals */ }
+
+  return new Response(
+    JSON.stringify({ success: true, caseId, reportToken, status: "review" }),
+    { headers }
+  );
+}
+
+// ============================================================
+// INTELLIGENCE BRIEF: Variable builder + prompt builder (Deno-local)
+// ============================================================
+// These duplicate the logic from src/lib/intelligence-brief/variables.ts
+// and prompts.ts because the Edge Function can't import Next.js modules.
+
+// deno-lint-ignore no-explicit-any
+function buildIBVariables(intake: IntakeData, phase2: any, priorCdHtml: string, chargeContext: string, judgeResearch: string, sectionOutputs: Record<string, string> | null): Record<string, string> {
+  const p2 = phase2 || {};
+  const so = sectionOutputs || {};
+
+  const hasAttorney = intake.has_attorney || "";
+  const attorneyType = hasAttorney === "public" ? "Public Defender"
+    : hasAttorney === "yes" ? "Private Attorney"
+    : hasAttorney === "no" ? "No Attorney"
+    : hasAttorney || "Not specified";
+
+  const county = p2.county || intake.incident_location || "Not provided";
+  const state = intake.state || "Not provided";
+  const stateCounty = county !== "Not provided" ? `${state}, ${county}` : state;
+
+  const monthsSinceArrest = intake.arrest_date
+    ? String(Math.floor((Date.now() - new Date(intake.arrest_date).getTime()) / (1000 * 60 * 60 * 24 * 30)))
+    : "Unknown";
+
+  const dependents = p2.dependents || "";
+  const hasChildren = /child|kid|son|daughter|minor|infant|toddler|baby/i.test(dependents) ? "yes" : "no";
+
+  const plea = intake.plea_offered || "";
+  const pleaStatus = plea === "yes" || plea === "Yes" ? "offered"
+    : plea === "discussing" ? "discussing" : "not yet";
+
+  const priorXml = priorCdHtml
+    ? `<prior_case_decoder_report>\n${priorCdHtml}\n</prior_case_decoder_report>`
+    : "";
+
+  return {
+    first_name: intake.first_name,
+    charges: intake.charge_type.replace(/-/g, " "),
+    state, county, state_county: stateCounty,
+    jurisdiction_level: (intake.jurisdiction_level || "state").toUpperCase(),
+    case_number: p2.case_number || intake.case_number || "Not provided",
+    case_stage: deriveCaseStageDeno(p2.hearing_type || "", p2.next_court_date || intake.court_date || "", plea, intake.has_discovery || ""),
+    arrest_date: intake.arrest_date || "Not provided",
+    arraignment_date: "Not yet identified — ask your attorney",
+    months_since_arrest: monthsSinceArrest,
+    next_court_date: p2.next_court_date || intake.court_date || "Not provided",
+    next_hearing_type: p2.hearing_type || "Not specified",
+    motion_deadlines: "Not yet identified — ask your attorney about applicable motion deadlines",
+    attorney_type: attorneyType,
+    attorney_name: p2.attorney_name || "Not provided",
+    attorney_firm: p2.attorney_firm || "",
+    last_communication: intake.last_attorney_contact || "Not provided",
+    discovery_status: intake.has_discovery || "Not specified",
+    plea_status: pleaStatus,
+    plea_terms: intake.plea_terms || "N/A",
+    charge_specific_data: chargeContext,
+    frustration: intake.situation || "Not provided",
+    biggest_concern: p2.biggest_concern || "Not specified",
+    attorney_statements: p2.what_attorney_told || "Not provided",
+    employment: p2.employment || "Not provided",
+    family_situation: dependents || "Not provided",
+    has_children: hasChildren,
+    immigration_status: p2.immigration_status || "Not specified",
+    co_defendants: p2.co_defendant_details || intake.co_defendants || "None reported",
+    on_probation_parole: p2.on_probation_parole || "Not specified",
+    prior_convictions: p2.prior_convictions || "None reported",
+    prior_convictions_summary: p2.prior_convictions ? `Has prior convictions: ${p2.prior_convictions}` : "No prior convictions reported",
+    key_dates: [intake.arrest_date ? `Arrest: ${intake.arrest_date}` : "", p2.next_court_date || intake.court_date ? `Next Court: ${p2.next_court_date || intake.court_date}` : ""].filter(Boolean).join(" | ") || "No dates provided",
+    prior_section_outputs_xml: priorXml,
+    judge_name: p2.judge_name || "Not provided",
+    judge_research_data: judgeResearch || "Judge research pending — use general patterns with appropriate caveats",
+    gaps_from_section_2: so["whats-working"] || "Pending Phase A",
+    accountability_score: "See Section 2",
+    most_likely_outcome: so["case-intelligence"] || "Pending Phase B",
+    urgent_deadlines: so["legal-options"] || "Pending Phase A",
+    applicable_motions: so["legal-options"] || "Pending Phase A",
+    top_collateral_consequences: so["protection"] || "Pending Phase A",
+    roadmap_gaps_and_unknowns: so["case-roadmap"] || "Pending Phase A",
+    accountability_gaps_and_decoded_issues: so["whats-working"] || "Pending Phase A",
+    intelligence_gaps_judge_unknowns: so["case-intelligence"] || "Pending Phase B",
+    motion_unknowns_deadline_questions_plea_questions: so["legal-options"] || "Pending Phase A",
+    consequence_questions: so["protection"] || "Pending Phase A",
+    section_6g_questions_to_exclude: "",
+    case_roadmap_output: so["case-roadmap"] || "",
+    whats_working_output: so["whats-working"] || "",
+    case_intelligence_output: so["case-intelligence"] || "",
+    legal_options_output: so["legal-options"] || "",
+    protection_output: so["protection"] || "",
+    your_plan_output: so["your-plan"] || "",
+  };
+}
+
+function deriveCaseStageDeno(hearingType: string, nextCourtDate: string, pleaOffered: string, discoveryStatus: string): string {
+  const ht = hearingType.toLowerCase();
+  if (ht.includes("arraignment")) return "Arraignment";
+  if (ht.includes("trial")) return "Trial";
+  if (ht.includes("sentencing")) return "Sentencing";
+  if (ht.includes("plea")) return "Plea negotiations";
+  if (ht.includes("suppression") || ht.includes("motion")) return "Motion hearings";
+  if (ht.includes("pre-trial") || ht.includes("pretrial")) return "Pre-trial";
+  if (ht.includes("probation")) return "Probation violation";
+  if (pleaOffered === "yes" || pleaOffered === "discussing") return "Plea negotiations";
+  if (discoveryStatus === "yes") return "Discovery review";
+  if (nextCourtDate) return "Pre-trial";
+  return "Early stages";
+}
+
+// Inline prompt builder — generates system + user prompt for a given section key
+// This duplicates the TypeScript prompt builders for Deno. Kept compact.
+function buildIBPrompt(sectionKey: string, v: Record<string, string>): { system: string; user: string } {
+  const BANNED = `\nABSOLUTE BANNED PHRASES: "you should", "you need to", "we recommend", "we advise", "your best option", "the best strategy", "red flag", "warning sign", "escalation ladder". A single occurrence invalidates the section.`;
+
+  const prompts: Record<string, { system: string; user: string }> = {
+    "case-roadmap": {
+      system: `You are an elite criminal defense research analyst generating Section 1: Your Case Roadmap for a Case Intelligence Brief.\n\nProvide a personalized GPS from current position to resolution. County-specific, charge-specific.${BANNED}\n\nOutput: ## Section 1: Your Case Roadmap\n### 1a. Where You Are Now (~250w)\n### 1b. What Happens Next (~500w)\n### 1c. The Two Paths (~200w)\n### Bottom Line Right Now (~50w)\nWord budget: ~1,050.`,
+      user: `Generate Section 1.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Case #: ${v.case_number} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Months since: ${v.months_since_arrest} | Court date: ${v.next_court_date} | Hearing: ${v.next_hearing_type} | Attorney: ${v.attorney_type} | Discovery: ${v.discovery_status}\nCharge context: ${v.charge_specific_data}\n</intake>\n${v.prior_section_outputs_xml}`,
+    },
+    "whats-working": {
+      system: `You are an elite criminal defense research analyst generating Section 2: What's Working + What Needs Attention.\n\nAssess what attorney has done RIGHT first. Decode statements. Gaps = "CLARIFY" never "failure". Attorney Accountability Score 0-100 (6 dimensions).${BANNED}\n\nOutput: ## Section 2\n### 2a. What's On Track (~400w)\n### 2b. Decoded Statements (~500w)\n### 2c. What Needs Attention (~500w)\n### Bottom Line (~50w)\nWord budget: ~1,550.`,
+      user: `Generate Section 2.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Attorney: ${v.attorney_type} ${v.attorney_name} | Last contact: ${v.last_communication} | Discovery: ${v.discovery_status} | Plea: ${v.plea_status} | Arrest: ${v.arrest_date} | Court: ${v.next_court_date} | Frustration: ${v.frustration} | Attorney said: ${v.attorney_statements} | Case #: ${v.case_number} | Dates: ${v.key_dates}\n</intake>\n${v.prior_section_outputs_xml}`,
+    },
+    "legal-options": {
+      system: `You are an elite criminal defense research analyst generating Section 4: Legal Options & Deadlines.\n\nMap every applicable motion, deadline, plea framework. NO recommendations — present options + attorney questions. NO specific percentages from training data.${BANNED}\n\nOutput: ## Section 4\n### 4a. Motion Landscape (~700w)\n### 4b. Deadline Calendar (~300w)\n### 4c-4g. Plea Framework (conditional: ${v.plea_status}) (~800-1000w)\n### Bottom Line (~50w)\nWord budget: ~2,200.`,
+      user: `Generate Section 4.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Court: ${v.next_court_date} | Plea: ${v.plea_status} | Plea terms: ${v.plea_terms} | Discovery: ${v.discovery_status} | Attorney: ${v.attorney_type} | Priors: ${v.prior_convictions}\nCharge context: ${v.charge_specific_data}\n</intake>\n${v.prior_section_outputs_xml}`,
+    },
+    "protection": {
+      system: `You are an elite criminal defense research analyst generating Section 5: Protecting Your Case and Life.\n\nEvery threat → immediately followed by protective action. No paragraph ends on fear. Life Impact Map: 8 domains. Immigration: if non-citizen, CRITICAL with Padilla reference. Family & Custody: ALWAYS present.${BANNED}\n\nOutput: ## Section 5\n### 5a. Protecting Your Case (~400w)\n### 5b. Life Impact Map (~800w)\n### 5c. Life While Pending (~400w)\n### Bottom Line (~50w)\nWord budget: ~1,750.`,
+      user: `Generate Section 5.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Stage: ${v.case_stage} | Employment: ${v.employment} | Family: ${v.family_situation} | Children: ${v.has_children} | Immigration: ${v.immigration_status} | Co-defendants: ${v.co_defendants} | Priors: ${v.prior_convictions} | Probation/parole: ${v.on_probation_parole}\nCharge context: ${v.charge_specific_data}\n</intake>\n${v.prior_section_outputs_xml}`,
+    },
+    "court-prep": {
+      system: `You are an elite criminal defense research analyst generating Appendix B: Next Court Date Prep.\n\nHearing-type-specific preparation guide. Practical (dress, arrive, park). Step-by-step walkthrough. If hearing type unknown: general guide.${BANNED}\n\nOutput: ## Appendix B\n### What This Hearing Is (~100w)\n### Step by Step (~350w)\n### What to Wear (~75w)\n### What to Bring (~100w)\n### What NOT to Do (~75w)\n### If Attorney Isn't There (~100w)\nWord budget: ~850.`,
+      user: `Generate Appendix B.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Court date: ${v.next_court_date} | Hearing: ${v.next_hearing_type} | Attorney: ${v.attorney_type} | Stage: ${v.case_stage} | Judge: ${v.judge_name}\n</intake>`,
+    },
+    "case-intelligence": {
+      system: `You are an elite criminal defense research analyst generating Section 3: Your Case Intelligence.\n\nOutcome map (5 scenarios, qualitative NOT percentages), defense theories (attributed to named experts), judge intelligence, prosecution strategy (FRAME analysis), jurisdiction profile. All county-specific.${BANNED}\nNO specific percentages from training data.\n\nOutput: ## Section 3\n### 3a. Outcome Map (~500w)\n### 3b. Defense Theories (~400w)\n### 3c. Judge Intelligence (~500w)\n### 3d. Prosecution Preview (~500w)\n### 3e. Jurisdiction Profile (~200w)\n### Bottom Line (~50w)\nWord budget: ~2,250.`,
+      user: `Generate Section 3.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Priors: ${v.prior_convictions_summary} | Probation: ${v.on_probation_parole} | Plea: ${v.plea_status} | Discovery: ${v.discovery_status}\nCharge context: ${v.charge_specific_data}\n</intake>\n\n<judge_research>\n${v.judge_research_data}\n</judge_research>\n\n<prior_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n</prior_sections>\n${v.prior_section_outputs_xml}`,
+    },
+    "your-plan": {
+      system: `You are an elite criminal defense research analyst generating Section 6: Your Plan.\n\nConvert everything into action. Email template fully personalized. Phone script read-aloud ready. 14-day plan: 1 action/day. Meeting Ready Sheet: 5 PRE-FILLED questions (Q1 = Golden). ZERO "[fill in]" placeholders.${BANNED}\n\nOutput: ## Section 6\n### 6a. If Overwhelmed (~50w)\n### 6b. Email (~200w)\n### 6c. Phone Script (~200w)\n### 6d. 14-Day Plan (~300w)\n### 6e. Follow-Up (~100w)\n### 6f. What to Bring (~100w)\n### 6g. Meeting Ready Sheet (~300w)\n### 6h. Post-Meeting (~200w)\n### 6i. Difficult Conversations (~350w)\n### 6j. Advocacy Steps (~175w)\nWord budget: ~2,075.`,
+      user: `Generate Section 6.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Case #: ${v.case_number} | Attorney: ${v.attorney_name} (${v.attorney_type}) | Court: ${v.next_court_date} | Last contact: ${v.last_communication} | Frustration: ${v.frustration} | Concern: ${v.biggest_concern}\n</intake>\n\n<cross_refs>\nGaps: ${v.gaps_from_section_2}\nScore: ${v.accountability_score}\nDeadlines: ${v.urgent_deadlines}\nMotions: ${v.applicable_motions}\nConsequences: ${v.top_collateral_consequences}\n</cross_refs>\n\n<prior_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n</prior_sections>\n${v.prior_section_outputs_xml}`,
+    },
+    "questions": {
+      system: `You are an elite criminal defense research analyst generating Appendix D: Targeted Follow-Up Questions (10-15).\n\nGap-based questions. 6-part format each. ZERO duplicates with Section 6g. Chris Voss calibrated design.${BANNED}\n\nOutput: ## Appendix D\n### Intro (~100w)\n### Case Strategy (2-4q)\n### Judge/Jurisdiction (1-3q)\n### Motions/Deadlines (2-3q)\n### Consequences (1-3q)\n### Evidence/Discovery (1-2q)\nWord budget: ~1,300-1,900.`,
+      user: `Generate Appendix D.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Attorney: ${v.attorney_name} (${v.attorney_type}) | Stage: ${v.case_stage}\nCharge context: ${v.charge_specific_data}\n</intake>\n\n<gaps>\nRoadmap: ${v.roadmap_gaps_and_unknowns}\nAccountability: ${v.accountability_gaps_and_decoded_issues}\nIntelligence: ${v.intelligence_gaps_judge_unknowns}\nMotions: ${v.motion_unknowns_deadline_questions_plea_questions}\nConsequences: ${v.consequence_questions}\n</gaps>\n\n<exclude>\n${v.section_6g_questions_to_exclude}\n</exclude>\n\n<all_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n<s6>${v.your_plan_output}</s6>\n</all_sections>\n${v.prior_section_outputs_xml}`,
+    },
+    "48hr-priorities": {
+      system: `You are an elite criminal defense research analyst generating the 48-Hour Priority List.\n\nExactly 3 priorities. P1=TODAY (5 min). P2=THIS WEEK. P3=BEFORE NEXT COURT DATE. Each references a section. End: "Everything else can wait. Start with Priority 1."${BANNED}\n\nOverrides: motion deadline <7d, immigration non-citizen, attorney gap >30d.`,
+      user: `Generate 48-Hour Priority List.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Court: ${v.next_court_date} | Immigration: ${v.immigration_status} | Attorney: ${v.attorney_name}\n</intake>\n\n<all_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n<s6>${v.your_plan_output}</s6>\n</all_sections>`,
+    },
+  };
+
+  return prompts[sectionKey] || { system: "", user: "" };
+}
+
+// ============================================================
+// INTELLIGENCE BRIEF: HTML renderer (Deno-local)
+// Duplicated from src/lib/intelligence-brief/render.ts
+// ============================================================
+
+function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
+  firstName: string; charges: string; stateCounty: string; caseNumber: string;
+  nextCourtDate: string; judgeName: string; attorneyName: string;
+  reportDate: string; reportId: string; monthsSinceArrest: string;
+}): string {
+  // Markdown→HTML helper (same as CD version)
+  function md2html(markdown: string): string {
+    let h = markdown
+      .replace(/^#### (.+)$/gm, '<h4 style="color: #F59E0B; font-size: 14px; margin-top: 20px;">$1</h4>')
+      .replace(/^### (.+)$/gm, '<h3 style="color: white; font-size: 16px; margin-top: 24px;">$1</h3>')
+      .replace(/^## (.+)$/gm, '<h2 style="color: #F59E0B; font-size: 20px; margin-top: 32px; padding-top: 24px; border-top: 1px solid #27272A;">$1</h2>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong style="color: white;">$1</strong>')
+      .replace(/\*(.+?)\*/g, "<em>$1</em>")
+      .replace(/^> (.+)$/gm, '<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">$1</blockquote>')
+      .replace(/^- \[x\] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9745; $1</li>')
+      .replace(/^- \[ \] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9744; $1</li>')
+      .replace(/^- (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
+      .replace(/^\d+\. (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
+      .replace(/\|(.+)\|/g, (match: string) => {
+        const cells = match.split("|").filter(Boolean).map((c: string) => c.trim());
+        if (cells.every((c: string) => /^[-:]+$/.test(c))) return "";
+        const tag = cells.some((c: string) => c.startsWith("**")) ? "th" : "td";
+        const s = `style="padding: 8px 12px; border: 1px solid #27272A; text-align: left;"`;
+        return `<tr>${cells.map((c: string) => `<${tag} ${s}>${c}</${tag}>`).join("")}</tr>`;
+      })
+      .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p style="margin: 8px 0; line-height: 1.6;">$1</p>');
+    h = h.replace(/(<tr>[\s\S]*?<\/tr>(\s*<tr>[\s\S]*?<\/tr>)*)/g, '<table style="width: 100%; border-collapse: collapse; margin: 16px 0;">$1</table>');
+    return h;
+  }
+
+  const sections = [
+    sectionOutputs["48hr-priorities"] || "",
+    sectionOutputs["case-roadmap"] || "",
+    sectionOutputs["whats-working"] || "",
+    sectionOutputs["case-intelligence"] || "",
+    sectionOutputs["legal-options"] || "",
+    sectionOutputs["protection"] || "",
+    sectionOutputs["your-plan"] || "",
+    sectionOutputs["court-prep"] || "",
+    sectionOutputs["questions"] || "",
+  ].filter((s) => s.trim()).map((s) => md2html(s)).join("\n");
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Intelligence Brief — ${escapeHtml(meta.firstName)}</title>
+<style>@media print { body { background: white !important; color: #1a1a1a !important; } * { color: #1a1a1a !important; } h2,h3,h4 { color: #92400e !important; } strong { color: #1a1a1a !important; } .no-print { display: none !important; } .header-block { background: #f5f5f4 !important; border-color: #92400e !important; } }</style>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0C0A09; color: #D4D4D8; margin: 0; padding: 0;">
+<div style="max-width: 800px; margin: 0 auto; padding: 32px 24px;">
+  <div class="header-block" style="background: #1C1917; padding: 32px; border-radius: 12px; border: 2px solid #F59E0B; margin-bottom: 32px; text-align: center;">
+    <h1 style="color: #F59E0B; font-size: 28px; margin: 0;">CASE INTELLIGENCE BRIEF</h1>
+    <p style="color: #A1A1AA; margin: 8px 0 0; font-size: 14px;">ImNotAnAttorney | We Research. You Ask.</p>
+    <div style="margin-top: 24px; text-align: left;">
+      <p style="margin: 4px 0;"><strong style="color: white;">Prepared for:</strong> ${escapeHtml(meta.firstName)}</p>
+      <p style="margin: 4px 0;"><strong style="color: white;">Charge(s):</strong> ${escapeHtml(meta.charges)}</p>
+      <p style="margin: 4px 0;"><strong style="color: white;">Jurisdiction:</strong> ${escapeHtml(meta.stateCounty)}</p>
+      ${meta.caseNumber !== "Not provided" ? `<p style="margin: 4px 0;"><strong style="color: white;">Case #:</strong> ${escapeHtml(meta.caseNumber)}</p>` : ""}
+      ${meta.nextCourtDate !== "Not provided" ? `<p style="margin: 4px 0;"><strong style="color: white;">Court Date:</strong> ${escapeHtml(meta.nextCourtDate)}</p>` : ""}
+      <p style="margin: 4px 0;"><strong style="color: white;">Judge:</strong> ${escapeHtml(meta.judgeName)}</p>
+      <p style="margin: 4px 0;"><strong style="color: white;">Attorney:</strong> ${escapeHtml(meta.attorneyName)}</p>
+      <p style="margin: 4px 0;"><strong style="color: white;">Report Date:</strong> ${escapeHtml(meta.reportDate)}</p>
+      <p style="margin: 4px 0;"><strong style="color: white;">Report ID:</strong> ${escapeHtml(meta.reportId)}</p>
+    </div>
+  </div>
+  ${sections}
+  <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 40px; border-left: 4px solid #A1A1AA;">
+    <p style="margin: 0; font-size: 13px; color: #71717A;"><strong style="color: #A1A1AA;">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+  </div>
+  <div style="margin-top: 48px; padding-top: 24px; border-top: 2px solid #27272A; text-align: center;">
+    <p style="margin: 0; font-size: 12px; color: #71717A;">&copy; ${new Date().getFullYear()} ImNotAnAttorney. Legal information, not legal advice.</p>
+    <p style="margin: 4px 0 0; font-size: 12px; color: #52525B;">Report ID: ${escapeHtml(meta.reportId)} | Generated: ${escapeHtml(meta.reportDate)}</p>
+  </div>
+  <div class="no-print" style="margin-top: 32px; text-align: center;">
+    <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">When you get discovery evidence, we can go even deeper:</p>
+    <a href="/checkout?tier=x-ray" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">The X-Ray — $1,497 ($500 after credit)</a>
+    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $997 is fully credited toward any tier within 12 months.</p>
+  </div>
+</div>
+</body>
+</html>`;
+}
+
+// ============================================================
 // MAIN HTTP HANDLER
-// Handles POST requests with { caseId, force? } JSON body.
+// Handles POST requests with { caseId, force?, tier?, phase? } JSON body.
 // CORS preflight (OPTIONS) is supported for cross-origin calls.
 // ============================================================
 
@@ -1716,7 +2423,7 @@ Deno.serve(async (req: Request) => {
       return new Response(JSON.stringify({ error: "ANTHROPIC_API_KEY not configured" }), { status: 500, headers });
     }
 
-    const { caseId, force } = await req.json();
+    const { caseId, force, tier, phase } = await req.json();
     if (!caseId || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(caseId)) {
       return new Response(JSON.stringify({ error: "Valid caseId (UUID) required" }), { status: 400, headers });
     }
@@ -1780,6 +2487,31 @@ Deno.serve(async (req: Request) => {
       return new Response(JSON.stringify({ error: "No intake found" }), { status: 404, headers });
     }
 
+    // ─── TIER BRANCHING ─────────────────────────────────────────
+    // Intelligence Brief uses separate Phase A/B handlers with different
+    // prompt chains and status flows. Case Decoder falls through below.
+    if (tier === "intelligence-brief") {
+      if (phase === "A") {
+        return await handleIBPhaseA(
+          caseId, caseData, intake!, anthropicKey,
+          supabaseUrl, supabaseKey, resendKey, resendFrom,
+          operatorEmail, siteUrl,
+        );
+      } else if (phase === "B") {
+        return await handleIBPhaseB(
+          caseId, caseData, intake!, anthropicKey,
+          supabaseUrl, supabaseKey, resendKey, resendFrom,
+          operatorEmail, siteUrl, operatorSecret,
+        );
+      } else {
+        return new Response(
+          JSON.stringify({ error: `Invalid phase "${phase}". Use "A" or "B".` }),
+          { status: 400, headers },
+        );
+      }
+    }
+    // ─── CASE DECODER FLOW (default) ────────────────────────────
+
     console.log(`[generate-report] Intake found, calling Claude API...`);
 
     // --- Generate report ---
@@ -1815,6 +2547,34 @@ Deno.serve(async (req: Request) => {
 
     console.log(`[generate-report] Claude done (${markdown.length} chars), rendering HTML...`);
 
+    // --- Post-generation validation (soft — log but don't block) ---
+    const validation = validateReportContent(markdown);
+    if (!validation.valid) {
+      console.warn(`[generate-report] Validation warnings (${validation.violations.length}):`,
+        validation.violations.join("; "));
+    }
+
+    // --- Extract expert names for hardcoded methodology note ---
+    let expertNames = "";
+    try {
+      const slug = resolveChargeSlug(intake.charge_type);
+      const cts = await supabaseSelect(supabaseUrl, supabaseKey, "charge_types",
+        `slug=eq.${encodeURIComponent(slug)}&select=expert_slugs`);
+      // deno-lint-ignore no-explicit-any
+      const ct = (cts as any[])[0];
+      if (ct?.expert_slugs?.length) {
+        const expertIds = ct.expert_slugs.slice(0, 3);
+        const experts = await supabaseSelect(supabaseUrl, supabaseKey, "experts",
+          `id=in.(${expertIds.map(encodeURIComponent).join(",")})&select=id,name`);
+        // deno-lint-ignore no-explicit-any
+        const sorted = expertIds.map((s: string) => (experts as any[]).find(e => e.id === s)).filter(Boolean);
+        // deno-lint-ignore no-explicit-any
+        expertNames = sorted.map((e: any) => e.name).join(", ");
+      }
+    } catch (err) {
+      console.warn("[generate-report] Could not fetch expert names for methodology note:", err);
+    }
+
     // --- Render HTML ---
     const reportToken = crypto.randomUUID();
     const reportDate = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
@@ -1836,6 +2596,8 @@ Deno.serve(async (req: Request) => {
       caseNumber: intake.case_number || undefined,
       courtDate: intake.court_date || undefined,
       daysSinceArrest,
+      expertNames: expertNames || undefined,
+      chargeType: intake.charge_type,
     });
 
     // --- Save to Supabase ---
@@ -1878,6 +2640,13 @@ Deno.serve(async (req: Request) => {
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Generated:</strong> ${reportDate}</p>
           </div>
           ${inclusionBadge}
+          ${!validation.valid ? `<div style="background: #451A03; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #EF4444;">
+            <p style="margin: 0 0 8px; color: #FCA5A5; font-weight: bold;">VALIDATION WARNINGS (${validation.violations.length})</p>
+            <ul style="margin: 0; padding-left: 20px; color: #D4D4D8; font-size: 13px;">
+              ${validation.violations.map(v => `<li>${escapeHtml(v)}</li>`).join("")}
+            </ul>
+            <p style="margin: 8px 0 0; color: #A1A1AA; font-size: 12px;">Review before approving. These may need manual edits in the report HTML.</p>
+          </div>` : ""}
           <div style="margin: 24px 0; display: flex; gap: 12px;">
             ${operatorSecret
               ? `<a href="${siteUrl}/api/deliver?token=${await signOperatorTokenDeno(caseId, operatorSecret)}&case=${caseId}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Approve &amp; Deliver</a>`
