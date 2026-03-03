@@ -1,0 +1,91 @@
+{
+  "evaluated_at": "2026-03-02T23:23:52.411Z",
+  "eval_version": "2.0",
+  "source": "tmp-dummy-report.md",
+  "charge_type": "Drug",
+  "tier": "intelligence-brief",
+  "model_used": "opus",
+  "gate_passed": true,
+  "complete": false,
+  "teams": {
+    "legal": {
+      "name": "Legal Substance",
+      "weight": "HIGH",
+      "model": "claude-opus-4-6",
+      "score": "0/10",
+      "passed": 0,
+      "needs_work": 0,
+      "failed": 10,
+      "criteria": [
+        {
+          "id": "L1",
+          "result": "FAIL",
+          "justification": "No specific charge type, statute, or jurisdiction is identified anywhere in the report — it is entirely placeholder content with no legal substance.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L2",
+          "result": "FAIL",
+          "justification": "No defense theories of any kind are presented — no suppression analysis, no weight challenge, no mens rea discussion, no chain of custody issues, nothing.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L3",
+          "result": "FAIL",
+          "justification": "No prosecution strategy section exists at all — no discussion of how drug cases are actually prosecuted in any jurisdiction.",
+          "problematic_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        },
+        {
+          "id": "L4",
+          "result": "FAIL",
+          "justification": "No judge profile or judicial intelligence section exists anywhere in the report.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L5",
+          "result": "FAIL",
+          "justification": "No outcome map or probability analysis is provided — no data on acquittal rates, plea outcomes, sentencing ranges, or mandatory minimums for any drug charge.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L6",
+          "result": "FAIL",
+          "justification": "No motions are identified — no suppression motions, no Franks hearings, no motions to compel discovery, no filing deadlines, nothing.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L7",
+          "result": "FAIL",
+          "justification": "No collateral consequences are discussed — no mention of driver's license suspension, professional licensing, immigration consequences, housing, or employment impacts for a drug conviction.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L8",
+          "result": "FAIL",
+          "justification": "No expert frameworks are applied — no Lichtman evidence-first approach for drug cases, no Scheck forensic methodology challenges for lab testing, no Spence affirmative defense theory.",
+          "problematic_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. This report provides legal INFORMATION — not legal ADVICE."
+        },
+        {
+          "id": "L9",
+          "result": "FAIL",
+          "justification": "Zero statutes are cited anywhere in the report — no controlled substance act provisions, no state or federal code sections, nothing.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L10",
+          "result": "FAIL",
+          "justification": "No plea or sentencing intelligence is provided — no mandatory minimums, no safety valve provisions, no substantial assistance mechanisms, no sentencing guidelines discussion.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        }
+      ],
+      "summary": "This is a placeholder/test stub with zero legal substance — it fails every single criterion and must not ship; it contains no charge-specific information, no defense theories, no statutes, no judicial intelligence, and no expert framework application whatsoever.",
+      "elapsed": "14.8",
+      "cost_usd": 0.09317
+    }
+  },
+  "total_pass": 0,
+  "total_needs_work": 0,
+  "total_fail": 10,
+  "cost_usd": 0.09317,
+  "duration_ms": 14796
+}
