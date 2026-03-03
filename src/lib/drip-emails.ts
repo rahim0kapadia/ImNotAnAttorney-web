@@ -358,8 +358,8 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li>Discovery Health Score — completeness rated out of 100</li>
         <li>Defense Opportunity Index — defense openings ranked by strength</li>
       </ul>
-      <p><strong style="color: white;">Your $997 is already credited.</strong> Upgrade for just $500.</p>
-      ${cta("Upgrade to The X-Ray — $500 →", "/checkout?tier=x-ray")}
+      <p><strong style="color: white;">Your $997 is already credited.</strong> Upgrade for just $1,500.</p>
+      ${cta("Upgrade to The X-Ray — $1,500 →", "/checkout?tier=x-ray")}
     `,
   },
 
