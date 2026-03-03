@@ -138,14 +138,8 @@ function Phase2IntakeForm() {
             details. You&apos;ll receive it via email within 72 hours.
           </p>
           <p className="mt-6 text-sm text-zinc-400">
-            While you wait, review your{" "}
-            <a
-              href="/blog"
-              className="text-amber-400 underline decoration-amber-400/50 hover:decoration-amber-400"
-            >
-              Case Decoder report
-            </a>{" "}
-            and start preparing the questions it identified.
+            While you wait, review the Case Decoder report we sent to your
+            email and start preparing the questions it identified.
           </p>
         </div>
       </div>

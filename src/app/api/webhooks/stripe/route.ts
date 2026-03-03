@@ -686,6 +686,9 @@ export async function POST(req: NextRequest) {
       if (refundedOrder) {
         if (isFullRefund) {
           // ── UPDATE LINKED CASE STATUS ──
+          // Updates ALL cases linked to this order — including included deliverables
+          // (e.g., when an IB order is refunded, both the IB case and the included
+          // CD case are marked "refunded" because they share the same order_id).
           // Setting case to "refunded" causes:
           //   1. Report page returns 403 (access revoked)
           //   2. Drip cron skips this order (Part 2 filters by status:"paid")

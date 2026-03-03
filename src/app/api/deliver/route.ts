@@ -443,6 +443,20 @@ export async function POST(req: NextRequest) {
   const tierName = TIER_NAMES[caseData.tier] || "Case Decoder";
   const isIncluded = caseData.is_included_deliverable === true;
 
+  // Look up parent tier for included deliverables (e.g., CD included with IB)
+  // so the email subject says "Intelligence Brief Package" not "Case Decoder Package"
+  let parentTierName = tierName;
+  if (isIncluded && caseData.parent_order_id) {
+    const { data: parentOrder } = await supabase
+      .from("orders")
+      .select("tier")
+      .eq("id", caseData.parent_order_id)
+      .single();
+    if (parentOrder) {
+      parentTierName = TIER_NAMES[parentOrder.tier] || parentOrder.tier;
+    }
+  }
+
   // Tier-specific delivery email instructions
   let instructionsHtml: string;
   let upgradeHtml: string;
@@ -485,7 +499,7 @@ export async function POST(req: NextRequest) {
 
   // For included deliverables, adjust the subject and intro
   const emailSubject = isIncluded
-    ? `Part 1 of Your ${escapeHtml(TIER_NAMES[caseData.tier] || "")} Package is Ready — Your Case Decoder Report`
+    ? `Part 1 of Your ${escapeHtml(parentTierName)} Package is Ready — Your Case Decoder Report`
     : `Your ${tierName} Report is Ready`;
 
   const deliveryLogContext: EmailLogContext = { category: "delivery", case_id: caseId! };
@@ -498,7 +512,7 @@ export async function POST(req: NextRequest) {
       references: caseThreadId(caseId!),
     },
     html: `
-      <h1 style="color: #F59E0B;">Your ${escapeHtml(tierName)} Report is Ready</h1>
+      <h1 style="color: #F59E0B;">${isIncluded ? `Part 1 of Your ${escapeHtml(parentTierName)} Package` : `Your ${escapeHtml(tierName)} Report`} is Ready</h1>
       <p>Hi ${escapeHtml(firstName)},</p>
       <p>Your personalized ${escapeHtml(tierName)} report is ready to view. It contains targeted questions, communication tools, and a clear picture of where things stand — built specifically from your case details.</p>
       <a href="${reportUrl}" style="display: inline-block; margin: 24px 0; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">View Your Report</a>

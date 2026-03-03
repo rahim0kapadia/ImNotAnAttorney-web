@@ -2130,6 +2130,7 @@ async function handleIBPhaseB(
     monthsSinceArrest: intake.arrest_date
       ? String(Math.floor((Date.now() - new Date(intake.arrest_date).getTime()) / (1000 * 60 * 60 * 24 * 30)))
       : "Unknown",
+    email: caseData.email,
   });
 
   // Save to DB
@@ -2433,6 +2434,7 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
   firstName: string; charges: string; stateCounty: string; caseNumber: string;
   nextCourtDate: string; judgeName: string; attorneyName: string;
   reportDate: string; reportId: string; monthsSinceArrest: string;
+  email?: string;
 }): string {
   // Markdown→HTML helper (same as CD version)
   function md2html(markdown: string): string {
@@ -2509,7 +2511,7 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
   </div>
   <div class="no-print" style="margin-top: 32px; text-align: center;">
     <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">When you get discovery evidence, we can go even deeper:</p>
-    <a href="/checkout?tier=x-ray" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">The X-Ray — $2,497 ($1,500 after credit)</a>
+    <a href="/checkout?tier=x-ray${meta.email ? `&email=${encodeURIComponent(meta.email)}` : ""}" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">The X-Ray — $2,497 ($1,500 after credit)</a>
     <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $997 is fully credited toward any tier within 12 months.</p>
   </div>
 </div>

@@ -77,6 +77,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Explicit refund check — customer sees a clear message instead of generic 409
+    if (caseData.status === "refunded") {
+      return NextResponse.json(
+        { error: "This case has been refunded and is no longer active. Contact help@imnotanattorney.com if you have questions." },
+        { status: 410 }
+      );
+    }
+
     // Prevent duplicate submissions
     if (caseData.status !== "awaiting-intake" && caseData.status !== "intake") {
       return NextResponse.json(
