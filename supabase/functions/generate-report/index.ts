@@ -1278,7 +1278,7 @@ Elements table with "Question for Your Attorney" column — NOT difficulty ratin
 Penalty range with statutory citation. Charge-specific intake data reflected: "You told us your substance was [X]..."
 BRIDGING — MANDATORY after penalty range: "These are statutory maximums, not predictions. The questions in this report help you understand the realistic range for YOUR case."
 After the penalty range and bridging, add a "**What this means:**" paragraph — plain English explanation of the charge with zero legalese. This is the defendant's anchor for understanding their situation.
-"Your Rights in This Process" box: right to see discovery, right to be consulted before plea, right to understand strategy, right to second opinion, right to a second legal opinion — with state-specific citations.
+"Your Rights in This Process" box: right to see discovery, right to be consulted before plea, right to understand strategy, right to a second legal opinion — with state-specific citations.
 
 ADMIN PROCESS CALLOUT — CONDITIONAL:
 If DUI/DWI → Include ALR/implied consent hearing deadline. Frame as "Something Your Attorney Can Help With" — efficacy-first. End with question + Q reference.
