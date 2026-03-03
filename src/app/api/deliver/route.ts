@@ -44,7 +44,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
-import { verifyOperatorToken, caseThreadId } from "@/lib/site";
+import { verifyOperatorToken, signPhase2Token, caseThreadId } from "@/lib/site";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
@@ -571,7 +571,9 @@ export async function POST(req: NextRequest) {
       for (const sibling of siblingCases) {
         const siblingTierName = TIER_NAMES[sibling.tier] || sibling.tier;
         // Send Phase 2 intake email for IB+ tiers
-        if (sibling.tier === "intelligence-brief" && sibling.status === "awaiting-intake") {
+        // Both awaiting-intake (hasn't filled standard intake yet) and intake
+        // (filled standard intake before payment) need Phase 2 details.
+        if (sibling.tier === "intelligence-brief" && (sibling.status === "awaiting-intake" || sibling.status === "intake")) {
           await sendEmail({
             to: caseData.email,
             subject: `Your Case Decoder is Ready — Next: Complete Your ${siblingTierName} Details`,
@@ -587,11 +589,18 @@ export async function POST(req: NextRequest) {
               <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
                 <p style="margin: 0; color: white; font-weight: bold;">Next Step: Complete Your ${escapeHtml(siblingTierName)}</p>
                 <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${escapeHtml(siblingTierName)} includes judge intelligence, motion landscape analysis, and 10-15 targeted questions — but we need a few more details about your case.</p>
-                <a href="${origin}/intake/intelligence-brief?case=${sibling.id}" style="display: inline-block; margin-top: 16px; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Intelligence Brief Details</a>
+                <a href="${origin}/intake/intelligence-brief?case=${sibling.id}&token=${signPhase2Token(sibling.id)}" style="display: inline-block; margin-top: 16px; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Intelligence Brief Details</a>
               </div>
               <p style="color: #A1A1AA;">This takes about 3-5 minutes. Your full ${escapeHtml(siblingTierName)} will be delivered within 72 hours after you complete this form.</p>
             `,
           }, { category: "phase2-intake", case_id: sibling.id, metadata: { tier: sibling.tier } });
+
+          // Set prior_case_id on the IB case pointing to the delivered CD case
+          // so the IB pipeline can fetch prior CD context directly
+          await supabase
+            .from("cases")
+            .update({ prior_case_id: caseId, updated_at: new Date().toISOString() })
+            .eq("id", sibling.id);
         }
       }
     }

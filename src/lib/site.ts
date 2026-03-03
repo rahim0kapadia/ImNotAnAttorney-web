@@ -115,6 +115,9 @@ export function isValidEmail(email: string): boolean {
 /** Default token validity: 24 hours (in seconds). */
 const OPERATOR_TOKEN_TTL_SECONDS = 24 * 60 * 60;
 
+/** Phase 2 intake token validity: 30 days (in seconds). */
+const PHASE2_TOKEN_TTL_SECONDS = 30 * 24 * 60 * 60;
+
 /**
  * Generate a signed operator token for a specific case.
  * The token is scoped to the caseId and expires after 24 hours.
@@ -172,6 +175,37 @@ export function verifyOperatorToken(
     mismatch |= providedHmac.charCodeAt(i) ^ expectedHmac.charCodeAt(i);
   }
   return mismatch === 0;
+}
+
+/**
+ * Generate a signed Phase 2 intake token for a specific case.
+ * Same HMAC algorithm as operator tokens but with 30-day TTL.
+ * Used for Phase 2 intake email links where customers may not
+ * fill the form immediately after receiving the email.
+ *
+ * @param caseId - The case this token authorizes intake for
+ * @returns A signed token string in format "timestamp.hmac"
+ */
+export function signPhase2Token(caseId: string): string {
+  const secret = process.env.OPERATOR_SECRET;
+  if (!secret) throw new Error("OPERATOR_SECRET not configured");
+
+  const timestamp = Math.floor(Date.now() / 1000);
+  const payload = `${caseId}:${timestamp}`;
+  const hmac = createHmac("sha256", secret).update(payload).digest("hex");
+  return `${timestamp}.${hmac}`;
+}
+
+/**
+ * Verify a signed Phase 2 intake token for a specific case.
+ * 30-day TTL (vs 24h for operator tokens).
+ *
+ * @param token - The token string from the URL (format: "timestamp.hmac")
+ * @param caseId - The case ID from the URL to verify against
+ * @returns true if the token is valid and not expired
+ */
+export function verifyPhase2Token(token: string, caseId: string): boolean {
+  return verifyOperatorToken(token, caseId, PHASE2_TOKEN_TTL_SECONDS);
 }
 
 /**

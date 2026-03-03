@@ -65,6 +65,15 @@ import type { DripEmail } from "@/lib/drip-emails";
 import { signOperatorToken, SITE_URL, caseThreadId } from "@/lib/site";
 import { stripe } from "@/lib/stripe";
 
+/** Maps tier slugs to display names for alert emails. */
+const TIER_NAMES: Record<string, string> = {
+  "case-decoder": "Case Decoder",
+  "intelligence-brief": "Intelligence Brief",
+  "x-ray": "X-Ray",
+  "war-room": "War Room",
+  "situation-room": "Situation Room",
+};
+
 /**
  * Vercel Cron handler — runs daily at 9AM EST (14:00 UTC).
  * Sends drip emails to active subscribers (nurture) AND customers (post-purchase).
@@ -491,9 +500,9 @@ export async function GET(req: NextRequest) {
 
         await sendEmail({
           to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
-          subject: `REMINDER: Case Decoder report awaiting review (${hoursAgo}+ hours)`,
+          subject: `REMINDER: ${TIER_NAMES[staleCase.tier] || 'Report'} awaiting review (${hoursAgo}+ hours)`,
           html: `<h1 style="color: #F59E0B;">Report Awaiting Review</h1>
-            <p>A Case Decoder report has been in review for <strong style="color: #EF4444;">${hoursAgo} hours</strong>. The 24-hour delivery guarantee is at risk.</p>
+            <p>A ${escapeHtml(TIER_NAMES[staleCase.tier] || 'report')} has been in review for <strong style="color: #EF4444;">${hoursAgo} hours</strong>. The delivery guarantee is at risk.</p>
             <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
               <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(staleCase.email)}</p>
               <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(staleCase.charge_type || "Unknown")}</p>
@@ -614,7 +623,7 @@ export async function GET(req: NextRequest) {
               <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${stuck.id}</p>
             </div>
             <p><strong>Retry command:</strong></p>
-            <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${genOrigin}/api/generate/case-decoder -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${stuck.id}","force":true}'</code>`,
+            <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${genOrigin}/api/generate/${stuck.tier === 'intelligence-brief' ? 'intelligence-brief' : 'case-decoder'} -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${stuck.id}","force":true}'</code>`,
         }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-generation", minutes: minutesStuck } });
 
         // Mark as failed to prevent re-alerting every cron run.
@@ -627,6 +636,130 @@ export async function GET(req: NextRequest) {
             updated_at: new Date().toISOString(),
           })
           .eq("id", stuck.id);
+      }
+    }
+
+    // ============================================================
+    // PART 5b: STUCK IB GENERATION DETECTION
+    // ============================================================
+    // Intelligence Brief uses multi-phase generation with statuses:
+    //   auto-generating → researching → compiling → review
+    // Detect stuck cases at each phase and alert the operator.
+
+    // Stuck auto-generating (Phase A timeout — >30 min)
+    const { data: stuckAutoGen } = await supabase
+      .from("cases")
+      .select("id, email, charge_type, tier, updated_at")
+      .eq("status", "auto-generating")
+      .lt("updated_at", thirtyMinAgo.toISOString());
+
+    if (stuckAutoGen && stuckAutoGen.length > 0) {
+      const ibOrigin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+      for (const stuck of stuckAutoGen) {
+        const minutesStuck = Math.round(
+          (Date.now() - new Date(stuck.updated_at).getTime()) / (1000 * 60)
+        );
+        await sendEmail({
+          to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+          subject: `ALERT: IB Phase A stuck for ${minutesStuck}+ min — ${escapeHtml(stuck.email)}`,
+          html: `<h1 style="color: #EF4444;">Intelligence Brief Phase A Stuck</h1>
+            <p>Case has been in "auto-generating" status for <strong>${minutesStuck} minutes</strong>. Phase A likely crashed or timed out.</p>
+            <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
+              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(stuck.email)}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(stuck.tier)}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${stuck.id}</p>
+            </div>
+            <p><strong>Retry command:</strong></p>
+            <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${ibOrigin}/api/generate/intelligence-brief -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${stuck.id}","force":true}'</code>`,
+        }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-auto-generating", minutes: minutesStuck } });
+
+        await supabase
+          .from("cases")
+          .update({ status: "generation-failed", updated_at: new Date().toISOString() })
+          .eq("id", stuck.id);
+      }
+    }
+
+    // Stuck compiling (Phase B timeout — >30 min)
+    const { data: stuckCompiling } = await supabase
+      .from("cases")
+      .select("id, email, charge_type, tier, updated_at")
+      .eq("status", "compiling")
+      .lt("updated_at", thirtyMinAgo.toISOString());
+
+    if (stuckCompiling && stuckCompiling.length > 0) {
+      const ibOrigin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+      for (const stuck of stuckCompiling) {
+        const minutesStuck = Math.round(
+          (Date.now() - new Date(stuck.updated_at).getTime()) / (1000 * 60)
+        );
+        await sendEmail({
+          to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+          subject: `ALERT: IB Phase B stuck for ${minutesStuck}+ min — ${escapeHtml(stuck.email)}`,
+          html: `<h1 style="color: #EF4444;">Intelligence Brief Phase B Stuck</h1>
+            <p>Case has been in "compiling" status for <strong>${minutesStuck} minutes</strong>. Phase B likely crashed or timed out.</p>
+            <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
+              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(stuck.email)}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${stuck.id}</p>
+            </div>
+            <p><strong>Action:</strong> Check Edge Function logs. Re-trigger Phase B via judge-research endpoint with auto_trigger_phase_b: true.</p>`,
+        }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-compiling", minutes: minutesStuck } });
+
+        await supabase
+          .from("cases")
+          .update({ status: "generation-failed", updated_at: new Date().toISOString() })
+          .eq("id", stuck.id);
+      }
+    }
+
+    // Stuck researching (waiting for judge research — >24h operator nudge)
+    const { data: stuckResearching } = await supabase
+      .from("cases")
+      .select("id, email, charge_type, tier, updated_at")
+      .eq("status", "researching")
+      .lt("updated_at", twentyFourHoursAgo.toISOString());
+
+    if (stuckResearching && stuckResearching.length > 0) {
+      for (const stuck of stuckResearching) {
+        const hoursStuck = Math.round(
+          (Date.now() - new Date(stuck.updated_at).getTime()) / (1000 * 60 * 60)
+        );
+        // Check if we already sent a nudge for this case
+        const { data: existingSub } = await supabase
+          .from("subscribers")
+          .select("id")
+          .eq("email", stuck.email.toLowerCase())
+          .maybeSingle();
+
+        if (existingSub?.id) {
+          const { data: alreadySent } = await supabase
+            .from("drip_emails")
+            .select("id")
+            .eq("subscriber_id", existingSub.id)
+            .eq("email_key", `researching_nudge_${stuck.id}`)
+            .maybeSingle();
+          if (alreadySent) continue;
+        }
+
+        await sendEmail({
+          to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+          subject: `REMINDER: IB judge research pending for ${hoursStuck}+ hours — ${escapeHtml(stuck.email)}`,
+          html: `<h1 style="color: #F59E0B;">Intelligence Brief Awaiting Judge Research</h1>
+            <p>Phase A completed ${hoursStuck} hours ago. Judge research data is needed to proceed with Phase B.</p>
+            <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
+              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(stuck.email)}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${stuck.id}</p>
+            </div>
+            <p><strong>Action:</strong> Enter judge research data via the judge-research endpoint to trigger Phase B.</p>`,
+        }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-researching", hours: hoursStuck } });
+
+        // Record nudge to prevent re-alerting
+        if (existingSub?.id) {
+          await supabase.from("drip_emails").upsert(
+            { subscriber_id: existingSub.id, email_key: `researching_nudge_${stuck.id}` },
+            { onConflict: "subscriber_id,email_key" }
+          );
+        }
       }
     }
 

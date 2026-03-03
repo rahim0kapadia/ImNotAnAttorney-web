@@ -286,8 +286,18 @@ export async function POST(req: NextRequest) {
     //     - Guides them toward the purchase funnel with upgrade incentive
     //     - Links to services page and Case Decoder checkout directly
     const hasPendingCase = pendingCases && pendingCases.length > 0;
+    const hasIBCase = pendingCases?.some((c) => c.tier === "intelligence-brief");
     const confirmationHtml = hasPendingCase
-      ? `
+      ? hasIBCase
+        ? `
+        <h1 style="color: #F59E0B;">Case Details Received</h1>
+        <p>Thank you, ${escapeHtml(firstName)}. We've received your intake form and your Case Decoder is being generated.</p>
+        <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
+          <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(chargeType)}</p>
+        </div>
+        <p style="color: #D4D4D8;">After you receive your Case Decoder, we'll send you a short follow-up form to complete your Intelligence Brief.</p>
+      `
+        : `
         <h1 style="color: #F59E0B;">Case Details Received</h1>
         <p>Thank you, ${escapeHtml(firstName)}. We've received your intake form and your report is being generated.</p>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">

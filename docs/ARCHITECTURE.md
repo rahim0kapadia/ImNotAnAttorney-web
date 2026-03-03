@@ -159,7 +159,7 @@ Source of truth for structured data previously scattered across 10+ markdown fil
 | Table | Rows | Source | Purpose |
 |-------|------|--------|---------|
 | `experts` | 63 | `system/EXPERT-REFERENCE.md` | .01% expert roster (attorneys, psychology, marketing) |
-| `eval_criteria` | 58 | `system/EVALUATION-TEAM.md` | 5-team evaluation criteria (U1-U10, P1-P10, L1-L10, D1-D11, C1-C10, X1-X7) |
+| `eval_criteria` | 58 | `system/EVALUATION-TEAM.md` | 5-team evaluation criteria with `applicable_tiers` (tier-aware filtering) and `charge_types` columns |
 | `pipeline_eval_weights` | 40 | `system/EVALUATION-TEAM.md` | Per-pipeline team weights (GATE/HIGH/MEDIUM/LOW) |
 | `buyer_states` | 6 | `system/BUYER-STATES.md` | Why defendants buy (distrust, double-checking, information-vacuum, etc.) |
 | `content_pain_points` | 20 | `content/REDDIT-PAIN-POINTS.md` | Reddit/Avvo defendant pain points with SEO data |
@@ -172,6 +172,57 @@ Source of truth for structured data previously scattered across 10+ markdown fil
 | `emotional_profiles` | 33 | `system/EMOTIONAL-INTELLIGENCE.md` | Emotional calibration (fears, stances, attorney wounds, banned terms) |
 
 All reference tables have `created_at`, `updated_at` (auto-trigger), and `active` boolean for soft-delete. Markdown files remain as human-readable references with "Source of truth" headers pointing to DB.
+
+### Operational Tables
+
+#### `email_log` (Migration 005)
+
+Tracks all 33 email send calls across 8 API routes. Fire-and-forget logging — insert failures never crash the calling route.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| email_type | text | Category (e.g. `payment-confirmation`, `drip-nurture`, `operator-alert`) |
+| recipient | text | Email address |
+| case_id | uuid | Associated case (nullable) |
+| order_id | uuid | Associated order (nullable) |
+| tier | text | Product tier (nullable) |
+| subject | text | Email subject line |
+| status | text | `sent` / `failed` |
+| error | text | Error message if failed |
+| metadata | jsonb | Extra context (template key, retry count, etc.) |
+| route_source | text | Which API route sent it |
+| sent_at | timestamptz | Timestamp |
+
+Indexes: `email_type`, `recipient`, `case_id`, `sent_at`.
+
+#### `audit_runs` (Migration 006)
+
+Stores evaluation results from `evaluate-report.mjs` runs.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| report_source | text | Source identifier (file path or persona name) |
+| charge_type | text | Charge type evaluated |
+| tier | text | Product tier |
+| model_used | text | Claude model used (opus, sonnet) |
+| team_results | jsonb | Per-team pass/fail/needs_work breakdown |
+| total_pass | integer | Total passing criteria |
+| total_fail | integer | Total failing criteria |
+| total_needs_work | integer | Total needs-work criteria |
+| gate_passed | boolean | Whether UPL gate passed |
+| created_at | timestamptz | When run completed |
+
+#### `cron_runs` (heartbeat)
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| started_at | timestamptz | When cron started |
+| completed_at | timestamptz | When cron finished |
+| parts_run | integer | How many parts executed |
+| errors | text[] | Any errors encountered |
 
 ### Database Triggers
 - `update_cases_updated_at` — Automatically sets `updated_at = now()` on every cases row update. This ensures stuck-case detection (cron Parts 4 & 5) works even when code paths forget to set updated_at explicitly.
@@ -290,20 +341,50 @@ Centralized in `src/lib/site.ts`:
 
 | Part | What | Threshold | Action |
 |------|------|-----------|--------|
-| 1 | Nurture emails | Days since subscribe | Send next unsent email in sequence |
-| 2 | Post-purchase emails | Days since purchase/delivery | Send tier-specific follow-ups (skips refunded) |
+| 1 | Nurture emails | Days since subscribe | Send next unsent email in sequence (with retry) |
+| 2 | Post-purchase emails | Days since purchase/delivery | Send tier-specific follow-ups (skips refunded, with retry) |
 | 3 | Review reminders | 12 hours in "review" | Alert operator (24h guarantee at risk) |
 | 4 | Stuck intake detection | 2 hours in "intake" | Mark intake-stalled, alert operator |
-| 5 | Stuck generation detection | 30 minutes in "generating" | Mark generation-failed, alert operator with retry command |
-| 12 | Missed evaluation safety net | 15 minutes in "review" with NULL eval_results | Re-trigger evaluate-report Edge Function (limit 5/run) |
+| 5 | Stuck generation detection | 30 minutes in "generating" | Mark generation-failed, alert operator |
+| 6 | Intake reminder | 24 hours no intake | Remind customer to complete intake |
+| 7 | Intake escalation | 72 hours / 7 days | Alert operator about abandoned intakes |
+| 8 | Old drip_emails cleanup | >90 days | Delete stale send records |
+| 9a | Stripe reconciliation | Missed webhooks | Detect orders without cases |
+| 9b | Orphan order detection | Order exists, no case | Alert operator |
+| 10 | Report expiry warning | 30 days before 12-month expiry | Warn customer |
+| 11 | Abandoned checkout recovery | 24-48 hours after email captured | Recovery email |
+| 12 | Missed evaluation safety net | 15 minutes in "review" with NULL eval_results | Re-trigger Edge Function (limit 5/run) |
+
+**Heartbeat:** Each run inserts into `cron_runs` table. Staleness check alerts operator if >48h gap between runs.
 
 ## Email System
 
 - **Provider:** Resend (API key is send-only — can send but not manage domains)
-- **From address:** `noreply@imnotanattorney.com` (domain not yet verified — using `onboarding@resend.dev` in dev)
+- **From address:** `noreply@imnotanattorney.com` (domain verified, DKIM + DMARC configured)
 - **CAN-SPAM compliance:** Physical address, unsubscribe link, List-Unsubscribe headers (RFC 8058)
 - **Templates:** Inline HTML in route handlers and `drip-emails.ts`
 - **Drip dedup:** `drip_emails` table tracks which emails were sent to each subscriber
+- **Email audit:** `email_log` table tracks all 33 send calls across 8 routes via fire-and-forget `logEmailSend()`
+
+## Evaluation Pipeline
+
+5-team expert evaluation framework for report quality assurance. DB-driven via `eval_criteria` and `pipeline_eval_weights` tables.
+
+| Team | Criteria | Weight | Focus |
+|------|----------|--------|-------|
+| UPL (Legal Compliance) | U1-U10 | GATE | No legal advice, banned phrases — must pass |
+| Psychology | P1-P10 | HIGH | Emotional calibration, buyer state awareness |
+| Legal Quality | L1-L10 | HIGH | Accuracy, specificity, actionability |
+| Defendant Experience | D1-D11 | MEDIUM | Readability, empowerment, trust |
+| Conversion & Brand | C1-C10 | LOW | CTA placement, brand consistency |
+| Cross-Pipeline | X1-X7 | — | Multi-report comparison (inactive) |
+
+**Tier-aware filtering:** Criteria with `applicable_tiers` are skipped for tiers they don't apply to. Case Decoder ($197) runs 46/51 criteria; Intelligence Brief+ ($997+) runs all 51.
+
+**CLI:** `node evaluate-report.mjs --file <report> --charge-type "<type>" --tier <tier>`
+- `--model sonnet` for budget runs (~$0.25 vs ~$1.25 for Opus)
+- `--teams upl,legal` for specific teams only
+- `--no-db` for offline mode with hardcoded criteria
 
 ## Security Headers
 
