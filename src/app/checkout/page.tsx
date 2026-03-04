@@ -231,7 +231,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Red flags summary",
       "35+ case-specific questions",
       "Discovery Health Score — your discovery completeness rated out of 100",
-      "Defense Opportunity Index — your top defense openings ranked by strength",
+      "Defense Opportunity Index — defense angles organized by charge category",
     ],
     guarantee:
       "Delivered within 10 business days with 35+ case-specific questions — or your money back.",

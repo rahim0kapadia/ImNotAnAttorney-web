@@ -268,6 +268,12 @@ export default function TermsPage() {
               case. You acknowledge that no representation has been made
               regarding the likely outcome of your legal matter.
             </p>
+            <p className="mt-2">
+              <strong className="text-zinc-300">
+                By using our site or purchasing our services, you agree not to
+                hold us liable for the outcome of your case in any way.
+              </strong>
+            </p>
           </section>
 
           <section>
