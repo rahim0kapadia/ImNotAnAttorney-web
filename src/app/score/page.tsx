@@ -43,6 +43,7 @@
 "use client";
 
 import { useState } from "react";
+import { TIER_CORE } from "@/lib/tiers";
 import Link from "next/link";
 
 /**
@@ -233,7 +234,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
       {answers.chargeType === "dui" && (
         <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
           <h3 className="font-bold text-white">
-            DUI Defense Playbook — $97, instant download
+            DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay}, instant download
           </h3>
           <p className="mt-2 text-sm text-zinc-400">
             23 DUI-specific questions for your attorney, a breathalyzer calibration
@@ -247,7 +248,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
             href="/playbook/dui-first-offense"
             className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
           >
-            Get the DUI Playbook — $97 →
+            Get the DUI Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} →
           </Link>
         </div>
       )}
@@ -268,7 +269,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
             href="/checkout?tier=case-decoder"
             className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-bold text-black transition-colors hover:bg-amber-400"
           >
-            Get Your Full Case Decoder — $197 →
+            Get Your Full Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} →
           </Link>
           <Link
             href="/resources"
@@ -436,8 +437,8 @@ export default function ScorePage() {
         <div className="mt-12 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
           <p className="text-xs text-zinc-400">
             This score is an educational tool based on general defense
-            milestones — not legal advice. Every case is different. Consult with
-            a licensed attorney for advice specific to your situation.
+            milestones — not legal advice. Every case is different. Your attorney remains the final authority on strategy decisions
+            specific to your situation.
           </p>
         </div>
       </div>

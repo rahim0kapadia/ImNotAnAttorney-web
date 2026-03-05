@@ -31,6 +31,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, TIERS, isValidTier } from "@/lib/stripe";
+import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
@@ -243,8 +244,8 @@ export async function POST(req: NextRequest) {
           <p>Those blanks are what your next attorney meeting is for.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
             <p style="margin: 0; color: white; font-weight: bold;">Want case-specific questions?</p>
-            <p style="margin: 8px 0 0; color: #D4D4D8;">Your $97 is fully credited toward the Case Decoder ($197). Get 15 questions built from YOUR charges, YOUR state, YOUR stage.</p>
-            <a href="${origin}/checkout?tier=case-decoder" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: transparent; color: #F59E0B; font-weight: bold; text-decoration: none; border: 1px solid #F59E0B; border-radius: 8px;">Upgrade for $100 →</a>
+            <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}). Get 15 questions built from YOUR charges, YOUR state, YOUR stage.</p>
+            <a href="${origin}/checkout?tier=case-decoder" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: transparent; color: #F59E0B; font-weight: bold; text-decoration: none; border: 1px solid #F59E0B; border-radius: 8px;">Upgrade for ${upgradePrice("dui-first-offense")} →</a>
           </div>
           <p style="color: #A1A1AA;">This download link expires in 72 hours. Reply to this email if you have questions.</p>
         `,
@@ -346,7 +347,7 @@ export async function POST(req: NextRequest) {
       // INCLUDED-TIER CASE CREATION (tier inclusion model)
       // ──────────────────────────────────────────────────────────────
       // When a customer buys IB ($997), they also get a Case Decoder
-      // delivered within 24 hours. When they buy X-Ray ($2,497), they
+      // delivered within 48 hours. When they buy X-Ray ($2,497), they
       // get CD + IB. Each included tier gets its own case record with
       // is_included_deliverable=true so the system can track and
       // deliver them independently.
@@ -517,7 +518,7 @@ export async function POST(req: NextRequest) {
               <h1 style="color: #F59E0B;">One More Step</h1>
               <p>Thank you for purchasing the Case Decoder. Before we can generate your personalized report, we need your case details.</p>
               <a href="${origin}/intake?email=${encodeURIComponent(email)}&tier=case-decoder" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
-              <p style="color: #A1A1AA;">Once you submit your case details, your report will be generated within 24 hours.</p>
+              <p style="color: #A1A1AA;">Once you submit your case details, your report will be generated within 48 hours.</p>
             `,
           }, `intake request for ${email}`, { category: "intake-request", case_id: caseId!, metadata: { tier: "case-decoder" } });
         }
@@ -536,9 +537,9 @@ export async function POST(req: NextRequest) {
           html: `
             <h1 style="color: #F59E0B;">One More Step</h1>
             <p>Thank you for purchasing the ${escapeHtml(productName)}. Before we can start generating your reports, we need your case details.</p>
-            <p style="color: #D4D4D8;">Your package includes a Case Decoder report delivered within 24 hours, followed by your full ${escapeHtml(productName)}.</p>
+            <p style="color: #D4D4D8;">Your package includes a Case Decoder report delivered within 48 hours, followed by your full ${escapeHtml(productName)}.</p>
             <a href="${origin}/intake?email=${encodeURIComponent(email)}&tier=${encodeURIComponent(tier)}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
-            <p style="color: #A1A1AA;">Once you submit your case details, your Case Decoder report will be generated within 24 hours.</p>
+            <p style="color: #A1A1AA;">Once you submit your case details, your Case Decoder report will be generated within 48 hours.</p>
           `,
         }, `intake request for ${email} (${tier})`, { category: "intake-request", case_id: caseId!, metadata: { tier } });
       }

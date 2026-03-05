@@ -45,6 +45,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
 import { verifyOperatorToken, signPhase2Token, caseThreadId } from "@/lib/site";
+import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
@@ -475,7 +476,7 @@ export async function POST(req: NextRequest) {
     upgradeHtml = `
       <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">
         <p style="margin: 0; color: #F59E0B; font-weight: bold;">When you get discovery — we're ready.</p>
-        <p style="margin: 8px 0 0; color: #D4D4D8;">Your $997 is credited toward The X-Ray ($2,497). Pay only $1,500. <a href="${origin}/services" style="color: #F59E0B;">View upgrade options</a></p>
+        <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${TIER_CORE["intelligence-brief"].priceDisplay} is credited toward ${TIER_CORE["x-ray"].name} (${TIER_CORE["x-ray"].priceDisplay}). Pay only ${upgradePrice("intelligence-brief")}. <a href="${origin}/services" style="color: #F59E0B;">View upgrade options</a></p>
       </div>`;
   } else {
     // Case Decoder (default)
@@ -493,7 +494,7 @@ export async function POST(req: NextRequest) {
     upgradeHtml = isIncluded ? "" : `
       <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">
         <p style="margin: 0; color: #F59E0B; font-weight: bold;">Ready to go deeper?</p>
-        <p style="margin: 8px 0 0; color: #D4D4D8;">Your $197 is credited toward any higher tier within 12 months. <a href="${origin}/services" style="color: #F59E0B;">View upgrade options</a></p>
+        <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${TIER_CORE["case-decoder"].priceDisplay} is credited toward any higher tier within 12 months. <a href="${origin}/services" style="color: #F59E0B;">View upgrade options</a></p>
       </div>`;
   }
 

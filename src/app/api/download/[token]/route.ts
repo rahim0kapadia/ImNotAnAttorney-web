@@ -19,6 +19,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { CONTACT_EMAIL } from "@/lib/site";
 
 export async function GET(
   _req: NextRequest,
@@ -60,7 +61,7 @@ export async function GET(
     const expiresAt = new Date(order.download_token_expires_at);
     if (Date.now() > expiresAt.getTime()) {
       return NextResponse.json(
-        { error: "This download link has expired. Check your email for a fresh link, or contact help@imnotanattorney.com." },
+        { error: `This download link has expired. Check your email for a fresh link, or contact ${CONTACT_EMAIL}.` },
         { status: 410 }
       );
     }
@@ -76,7 +77,7 @@ export async function GET(
   if (packError || !pack?.pdf_storage_path) {
     console.error("[Download] Charge pack lookup failed:", packError);
     return NextResponse.json(
-      { error: "Product configuration error. Contact help@imnotanattorney.com." },
+      { error: `Product configuration error. Contact ${CONTACT_EMAIL}.` },
       { status: 500 }
     );
   }
@@ -90,7 +91,7 @@ export async function GET(
   if (signedUrlError || !signedUrlData?.signedUrl) {
     console.error("[Download] Signed URL generation failed:", signedUrlError);
     return NextResponse.json(
-      { error: "Could not generate download link. Contact help@imnotanattorney.com." },
+      { error: `Could not generate download link. Contact ${CONTACT_EMAIL}.` },
       { status: 500 }
     );
   }

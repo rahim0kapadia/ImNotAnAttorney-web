@@ -33,6 +33,7 @@
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { LeadCapture } from "@/components/LeadCapture";
 import { SITE_URL } from "@/lib/site";
+import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -65,41 +66,41 @@ const caseTypes = [
       "We analyze your case using Barry Scheck's chain of custody protocol, Ron Chapman II's weight discrepancy framework, and Jeffrey Lichtman's informant credibility methodology — the same approaches that won El Chapo's defense and produced 375+ Innocence Project exonerations.",
     tiers: [
       {
-        name: "Case Decoder",
+        name: TIER_CORE["case-decoder"].name,
         slug: "case-decoder",
-        price: "$197",
+        price: TIER_CORE["case-decoder"].priceDisplay,
         desc: "15 calibrated attorney questions, ready-to-send email templates, and a 7-day action plan — built from elite defense methodology for drug cases.",
-        discovery: false,
+        discovery: TIER_CORE["case-decoder"].requiresDiscovery,
         popular: true,
       },
       {
-        name: "Intelligence Brief",
+        name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
-        price: "$997",
-        desc: "Includes Case Decoder report (delivered within 24 hours). Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
-        discovery: false,
+        price: TIER_CORE["intelligence-brief"].priceDisplay,
+        desc: "Includes Case Decoder report (delivered within 48 hours). Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
+        discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
       },
       {
-        name: "The X-Ray",
+        name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
-        price: "$2,497",
+        price: TIER_CORE["x-ray"].priceDisplay,
         desc: "Includes Case Decoder + Intelligence Brief delivered first. Full discovery analysis — weight discrepancies, lab methodology gaps, CI reliability, chain of custody. 35+ case-specific questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, defense angles organized by charge category.",
-        discovery: true,
+        discovery: TIER_CORE["x-ray"].requiresDiscovery,
         bestValue: true,
       },
       {
-        name: "The War Room",
+        name: TIER_CORE["war-room"].name,
         slug: "war-room",
-        price: "$4,997",
+        price: TIER_CORE["war-room"].priceDisplay,
         desc: "Everything above + officer dossiers, witness analysis (up to 8), motion timing questions for your attorney, case law package, weekly updates. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
-        discovery: true,
+        discovery: TIER_CORE["war-room"].requiresDiscovery,
       },
       {
-        name: "The Situation Room",
+        name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
-        price: "$9,997",
+        price: TIER_CORE["situation-room"].priceDisplay,
         desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology.",
-        discovery: true,
+        discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: true,
       },
     ],
@@ -111,41 +112,41 @@ const caseTypes = [
       "From breathalyzer calibration to field sobriety compliance, we apply Barry Scheck's forensic methodology and F. Lee Bailey's evidence analysis framework — the same approach Bailey used to destroy prosecution witnesses in the Sam Sheppard retrial.",
     tiers: [
       {
-        name: "Case Decoder",
+        name: TIER_CORE["case-decoder"].name,
         slug: "case-decoder",
-        price: "$197",
+        price: TIER_CORE["case-decoder"].priceDisplay,
         desc: "15 calibrated attorney questions, ready-to-send email templates, and a 7-day action plan — built from elite defense methodology for DUI cases.",
-        discovery: false,
+        discovery: TIER_CORE["case-decoder"].requiresDiscovery,
         popular: true,
       },
       {
-        name: "Intelligence Brief",
+        name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
-        price: "$997",
-        desc: "Includes Case Decoder report (delivered within 24 hours). Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
-        discovery: false,
+        price: TIER_CORE["intelligence-brief"].priceDisplay,
+        desc: "Includes Case Decoder report (delivered within 48 hours). Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
+        discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
       },
       {
-        name: "The X-Ray",
+        name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
-        price: "$2,497",
+        price: TIER_CORE["x-ray"].priceDisplay,
         desc: "Includes Case Decoder + Intelligence Brief delivered first. Full discovery analysis — BAC evidence, breathalyzer calibration, dashcam review, field sobriety compliance. 35+ questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, defense angles organized by charge category.",
-        discovery: true,
+        discovery: TIER_CORE["x-ray"].requiresDiscovery,
         bestValue: true,
       },
       {
-        name: "The War Room",
+        name: TIER_CORE["war-room"].name,
         slug: "war-room",
-        price: "$4,997",
+        price: TIER_CORE["war-room"].priceDisplay,
         desc: "Officer dossiers, expert witness challenges, motion timing questions for your attorney, case law package, weekly updates until resolution. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
-        discovery: true,
+        discovery: TIER_CORE["war-room"].requiresDiscovery,
       },
       {
-        name: "The Situation Room",
+        name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
-        price: "$9,997",
+        price: TIER_CORE["situation-room"].priceDisplay,
         desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. Officer research, expert credibility questions, jury selection research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology.",
-        discovery: true,
+        discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: true,
       },
     ],
@@ -157,41 +158,41 @@ const caseTypes = [
       "Federal cases are a different game. We apply Alan Dershowitz's constitutional framework, Benjamin Brafman's jury psychology methodology (DSK, Martin Shkreli), and Martin Weinberg's RICO dismantling approach to help you understand complex charges and evaluate every strategic decision.",
     tiers: [
       {
-        name: "Case Decoder",
+        name: TIER_CORE["case-decoder"].name,
         slug: "case-decoder",
-        price: "$197",
+        price: TIER_CORE["case-decoder"].priceDisplay,
         desc: "15 calibrated attorney questions, ready-to-send email templates, and a 7-day action plan — built from elite defense methodology for federal cases.",
-        discovery: false,
+        discovery: TIER_CORE["case-decoder"].requiresDiscovery,
         popular: true,
       },
       {
-        name: "Intelligence Brief",
+        name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
-        price: "$997",
-        desc: "Includes Case Decoder report (delivered within 24 hours). Judge sentencing patterns, AUSA profile, guidelines calculation review, questions about the cooperation decision for your attorney. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
-        discovery: false,
+        price: TIER_CORE["intelligence-brief"].priceDisplay,
+        desc: "Includes Case Decoder report (delivered within 48 hours). Judge sentencing patterns, AUSA profile, guidelines calculation review, questions about the cooperation decision for your attorney. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
+        discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
       },
       {
-        name: "The X-Ray",
+        name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
-        price: "$2,497",
+        price: TIER_CORE["x-ray"].priceDisplay,
         desc: "Discovery indexing for massive cases. Financial document analysis, witness statement review, timeline reconstruction. 35+ questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, defense angles organized by charge category.",
-        discovery: true,
+        discovery: TIER_CORE["x-ray"].requiresDiscovery,
         bestValue: true,
       },
       {
-        name: "The War Room",
+        name: TIER_CORE["war-room"].name,
         slug: "war-room",
-        price: "$4,997",
+        price: TIER_CORE["war-room"].priceDisplay,
         desc: "Full intelligence operation — AUSA dossier, cooperator analysis, sentencing guidelines deep dive, case law package, weekly updates. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
-        discovery: true,
+        discovery: TIER_CORE["war-room"].requiresDiscovery,
       },
       {
-        name: "The Situation Room",
+        name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
-        price: "$9,997",
+        price: TIER_CORE["situation-room"].priceDisplay,
         desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. Expert credibility research, cooperator background questions, guidelines research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on Roy Black's preparation standard, Alan Dershowitz's appellate framework, and Barry Berke's precision methodology.",
-        discovery: true,
+        discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: true,
       },
     ],
@@ -223,7 +224,7 @@ const faqs = [
   {
     question: "What if I already bought a lower tier?",
     answer:
-      "100% of what you paid is credited toward the next tier. Buy the Case Decoder for $197, then upgrade to the Intelligence Brief for just $800. No money wasted. Credits are valid for 12 months.",
+      `100% of what you paid is credited toward the next tier. Buy the Case Decoder for ${TIER_CORE["case-decoder"].priceDisplay}, then upgrade to the Intelligence Brief for just ${upgradePrice("case-decoder")}. No money wasted. Credits are valid for 12 months.`,
   },
   {
     question: "How is this different from a second opinion?",
@@ -285,7 +286,7 @@ export default function ServicesPage() {
           </p>
           <p className="mx-auto mt-4 max-w-2xl text-zinc-400">
             For defendants who read their own discovery. Five tiers of defense
-            intelligence. Start at $197 — upgrade anytime with full credit.
+            intelligence. Start at {TIER_CORE["case-decoder"].priceDisplay} — upgrade anytime with full credit.
           </p>
         </div>
 
@@ -334,15 +335,15 @@ export default function ServicesPage() {
             Upgrade Credits: 100% Applied
           </p>
           <p className="mt-2 text-sm text-zinc-400">
-            Start with the Case Decoder for $197. If you upgrade later, every
+            Start with the Case Decoder for {TIER_CORE["case-decoder"].priceDisplay}. If you upgrade later, every
             dollar you paid is credited toward the next tier. No money wasted.
             12-month expiration.
           </p>
         </div>
 
         {/* DECISION GUIDE — Routes visitors based on discovery status.       */}
-        {/* No discovery: Case Decoder ($197) or Intelligence Brief ($997).  */}
-        {/* Has discovery: X-Ray ($2,497) recommended as starting point.     */}
+        {/* No discovery: {TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay}) or {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay}).  */}
+        {/* Has discovery: {TIER_CORE["x-ray"].name} ({TIER_CORE["x-ray"].priceDisplay}) recommended as starting point.     */}
         {/* This reduces confusion from the 5-tier display below.            */}
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
@@ -352,11 +353,11 @@ export default function ServicesPage() {
             <p className="mt-2 text-sm text-zinc-400">
               Start with the{" "}
               <Link href="/checkout?tier=case-decoder" className="text-white underline">
-                Case Decoder ($197)
+                {TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay})
               </Link>{" "}
               or{" "}
               <Link href="/checkout?tier=intelligence-brief" className="text-white underline">
-                Intelligence Brief ($997)
+                {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay})
               </Link>
               . Both work without discovery documents. Get charge analysis,
               judge intel, and targeted questions for your next attorney meeting.
@@ -369,7 +370,7 @@ export default function ServicesPage() {
             <p className="mt-2 text-sm text-zinc-400">
               The{" "}
               <Link href="/checkout?tier=x-ray" className="text-white underline">
-                X-Ray ($2,497)
+                {TIER_CORE["x-ray"].name} ({TIER_CORE["x-ray"].priceDisplay})
               </Link>{" "}
               is the most thorough starting point. Full discovery analysis —
               every page, every discrepancy, every red flag mapped. 35+
@@ -407,7 +408,7 @@ export default function ServicesPage() {
                 <h3 className="font-semibold text-white">
                   DUI Defense Playbook
                 </h3>
-                <span className="text-lg font-bold text-amber-400">$97</span>
+                <span className="text-lg font-bold text-amber-400">{TIER_CORE["dui-first-offense"].priceDisplay}</span>
               </div>
               <p className="mt-2 text-sm text-zinc-400">
                 26 questions your DUI attorney hopes you never ask.
@@ -415,7 +416,7 @@ export default function ServicesPage() {
                 flags, attorney accountability scorecard. Instant PDF.
               </p>
               <p className="mt-2 text-xs text-zinc-500">
-                $97 credited toward Case Decoder within 30 days.
+                {TIER_CORE["dui-first-offense"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
             <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 opacity-60">
@@ -426,7 +427,7 @@ export default function ServicesPage() {
                 <h3 className="font-semibold text-white">
                   Drug Possession Playbook
                 </h3>
-                <span className="text-lg font-bold text-zinc-500">$97</span>
+                <span className="text-lg font-bold text-zinc-500">{TIER_CORE["dui-first-offense"].priceDisplay}</span>
               </div>
               <p className="mt-2 text-sm text-zinc-500">
                 Chain of custody, lab procedure challenges, weight discrepancy
@@ -442,7 +443,7 @@ export default function ServicesPage() {
                 <h3 className="font-semibold text-white">
                   Domestic Violence Playbook
                 </h3>
-                <span className="text-lg font-bold text-zinc-500">$97</span>
+                <span className="text-lg font-bold text-zinc-500">{TIER_CORE["dui-first-offense"].priceDisplay}</span>
               </div>
               <p className="mt-2 text-sm text-zinc-500">
                 Accuser credibility framework, protective order strategy,
@@ -575,28 +576,28 @@ export default function ServicesPage() {
           <div className="mx-auto mt-6 max-w-2xl text-left">
             <div className="space-y-2 text-sm text-zinc-400">
               <p>
-                <span className="font-semibold text-white">Case Decoder ($197):</span>{" "}
-                Delivered within 24 hours. 10+ targeted questions from your case details.
+                <span className="font-semibold text-white">{TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay}):</span>{" "}
+                Delivered within 48 hours. 10+ targeted questions from your case details.
               </p>
               <p>
                 <span className="font-semibold text-white">
-                  Intelligence Brief ($997):
+                  {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay}):
                 </span>{" "}
                 Delivered within 72 hours. 10-15 targeted questions with judge intelligence.
               </p>
               <p>
-                <span className="font-semibold text-white">The X-Ray ($2,497):</span>{" "}
+                <span className="font-semibold text-white">{TIER_CORE["x-ray"].name} ({TIER_CORE["x-ray"].priceDisplay}):</span>{" "}
                 Delivered within 10 business days. Full discovery analysis with 35+ questions.
               </p>
               <p>
                 <span className="font-semibold text-white">
-                  The War Room ($4,997):
+                  {TIER_CORE["war-room"].name} ({TIER_CORE["war-room"].priceDisplay}):
                 </span>{" "}
                 Initial package within 25-28 business days. Weekly updates thereafter.
               </p>
               <p>
                 <span className="font-semibold text-white">
-                  The Situation Room ($9,997):
+                  {TIER_CORE["situation-room"].name} ({TIER_CORE["situation-room"].priceDisplay}):
                 </span>{" "}
                 Priority 24-48hr turnaround. Trial Intelligence Operations — evening debrief + morning prep brief every trial day.
               </p>

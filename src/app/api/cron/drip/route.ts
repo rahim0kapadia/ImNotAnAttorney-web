@@ -19,9 +19,9 @@
  *     - Relative to delivery (delayDays from delivered_at) — for "how was your report" type emails
  *     - Relative to meeting (not yet implemented — needs meeting date tracking)
  *
- * PART 3 — Operator review reminders (24-hour guarantee protection)
+ * PART 3 — Operator review reminders (48-hour guarantee protection)
  *   Detects cases in "review" status for 12+ hours and alerts the operator.
- *   The 12-hour threshold gives 12 hours of buffer before the 24-hour delivery
+ *   The 12-hour threshold gives 36 hours of buffer before the 48-hour delivery
  *   guarantee is breached. Fires only once per case (review_reminder_sent flag).
  *
  * PART 4 — Stuck intake detection (generation may have been dropped)
@@ -68,6 +68,7 @@ import { getNextNurtureEmail, getPostPurchaseEmails } from "@/lib/drip-emails";
 import type { DripEmail } from "@/lib/drip-emails";
 import { signOperatorToken, signPhase2Token, SITE_URL, caseThreadId } from "@/lib/site";
 import { stripe } from "@/lib/stripe";
+import { TIER_CORE } from "@/lib/tiers";
 
 /** Maps tier slugs to display names for alert emails. */
 const TIER_NAMES: Record<string, string> = {
@@ -473,9 +474,9 @@ export async function GET(req: NextRequest) {
     }
 
     // ============================================================
-    // PART 3: OPERATOR REVIEW REMINDERS (24-hour guarantee protection)
+    // PART 3: OPERATOR REVIEW REMINDERS (48-hour guarantee protection)
     // ============================================================
-    // The Case Decoder has a 24-hour delivery guarantee. Reports land in
+    // The Case Decoder has a 48-hour delivery guarantee. Reports land in
     // "review" status after the Edge Function generates them. The operator
     // must review and click "Deliver" before the guarantee expires.
     //
@@ -996,7 +997,7 @@ export async function GET(req: NextRequest) {
             <p>You purchased your report — but we still need your case details before we can generate it.</p>
             <p>It only takes 3 minutes:</p>
             <a href="${intakeOrigin}/intake?email=${encodeURIComponent(awCase.email)}&tier=${escapeHtml(awCase.tier)}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
-            <p style="color: #A1A1AA;">${awCase.tier === "intelligence-brief" ? "Your Case Decoder will be delivered within 24 hours. After that, we&#39;ll send a short follow-up form for your full Intelligence Brief." : "Once you submit, your report will be generated within 24 hours."}</p>
+            <p style="color: #A1A1AA;">${awCase.tier === "intelligence-brief" ? "Your Case Decoder will be delivered within 48 hours. After that, we&#39;ll send a short follow-up form for your full Intelligence Brief." : "Once you submit, your report will be generated within 48 hours."}</p>
           `,
         }, { category: "intake-reminder", case_id: awCase.id, metadata: { tier: awCase.tier } });
 
@@ -1366,7 +1367,7 @@ export async function GET(req: NextRequest) {
           html: `
             <h1 style="color: #F59E0B;">You Were Close</h1>
             <p>You started checkout but didn't finish. No pressure — but if you're still thinking about it, the Case Decoder is the right place to start.</p>
-            <p>For $197, you get a plain-English charge breakdown, 15 calibrated questions for your attorney, ready-to-send email templates, and a 7-day action plan.</p>
+            <p>For ${TIER_CORE["case-decoder"].priceDisplay}, you get a plain-English charge breakdown, 15 calibrated questions for your attorney, ready-to-send email templates, and a 7-day action plan.</p>
             <a href="${checkoutOrigin}/checkout?tier=case-decoder" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Continue to Checkout</a>
             <p style="color: #A1A1AA;">Questions? Reply to this email — a real person reads every message.</p>
           `,

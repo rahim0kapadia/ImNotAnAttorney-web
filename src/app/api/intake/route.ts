@@ -39,6 +39,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import { SITE_URL } from "@/lib/site";
+import { TIER_CORE } from "@/lib/tiers";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
@@ -317,7 +318,7 @@ export async function POST(req: NextRequest) {
           <li style="margin-bottom: 8px;">Purchase your chosen service — 100% of what you pay is credited if you upgrade later</li>
           <li style="margin-bottom: 8px;">We'll analyze your case and deliver your report within the guaranteed timeframe</li>
         </ol>
-        <p style="color: #A1A1AA;">Not sure where to start? For <strong style="color: white;">${escapeHtml(chargeType.replace(/-/g, " "))}</strong> cases, the <a href="${SITE_URL}/checkout?tier=case-decoder" style="color: #F59E0B;">Case Decoder ($197)</a> covers the essentials — and every dollar counts toward an upgrade.</p>
+        <p style="color: #A1A1AA;">Not sure where to start? For <strong style="color: white;">${escapeHtml(chargeType.replace(/-/g, " "))}</strong> cases, the <a href="${SITE_URL}/checkout?tier=case-decoder" style="color: #F59E0B;">${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay})</a> covers the essentials — and every dollar counts toward an upgrade.</p>
       `;
 
     await sendEmail({

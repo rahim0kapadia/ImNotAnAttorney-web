@@ -34,6 +34,7 @@
  * SEO: Full OG metadata with specific findings in description.
  */
 import { SITE_URL } from "@/lib/site";
+import { TIER_CORE } from "@/lib/tiers";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -73,13 +74,13 @@ function InlineCTA({ variant }: { variant: "mid" | "end" }) {
       <p className="mt-2 text-sm text-zinc-400">
         {variant === "mid"
           ? "Want questions and communication tools built from YOUR case details?"
-          : "15 questions. Email templates. A 7-day plan. Starting at $197."}
+          : `15 questions. Email templates. A 7-day plan. Starting at ${TIER_CORE["case-decoder"].priceDisplay}.`}
       </p>
       <Link
         href="/checkout?tier=case-decoder"
         className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
       >
-        Find What&apos;s in My Case — $197 →
+        Find What&apos;s in My Case — {TIER_CORE["case-decoder"].priceDisplay} →
       </Link>
     </div>
   );

@@ -23,6 +23,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email";
+import { TIER_CORE } from "@/lib/tiers";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 /**
@@ -130,7 +131,7 @@ export async function POST(req: NextRequest) {
         <p>Here's your free guide:</p>
         <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com"}/resources" style="display: inline-block; margin: 24px 0; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Download Your Discovery Checklist</a>
         <p style="color: #A1A1AA;">Inside: 7 evidence problems from a real trafficking case — the weight that disappeared, the substance that changed, the fingerprints nobody mentioned, and 4 more. Plus the exact questions that expose each one.</p>
-        <p style="color: #A1A1AA;">When you're ready to go deeper, our <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com"}/services" style="color: #F59E0B;">case analysis services</a> start at $197.</p>
+        <p style="color: #A1A1AA;">When you're ready to go deeper, our <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com"}/services" style="color: #F59E0B;">case analysis services</a> start at ${TIER_CORE["case-decoder"].priceDisplay}.</p>
       `,
     }, { category: "welcome" });
 

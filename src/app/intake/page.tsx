@@ -53,6 +53,7 @@
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { TIER_CORE } from "@/lib/tiers";
 
 // ============================================================
 // JURISDICTION + CHARGE TYPE CONFIGURATION
@@ -383,11 +384,11 @@ const usStates = [
 
 /** Service interest options — maps to the 5 tiers + "help me decide" fallback. */
 const serviceInterests = [
-  "Case Decoder ($197)",
-  "Intelligence Brief ($997)",
-  "The X-Ray ($2,497)",
-  "The War Room ($4,997)",
-  "The Situation Room ($9,997)",
+  `${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay})`,
+  `${TIER_CORE["intelligence-brief"].name} (${TIER_CORE["intelligence-brief"].priceDisplay})`,
+  `${TIER_CORE["x-ray"].name} (${TIER_CORE["x-ray"].priceDisplay})`,
+  `${TIER_CORE["war-room"].name} (${TIER_CORE["war-room"].priceDisplay})`,
+  `${TIER_CORE["situation-room"].name} (${TIER_CORE["situation-room"].priceDisplay})`,
   "Not sure \u2014 help me decide",
 ];
 
@@ -532,12 +533,12 @@ function IntakeForm() {
     courtDate: "",
     situation: "",
     specificQuestion: "",
-    services: interest ? [`The Situation Room ($9,997)`] : prefillTier ? [({
-      "case-decoder": "Case Decoder ($197)",
-      "intelligence-brief": "Intelligence Brief ($997)",
-      "x-ray": "The X-Ray ($2,497)",
-      "war-room": "The War Room ($4,997)",
-      "situation-room": "The Situation Room ($9,997)",
+    services: interest ? [`${TIER_CORE["situation-room"].name} (${TIER_CORE["situation-room"].priceDisplay})`] : prefillTier ? [({
+      "case-decoder": `${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay})`,
+      "intelligence-brief": `${TIER_CORE["intelligence-brief"].name} (${TIER_CORE["intelligence-brief"].priceDisplay})`,
+      "x-ray": `${TIER_CORE["x-ray"].name} (${TIER_CORE["x-ray"].priceDisplay})`,
+      "war-room": `${TIER_CORE["war-room"].name} (${TIER_CORE["war-room"].priceDisplay})`,
+      "situation-room": `${TIER_CORE["situation-room"].name} (${TIER_CORE["situation-room"].priceDisplay})`,
     } as Record<string, string>)[prefillTier] || prefillTier] : ([] as string[]),
     pleaOffered: "",
     pleaTerms: "",
@@ -614,7 +615,7 @@ function IntakeForm() {
   if (submitted) {
     // Context-aware success message: paid tiers get specific delivery messaging
     const paidTierMessages: Record<string, string> = {
-      "case-decoder": "Your Case Decoder report is being generated. You\u2019ll receive it via email within 24 hours.",
+      "case-decoder": "Your Case Decoder report is being generated. You\u2019ll receive it via email within 48 hours.",
       "intelligence-brief": "Your Intelligence Brief is being prepared. You\u2019ll receive it via email within 48\u201372 hours.",
       "x-ray": "Your X-Ray analysis has been queued. Upload your discovery documents to begin \u2014 check your email for the upload link.",
       "war-room": "Your War Room engagement has begun. Upload your discovery documents to start \u2014 check your email for the upload link.",

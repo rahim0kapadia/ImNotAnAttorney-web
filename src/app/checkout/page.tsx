@@ -42,7 +42,7 @@
  */
 "use client";
 
-import { TIER_CORE, tierPriceNum, type TierSlug } from "@/lib/tiers";
+import { TIER_CORE, tierPriceNum, upgradePrice, type TierSlug } from "@/lib/tiers";
 import { useSearchParams } from "next/navigation";
 import { useState, Suspense } from "react";
 import Link from "next/link";
@@ -93,14 +93,26 @@ type TierInfo = {
  * The nudge.upgradeCost accounts for 100% upgrade credit policy.
  * Example: Case Decoder ($197) -> Intelligence Brief ($997) = $800 upgrade.
  */
+/** Extracts derivable fields from TIER_CORE for use in TIER_INFO. */
+function coreTier(slug: TierSlug) {
+  const t = TIER_CORE[slug];
+  return {
+    name: t.name,
+    price: t.priceDisplay,
+    priceNum: t.price / 100,
+    delivery: t.delivery,
+    requiresDiscovery: t.requiresDiscovery,
+    requiresWarRoom: t.requiresWarRoom,
+    isDigitalProduct: t.isDigitalProduct,
+    priorityPrice: t.priorityPrice ? `$${t.priorityPrice / 100}` : null,
+    priorityPriceNum: t.priorityPrice ? t.priorityPrice / 100 : undefined,
+    priorityDesc: t.priorityDelivery ?? null,
+  };
+}
+
 const TIER_INFO: Record<string, TierInfo> = {
   "dui-first-offense": {
-    name: "DUI Defense Playbook",
-    price: "$97",
-    priceNum: 97,
-    delivery: "Instant download",
-    requiresDiscovery: false,
-    isDigitalProduct: true,
+    ...coreTier("dui-first-offense"),
     features: [
       "Charge Reality Report — DUI first offense explained in plain English",
       "26 Questions Your DUI Attorney Hopes You Never Ask (6-part format)",
@@ -121,9 +133,9 @@ const TIER_INFO: Record<string, TierInfo> = {
     },
     nudge: {
       nextTierSlug: "case-decoder",
-      nextTierName: "Case Decoder",
-      nextTierPrice: "$197",
-      upgradeCost: "$100",
+      nextTierName: TIER_CORE["case-decoder"].name,
+      nextTierPrice: TIER_CORE["case-decoder"].priceDisplay,
+      upgradeCost: upgradePrice("dui-first-offense")!,
       unlocks:
         "15 case-specific questions built from YOUR charges, YOUR state, YOUR stage. Plus email templates, phone scripts, and a 7-day action plan.",
       bestFor:
@@ -131,11 +143,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     },
   },
   "case-decoder": {
-    name: "Case Decoder",
-    price: "$197",
-    priceNum: 197,
-    delivery: "24 hours",
-    requiresDiscovery: false,
+    ...coreTier("case-decoder"),
     features: [
       "Plain-English charge breakdown with elements the prosecution must prove",
       "15 calibrated questions for your attorney (6-part format with follow-up probes)",
@@ -147,14 +155,11 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Included: When the Conversation Gets Difficult — scripts for 4 common scenarios",
     ],
     guarantee:
-      "Delivered within 24 hours with 15 calibrated questions + communication tools — or your money back.",
-    priorityPrice: "$97",
-    priorityDesc: "Same-day delivery (4 hours)",
-    priorityPriceNum: 97,
+      "Delivered within 48 hours with 15 calibrated questions + communication tools — or your money back.",
     validation:
       "The right place to start. Understand exactly what you are facing before your next attorney meeting.",
     whyThisWorks:
-      "Every question generated using documented tactics from elite defense attorneys — Barry Scheck's chain of custody protocol, Jeffrey Lichtman's informant reliability methodology, Ron Chapman II's drug forensic framework. 15 calibrated questions + ready-to-send email templates + a 7-day action plan. You're getting a communication playbook informed by the same methodologies elite defense attorneys use — for $197.",
+      `Every question generated using documented tactics from elite defense attorneys — Barry Scheck's chain of custody protocol, Jeffrey Lichtman's informant reliability methodology, Ron Chapman II's drug forensic framework. 15 calibrated questions + ready-to-send email templates + a 7-day action plan. You're getting a communication playbook informed by the same methodologies elite defense attorneys use — for ${TIER_CORE["case-decoder"].priceDisplay}.`,
     pullquote: {
       quote:
         "Forensic evidence is only as reliable as the humans who handle it.",
@@ -162,9 +167,9 @@ const TIER_INFO: Record<string, TierInfo> = {
     },
     nudge: {
       nextTierSlug: "intelligence-brief",
-      nextTierName: "Intelligence Brief",
-      nextTierPrice: "$997",
-      upgradeCost: "$800",
+      nextTierName: TIER_CORE["intelligence-brief"].name,
+      nextTierPrice: TIER_CORE["intelligence-brief"].priceDisplay,
+      upgradeCost: upgradePrice("case-decoder")!,
       unlocks:
         "Adds your judge's actual sentencing patterns, a motion landscape report, and 10-15 targeted questions.",
       bestFor:
@@ -172,13 +177,9 @@ const TIER_INFO: Record<string, TierInfo> = {
     },
   },
   "intelligence-brief": {
-    name: "Case Intelligence Brief",
-    price: "$997",
-    priceNum: 997,
-    delivery: "72 hours",
-    requiresDiscovery: false,
+    ...coreTier("intelligence-brief"),
     features: [
-      "Case Decoder report delivered within 24 hours",
+      "Case Decoder report delivered within 48 hours",
       "Everything in Case Decoder, plus:",
       "Attorney Accountability Score — 6-dimension tracking with milestone timeline",
       "Prosecution Case Vulnerability Report — where the prosecution's case has gaps, informed by court records and sentencing trends in your jurisdiction",
@@ -194,9 +195,6 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "Delivered within 72 hours with 10-15 targeted questions — or your money back.",
-    priorityPrice: "$297",
-    priorityDesc: "24-hour delivery",
-    priorityPriceNum: 297,
     validation:
       "Everything you need to understand your case — without needing discovery yet.",
     whyThisWorks:
@@ -208,9 +206,9 @@ const TIER_INFO: Record<string, TierInfo> = {
     },
     nudge: {
       nextTierSlug: "x-ray",
-      nextTierName: "The X-Ray",
-      nextTierPrice: "$2,497",
-      upgradeCost: "$1,500",
+      nextTierName: TIER_CORE["x-ray"].name,
+      nextTierPrice: TIER_CORE["x-ray"].priceDisplay,
+      upgradeCost: upgradePrice("intelligence-brief")!,
       unlocks:
         "Adds full discovery analysis — timelines, discrepancies, red flags inside the documents your attorney already has.",
       bestFor:
@@ -218,11 +216,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     },
   },
   "x-ray": {
-    name: "The X-Ray",
-    price: "$2,497",
-    priceNum: 2497,
-    delivery: "10 business days",
-    requiresDiscovery: true,
+    ...coreTier("x-ray"),
     features: [
       "Case Decoder + Intelligence Brief delivered first",
       "Everything in Intelligence Brief, plus:",
@@ -236,9 +230,6 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "Delivered within 10 business days with 35+ case-specific questions — or your money back.",
-    priorityPrice: "$497",
-    priorityDesc: "5 business day delivery",
-    priorityPriceNum: 497,
     validation:
       "The most thorough analysis available without a multi-week engagement. Full discovery, full picture.",
     whyThisWorks:
@@ -250,9 +241,9 @@ const TIER_INFO: Record<string, TierInfo> = {
     },
     nudge: {
       nextTierSlug: "war-room",
-      nextTierName: "The War Room",
-      nextTierPrice: "$4,997",
-      upgradeCost: "$2,500",
+      nextTierName: TIER_CORE["war-room"].name,
+      nextTierPrice: TIER_CORE["war-room"].priceDisplay,
+      upgradeCost: upgradePrice("x-ray")!,
       unlocks:
         "Adds judge and prosecution dossiers, witness analysis for up to 8 witnesses, a case law package, and weekly updates.",
       bestFor:
@@ -260,11 +251,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     },
   },
   "war-room": {
-    name: "The War Room",
-    price: "$4,997",
-    priceNum: 4997,
-    delivery: "25-28 days + weekly updates",
-    requiresDiscovery: true,
+    ...coreTier("war-room"),
     features: [
       "Includes Case Decoder + Intelligence Brief + X-Ray delivered progressively",
       "Everything in The X-Ray, plus:",
@@ -280,9 +267,6 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "Initial package within 25-28 business days. Weekly updates every 7 days thereafter.",
-    priorityPrice: "$997",
-    priorityDesc: "Expedited 20-day delivery",
-    priorityPriceNum: 997,
     validation:
       "Ongoing intelligence from now through resolution. Most clients stay in this tier for the life of their case.",
     whyThisWorks:
@@ -294,9 +278,9 @@ const TIER_INFO: Record<string, TierInfo> = {
     },
     nudge: {
       nextTierSlug: "situation-room",
-      nextTierName: "The Situation Room",
-      nextTierPrice: "$9,997",
-      upgradeCost: "$5,000",
+      nextTierName: TIER_CORE["situation-room"].name,
+      nextTierPrice: TIER_CORE["situation-room"].priceDisplay,
+      upgradeCost: upgradePrice("war-room")!,
       unlocks:
         "Trial Intelligence Operations — all witnesses researched, daily trial prep, Priority Response Line, JOA + sentencing research.",
       bestFor:
@@ -304,12 +288,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     },
   },
   "situation-room": {
-    name: "The Situation Room",
-    price: "$9,997",
-    priceNum: 9997,
-    delivery: "24-48hr priority turnaround",
-    requiresDiscovery: true,
-    requiresWarRoom: true,
+    ...coreTier("situation-room"),
     features: [
       "Includes all lower-tier reports delivered progressively",
       "Everything in The War Room, plus:",
@@ -337,11 +316,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     },
   },
   "extra-witness": {
-    name: "Extra Witness Intel",
-    price: "$149",
-    priceNum: 149,
-    delivery: "Next update cycle",
-    requiresDiscovery: false,
+    ...coreTier("extra-witness"),
     features: [
       "Individual witness background report",
       "Credibility and background question set",
@@ -350,11 +325,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     guarantee: "Delivered in your next scheduled update cycle.",
   },
   "witness-pack": {
-    name: "Standalone Witness Pack",
-    price: "$297",
-    priceNum: 297,
-    delivery: "3-5 business days",
-    requiresDiscovery: true,
+    ...coreTier("witness-pack"),
     features: [
       "Comprehensive witness analysis",
       "Background and credibility report",

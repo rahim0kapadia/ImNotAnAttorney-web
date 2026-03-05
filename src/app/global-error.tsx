@@ -21,6 +21,8 @@
  */
 "use client";
 
+import { CONTACT_EMAIL } from "@/lib/site";
+
 export default function GlobalError({
   reset,
 }: {
@@ -86,10 +88,10 @@ export default function GlobalError({
           <p style={{ marginTop: "32px", fontSize: "12px", color: "#52525B" }}>
             Questions?{" "}
             <a
-              href="mailto:help@imnotanattorney.com"
+              href={"mailto:" + CONTACT_EMAIL}
               style={{ color: "#F59E0B", textDecoration: "underline" }}
             >
-              help@imnotanattorney.com
+              {CONTACT_EMAIL}
             </a>
           </p>
         </div>

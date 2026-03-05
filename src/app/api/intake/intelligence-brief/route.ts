@@ -19,7 +19,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
-import { SITE_URL, verifyPhase2Token } from "@/lib/site";
+import { SITE_URL, CONTACT_EMAIL, verifyPhase2Token } from "@/lib/site";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 const OPERATOR_EMAIL =
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
     // Explicit refund check — customer sees a clear message instead of generic 409
     if (caseData.status === "refunded") {
       return NextResponse.json(
-        { error: "This case has been refunded and is no longer active. Contact help@imnotanattorney.com if you have questions." },
+        { error: `This case has been refunded and is no longer active. Contact ${CONTACT_EMAIL} if you have questions.` },
         { status: 410 }
       );
     }
