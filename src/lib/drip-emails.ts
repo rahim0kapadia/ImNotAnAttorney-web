@@ -34,6 +34,12 @@
  *   and reused across requests with different env configurations (e.g., preview
  *   deploys vs production).
  *
+ * PRICING: All dollar amounts in email copy reference prices from src/lib/tiers.ts.
+ * When tiers.ts prices change, grep this file for dollar amounts and update.
+ * Upgrade math: CD$197→IB$997 = $800, IB→XR$2,497 = $1,500,
+ * XR→WR$4,997 = $2,500, WR→SR$9,997 = $5,000, DUI$97→CD$197 = $100,
+ * WP$297→XR$2,497 = $2,200.
+ *
  * Style: dark bg (#0C0A09), zinc text (#D4D4D8), amber accent (#F59E0B).
  * CAN-SPAM footer is added by sendEmail() in lib/email.ts — not here.
  */
@@ -152,7 +158,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p>We found all of them in the discovery documents. We generated 15 specific questions — each traced to a documented winning method from attorneys like Barry Scheck, Jeffrey Lichtman, and Alan Dershowitz.</p>
       ${cta("See the full sample report →", "/sample")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">DUI charges?</strong> Get the DUI Defense Playbook — $97, instant download. 23 questions your attorney hopes you never ask + breathalyzer checklist + attorney scorecard. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
+        <strong style="color: white;">DUI charges?</strong> Get the DUI Defense Playbook — $97, instant download. 26 questions your attorney hopes you never ask + breathalyzer checklist + attorney scorecard. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
       </p>
     `,
   },
@@ -205,7 +211,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p><strong style="color: white;">$197. 24 hours.</strong> The cost of not knowing is higher.</p>
       ${cta("Find What's in My Case — $197 →", "/checkout?tier=case-decoder")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">DUI charges?</strong> Start with the DUI Defense Playbook — $97 instant download. 23 questions + attorney scorecard. Your $97 is credited toward any service tier. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
+        <strong style="color: white;">DUI charges?</strong> Start with the DUI Defense Playbook — $97 instant download. 26 questions + attorney scorecard. Your $97 is credited toward any service tier. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
       </p>
     `,
   },
@@ -532,7 +538,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Which question surprised you the most?",
     html: `
       <h1 style="color: #F59E0B;">Which Question Surprised You?</h1>
-      <p>You've had a few days with the Playbook. Which of the 23 questions surprised you most?</p>
+      <p>You've had a few days with the Playbook. Which of the 26 questions surprised you most?</p>
       <p>Was it the breathalyzer calibration question? The 15-minute observation period? The FST conditions?</p>
       <p><strong style="color: white;">Reply to this email and tell me.</strong> Real feedback from real defendants makes this better for everyone who comes after you. Your reply is confidential.</p>
     `,
@@ -544,7 +550,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Generic questions are a start. Case-specific ones change the conversation.",
     html: `
       <h1 style="color: #F59E0B;">Generic vs. Case-Specific</h1>
-      <p>The Playbook gives you 23 questions that apply to DUI cases generally. The <strong style="color: white;">Case Decoder</strong> gives you 15 questions built from YOUR charges, YOUR state, YOUR stage, YOUR attorney situation.</p>
+      <p>The Playbook gives you 26 questions that apply to DUI cases generally. The <strong style="color: white;">Case Decoder</strong> gives you 15 questions built from YOUR charges, YOUR state, YOUR stage, YOUR attorney situation.</p>
       <p>Generic questions open the conversation. <strong style="color: white;">Case-specific questions change it.</strong></p>
       <p>The difference: when your attorney hears a question from the Playbook, they know the answer. When they hear a question from your Case Decoder, they have to actually check the file.</p>
       <p><strong style="color: white;">That's the meeting that changes everything.</strong></p>
@@ -562,7 +568,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">Know Someone Facing a DUI?</h1>
       <p>If someone you know just got pulled over — or is about to go to court — forward them this email.</p>
-      <p>The DUI Defense Playbook is the thing I wish existed when I was in their position. 23 questions, a case stage roadmap, a red flag checklist, and an attorney scorecard. $97, instant download.</p>
+      <p>The DUI Defense Playbook is the thing I wish existed when I was in their position. 26 questions, a case stage roadmap, a red flag checklist, and an attorney scorecard. $97, instant download.</p>
       ${cta("Share the DUI Defense Playbook →", "/playbook/dui-first-offense")}
       <p style="margin-top: 16px; color: #71717A;">If they buy through your link, send me a receipt and I'll credit you $20 toward any of our services.</p>
     `,

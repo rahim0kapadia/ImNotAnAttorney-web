@@ -180,8 +180,8 @@ export default function ResourcesPage() {
             <p className="text-sm text-zinc-400">
               <span className="font-semibold text-amber-400">Disclaimer:</span>{" "}
               This is general legal information, not legal advice. Rights vary
-              by state and jurisdiction. Consult your attorney for specifics
-              about your case.
+              by state and jurisdiction. Your attorney remains the final authority on strategy
+              decisions specific to your situation.
             </p>
           </div>
         </section>
@@ -202,12 +202,12 @@ export default function ResourcesPage() {
                   $97 &middot; Instant Download
                 </span>
                 <h3 className="mt-3 text-lg font-bold text-white">
-                  23 Questions Your Attorney Hopes You Never Ask
+                  26 Questions Your Attorney Hopes You Never Ask
                 </h3>
                 <ul className="mt-3 space-y-1 text-sm text-zinc-300">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 text-amber-400">&#10003;</span>
-                    23 attorney-sourced questions with good/bad answer examples
+                    26 attorney-sourced questions with good/bad answer examples
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 text-amber-400">&#10003;</span>

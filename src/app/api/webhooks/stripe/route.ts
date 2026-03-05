@@ -239,7 +239,7 @@ export async function POST(req: NextRequest) {
           <h1 style="color: #F59E0B;">Your ${escapeHtml(productName)} Is Ready</h1>
           <p>Your ${escapeHtml(productName)} is inside. Click below to download your PDF.</p>
           <a href="${downloadUrl}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Download Your Playbook</a>
-          <p>Start with Section 2 — the 23 Questions. Go through them and put a checkmark next to every one you already know your attorney's answer to. Most people get through 4 or 5 checkmarks. Then the blanks start.</p>
+          <p>Start with Section 2 — the 26 Questions. Go through them and put a checkmark next to every one you already know your attorney's answer to. Most people get through 4 or 5 checkmarks. Then the blanks start.</p>
           <p>Those blanks are what your next attorney meeting is for.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
             <p style="margin: 0; color: white; font-weight: bold;">Want case-specific questions?</p>

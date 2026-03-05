@@ -1,7 +1,7 @@
 /**
  * Services / Pricing Page (/services)
  *
- * Full 5-tier service catalog organized by case type (Drug, DUI, White Collar).
+ * Full service catalog with instant products organized by case type (Drug, DUI, White Collar).
  * This is the deep-dive pricing page linked from the landing page, nav, and
  * blog CTAs. While the landing page shows only 3 tiers to reduce decision
  * fatigue, this page shows all 5 tiers per case type.
@@ -62,7 +62,7 @@ const caseTypes = [
     title: "Drug Cases",
     subtitle: "Possession, trafficking, distribution",
     description:
-      "We analyze your case using Barry Scheck's chain of custody protocol, Ron Chapman II's weight discrepancy framework, and Jeffrey Lichtman's 7-pillar CI reliability system — the same approaches that won El Chapo's defense and produced 375+ Innocence Project exonerations.",
+      "We analyze your case using Barry Scheck's chain of custody protocol, Ron Chapman II's weight discrepancy framework, and Jeffrey Lichtman's informant credibility methodology — the same approaches that won El Chapo's defense and produced 375+ Innocence Project exonerations.",
     tiers: [
       {
         name: "Case Decoder",
@@ -76,7 +76,7 @@ const caseTypes = [
         name: "Intelligence Brief",
         slug: "intelligence-brief",
         price: "$997",
-        desc: "Includes Case Decoder report (delivered within 24 hours). Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios based on your county's actual case data, plus where the prosecution's case has exploitable gaps.",
+        desc: "Includes Case Decoder report (delivered within 24 hours). Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
         discovery: false,
       },
       {
@@ -122,7 +122,7 @@ const caseTypes = [
         name: "Intelligence Brief",
         slug: "intelligence-brief",
         price: "$997",
-        desc: "Includes Case Decoder report (delivered within 24 hours). Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios based on your county's actual case data, plus where the prosecution's case has exploitable gaps.",
+        desc: "Includes Case Decoder report (delivered within 24 hours). Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
         discovery: false,
       },
       {
@@ -168,7 +168,7 @@ const caseTypes = [
         name: "Intelligence Brief",
         slug: "intelligence-brief",
         price: "$997",
-        desc: "Includes Case Decoder report (delivered within 24 hours). Judge sentencing patterns, AUSA profile, guidelines calculation review, questions about the cooperation decision for your attorney. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios based on your county's actual case data, plus where the prosecution's case has exploitable gaps.",
+        desc: "Includes Case Decoder report (delivered within 24 hours). Judge sentencing patterns, AUSA profile, guidelines calculation review, questions about the cooperation decision for your attorney. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
         discovery: false,
       },
       {
@@ -410,7 +410,7 @@ export default function ServicesPage() {
                 <span className="text-lg font-bold text-amber-400">$97</span>
               </div>
               <p className="mt-2 text-sm text-zinc-400">
-                23 questions your DUI attorney hopes you never ask.
+                26 questions your DUI attorney hopes you never ask.
                 Breathalyzer calibration checklist, case stage roadmap, 12 red
                 flags, attorney accountability scorecard. Instant PDF.
               </p>

@@ -13,14 +13,14 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "DUI Defense Playbook — $97 Instant Download | ImNotAnAttorney",
   description:
-    "23 questions your DUI attorney hopes you never ask. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download. $97.",
+    "26 questions your DUI attorney hopes you never ask. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download. $97.",
   alternates: {
     canonical: "https://imnotanattorney.com/playbook/dui-first-offense",
   },
   openGraph: {
     title: "DUI Defense Playbook — $97 Instant Download",
     description:
-      "23 questions your DUI attorney hopes you never ask. Instant PDF. $97.",
+      "26 questions your DUI attorney hopes you never ask. Instant PDF. $97.",
     url: "https://imnotanattorney.com/playbook/dui-first-offense",
     type: "website",
   },
@@ -53,7 +53,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "What's the Defense Playbook vs the Case Decoder?",
-    a: "The Playbook is generic to all DUI first offense cases — 23 questions any DUI defendant should ask. The Case Decoder ($197) is personalized to YOUR specific situation with case-specific questions, email templates, and a 7-day action plan. Your $97 Playbook purchase is credited toward the Case Decoder.",
+    a: "The Playbook is generic to all DUI first offense cases — 26 questions any DUI defendant should ask. The Case Decoder ($197) is personalized to YOUR specific situation with case-specific questions, email templates, and a 7-day action plan. Your $97 Playbook purchase is credited toward the Case Decoder.",
   },
 ];
 
@@ -71,7 +71,7 @@ export default function DUIPlaybookPage() {
           The Breathalyzer Reading Is Not the Case.
         </h1>
         <p className="mt-4 text-lg text-zinc-400">
-          23 questions your DUI attorney hopes you never ask — plus a case stage
+          26 questions your DUI attorney hopes you never ask — plus a case stage
           roadmap, red flag checklist, and attorney accountability scorecard.
         </p>
         <div className="mt-6 flex items-center justify-center gap-3">
@@ -189,7 +189,7 @@ export default function DUIPlaybookPage() {
               value: "$297",
             },
             {
-              title: "23 Questions Your DUI Attorney Hopes You Never Ask",
+              title: "26 Questions Your DUI Attorney Hopes You Never Ask",
               desc: "Derived from 40+ elite defense attorneys' techniques. 6-part format per question with follow-up probes. The research alone took months.",
               value: "$197",
             },
@@ -376,7 +376,7 @@ export default function DUIPlaybookPage() {
           The DUI Defense Playbook is <span className="text-amber-400">$97</span>.
         </p>
         <p className="mt-2 text-sm text-zinc-400">
-          Instant PDF. 23 questions. 12 red flags. Case stage roadmap. Attorney
+          Instant PDF. 26 questions. 12 red flags. Case stage roadmap. Attorney
           scorecard.
         </p>
         <Link
@@ -423,7 +423,7 @@ export default function DUIPlaybookPage() {
             "@type": "Product",
             name: "DUI Defense Playbook",
             description:
-              "23 questions your DUI attorney hopes you never ask. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download.",
+              "26 questions your DUI attorney hopes you never ask. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download.",
             url: "https://imnotanattorney.com/playbook/dui-first-offense",
             brand: { "@type": "Organization", name: "ImNotAnAttorney" },
             offers: {

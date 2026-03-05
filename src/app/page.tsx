@@ -103,7 +103,7 @@ const homeFaqs = [
   {
     question: "What's the Defense Playbook?",
     answer:
-      "The DUI Defense Playbook ($97) is an instant-download PDF with 23 questions your DUI attorney hopes you never ask, a breathalyzer calibration checklist, a case stage roadmap, 12 red flags, and an attorney accountability scorecard. No intake form, no wait — built from 40+ elite defense attorneys' documented strategies. Your $97 is fully credited toward the Case Decoder within 30 days.",
+      "The DUI Defense Playbook ($97) is an instant-download PDF with 26 questions your DUI attorney hopes you never ask, a breathalyzer calibration checklist, a case stage roadmap, 12 red flags, and an attorney accountability scorecard. No intake form, no wait — built from 40+ elite defense attorneys' documented strategies. Your $97 is fully credited toward the Case Decoder within 30 days.",
   },
 ];
 
@@ -407,7 +407,7 @@ export default function Home() {
               {
                 name: "Jeffrey Lichtman",
                 record: "Gotti Jr. (charges dismissed), El Chapo lead counsel",
-                method: "7-pillar CI destruction playbook for every CI/cooperator question.",
+                method: "Informant credibility methodology for every CI/cooperator question.",
               },
               {
                 name: "Gerry Spence",
@@ -417,7 +417,7 @@ export default function Home() {
               {
                 name: "F. Lee Bailey",
                 record: "Sam Sheppard retrial acquittal, OJ defense team",
-                method: "5-phase trap sequence for witness examination questions.",
+                method: "Cross-examination methodology for witness examination questions.",
               },
               {
                 name: "Alan Dershowitz",

@@ -52,7 +52,7 @@ export default async function Image() {
             textAlign: "center",
           }}
         >
-          23 questions your DUI attorney hopes you never ask.
+          26 questions your DUI attorney hopes you never ask.
         </div>
         <div
           style={{

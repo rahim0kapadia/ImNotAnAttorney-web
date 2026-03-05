@@ -15,7 +15,7 @@ export function PlaybookCTA() {
         DUI Defense Playbook — $97
       </p>
       <h3 className="mt-2 text-lg font-bold text-white">
-        23 questions your DUI attorney hopes you never ask.
+        26 questions your DUI attorney hopes you never ask.
       </h3>
       <p className="mt-2 text-sm text-zinc-400">
         Instant PDF download. Breathalyzer calibration checklist, case stage

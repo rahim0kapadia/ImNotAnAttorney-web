@@ -42,6 +42,7 @@
  */
 "use client";
 
+import { TIER_CORE, tierPriceNum, type TierSlug } from "@/lib/tiers";
 import { useSearchParams } from "next/navigation";
 import { useState, Suspense } from "react";
 import Link from "next/link";
@@ -102,7 +103,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     isDigitalProduct: true,
     features: [
       "Charge Reality Report — DUI first offense explained in plain English",
-      "23 Questions Your DUI Attorney Hopes You Never Ask (6-part format)",
+      "26 Questions Your DUI Attorney Hopes You Never Ask (6-part format)",
       "DUI Case Stage Roadmap — arrest through resolution timeline",
       "Red Flag Checklist — 12 evidence and procedural red flags",
       "Attorney Accountability Scorecard — rate your attorney on 10 behaviors",
@@ -180,7 +181,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Case Decoder report delivered within 24 hours",
       "Everything in Case Decoder, plus:",
       "Attorney Accountability Score — 6-dimension tracking with milestone timeline",
-      "Prosecution Case Vulnerability Report — where the prosecution's case has gaps, based on your county's outcome data",
+      "Prosecution Case Vulnerability Report — where the prosecution's case has gaps, informed by court records and sentencing trends in your jurisdiction",
       "Charge exposure map",
       "Judge intelligence profile",
       "Jurisdiction profile",
@@ -285,7 +286,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Ongoing intelligence from now through resolution. Most clients stay in this tier for the life of their case.",
     whyThisWorks:
-      "Witness analysis using Jeffrey Lichtman's 7-pillar methodology — the system that dismantled cooperators in El Chapo and Gotti Jr. Officer dossiers built on Alan Jackson's investigator accountability framework. Updated weekly as your case develops.",
+      "Witness analysis using Jeffrey Lichtman's informant credibility methodology — the system that dismantled cooperators in El Chapo and Gotti Jr. Officer dossiers built on Alan Jackson's investigator accountability framework. Updated weekly as your case develops.",
     pullquote: {
       quote:
         "The cooperator is only as good as their handler lets them be.",
