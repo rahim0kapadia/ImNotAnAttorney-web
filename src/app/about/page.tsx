@@ -98,9 +98,8 @@ export default function AboutPage() {
           <div className="mt-4 space-y-4 text-zinc-400 leading-relaxed">
             <p>
               I started reading everything the best defense attorneys ever
-              published. Barry Scheck&apos;s chain of custody protocols. Jeffrey
-              Lichtman&apos;s CI destruction methodology. Gerry Spence&apos;s
-              investigation patterns. 40+ legendary attorneys.
+              published. Their chain of custody protocols. Informant defense
+              methodologies. Investigation patterns. 40+ legendary attorneys.
             </p>
             <p>
               I built a system that does what I did — but faster, deeper, and
