@@ -19,7 +19,7 @@
  *   5. Bridge — Identity statement ("people like us read the discovery ourselves")
  *   6. How it works — 3-step process (tell us, we research, you ask)
  *   7. Attorneys behind your questions — Credibility via 40+ named attorneys
- *   8. Value anchor — Stakes comparison ($10K-$100K attorney vs $197-$9,997 service)
+ *   8. Value anchor — Stakes comparison ($10K-$100K attorney vs {TIER_CORE["case-decoder"].priceDisplay}-{TIER_CORE["situation-room"].priceDisplay} service)
  *   9. Guarantee — Tiered guarantee (delivery + satisfaction)
  *  10. Pricing — PricingTable component (first 3 tiers shown on landing page)
  *  11. Lead capture — Email opt-in for non-buyers
@@ -33,6 +33,7 @@ import { LeadCapture } from "@/components/LeadCapture";
 import { PricingTable } from "@/components/PricingTable";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { SITE_URL } from "@/lib/site";
+import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -40,14 +41,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "ImNotAnAttorney — We Found a 73% Weight Discrepancy Your Attorney Missed",
   description:
-    "Legal empowerment for criminal defendants. We research your case and generate the questions that hold your attorney accountable. Starting at $197.",
+    `Legal empowerment for criminal defendants. We research your case and generate the questions that hold your attorney accountable. Starting at ${TIER_CORE["case-decoder"].priceDisplay}.`,
   alternates: {
     canonical: SITE_URL,
   },
   openGraph: {
     title: "ImNotAnAttorney — We Found a 73% Weight Discrepancy Your Attorney Missed",
     description:
-      "We dig through your discovery, find what your lawyer missed, and hand you the exact questions that make them start working.",
+      "We research your case, find the details that matter, and hand you the exact questions that get real answers from your attorney.",
   },
 };
 
@@ -78,7 +79,7 @@ const homeFaqs = [
   {
     question: "What if I don't have my discovery documents yet?",
     answer:
-      "That's fine — our Case Decoder ($197) and Intelligence Brief ($997) don't require discovery. We can analyze your charges, research your judge, and generate targeted questions with just your case information. When you get discovery, upgrade to The X-Ray with full credit.",
+      `That's fine — our ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}) and ${TIER_CORE["intelligence-brief"].name} (${TIER_CORE["intelligence-brief"].priceDisplay}) don't require discovery. We can analyze your charges, research your judge, and generate targeted questions with just your case information. When you get discovery, upgrade to The X-Ray with full credit.`,
   },
   {
     question: "Do you work on federal cases?",
@@ -88,12 +89,12 @@ const homeFaqs = [
   {
     question: "How fast do I get my report?",
     answer:
-      "Case Decoder: 24 hours. Intelligence Brief: 72 hours. The X-Ray: 10 business days. War Room: 25-28 days initial + weekly updates. Situation Room: 24-48hr priority turnaround with Trial Intelligence Operations.",
+      `${TIER_CORE["case-decoder"].name}: ${TIER_CORE["case-decoder"].delivery}. ${TIER_CORE["intelligence-brief"].name}: ${TIER_CORE["intelligence-brief"].delivery}. ${TIER_CORE["x-ray"].name}: ${TIER_CORE["x-ray"].delivery}. ${TIER_CORE["war-room"].name}: ${TIER_CORE["war-room"].delivery.split(" +")[0]} initial + weekly updates. ${TIER_CORE["situation-room"].name}: ${TIER_CORE["situation-room"].delivery} with Trial Intelligence Operations.`,
   },
   {
     question: "What if I already bought a lower tier?",
     answer:
-      "100% of what you paid is credited toward the next tier. Buy the Case Decoder for $197, then upgrade to the Intelligence Brief for just $800. No money wasted. Credits are valid for 12 months.",
+      `100% of what you paid is credited toward the next tier. Buy the ${TIER_CORE["case-decoder"].name} for ${TIER_CORE["case-decoder"].priceDisplay}, then upgrade to the ${TIER_CORE["intelligence-brief"].name} for just ${upgradePrice("case-decoder")}. No money wasted. Credits are valid for 12 months.`,
   },
   {
     question: "Can I get a refund?",
@@ -103,7 +104,7 @@ const homeFaqs = [
   {
     question: "What's the Defense Playbook?",
     answer:
-      "The DUI Defense Playbook ($97) is an instant-download PDF with 26 questions your DUI attorney hopes you never ask, a breathalyzer calibration checklist, a case stage roadmap, 12 red flags, and an attorney accountability scorecard. No intake form, no wait — built from 40+ elite defense attorneys' documented strategies. Your $97 is fully credited toward the Case Decoder within 30 days.",
+      `The ${TIER_CORE["dui-first-offense"].name} (${TIER_CORE["dui-first-offense"].priceDisplay}) is an instant-download PDF with 26 questions your DUI attorney hopes you never ask, a breathalyzer calibration checklist, a case stage roadmap, 12 red flags, and an attorney accountability scorecard. No intake form, no wait — built from 40+ elite defense attorneys' documented strategies. Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} within 30 days.`,
   },
 ];
 
@@ -166,7 +167,7 @@ export default function Home() {
               href="/checkout?tier=case-decoder"
               className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400"
             >
-              Find What&apos;s in My Case — $197 →
+              Find What&apos;s in My Case — {TIER_CORE["case-decoder"].priceDisplay} →
             </Link>
             <Link
               href="/sample"
@@ -177,7 +178,7 @@ export default function Home() {
           </div>
           <p className="mt-4 text-xs text-zinc-400">
             We&apos;re not attorneys. We&apos;re researchers — and that&apos;s
-            exactly why we find what they miss.
+            exactly why we find the details that matter.
           </p>
           <p className="mt-3 text-sm text-zinc-400">
             Or{" "}
@@ -194,7 +195,7 @@ export default function Home() {
               href="/playbook/dui-first-offense"
               className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
             >
-              Get the DUI Defense Playbook — $97 instant download →
+              Get the DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} instant download →
             </Link>
           </p>
           <p className="mt-2 text-sm font-semibold text-amber-500">
@@ -470,7 +471,7 @@ export default function Home() {
               </p>
             </div>
             <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
-              <div className="text-2xl font-bold text-amber-400">$197-$9,997</div>
+              <div className="text-2xl font-bold text-amber-400">{TIER_CORE["case-decoder"].priceDisplay}-{TIER_CORE["situation-room"].priceDisplay}</div>
               <p className="mt-2 text-sm text-zinc-400">
                 What it costs to make sure your defense is real
               </p>
@@ -492,7 +493,7 @@ export default function Home() {
             </h2>
             <div className="mt-6 space-y-4 text-left">
               <div>
-                <p className="text-sm font-semibold text-amber-400">Case Decoder ($197) &amp; Intelligence Brief ($997)</p>
+                <p className="text-sm font-semibold text-amber-400">{TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay}) &amp; {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay})</p>
                 <p className="mt-1 text-sm text-zinc-300">
                   Delivered within the stated timeframe with the guaranteed question
                   count — or a full cash refund. Not satisfied? 100% credit toward
@@ -500,7 +501,7 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <p className="text-sm font-semibold text-amber-400">The X-Ray ($2,497), War Room ($4,997) &amp; Situation Room ($9,997)</p>
+                <p className="text-sm font-semibold text-amber-400">{TIER_CORE["x-ray"].name} ({TIER_CORE["x-ray"].priceDisplay}), {TIER_CORE["war-room"].name} ({TIER_CORE["war-room"].priceDisplay}) &amp; {TIER_CORE["situation-room"].name} ({TIER_CORE["situation-room"].priceDisplay})</p>
                 <p className="mt-1 text-sm text-zinc-300">
                   Delivery guarantee — every deliverable completed on schedule, or a
                   full refund. These services involve substantial custom research
@@ -536,7 +537,7 @@ export default function Home() {
           </p>
           <p className="mt-2 text-center text-sm text-zinc-400">
             Defendants who fight back with research choose their tier. Start at
-            $197 — upgrade anytime with full credit.
+            {TIER_CORE["case-decoder"].priceDisplay} — upgrade anytime with full credit.
           </p>
           <div className="mt-12">
             <PricingTable maxTiers={3} />
@@ -595,7 +596,7 @@ export default function Home() {
             href="/checkout?tier=case-decoder"
             className="mt-8 inline-block rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400"
           >
-            Find What&apos;s in My Case — $197 →
+            Find What&apos;s in My Case — {TIER_CORE["case-decoder"].priceDisplay} →
           </Link>
         </div>
       </section>

@@ -8,7 +8,7 @@
 - [x] PDF lead magnet: "10 Questions Your Attorney Hopes You Never Ask"
 
 ### Pricing & Services
-- [x] 5-tier pricing: $97 Case Decoder → $4,997 Situation Room
+- [x] 5-tier pricing: $197 Case Decoder → $4,997 Situation Room
 - [x] Witness add-ons: $149/extra witness, $297 standalone pack
 - [x] Upgrade credits: 100% toward next tier, 12-month expiration
 - [x] PricingTable, Services page, Landing page, Footer all aligned
@@ -31,8 +31,8 @@
 - [x] End-to-end payment flow tested
 
 ### Product Templates
-- [x] Case Decoder ($97) — intake, prompt, report, SOP
-- [x] Intelligence Brief ($497) — intake, 4 prompts, report, SOP
+- [x] Case Decoder ($197) — intake, prompt, report, SOP
+- [x] Intelligence Brief ($997) — intake, 4 prompts, report, SOP
 
 ### Integration Audit Fixes (Feb 19, 2026)
 - [x] Fixed services page tier slugs (3 tiers had wrong checkout URLs — $8,991 blocked)
@@ -59,8 +59,8 @@
 - [ ] **UPL legal review** — Consult attorney on service boundaries (BLOCKER for live payments)
 - [ ] **Terms of Service** — Required before accepting real payments
 - [ ] **Privacy Policy** — Required — collecting PII
-- [ ] **Stripe live mode** — Switch from test keys to live keys
-- [ ] **Resend domain verification** — Verify imnotanattorney.com for custom sender
+- [ ] **Stripe live mode** — LAST STEP. Switch test to live keys only after full e2e verification. Rahim initiates.
+- [x] **Resend domain verification** — Domain verified, inbound webhook for admin emails
 - [ ] **Domain email** — Set up help@imnotanattorney.com (Cloudflare email routing)
 - [ ] **Twitter account** — Create @ImNotAnAttorney
 

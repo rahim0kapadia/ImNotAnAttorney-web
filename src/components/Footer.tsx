@@ -17,6 +17,7 @@
  * Copyright year is dynamically generated via `new Date().getFullYear()`.
  */
 import Link from "next/link";
+import { TIER_CORE } from "@/lib/tiers";
 
 export function Footer() {
   return (
@@ -123,31 +124,31 @@ export function Footer() {
                 href="/checkout?tier=case-decoder"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                Case Decoder ($197)
+                {TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay})
               </Link>
               <Link
                 href="/checkout?tier=intelligence-brief"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                Intelligence Brief ($997)
+                {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay})
               </Link>
               <Link
                 href="/checkout?tier=x-ray"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                The X-Ray ($2,497)
+                {TIER_CORE["x-ray"].name} ({TIER_CORE["x-ray"].priceDisplay})
               </Link>
               <Link
                 href="/checkout?tier=war-room"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                The War Room ($4,997)
+                {TIER_CORE["war-room"].name} ({TIER_CORE["war-room"].priceDisplay})
               </Link>
               <Link
                 href="/checkout?tier=situation-room"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                The Situation Room ($9,997)
+                {TIER_CORE["situation-room"].name} ({TIER_CORE["situation-room"].priceDisplay})
               </Link>
               <Link
                 href="/services"
@@ -204,8 +205,8 @@ export function Footer() {
             <strong className="text-zinc-400">Disclaimer:</strong>{" "}
             ImNotAnAttorney provides legal information and research services,
             not legal advice. We are not a law firm and do not create an
-            attorney-client relationship. Always consult with a licensed
-            attorney for legal advice specific to your situation.
+            attorney-client relationship. Your attorney remains the final authority on
+            strategy decisions specific to your situation.
           </p>
         </div>
 

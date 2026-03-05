@@ -888,8 +888,8 @@ Items confirmed fixed through code review. Organized by source document with imp
 
 | ID | Item | When Fixed | Details |
 |----|------|-----------|---------|
-| B1 | No Terms of Service page | Feb 2026 | `/terms` page created with placeholder content. Needs attorney review before Stripe live (see C6). |
-| B2 | No Privacy Policy page | Feb 2026 | `/privacy` page created with placeholder content. Needs attorney review before Stripe live (see C6). |
+| B1 | No Terms of Service page | Feb 2026 | `/terms` page created with placeholder content. Content complete. Attorney review recommended. |
+| B2 | No Privacy Policy page | Feb 2026 | `/privacy` page created with placeholder content. Content complete. Attorney review recommended. |
 | B5 | Resend domain not verified | Feb 23, 2026 | Domain verified in Resend. DKIM record configured in Cloudflare DNS. DMARC added. Sending from `noreply@imnotanattorney.com`. |
 | B6 | No unsubscribe link in emails (CAN-SPAM) | Feb 2026 pipeline session | Unsubscribe link added to all commercial emails. `/unsubscribe` route with GET confirmation + POST handler. `List-Unsubscribe` headers added. |
 | B7 | No physical mailing address in emails (CAN-SPAM) | Feb 2026 pipeline session | Physical address (195 Dr MLK Jr St N, St Petersburg, FL 33701) added to email footer. Centralized in `src/lib/site.ts` as `PHYSICAL_ADDRESS`. |

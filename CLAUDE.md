@@ -90,6 +90,37 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 - Domain imnotanattorney.com not yet pointed
 - Twitter account @ImNotAnAttorney not yet created
 
+
+## Continuous Verification (CV)
+
+When Rahim says **"run CV"**, run this command:
+
+```bash
+node ~/projects/continuous-verification/verify.mjs --project inna --probe-only --no-trends
+```
+
+This project is monitored by the CV engine at `~/projects/continuous-verification/`.
+
+```bash
+# Run INNA probes
+node ~/projects/continuous-verification/verify.mjs --project inna --probe-only
+
+# Full verification (probes + eval + adversarial)
+node ~/projects/continuous-verification/verify.mjs --project inna
+
+# Via Claw inbox
+echo '{"type":"run-cv","project":"inna"}' > ~/.openclaw/workspace/claw-inbox.json
+```
+
+**Hypotheses monitored:**
+- INNA-H1: Every generated report passes UPL gate
+- INNA-H2: Cron job runs within every 48h window
+- INNA-H3: Site up + checkout API returns valid response
+- INNA-H5: Adversarial UPL inputs are rejected by gate
+- INNA-H6: Orders table healthy
+
+**Known finding (2026-03-05):** 4 cases in "review" with NULL eval_results (INNA-H1 violated).
+
 ## Reference
 - Business docs: `C:\Users\email\projects\ImNotAnAttorney\`
 - Elite skills: `C:\Users\email\.openclaw\workspace\skills\`

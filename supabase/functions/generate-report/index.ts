@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @fileoverview Supabase Edge Function: Case Decoder report generator.
  *
  * This is the PRODUCTION report generation path. It replaced the legacy
@@ -348,6 +348,24 @@ INSTEAD use: "what to listen for," "Your Advocacy Steps," "Step [N] in
 Your Advocacy Steps," "here's your next step," "you can," "you told us" /
 "you said" / "you mentioned" / "you shared."
 
+NEVER use imperative grammar: "Do not," "Do NOT," "Never show," "Send,"
+"Print," "Bring," "Create," "Write down," "Make sure," "Be sure to,"
+"Remember to." These are directives — they tell the defendant WHAT TO DO,
+crossing from information into advice.
+INSTEAD use: "you may want to consider," "one option is to," "some
+defendants find it helpful to," "you can," "it may be worth."
+
+NEVER create any attorney performance scoring, rating, or competency
+evaluation system. No numeric scores, no grade bands, no labels like
+"CRITICAL," "Severely Deficient," "Below Standard," "Failing," or "Poor"
+applied to attorney actions, inactions, or case milestones.
+NEVER score the attorney's communication, preparation, strategy, or
+filing activity with a number or band label.
+INSTEAD: Frame the same observations as CASE STATUS QUESTIONS. Example:
+  BAD:  "Communication 4/25 — Severely Deficient"
+  GOOD: "One question worth raising: has your attorney walked you through
+        what the discovery contains?"
+
 LEGAL JARGON — ALWAYS DEFINE ON FIRST USE:
 Define ALL legal terms in plain English on first use with a parenthetical.
 Never use a legal term without an inline plain-English definition. Examples:
@@ -365,6 +383,12 @@ Never use a legal term without an inline plain-English definition. Examples:
   your case)
 - "mandatory minimum" (the lowest sentence a judge can give, by law,
   regardless of circumstances)
+- “CI” (confidential informant — a person who provides information to law
+  enforcement, typically in exchange for leniency in their own case)
+- “LEO” (law enforcement officer)
+- “PD” (public defender — a court-appointed attorney; NOT police department)
+- “PTI” (pretrial intervention — a diversion program that may avoid a conviction)
+- “PCR” (post-conviction relief — legal remedies available after a conviction)
 This applies to ALL legal terms — not just these examples. If a term
 would confuse someone without legal training, define it.
 
@@ -673,18 +697,38 @@ The questions in this report help you understand the realistic range
 for YOUR case."
 
 EXACTLY WHAT TO SAY — 7 SUBSECTIONS:
-1. "Do NOT show" warning with anchoring bias explanation.
+1. "Meeting preparation note" -- explain WHY reviewing this report before
+   the meeting (not with the attorney) leads to better outcomes. Anchoring
+   bias explanation. Frame as informational: "Some defendants find it most
+   effective to review this report privately before their meeting, so they
+   have time to think through the questions." NEVER use imperative language
+   like "Do not show," "Do NOT," or "Never show." Information only -- never
+   a directive. Example framing: "This report is designed for your
+   preparation. Some defendants find reviewing it privately before their
+   meeting helps them get more from the conversation."
 2. Ready-to-Send Email — copy-paste ready, personalized (case #, court
    date, intake-specific questions, defendant name). Tone: collaborative
    ("I want to be well-prepared for our next conversation").
 3. Phone Script — read-aloud ready, personalized (name, case #, court date).
 4. Follow-up Template — if no response within 5-7 business days.
-5. Your Advocacy Steps (8 steps, NOT "escalation ladder"):
-   Steps 1-5 = collaborative ("most situations resolve here").
-   Steps 6-8 = structural safety nets ("so you always have a next step").
-   Contextualized to attorney type + jurisdiction (state bar process).
-   Step 8: affordability context for PD clients (legal aid, PD
-   substitution process, cost acknowledgment).
+5. Your Advocacy Steps — EXACTLY 5 steps, NO MORE. NOT "escalation ladder.":
+   Step 1: Send written questions to attorney before the meeting.
+   Step 2: Request a formal case update meeting (with specific agenda).
+   Step 3: Follow up in writing if no response within 5-7 business days.
+   Step 4: Request written answers to your specific questions.
+   Step 5: Consider seeking a second opinion from another attorney
+           — framed as INFORMATION only: "Some defendants choose to
+           consult a second attorney for perspective. This is always
+           your right."
+   Contextualized to attorney type (PD clients: include legal aid context).
+   HARD STOP — Steps 6, 7, 8 DO NOT EXIST in this report.
+   FORBIDDEN in any step: "file a Bar complaint," "file a complaint with
+   the Florida Bar," "file a complaint with the state bar," "change your
+   attorney," "fire your attorney," "seek new counsel," "terminate your
+   attorney," or any directive to take legal action against the attorney.
+   FORBIDDEN: any imperative grammar in step descriptions.
+   Every step uses "you may consider" or "one option is" — never imperatives.
+
 6. When the Conversation Gets Difficult — 3-4 scenarios, each with:
    what you hear → what's happening → what you say → why it works.
    Attorney always feels respected. Defendant positioned as wanting to
@@ -766,6 +810,11 @@ This section is the DETERMINATION payoff. The report ends here.
    Follow up. Day 4: Gather materials. Day 5: Practice questions aloud.
    Day 6-7: Attend meeting.
    Full Advocacy Steps = long-term playbook (weeks 2+) — there in Your Attorney Meeting Toolkit if needed.
+   7-DAY PLAN LANGUAGE RULE: Every day's action label MUST use informational framing.
+   NOT: “Day 1: Send email.” NOT: “Day 4: Gather materials.”
+   INSTEAD: “Day 1: You may want to consider sending the email from your toolkit (30 seconds).”
+   “Day 4: One option is to gather [X] before the meeting.”
+   The Shine moment after each action can affirm the step — but the action label must never be a bare imperative.
 3. What to Bring — checklist: printed Meeting Ready Sheet + pen +
    case # + documents from intake + phone (if one-party consent state).
 4. What to Expect — 2-3 sentences based on attorney type (PD: shorter
@@ -849,18 +898,50 @@ SELF-VERIFICATION — Before output:
 38. If co_defendants = "Yes", co-defendant dynamics are addressed (cooperation pressure, betrayal fear, feeling singled out) in Questions for Your Attorney and Things Worth Asking About.
 Revise if any check fails.
 
-COLLATERAL CONSEQUENCES — ALWAYS CITE SOURCES:
+COLLATERAL CONSEQUENCES — MANDATORY CITATION RULES:
 Every collateral consequence mentioned ANYWHERE in the report MUST cite
 a specific statute, regulation, or named source. Never make unsourced
 claims about employment, housing, immigration, voting, firearms, or
-civil rights consequences. Examples:
-- Debarment → FAR 9.406-2
-- Voting → state-specific election code (or "varies by state")
-- Firearms → 18 U.S.C. § 922(g)(1)
-- Immigration → *Padilla v. Kentucky*, 8 U.S.C. § 1101(a)(43)
-- Professional licensing → cite specific board/statute
-If no specific statute is known, frame as "ask your attorney about
-[consequence] under [state] law" instead of asserting the consequence.
+civil rights consequences.
+
+IMMIGRATION — use this paragraph VERBATIM every time immigration consequences
+appear. Do not summarize or shorten it:
+“If you are not a U.S. citizen, this charge may carry immigration consequences
+under federal law. Under Padilla v. Kentucky, 559 U.S. 356 (2010), your
+attorney has a legal duty to advise you about immigration consequences. Before
+making any decisions about your case, discuss the immigration impact with BOTH
+your criminal defense attorney AND a separate immigration attorney who
+specializes in criminal immigration matters. See also 8 U.S.C. $([char]0x00A7) 1101(a)(43)
+(aggravated felony classifications).”
+
+GUN RIGHTS — always cite: 18 U.S.C. $([char]0x00A7) 922(g)(1) (federal prohibition).
+Also note applicable state firearms statute if known.
+
+DRIVER’S LICENSE — cite applicable state statute. For Florida: F.S. $([char]0x00A7) 322.055.
+For other states: “Your attorney can identify the applicable statute in [state].”
+
+PROFESSIONAL LICENSING — NEVER assert loss as fact. Frame as: “Convictions
+can affect professional licenses — your attorney can advise which licensing
+boards in [state] require disclosure or may take action under [board statute].”
+
+EMPLOYMENT — NEVER assert as fact without a source. Frame as: “Many employers
+conduct criminal background checks governed by the Fair Credit Reporting Act
+(FCRA, 15 U.S.C. § 1681 et seq.) and applicable state law. Your attorney can
+discuss how this charge may appear in a background check and what your
+disclosure obligations may be under [state] law.”
+
+FELONY RECORD — cite applicable state public records statute, or: “Felony
+convictions are generally public records under [state] law — your attorney
+can explain expungement or sealing options.”
+
+DEBARMENT — FAR 9.406-2 (federal); applicable state debarment statute.
+
+VOTING RIGHTS — cite state-specific election code, or note “varies by state —
+see [state] election code.”
+
+RULE: If no specific statute is known for a consequence, use the
+“your attorney can advise” framing. NEVER assert a consequence as
+certain fact without a citation.
 
 OUTPUT CATEGORIES — You are NOT providing legal advice. You provide:
 1. Legal INFORMATION about charges and procedures
@@ -1071,6 +1152,54 @@ GOD MODE EXPERTS (triangulated):
 3. David B. Smith — Prosecution and Defense of Forfeiture Cases (Matthew Bender). Methodology: early asset restraint challenge, right to counsel preservation.
 
 Focus: document privilege, cooperation strategy, parallel proceedings, loss calculation, asset forfeiture, professional reliance defense.${csBlock}`;
+  }
+
+  if (ct.includes("traffick") || ct.includes("distribut")) {
+    return `\nCHARGE-SPECIFIC CONTEXT -- DRUG TRAFFICKING (${jur}):
+GOD MODE EXPERTS (triangulated):
+1. Jeffrey Lichtman -- El Chapo defense; 3 Gotti mistrials. Methodology: 7-Pillar CI Destruction Protocol, weight challenge, threshold analysis.
+2. Ron Chapman II -- Multiple federal acquittals including Rule 29 mid-trial wins. Methodology: forensic substance analysis challenge, quantity dispute, chain of custody attack.
+3. Michael Levine -- 25-year DEA veteran; 500+ expert witness appearances. Methodology: government case construction deconstruction, CI handling procedure critique.
+4. Barry Scheck -- Innocence Project co-founder; forensic evidence challenges. Methodology: crime lab methodology audit, chain of custody documentation gaps, independent re-testing requests, substance identification challenge.
+
+CONTROLLING STATUTE -- FLORIDA TRAFFICKING:
+Florida Statute § 893.135 governs drug trafficking charges in Florida.
+CRITICAL LEGAL STANDARD: Florida trafficking is a STRICT QUANTITY OFFENSE.
+The prosecution only needs to prove the defendant possessed the threshold
+quantity of the controlled substance. They do NOT need to prove intent to
+sell, manufacture, or deliver.
+
+DO NOT STATE OR IMPLY that the prosecution must prove intent to distribute.
+CORRECT FRAMING ONLY: "Under F.S. § 893.135, possession of more than [X grams]
+of [substance] constitutes trafficking. Your attorney can explain what the
+prosecution would need to prove in your specific circumstances."
+
+APPROXIMATE MANDATORY MINIMUMS under F.S. § 893.135 (verify exact
+subsection with attorney):
+- Cannabis: 25 lbs / 300 plants = 3-yr minimum; 2,000 lbs = 7-yr; 10,000 lbs = 15-yr
+- Cocaine: 28g = 3-yr minimum; 200g = 7-yr; 400g = 15-yr; 150kg = 25-yr
+- Opioids/Fentanyl: 4g = 3-yr minimum; 14g = 15-yr; 28g = 25-yr
+- Methamphetamine: 14g = 3-yr minimum; 28g = 7-yr; 200g = 15-yr
+
+TIER IDENTIFICATION: If the intake mentions the specific substance and/or quantity
+alleged, IDENTIFY THE APPLICABLE MANDATORY MINIMUM TIER from the table above and
+state it explicitly in the report. Frame as: if the prosecution’s quantity
+allegation is accurate, the applicable mandatory minimum would be [X] years under
+F.S. § 893.135. Your attorney can confirm the exact subsection and any threshold dispute.
+If substance or quantity is not specified in the intake, flag it as a critical
+unknown the defendant should confirm with their attorney.
+
+FLORIDA MOTION DEADLINES (Fla. R. Crim. P. 3.190):
+- Motions to suppress: must be filed no later than 10 days before trial (or per court order)
+- Motion to reveal CI identity: file pretrial; urgency increases as trial date approaches
+- Brady/Giglio requests: no absolute deadline but earlier is better; can be raised anytime
+MANDATORY: INCLUDE THIS VERBATIM in your discussion of pretrial motions (in the motions question or Things Worth Asking About section):
+'Under Fla. R. Crim. P. 3.190, suppression motions must typically be filed at least 10 days before trial. Given your upcoming court date, your attorney can confirm whether any motion deadlines are approaching.'
+This citation MUST appear in the generated report. Do not omit it.
+
+Focus areas: weight threshold dispute, constructive vs. actual possession,
+chain of custody challenge, lab methodology challenge, CI reliability,
+search legality, mandatory minimum exposure, knowledge of quantity.${csBlock}`;
   }
 
   if (ct.includes("drug")) {
@@ -1374,7 +1503,10 @@ Each item starts with "You told us..." / "You mentioned..." and uses labels: ADD
 
 ADDRESS FIRST items with deadlines get TIME-SENSITIVE marker:
 "⏰ ADDRESS FIRST — [Topic] — TIME-SENSITIVE"
-(e.g., body cam footage retention periods, ALR hearing windows, evidence preservation deadlines)
+(e.g., body cam footage retention periods, ALR hearing windows, evidence preservation deadlines,
+pre-trial motion filing deadlines — when flagging suppression motions or other pre-trial motions,
+add: “Given your upcoming court date, your attorney can confirm whether motion
+deadlines are approaching — Fla. R. Crim. P. 3.190 governs suppression motion timing in Florida.”)
 
 **Things You Told Us You Don't Know** (gaps to fill):
 Each "don't know" answer from intake. Normalize: "Most defendants aren't told proactively — that's why we ask."
@@ -1621,11 +1753,14 @@ function validateReportContent(markdown: string): { valid: boolean; violations: 
     "background check", "voting", "firearms",
   ];
   const sentences = markdown.split(/[.!?]\s+/);
-  for (const sentence of sentences) {
+  for (let sidx = 0; sidx < sentences.length; sidx++) {
+    const sentence = sentences[sidx];
     const sentLower = sentence.toLowerCase();
     const mentionsTopic = collateralTopics.some(t => sentLower.includes(t));
     if (mentionsTopic) {
-      const hasCitation = /§|U\.S\.C\.|F\.S\.|C\.F\.R\.| v\. /.test(sentence);
+      // Check sentence + neighbors for citation (catches e.g. Padilla in adjacent sentence)
+      const context = [sentences[sidx - 1] || "", sentence, sentences[sidx + 1] || ""].join(" ");
+      const hasCitation = /§|U\.S\.C\.|F\.S\.|C\.F\.R\.| v\. |\d{3} U\.S\.|Padilla/.test(context);
       const hasAskFrame = sentLower.includes("ask your attorney");
       const isExampleAnswer = sentLower.includes("good answer") || sentLower.includes("bad answer");
       if (!hasCitation && !hasAskFrame && !isExampleAnswer) {
@@ -1633,6 +1768,38 @@ function validateReportContent(markdown: string): { valid: boolean; violations: 
         violations.push(`Unsourced collateral claim: "${preview}..."`);
       }
     }
+  }
+
+
+  // 4. CRITICAL: Attorney performance scoring patterns (U3)
+  const scoringPatterns = [
+    /\b(Severely Deficient|Below Standard|Critically Deficient)\b/i,
+    /Defense Milestone Score/i,
+    /\d+\/\d+\s*[\u2014-]\s*(CRITICAL|Severely|Deficient|Failing)/i,
+  ];
+  for (const pattern of scoringPatterns) {
+    if (pattern.test(markdown)) {
+      violations.push(`[CRITICAL] Attorney performance scoring detected (violates U3 UPL) -- remove all scoring/rating systems`);
+    }
+  }
+
+  // 5. CRITICAL: Immigration consequences without Padilla citation (U6)
+  if (/immigration.{0,300}(consequence|impact|status|removal|deportation)/i.test(markdown) &&
+      !markdown.includes("Padilla")) {
+    violations.push(`[CRITICAL] Immigration consequences mentioned without Padilla v. Kentucky citation (violates U6 UPL)`);
+  }
+
+  // 6. CRITICAL: Florida drug trafficking without 893.135 (L9)
+  if (/trafficking/i.test(markdown) &&
+      /florida/i.test(markdown) &&
+      !markdown.includes("893.135") && !markdown.includes("§ 893")) {
+    violations.push(`[CRITICAL] Florida drug trafficking case missing F.S. § 893.135 citation (violates L9)`);
+  }
+
+  // 7. CRITICAL: Bar complaint or attorney-change directives (U8)
+  if (/file a (florida bar|state bar|bar) complaint/i.test(markdown) ||
+      /fire your attorney/i.test(markdown)) {
+    violations.push(`[CRITICAL] Bar complaint or attorney-firing directive detected (violates U8 UPL)`);
   }
 
   // 3. Pricing errors — $797 should be $800
@@ -2687,9 +2854,13 @@ Deno.serve(async (req: Request) => {
       ""
     ).replace(/^\s*---\s*$/m, "").trim();
 
-    // --- Post-generation validation (soft — log but don't block) ---
+    // --- Post-generation validation (hard gate for critical UPL violations) ---
     const validation = validateReportContent(markdown);
     if (!validation.valid) {
+      const criticalViolations = validation.violations.filter((v: string) => v.startsWith("[CRITICAL]"));
+      if (criticalViolations.length > 0) {
+        throw new Error(`Report failed UPL gate (${criticalViolations.length} critical violation(s)): ${criticalViolations.join("; ")}`);
+      }
       console.warn(`[generate-report] Validation warnings (${validation.violations.length}):`,
         validation.violations.join("; "));
     }

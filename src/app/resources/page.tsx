@@ -33,6 +33,7 @@
 import { LeadCapture } from "@/components/LeadCapture";
 import { SITE_URL } from "@/lib/site";
 import Link from "next/link";
+import { TIER_CORE } from "@/lib/tiers";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -199,7 +200,7 @@ export default function ResourcesPage() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <span className="inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
-                  $97 &middot; Instant Download
+                  {TIER_CORE["dui-first-offense"].priceDisplay} &middot; Instant Download
                 </span>
                 <h3 className="mt-3 text-lg font-bold text-white">
                   26 Questions Your Attorney Hopes You Never Ask
@@ -227,7 +228,7 @@ export default function ResourcesPage() {
                   </li>
                 </ul>
                 <p className="mt-3 text-xs text-zinc-500">
-                  $97 credited toward Case Decoder within 30 days.
+                  {TIER_CORE["dui-first-offense"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
                 </p>
               </div>
             </div>
@@ -235,7 +236,7 @@ export default function ResourcesPage() {
               href="/playbook/dui-first-offense"
               className="mt-6 inline-block rounded-lg bg-amber-500 px-6 py-2.5 text-sm font-bold text-black transition-colors hover:bg-amber-400"
             >
-              Get the DUI Defense Playbook — $97
+              Get the {TIER_CORE["dui-first-offense"].name} — {TIER_CORE["dui-first-offense"].priceDisplay}
             </Link>
           </div>
         </section>

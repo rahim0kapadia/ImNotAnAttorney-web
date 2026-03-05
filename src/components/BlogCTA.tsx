@@ -14,6 +14,7 @@
  * Used in: `src/app/blog/[slug]/page.tsx` (rendered after MDX content, before LeadCapture).
  */
 import Link from "next/link";
+import { TIER_CORE } from "@/lib/tiers";
 
 export function BlogCTA() {
   return (
@@ -26,14 +27,14 @@ export function BlogCTA() {
         They use case-specific research — questions built from their
         actual charges, their actual discovery, their actual judge. Our
         Case Decoder gives you 15 targeted questions your attorney
-        isn&apos;t expecting. Starting at $197.
+        isn&apos;t expecting. Starting at {TIER_CORE["case-decoder"].priceDisplay}.
       </p>
       <div className="mt-4 flex flex-col gap-3 sm:flex-row">
         <Link
           href="/checkout?tier=case-decoder"
           className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-colors hover:bg-amber-400"
         >
-          Get Your Case Decoder — $197 →
+          Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} →
         </Link>
         <Link
           href="/sample"

@@ -30,7 +30,7 @@ const ATTORNEYS: Record<
     {
       name: "Jeffrey Lichtman",
       credential: "El Chapo lead counsel, Gotti Jr. (charges dismissed)",
-      method: "7-pillar CI destruction playbook",
+      method: "Informant credibility methodology",
     },
     {
       name: "Barry Scheck",

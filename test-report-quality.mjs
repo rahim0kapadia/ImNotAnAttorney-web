@@ -438,6 +438,106 @@ If mentioning Intelligence Brief ($997), frame as verification.
 }
 
 // ================================================================
+// POST-GENERATION VALIDATION (synced from edge function)
+// ================================================================
+
+function validateReportContent(markdown) {
+  const violations = [];
+  const lower = markdown.toLowerCase();
+
+  // 1. Banned phrases — with informational-context exemptions
+  // "you should know/understand/be aware" and "you need to know/understand/be prepared"
+  // are informational framing, not directive UPL advice.
+  const bannedPhrases = [
+    { phrase: "fire your attorney", exemptions: [] },
+    { phrase: "publicly available", exemptions: [] },
+    { phrase: "consult your attorney", exemptions: [] },
+    { phrase: "you should", exemptions: ["you should know", "you should understand", "you should be aware", "you should never"] },
+    { phrase: "you need to", exemptions: ["you need to know", "you need to understand", "you need to be prepared", "you need to be ready", "what you need to", "whether you need to"] },
+    { phrase: "we recommend", exemptions: [] },
+    { phrase: "we advise", exemptions: [] },
+    { phrase: "file a complaint", exemptions: [] },
+  ];
+  for (const { phrase, exemptions } of bannedPhrases) {
+    if (lower.includes(phrase)) {
+      // Check if every occurrence is covered by an exemption
+      let idx = 0;
+      let hasReal = false;
+      while ((idx = lower.indexOf(phrase, idx)) !== -1) {
+        // Extract surrounding context (40 chars before + phrase + 40 chars after)
+        const contextStart = Math.max(0, idx - 40);
+        const contextEnd = Math.min(lower.length, idx + phrase.length + 40);
+        const context = lower.slice(contextStart, contextEnd);
+        const exempt = exemptions.some((e) => context.includes(e));
+        if (!exempt) {
+          hasReal = true;
+          break;
+        }
+        idx += phrase.length;
+      }
+      if (hasReal) {
+        violations.push(`Banned phrase detected: "${phrase}"`);
+      }
+    }
+  }
+
+  // 2. Unsourced collateral claims — sentences mentioning collateral topics
+  //    without a statute citation (§, U.S.C., F.S., or case name "v.")
+  //    Exempts "Good answer:" example sections (attorney response templates)
+  const collateralTopics = [
+    "employment", "housing", "immigration", "financial aid",
+    "background check", "voting", "firearms",
+  ];
+  const sentences = markdown.split(/[.!?]\s+/);
+  for (const sentence of sentences) {
+    const sentLower = sentence.toLowerCase();
+    const mentionsTopic = collateralTopics.some((t) => sentLower.includes(t));
+    if (mentionsTopic) {
+      const hasCitation = /§|U\.S\.C\.|F\.S\.|C\.F\.R\.| v\. /.test(sentence);
+      const hasAskFrame = sentLower.includes("ask your attorney");
+      const isExampleAnswer = sentLower.includes("good answer") || sentLower.includes("bad answer");
+      if (!hasCitation && !hasAskFrame && !isExampleAnswer) {
+        const preview = sentence.trim().slice(0, 80);
+        violations.push(`Unsourced collateral claim: "${preview}..."`);
+      }
+    }
+  }
+
+  // 3. Pricing errors — $797 should be $800
+  if (markdown.includes("$797")) {
+    violations.push('Pricing error: "$797" found (should be "$800 after credit")');
+  }
+
+  return { valid: violations.length === 0, violations };
+}
+
+// ================================================================
+// METHODOLOGY NOTE STRIPPING (synced from edge function)
+// ================================================================
+
+function stripModelMethodologyNote(markdown) {
+  return markdown.replace(
+    /^>[ \t]*\*{0,2}METHODOLOGY[^\n]*(?:\n>[ \t]*[^\n]*)*/im,
+    ""
+  ).replace(/^\s*---\s*$/m, "").trim();
+}
+
+// ================================================================
+// EXPERT NAME EXTRACTION (from getChargeContext return text)
+// ================================================================
+
+function extractExpertNames(chargeContextBlock) {
+  // Extract names like "1. Jeffrey Lichtman — ..." from the charge context
+  const namePattern = /^\d+\.\s+([^—–\-]+)\s*[—–\-]/gm;
+  const names = [];
+  let match;
+  while ((match = namePattern.exec(chargeContextBlock)) !== null) {
+    names.push(match[1].trim());
+  }
+  return names.slice(0, 3).join(", ");
+}
+
+// ================================================================
 // HTML RENDERER (from render-test-report.mjs)
 // ================================================================
 
@@ -512,6 +612,11 @@ function renderReportHtml(markdown, meta) {
       <p style="margin: 4px 0;"><strong style="color: white;">Report ID:</strong> ${escapeHtml(meta.reportId)}</p>
     </div>
   </div>
+  ${meta.expertNames ? `<blockquote style="border-left: 3px solid #F59E0B; padding: 16px; margin: 24px 0; background: #1C1917; border-radius: 0 8px 8px 0;">
+    <p style="margin: 0 0 12px; color: #F59E0B; font-weight: bold;">METHODOLOGY NOTE</p>
+    <p style="margin: 0 0 12px; color: #A1A1AA;">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)} — selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
+    <p style="margin: 0; color: #A1A1AA;"><strong style="color: white;">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+  </blockquote>` : ""}
   ${html}
   <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 40px; border-left: 4px solid #A1A1AA;">
     <p style="margin: 0; font-size: 13px; color: #71717A;">
@@ -521,6 +626,11 @@ function renderReportHtml(markdown, meta) {
   <div style="margin-top: 48px; padding-top: 24px; border-top: 2px solid #27272A; text-align: center;">
     <p style="margin: 0; font-size: 12px; color: #71717A;">&copy; ${new Date().getFullYear()} ImNotAnAttorney. Legal information, not legal advice.</p>
     <p style="margin: 4px 0 0; font-size: 12px; color: #52525B;">Report ID: ${meta.reportId} | Generated: ${meta.reportDate}</p>
+  </div>
+  <div class="no-print" style="margin-top: 32px; text-align: center;">
+    <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">After your meeting, if you want to verify your attorney's answers against the evidence:</p>
+    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $997 ($800 after credit)</a>
+    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure — decide after your meeting.</p>
   </div>
 </div>
 </body>
@@ -542,8 +652,10 @@ function hasNone(text, needle) {
 /**
  * Common audit checks that apply to ALL personas.
  * Returns array of [checkName, passed] tuples.
+ * @param {string} text - Raw markdown report
+ * @param {string} [html] - Rendered HTML (for checks that verify hardcoded elements)
  */
-function commonChecks(text) {
+function commonChecks(text, html) {
   return [
     // ---- BANNED TERMS (must NOT appear) ----
     ["NO prosecution difficulty ratings", hasNone(text, "Prosecution Difficulty") && hasNone(text, "Strong |") && hasNone(text, "Weak |")],
@@ -598,7 +710,7 @@ function commonChecks(text) {
     ["NO banned alarm language (red flag/warning sign)", hasNone(text, "red flag") && hasNone(text, "warning sign")],
 
     // ---- UPL FIX VALIDATION ----
-    ["Has legal information disclaimer in methodology note", has(text, "does not constitute legal") || has(text, "does not provide legal") || (has(text, "legal INFORMATION") && has(text, "not") && has(text, "ADVICE"))],
+    ["Has legal information disclaimer in methodology note", has(text, "does not constitute legal") || has(text, "does not provide legal") || (has(text, "legal INFORMATION") && has(text, "not") && has(text, "ADVICE")) || (html && has(html, "legal INFORMATION") && has(html, "not legal ADVICE"))],
     ["NO 'We heard every word' or announced empathy", hasNone(text, "We heard every word") && hasNone(text, "We listened carefully") && hasNone(text, "We hear you")],
     ["Has section transitions (bridge sentences)", has(text, "next section") || has(text, "now that you") || has(text, "here are") || has(text, "paired with")],
   ];
@@ -750,12 +862,34 @@ async function main() {
       }
     }
 
+    // Strip model-generated methodology note (system injects the official one)
+    text = stripModelMethodologyNote(text);
+
     const words = text.split(" ").filter((w) => w.length > 0);
+
+    // Post-generation validation
+    const validation = validateReportContent(text);
+    if (!validation.valid) {
+      console.warn(`  Validation warnings (${validation.violations.length}):`);
+      for (const v of validation.violations) {
+        console.warn(`    - ${v}`);
+      }
+    } else {
+      console.log(`  Validation: PASS (0 violations)`);
+    }
 
     // Save markdown
     const mdPath = path.join(OUT_DIR, `${persona.id}.md`);
     fs.writeFileSync(mdPath, text, "utf-8");
     console.log(`  Saved: ${mdPath}`);
+
+    // Extract expert names from charge context for methodology note
+    const chargeContextBlock = getChargeContext(
+      intake.charge_type,
+      intake.jurisdiction_level || "unknown",
+      intake.charge_specific_data || {}
+    );
+    const expertNames = extractExpertNames(chargeContextBlock);
 
     // Save HTML
     const chargeLabel = intake.charge_type.toUpperCase().replace("-", " / ");
@@ -772,6 +906,8 @@ async function main() {
       daysSinceArrest,
       reportDate: new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }),
       reportId: `TEST-${persona.id.toUpperCase().replace("PERSONA-", "")}-001`,
+      expertNames: expertNames || undefined,
+      chargeType: intake.charge_type,
     });
 
     const htmlPath = path.join(OUT_DIR, `${persona.id}.html`);
@@ -779,7 +915,7 @@ async function main() {
     console.log(`  Saved: ${htmlPath}`);
 
     // Run audit checks
-    const allChecks = [...commonChecks(text), ...persona.extraChecks(text)];
+    const allChecks = [...commonChecks(text, htmlContent), ...persona.extraChecks(text)];
 
     console.log(`\n  ${"=".repeat(40)}`);
     console.log(`  AUDIT CHECKS — ${persona.label}`);

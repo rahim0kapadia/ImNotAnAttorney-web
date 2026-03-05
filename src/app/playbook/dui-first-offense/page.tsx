@@ -9,18 +9,19 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
+import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 
 export const metadata: Metadata = {
-  title: "DUI Defense Playbook — $97 Instant Download | ImNotAnAttorney",
+  title: `${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay} Instant Download | ImNotAnAttorney`,
   description:
-    "26 questions your DUI attorney hopes you never ask. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download. $97.",
+    `26 questions your DUI attorney hopes you never ask. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download. ${TIER_CORE["dui-first-offense"].priceDisplay}.`,
   alternates: {
     canonical: "https://imnotanattorney.com/playbook/dui-first-offense",
   },
   openGraph: {
-    title: "DUI Defense Playbook — $97 Instant Download",
+    title: `${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay} Instant Download`,
     description:
-      "26 questions your DUI attorney hopes you never ask. Instant PDF. $97.",
+      `26 questions your DUI attorney hopes you never ask. Instant PDF. ${TIER_CORE["dui-first-offense"].priceDisplay}.`,
     url: "https://imnotanattorney.com/playbook/dui-first-offense",
     type: "website",
   },
@@ -37,7 +38,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "What if I need something more personalized?",
-    a: "Your $97 is fully credited toward the Case Decoder ($197) within 30 days. The Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage. The upgrade costs just $100.",
+    a: `Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}) within 30 days. The ${TIER_CORE["case-decoder"].name} builds 15 questions from YOUR charges, YOUR state, YOUR stage. The upgrade costs just ${upgradePrice("dui-first-offense")}.`,
   },
   {
     q: "How is this delivered?",
@@ -53,7 +54,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "What's the Defense Playbook vs the Case Decoder?",
-    a: "The Playbook is generic to all DUI first offense cases — 26 questions any DUI defendant should ask. The Case Decoder ($197) is personalized to YOUR specific situation with case-specific questions, email templates, and a 7-day action plan. Your $97 Playbook purchase is credited toward the Case Decoder.",
+    a: `The Playbook is generic to all DUI first offense cases — 26 questions any DUI defendant should ask. The ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}) is personalized to YOUR specific situation with case-specific questions, email templates, and a 7-day action plan. Your ${TIER_CORE["dui-first-offense"].priceDisplay} Playbook purchase is credited toward the ${TIER_CORE["case-decoder"].name}.`,
   },
 ];
 
@@ -75,7 +76,7 @@ export default function DUIPlaybookPage() {
           roadmap, red flag checklist, and attorney accountability scorecard.
         </p>
         <div className="mt-6 flex items-center justify-center gap-3">
-          <span className="text-4xl font-extrabold text-amber-400">$97</span>
+          <span className="text-4xl font-extrabold text-amber-400">{TIER_CORE["dui-first-offense"].priceDisplay}</span>
           <span className="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-400">
             Instant PDF
           </span>
@@ -84,7 +85,7 @@ export default function DUIPlaybookPage() {
           href={checkoutUrl}
           className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-colors hover:bg-amber-400"
         >
-          Get Instant Access — $97
+          Get Instant Access — {TIER_CORE["dui-first-offense"].priceDisplay}
         </Link>
         <p className="mt-3 text-xs text-zinc-500">
           Download within 60 seconds of purchase. No intake form. No waiting.
@@ -228,13 +229,13 @@ export default function DUIPlaybookPage() {
             Total value: <span className="text-zinc-300 line-through">$785</span>
           </p>
           <p className="mt-2 text-3xl font-extrabold text-amber-400">
-            Your price: $97
+            Your price: {TIER_CORE["dui-first-offense"].priceDisplay}
           </p>
           <Link
             href={checkoutUrl}
             className="mt-4 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-colors hover:bg-amber-400"
           >
-            Get Instant Access — $97
+            Get Instant Access — {TIER_CORE["dui-first-offense"].priceDisplay}
           </Link>
         </div>
       </section>
@@ -331,7 +332,7 @@ export default function DUIPlaybookPage() {
             },
             {
               deadline: "30 days from purchase",
-              what: "Your $97 upgrade credit toward the Case Decoder ($197). After 30 days, the credit expires.",
+              what: `Your ${TIER_CORE["dui-first-offense"].priceDisplay} upgrade credit toward the ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}). After 30 days, the credit expires.`,
             },
           ].map((item) => (
             <div
@@ -373,7 +374,7 @@ export default function DUIPlaybookPage() {
           A 30-minute attorney consultation costs $150-$250.
         </p>
         <p className="mt-2 text-3xl font-extrabold text-white">
-          The DUI Defense Playbook is <span className="text-amber-400">$97</span>.
+          The {TIER_CORE["dui-first-offense"].name} is <span className="text-amber-400">{TIER_CORE["dui-first-offense"].priceDisplay}</span>.
         </p>
         <p className="mt-2 text-sm text-zinc-400">
           Instant PDF. 26 questions. 12 red flags. Case stage roadmap. Attorney
@@ -383,7 +384,7 @@ export default function DUIPlaybookPage() {
           href={checkoutUrl}
           className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-colors hover:bg-amber-400"
         >
-          Get Instant Access — $97
+          Get Instant Access — {TIER_CORE["dui-first-offense"].priceDisplay}
         </Link>
         <p className="mt-3 text-xs text-zinc-500">
           5 questions you never thought to ask — or full refund.
@@ -408,8 +409,8 @@ export default function DUIPlaybookPage() {
             stage — plus email templates, phone scripts, and a 7-day action plan.
           </p>
           <p className="mt-2 text-xs text-zinc-500">
-            Your $97 Playbook purchase is credited toward the Case Decoder.
-            Upgrade for $100 within 30 days.
+            Your {TIER_CORE["dui-first-offense"].priceDisplay} Playbook purchase is credited toward the {TIER_CORE["case-decoder"].name}.
+            Upgrade for {upgradePrice("dui-first-offense")} within 30 days.
           </p>
         </div>
       </section>
@@ -421,14 +422,14 @@ export default function DUIPlaybookPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Product",
-            name: "DUI Defense Playbook",
+            name: TIER_CORE["dui-first-offense"].name,
             description:
               "26 questions your DUI attorney hopes you never ask. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download.",
             url: "https://imnotanattorney.com/playbook/dui-first-offense",
             brand: { "@type": "Organization", name: "ImNotAnAttorney" },
             offers: {
               "@type": "Offer",
-              price: "97.00",
+              price: String(TIER_CORE["dui-first-offense"].price / 100) + ".00",
               priceCurrency: "USD",
               availability: "https://schema.org/InStock",
               url: "https://imnotanattorney.com/checkout?tier=dui-first-offense",

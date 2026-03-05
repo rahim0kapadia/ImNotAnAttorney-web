@@ -85,7 +85,7 @@ export default function TermsPage() {
             </p>
             <p className="mt-2">
               <strong className="text-zinc-300">What we provide:</strong> Legal
-              information, factual analysis of case documents, publicly documented
+              information, factual analysis of case documents, established
               legal frameworks and procedures, and specific questions you can
               bring to your attorney. Our reports identify patterns, potential
               issues, and areas worth exploring — they do not tell you what to
@@ -110,6 +110,16 @@ export default function TermsPage() {
               The information we provide is not a substitute for the advice of a
               licensed attorney who knows the full facts of your case. You are
               solely responsible for all decisions regarding your legal matter.
+            </p>
+            <p className="mt-2">
+              <strong className="text-zinc-300">
+                No guarantee of accuracy or completeness.
+              </strong>{" "}
+              While we strive for thoroughness, our reports may contain errors,
+              omissions, or incomplete analysis. AI-generated content is
+              reviewed for quality but is not verified by a licensed attorney.
+              All information should be independently verified with your own
+              legal counsel before relying on it for any decision.
             </p>
           </section>
 

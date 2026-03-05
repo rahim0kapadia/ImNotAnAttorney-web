@@ -174,6 +174,15 @@ export default function PrivacyPage() {
                 for current details
               </li>
               <li>
+                <strong className="text-zinc-300">
+                  Case-specific analysis:
+                </strong>{" "}
+                Your case details (charges, jurisdiction, situation) are
+                combined with legal research frameworks to generate analysis
+                specific to your matter. This means your personal case
+                information directly shapes the AI output you receive
+              </li>
+              <li>
                 <strong className="text-zinc-300">Our quality review:</strong>{" "}
                 AI-generated reports are reviewed for quality and UPL compliance
                 before delivery. We use automated evaluation systems to check
