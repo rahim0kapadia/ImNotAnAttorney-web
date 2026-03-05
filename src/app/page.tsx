@@ -157,10 +157,9 @@ export default function Home() {
             all in the discovery. We can do the same for yours.
           </p>
           <p className="mx-auto mt-4 max-w-2xl text-sm text-zinc-400">
-            Our research is built on the tactics of Gerry Spence (never lost a
-            criminal case), Barry Scheck (Innocence Project, OJ Simpson DNA
-            defense), Jeffrey Lichtman (El Chapo, John Gotti Jr.), and 37 more
-            of the most dangerous defense attorneys who ever practiced.
+            Our research is built on the documented tactics of 40+ elite
+            defense attorneys — the ones who win landmark cases, expose wrongful
+            convictions, and set the strategies other attorneys follow.
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
@@ -230,7 +229,7 @@ export default function Home() {
                 Scene weight: 93.9g. Lab weight: 25.59g. That&apos;s 68.3g missing — enough to change the charge tier entirely. The attorney never flagged it.
               </p>
               <p className="mt-2 text-xs text-zinc-500">
-                Identified using Barry Scheck&apos;s chain of custody protocol — the same methodology used in the OJ Simpson DNA defense.
+                Identified using chain of custody protocols — the same methodology used in landmark DNA exoneration cases.
               </p>
             </div>
             <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">
@@ -240,7 +239,7 @@ export default function Home() {
                 Same phone number attributed to BOTH the confidential informant and the defendant. Same detective, same report. A Franks v. Delaware issue hiding in plain sight.
               </p>
               <p className="mt-2 text-xs text-zinc-500">
-                Flagged using Jeffrey Lichtman&apos;s investigation pattern framework — Lichtman&apos;s informant destruction method won 3 mistrials for John Gotti Jr. and led El Chapo&apos;s defense.
+                Flagged using informant investigation methodology — proven in high-profile federal defense cases.
               </p>
             </div>
             <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">
@@ -250,7 +249,7 @@ export default function Home() {
                 Officers said &ldquo;amphetamine&rdquo; on scene. Lab found MDMA/MDA — a completely different substance. That&apos;s a fatal variance the state had to amend.
               </p>
               <p className="mt-2 text-xs text-zinc-500">
-                Identified via Ron Chapman II&apos;s substance identification protocol — Chapman exploits prosecutorial complacency in federal cases.
+                Identified via substance identification protocol — applied to federal drug cases.
               </p>
             </div>
           </div>
@@ -362,7 +361,7 @@ export default function Home() {
               {
                 step: "02",
                 title: "We research everything",
-                desc: "We run your case through a research system built on 40+ elite defense attorneys — their documented tactics, their specific playbooks, their winning frameworks. Barry Scheck's chain of custody protocol (OJ, 375+ Innocence Project exonerations). Jeffrey Lichtman's confidential informant destruction playbook (El Chapo, Gotti Jr.). Alan Dershowitz's constitutional appellate framework. Gerry Spence's investigation patterns (never lost a criminal case). We generate the questions they would ask if they were reading your file.",
+                desc: "We run your case through a research system built on 40+ elite defense attorneys — their documented tactics, their specific playbooks, their winning frameworks. Chain of custody protocols used in 375+ exonerations. Informant credibility methodologies proven in high-profile federal cases. Constitutional appellate frameworks. Investigation patterns from attorneys who never lost. We generate the questions they would ask if they were reading your file.",
               },
               {
                 step: "03",
@@ -393,7 +392,7 @@ export default function Home() {
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-5xl">
           <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
-            The Attorneys Behind Your Questions
+            The Methodologies Behind Your Questions
           </h2>
           <p className="mt-3 text-center text-zinc-400">
             Every question we generate traces to a documented winning method.
@@ -401,34 +400,34 @@ export default function Home() {
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                name: "Barry Scheck",
-                record: "Innocence Project (375+ exonerations), OJ Simpson DNA defense",
-                method: "Chain of custody protocol applied to every discovery review.",
+                name: "Chain of Custody Analysis",
+                record: "375+ exonerations, landmark DNA defense cases",
+                method: "Every piece of evidence traced from collection to courtroom. Gaps in custody = gaps in reliability.",
               },
               {
-                name: "Jeffrey Lichtman",
-                record: "Gotti Jr. (charges dismissed), El Chapo lead counsel",
-                method: "Informant credibility methodology for every CI/cooperator question.",
+                name: "Informant Credibility",
+                record: "Proven in high-profile federal defense cases",
+                method: "Every cooperator's history, motives, and handler relationship scrutinized.",
               },
               {
-                name: "Gerry Spence",
-                record: "Never lost a criminal case",
-                method: "Investigation pattern analysis — find the one fact that destroys everything.",
+                name: "Investigation Patterns",
+                record: "Methodology from attorneys who never lost",
+                method: "Find the one fact that destroys the prosecution's narrative.",
               },
               {
-                name: "F. Lee Bailey",
-                record: "Sam Sheppard retrial acquittal, OJ defense team",
-                method: "Cross-examination methodology for witness examination questions.",
+                name: "Cross-Examination Design",
+                record: "Techniques from landmark acquittals and retrials",
+                method: "Witness examination questions that expose procedural failures.",
               },
               {
-                name: "Alan Dershowitz",
-                record: "Harvard Law youngest full professor, Von Bulow reversal",
-                method: "Constitutional hooks for motion/appellate issues.",
+                name: "Constitutional Framework",
+                record: "Applied in landmark appellate reversals",
+                method: "Constitutional hooks built into every motion and appeal.",
               },
               {
-                name: "Ron Chapman II",
-                record: "Federal drug defense specialist, former prosecutor",
-                method: "Weight discrepancy and substance variance protocols for drug cases.",
+                name: "Drug Forensics",
+                record: "Federal drug defense methodology",
+                method: "Weight discrepancy and substance variance protocols for every drug case.",
               },
             ].map((attorney) => (
               <div
@@ -442,9 +441,7 @@ export default function Home() {
             ))}
           </div>
           <p className="mt-8 text-center text-sm text-zinc-400">
-            Plus: Johnnie Cochran. Jose Baez. Alan Jackson (Karen Read, 2025).
-            Roy Black. Benjamin Brafman. Mark Geragos. Barry Berke. Robert
-            Shapiro. Tom Mesereau. And 28 more.
+            Plus 34 more elite defense attorneys whose documented tactics inform every question we generate.
           </p>
         </div>
       </section>
