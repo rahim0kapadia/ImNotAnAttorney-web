@@ -63,7 +63,7 @@ const caseTypes = [
     title: "Drug Cases",
     subtitle: "Possession, trafficking, distribution",
     description:
-      "We analyze your case using Barry Scheck's chain of custody protocol, Ron Chapman II's weight discrepancy framework, and Jeffrey Lichtman's informant credibility methodology — the same approaches that won El Chapo's defense and produced 375+ Innocence Project exonerations.",
+      "We analyze your case using chain of custody protocols, weight discrepancy frameworks, and informant credibility methodology — the same approaches used in landmark federal defense cases and 375+ exonerations.",
     tiers: [
       {
         name: TIER_CORE["case-decoder"].name,
@@ -99,7 +99,7 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology.",
+        desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on elite preparation standards, cross-examination design, and precision strike methodology — from attorneys who defined modern trial practice.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: true,
       },
@@ -109,7 +109,7 @@ const caseTypes = [
     title: "DUI / DWI",
     subtitle: "First offense through felony DUI",
     description:
-      "From breathalyzer calibration to field sobriety compliance, we apply Barry Scheck's forensic methodology and F. Lee Bailey's evidence analysis framework — the same approach Bailey used to destroy prosecution witnesses in the Sam Sheppard retrial.",
+      "From breathalyzer calibration to field sobriety compliance, we apply forensic evidence methodology and cross-examination frameworks — the same approaches used to destroy prosecution witnesses in landmark retrials and acquittals.",
     tiers: [
       {
         name: TIER_CORE["case-decoder"].name,
@@ -145,7 +145,7 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. Officer research, expert credibility questions, jury selection research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology.",
+        desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. Officer research, expert credibility questions, jury selection research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on elite preparation standards, cross-examination design, and precision strike methodology — from attorneys who defined modern trial practice.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: true,
       },
@@ -155,7 +155,7 @@ const caseTypes = [
     title: "White Collar",
     subtitle: "Fraud, embezzlement, federal charges",
     description:
-      "Federal cases are a different game. We apply Alan Dershowitz's constitutional framework, Benjamin Brafman's jury psychology methodology (DSK, Martin Shkreli), and Martin Weinberg's RICO dismantling approach to help you understand complex charges and evaluate every strategic decision.",
+      "Federal cases are a different game. We apply constitutional appellate frameworks, jury psychology methodology, and RICO dismantling approaches — drawn from attorneys who have handled the highest-profile federal cases — to help you understand complex charges and evaluate every strategic decision.",
     tiers: [
       {
         name: TIER_CORE["case-decoder"].name,
@@ -191,7 +191,7 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. Expert credibility research, cooperator background questions, guidelines research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on Roy Black's preparation standard, Alan Dershowitz's appellate framework, and Barry Berke's precision methodology.",
+        desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. Expert credibility research, cooperator background questions, guidelines research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on elite preparation standards, appellate frameworks, and precision methodology — from attorneys who defined modern trial practice.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: true,
       },
