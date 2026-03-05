@@ -129,7 +129,7 @@ function InboxContent() {
             Admin Inbox
           </h1>
           <p className="text-zinc-500 text-sm text-center mb-6">
-            Enter operator secret to continue
+            Enter password to continue
           </p>
           {error && (
             <div className="mb-4 rounded-lg border border-red-800 bg-red-900/20 p-3 text-sm text-red-400">
@@ -140,7 +140,7 @@ function InboxContent() {
             type="password"
             value={secretInput}
             onChange={(e) => setSecretInput(e.target.value)}
-            placeholder="Operator secret"
+            placeholder="Password"
             className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none"
             autoFocus
           />
