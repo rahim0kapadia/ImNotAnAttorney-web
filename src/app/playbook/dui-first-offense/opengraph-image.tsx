@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
+import { TIER_CORE } from "@/lib/tiers";
 
 export const runtime = "edge";
-export const alt = "DUI Defense Playbook — $97 Instant Download | ImNotAnAttorney";
+export const alt = `DUI Defense Playbook — ${TIER_CORE["dui-first-offense"].priceDisplay} Instant Download | ImNotAnAttorney`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -69,7 +70,7 @@ export default async function Image() {
               color: "#f59e0b",
             }}
           >
-            $97
+            {TIER_CORE["dui-first-offense"].priceDisplay}
           </div>
           <div
             style={{

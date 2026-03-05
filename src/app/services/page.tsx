@@ -40,7 +40,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Criminal Defense Case Analysis Services",
   description:
-    "Case-specific research and question reports for criminal defendants. Five tiers from $197 Case Decoder to $9,997 Situation Room. DUI, drug cases, white collar, and federal defense.",
+    `Case-specific research and question reports for criminal defendants. Five tiers from ${TIER_CORE["case-decoder"].priceDisplay} Case Decoder to ${TIER_CORE["situation-room"].priceDisplay} Situation Room. DUI, drug cases, white collar, and federal defense.`,
   alternates: {
     canonical: `${SITE_URL}/services`,
   },
@@ -253,7 +253,7 @@ const serviceSchema = {
   "@type": "ProfessionalService",
   name: "ImNotAnAttorney Case Review Services",
   description:
-    "Legal research and case analysis for criminal defendants. Five tiers from $197 Case Decoder to $9,997 Situation Room.",
+    `Legal research and case analysis for criminal defendants. Five tiers from ${TIER_CORE["case-decoder"].priceDisplay} Case Decoder to ${TIER_CORE["situation-room"].priceDisplay} Situation Room.`,
   provider: {
     "@type": "Organization",
     name: "ImNotAnAttorney",

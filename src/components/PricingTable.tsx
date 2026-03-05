@@ -1,12 +1,8 @@
 /**
  * PricingTable -- Renders the tiered pricing grid for all service tiers and add-ons.
  *
- * MAINTENANCE WARNING: Tier names, prices, and feature lists are hardcoded in the
- * `tiers` array below. This is the THIRD source of truth for pricing data -- the
- * other two are:
- *   1. `src/lib/stripe.ts`       (Stripe product/price IDs and metadata)
- *   2. `src/app/services/page.tsx` (services page copy and feature descriptions)
- * Any pricing change MUST be updated in all three locations to stay consistent.
+ * Tier names and prices are derived from `src/lib/tiers.ts` (single source of truth).
+ * Features, descriptions, CTAs, and marketing copy are kept local to this component.
  *
  * Display modes controlled by the `maxTiers` prop:
  *   - Omitted / undefined: Full display -- all 5 tiers + add-ons + upgrade credits + guarantee.
@@ -23,13 +19,14 @@
  * @param props.maxTiers - Optional. Limits visible tiers for truncated display.
  */
 import Link from "next/link";
+import { TIER_CORE } from "@/lib/tiers";
 
 const tiers = [
   {
-    name: "Case Decoder",
-    price: "$197",
+    name: TIER_CORE["case-decoder"].name,
+    price: TIER_CORE["case-decoder"].priceDisplay,
     anchor: null,
-    description: "24-hour turnaround. No discovery needed.",
+    description: "48-hour turnaround. No discovery needed.",
     features: [
       "Plain-English charge breakdown with elements the prosecution must prove",
       "15 calibrated questions for your attorney (6-part format)",
@@ -46,8 +43,8 @@ const tiers = [
     bestFor: "Just arrested, need clarity",
   },
   {
-    name: "Intelligence Brief",
-    price: "$997",
+    name: TIER_CORE["intelligence-brief"].name,
+    price: TIER_CORE["intelligence-brief"].priceDisplay,
     anchor: "vs. $1,500+ for a second-opinion attorney",
     description:
       "Judge intel + 10-15 targeted questions. No discovery needed.",
@@ -65,13 +62,13 @@ const tiers = [
       "Plea Decision Checklist",
     ],
     cta: "Get Your Intelligence Brief",
-    featured: true,
+    featured: false,
     tier: "intelligence-brief",
     bestFor: "Pre-trial, want judge intel + questions",
   },
   {
-    name: "The X-Ray",
-    price: "$2,497",
+    name: TIER_CORE["x-ray"].name,
+    price: TIER_CORE["x-ray"].priceDisplay,
     anchor: null,
     description: "Full discovery analysis. 10 business days.",
     features: [
@@ -90,8 +87,8 @@ const tiers = [
     bestFor: "Have discovery, need deep analysis",
   },
   {
-    name: "The War Room",
-    price: "$4,997",
+    name: TIER_CORE["war-room"].name,
+    price: TIER_CORE["war-room"].priceDisplay,
     anchor: "Less than 10% of most retainers",
     description:
       "Full intelligence operation. 25-28 days + weekly updates.",
@@ -113,8 +110,8 @@ const tiers = [
     bestFor: "Complex case, need ongoing intelligence",
   },
   {
-    name: "The Situation Room",
-    price: "$9,997",
+    name: TIER_CORE["situation-room"].name,
+    price: TIER_CORE["situation-room"].priceDisplay,
     anchor: "Trial Intelligence Operations. Requires War Room.",
     description:
       "Evening debrief + morning prep brief every trial day. 24-48hr priority turnaround.",
@@ -140,15 +137,15 @@ const tiers = [
 
 const addons = [
   {
-    name: "Extra Witness Intel",
-    price: "$149",
+    name: TIER_CORE["extra-witness"].name,
+    price: TIER_CORE["extra-witness"].priceDisplay,
     unit: "per witness",
     description: "Additional witness dossier beyond your tier limit",
     availability: "War Room & Situation Room",
   },
   {
-    name: "Standalone Witness Pack",
-    price: "$297",
+    name: TIER_CORE["witness-pack"].name,
+    price: TIER_CORE["witness-pack"].priceDisplay,
     unit: "up to 3 witnesses",
     description: "Witness analysis from your discovery documents",
     availability: "Any tier with discovery",
@@ -173,7 +170,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
           <span className="font-bold text-white">$1,500+</span> for one hour.
         </p>
         <p className="mt-2 text-sm text-amber-400 font-semibold">
-          We start at $197. Your freedom is worth asking the right questions.
+          We start at {TIER_CORE["case-decoder"].priceDisplay}. Your freedom is worth asking the right questions.
         </p>
       </div>
 
@@ -321,7 +318,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
           Upgrade Credits: 100% Applied
         </p>
         <p className="mt-2 text-sm text-zinc-400">
-          Start with the Case Decoder for $197. If you upgrade later, every
+          Start with the Case Decoder for {TIER_CORE["case-decoder"].priceDisplay}. If you upgrade later, every
           dollar you paid is credited toward the next tier. No money wasted.
           12-month expiration.
         </p>
