@@ -44,12 +44,16 @@ export async function POST(req: NextRequest) {
   const fromEmail =
     process.env.RESEND_FROM_EMAIL || "help@imnotanattorney.com";
 
+  // Append signature
+  const signature = `\n\n—\nYour team at ImNotAnAttorney\nYou're not in this alone.\nhelp@imnotanattorney.com`;
+  const fullText = text + signature;
+
   // Build email payload
   const payload: Record<string, unknown> = {
     from: `ImNotAnAttorney <${fromEmail}>`,
     to: [to],
     subject: subject || "Re: (no subject)",
-    text,
+    text: fullText,
     reply_to: fromEmail,
   };
 
