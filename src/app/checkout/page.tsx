@@ -125,11 +125,11 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by DUI defendants within 60 seconds of purchase.",
     whyThisWorks:
-      "Built from documented defense strategies used by Lawrence Taylor (the 'Dean of DUI Defense'), Barry Scheck's forensic evidence methodology, and NHTSA field sobriety test standards. 23 specific questions derived from 40+ elite DUI defense attorneys' techniques.",
+      "Built from documented defense strategies used by elite DUI defense attorneys, forensic evidence methodology, and NHTSA field sobriety test standards. 26 specific questions derived from 40+ elite DUI defense attorneys' techniques.",
     pullquote: {
       quote:
         "The breathalyzer reading is not the case. The maintenance records are.",
-      author: "Lawrence Taylor",
+      author: "Elite DUI Defense",
     },
     nudge: {
       nextTierSlug: "case-decoder",
@@ -159,11 +159,11 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "The right place to start. Understand exactly what you are facing before your next attorney meeting.",
     whyThisWorks:
-      `Every question generated using documented tactics from elite defense attorneys — Barry Scheck's chain of custody protocol, Jeffrey Lichtman's informant reliability methodology, Ron Chapman II's drug forensic framework. 15 calibrated questions + ready-to-send email templates + a 7-day action plan. You're getting a communication playbook informed by the same methodologies elite defense attorneys use — for ${TIER_CORE["case-decoder"].priceDisplay}.`,
+      `Every question generated using documented tactics from elite defense attorneys — chain of custody protocols, informant reliability methodology, drug forensic frameworks. 15 calibrated questions + ready-to-send email templates + a 7-day action plan. You're getting a communication playbook informed by the same methodologies elite defense attorneys use — for ${TIER_CORE["case-decoder"].priceDisplay}.`,
     pullquote: {
       quote:
         "Forensic evidence is only as reliable as the humans who handle it.",
-      author: "Barry Scheck",
+      author: "Elite Defense",
     },
     nudge: {
       nextTierSlug: "intelligence-brief",
@@ -198,11 +198,11 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Everything you need to understand your case — without needing discovery yet.",
     whyThisWorks:
-      "Your judge's actual sentencing patterns. Your jurisdiction's plea statistics. Built on Benjamin Brafman's jury psychology methodology and Alan Dershowitz's constitutional framework. A single hour with an attorney who knows this costs $500+. You're getting a complete intelligence file.",
+      "Your judge's actual sentencing patterns. Your jurisdiction's plea statistics. Built on elite jury psychology methodology and constitutional appellate frameworks. A single hour with an attorney who knows this costs $500+. You're getting a complete intelligence file.",
     pullquote: {
       quote:
         "If you're not filing suppression motions, you're not defending.",
-      author: "Victor Knapp",
+      author: "Elite Defense",
     },
     nudge: {
       nextTierSlug: "x-ray",
@@ -233,11 +233,11 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "The most thorough analysis available without a multi-week engagement. Full discovery, full picture.",
     whyThisWorks:
-      "Every page of your discovery analyzed using Barry Scheck's chain of custody protocol and Ron Chapman II's drug forensic framework. We found a 73% weight discrepancy in the case that built this system. Your discovery has its own story — we'll find it.",
+      "Every page of your discovery analyzed using chain of custody protocols and drug forensic frameworks developed by elite defense attorneys. We found a 73% weight discrepancy in the case that built this system. Your discovery has its own story — we'll find it.",
     pullquote: {
       quote:
         "The absence of physical evidence is itself evidence.",
-      author: "Barry Scheck",
+      author: "Elite Defense",
     },
     nudge: {
       nextTierSlug: "war-room",
@@ -270,11 +270,11 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Ongoing intelligence from now through resolution. Most clients stay in this tier for the life of their case.",
     whyThisWorks:
-      "Witness analysis using Jeffrey Lichtman's informant credibility methodology — the system that dismantled cooperators in El Chapo and Gotti Jr. Officer dossiers built on Alan Jackson's investigator accountability framework. Updated weekly as your case develops.",
+      "Witness analysis using informant credibility methodology — proven in high-profile federal defense cases. Officer dossiers built on investigator accountability frameworks. Updated weekly as your case develops.",
     pullquote: {
       quote:
         "The cooperator is only as good as their handler lets them be.",
-      author: "Jeffrey Lichtman",
+      author: "Elite Defense",
     },
     nudge: {
       nextTierSlug: "situation-room",
@@ -308,11 +308,11 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Reserved for cases going to trial or cases where the stakes are highest. Requires prior War Room engagement.",
     whyThisWorks:
-      "Trial prep built on Roy Black's preparation standard, F. Lee Bailey's cross-examination design, and Barry Berke's precision strike methodology. Trial Intelligence Operations means evening debrief + morning prep brief every trial day — because trial doesn't wait.",
+      "Trial prep built on elite preparation standards, cross-examination design, and precision strike methodology — from attorneys who defined modern trial practice. Trial Intelligence Operations means evening debrief + morning prep brief every trial day — because trial doesn't wait.",
     pullquote: {
       quote:
         "Preparation is the be-all of good trial work.",
-      author: "Roy Black",
+      author: "Elite Defense",
     },
   },
   "extra-witness": {
