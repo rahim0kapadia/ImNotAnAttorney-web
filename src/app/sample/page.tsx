@@ -141,16 +141,10 @@ export default function SamplePage() {
             <p className="mt-3 text-sm leading-relaxed text-zinc-300">
               Every question and framework in this report traces to documented
               winning methods from elite criminal defense attorneys. Your report
-              draws on{" "}
-              <span className="font-semibold text-white">Barry Scheck</span>{" "}
-              (forensic evidence methodology),{" "}
-              <span className="font-semibold text-white">F. Lee Bailey</span>{" "}
-              (evidence analysis and cross-examination), and{" "}
-              <span className="font-semibold text-white">
-                Victor Knapp
-              </span>{" "}
-              (DWI suppression strategy) — selected for DWI cases. Expert
-              attributions appear throughout.
+              draws on elite defense methodology — forensic evidence
+              analysis, cross-examination frameworks, and DWI suppression
+              strategy — selected for DWI cases from 40+ documented attorney
+              methodologies.
             </p>
           </div>
 
@@ -444,7 +438,7 @@ export default function SamplePage() {
                     This question gets you a full status update without sounding
                     confrontational.{" "}
                     <span className="italic">
-                      (Barry Scheck&apos;s evidence audit methodology)
+                      (evidence audit methodology)
                     </span>
                   </p>
                   <p>
@@ -493,7 +487,7 @@ export default function SamplePage() {
                     Breathalyzer calibration records and field sobriety video can
                     reveal procedural errors.{" "}
                     <span className="italic">
-                      (F. Lee Bailey&apos;s evidence analysis framework)
+                      (evidence analysis framework)
                     </span>
                   </p>
                   <p>
@@ -540,7 +534,7 @@ export default function SamplePage() {
                     potentially excluded. Even partial noncompliance weakens the
                     prosecution&apos;s case.{" "}
                     <span className="italic">
-                      (Victor Knapp&apos;s suppression methodology)
+                      (suppression methodology)
                     </span>
                   </p>
                   <p>
