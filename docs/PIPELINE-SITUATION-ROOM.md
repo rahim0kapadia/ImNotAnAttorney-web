@@ -188,7 +188,7 @@ The Situation Room has built-in priority response, unlike lower tiers where prio
 
 | Tier | Standard Delivery | Priority Add-On |
 |------|------------------|----------------|
-| Case Decoder | 24 hours | $97 (4 hours) |
+| Case Decoder | 48 hours | $97 (4 hours) |
 | Intelligence Brief | 48-72 hours | $297 (24 hours) |
 | X-Ray | 10 business days | $497 (5 business days) |
 | War Room | 25-28 days + weekly | $997 (20-day delivery) |

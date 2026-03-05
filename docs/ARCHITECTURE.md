@@ -285,7 +285,7 @@ Stores evaluation results from `evaluate-report.mjs` runs.
 
 ## Multi-Case Order Model (Tier Inclusion)
 
-Higher tiers include lower-tier deliverables. When a customer buys Intelligence Brief ($997), they receive both a Case Decoder report (delivered within 24 hours) AND their Intelligence Brief. Each deliverable gets its own `case` record.
+Higher tiers include lower-tier deliverables. When a customer buys Intelligence Brief ($997), they receive both a Case Decoder report (delivered within 48 hours) AND their Intelligence Brief. Each deliverable gets its own `case` record.
 
 ### Inclusion Map
 

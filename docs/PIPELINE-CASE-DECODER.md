@@ -502,7 +502,7 @@ After saving the report (status = "review"), the generate-report Edge Function f
 
 **Note:** The evaluation scorecard is advisory — operators can still deliver even if UPL gate fails, if they believe the evaluation is wrong.
 
-### Review Reminder (24-hour guarantee protection)
+### Review Reminder (48-hour guarantee protection)
 
 If a report sits in `"review"` status for 12+ hours without delivery, the cron (Part 3) sends the operator a reminder email with:
 - How many hours the report has been waiting

@@ -39,8 +39,9 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
+import { CONTACT_EMAIL } from "@/lib/site";
+import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 
-const CONTACT_EMAIL = "help@imnotanattorney.com";
 
 /**
  * Per-tier next steps configuration.
@@ -57,46 +58,46 @@ const TIER_NEXT_STEPS: Record<
   { name: string; delivery: string; action: string; showUpload: boolean; noIntakeAction?: string; intakeUrl?: string; isDigitalProduct?: boolean }
 > = {
   "dui-first-offense": {
-    name: "DUI Defense Playbook",
-    delivery: "Instant",
+    name: TIER_CORE["dui-first-offense"].name,
+    delivery: TIER_CORE["dui-first-offense"].delivery,
     action:
       "Your DUI Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
     showUpload: false,
     isDigitalProduct: true,
   },
   "case-decoder": {
-    name: "Case Decoder",
-    delivery: "24 hours",
+    name: TIER_CORE["case-decoder"].name,
+    delivery: TIER_CORE["case-decoder"].delivery,
     action:
-      "Your Case Decoder report is being prepared. Check your email within 24 hours.",
+      "Your Case Decoder report is being prepared. Check your email within 48 hours.",
     showUpload: false,
     noIntakeAction:
       "Complete your case details so we can start generating your report.",
     intakeUrl: "/intake?tier=case-decoder",
   },
   "intelligence-brief": {
-    name: "Case Intelligence Brief",
-    delivery: "72 hours",
+    name: TIER_CORE["intelligence-brief"].name,
+    delivery: TIER_CORE["intelligence-brief"].delivery,
     action:
-      "Your package includes a Case Decoder report delivered within 24 hours, followed by your full Intelligence Brief within 72 hours. Complete your case details to get started.",
+      "Your package includes a Case Decoder report delivered within 48 hours, followed by your full Intelligence Brief within 72 hours. Complete your case details to get started.",
     showUpload: false,
     noIntakeAction:
-      "Complete your case details so we can generate your Case Decoder report within 24 hours.",
+      "Complete your case details so we can generate your Case Decoder report within 48 hours.",
     intakeUrl: "/intake?tier=intelligence-brief",
   },
   "x-ray": {
-    name: "The X-Ray",
-    delivery: "10 business days",
+    name: TIER_CORE["x-ray"].name,
+    delivery: TIER_CORE["x-ray"].delivery,
     action:
-      "Your package includes a Case Decoder (24 hours) and Intelligence Brief (72 hours) delivered first, then your full X-Ray analysis after you upload discovery documents.",
+      "Your package includes a Case Decoder (48 hours) and Intelligence Brief (72 hours) delivered first, then your full X-Ray analysis after you upload discovery documents.",
     showUpload: true,
     noIntakeAction:
       "Complete your case details to start receiving your included reports while we prepare for your discovery analysis.",
     intakeUrl: "/intake?tier=x-ray",
   },
   "war-room": {
-    name: "The War Room",
-    delivery: "25-28 business days",
+    name: TIER_CORE["war-room"].name,
+    delivery: TIER_CORE["war-room"].delivery,
     action:
       "Your package includes Case Decoder + Intelligence Brief delivered first, then your full War Room intelligence operation after discovery upload. Expect your first update within 7 days of upload.",
     showUpload: true,
@@ -105,8 +106,8 @@ const TIER_NEXT_STEPS: Record<
     intakeUrl: "/intake?tier=war-room",
   },
   "situation-room": {
-    name: "The Situation Room",
-    delivery: "24-48 hours per stage",
+    name: TIER_CORE["situation-room"].name,
+    delivery: TIER_CORE["situation-room"].delivery,
     action:
       "Your package includes all lower-tier reports delivered progressively. Upload your discovery documents to begin the full Situation Room operation. We'll contact you within 24 hours.",
     showUpload: true,
@@ -115,15 +116,15 @@ const TIER_NEXT_STEPS: Record<
     intakeUrl: "/intake?tier=situation-room",
   },
   "extra-witness": {
-    name: "Extra Witness Intel",
-    delivery: "Next update cycle",
+    name: TIER_CORE["extra-witness"].name,
+    delivery: TIER_CORE["extra-witness"].delivery,
     action:
       "Your extra witness analysis will be included in your next scheduled case update.",
     showUpload: false,
   },
   "witness-pack": {
-    name: "Standalone Witness Pack",
-    delivery: "3-5 business days",
+    name: TIER_CORE["witness-pack"].name,
+    delivery: TIER_CORE["witness-pack"].delivery,
     action:
       "Upload your discovery documents so we can begin your witness analysis. You'll receive a link via email.",
     showUpload: true,
@@ -319,7 +320,7 @@ function SuccessContent() {
                   Get Case-Specific Questions — Case Decoder
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $97 is already credited. The Playbook gives you generic DUI questions — the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
+                  Your {TIER_CORE["dui-first-offense"].priceDisplay} is already credited. The Playbook gives you generic DUI questions — the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: personalized charge breakdown, ready-to-send email templates, phone scripts, 7-day action plan, attorney meeting prep.
@@ -328,7 +329,7 @@ function SuccessContent() {
                   href="/checkout?tier=case-decoder"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Upgrade to Case Decoder — $100 &rarr;
+                  Upgrade to {TIER_CORE["case-decoder"].name} — {upgradePrice("dui-first-offense")} &rarr;
                 </Link>
               </div>
             )}
@@ -341,7 +342,7 @@ function SuccessContent() {
                   Upgrade to Intelligence Brief
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $197 is already credited. Get judge intelligence, jurisdiction profile, and 10-15 targeted questions.
+                  Your {TIER_CORE["case-decoder"].priceDisplay} is already credited. Get judge intelligence, jurisdiction profile, and 10-15 targeted questions.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: judge sentencing patterns, motion landscape report, attorney accountability timeline.
@@ -350,7 +351,7 @@ function SuccessContent() {
                   href="/checkout?tier=intelligence-brief"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Claim Your Upgrade Credit — $800 &rarr;
+                  Claim Your Upgrade Credit — {upgradePrice("case-decoder")} &rarr;
                 </Link>
               </div>
             )}
@@ -363,7 +364,7 @@ function SuccessContent() {
                   Upgrade to The X-Ray
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $997 is already credited. Get full discovery analysis — every page, every discrepancy, every red flag mapped.
+                  Your {TIER_CORE["intelligence-brief"].priceDisplay} is already credited. Get full discovery analysis — every page, every discrepancy, every red flag mapped.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: discovery document index, comprehensive timeline, discrepancy report, 35+ case-specific questions.
@@ -372,7 +373,7 @@ function SuccessContent() {
                   href="/checkout?tier=x-ray"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Claim Your Upgrade Credit — $500 &rarr;
+                  Claim Your Upgrade Credit — {upgradePrice("intelligence-brief")} &rarr;
                 </Link>
               </div>
             )}
@@ -385,7 +386,7 @@ function SuccessContent() {
                   Upgrade to The War Room
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $2,497 is already credited. Get judge and prosecution dossiers, witness analysis, case law package, and weekly updates through resolution.
+                  Your {TIER_CORE["x-ray"].priceDisplay} is already credited. Get judge and prosecution dossiers, witness analysis, case law package, and weekly updates through resolution.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: witness analysis (up to 8), officer dossiers, motion timing questions for your attorney, weekly intelligence updates.
@@ -394,7 +395,7 @@ function SuccessContent() {
                   href="/checkout?tier=war-room"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Claim Your Upgrade Credit — $2,500 &rarr;
+                  Claim Your Upgrade Credit — {upgradePrice("x-ray")} &rarr;
                 </Link>
               </div>
             )}
@@ -407,7 +408,7 @@ function SuccessContent() {
                   Upgrade to The Situation Room
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your $4,997 is already credited. Get Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line.
+                  Your {TIER_CORE["war-room"].priceDisplay} is already credited. Get Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: Trial Intelligence Operations, witness impeachment research packages, Priority Response Line (2hr trial prep, 4hr trial), direct access channel.
@@ -416,7 +417,7 @@ function SuccessContent() {
                   href="/checkout?tier=situation-room"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Claim Your Upgrade Credit — $5,000 &rarr;
+                  Claim Your Upgrade Credit — {upgradePrice("war-room")} &rarr;
                 </Link>
               </div>
             )}

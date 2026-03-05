@@ -217,7 +217,7 @@ export default async function ReportPage({
             it&apos;s ready.
           </p>
           <p className="mt-4 text-sm text-zinc-400">
-            Haven&apos;t received your report within 24 hours? Contact{" "}
+            Haven&apos;t received your report within 48 hours? Contact{" "}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="text-amber-400 underline decoration-amber-400/50"
@@ -246,7 +246,7 @@ export default async function ReportPage({
             when it&apos;s ready to view.
           </p>
           <p className="mt-4 text-sm text-zinc-400">
-            Haven&apos;t received your report within 24 hours? Contact{" "}
+            Haven&apos;t received your report within 48 hours? Contact{" "}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="text-amber-400 underline decoration-amber-400/50"

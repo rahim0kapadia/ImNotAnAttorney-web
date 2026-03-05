@@ -34,15 +34,15 @@
  *   and reused across requests with different env configurations (e.g., preview
  *   deploys vs production).
  *
- * PRICING: All dollar amounts in email copy reference prices from src/lib/tiers.ts.
- * When tiers.ts prices change, grep this file for dollar amounts and update.
- * Upgrade math: CD$197→IB$997 = $800, IB→XR$2,497 = $1,500,
- * XR→WR$4,997 = $2,500, WR→SR$9,997 = $5,000, DUI$97→CD$197 = $100,
- * WP$297→XR$2,497 = $2,200.
+ * PRICING: All dollar amounts in email copy are derived from TIER_CORE
+ * (src/lib/tiers.ts) via upgradePrice() and upgradeCostBetween() helpers.
+ * Upgrade costs are computed automatically — no manual math needed.
  *
  * Style: dark bg (#0C0A09), zinc text (#D4D4D8), amber accent (#F59E0B).
  * CAN-SPAM footer is added by sendEmail() in lib/email.ts — not here.
  */
+
+import { TIER_CORE, upgradePrice, upgradeCostBetween } from "@/lib/tiers";
 
 // ============================================================
 // TYPES
@@ -158,14 +158,14 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p>We found all of them in the discovery documents. We generated 15 specific questions — each traced to a documented winning method from attorneys like Barry Scheck, Jeffrey Lichtman, and Alan Dershowitz.</p>
       ${cta("See the full sample report →", "/sample")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">DUI charges?</strong> Get the DUI Defense Playbook — $97, instant download. 26 questions your attorney hopes you never ask + breathalyzer checklist + attorney scorecard. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
+        <strong style="color: white;">DUI charges?</strong> Get the ${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay}, instant download. 26 questions your attorney hopes you never ask + breathalyzer checklist + attorney scorecard. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
       </p>
     `,
   },
   {
     key: "nurture_day7",
     delayDays: 7,
-    subject: "10 questions, $197, 24 hours — here's exactly what you get",
+    subject: "10 questions, $197, 48 hours — here's exactly what you get",
     html: `
       <h1 style="color: #F59E0B;">Here's What a Case Decoder Includes</h1>
       <ul style="padding-left: 20px;">
@@ -177,11 +177,11 @@ export const NURTURE_EMAILS: DripEmail[] = [
         <li>Included: Scripts for when the conversation gets difficult</li>
       </ul>
       <p>Every question generated using tactics from elite defense attorneys — Barry Scheck, Jeffrey Lichtman, F. Lee Bailey.</p>
-      <p>Delivered within 24 hours with 15 calibrated questions + communication tools — or full cash refund. Delivered and not satisfied? 100% credit toward any higher tier.</p>
-      <p><strong style="color: white;">$197.</strong> Less than one hour of your attorney's time.</p>
-      ${cta("Find What's in My Case — $197 →", "/checkout?tier=case-decoder")}
+      <p>Delivered within 48 hours with 15 calibrated questions + communication tools — or full cash refund. Delivered and not satisfied? 100% credit toward any higher tier.</p>
+      <p><strong style="color: white;">${TIER_CORE["case-decoder"].priceDisplay}.</strong> Less than one hour of your attorney's time.</p>
+      ${cta(`Find What's in My Case — ${TIER_CORE["case-decoder"].priceDisplay} →`, "/checkout?tier=case-decoder")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">Not ready for case-specific?</strong> The DUI Defense Playbook ($97) gives you 23 general DUI questions instantly. Full credit toward Case Decoder within 30 days. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
+        <strong style="color: white;">Not ready for case-specific?</strong> The ${TIER_CORE["dui-first-offense"].name} (${TIER_CORE["dui-first-offense"].priceDisplay}) gives you 23 general DUI questions instantly. Full credit toward Case Decoder within 30 days. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
       </p>
     `,
   },
@@ -208,10 +208,10 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p>A motion to suppress that could have thrown out evidence. A Franks hearing that could have invalidated the warrant. A motion to dismiss based on a charging error.</p>
       <p>In the real case we reviewed, <strong style="color: white;">zero motions had been filed</strong>. The substance variance alone was grounds for a motion to dismiss.</p>
       <p>The Case Decoder includes a motion deadline awareness section specific to your charges. It tells you what to ASK about — so nothing slips through the cracks.</p>
-      <p><strong style="color: white;">$197. 24 hours.</strong> The cost of not knowing is higher.</p>
-      ${cta("Find What's in My Case — $197 →", "/checkout?tier=case-decoder")}
+      <p><strong style="color: white;">${TIER_CORE["case-decoder"].priceDisplay}. ${TIER_CORE["case-decoder"].delivery}.</strong> The cost of not knowing is higher.</p>
+      ${cta(`Find What's in My Case — ${TIER_CORE["case-decoder"].priceDisplay} →`, "/checkout?tier=case-decoder")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">DUI charges?</strong> Start with the DUI Defense Playbook — $97 instant download. 26 questions + attorney scorecard. Your $97 is credited toward any service tier. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
+        <strong style="color: white;">DUI charges?</strong> Start with the ${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay} instant download. 26 questions + attorney scorecard. Your ${TIER_CORE["dui-first-offense"].priceDisplay} is credited toward any service tier. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
       </p>
     `,
   },
@@ -272,7 +272,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">Ready to Go Deeper?</h1>
       <p>Your Case Decoder gave you the foundation — charges explained, 15 calibrated questions, and a 7-day action plan.</p>
-      <p>The <strong style="color: white;">Intelligence Brief ($997)</strong> goes deeper:</p>
+      <p>The <strong style="color: white;">${TIER_CORE["intelligence-brief"].name} (${TIER_CORE["intelligence-brief"].priceDisplay})</strong> goes deeper:</p>
       <ul style="padding-left: 20px;">
         <li>Your judge's actual sentencing patterns</li>
         <li>Jurisdiction-specific plea statistics</li>
@@ -281,8 +281,8 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li>Judge Intelligence Card — one-page print reference for hearings</li>
         <li>Plea Decision Checklist</li>
       </ul>
-      <p><strong style="color: white;">Your $197 is already credited.</strong> Upgrade for just $800.</p>
-      ${cta("Upgrade to Intelligence Brief — $800 →", "/checkout?tier=intelligence-brief")}
+      <p><strong style="color: white;">Your ${TIER_CORE["case-decoder"].priceDisplay} is already credited.</strong> Upgrade for just ${upgradePrice("case-decoder")}.</p>
+      ${cta(`Upgrade to ${TIER_CORE["intelligence-brief"].name} — ${upgradePrice("case-decoder")} →`, "/checkout?tier=intelligence-brief")}
     `,
   },
 
@@ -302,7 +302,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
 
   // --- Included Case Decoder (delivered as part of IB+ package) ---
   // When a customer buys IB or higher, a CD is auto-generated and delivered
-  // within 24 hours. This drip is for that included delivery — no upsell
+  // within 48 hours. This drip is for that included delivery — no upsell
   // since the customer already bought the higher tier.
   {
     key: "included_case_decoder_delivery",
@@ -363,7 +363,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">When You Get Discovery</h1>
       <p>Your Intelligence Brief covered charges, judge intel, and accountability. But the real power is in the discovery documents.</p>
-      <p>When you receive discovery, the <strong style="color: white;">X-Ray ($2,497)</strong> analyzes every page:</p>
+      <p>When you receive discovery, the <strong style="color: white;">${TIER_CORE["x-ray"].name} (${TIER_CORE["x-ray"].priceDisplay})</strong> analyzes every page:</p>
       <ul style="padding-left: 20px;">
         <li>Complete document index</li>
         <li>Comprehensive timeline</li>
@@ -373,8 +373,8 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li>Discovery Health Score — completeness rated out of 100</li>
         <li>Defense Opportunity Index — defense angles organized by charge category</li>
       </ul>
-      <p><strong style="color: white;">Your $997 is already credited.</strong> Upgrade for just $1,500.</p>
-      ${cta("Upgrade to The X-Ray — $1,500 →", "/checkout?tier=x-ray")}
+      <p><strong style="color: white;">Your ${TIER_CORE["intelligence-brief"].priceDisplay} is already credited.</strong> Upgrade for just ${upgradePrice("intelligence-brief")}.</p>
+      ${cta(`Upgrade to ${TIER_CORE["x-ray"].name} — ${upgradePrice("intelligence-brief")} →`, "/checkout?tier=x-ray")}
     `,
   },
 
@@ -526,9 +526,9 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>In most states, you have <strong style="color: white;">10 days from your arrest</strong> to request a hearing to fight the automatic license suspension. If your attorney hasn't requested it, that window may already be closing.</p>
       <p>Open your Playbook to the <strong style="color: white;">Case Stage Roadmap</strong> section. The DMV deadline is the first item. If you haven't acted on it yet, today is the day.</p>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">Want case-specific research?</strong> Your $97 is fully credited toward the Case Decoder ($197). We'll research YOUR judge, YOUR jurisdiction, and generate 15 questions specific to your case.
+        <strong style="color: white;">Want case-specific research?</strong> Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}). We'll research YOUR judge, YOUR jurisdiction, and generate 15 questions specific to your case.
       </p>
-      ${cta("Upgrade to Case Decoder — $100 →", "/checkout?tier=case-decoder")}
+      ${cta(`Upgrade to ${TIER_CORE["case-decoder"].name} — ${upgradePrice("dui-first-offense")} →`, "/checkout?tier=case-decoder")}
     `,
   },
   {
@@ -555,9 +555,9 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>The difference: when your attorney hears a question from the Playbook, they know the answer. When they hear a question from your Case Decoder, they have to actually check the file.</p>
       <p><strong style="color: white;">That's the meeting that changes everything.</strong></p>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        Your $97 is fully credited. Upgrade for $100. 24-hour delivery.
+        Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited. Upgrade for ${upgradePrice("dui-first-offense")}. ${TIER_CORE["case-decoder"].delivery} delivery.
       </p>
-      ${cta("Get Your Case Decoder — $100 →", "/checkout?tier=case-decoder")}
+      ${cta(`Get Your ${TIER_CORE["case-decoder"].name} — ${upgradePrice("dui-first-offense")} →`, "/checkout?tier=case-decoder")}
     `,
   },
   {
@@ -568,7 +568,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">Know Someone Facing a DUI?</h1>
       <p>If someone you know just got pulled over — or is about to go to court — forward them this email.</p>
-      <p>The DUI Defense Playbook is the thing I wish existed when I was in their position. 26 questions, a case stage roadmap, a red flag checklist, and an attorney scorecard. $97, instant download.</p>
+      <p>The DUI Defense Playbook is the thing I wish existed when I was in their position. 26 questions, a case stage roadmap, a red flag checklist, and an attorney scorecard. ${TIER_CORE["dui-first-offense"].priceDisplay}, instant download.</p>
       ${cta("Share the DUI Defense Playbook →", "/playbook/dui-first-offense")}
       <p style="margin-top: 16px; color: #71717A;">If they buy through your link, send me a receipt and I'll credit you $20 toward any of our services.</p>
     `,
@@ -604,16 +604,16 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">Your Witnesses Revealed Something Interesting</h1>
       <p>Witness analysis often uncovers patterns that go beyond individual testimony — contradictions that connect to the broader case, gaps that suggest missing evidence, statements that don't match the physical evidence.</p>
       <p>If your witness analysis raised more questions than it answered, a deeper dive might be worth it:</p>
-      <p><strong style="color: white;">The X-Ray ($2,497)</strong> — full discovery analysis:</p>
+      <p><strong style="color: white;">${TIER_CORE["x-ray"].name} (${TIER_CORE["x-ray"].priceDisplay})</strong> — full discovery analysis:</p>
       <ul style="padding-left: 20px;">
         <li>Complete document index and timeline</li>
         <li>Discrepancy report across ALL evidence</li>
         <li>35+ case-specific questions</li>
         <li>Discovery Health Score + Defense Opportunity Index</li>
       </ul>
-      <p><strong style="color: white;">Your $297 is already credited.</strong> Upgrade for $2,200.</p>
-      ${cta("Upgrade to The X-Ray — $2,200 →", "/checkout?tier=x-ray")}
-      <p style="margin-top: 16px;">Or go deeper with <strong style="color: white;">The War Room ($4,997)</strong> — full intelligence operation with weekly updates. Your $297 credit applies. ${link("Learn more →", "/services")}</p>
+      <p><strong style="color: white;">Your ${TIER_CORE["witness-pack"].priceDisplay} is already credited.</strong> Upgrade for ${upgradeCostBetween("witness-pack", "x-ray")}.</p>
+      ${cta(`Upgrade to ${TIER_CORE["x-ray"].name} — ${upgradeCostBetween("witness-pack", "x-ray")} →`, "/checkout?tier=x-ray")}
+      <p style="margin-top: 16px;">Or go deeper with <strong style="color: white;">${TIER_CORE["war-room"].name} (${TIER_CORE["war-room"].priceDisplay})</strong> — full intelligence operation with weekly updates. Your ${TIER_CORE["witness-pack"].priceDisplay} credit applies. ${link("Learn more →", "/services")}</p>
     `,
   },
 
