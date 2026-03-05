@@ -106,6 +106,7 @@ export async function POST(req: NextRequest) {
     subject: emailData.subject || data.subject || "(no subject)",
     body_text: emailData.text || null,
     body_html: emailData.html || null,
+    message_id: emailData.message_id || null,
     headers: emailData.headers || null,
     raw_payload: { webhook: data, email: emailData },
     read: false,

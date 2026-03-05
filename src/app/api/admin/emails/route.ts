@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
 
   let query = supabase
     .from("inbound_emails")
-    .select("id, from_email, from_name, to_email, subject, body_text, body_html, read, created_at", { count: "exact" })
+    .select("id, from_email, from_name, to_email, subject, body_text, body_html, message_id, read, created_at", { count: "exact" })
     .order("created_at", { ascending: false })
     .range(offset, offset + limit - 1);
 

@@ -17,6 +17,7 @@ interface Email {
   subject: string | null;
   body_text: string | null;
   body_html: string | null;
+  message_id: string | null;
   read: boolean;
   created_at: string;
 }
@@ -32,6 +33,10 @@ function InboxContent() {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<Email | null>(null);
   const [unreadOnly, setUnreadOnly] = useState(false);
+  const [replying, setReplying] = useState(false);
+  const [replyText, setReplyText] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sendStatus, setSendStatus] = useState<string | null>(null);
 
   // Restore session on mount
   useEffect(() => {
@@ -118,6 +123,43 @@ function InboxContent() {
     );
     if (selected?.id === email.id)
       setSelected({ ...email, read: !email.read });
+  }
+
+  async function sendReply() {
+    if (!selected || !replyText.trim()) return;
+    setSending(true);
+    setSendStatus(null);
+    try {
+      const res = await fetch("/api/admin/reply", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Admin-Password": secret,
+        },
+        body: JSON.stringify({
+          to: selected.from_email,
+          subject: selected.subject
+            ? (selected.subject.startsWith("Re:") ? selected.subject : `Re: ${selected.subject}`)
+            : "Re: (no subject)",
+          text: replyText.trim(),
+          message_id: selected.message_id,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to send");
+      }
+      setSendStatus("Sent!");
+      setReplyText("");
+      setTimeout(() => {
+        setReplying(false);
+        setSendStatus(null);
+      }, 2000);
+    } catch (e) {
+      setSendStatus(e instanceof Error ? e.message : "Send failed");
+    } finally {
+      setSending(false);
+    }
   }
 
   // ── LOGIN SCREEN ──
@@ -223,6 +265,9 @@ function InboxContent() {
                   key={email.id}
                   onClick={() => {
                     setSelected(email);
+                    setReplying(false);
+                    setReplyText("");
+                    setSendStatus(null);
                     if (!email.read) toggleRead(email);
                   }}
                   className={`w-full text-left rounded-lg border p-4 transition-colors ${
@@ -310,13 +355,70 @@ function InboxContent() {
                       {new Date(selected.created_at).toLocaleString()}
                     </p>
                   </div>
-                  <button
-                    onClick={() => toggleRead(selected)}
-                    className="text-xs text-zinc-500 hover:text-zinc-300 border border-zinc-700 rounded px-2 py-1"
-                  >
-                    Mark {selected.read ? "unread" : "read"}
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => {
+                        setReplying(!replying);
+                        setSendStatus(null);
+                      }}
+                      className="text-xs text-amber-400 hover:text-amber-300 border border-amber-500/30 rounded px-2 py-1"
+                    >
+                      Reply
+                    </button>
+                    <button
+                      onClick={() => toggleRead(selected)}
+                      className="text-xs text-zinc-500 hover:text-zinc-300 border border-zinc-700 rounded px-2 py-1"
+                    >
+                      Mark {selected.read ? "unread" : "read"}
+                    </button>
+                  </div>
                 </div>
+                {/* Reply compose */}
+                {replying && (
+                  <div className="border-t border-zinc-800 pt-4 mb-4">
+                    <p className="text-xs text-zinc-500 mb-2">
+                      Replying to {selected.from_email}
+                    </p>
+                    <textarea
+                      value={replyText}
+                      onChange={(e) => setReplyText(e.target.value)}
+                      placeholder="Type your reply..."
+                      rows={6}
+                      className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-sm text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none resize-y"
+                      autoFocus
+                    />
+                    <div className="flex items-center justify-between mt-3">
+                      <div className="flex gap-2">
+                        <button
+                          onClick={sendReply}
+                          disabled={sending || !replyText.trim()}
+                          className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-black hover:bg-amber-400 transition-colors disabled:opacity-40"
+                        >
+                          {sending ? "Sending..." : "Send Reply"}
+                        </button>
+                        <button
+                          onClick={() => {
+                            setReplying(false);
+                            setReplyText("");
+                            setSendStatus(null);
+                          }}
+                          className="rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                      {sendStatus && (
+                        <span
+                          className={`text-sm ${sendStatus === "Sent!" ? "text-green-400" : "text-red-400"}`}
+                        >
+                          {sendStatus}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Email body */}
                 <div className="border-t border-zinc-800 pt-4">
                   {selected.body_html ? (
                     <div
