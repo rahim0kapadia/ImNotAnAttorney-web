@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
 
   let emailData;
   try {
-    const res = await fetch(`${RESEND_API}/emails/received/${emailId}`, {
+    const res = await fetch(`${RESEND_API}/emails/receiving/${emailId}`, {
       headers: { Authorization: `Bearer ${resendApiKey}` },
     });
     if (!res.ok) {
