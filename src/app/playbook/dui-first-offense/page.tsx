@@ -34,7 +34,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "What if I already have an attorney?",
-    a: "That's exactly who this is for. The Playbook makes every conversation with your attorney more productive. Most defendants leave attorney meetings without knowing what to ask. This gives you 23 specific questions.",
+    a: "That's exactly who this is for. The Playbook makes every conversation with your attorney more productive. Most defendants leave attorney meetings without knowing what to ask. This gives you 26 specific questions.",
   },
   {
     q: "What if I need something more personalized?",
@@ -142,27 +142,27 @@ export default function DUIPlaybookPage() {
       {/* PROOF — Named attorneys */}
       <section className="mt-20">
         <h2 className="text-2xl font-bold text-white">
-          Built from the strategies of elite DUI defense attorneys
+          Built from elite DUI defense methodology
         </h2>
         <div className="mt-8 space-y-6">
           {[
             {
-              name: "Lawrence Taylor",
-              title: 'Author of "Drunk Driving Defense" — the attorney textbook on DUI law',
+              name: "Calibration-First Methodology",
+              title: "Foundation of the evidence challenge section",
               insight:
-                "Documented dozens of cases where breathalyzer readings were suppressed. His calibration-first methodology is the foundation of Section 4.",
+                "Dozens of documented cases where breathalyzer readings were suppressed. Machine calibration, operator certification, observation period — challenge the evidence before you challenge the case.",
             },
             {
-              name: "Barry Scheck",
-              title: "Co-founder of the Innocence Project",
+              name: "Chain of Custody Protocol",
+              title: "Applied to every evidence question",
               insight:
-                "Forensic evidence is only as reliable as the humans who handle it. His chain of custody protocol informs every evidence question in the Playbook.",
+                "Forensic evidence is only as reliable as the humans who handle it. Every evidence question in the Playbook traces custody from collection to courtroom.",
             },
             {
-              name: "F. Lee Bailey",
-              title: "Legendary trial attorney",
+              name: "Cross-Examination Framework",
+              title: "Exposing procedural failures",
               insight:
-                "Pioneered the cross-examination techniques that exposed procedural failures in breathalyzer and field sobriety testing.",
+                "Cross-examination techniques that exposed procedural failures in breathalyzer and field sobriety testing — applied to every accountability question.",
             },
           ].map((expert) => (
             <div
