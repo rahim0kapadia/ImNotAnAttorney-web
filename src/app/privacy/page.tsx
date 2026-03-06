@@ -29,10 +29,20 @@ export default function PrivacyPage() {
           Privacy Policy
         </h1>
         <p className="mt-2 text-sm text-zinc-400">
-          Last updated: March 3, 2026
+          Last updated: March 6, 2026
         </p>
 
         <div className="mt-10 space-y-8 text-sm leading-relaxed text-zinc-400">
+          {/* Human intro — TL;DR before the legal details */}
+          <p className="text-base text-zinc-300">
+            You&apos;re sharing sensitive legal information with us. We
+            don&apos;t take that lightly. Here&apos;s the short version: we
+            never see your credit card number, we don&apos;t sell your data,
+            your case documents are deleted within 90 days of report delivery,
+            and we don&apos;t use tracking cookies. Everything below explains
+            this in detail.
+          </p>
+
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
               1. Information We Collect
@@ -48,7 +58,10 @@ export default function PrivacyPage() {
                 <strong className="text-zinc-300">Case information:</strong>{" "}
                 Charge type, state, county, attorney status, discovery status,
                 and situation description (when you submit the intake form or
-                use our Attorney Accountability Score tool)
+                use our Attorney Accountability Score tool). Also includes
+                service-related details provided at checkout: court date (if
+                provided), priority delivery selection, and applicable upgrade
+                credits
               </li>
               <li>
                 <strong className="text-zinc-300">Discovery documents:</strong>{" "}
@@ -67,14 +80,23 @@ export default function PrivacyPage() {
               <li>
                 <strong className="text-zinc-300">Usage data:</strong> Pages
                 visited and general traffic patterns, collected via Vercel
-                Analytics using anonymized, cookieless tracking
+                Analytics using anonymized, cookieless tracking. IP addresses
+                are temporarily stored (60-second windows) for rate-limit
+                enforcement on sensitive endpoints and are automatically
+                discarded
               </li>
               <li>
                 <strong className="text-zinc-300">Communications:</strong> Email
                 correspondence with our support team related to your order or
-                service
+                service. Inbound emails sent to our support address are stored
+                to ensure we can respond to and track your requests.
               </li>
             </ul>
+            <p className="mt-2">
+              We do <strong className="text-zinc-300">not</strong> collect
+              biometric information (fingerprints, facial recognition,
+              voiceprints, or other identifying biological characteristics).
+            </p>
           </section>
 
           <section>
@@ -154,15 +176,14 @@ export default function PrivacyPage() {
                   No training on your data:
                 </strong>{" "}
                 Per Anthropic&apos;s commercial API terms, data sent through
-                their API is not used to train their AI models. Your case
-                information is processed and discarded by Anthropic after
-                generating a response
+                their API is not used to train their AI models
               </li>
               <li>
                 <strong className="text-zinc-300">Retention by AI provider:</strong>{" "}
-                Anthropic may temporarily retain API inputs and outputs for up
-                to 30 days for abuse monitoring and safety purposes, after which
-                they are deleted. See{" "}
+                Per Anthropic&apos;s current commercial API terms, they may
+                temporarily retain API inputs and outputs for up to 30 days for
+                abuse monitoring and safety purposes, after which they are
+                deleted. See{" "}
                 <a
                   href="https://www.anthropic.com/privacy"
                   target="_blank"
@@ -184,10 +205,9 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <strong className="text-zinc-300">Our quality review:</strong>{" "}
-                AI-generated reports are reviewed for quality and UPL compliance
-                before delivery. We use automated evaluation systems to check
-                for errors, prohibited language, and adherence to our
-                information-only standard
+                Every report is reviewed for quality and compliance before
+                delivery. We check for errors, prohibited language, and
+                adherence to our information-only standard
               </li>
             </ul>
           </section>
@@ -221,18 +241,33 @@ export default function PrivacyPage() {
                 licensed, or used for any other purpose
               </li>
               <li>
-                <strong className="text-zinc-300">Deletion:</strong> Discovery
-                documents are deleted within 90 days after your report is
-                delivered. You may request immediate deletion at any time by
-                contacting us. Upon receiving a deletion request, documents are
-                removed within 5 business days
+                <strong className="text-zinc-300">Automatic deletion:</strong>{" "}
+                Discovery documents are automatically deleted 90 days after your
+                report is delivered. We recommend downloading and saving your
+                report upon delivery. You may also request immediate deletion at
+                any time by contacting us — documents are removed within 5
+                business days of a deletion request.
               </li>
               <li>
-                <strong className="text-zinc-300">Refund impact:</strong> If
-                your purchase is refunded, your uploaded documents and generated
-                report are deleted, and your report access token is revoked
+                <strong className="text-zinc-300">
+                  What happens if you get a refund:
+                </strong>{" "}
+                If your purchase is <strong className="text-zinc-300">refunded</strong>{" "}
+                (delivery guarantee or chargeback), your uploaded documents
+                and generated report are deleted, and your report access
+                token is revoked. This protects you — once a transaction
+                is reversed, we don&apos;t hold onto your data. Satisfaction
+                credits do not trigger deletion or token revocation.
               </li>
             </ul>
+            <p className="mt-3">
+              <strong className="text-zinc-300">Consent.</strong> By
+              purchasing our services and submitting case information or
+              discovery documents, you consent to the processing of this
+              sensitive personal information for the purpose of generating
+              your report, including processing through AI systems as
+              described in Section 3.
+            </p>
           </section>
 
           <section>
@@ -335,8 +370,27 @@ export default function PrivacyPage() {
                 Purged automatically after 90 days
               </li>
               <li>
+                <strong className="text-zinc-300">
+                  Inbound email correspondence:
+                </strong>{" "}
+                Retained for 24 months or until you request deletion
+              </li>
+              <li>
+                <strong className="text-zinc-300">
+                  Free tool submissions (Attorney Accountability Score):
+                </strong>{" "}
+                Processed server-side and returned immediately. We do not store
+                score inputs permanently.
+              </li>
+              <li>
                 <strong className="text-zinc-300">Usage analytics:</strong>{" "}
                 Anonymized and aggregated; no individual-level data is retained
+              </li>
+              <li>
+                <strong className="text-zinc-300">Backup copies:</strong>{" "}
+                Our database provider maintains automated backups for disaster
+                recovery. Deleted data may persist in encrypted backups for up
+                to 30 days after deletion from live systems.
               </li>
             </ul>
           </section>
@@ -449,6 +503,14 @@ export default function PrivacyPage() {
               are sold.
             </p>
             <p className="mt-2">
+              <strong className="text-zinc-300">
+                Financial incentives.
+              </strong>{" "}
+              Upgrade credits and satisfaction guarantees are service benefits
+              available to all customers. They are not financial incentives
+              offered in exchange for providing personal data.
+            </p>
+            <p className="mt-2">
               To submit a CCPA request, email{" "}
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
@@ -458,6 +520,52 @@ export default function PrivacyPage() {
               </a>{" "}
               with the subject line &quot;CCPA Request.&quot; We will verify your
               identity before processing any request.
+            </p>
+            <p className="mt-2">
+              <strong className="text-zinc-300">Authorized agents.</strong>{" "}
+              You may designate an authorized agent to submit CCPA requests
+              on your behalf. Agents must provide written authorization
+              signed by you and proof of their identity. We may contact you
+              directly to confirm the request.
+            </p>
+
+            <h3 className="mb-2 mt-4 text-base font-semibold text-white">
+              Other State Privacy Laws
+            </h3>
+            <p>
+              If you reside in a state with comprehensive consumer privacy
+              legislation (including but not limited to Virginia, Colorado,
+              Connecticut, Utah, Montana, Iowa, Delaware, New Hampshire, New
+              Jersey, Nebraska, Tennessee, Minnesota, Maryland, Indiana,
+              Kentucky, Rhode Island, Texas, and Oregon), you may have
+              similar rights to access, correct, delete, and port your
+              personal data, as well as the right to opt out of certain
+              processing activities. We do not sell personal data or use it
+              for targeted advertising. To exercise any state privacy right,
+              email{" "}
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="text-amber-400 underline"
+              >
+                {CONTACT_EMAIL}
+              </a>{" "}
+              with the subject line &quot;State Privacy Request&quot; and
+              your state of residence. We will respond within the timeframe
+              required by your state&apos;s law.
+            </p>
+            <p className="mt-2">
+              <strong className="text-zinc-300">Appeals.</strong> If we deny
+              a request to access, correct, delete, or port your personal
+              data, we will provide a written explanation. You may appeal by
+              emailing{" "}
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="text-amber-400 underline"
+              >
+                {CONTACT_EMAIL}
+              </a>{" "}
+              with the subject line &quot;Privacy Appeal.&quot; We will
+              respond to appeals within 60 days.
             </p>
           </section>
 
@@ -479,7 +587,10 @@ export default function PrivacyPage() {
                 Stripe&apos;s Privacy Policy
               </a>{" "}
               for details. We do not use cookies for advertising, retargeting,
-              or cross-site tracking.
+              or cross-site tracking. We do not respond to Global Privacy
+              Control (GPC) or &quot;Do Not Track&quot; (DNT) browser signals
+              because we do not engage in cross-context behavioral advertising
+              or tracking.
             </p>
           </section>
 
@@ -523,9 +634,9 @@ export default function PrivacyPage() {
               </li>
             </ul>
             <p className="mt-2">
-              While we implement industry-standard security measures, no method
-              of electronic storage or transmission over the internet is 100%
-              secure. We cannot guarantee absolute security of your data.
+              No internet service can guarantee zero risk, but we&apos;ve made
+              every architectural decision with your case data&apos;s
+              sensitivity in mind.
             </p>
           </section>
 
@@ -610,7 +721,7 @@ export default function PrivacyPage() {
               .
             </p>
             <p className="mt-2">
-              ImNotAnAttorney
+              ImNotAnAttorney, a business operated by Rahim Kapadia
               <br />
               195 Dr MLK Jr St N
               <br />
