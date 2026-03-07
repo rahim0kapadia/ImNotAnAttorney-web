@@ -1887,6 +1887,240 @@ function validateReportContent(markdown: string): { valid: boolean; violations: 
 // Must stay in sync if the report template changes.
 // ============================================================
 
+/** Shared CSS for both Case Decoder and Intelligence Brief report renderers. */
+const REPORT_STYLES = `
+/* === Base === */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0C0A09;
+  color: #D4D4D8;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* === Header === */
+.header-block {
+  background: #1C1917;
+  padding: 32px;
+  border-radius: 12px;
+  border: 2px solid #F59E0B;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.header-title {
+  color: #F59E0B;
+  font-size: 28px;
+  margin: 0;
+}
+.header-subtitle {
+  color: #A1A1AA;
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+.header-meta {
+  margin-top: 24px;
+  text-align: left;
+}
+.meta-field {
+  margin: 4px 0;
+}
+.meta-label {
+  color: white;
+}
+
+/* === Content typography === */
+.section-h2 {
+  color: #F59E0B;
+  font-size: 20px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #3f3f46;
+}
+.section-h3 {
+  color: white;
+  font-size: 17px;
+  margin-top: 24px;
+  letter-spacing: 0.02em;
+}
+.section-h4 {
+  color: #F59E0B;
+  font-size: 14px;
+  margin-top: 20px;
+}
+.bold-text {
+  color: white;
+}
+.body-text {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+/* === Tables === */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+.table-header {
+  padding: 8px 12px;
+  border: 1px solid #3f3f46;
+  border-bottom: 2px solid #3f3f46;
+  text-align: left;
+  background: #1a1a1e;
+  font-weight: bold;
+  overflow-wrap: break-word;
+}
+.table-cell {
+  padding: 8px 12px;
+  border: 1px solid #3f3f46;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+tr:nth-child(even) > .table-cell {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* === Blockquotes === */
+.blockquote {
+  border-left: 4px solid #F59E0B;
+  padding: 12px 16px;
+  margin: 16px 0;
+  color: #A1A1AA;
+  background: rgba(245, 158, 11, 0.05);
+  border-radius: 0 4px 4px 0;
+}
+
+/* === Lists === */
+.report-list {
+  margin: 8px 0;
+  padding-left: 24px;
+}
+.list-item {
+  margin-bottom: 6px;
+  margin-left: 24px;
+}
+.checkbox-item {
+  list-style: none;
+}
+
+/* === Methodology note (Case Decoder) === */
+.methodology-note {
+  border-left: 3px solid #F59E0B;
+  padding: 16px;
+  margin: 24px 0;
+  background: #1C1917;
+  border-radius: 0 8px 8px 0;
+}
+.methodology-note-title {
+  margin: 0 0 12px;
+  color: #F59E0B;
+  font-weight: bold;
+}
+.methodology-note-text {
+  margin: 0 0 12px;
+  color: #A1A1AA;
+}
+
+/* === Footer === */
+.footer-disclaimer {
+  background: #1C1917;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 40px;
+  border-left: 4px solid #A1A1AA;
+}
+.footer-disclaimer-text {
+  margin: 0;
+  font-size: 13px;
+  color: #71717A;
+}
+.footer-disclaimer-label {
+  color: #A1A1AA;
+}
+.copyright-block {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 2px solid #27272A;
+  text-align: center;
+}
+.copyright-text {
+  margin: 0;
+  font-size: 12px;
+  color: #71717A;
+}
+.copyright-meta {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #52525B;
+}
+
+/* === Upgrade CTA === */
+.upgrade-cta {
+  margin-top: 32px;
+  text-align: center;
+}
+.upgrade-cta-text {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #A1A1AA;
+}
+.upgrade-btn {
+  display: inline-block;
+  padding: 16px 32px;
+  background: #F59E0B;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.upgrade-credit-note {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #71717A;
+}
+
+/* === Page breaks === */
+.page-break {
+  page-break-after: always;
+}
+
+/* === Mobile responsive === */
+@media (max-width: 640px) {
+  .container { padding: 16px 12px; }
+  .header-block { padding: 20px; }
+  .header-title { font-size: 22px; }
+  .section-h2 { font-size: 17px; margin-top: 24px; padding-top: 16px; }
+  .section-h3 { font-size: 15px; }
+  .report-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table-header, .table-cell { padding: 6px 8px; font-size: 13px; }
+  .upgrade-btn { padding: 14px 24px; font-size: 15px; }
+}
+
+/* === Print === */
+@media print {
+  body { background: white !important; color: #1a1a1a !important; }
+  * { color: #1a1a1a !important; }
+  .section-h2, .section-h3, .section-h4 { color: #92400e !important; page-break-after: avoid; }
+  .bold-text, .meta-label { color: #1a1a1a !important; }
+  .blockquote { border-left-color: #92400e !important; background: #f5f5f4 !important; page-break-inside: avoid; }
+  .methodology-note { background: #f5f5f4 !important; border-left-color: #92400e !important; page-break-inside: avoid; }
+  .report-table { page-break-inside: avoid; }
+  .table-header, .table-cell { border-color: #d4d4d4 !important; }
+  .table-header { background: #e5e5e5 !important; }
+  .print-hidden, .no-print { display: none !important; }
+  .header-block { background: #f5f5f4 !important; border-color: #92400e !important; }
+  a { color: #92400e !important; }
+  .body-text { orphans: 3; widows: 3; }
+  @page { margin: 1in; }
+}
+`;
+
 /**
  * Converts a markdown report to a branded HTML document.
  *
@@ -1914,41 +2148,41 @@ function renderReportHtml(
   }
 ): string {
   let html = markdown
-    .replace(/^#### (.+)$/gm, '<h4 style="color: #F59E0B; font-size: 14px; margin-top: 20px;">$1</h4>')
-    .replace(/^### (.+)$/gm, '<h3 style="color: white; font-size: 16px; margin-top: 24px;">$1</h3>')
-    .replace(/^## (.+)$/gm, '<h2 style="color: #F59E0B; font-size: 20px; margin-top: 32px; padding-top: 24px; border-top: 1px solid #27272A;">$1</h2>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong style="color: white;">$1</strong>')
+    .replace(/^#### (.+)$/gm, '<h4 class="section-h4">$1</h4>')
+    .replace(/^### (.+)$/gm, '<h3 class="section-h3">$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2 class="section-h2">$1</h2>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong class="bold-text">$1</strong>')
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
-    .replace(/^>[ ]?(.*)$/gm, (_m: string, content: string) => '<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">' + (content || '') + '</blockquote>')
-    .replace(/^- \[x\] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9745; $1</li>')
-    .replace(/^- \[ \] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9744; $1</li>')
-    .replace(/^- (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
-    .replace(/^\d+\. (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
+    .replace(/^>[ ]?(.*)$/gm, (_m: string, content: string) => '<blockquote class="blockquote">' + (content || '') + '</blockquote>')
+    .replace(/^- \[x\] (.+)$/gm, '<li class="list-item checkbox-item">&#9745; $1</li>')
+    .replace(/^- \[ \] (.+)$/gm, '<li class="list-item checkbox-item">&#9744; $1</li>')
+    .replace(/^- (.+)$/gm, '<li class="list-item">$1</li>')
+    .replace(/^\d+\. (.+)$/gm, '<li class="list-item">$1</li>')
     .replace(/\|(.+)\|/g, (match: string) => {
       const cells = match.split("|").filter(Boolean).map((c: string) => c.trim());
       if (cells.every((c: string) => /^[-:]+$/.test(c))) return "";
       const isHeader = cells.some((c: string) => c.startsWith("**") || c === "#");
       const tag = isHeader ? "th" : "td";
-      const style = `style="padding: 8px 12px; border: 1px solid #27272A; text-align: left;"`;
-      return `<tr>${cells.map((c: string) => `<${tag} ${style}>${c}</${tag}>`).join("")}</tr>`;
+      const cls = isHeader ? "table-header" : "table-cell";
+      return `<tr>${cells.map((c: string) => `<${tag} class="${cls}">${c}</${tag}>`).join("")}</tr>`;
     })
-    .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p style="margin: 8px 0; line-height: 1.6;">$1</p>');
+    .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p class="body-text">$1</p>');
 
   html = html.replace(
     /(<tr>[\s\S]*?<\/tr>(\s*<tr>[\s\S]*?<\/tr>)*)/g,
     (tableMatch: string) => {
       const rows = tableMatch.split('</tr>').filter((r: string) => r.trim());
       if (rows.length > 0) {
-        rows[0] = rows[0].replace(/<td /g, '<th ').replace(/<\/td>/g, '</th>');
+        rows[0] = rows[0].replace(/<td class="table-cell"/g, '<th class="table-header"').replace(/<\/td>/g, '</th>');
       }
-      return '<table style="width: 100%; border-collapse: collapse; margin: 16px 0;">' + rows.map((r: string) => r.trim() ? r.trim() + '</tr>' : '').filter(Boolean).join('\n') + '</table>';
+      return '<table class="report-table">' + rows.map((r: string) => r.trim() ? r.trim() + '</tr>' : '').filter(Boolean).join('\n') + '</table>';
     }
   );
 
   // Wrap consecutive <li> elements in <ul>
   html = html.replace(
     /(<li[\s\S]*?<\/li>\s*)+/g,
-    '<ul style="margin: 8px 0; padding-left: 24px;">$&</ul>'
+    '<ul class="report-list">$&</ul>'
   );
 
   // Merge consecutive <blockquote> elements into a single blockquote
@@ -1959,7 +2193,7 @@ function renderReportHtml(
       const re = /<blockquote[^>]*>([\s\S]*?)<\/blockquote>/g;
       let m: RegExpExecArray | null;
       while ((m = re.exec(bqMatch)) !== null) { contents.push(m[1]); }
-      return `<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">${contents.join('<br>')}</blockquote>`;
+      return `<blockquote class="blockquote">${contents.join('<br>')}</blockquote>`;
     }
   );
 
@@ -1969,55 +2203,43 @@ function renderReportHtml(
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Case Decoder Report — ${escapeHtml(meta.firstName)}</title>
-<style>
-  @media print {
-    body { background: white !important; color: #1a1a1a !important; }
-    * { color: #1a1a1a !important; }
-    h2, h3, h4 { color: #92400e !important; }
-    strong { color: #1a1a1a !important; }
-    blockquote { border-left-color: #92400e !important; }
-    table, th, td { border-color: #d4d4d4 !important; }
-    .print-hidden { display: none !important; }
-    .header-block { background: #f5f5f4 !important; border-color: #92400e !important; }
-    a { color: #92400e !important; }
-  }
-</style>
+<style>${REPORT_STYLES}</style>
 </head>
-<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0C0A09; color: #D4D4D8; margin: 0; padding: 0;">
-<div style="max-width: 800px; margin: 0 auto; padding: 32px 24px;">
-  <div class="header-block" style="background: #1C1917; padding: 32px; border-radius: 12px; border: 2px solid #F59E0B; margin-bottom: 32px; text-align: center;">
-    <h1 style="color: #F59E0B; font-size: 28px; margin: 0;">CASE DECODER REPORT</h1>
-    <p style="color: #A1A1AA; margin: 8px 0 0; font-size: 14px;">ImNotAnAttorney | We Research. You Ask.</p>
-    <div style="margin-top: 24px; text-align: left;">
-      <p style="margin: 4px 0;"><strong style="color: white;">Prepared for:</strong> ${escapeHtml(meta.firstName)}</p>
-      <p style="margin: 4px 0;"><strong style="color: white;">Charge(s):</strong> ${escapeHtml(meta.charges)}</p>
-      <p style="margin: 4px 0;"><strong style="color: white;">Jurisdiction:</strong> ${escapeHtml(meta.jurisdiction)}</p>
-      ${meta.caseNumber ? `<p style="margin: 4px 0;"><strong style="color: white;">Case Number:</strong> ${escapeHtml(meta.caseNumber)}</p>` : ""}
-      ${meta.courtDate ? `<p style="margin: 4px 0;"><strong style="color: white;">Next Court Date:</strong> ${escapeHtml(meta.courtDate)}</p>` : ""}
-      ${meta.daysSinceArrest != null ? `<p style="margin: 4px 0;"><strong style="color: white;">Days Since Arrest:</strong> ${meta.daysSinceArrest}</p>` : ""}
-      <p style="margin: 4px 0;"><strong style="color: white;">Report Date:</strong> ${escapeHtml(meta.reportDate)}</p>
-      <p style="margin: 4px 0;"><strong style="color: white;">Report ID:</strong> ${escapeHtml(meta.reportId)}</p>
+<body>
+<div class="container">
+  <div class="header-block">
+    <h1 class="header-title">CASE DECODER REPORT</h1>
+    <p class="header-subtitle">ImNotAnAttorney | We Research. You Ask.</p>
+    <div class="header-meta">
+      <p class="meta-field"><strong class="meta-label">Prepared for:</strong> ${escapeHtml(meta.firstName)}</p>
+      <p class="meta-field"><strong class="meta-label">Charge(s):</strong> ${escapeHtml(meta.charges)}</p>
+      <p class="meta-field"><strong class="meta-label">Jurisdiction:</strong> ${escapeHtml(meta.jurisdiction)}</p>
+      ${meta.caseNumber ? `<p class="meta-field"><strong class="meta-label">Case Number:</strong> ${escapeHtml(meta.caseNumber)}</p>` : ""}
+      ${meta.courtDate ? `<p class="meta-field"><strong class="meta-label">Next Court Date:</strong> ${escapeHtml(meta.courtDate)}</p>` : ""}
+      ${meta.daysSinceArrest != null ? `<p class="meta-field"><strong class="meta-label">Days Since Arrest:</strong> ${meta.daysSinceArrest}</p>` : ""}
+      <p class="meta-field"><strong class="meta-label">Report Date:</strong> ${escapeHtml(meta.reportDate)}</p>
+      <p class="meta-field"><strong class="meta-label">Report ID:</strong> ${escapeHtml(meta.reportId)}</p>
     </div>
   </div>
-  ${meta.expertNames ? `<blockquote style="border-left: 3px solid #F59E0B; padding: 16px; margin: 24px 0; background: #1C1917; border-radius: 0 8px 8px 0;">
-    <p style="margin: 0 0 12px; color: #F59E0B; font-weight: bold;">METHODOLOGY NOTE</p>
-    <p style="margin: 0 0 12px; color: #A1A1AA;">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)} — selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
-    <p style="margin: 0; color: #A1A1AA;"><strong style="color: white;">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+  ${meta.expertNames ? `<blockquote class="methodology-note">
+    <p class="methodology-note-title">METHODOLOGY NOTE</p>
+    <p class="methodology-note-text">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)} — selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
+    <p class="methodology-note-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
   </blockquote>` : ""}
   ${html}
-  <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 40px; border-left: 4px solid #A1A1AA;">
-    <p style="margin: 0; font-size: 13px; color: #71717A;">
-      <strong style="color: #A1A1AA;">A note on what this is:</strong> This report gives you legal information, context, and questions — not legal advice. We can't tell you what to do. What we can do is make sure you walk into your next conversation informed, prepared, and asking the right things. Your attorney has your case file, your courtroom, and your judge. This report makes sure you know what to ask them — and why it matters.
+  <div class="footer-disclaimer">
+    <p class="footer-disclaimer-text">
+      <strong class="footer-disclaimer-label">A note on what this is:</strong> This report gives you legal information, context, and questions — not legal advice. We can't tell you what to do. What we can do is make sure you walk into your next conversation informed, prepared, and asking the right things. Your attorney has your case file, your courtroom, and your judge. This report makes sure you know what to ask them — and why it matters.
     </p>
   </div>
-  <div style="margin-top: 48px; padding-top: 24px; border-top: 2px solid #27272A; text-align: center;">
-    <p style="margin: 0; font-size: 12px; color: #71717A;">&copy; ${new Date().getFullYear()} ImNotAnAttorney. Legal information, not legal advice.</p>
-    <p style="margin: 4px 0 0; font-size: 12px; color: #52525B;">Report ID: ${meta.reportId} | Generated: ${meta.reportDate}</p>
+  <div class="copyright-block">
+    <p class="copyright-text">&copy; ${new Date().getFullYear()} ImNotAnAttorney. Legal information, not legal advice.</p>
+    <p class="copyright-meta">Report ID: ${meta.reportId} | Generated: ${meta.reportDate}</p>
   </div>
-  <div class="print-hidden" style="margin-top: 32px; text-align: center;">
-    <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">After your meeting, if you want to verify your attorney's answers against the evidence:</p>
-    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $997 ($800 after credit)</a>
-    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure — decide after your meeting.</p>
+  <div class="print-hidden upgrade-cta">
+    <p class="upgrade-cta-text">After your meeting, if you want to verify your attorney's answers against the evidence:</p>
+    <a href="/checkout" class="upgrade-btn">Case Intelligence Brief — $997 ($800 after credit)</a>
+    <p class="upgrade-credit-note">Your $197 is fully credited toward any tier within 12 months. No pressure — decide after your meeting.</p>
   </div>
 </div>
 </body>
@@ -2886,38 +3108,38 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
   // Markdown→HTML helper (same as CD version)
   function md2html(markdown: string): string {
     let h = markdown
-      .replace(/^#### (.+)$/gm, '<h4 style="color: #F59E0B; font-size: 14px; margin-top: 20px;">$1</h4>')
-      .replace(/^### (.+)$/gm, '<h3 style="color: white; font-size: 16px; margin-top: 24px;">$1</h3>')
-      .replace(/^## (.+)$/gm, '<h2 style="color: #F59E0B; font-size: 20px; margin-top: 32px; padding-top: 24px; border-top: 1px solid #27272A;">$1</h2>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong style="color: white;">$1</strong>')
+      .replace(/^#### (.+)$/gm, '<h4 class="section-h4">$1</h4>')
+      .replace(/^### (.+)$/gm, '<h3 class="section-h3">$1</h3>')
+      .replace(/^## (.+)$/gm, '<h2 class="section-h2">$1</h2>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong class="bold-text">$1</strong>')
       .replace(/\*(.+?)\*/g, "<em>$1</em>")
-      .replace(/^>[ ]?(.*)$/gm, (_m: string, content: string) => '<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">' + (content || '') + '</blockquote>')
-      .replace(/^- \[x\] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9745; $1</li>')
-      .replace(/^- \[ \] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9744; $1</li>')
-      .replace(/^- (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
-      .replace(/^\d+\. (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
+      .replace(/^>[ ]?(.*)$/gm, (_m: string, content: string) => '<blockquote class="blockquote">' + (content || '') + '</blockquote>')
+      .replace(/^- \[x\] (.+)$/gm, '<li class="list-item checkbox-item">&#9745; $1</li>')
+      .replace(/^- \[ \] (.+)$/gm, '<li class="list-item checkbox-item">&#9744; $1</li>')
+      .replace(/^- (.+)$/gm, '<li class="list-item">$1</li>')
+      .replace(/^\d+\. (.+)$/gm, '<li class="list-item">$1</li>')
       .replace(/\|(.+)\|/g, (match: string) => {
         const cells = match.split("|").filter(Boolean).map((c: string) => c.trim());
         if (cells.every((c: string) => /^[-:]+$/.test(c))) return "";
         const tag = cells.some((c: string) => c.startsWith("**")) ? "th" : "td";
-        const s = `style="padding: 8px 12px; border: 1px solid #27272A; text-align: left;"`;
-        return `<tr>${cells.map((c: string) => `<${tag} ${s}>${c}</${tag}>`).join("")}</tr>`;
+        const cls = tag === "th" ? "table-header" : "table-cell";
+        return `<tr>${cells.map((c: string) => `<${tag} class="${cls}">${c}</${tag}>`).join("")}</tr>`;
       })
-      .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p style="margin: 8px 0; line-height: 1.6;">$1</p>');
+      .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p class="body-text">$1</p>');
     h = h.replace(
       /(<tr>[\s\S]*?<\/tr>(\s*<tr>[\s\S]*?<\/tr>)*)/g,
       (tableMatch: string) => {
         const rows = tableMatch.split('</tr>').filter((r: string) => r.trim());
         if (rows.length > 0) {
-          rows[0] = rows[0].replace(/<td /g, '<th ').replace(/<\/td>/g, '</th>');
+          rows[0] = rows[0].replace(/<td class="table-cell"/g, '<th class="table-header"').replace(/<\/td>/g, '</th>');
         }
-        return '<table style="width: 100%; border-collapse: collapse; margin: 16px 0;">' + rows.map((r: string) => r.trim() ? r.trim() + '</tr>' : '').filter(Boolean).join('\n') + '</table>';
+        return '<table class="report-table">' + rows.map((r: string) => r.trim() ? r.trim() + '</tr>' : '').filter(Boolean).join('\n') + '</table>';
       }
     );
     // Wrap consecutive <li> in <ul>
     h = h.replace(
       /(<li[\s\S]*?<\/li>\s*)+/g,
-      '<ul style="margin: 8px 0; padding-left: 24px;">$&</ul>'
+      '<ul class="report-list">$&</ul>'
     );
 
     // Merge consecutive <blockquote> elements
@@ -2928,7 +3150,7 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
         const re = /<blockquote[^>]*>([\s\S]*?)<\/blockquote>/g;
         let m: RegExpExecArray | null;
         while ((m = re.exec(bqMatch)) !== null) { contents.push(m[1]); }
-        return `<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">${contents.join('<br>')}</blockquote>`;
+        return `<blockquote class="blockquote">${contents.join('<br>')}</blockquote>`;
       }
     );
     return h;
@@ -2948,44 +3170,45 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
     sectionOutputs["court-prep"] || "",
     buildYourRights(stateForRights),
     sectionOutputs["questions"] || "",
-  ].filter((s) => s.trim()).map((s) => md2html(s)).join('\n<div style="page-break-after: always;"></div>\n');
+  ].filter((s) => s.trim()).map((s) => md2html(s)).join('\n<div class="page-break"></div>\n');
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Case Intelligence Brief — ${escapeHtml(meta.firstName)}</title>
-<style>@media print { body { background: white !important; color: #1a1a1a !important; } * { color: #1a1a1a !important; } h2,h3,h4 { color: #92400e !important; } strong { color: #1a1a1a !important; } .print-hidden { display: none !important; } .header-block { background: #f5f5f4 !important; border-color: #92400e !important; } }</style>
+<style>${REPORT_STYLES}</style>
 </head>
-<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0C0A09; color: #D4D4D8; margin: 0; padding: 0;">
-<div style="max-width: 800px; margin: 0 auto; padding: 32px 24px;">
-  <div class="header-block" style="background: #1C1917; padding: 32px; border-radius: 12px; border: 2px solid #F59E0B; margin-bottom: 32px; text-align: center;">
-    <h1 style="color: #F59E0B; font-size: 28px; margin: 0;">CASE INTELLIGENCE BRIEF</h1>
-    <p style="color: #A1A1AA; margin: 8px 0 0; font-size: 14px;">ImNotAnAttorney | We Research. You Ask.</p>
-    <div style="margin-top: 24px; text-align: left;">
-      <p style="margin: 4px 0;"><strong style="color: white;">Prepared for:</strong> ${escapeHtml(meta.firstName)}</p>
-      <p style="margin: 4px 0;"><strong style="color: white;">Charge(s):</strong> ${escapeHtml(meta.charges)}</p>
-      <p style="margin: 4px 0;"><strong style="color: white;">Jurisdiction:</strong> ${escapeHtml(meta.stateCounty)}</p>
-      ${meta.caseNumber !== "Not provided" ? `<p style="margin: 4px 0;"><strong style="color: white;">Case #:</strong> ${escapeHtml(meta.caseNumber)}</p>` : ""}
-      ${meta.nextCourtDate !== "Not provided" ? `<p style="margin: 4px 0;"><strong style="color: white;">Court Date:</strong> ${escapeHtml(meta.nextCourtDate)}</p>` : ""}
-      <p style="margin: 4px 0;"><strong style="color: white;">Judge:</strong> ${escapeHtml(meta.judgeName)}</p>
-      <p style="margin: 4px 0;"><strong style="color: white;">Attorney:</strong> ${escapeHtml(meta.attorneyName)}</p>
-      <p style="margin: 4px 0;"><strong style="color: white;">Report Date:</strong> ${escapeHtml(meta.reportDate)}</p>
-      <p style="margin: 4px 0;"><strong style="color: white;">Report ID:</strong> ${escapeHtml(meta.reportId)}</p>
+<body>
+<div class="container">
+  <div class="header-block">
+    <h1 class="header-title">CASE INTELLIGENCE BRIEF</h1>
+    <p class="header-subtitle">ImNotAnAttorney | We Research. You Ask.</p>
+    <div class="header-meta">
+      <p class="meta-field"><strong class="meta-label">Prepared for:</strong> ${escapeHtml(meta.firstName)}</p>
+      <p class="meta-field"><strong class="meta-label">Charge(s):</strong> ${escapeHtml(meta.charges)}</p>
+      <p class="meta-field"><strong class="meta-label">Jurisdiction:</strong> ${escapeHtml(meta.stateCounty)}</p>
+      ${meta.caseNumber !== "Not provided" ? `<p class="meta-field"><strong class="meta-label">Case #:</strong> ${escapeHtml(meta.caseNumber)}</p>` : ""}
+      ${meta.nextCourtDate !== "Not provided" ? `<p class="meta-field"><strong class="meta-label">Court Date:</strong> ${escapeHtml(meta.nextCourtDate)}</p>` : ""}
+      <p class="meta-field"><strong class="meta-label">Judge:</strong> ${escapeHtml(meta.judgeName)}</p>
+      <p class="meta-field"><strong class="meta-label">Attorney:</strong> ${escapeHtml(meta.attorneyName)}</p>
+      <p class="meta-field"><strong class="meta-label">Report Date:</strong> ${escapeHtml(meta.reportDate)}</p>
+      <p class="meta-field"><strong class="meta-label">Report ID:</strong> ${escapeHtml(meta.reportId)}</p>
     </div>
   </div>
   ${sections}
-  <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 40px; border-left: 4px solid #A1A1AA;">
-    <p style="margin: 0; font-size: 13px; color: #71717A;"><strong style="color: #A1A1AA;">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+  <div class="footer-disclaimer">
+    <p class="footer-disclaimer-text"><strong class="footer-disclaimer-label">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
   </div>
-  <div style="margin-top: 48px; padding-top: 24px; border-top: 2px solid #27272A; text-align: center;">
-    <p style="margin: 0; font-size: 12px; color: #71717A;">&copy; ${new Date().getFullYear()} ImNotAnAttorney. Legal information, not legal advice.</p>
-    <p style="margin: 4px 0 0; font-size: 12px; color: #52525B;">Report ID: ${escapeHtml(meta.reportId)} | Generated: ${escapeHtml(meta.reportDate)}</p>
+  <div class="copyright-block">
+    <p class="copyright-text">&copy; ${new Date().getFullYear()} ImNotAnAttorney. Legal information, not legal advice.</p>
+    <p class="copyright-meta">Report ID: ${escapeHtml(meta.reportId)} | Generated: ${escapeHtml(meta.reportDate)}</p>
   </div>
-  <div class="print-hidden" style="margin-top: 32px; text-align: center;">
-    <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">When you get discovery evidence, we can go even deeper:</p>
-    <a href="/checkout?tier=x-ray${meta.email ? `&email=${encodeURIComponent(meta.email)}` : ""}" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">The X-Ray — $2,497 ($1,500 after credit)</a>
-    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $997 is fully credited toward any tier within 12 months.</p>
+  <div class="print-hidden upgrade-cta">
+    <p class="upgrade-cta-text">When you get discovery evidence, we can go even deeper:</p>
+    <a href="/checkout?tier=x-ray${meta.email ? `&email=${encodeURIComponent(meta.email)}` : ""}" class="upgrade-btn">The X-Ray — $2,497 ($1,500 after credit)</a>
+    <p class="upgrade-credit-note">Your $997 is fully credited toward any tier within 12 months.</p>
   </div>
 </div>
 </body>
