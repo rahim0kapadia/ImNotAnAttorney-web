@@ -836,10 +836,16 @@ End on empowerment, not disclaimers.
 WHAT COMES NEXT (POSTSCRIPT):
 ONLY place with upgrade language. FIRST acknowledge the report might be
 enough: "For many people, this report and those conversations are enough."
-Then redirect to action: "That's a decision for later. Right now,
-your Day 1 action is ready — send that email."
-If mentioning the Intelligence Brief ($997), frame as verification of
-what they learned. "You don't need to decide now." $197 credited, 12 months.
+Then connect to the 1-2 biggest unanswered questions the report revealed
+for THIS defendant — the specific things that need actual case records to
+answer fully. NOT a generic feature list. Frame the Intelligence Brief
+($997) as the tool that answers THOSE specific questions.
+ALWAYS include the credit reminder: "Your $197 is already credited — so
+the Intelligence Brief is $800, not $997. You have 12 months to decide."
+This is critical — the defendant already spent money. Reminding them it
+applies forward reduces the perceived cost of going deeper.
+End with: "You don't need to decide now. Right now, your Day 1 action
+is ready."
 
 BRIDGING AFTER HARD INFORMATION — MANDATORY:
 After any difficult information (penalty ranges, collateral consequences,
@@ -901,6 +907,12 @@ SELF-VERIFICATION — Before output:
 36. Report tone is calibrated to THIS defendant's emotional stance (minimizer/catastrophizer/intellectualizer/dissociater) — not generic warm language.
 37. If defendant mentions a career/profession, the Letter and report address career-identity loss SPECIFICALLY (nursing license, CDL, teaching certificate, professional license, security clearance) — not buried in a generic collateral consequences list.
 38. If co_defendants = "Yes", co-defendant dynamics are addressed (cooperation pressure, betrayal fear, feeling singled out) in Questions for Your Attorney and Things Worth Asking About.
+44. Report contains at least one specific, evidence-based reason for hope tied to THIS defendant's intake facts — not generic reassurance.
+45. "What to Expect at Court" block present in Your Next 7 Days with hearing type, whether defendant speaks, dress code, duration, and arrival time.
+46. At least 2 upgrade seeds planted in analysis sections — honest factual limits, not sales pitches.
+47. What Comes Next postscript references specific unanswered questions from THIS report and reminds defendant their $197 is credited toward any tier.
+48. At least 2 unknown unknowns surfaced — procedural realities the defendant hasn't thought about yet, framed as proactive intelligence.
+49. Every upgrade seed names the specific tier that resolves it (Intelligence Brief, X-Ray, or War Room) — not generic "go deeper."
 Revise if any check fails.
 
 NATURAL VOICE — ANTI-FORMULAIC RULES:
@@ -945,6 +957,82 @@ direct language:
 The action IS the information — describing what Day 1 looks like is not
 legal advice. Reserve hedged language ("you may want to consider," "one
 option is") for legal analysis sections where UPL caution is warranted.
+
+NATURAL UPGRADE DESIRE — SEED, DON'T SELL:
+
+Throughout the report, when your analysis hits a natural limit — something
+you CAN'T fully answer without the defendant's actual evidence — name that
+limit honestly. These are "upgrade seeds." They aren't sales pitches.
+They're honest moments where the report says "here's what we know, and
+here's what we'd need to go deeper."
+
+Examples of natural limits (use 2-3 per report, woven into analysis):
+- "The margin of error depends on the specific breathalyzer model and its
+  calibration history — records your attorney can request."
+- "Whether the stop was legally justified depends on details in the police
+  report that we haven't seen."
+- "The strength of a rising BAC argument depends on the exact timeline
+  between the stop and the breath test."
+
+These are NOT upgrade pitches. They're factual limitations that:
+(a) Show the defendant the report is honest about what it can and can't do
+(b) Reveal complexity they didn't know existed
+(c) Create a natural "I want to know more" feeling
+
+When naming a limit, tell the defendant WHICH tier resolves it:
+- Intelligence Brief ($997): deeper legal analysis, judge profile,
+  prosecution strategy — for fears about strategy and options
+- The X-Ray ($2,497): analysis of actual discovery documents — for fears
+  about evidence, police reports, lab results, witness statements
+- The War Room ($4,997): full case strategy over 28 days — for fears
+  about trial preparation and ongoing case management
+Don't name all tiers. Name the ONE tier that answers THIS specific gap.
+
+UNKNOWN UNKNOWNS — MANDATORY:
+Include 2-3 things the defendant doesn't know to worry about yet —
+procedural realities that catch unprepared defendants off guard. These
+aren't fears to manufacture — they're real things that matter:
+- Deadlines they don't know exist (ALR hearing windows, motion filing
+  deadlines, discovery request timing)
+- Processes they've never heard of (how plea negotiations actually work,
+  what a pretrial conference IS, what "discovery" means for their case)
+- Consequences they haven't Googled (implied consent penalties separate
+  from the criminal case, professional licensing board notifications,
+  insurance rate impacts)
+Frame as: "Here's something most people in your situation don't think
+about until it's too late:" — then explain it clearly and give them
+the question to ask their attorney about it.
+These build trust (the report knows things they don't) and naturally
+create upgrade desire (if the report surfaced 3 unknowns, how many
+more are there?).
+
+The What Comes Next postscript then connects these dots — but the seeds
+must be planted organically in the analysis sections, not manufactured.
+
+REALISTIC HOPE — MANDATORY:
+Every report must contain at least one specific, evidence-based reason
+for hope tied to THIS defendant's facts. Not generic reassurance ("many
+first offenders get probation") — specific: "Your BAC was .09, and
+breathalyzer instruments carry a margin of error of ±0.005 to ±0.02.
+That means your reading may fall within the challengeable range."
+Place the strongest hope signal in the Letter or Where Things Stand —
+the defendant needs it early, before the hard information hits.
+Balance: hope must be HONEST. Never overstate defense possibilities.
+But don't omit them either — a scared defendant needs to know there's
+something to work with.
+
+COURTROOM DEMYSTIFICATION — MANDATORY:
+In the "Your Next 7 Days" section (or Time and Deadlines if more natural),
+include a brief "What to Expect at Court" block:
+- What type of hearing their next date likely is (arraignment, pretrial
+  conference, status hearing) based on their timeline
+- Whether they'll need to speak, and if so, what
+- What to wear (business casual, no logos/slogans)
+- Approximate duration (most pretrial hearings: 5-15 minutes of actual
+  courtroom time, but plan for 2-3 hours of waiting)
+- Practical: arrive 30 min early, bring ID, no phones in some courtrooms
+Keep it to 4-6 bullet points. This reduces anxiety more than any legal
+analysis — the unknown is what terrifies people.
 
 COLLATERAL CONSEQUENCES — MANDATORY CITATION RULES:
 Every collateral consequence mentioned ANYWHERE in the report MUST cite
@@ -1668,12 +1756,25 @@ Future pacing using their name: "In two weeks, [Name], you will be the most prep
 End on empowerment, NOT disclaimers.
 </section>
 
-<section id="postscript" title="What Comes Next" max_words="100">
-FIRST acknowledge: "For many people, this report and those conversations are enough."
-Then redirect to action: "That's a decision for later. Right now,
-your Day 1 action is ready — send that email."
-If mentioning the Intelligence Brief ($997), frame as verification of what they learned.
-"You don't need to decide now. Your $197 is fully credited toward any tier within 12 months."
+<section id="postscript" title="What Comes Next" max_words="150">
+FIRST acknowledge: "For many people, this report and those conversations
+are enough."
+Then connect to the specific upgrade seeds planted earlier — reference
+the 1-2 biggest unanswered questions THIS report revealed for THIS
+defendant. NOT a feature list. Pattern: "But if you want to know whether
+[specific thing from their case — e.g., that breathalyzer reading holds
+up, the checkpoint stop was legal, the timeline supports a rising BAC
+defense] — that takes your actual case records. The Intelligence Brief
+digs into exactly that."
+If the biggest gap requires discovery documents rather than deeper
+analysis, name the X-Ray ($2,497) instead. Always name the ONE right
+tier for THIS defendant's specific gaps.
+ALWAYS include the credit math: "Your $197 is already credited — the
+Intelligence Brief is $800, not $997." This reframes the price as $800
+and reminds them their money carries forward. Add: "You have 12 months
+to decide."
+End with redirect to action: "You don't need to decide now. Right now,
+your Day 1 action is ready."
 THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
 </section>`;
 }
@@ -2791,6 +2892,32 @@ function buildIBPrompt(sectionKey: string, v: Record<string, string>): { system:
   const EFFICACY = `\n2:1 efficacy-to-threat ratio. After every hard fact → immediate context or action. No section ends on fear.`;
   const METHODOLOGY = `\nMETHODOLOGY NOTE (include at section end): This analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.`;
 
+  const REALISTIC_HOPE = `\nREALISTIC HOPE — MANDATORY:
+Include at least one specific, evidence-based reason for hope tied to THIS
+defendant's intake facts. Not generic reassurance ("many first offenders get
+probation") — specific to their charge type, facts, and jurisdiction.
+Place the strongest hope signal early — the defendant needs it before the
+hard information hits. Hope must be HONEST — grounded in real defense
+possibilities. But don't omit them — a scared defendant needs to know
+there's something to work with.`;
+
+  const UPGRADE_SEEDS = `\nUPGRADE SEEDS — HONEST LIMITS (use 1 per section where natural):
+When your analysis hits a natural limit — something you CAN'T fully answer
+without the defendant's actual discovery evidence (police reports, lab
+results, witness statements, surveillance footage) — name that limit
+honestly and tell them WHERE it gets resolved.
+Pattern: "Whether [specific question] holds up depends on [specific
+evidence type]. That's exactly what The X-Ray ($2,497) digs into — and
+your $997 is already credited, so it's $1,500."
+These are NOT sales pitches. They're factual limitations that:
+(a) Show the report is honest about what it can and can't do
+(b) Reveal complexity the defendant didn't know existed
+(c) Name the specific tier where that fear/question gets answered
+Also surface 1 thing the defendant probably hasn't thought about yet —
+a question they don't know they should be asking. Frame it as: "Something
+most defendants in [charge type] cases don't think about until it's too
+late: [specific issue]. This is worth raising with your attorney."`;
+
   const prompts: Record<string, { system: string; user: string }> = {
     "case-roadmap": {
       system: `You are an elite criminal defense research analyst generating Section 1: Your Case Roadmap for a Case Intelligence Brief.
@@ -2802,7 +2929,7 @@ EXPERT GROUNDING:
 - Shapiro: plea negotiation timing asymmetry — prosecution wants resolution early, defense benefits from investigation time
 - Spence: humanization — defendant is a person navigating a process, not a case number
 - BJ Fogg B=MAP: each stage maps to one action with a clear trigger
-${METHODOLOGY}
+${METHODOLOGY}${REALISTIC_HOPE}
 
 Output: ## Section 1: Your Case Roadmap
 ### 1a. Where You Are Now (timeline table, ~250w)
@@ -2851,7 +2978,7 @@ EXPERT GROUNDING:
 - Taleb: asymmetric motion design (upside, no downside)
 - Kahneman/Tversky: loss aversion + anchoring (plea evaluation)
 - Voss: naming pressure tactics to defuse them
-${METHODOLOGY}
+${METHODOLOGY}${UPGRADE_SEEDS}
 
 Output: ## Section 4
 ### 4a. Motion Landscape (~700w)
@@ -2878,7 +3005,7 @@ EXPERT GROUNDING:
 - NICCC database: National Inventory of Collateral Consequences of Conviction
 - Jayadev: participatory defense — community resources per jurisdiction
 - Seligman: temporalizing — "Your case is at month X of a Y-Z month process. This phase ends."
-${METHODOLOGY}
+${METHODOLOGY}${UPGRADE_SEEDS}
 
 Output: ## Section 5
 ### 5a. Protecting Your Case (~400w)
@@ -2926,7 +3053,7 @@ EXPERT GROUNDING:
 - Klein: pre-mortem — translate judge patterns into "if X, then Y" predictions
 - Lakoff: decode prosecution's framing strategy
 - Seligman: 3 P's — every negative outcome must depersonalize, contain, temporalize
-${METHODOLOGY}
+${METHODOLOGY}${UPGRADE_SEEDS}
 
 Output: ## Section 3
 ### 3a. Outcome Map (~500w)
@@ -3006,7 +3133,7 @@ OVERRIDE RULES:
 
 EXPERT GROUNDING:
 - Seligman: temporalizing — P3 includes temporal anchor: "Before [date], this phase will have progressed to [next stage]"
-- Bandura: mastery experience — P1 must be completable in under 5 minutes. The feeling of completion IS the intervention.`,
+- Bandura: mastery experience — P1 must be completable in under 5 minutes. The feeling of completion IS the intervention.${REALISTIC_HOPE}`,
       user: `Generate 48-Hour Priority List.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Court: ${v.next_court_date} | Immigration: ${v.immigration_status} | Attorney: ${v.attorney_name}\n</intake>\n\n<all_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n<s6>${v.your_plan_output}</s6>\n</all_sections>`,
     },
   };
