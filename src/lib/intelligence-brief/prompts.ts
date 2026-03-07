@@ -45,6 +45,22 @@ const METHODOLOGY_NOTE = `
 METHODOLOGY NOTE (include at section end):
 This analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.`;
 
+const LEGAL_ACCURACY_RULES = `
+JURISDICTION-SPECIFIC CHARGE TERMINOLOGY:
+Use the CORRECT charge name for the defendant's state. The intake may use colloquial terms — you must normalize.
+- Texas: "DWI" (Driving While Intoxicated) under Penal Code § 49.04 — NEVER "DUI" (which is a separate minor-only offense under Alcoholic Beverage Code § 106.041)
+- Other states: verify the correct statutory name (e.g., OUI in Massachusetts, OWI in Iowa)
+If the intake says "DUI" but the state is Texas, convert ALL references to "DWI" throughout.
+
+OUTCOME AVAILABILITY VERIFICATION:
+Before listing an outcome as possible, verify it is actually available for THIS charge in THIS state:
+- Texas DWI: Deferred adjudication is NOT available (Code of Criminal Procedure Art. 42A.102(b)(1) specifically excludes DWI). Use "pre-trial diversion/intervention program" instead, if the county offers one.
+- Always qualify county-specific programs: "Some [county] courts offer [program] — ask your attorney whether you qualify."
+Listing an outcome that is statutorily unavailable is a legal accuracy violation that will fail audit.
+
+LEGAL TERMS OF ART:
+Never use legal terms of art to characterize the attorney's behavior. "Standard of care" implies malpractice. "Ineffective assistance" implies a constitutional violation. Use plain language: "communication expectations," "typical communication patterns," "what most bar associations publish as guidelines."`;
+
 const ANTI_HALLUCINATION_PERCENTAGES = `
 ANTI-HALLUCINATION — NO SPECIFIC PERCENTAGES:
 Do NOT output specific percentages from training data (e.g., "75-85% conviction rate", "10-15% suppression success").
@@ -83,6 +99,7 @@ CRITICAL RULES:
 10. Bottom Line: 1 sentence + 1 action.
 11. BANNED terminology: "red flag," "warning sign," "escalation ladder," "you need to," "you should"
 ${BANNED_PHRASES_BLOCK}
+${LEGAL_ACCURACY_RULES}
 12. Maintain 2:1 efficacy-to-threat ratio. After every hard fact → immediate context or action.
 
 EXPERT GROUNDING:
@@ -158,6 +175,7 @@ CRITICAL RULES:
 7. Warm language: "You told us" / "You said" / "You mentioned" / "You shared" — NEVER "You indicated" / "You reported" / "You selected"
 8. BANNED terminology: "red flag," "warning sign," "escalation ladder," "you need to," "you should"
 ${BANNED_PHRASES_BLOCK}
+${LEGAL_ACCURACY_RULES}
 9. End with "Bottom Line Right Now" box — one sentence, one action.
 10. 2:1 efficacy-to-threat ratio. Every gap → immediate action step.
 11. BUYER STATE AWARENESS: Read frustration, last_communication, and attorney_statements to detect WHY this defendant purchased. Adjust tone:
@@ -237,6 +255,7 @@ CRITICAL RULES:
 8. Motion landscape: Constitutional, Procedural, Evidence, Charge-Specific motions.
 9. Warm language rules apply. BANNED terminology applies.
 ${BANNED_PHRASES_BLOCK}
+${LEGAL_ACCURACY_RULES}
 10. End with "Bottom Line Right Now" box. The Bottom Line must use "could be filed" not "could or should be filed" — "should" implies recommendation.
 11. 2:1 efficacy-to-threat ratio. Every deadline → paired with action. No section ends on threat.
 12. Cite the PRIMARY STATUTE for the charge (e.g., Texas Penal Code § 49.04 for DWI). Use jurisdiction-correct terminology.
@@ -328,6 +347,7 @@ CRITICAL RULES:
 8. Co-defendants: ONLY if co_defendants = true. Privilege awareness.
 9. Warm language rules apply. BANNED terminology applies.
 ${BANNED_PHRASES_BLOCK}
+${LEGAL_ACCURACY_RULES}
 10. End with "Bottom Line Right Now" box.
 11. 2:1 efficacy-to-threat ratio. After every consequence → immediate protective action.
 12. NO section or subsection ends on a threat. Always end on action or reassurance.
@@ -413,6 +433,7 @@ CRITICAL RULES:
 9. PD-specific vs private-specific guidance for "If Your Attorney Isn't There."
 10. Jurisdiction-specific where possible (courthouse practices vary).
 ${BANNED_PHRASES_BLOCK}
+${LEGAL_ACCURACY_RULES}
 
 EXPERT GROUNDING:
 - Raj Jayadev: participatory defense — preparation reduces power imbalance
@@ -485,6 +506,7 @@ CRITICAL RULES:
 7. Jurisdiction Profile: local courthouse practices, not generic "how courts work."
 8. Warm language rules apply. BANNED terminology applies.
 ${BANNED_PHRASES_BLOCK}
+${LEGAL_ACCURACY_RULES}
 9. End with "Bottom Line Right Now" box.
 10. 2:1 efficacy-to-threat ratio. After every hard outcome → bridge to action.
 11. All sources cited for judge intelligence.
@@ -590,6 +612,7 @@ CRITICAL RULES:
 8. If upgrade: 14-day plan starts at Day 8 (continuing from Case Decoder's 7-day plan).
 9. Warm language rules apply. BANNED terminology applies.
 ${BANNED_PHRASES_BLOCK}
+${LEGAL_ACCURACY_RULES}
 10. End with "Bottom Line Right Now" box.
 11. Every template must be actually usable — no "[fill in]" placeholders that require legal knowledge. Only personal details (name, phone number) can be blanks.
 12. BUYER STATE AWARENESS: The action plan must match why they bought:
@@ -690,6 +713,7 @@ CRITICAL RULES:
 6. Warm language: "You told us" / "Your brief found" — NEVER "You indicated" / "You reported"
 7. BANNED terminology applies.
 ${BANNED_PHRASES_BLOCK}
+${LEGAL_ACCURACY_RULES}
 8. Categorized by topic area, not numbered sequentially.
 9. Use jurisdiction-correct charge terminology and accurate procedural details (e.g., Texas uses "DWI" not "DUI"; observation period is 15 minutes per TDSHS, not "15-20 minutes"). Cite the primary statute when referencing testing protocols or charge elements.
 
@@ -784,6 +808,7 @@ CRITICAL RULES:
 6. Format: boxed/highlighted, visually distinct from the rest of the report.
 7. Ends with: "Everything else can wait. Start with Priority 1."
 ${BANNED_PHRASES_BLOCK}
+${LEGAL_ACCURACY_RULES}
 8. BUYER STATE AWARENESS: If intake signals attorney is non-responsive (last_communication gap > 2 weeks, frustration mentions silence), Priority 1 should still be "send the email" BUT Priority 2 must deliver value that doesn't depend on attorney responding.
 
 EXPERT GROUNDING:
