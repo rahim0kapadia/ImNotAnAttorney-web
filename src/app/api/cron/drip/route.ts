@@ -4,7 +4,7 @@
  * Schedule: Runs daily at 9 AM EST (14:00 UTC) via Vercel Cron.
  * Protected by CRON_SECRET bearer token (Vercel sets this automatically).
  *
- * This cron does 14 things, in order:
+ * This cron does 16 things, in order:
  *
  * PART 1 — Nurture emails (subscribers who haven't bought yet)
  *   Sends the next unsent email in the nurture sequence based on days since signup.
@@ -45,6 +45,13 @@
  *   Re-triggers the evaluate-report Edge Function for up to 5 cases per cron run.
  *   The eval trigger is fire-and-forget from generate-report — this catches cases
  *   where that trigger was silently dropped.
+ *
+ * PART 13 — Drip email send log cleanup (Privacy Policy §6)
+ *   Purges drip_emails dedup records older than 90 days.
+ *
+ * PART 14 — Discovery document auto-deletion (Privacy Policy §4)
+ *   Deletes discovery files from Supabase Storage 90 days after report delivery.
+ *   Clears file_urls on the case record after successful deletion.
  *
  * CAN-SPAM compliance:
  *   - All emails include unsubscribe links (via unsubscribeEmail param)
@@ -391,12 +398,23 @@ export async function GET(req: NextRequest) {
           // ── LINKED CASE (for threading + placeholder resolution) ──
           const { data: linkedCase } = await supabase
             .from("cases")
-            .select("id, report_token")
+            .select("id, report_token, status")
             .eq("email", order.email.toLowerCase())
             .eq("tier", order.tier)
             .order("created_at", { ascending: false })
             .limit(1)
             .maybeSingle();
+
+          // ── GUARD: Status update emails only send after upload submission ──
+          // Discovery tier status updates should only fire once the customer
+          // has actually submitted documents (case status = "submitted" or later).
+          if (nextEmail.key.includes("status_update") && linkedCase) {
+            const submittedStatuses = ["submitted", "generating", "review", "delivered"];
+            if (!submittedStatuses.includes(linkedCase.status)) {
+              skipped++;
+              continue;
+            }
+          }
 
           // ── RESOLVE PLACEHOLDERS (e.g., upload reminder needs case ID) ──
           let emailHtml = nextEmail.html;
@@ -1421,6 +1439,64 @@ export async function GET(req: NextRequest) {
         }
       }
       console.log(`[Drip Cron] Part 12: Re-triggered evaluation for ${missingEvals.length} cases`);
+    }
+
+    // ============================================================
+    // PART 13: DRIP EMAIL SEND LOG CLEANUP (Privacy Policy §6)
+    // ============================================================
+    // Purge drip_emails entries older than 90 days. These are dedup records
+    // (subscriber_id, email_key) with no sensitive content. Privacy Policy
+    // promises 90-day purge; this implements it.
+    const dripCutoff = new Date();
+    dripCutoff.setDate(dripCutoff.getDate() - 90);
+
+    const { count: dripPurged } = await supabase
+      .from("drip_emails")
+      .delete({ count: "exact" })
+      .lt("created_at", dripCutoff.toISOString());
+
+    if (dripPurged && dripPurged > 0) {
+      console.log(`[Drip Cron] Part 13: Purged ${dripPurged} old drip_emails records`);
+      cleaned += dripPurged;
+    }
+
+    // ============================================================
+    // PART 14: DISCOVERY DOCUMENT AUTO-DELETION (Privacy Policy §4)
+    // ============================================================
+    // Privacy Policy promises discovery documents are deleted within 90 days
+    // after report delivery. Query delivered cases with file_urls that are
+    // older than 90 days, delete from Supabase Storage, then clear file_urls.
+    const { data: expiredDiscovery } = await supabase
+      .from("cases")
+      .select("id, file_urls")
+      .eq("status", "delivered")
+      .lt("delivered_at", ninetyDaysAgo.toISOString())
+      .not("file_urls", "eq", "{}");
+
+    if (expiredDiscovery && expiredDiscovery.length > 0) {
+      for (const c of expiredDiscovery) {
+        if (!c.file_urls || c.file_urls.length === 0) continue;
+
+        // Delete files from storage bucket
+        const { error: removeError } = await supabase.storage
+          .from("discovery-files")
+          .remove(c.file_urls);
+
+        if (removeError) {
+          console.error(`[Drip Cron] Part 14: Failed to delete files for case ${c.id}:`, removeError);
+          errors++;
+          continue;
+        }
+
+        // Clear file_urls on the case record
+        await supabase
+          .from("cases")
+          .update({ file_urls: [] })
+          .eq("id", c.id);
+
+        cleaned += c.file_urls.length;
+        console.log(`[Drip Cron] Part 14: Deleted ${c.file_urls.length} discovery files for case ${c.id}`);
+      }
     }
 
     // ============================================================

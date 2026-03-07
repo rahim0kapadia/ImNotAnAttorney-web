@@ -12,6 +12,7 @@ Reusable per-tier checklist for auditing the entire customer pipeline. Created 2
 | `ImNotAnAttorney/docs/plans/2026-02-19-full-launch-readiness.md` | 2026-02-19 | Original build plan | Complete |
 | Plan: peppy-launching-rabbit | 2026-02-24 | 4-round deep audit, 26 gaps | Complete |
 | 3-agent IB pipeline audit | 2026-03-03 | IB happy-path + gaps | Complete — fixes in this commit |
+| 5-team discovery tier audit | 2026-03-06 | X-Ray, War Room, Situation Room — UPL, Psych, Legal, Defendant, Conversion (18 issues) | Complete — all fixes applied |
 
 ## Checklist (Per Tier)
 
@@ -109,6 +110,61 @@ Reusable per-tier checklist for auditing the entire customer pipeline. Created 2
 - [x] Rate limiting on IB-specific endpoints
 - [x] Post-purchase drip: delivery + story harvest (day 5) + upsell (day 10)
 - [x] Intake reminder SLA text branches for IB tier (fixed this commit)
+
+## Discovery Tiers — 5-Team Audit Results (2026-03-06)
+
+**Scope:** X-Ray ($2,497), War Room ($4,997), Situation Room ($9,997) — all prompt templates, report templates, delivery SOPs, and related web code.
+**Framework:** Same 50-criteria 5-team audit (UPL, Psych, Legal, Defendant, Conversion) used for IB audit.
+**Issues found:** 18 across 5 categories. All fixed.
+
+### GATE Priority (UPL — blocks shipment)
+
+| ID | Issue | Fix | Status |
+|----|-------|-----|--------|
+| UPL-1 | 10 discovery tier prompt templates lacked ABSOLUTE BANNED PHRASES enforcement blocks | Added enforcement blocks to all 10 prompts (3 X-Ray, 4 War Room, 3 Situation Room) | FIXED |
+| UPL-2 | X-Ray report template: "Always consult with your licensed attorney" | Replaced with approved methodology note disclaimer | FIXED |
+| UPL-3 | X-Ray report template: "What should concern you" (directive) | Changed to "Patterns worth noting" | FIXED |
+| UPL-4 | Situation Room report template: "consult with your licensed attorney" | Replaced with approved methodology note disclaimer | FIXED |
+| UPL-5 | Situation Room report template: "should accomplish" (directive) | Changed to "aims to explore" | FIXED |
+| UPL-6 | War Room report template: "Sentence Recommendation" (ambiguous) | Changed to "Sentencing Landscape" | FIXED |
+
+### HIGH Priority
+
+| ID | Issue | Fix | Status |
+|----|-------|-----|--------|
+| PSYCH-1 | Situation Room prerequisite gate: no client-side explanation when War Room not found | Added prerequisite note to checkout success page for Situation Room tier | FIXED |
+| DEF-1 | Add-on tiers (extra-witness, witness-pack) don't link to parent case | Added parent case linkage in Stripe webhook — queries most recent active discovery case | FIXED |
+| DEF-2 | Upload reminder emails may have unresolved template variables | Investigated — all template variables properly resolved in cron drip route. False positive. | NO CHANGE NEEDED |
+| DEF-3 | Discovery tier success page says "analysis begins immediately" | Investigated — success page already shows appropriate upload-first messaging for discovery tiers. False positive. | NO CHANGE NEEDED |
+| PSYCH-2 | No status update emails during analysis period (E2 deferred item) | Added 3 new discovery status update emails (post_x_ray/war_room/situation_room_status_update) with guard: only sends after case is in submitted+ status | FIXED |
+| PSYCH-3 | Situation Room report template: "recommended order" (directive) | Changed to "suggested sequence for discussion" | FIXED |
+
+### MEDIUM Priority
+
+| ID | Issue | Fix | Status |
+|----|-------|-----|--------|
+| CONV-1 | Delivery SOPs reference non-existent status values | Fixed: `upload_received` → `submitted`, `discovery_received` → `submitted`, `awaiting_discovery` → `pending`, `analysis_in_progress` removed, bucket `discovery` → `discovery-files` | FIXED |
+| CONV-2 | X-Ray report template missing Defense Opportunity Index | Already present at lines 352-358. False positive. | NO CHANGE NEEDED |
+| X5 | Anti-hallucination audit checklists missing from discovery tier SOPs | Added 5-item anti-hallucination checklist to all 3 delivery SOPs (expert verification, case law, statutes, skill labels, timelines) | FIXED |
+| X7 | AUDIT-CHECKLIST.md needs results from this audit cycle | This entry | FIXED |
+
+### Additional fixes found during implementation
+
+| File | Fix |
+|------|-----|
+| War Room prompt-template-motion-awareness.md | "Recommended Motion Sequencing" → "Motion Sequencing Analysis"; "recommended order of operations" → "suggested sequence for discussion with your attorney" |
+| War Room prompt-template-weekly-update.md | Disclaimer in output template replaced with approved methodology note |
+| X-Ray report-template.md line 60 | "act on it without consulting your attorney" → "act on it independently of your attorney" |
+| War Room report-template.md lines 25-27 | Disclaimer replaced with approved methodology note |
+
+### Files Modified (20 total)
+
+**Prompt templates (10):** `x-ray/prompt-template-{discovery-analysis,red-flags,questions}.md`, `war-room/prompt-template-{dossiers,motion-awareness,strategy,weekly-update}.md`, `situation-room/prompt-template-{trial-prep,reply-research,witness-research}.md`
+**Report templates (3):** `x-ray/report-template.md`, `war-room/report-template.md`, `situation-room/report-template.md`
+**Delivery SOPs (3):** `x-ray/delivery-sop.md`, `war-room/delivery-sop.md`, `situation-room/delivery-sop.md`
+**Web code (4):** `webhooks/stripe/route.ts`, `checkout/success/page.tsx`, `cron/drip/route.ts`, `lib/drip-emails.ts`
+
+---
 
 ## Deferred Items
 

@@ -12,7 +12,7 @@
  *      - Case Decoder: delivery → story harvest → upsell → referral
  *      - Intelligence Brief: delivery → story harvest → upsell
  *      - X-Ray: delivery → upload reminder → story harvest
- *      - War Room: delivery → first weekly update → story harvest
+ *      - War Room: delivery → referral (operator handles updates directly)
  *      - Situation Room: delivery → story harvest
  *      - Witness Pack / Extra Witness: delivery → upsell
  *
@@ -447,33 +447,19 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
   {
-    key: "post_war_room_first_update",
-    delayDays: 30,
-    tier: "war-room",
-    subject: "Your first weekly update is ready",
-    html: `
-      <h1 style="color: #F59E0B;">Your First Weekly Update Is Ready</h1>
-      <p>Your War Room weekly update is available. Here's how to use it:</p>
-      <ol>
-        <li><strong style="color: white;">Check for new developments</strong> — any changes in your case since the initial package</li>
-        <li><strong style="color: white;">Review updated questions</strong> — new questions based on case progress</li>
-        <li><strong style="color: white;">Share with your attorney</strong> — the attorney delivery section is formatted for them</li>
-      </ol>
-      <p>These updates continue weekly. If anything changes in your case — new discovery, new hearings, new filings — reply to this email so we can incorporate it.</p>
-    `,
-  },
-  {
-    key: "post_war_room_story_harvest",
-    delayDays: 5,
+    key: "post_war_room_referral",
+    delayDays: 14,
     tier: "war-room",
     relativeToDelivery: true,
-    subject: "How's your case going?",
+    subject: "Know someone facing charges?",
     html: `
-      <h1 style="color: #F59E0B;">How's Your Case Going?</h1>
-      <p>You've had your War Room package for a while now. I have one question:</p>
-      <p style="font-size: 18px; color: white;"><strong>What's been the most useful finding so far?</strong></p>
-      <p>Was it the witness analysis? The motion landscape? Something your attorney hadn't considered?</p>
-      <p>Just reply to this email. Your experience helps us build better intelligence for every defendant who comes after you.</p>
+      <h1 style="color: #F59E0B;">Know Someone Facing Charges?</h1>
+      <p>You know what it's like to face the system without enough information. If someone you know is in the same position, you can help them skip the confusion.</p>
+      <p style="font-size: 18px; color: white;"><strong>Send them to ${link("imnotanattorney.com", "/")}</strong></p>
+      <p>They can start with a free Attorney Accountability Score — no payment, no commitment. Just clarity on where they stand.</p>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        Every defendant deserves to walk into their attorney's office with the right questions. You did it. They can too.
+      </p>
     `,
   },
 
@@ -574,25 +560,89 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
 
+  // --- Discovery Status Update (X-Ray, War Room, Situation Room) ---
+  // Sent 3 days after upload finalization to reassure the customer their
+  // documents are being analyzed. Only for discovery tiers where the
+  // analysis takes 10+ business days.
+  {
+    key: "post_x_ray_status_update",
+    delayDays: 3,
+    tier: "x-ray",
+    subject: "Your discovery documents are being analyzed",
+    html: `
+      <h1 style="color: #F59E0B;">Your Documents Are Being Analyzed</h1>
+      <p>We received your discovery documents and analysis is underway. Here's what's happening:</p>
+      <ul style="padding-left: 20px;">
+        <li><strong style="color: white;">Document inventory</strong> — cataloging every page, every exhibit</li>
+        <li><strong style="color: white;">Timeline reconstruction</strong> — mapping events from all documents</li>
+        <li><strong style="color: white;">Cross-reference analysis</strong> — identifying contradictions between documents</li>
+        <li><strong style="color: white;">Red flag identification</strong> — flagging issues your attorney may want to explore</li>
+      </ul>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Expected delivery: within 10 business days of upload.</strong> We'll email you as soon as your X-Ray report is ready.
+      </p>
+      <p style="color: #A1A1AA;">Have additional documents to upload? You can add them anytime at ${link("the upload page", "/upload")}.</p>
+    `,
+  },
+  {
+    key: "post_war_room_status_update",
+    delayDays: 3,
+    tier: "war-room",
+    subject: "Your War Room analysis is in progress",
+    html: `
+      <h1 style="color: #F59E0B;">Your War Room Analysis Is In Progress</h1>
+      <p>We received your discovery documents and your War Room intelligence operation has begun:</p>
+      <ul style="padding-left: 20px;">
+        <li><strong style="color: white;">Week 1:</strong> Full case analysis — charges, discovery deep dive, timeline</li>
+        <li><strong style="color: white;">Weeks 2-3:</strong> Witness dossiers, prosecution analysis, motion landscape</li>
+        <li><strong style="color: white;">Week 4:</strong> Final package assembly — strategy questions, case law</li>
+      </ul>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Expected delivery: 25-28 business days.</strong> Weekly updates begin after initial delivery.
+      </p>
+      <p style="color: #A1A1AA;">Have additional documents? Upload anytime at ${link("the upload page", "/upload")}.</p>
+    `,
+  },
+  {
+    key: "post_situation_room_status_update",
+    delayDays: 3,
+    tier: "situation-room",
+    subject: "Your Situation Room engagement is active — analysis underway",
+    html: `
+      <h1 style="color: #F59E0B;">Your Situation Room Analysis Is Underway</h1>
+      <p>Your documents are being analyzed on a priority timeline. Your Situation Room engagement includes:</p>
+      <ul style="padding-left: 20px;">
+        <li><strong style="color: white;">Priority analysis</strong> — 24-48 hour turnaround per stage</li>
+        <li><strong style="color: white;">All War Room deliverables</strong> on an accelerated schedule</li>
+        <li><strong style="color: white;">Trial Intelligence Operations</strong> — evening debrief + morning prep (when trial begins)</li>
+      </ul>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Your priority communication channel is active.</strong> Use it anytime for urgent questions.
+      </p>
+      <p style="color: #A1A1AA;">Have additional documents? Upload anytime at ${link("the upload page", "/upload")}.</p>
+    `,
+  },
+
   // --- Witness Pack ($297) ---
   {
     key: "post_witness_pack_delivery",
     delayDays: 0,
     tier: "witness-pack",
-    subject: "Your Witness Pack analysis is underway",
+    subject: "Your Witness Pack order is confirmed — upload discovery to begin",
     html: `
-      <h1 style="color: #F59E0B;">Your Witness Pack Analysis Is Underway</h1>
-      <p>We've received your order and are analyzing up to 3 witnesses from your discovery documents.</p>
-      <p>Here's what you'll receive:</p>
+      <h1 style="color: #F59E0B;">Your Witness Pack Order Is Confirmed</h1>
+      <p>We're ready to analyze up to 3 witnesses — but we need your discovery documents first.</p>
+      <p><strong style="color: white;">Upload your documents now so we can start immediately:</strong></p>
+      ${cta("Upload Discovery Documents →", "/upload")}
+      <p style="margin-top: 24px;">Here's what you'll receive once analysis begins:</p>
       <ul style="padding-left: 20px;">
         <li>Statement analysis for each witness — inconsistencies, gaps, and patterns</li>
         <li>Inconsistency report — where witness statements conflict with evidence or each other</li>
         <li>Cross-examination questions per witness — specific, sourced, ready for your attorney</li>
       </ul>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">Delivery: 3-5 business days.</strong> If you haven't uploaded discovery yet, do it now so we can start immediately.
+        <strong style="color: white;">Delivery: 3-5 business days from when we receive your documents.</strong>
       </p>
-      ${cta("Upload Discovery Documents →", "/upload")}
     `,
   },
   {

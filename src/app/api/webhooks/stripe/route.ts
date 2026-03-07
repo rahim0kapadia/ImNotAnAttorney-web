@@ -344,6 +344,35 @@ export async function POST(req: NextRequest) {
       }
 
       // ──────────────────────────────────────────────────────────────
+      // ADD-ON PARENT CASE LINKING
+      // ──────────────────────────────────────────────────────────────
+      // Add-on tiers (extra-witness, witness-pack) should link to the
+      // customer's most recent active discovery case so the operator
+      // knows which engagement this add-on belongs to.
+      if (caseId && tierConfig?.isAddon) {
+        const discoveryTiers = ["x-ray", "war-room", "situation-room"];
+        const { data: parentCase } = await supabase
+          .from("cases")
+          .select("id, order_id")
+          .eq("email", email)
+          .in("tier", discoveryTiers)
+          .not("status", "in", '("refunded")')
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (parentCase) {
+          await supabase
+            .from("cases")
+            .update({ parent_order_id: parentCase.order_id })
+            .eq("id", caseId);
+          console.log(`[Webhook] Linked add-on ${tier} case ${caseId} to parent case ${parentCase.id}`);
+        } else {
+          console.warn(`[Webhook] Add-on ${tier} for ${email} — no active discovery case found to link`);
+        }
+      }
+
+      // ──────────────────────────────────────────────────────────────
       // INCLUDED-TIER CASE CREATION (tier inclusion model)
       // ──────────────────────────────────────────────────────────────
       // When a customer buys IB ($997), they also get a Case Decoder

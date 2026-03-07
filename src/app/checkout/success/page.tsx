@@ -109,7 +109,7 @@ const TIER_NEXT_STEPS: Record<
     name: TIER_CORE["situation-room"].name,
     delivery: TIER_CORE["situation-room"].delivery,
     action:
-      "Your package includes all lower-tier reports delivered progressively. Upload your discovery documents to begin the full Situation Room operation. We'll contact you within 24 hours.",
+      "Your package includes all lower-tier reports delivered progressively. Upload your discovery documents to begin the full Situation Room operation. We'll contact you within 24 hours. Note: The Situation Room builds on War Room deliverables. If you haven't completed the War Room tier, our team will reach out to coordinate your engagement.",
     showUpload: true,
     noIntakeAction:
       "Complete your case details to start receiving your included reports.",
