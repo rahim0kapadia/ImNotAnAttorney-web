@@ -30,22 +30,39 @@ export default function TermsPage() {
           Terms of Service
         </h1>
         <p className="mt-2 text-sm text-zinc-400">
-          Last updated: March 3, 2026
+          Last updated: March 6, 2026
         </p>
 
         <div className="mt-10 space-y-8 text-sm leading-relaxed text-zinc-400">
+          {/* Human intro — before the legal language starts */}
+          <p className="text-base text-zinc-300">
+            We built this business because we&apos;ve been where you are. We know
+            what it feels like when the system stops communicating and nobody
+            explains what&apos;s happening with your case. These terms explain
+            what we commit to you and what we ask in return. If anything here is
+            unclear, email us at{" "}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="text-amber-400 underline"
+            >
+              {CONTACT_EMAIL}
+            </a>
+            .
+          </p>
+
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
               1. Acceptance of Terms
             </h2>
             <p>
-              By accessing or using ImNotAnAttorney (&quot;we,&quot;
-              &quot;us,&quot; or &quot;our&quot;) at imnotanattorney.com
-              (&quot;the Site&quot;), or by purchasing any of our services, you
-              agree to be bound by these Terms of Service (&quot;Terms&quot;). If
-              you do not agree to these Terms, do not access or use our
-              services. These Terms constitute a legally binding agreement
-              between you and ImNotAnAttorney.
+              By accessing or using ImNotAnAttorney, a business operated by
+              Rahim Kapadia (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;)
+              at imnotanattorney.com (&quot;the Site&quot;), or by purchasing any
+              of our services, you agree to be bound by these Terms of Service
+              (&quot;Terms&quot;). These Terms constitute a legally binding
+              agreement between you and ImNotAnAttorney. We encourage you to read
+              them in full — and if anything doesn&apos;t make sense, reach out
+              before purchasing.
             </p>
           </section>
 
@@ -72,7 +89,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              3. Not Legal Advice — Important Disclaimer
+              3. What We Do — And What We Don&apos;t
             </h2>
             <p>
               <strong className="text-amber-400">
@@ -85,11 +102,10 @@ export default function TermsPage() {
             </p>
             <p className="mt-2">
               <strong className="text-zinc-300">What we provide:</strong> Legal
-              information, factual analysis of case documents, established
-              legal frameworks and procedures, and specific questions you can
-              bring to your attorney. Our reports identify patterns, potential
-              issues, and areas worth exploring — they do not tell you what to
-              do.
+              information, factual analysis of case documents, established legal
+              frameworks and procedures, and specific questions you can bring to
+              your attorney. Our reports identify patterns, potential issues, and
+              areas worth exploring — they do not tell you what to do.
             </p>
             <p className="mt-2">
               <strong className="text-zinc-300">What we do NOT provide:</strong>{" "}
@@ -100,6 +116,14 @@ export default function TermsPage() {
               how to handle any specific aspect of your case.
             </p>
             <p className="mt-2">
+              <strong className="text-zinc-300">How it works best:</strong>{" "}
+              Your attorney makes the legal decisions. We make sure you
+              understand what decisions are being made, and why. Our reports are
+              designed to work best when brought into a conversation with your
+              attorney — giving you the context and questions to have a
+              productive discussion.
+            </p>
+            <p className="mt-2">
               No communication with ImNotAnAttorney — including submitting case
               details, purchasing services, receiving reports, or exchanging
               emails — creates an attorney-client relationship, establishes any
@@ -107,19 +131,16 @@ export default function TermsPage() {
               or creates any fiduciary duty between you and ImNotAnAttorney.
             </p>
             <p className="mt-2">
-              The information we provide is not a substitute for the advice of a
-              licensed attorney who knows the full facts of your case. You are
-              solely responsible for all decisions regarding your legal matter.
-            </p>
-            <p className="mt-2">
               <strong className="text-zinc-300">
-                No guarantee of accuracy or completeness.
+                Limitations on accuracy.
               </strong>{" "}
-              While we strive for thoroughness, our reports may contain errors,
-              omissions, or incomplete analysis. AI-generated content is
-              reviewed for quality but is not verified by a licensed attorney.
-              All information should be independently verified with your own
-              legal counsel before relying on it for any decision.
+              While we strive for thoroughness, our analysis is based on the
+              information you provide. We don&apos;t have access to sealed court
+              records, private conversations between attorneys and judges, or
+              real-time courtroom dynamics — which means there are things your
+              attorney knows that we can&apos;t account for. AI-generated
+              content is reviewed for quality but is not verified by a licensed
+              attorney.
             </p>
           </section>
 
@@ -128,32 +149,27 @@ export default function TermsPage() {
               4. Artificial Intelligence Disclosure
             </h2>
             <p>
-              Our analysis services use artificial intelligence (AI) technology,
-              including large language models provided by Anthropic (Claude), to
-              process case information and generate reports. By using our
-              services, you acknowledge and consent to the following:
+              Our reports are generated using Claude, a large language model
+              built by{" "}
+              <a
+                href="https://www.anthropic.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-amber-400 underline"
+              >
+                Anthropic
+              </a>
+              , one of the leading AI safety companies in the world. Your case
+              data is not used to train their models, and every report goes
+              through a quality review before delivery. Like any tool, AI has
+              limitations — it can miss nuance or produce errors, which is why
+              our reports are designed as a starting point for conversations with
+              your attorney, not a replacement for one. See our{" "}
+              <a href="/privacy" className="text-amber-400 underline">
+                Privacy Policy
+              </a>{" "}
+              Section 3 for full technical details on how your data is processed.
             </p>
-            <ul className="mt-2 list-disc space-y-1 pl-5">
-              <li>
-                Your case information and uploaded documents may be processed by
-                third-party AI systems to generate your report
-              </li>
-              <li>
-                AI-generated analysis may contain errors, omissions, or
-                inaccuracies — you should verify all information with your
-                attorney
-              </li>
-              <li>
-                AI systems do not have the professional judgment, ethical
-                obligations, or situational awareness of a licensed attorney
-              </li>
-              <li>
-                We review AI outputs for quality and compliance, but the
-                presence of AI in the process means our reports should be
-                treated as informational research, not professional legal work
-                product
-              </li>
-            </ul>
           </section>
 
           <section>
@@ -163,8 +179,7 @@ export default function TermsPage() {
             <p>
               All payments are processed securely through Stripe. Prices are
               listed in US dollars. By purchasing a service, you agree to pay the
-              listed price for your selected tier. All sales are final except as
-              described below.
+              listed price for your selected tier.
             </p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
@@ -172,9 +187,23 @@ export default function TermsPage() {
                 Each service tier includes a specific delivery timeframe stated
                 at the time of purchase. If we fail to deliver your report
                 within the guaranteed timeframe, you are entitled to a full
-                refund of the amount paid for that tier. To claim a delivery
+                cash refund — no questions asked. To claim a delivery
                 guarantee refund, contact us within 7 days of the missed
                 delivery deadline.
+              </li>
+              <li>
+                <strong className="text-zinc-300">
+                  Satisfaction guarantee:
+                </strong>{" "}
+                If you&apos;re not satisfied with your report after delivery,
+                contact us within 30 days. We&apos;ll apply 100% of your
+                purchase as a credit toward any higher service tier.
+                Satisfaction credits are non-transferable and have no cash
+                value. This is a credit, not a cash refund — the delivery
+                guarantee above is the cash refund. Satisfaction credits do
+                not trigger deletion of your documents or revocation of
+                report access — only cash refunds (delivery guarantee) and
+                chargebacks do.
               </li>
               <li>
                 <strong className="text-zinc-300">Upgrade credits:</strong> 100%
@@ -185,10 +214,19 @@ export default function TermsPage() {
                 upgrade credit.
               </li>
               <li>
-                <strong className="text-zinc-300">Refunds:</strong> Outside of
-                delivery guarantee violations, all sales are final. If you
-                believe there is an error with your order, contact us within 30
-                days of purchase.
+                <strong className="text-zinc-300">Disputes:</strong> If
+                you&apos;re unsatisfied or believe there&apos;s a billing error,
+                please contact us at{" "}
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="text-amber-400 underline"
+                >
+                  {CONTACT_EMAIL}
+                </a>{" "}
+                before filing a dispute with your bank. We respond within 24
+                hours. Unresolved chargebacks may result in suspension of your
+                account and forfeiture of any remaining service access or
+                upgrade credits.
               </li>
             </ul>
           </section>
@@ -268,21 +306,18 @@ export default function TermsPage() {
               months preceding the claim.
             </p>
             <p className="mt-2">
-              <strong className="text-zinc-300">
-                No guarantee of legal outcomes.
-              </strong>{" "}
-              We do not and cannot guarantee any particular legal outcome. Our
-              analysis is informational — not predictive. Case outcomes depend
-              on many factors outside our control, including your attorney&apos;s
-              strategy, the judge, the jury, and the specific facts of your
-              case. You acknowledge that no representation has been made
-              regarding the likely outcome of your legal matter.
+              We deliver our services as described on our website at the time of
+              your purchase — no hidden fees, no bait-and-switch. Beyond that,
+              we provide our services &quot;as is&quot; and &quot;as
+              available&quot; without additional warranties, express or implied,
+              including implied warranties of merchantability or fitness for a
+              particular purpose.
             </p>
             <p className="mt-2">
-              <strong className="text-zinc-300">
-                By using our site or purchasing our services, you agree not to
-                hold us liable for the outcome of your case in any way.
-              </strong>
+              We&apos;re a research partner, not a guarantor. Legal outcomes
+              depend on facts, attorneys, judges, and circumstances we
+              can&apos;t control. What we can control — and do — is the quality
+              of the information and questions we put in your hands.
             </p>
           </section>
 
@@ -309,14 +344,14 @@ export default function TermsPage() {
               10. Indemnification
             </h2>
             <p>
-              You agree to indemnify, defend, and hold harmless ImNotAnAttorney
-              and its owners, employees, agents, and contractors from and
-              against any claims, damages, losses, liabilities, costs, and
-              expenses (including reasonable attorneys&apos; fees) arising out of
-              or related to: (a) your use of our services; (b) your violation
-              of these Terms; (c) your violation of any applicable law or
-              regulation; or (d) any decision you make or action you take based
-              on information provided by our services.
+              Both you and ImNotAnAttorney benefit from clear expectations. You
+              agree to indemnify, defend, and hold harmless ImNotAnAttorney and
+              its owners, employees, agents, and contractors from and against
+              any claims, damages, losses, liabilities, costs, and expenses
+              (including reasonable attorneys&apos; fees) arising out of or
+              related to: (a) your violation of these Terms; (b) your violation
+              of any applicable law or regulation; or (c) any materially
+              inaccurate information you submit to us.
             </p>
           </section>
 
@@ -390,10 +425,10 @@ export default function TermsPage() {
               performing our obligations where such failure or delay results
               from circumstances beyond our reasonable control, including but
               not limited to: natural disasters, acts of government, internet or
-              telecommunications failures, third-party service outages (e.g.,
-              Stripe, Supabase, Anthropic), power failures, or cyberattacks. In
-              such events, our delivery guarantee timeframes will be extended by
-              the duration of the force majeure event.
+              telecommunications failures, third-party service outages, power
+              failures, or cyberattacks. In such events, our delivery guarantee
+              timeframes will be extended by the duration of the force majeure
+              event.
             </p>
           </section>
 
@@ -409,6 +444,19 @@ export default function TermsPage() {
               necessary to make it valid and enforceable while preserving its
               original intent.
             </p>
+            <p className="mt-2">
+              <strong className="text-zinc-300">Waiver.</strong> Our failure
+              to enforce any provision of these Terms does not constitute a
+              waiver of our right to enforce that provision or any other
+              provision in the future.
+            </p>
+            <p className="mt-2">
+              <strong className="text-zinc-300">Assignment.</strong> We may
+              assign these Terms or any rights under them without your consent
+              (for example, in connection with a merger or acquisition). You
+              may not assign your rights or obligations under these Terms
+              without our prior written consent.
+            </p>
           </section>
 
           <section>
@@ -419,10 +467,11 @@ export default function TermsPage() {
               We reserve the right to modify these Terms at any time. Material
               changes will be posted on this page with an updated &quot;Last
               updated&quot; date. If you have an active order, we will notify
-              you of material changes by email. Continued use of our services
-              after changes are posted constitutes your acceptance of the
-              modified Terms. If you do not agree to the modified Terms, you
-              must stop using our services.
+              you of material changes by email. Material changes will never
+              affect services you&apos;ve already purchased under a prior
+              version of these Terms. Continued use of our services after
+              changes are posted constitutes your acceptance of the modified
+              Terms.
             </p>
           </section>
 
@@ -453,7 +502,10 @@ export default function TermsPage() {
               , constitute the entire agreement between you and ImNotAnAttorney
               regarding your use of our services. These Terms supersede all
               prior agreements, communications, and understandings, whether
-              written or oral, regarding the subject matter herein.
+              written or oral, regarding the subject matter herein. Section
+              headings are for convenience only and do not affect
+              interpretation. These Terms do not create any rights for third
+              parties.
             </p>
           </section>
 
@@ -472,7 +524,7 @@ export default function TermsPage() {
               .
             </p>
             <p className="mt-2">
-              ImNotAnAttorney
+              ImNotAnAttorney, a business operated by Rahim Kapadia
               <br />
               195 Dr MLK Jr St N
               <br />
