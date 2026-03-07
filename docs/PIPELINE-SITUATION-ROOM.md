@@ -278,8 +278,10 @@ The Situation Room has two post-purchase emails defined in `src/lib/drip-emails.
 | Case Decoder | Day 0 | Day 5 (delivery) | Day 7 | Day 14 |
 | Intelligence Brief | Day 0 | Day 5 (delivery) | Day 10 | -- |
 | X-Ray | Day 0 | Day 5 (delivery) | -- | -- |
-| War Room | Day 0 | Day 5 (delivery) | -- | -- |
+| War Room | Day 0 | -- | -- | Day 14 (delivery) |
 | **Situation Room** | **Day 0** | **Day 5 (delivery)** | **--** | **--** |
+
+War Room has no story harvest or update drips — the operator communicates directly with War Room customers via weekly updates, so automated drips would conflict. A referral email sends 14 days after delivery instead.
 
 The Situation Room has no upsell email because it is the highest tier — there is no tier above it to upsell into. The extra-witness add-on ($149) is communicated via the delivery email and ongoing operator interactions, not via a drip email.
 

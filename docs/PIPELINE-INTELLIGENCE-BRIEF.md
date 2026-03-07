@@ -50,16 +50,9 @@ When Stripe fires `checkout.session.completed`, the webhook:
 5. Sends payment confirmation email to customer (includes delivery timeframe from tier config).
 6. Sends operator notification email with full order details.
 
-**Key difference from Case Decoder:** The webhook does NOT auto-trigger report generation for this tier. The auto-trigger block (lines 290-318 in route.ts) is gated by `tier === "case-decoder"`:
+**Key difference from Case Decoder:** The webhook does NOT directly auto-trigger IB report generation. However, because the Intelligence Brief **includes the Case Decoder as Part 1**, the webhook triggers CD generation via the `includesTiers` mechanism (lines 363-439 in route.ts). The primary auto-trigger gate (`tier === "case-decoder"`) handles standalone CD purchases; the `includesTiers` logic handles CD generation for IB and higher tiers that include it.
 
-```ts
-if (caseId && tier === "case-decoder") {
-  // Only case-decoder gets auto-triggered here.
-  // Higher tiers require discovery documents or manual operator action.
-}
-```
-
-For `intelligence-brief`, the webhook creates the order and case, then stops. No generation endpoint is called.
+For `intelligence-brief`, the webhook creates the order and case, auto-generates the included Case Decoder, then waits for the customer to complete the Phase 2 intake before Phase A generation begins.
 
 ### 3. Intake Form + Case Linking
 

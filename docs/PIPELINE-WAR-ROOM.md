@@ -219,7 +219,7 @@ When a War Room customer upgrades to Situation Room:
 
 ## Drip Sequence
 
-War Room has three post-purchase emails defined in `src/lib/drip-emails.ts`.
+War Room has two post-purchase emails defined in `src/lib/drip-emails.ts`. Weekly updates and story harvesting are handled directly by the operator since War Room is an ongoing, time-sensitive engagement.
 
 ### Email 1: Package Assembly Notification (Day 0)
 
@@ -229,27 +229,22 @@ War Room has three post-purchase emails defined in `src/lib/drip-emails.ts`.
 - Content: Three-phase timeline (Days 1-7, 7-21, 21-28), upload CTA, delivery expectation (25-28 business days)
 - Sets expectations for the multi-phase delivery process
 
-### Email 2: First Weekly Update (Day 30)
+### Email 2: Referral (Day 14 After Delivery)
 
-- Key: `post_war_room_first_update`
-- Trigger: Cron job (/api/cron/drip Part 2), 30 days after purchase
-- Subject: "Your first weekly update is ready"
-- Content: How to use the update (check new developments, review updated questions, share with attorney)
-- Notes that updates continue weekly and customer can reply with case changes
+- Key: `post_war_room_referral`
+- Trigger: Cron job, 14 days after `cases.delivered_at` (uses `relativeToDelivery: true`)
+- Subject: "Know someone facing charges?"
+- Content: Encourages customer to refer others, links to free Attorney Accountability Score
+- Purpose: Word-of-mouth acquisition from high-value customers
 
-### Email 3: Story Harvest (Day 5 After Delivery)
+### Why No Automated Story Harvest or Update Emails
 
-- Key: `post_war_room_story_harvest`
-- Trigger: Cron job, 5 days after `cases.delivered_at` (uses `relativeToDelivery: true`)
-- Subject: "How's your case going?"
-- Content: Asks which finding has been most useful (witness analysis, motion landscape, etc.)
-- Purpose: Collect testimonials and feedback to improve the service
+War Room is an ongoing engagement with weekly operator contact. Unlike lower tiers where automated drip fills the communication gap, War Room customers receive direct operator updates. Story harvesting and feedback happen naturally during those interactions. Automated update emails would conflict with operator-driven communication.
 
 ### Drip Timing Notes
 
 - Day-0 emails are sent by the webhook/delivery endpoints, not the cron. The cron skips `delayDays: 0` entries.
-- The `relativeToDelivery` flag on the story harvest email means the 5-day delay is measured from `cases.delivered_at`, not from the purchase date. Since War Room delivery takes 25-28 days, this ensures the story harvest arrives ~5 days after the customer actually receives the package.
-- The day-30 first update email is measured from purchase date, which aligns with the 25-28 day initial delivery window (customer receives the package, then gets the update prompt ~2-5 days later).
+- The `relativeToDelivery` flag on the referral email means the 14-day delay is measured from `cases.delivered_at`, not from the purchase date. Since War Room delivery takes 25-28 days, this ensures the referral arrives ~2 weeks after the customer has their package and has experienced the value.
 - Drip deduplication uses the `drip_emails` table with a unique constraint on `(subscriber_id, email_key)`.
 - Refunded orders are skipped by the cron (Part 2 filters by `status: "paid"`).
 - Unsubscribed customers are filtered out via subscriber record check.

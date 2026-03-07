@@ -385,31 +385,17 @@ emails.push({
 });
 
 emails.push({
-  filename: "post-war-room-first-update.html",
-  subject: "Your first weekly update is ready",
-  category: "Post-Purchase: War Room (Day 30)",
+  filename: "post-war-room-referral.html",
+  subject: "Know someone facing charges?",
+  category: "Post-Purchase: War Room (Day 14, relative to delivery)",
   html: `
-    <h1 style="color: #F59E0B;">Your First Weekly Update Is Ready</h1>
-    <p>Your War Room weekly update is available. Here's how to use it:</p>
-    <ol>
-      <li><strong style="color: white;">Check for new developments</strong> — any changes in your case since the initial package</li>
-      <li><strong style="color: white;">Review updated questions</strong> — new questions based on case progress</li>
-      <li><strong style="color: white;">Share with your attorney</strong> — the attorney delivery section is formatted for them</li>
-    </ol>
-    <p>These updates continue weekly. If anything changes in your case — new discovery, new hearings, new filings — reply to this email so we can incorporate it.</p>
-  `,
-});
-
-emails.push({
-  filename: "post-war-room-story-harvest.html",
-  subject: "How's your case going?",
-  category: "Post-Purchase: War Room (Day 5, relative to delivery)",
-  html: `
-    <h1 style="color: #F59E0B;">How's Your Case Going?</h1>
-    <p>You've had your War Room package for a while now. I have one question:</p>
-    <p style="font-size: 18px; color: white;"><strong>What's been the most useful finding so far?</strong></p>
-    <p>Was it the witness analysis? The motion landscape? Something your attorney hadn't considered?</p>
-    <p>Just reply to this email. Your experience helps us build better intelligence for every defendant who comes after you.</p>
+    <h1 style="color: #F59E0B;">Know Someone Facing Charges?</h1>
+    <p>You know what it's like to face the system without enough information. If someone you know is in the same position, you can help them skip the confusion.</p>
+    <p style="font-size: 18px; color: white;"><strong>Send them to ${link("imnotanattorney.com", "/")}</strong></p>
+    <p>They can start with a free Attorney Accountability Score — no payment, no commitment. Just clarity on where they stand.</p>
+    <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+      Every defendant deserves to walk into their attorney's office with the right questions. You did it. They can too.
+    </p>
   `,
 });
 
@@ -446,21 +432,22 @@ emails.push({
 
 emails.push({
   filename: "post-witness-pack-delivery.html",
-  subject: "Your Witness Pack analysis is underway",
+  subject: "Your Witness Pack order is confirmed — upload discovery to begin",
   category: "Post-Purchase: Witness Pack (Day 0)",
   html: `
-    <h1 style="color: #F59E0B;">Your Witness Pack Analysis Is Underway</h1>
-    <p>We've received your order and are analyzing up to 3 witnesses from your discovery documents.</p>
-    <p>Here's what you'll receive:</p>
+    <h1 style="color: #F59E0B;">Your Witness Pack Order Is Confirmed</h1>
+    <p>We're ready to analyze up to 3 witnesses — but we need your discovery documents first.</p>
+    <p><strong style="color: white;">Upload your documents now so we can start immediately:</strong></p>
+    ${cta("Upload Discovery Documents →", "/upload")}
+    <p style="margin-top: 24px;">Here's what you'll receive once analysis begins:</p>
     <ul style="padding-left: 20px;">
       <li>Statement analysis for each witness — inconsistencies, gaps, and patterns</li>
       <li>Inconsistency report — where witness statements conflict with evidence or each other</li>
       <li>Cross-examination questions per witness — specific, sourced, ready for your attorney</li>
     </ul>
     <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-      <strong style="color: white;">Delivery: 3-5 business days.</strong> If you haven't uploaded discovery yet, do it now so we can start immediately.
+      <strong style="color: white;">Delivery: 3-5 business days from when we receive your documents.</strong>
     </p>
-    ${cta("Upload Discovery Documents →", "/upload")}
   `,
 });
 
