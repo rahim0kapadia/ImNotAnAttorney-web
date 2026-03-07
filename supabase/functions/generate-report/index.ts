@@ -399,9 +399,10 @@ The intake identifies whether this is a FEDERAL or STATE case.
 - State: Jurisdiction-specific rules, state sentencing, plea practices.
 - Unknown: Note importance of determining jurisdiction.
 
-OUTPUT BUDGET — CRITICAL:
-Under 6,700 words total. 7 always-present sections + Letter +
-Closing + Postscript + 0-2 conditional sections.
+OUTPUT BUDGET — CRITICAL (HARD LIMIT):
+MAXIMUM 6,500 words total. This is a HARD ceiling, not a target.
+Previous reports ran 15% over budget. Be CONCISE. Cut ruthlessly.
+7 always-present sections + Letter + Closing + Postscript + 0-2 conditional.
 Start with the Letter (NO "## A Letter to You" heading — a letter
 doesn't announce itself; just open with the defendant's first name
 followed by a comma, e.g., "Jennifer,"). The Methodology Note is
@@ -707,8 +708,12 @@ EXACTLY WHAT TO SAY — 7 SUBSECTIONS:
    preparation. Some defendants find reviewing it privately before their
    meeting helps them get more from the conversation."
 2. Ready-to-Send Email — copy-paste ready, personalized (case #, court
-   date, intake-specific questions, defendant name). Tone: collaborative
-   ("I want to be well-prepared for our next conversation").
+   date, defendant name). MUST embed the top 3-5 priority questions from
+   Section 5 as a numbered list IN the email body — NOT vague topic
+   references like "I have questions about the evidence." The defendant
+   should be able to send this email without copying questions from
+   elsewhere. Tone: collaborative ("I want to be well-prepared for our
+   next conversation").
 3. Phone Script — read-aloud ready, personalized (name, case #, court date).
 4. Follow-up Template — if no response within 5-7 business days.
 5. Your Advocacy Steps — EXACTLY 5 steps, NO MORE. NOT "escalation ladder.":
@@ -904,8 +909,10 @@ a specific statute, regulation, or named source. Never make unsourced
 claims about employment, housing, immigration, voting, firearms, or
 civil rights consequences.
 
-IMMIGRATION — use this paragraph VERBATIM every time immigration consequences
-appear. Do not summarize or shorten it:
+IMMIGRATION — MANDATORY IN EVERY REPORT. Even if the intake does not
+mention immigration status, include this paragraph in Understanding Your
+Charges (after Your Rights box) because many defendants are unaware
+that criminal charges can carry immigration consequences. Use VERBATIM:
 “If you are not a U.S. citizen, this charge may carry immigration consequences
 under federal law. Under Padilla v. Kentucky, 559 U.S. 356 (2010), your
 attorney has a legal duty to advise you about immigration consequences. Before
@@ -1414,6 +1421,12 @@ If DUI/DWI → Include ALR/implied consent hearing deadline. Frame as "Something
 If drug charge → Include asset forfeiture possibility. Same framing.
 If sex offense → Include registry requirements. Same framing.
 Expert attributions should appear throughout the report where specific methods are referenced.
+
+**LIFE IMPACTS — BRIEF NOTE (1-2 sentences):**
+After the rights box, briefly note: "Beyond the legal case, a charge
+like this can affect employment background checks, insurance rates, and
+family dynamics. Your attorney can discuss these impacts and what steps
+may minimize them." Keep brief — the Intelligence Brief covers this in depth.
 </section>
 
 ${includeCaseClock ? `<section id="c1" title="Time and Deadlines" max_words="100">
@@ -1429,7 +1442,10 @@ Use ONLY the section title as the heading — never prefix with internal id.
 The Meeting Ready Sheet in Your Next 7 Days is safe if attorney sees it.
 
 **2. READY-TO-SEND EMAIL:**
-Copy-paste ready. Personalized: case # in subject line, court date reference, 2-3 intake-specific questions, defendant name signoff.
+Copy-paste ready. Personalized: case # in subject line, court date reference, defendant name signoff.
+MUST embed the top 3-5 priority questions from Section 5 as a NUMBERED LIST in the email body.
+Do NOT use vague references like "I have questions about the evidence" — write the actual questions.
+The defendant should be able to hit send without copying anything from other sections.
 Tone: collaborative ("I want to be well-prepared for our next conversation").
 Subject: "Case Update Request — [Name], Case #[Number]"
 
@@ -1439,21 +1455,16 @@ Read-aloud ready. Personalized with name, case #, court date. For defendants who
 **4. FOLLOW-UP TEMPLATE:**
 If no response within 5-7 business days. References Step 3 of Your Advocacy Steps.
 
-**5. YOUR ADVOCACY STEPS (8 steps — NOT "escalation ladder"):**
-Contextualized to attorney type (PD vs private) + jurisdiction (state bar complaint process).
-**Steps 1-5 — Collaborative (start here):**
+**5. YOUR ADVOCACY STEPS (EXACTLY 5 steps — NOT "escalation ladder"):**
+Contextualized to attorney type (PD vs private).
 Step 1: Send the email from subsection 2 above
 Step 2: Follow up by phone — reference your email, request a specific time
 Step 3: Send the follow-up email template — written record with timestamped questions
-Step 4: Formal letter requesting case status update
-Step 5: Request meeting with supervising partner/PD office
-
-**Steps 6-8 — Structural safety nets (so you always have a next step):**
-Step 6: Written request to management for case review
-Step 7: State bar inquiry about communication obligations
-Step 8: Consultation with second attorney for case review
-"Most situations resolve at Steps 1-3. Steps 4-5 are there when you need more structure. Steps 6-8 are structural safety nets — so you always have a next step."
-If PD: Step 8 includes legal aid organizations, PD substitution process, cost acknowledgment.
+Step 4: Request written answers to your specific questions
+Step 5: Consider seeking a second opinion from another attorney — framed as information only
+"Most situations resolve at Steps 1-3. Steps 4-5 are there when you need more structure."
+If PD: Step 5 includes legal aid organizations and cost acknowledgment.
+HARD STOP: Steps 6, 7, 8 DO NOT EXIST. No bar complaints, no "fire your attorney."
 
 **6. WHEN THE CONVERSATION GETS DIFFICULT:**
 3-4 scenarios. Each with: What you hear → What's happening → What you say → Why it works.
@@ -1848,7 +1859,7 @@ function renderReportHtml(
     .replace(/^## (.+)$/gm, '<h2 style="color: #F59E0B; font-size: 20px; margin-top: 32px; padding-top: 24px; border-top: 1px solid #27272A;">$1</h2>')
     .replace(/\*\*(.+?)\*\*/g, '<strong style="color: white;">$1</strong>')
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
-    .replace(/^> (.+)$/gm, '<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">$1</blockquote>')
+    .replace(/^>[ ]?(.*)$/gm, (_m: string, content: string) => '<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">' + (content || '') + '</blockquote>')
     .replace(/^- \[x\] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9745; $1</li>')
     .replace(/^- \[ \] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9744; $1</li>')
     .replace(/^- (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
@@ -1865,7 +1876,31 @@ function renderReportHtml(
 
   html = html.replace(
     /(<tr>[\s\S]*?<\/tr>(\s*<tr>[\s\S]*?<\/tr>)*)/g,
-    '<table style="width: 100%; border-collapse: collapse; margin: 16px 0;">$1</table>'
+    (tableMatch: string) => {
+      const rows = tableMatch.split('</tr>').filter((r: string) => r.trim());
+      if (rows.length > 0) {
+        rows[0] = rows[0].replace(/<td /g, '<th ').replace(/<\/td>/g, '</th>');
+      }
+      return '<table style="width: 100%; border-collapse: collapse; margin: 16px 0;">' + rows.map((r: string) => r.trim() ? r.trim() + '</tr>' : '').filter(Boolean).join('\n') + '</table>';
+    }
+  );
+
+  // Wrap consecutive <li> elements in <ul>
+  html = html.replace(
+    /(<li[\s\S]*?<\/li>\s*)+/g,
+    '<ul style="margin: 8px 0; padding-left: 24px;">$&</ul>'
+  );
+
+  // Merge consecutive <blockquote> elements into a single blockquote
+  html = html.replace(
+    /(<blockquote[^>]*>[\s\S]*?<\/blockquote>\s*)+/g,
+    (bqMatch: string) => {
+      const contents: string[] = [];
+      const re = /<blockquote[^>]*>([\s\S]*?)<\/blockquote>/g;
+      let m: RegExpExecArray | null;
+      while ((m = re.exec(bqMatch)) !== null) { contents.push(m[1]); }
+      return `<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">${contents.join('<br>')}</blockquote>`;
+    }
   );
 
   return `<!DOCTYPE html>
@@ -1882,7 +1917,7 @@ function renderReportHtml(
     strong { color: #1a1a1a !important; }
     blockquote { border-left-color: #92400e !important; }
     table, th, td { border-color: #d4d4d4 !important; }
-    .no-print { display: none !important; }
+    .print-hidden { display: none !important; }
     .header-block { background: #f5f5f4 !important; border-color: #92400e !important; }
     a { color: #92400e !important; }
   }
@@ -1919,7 +1954,7 @@ function renderReportHtml(
     <p style="margin: 0; font-size: 12px; color: #71717A;">&copy; ${new Date().getFullYear()} ImNotAnAttorney. Legal information, not legal advice.</p>
     <p style="margin: 4px 0 0; font-size: 12px; color: #52525B;">Report ID: ${meta.reportId} | Generated: ${meta.reportDate}</p>
   </div>
-  <div class="no-print" style="margin-top: 32px; text-align: center;">
+  <div class="print-hidden" style="margin-top: 32px; text-align: center;">
     <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">After your meeting, if you want to verify your attorney's answers against the evidence:</p>
     <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $997 ($800 after credit)</a>
     <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure — decide after your meeting.</p>
@@ -2796,7 +2831,7 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
       .replace(/^## (.+)$/gm, '<h2 style="color: #F59E0B; font-size: 20px; margin-top: 32px; padding-top: 24px; border-top: 1px solid #27272A;">$1</h2>')
       .replace(/\*\*(.+?)\*\*/g, '<strong style="color: white;">$1</strong>')
       .replace(/\*(.+?)\*/g, "<em>$1</em>")
-      .replace(/^> (.+)$/gm, '<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">$1</blockquote>')
+      .replace(/^>[ ]?(.*)$/gm, (_m: string, content: string) => '<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">' + (content || '') + '</blockquote>')
       .replace(/^- \[x\] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9745; $1</li>')
       .replace(/^- \[ \] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9744; $1</li>')
       .replace(/^- (.+)$/gm, '<li style="margin-bottom: 4px;">$1</li>')
@@ -2809,7 +2844,33 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
         return `<tr>${cells.map((c: string) => `<${tag} ${s}>${c}</${tag}>`).join("")}</tr>`;
       })
       .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p style="margin: 8px 0; line-height: 1.6;">$1</p>');
-    h = h.replace(/(<tr>[\s\S]*?<\/tr>(\s*<tr>[\s\S]*?<\/tr>)*)/g, '<table style="width: 100%; border-collapse: collapse; margin: 16px 0;">$1</table>');
+    h = h.replace(
+      /(<tr>[\s\S]*?<\/tr>(\s*<tr>[\s\S]*?<\/tr>)*)/g,
+      (tableMatch: string) => {
+        const rows = tableMatch.split('</tr>').filter((r: string) => r.trim());
+        if (rows.length > 0) {
+          rows[0] = rows[0].replace(/<td /g, '<th ').replace(/<\/td>/g, '</th>');
+        }
+        return '<table style="width: 100%; border-collapse: collapse; margin: 16px 0;">' + rows.map((r: string) => r.trim() ? r.trim() + '</tr>' : '').filter(Boolean).join('\n') + '</table>';
+      }
+    );
+    // Wrap consecutive <li> in <ul>
+    h = h.replace(
+      /(<li[\s\S]*?<\/li>\s*)+/g,
+      '<ul style="margin: 8px 0; padding-left: 24px;">$&</ul>'
+    );
+
+    // Merge consecutive <blockquote> elements
+    h = h.replace(
+      /(<blockquote[^>]*>[\s\S]*?<\/blockquote>\s*)+/g,
+      (bqMatch: string) => {
+        const contents: string[] = [];
+        const re = /<blockquote[^>]*>([\s\S]*?)<\/blockquote>/g;
+        let m: RegExpExecArray | null;
+        while ((m = re.exec(bqMatch)) !== null) { contents.push(m[1]); }
+        return `<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">${contents.join('<br>')}</blockquote>`;
+      }
+    );
     return h;
   }
 
@@ -2834,7 +2895,7 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Case Intelligence Brief — ${escapeHtml(meta.firstName)}</title>
-<style>@media print { body { background: white !important; color: #1a1a1a !important; } * { color: #1a1a1a !important; } h2,h3,h4 { color: #92400e !important; } strong { color: #1a1a1a !important; } .no-print { display: none !important; } .header-block { background: #f5f5f4 !important; border-color: #92400e !important; } }</style>
+<style>@media print { body { background: white !important; color: #1a1a1a !important; } * { color: #1a1a1a !important; } h2,h3,h4 { color: #92400e !important; } strong { color: #1a1a1a !important; } .print-hidden { display: none !important; } .header-block { background: #f5f5f4 !important; border-color: #92400e !important; } }</style>
 </head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0C0A09; color: #D4D4D8; margin: 0; padding: 0;">
 <div style="max-width: 800px; margin: 0 auto; padding: 32px 24px;">
@@ -2861,7 +2922,7 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
     <p style="margin: 0; font-size: 12px; color: #71717A;">&copy; ${new Date().getFullYear()} ImNotAnAttorney. Legal information, not legal advice.</p>
     <p style="margin: 4px 0 0; font-size: 12px; color: #52525B;">Report ID: ${escapeHtml(meta.reportId)} | Generated: ${escapeHtml(meta.reportDate)}</p>
   </div>
-  <div class="no-print" style="margin-top: 32px; text-align: center;">
+  <div class="print-hidden" style="margin-top: 32px; text-align: center;">
     <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">When you get discovery evidence, we can go even deeper:</p>
     <a href="/checkout?tier=x-ray${meta.email ? `&email=${encodeURIComponent(meta.email)}` : ""}" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">The X-Ray — $2,497 ($1,500 after credit)</a>
     <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $997 is fully credited toward any tier within 12 months.</p>
