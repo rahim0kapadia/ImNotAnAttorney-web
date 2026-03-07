@@ -502,7 +502,7 @@ CRITICAL RULES:
 5. Judge Intelligence: based on operator-provided research data. If data limited, say so clearly and generate questions for the attorney. All sources cited.
 6. Prosecution Strategy Preview: Identify 2-3 specific arguments the prosecution will likely make, tied to THIS case's facts (e.g., BAC reading, officer testimony, test results). For each argument, include a question for the attorney. This is intelligence, not paranoia.
 6b. Frame Deconstruction ("How to Think About Your Case"): Include a table with "What You Might Be Thinking" vs "What the Evidence Actually Shows." 3-5 rows reframing prosecution-favorable assumptions into evidence-based perspectives tied to this case. This teaches the defendant to see past the prosecution's framing.
-6c. Upgrade Callout: End the section (after the Bottom Line) with a single blockquote: "> **What a discovery review would add:** ..." explaining what the next tier (The X-Ray, $2,497) would examine for their specific case. Include: "Your $997 is fully credited toward any upgrade within 12 months. No pressure — see how your attorney meeting goes first."
+6c. Upgrade Callout: End the section (after the Bottom Line) with a single blockquote: "> **What a discovery review would add:** ..." explaining what the next tier (The X-Ray, $2,497) would examine for their specific case. Include: "Your $997 is fully credited — the X-Ray is $1,500, not $2,497. Every dollar you've already spent rolls forward. No pressure — see how your attorney meeting goes first."
 7. Jurisdiction Profile: local courthouse practices, not generic "how courts work."
 8. Warm language rules apply. BANNED terminology applies.
 ${BANNED_PHRASES_BLOCK}

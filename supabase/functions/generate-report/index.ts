@@ -912,7 +912,7 @@ SELF-VERIFICATION — Before output:
 46. At least 2 upgrade seeds planted in analysis sections — honest factual limits, not sales pitches.
 47. What Comes Next postscript references specific unanswered questions from THIS report and reminds defendant their $197 is credited toward any tier.
 48. At least 2 unknown unknowns surfaced — procedural realities the defendant hasn't thought about yet, framed as proactive intelligence.
-49. Every upgrade seed names the specific tier that resolves it (Intelligence Brief, X-Ray, or War Room) — not generic "go deeper."
+49. Every upgrade seed names the specific tier that resolves it (Intelligence Brief, X-Ray, War Room, or Situation Room) with credit math — not generic "go deeper."
 Revise if any check fails.
 
 NATURAL VOICE — ANTI-FORMULAIC RULES:
@@ -979,14 +979,20 @@ These are NOT upgrade pitches. They're factual limitations that:
 (b) Reveal complexity they didn't know existed
 (c) Create a natural "I want to know more" feeling
 
-When naming a limit, tell the defendant WHICH tier resolves it:
-- Intelligence Brief ($997): deeper legal analysis, judge profile,
-  prosecution strategy — for fears about strategy and options
-- The X-Ray ($2,497): analysis of actual discovery documents — for fears
-  about evidence, police reports, lab results, witness statements
-- The War Room ($4,997): full case strategy over 28 days — for fears
-  about trial preparation and ongoing case management
+When naming a limit, tell the defendant WHICH tier resolves it AND
+include the credit math (every dollar rolls forward, 12-month window):
+- Intelligence Brief ($997 — $800 after CD credit): deeper legal analysis,
+  judge profile, prosecution strategy — for fears about strategy and options
+- The X-Ray ($2,497 — $2,300 after CD credit, or $1,500 after IB credit):
+  analysis of actual discovery documents — for fears about evidence, police
+  reports, lab results, witness statements
+- The War Room ($4,997): full case strategy over 28 days — for fears about
+  trial preparation and ongoing case management
+- The Situation Room ($9,997, requires War Room): trial intelligence
+  operations with priority response — for active trial support
 Don't name all tiers. Name the ONE tier that answers THIS specific gap.
+Always show the credit math: "Your $197 is already credited — so it's
+$[difference], not $[full price]."
 
 UNKNOWN UNKNOWNS — MANDATORY:
 Include 2-3 things the defendant doesn't know to worry about yet —
@@ -2909,6 +2915,11 @@ honestly and tell them WHERE it gets resolved.
 Pattern: "Whether [specific question] holds up depends on [specific
 evidence type]. That's exactly what The X-Ray ($2,497) digs into — and
 your $997 is already credited, so it's $1,500."
+FULL CREDIT LADDER — every dollar rolls forward (12-month window):
+- IB ($997) → X-Ray ($2,497) = $1,500 after credit
+- IB ($997) → War Room ($4,997) = $4,000 after credit
+- IB ($997) → Situation Room ($9,997) = $9,000 after credit (requires War Room first)
+Name the ONE tier that answers THIS specific gap — don't list all tiers.
 These are NOT sales pitches. They're factual limitations that:
 (a) Show the report is honest about what it can and can't do
 (b) Reveal complexity the defendant didn't know existed
