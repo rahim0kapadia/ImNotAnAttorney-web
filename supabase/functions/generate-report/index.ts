@@ -2913,10 +2913,38 @@ These are NOT sales pitches. They're factual limitations that:
 (a) Show the report is honest about what it can and can't do
 (b) Reveal complexity the defendant didn't know existed
 (c) Name the specific tier where that fear/question gets answered
-Also surface 1 thing the defendant probably hasn't thought about yet —
-a question they don't know they should be asking. Frame it as: "Something
+Also surface 2-3 things the defendant probably hasn't thought about yet —
+questions they don't know they should be asking. Frame as: "Something
 most defendants in [charge type] cases don't think about until it's too
-late: [specific issue]. This is worth raising with your attorney."`;
+late: [specific issue]. This is worth raising with your attorney."
+These build trust (the report knows things they don't) and naturally
+create upgrade desire (if the report surfaced unknowns, how many more
+are there?).`;
+
+  const ANTI_FORMULAIC = `\nANTI-FORMULAIC RULES (D12-D16):
+- Intake attribution ("You told us" / "You mentioned" / "You said") max 3 per section. After that, state facts directly without attribution.
+- No phrase repeated verbatim >3 times within one section.
+- Table cells under 30 words. Key actions not buried in middle of dense paragraphs.
+- If inserting immigration or collateral consequence content mid-section, add a 1-sentence contextual lead-in — no cold drops between unrelated topics.
+- Vary structural patterns: if using repeated blocks (questions, action items, bullet lists), vary length and format so the reader can't predict the exact shape of every remaining item after seeing 2-3.`;
+
+  const EMOTIONAL_DEPTH = `\nEMOTIONAL PROFILING — Read intake to detect and calibrate:
+- PRIMARY FEAR: career/freedom/family/financial/reputation — what are they MOST afraid of losing?
+- EMOTIONAL STANCE: Minimizer ("not that big a deal") → validate practical approach, build alongside. Catastrophizer ("life is ruined") → contain scope, temporalize, show bounded reality. Intellectualizer (precise legal questions) → honor the approach, provide info, gently bridge to emotion. Dissociater (flat affect, minimal detail) → concrete simple actions, skip emotional language.
+- ATTORNEY WOUND: Abandonment (PD won't call back), Betrayal (pushing unwanted plea), or Kept in Dark (won't explain). These feel very different — calibrate tone accordingly.
+- HOPE SIGNAL: What their specific question or frustration reveals about what they hope is true. Mirror and build on it.
+Calibrate section tone to THIS defendant's stance — not generic warm language.`;
+
+  const ACTION_VOICE = `\nACTION SECTION VOICE (D14):
+Action sections (plans, priorities, email templates, "if overwhelmed") use direct language — the action IS the information: "Send the email (30 seconds)" NOT "You may want to consider sending the email." Reserve hedged language ("one option is," "you may want to consider") for legal analysis sections where UPL caution applies.`;
+
+  const COLLATERAL_CITATIONS = `\nCOLLATERAL CONSEQUENCE CITATIONS (L7/U10):
+Every collateral consequence MUST cite a specific statute, regulation, or named source.
+- Immigration: cite Padilla v. Kentucky, 559 U.S. 356 (2010) + 8 U.S.C. § 1101(a)(43). Include immigration attorney referral.
+- Gun rights: cite 18 U.S.C. § 922(g)(1) + applicable state firearms statute.
+- Driver's license: cite applicable state statute (FL: F.S. § 322.055).
+- Professional licensing: NEVER assert loss as fact — frame as "may affect" + cite licensing board statute.
+Unsourced claims about employment, housing, immigration, voting, firearms, or civil rights consequences are audit failures.`;
 
   const prompts: Record<string, { system: string; user: string }> = {
     "case-roadmap": {
@@ -2929,7 +2957,7 @@ EXPERT GROUNDING:
 - Shapiro: plea negotiation timing asymmetry — prosecution wants resolution early, defense benefits from investigation time
 - Spence: humanization — defendant is a person navigating a process, not a case number
 - BJ Fogg B=MAP: each stage maps to one action with a clear trigger
-${METHODOLOGY}${REALISTIC_HOPE}
+${METHODOLOGY}${REALISTIC_HOPE}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
 
 Output: ## Section 1: Your Case Roadmap
 ### 1a. Where You Are Now (timeline table, ~250w)
@@ -2954,7 +2982,7 @@ EXPERT GROUNDING:
 - Roy Black: preparation = the differentiator
 - Chris Voss: calibrated follow-up questions
 - George Lakoff: decode the frames attorneys use (what they say vs what they mean)
-${METHODOLOGY}
+${METHODOLOGY}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
 
 Output: ## Section 2
 ### 2a. What's On Track (score + tracker, ~400w)
@@ -2978,7 +3006,7 @@ EXPERT GROUNDING:
 - Taleb: asymmetric motion design (upside, no downside)
 - Kahneman/Tversky: loss aversion + anchoring (plea evaluation)
 - Voss: naming pressure tactics to defuse them
-${METHODOLOGY}${UPGRADE_SEEDS}
+${METHODOLOGY}${UPGRADE_SEEDS}${ANTI_FORMULAIC}
 
 Output: ## Section 4
 ### 4a. Motion Landscape (~700w)
@@ -3005,7 +3033,7 @@ EXPERT GROUNDING:
 - NICCC database: National Inventory of Collateral Consequences of Conviction
 - Jayadev: participatory defense — community resources per jurisdiction
 - Seligman: temporalizing — "Your case is at month X of a Y-Z month process. This phase ends."
-${METHODOLOGY}${UPGRADE_SEEDS}
+${METHODOLOGY}${UPGRADE_SEEDS}${ANTI_FORMULAIC}${COLLATERAL_CITATIONS}
 
 Output: ## Section 5
 ### 5a. Protecting Your Case (~400w)
@@ -3023,6 +3051,7 @@ Hearing-type-specific preparation guide. Practical (dress, arrive, park). Step-b
 EXPERT GROUNDING:
 - Jayadev: participatory defense — preparation reduces power imbalance
 - BJ Fogg: preparation = ability, reduces anxiety = motivation barrier
+${ANTI_FORMULAIC}
 
 Output: ## Appendix B
 ### What This Hearing Is (~100w)
@@ -3053,7 +3082,7 @@ EXPERT GROUNDING:
 - Klein: pre-mortem — translate judge patterns into "if X, then Y" predictions
 - Lakoff: decode prosecution's framing strategy
 - Seligman: 3 P's — every negative outcome must depersonalize, contain, temporalize
-${METHODOLOGY}${UPGRADE_SEEDS}
+${METHODOLOGY}${UPGRADE_SEEDS}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
 
 Output: ## Section 3
 ### 3a. Outcome Map (~500w)
@@ -3080,7 +3109,7 @@ EXPERT GROUNDING:
 - Voss: difficult conversation scripts — tactical empathy, calibrated questions
 - Bandura: 4 sources of self-efficacy — mastery (Day 1 email = small win), vicarious learning, social persuasion, emotional state management
 - Klein: pre-mortem for meeting prep — imagine it went badly, prepare to prevent each failure mode
-${METHODOLOGY}
+${METHODOLOGY}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}${ACTION_VOICE}
 
 Output: ## Section 6
 ### 6a. If Overwhelmed (~50w)
@@ -3106,6 +3135,7 @@ EXPERT GROUNDING:
 - Irving Younger: cross-examination precision adapted for client-attorney communication
 - Pozner: pointed questions impossible to dodge
 - MacCarthy: question sequencing for maximum information extraction
+${ANTI_FORMULAIC}
 
 Output: ## Appendix D
 ### Intro (~100w)
@@ -3133,7 +3163,7 @@ OVERRIDE RULES:
 
 EXPERT GROUNDING:
 - Seligman: temporalizing — P3 includes temporal anchor: "Before [date], this phase will have progressed to [next stage]"
-- Bandura: mastery experience — P1 must be completable in under 5 minutes. The feeling of completion IS the intervention.${REALISTIC_HOPE}`,
+- Bandura: mastery experience — P1 must be completable in under 5 minutes. The feeling of completion IS the intervention.${REALISTIC_HOPE}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}${ACTION_VOICE}`,
       user: `Generate 48-Hour Priority List.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Court: ${v.next_court_date} | Immigration: ${v.immigration_status} | Attorney: ${v.attorney_name}\n</intake>\n\n<all_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n<s6>${v.your_plan_output}</s6>\n</all_sections>`,
     },
   };
