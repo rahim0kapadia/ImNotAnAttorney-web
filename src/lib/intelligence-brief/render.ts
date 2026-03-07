@@ -253,10 +253,10 @@ function buildYourRights(state: string): string {
 - You have the right to be consulted before major decisions are made
 - You have the right to make the final decision on whether to accept a plea or go to trial
 - You have the right to effective assistance of counsel (Strickland v. Washington)
-- You have the right to fire your attorney and hire a new one (though timing matters)
+- You have the right to change attorneys at any time (though timing and procedural requirements apply)
 
 ### If You Feel Your Rights Are Being Violated:
 - Document everything in writing (dates, times, what was said)
-- Follow the Advocacy Steps in Section 6j of this brief
+- Follow the Advocacy Steps in Section 6 of this brief
 - Contact your state bar association's client protection hotline`;
 }

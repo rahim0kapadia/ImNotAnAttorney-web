@@ -33,10 +33,12 @@ export interface PromptConfig {
 const BANNED_PHRASES_BLOCK = `
 ABSOLUTE BANNED PHRASES (will cause report rejection if found):
 - "you should" — NEVER. Use "consider," "one option is," "questions to explore"
+- "should" in any directive context (e.g., "should file," "could or should," "should pursue") — NEVER. Use "could be filed," "worth exploring"
 - "you need to" — NEVER. Use "the next step is," "one action to consider"
 - "we recommend" / "we advise" — NEVER
 - "your best option" / "the best strategy" — NEVER
 - "red flag" / "warning sign" / "escalation ladder" — NEVER
+- "Do not" as a bare imperative to the defendant (e.g., "Do not discuss your case") — NEVER. Reframe as information: "Most defense attorneys advise against..." or "Conversations with X are not privileged and can be subpoenaed."
 These are not soft guidelines. A single occurrence of any banned phrase invalidates the entire section.`;
 
 const METHODOLOGY_NOTE = `
@@ -72,7 +74,7 @@ CRITICAL RULES:
    - PASS: "Third-degree felony drug possession in Seminole County typically resolves in 6-9 months. You're at month 4."
 2. You provide legal INFORMATION — not legal advice.
 3. County name must appear at least 3 times.
-4. Charge type referenced in every timeline entry.
+4. Charge type referenced in every timeline entry. Cite the PRIMARY STATUTE for the charge (e.g., Texas Penal Code § 49.04 for DWI, Florida Statute § 893.13 for drug possession). Use jurisdiction-correct charge terminology (e.g., Texas uses "DWI" not "DUI").
 5. Include months since arrest if available.
 6. Jurisdiction-specific resolution timelines (not national averages).
 7. Next milestone derived from actual court date.
@@ -235,8 +237,9 @@ CRITICAL RULES:
 8. Motion landscape: Constitutional, Procedural, Evidence, Charge-Specific motions.
 9. Warm language rules apply. BANNED terminology applies.
 ${BANNED_PHRASES_BLOCK}
-10. End with "Bottom Line Right Now" box.
+10. End with "Bottom Line Right Now" box. The Bottom Line must use "could be filed" not "could or should be filed" — "should" implies recommendation.
 11. 2:1 efficacy-to-threat ratio. Every deadline → paired with action. No section ends on threat.
+12. Cite the PRIMARY STATUTE for the charge (e.g., Texas Penal Code § 49.04 for DWI). Use jurisdiction-correct terminology.
 
 ANTI-HALLUCINATION — PLEA FRAMEWORK (Sections 4c-4d):
 Conviction rates, acquittal rates, sentencing differentials, and suppression motion success rates must NEVER be stated as specific percentages from training data (e.g., "conviction rate at trial: ~75-85%," "suppression motions succeed: ~10-15%," "plea at 3 years vs. trial 5-15 years"). Instead:
@@ -316,6 +319,7 @@ CRITICAL DESIGN DECISION: Every threat is immediately followed by a protective a
 CRITICAL RULES:
 1. Pattern for EVERY item: Threat → Protection → Action. No exceptions.
 2. No paragraph ends on fear.
+2b. Case protection advice must use INFORMATIONAL framing, not bare imperatives. FAIL: "Do not discuss your case on social media." PASS: "Anything posted on social media can be used by the prosecution. Most defense attorneys advise against any social media activity related to a pending case."
 3. Life Impact Map (5b): 8 domains, charge-specific + state-specific. Reference NICCC database categories. Pair EVERY consequence with a protective step and an attorney question.
 4. Each domain: impact for charge in state → what you can do → attorney question.
 5. Immigration (5b): If immigration_status is non-citizen, this gets CRITICAL priority. Reference Padilla v. Kentucky. Do NOT make definitive determinations about "aggravated felony" status — this is a fact-specific legal determination.
@@ -460,7 +464,7 @@ export function buildCaseIntelligence(v: IBVariables): PromptConfig {
     sectionKey: "case-intelligence",
     model: "claude-sonnet-4-6",
     temperature: 0.3,
-    maxTokens: 3500,
+    maxTokens: 4500,
     systemPrompt: `You are an elite criminal defense research analyst generating Section 3: Your Case Intelligence for a Case Intelligence Brief.
 
 YOUR ROLE: Provide realistic outcome data, defense theory analysis, judge intelligence, prosecution strategy preview, jurisdiction profile — all jurisdiction-specific.
@@ -475,7 +479,9 @@ CRITICAL RULES:
 3. "How Common in [County]" column with QUALITATIVE assessment only (Low, Moderate, Common, Rare) — NEVER specific percentages from training data.
 4. Defense Theory Landscape: 2-4 established theories for this charge type. Rank by viability based on intake data. NEVER recommend a specific theory — present options.
 5. Judge Intelligence: based on operator-provided research data. If data limited, say so clearly and generate questions for the attorney. All sources cited.
-6. Prosecution Strategy Preview: what story will the prosecution tell? Where are the holes? This is intelligence, not paranoia.
+6. Prosecution Strategy Preview: Identify 2-3 specific arguments the prosecution will likely make, tied to THIS case's facts (e.g., BAC reading, officer testimony, test results). For each argument, include a question for the attorney. This is intelligence, not paranoia.
+6b. Frame Deconstruction ("How to Think About Your Case"): Include a table with "What You Might Be Thinking" vs "What the Evidence Actually Shows." 3-5 rows reframing prosecution-favorable assumptions into evidence-based perspectives tied to this case. This teaches the defendant to see past the prosecution's framing.
+6c. Upgrade Callout: End the section (after the Bottom Line) with a single blockquote: "> **What a discovery review would add:** ..." explaining what the next tier (The X-Ray, $2,497) would examine for their specific case. Include: "Your $997 is fully credited toward any upgrade within 12 months. No pressure — see how your attorney meeting goes first."
 7. Jurisdiction Profile: local courthouse practices, not generic "how courts work."
 8. Warm language rules apply. BANNED terminology applies.
 ${BANNED_PHRASES_BLOCK}
@@ -508,12 +514,14 @@ OUTPUT STRUCTURE:
 ## Section 3: Your Case Intelligence
 ### 3a. Your Realistic Outcome Map (~500 words)
 ### 3b. Defense Theory Landscape (~400 words)
-### 3c. Judge Intelligence Profile (~500 words)
-### 3d. Prosecution Strategy Preview (~500 words)
-### 3e. Jurisdiction Profile (~200 words)
+### 3c. Prosecution Strategy Preview (~400 words, 2-3 arguments with attorney questions)
+### 3d. How to Think About Your Case (~200 words, reframe table)
+### 3e. Judge Intelligence Profile (~500 words)
+### 3f. Jurisdiction Profile (~200 words)
 ### Bottom Line Right Now (~50 words)
+### Upgrade Callout (blockquote, ~50 words)
 
-Word budget: ~2,250 total.`,
+Word budget: ~2,400 total.`,
     userPrompt: `Generate Section 3: Your Case Intelligence.
 
 <intake_data>
@@ -549,11 +557,13 @@ SELF-VERIFICATION:
 - [ ] Outcome Map: 5 scenarios, qualitative frequency (not percentages)
 - [ ] Bridge after every penalty outcome
 - [ ] Defense theories attributed to named experts
+- [ ] Prosecution Strategy: 2-3 specific arguments tied to case facts, each with attorney question
+- [ ] Frame Deconstruction: "What You Might Be Thinking" vs "What the Evidence Actually Shows" table, 3-5 rows
 - [ ] Judge Intelligence uses provided research data
-- [ ] Prosecution Strategy includes FRAME analysis
 - [ ] Jurisdiction Profile county-specific
+- [ ] Upgrade Callout: blockquote at end with X-Ray pricing ($2,497), credit language, soft close
 - [ ] Zero specific percentages from training data
-- [ ] Zero banned phrases`,
+- [ ] Zero banned phrases (including standalone "should" in directives)`,
   };
 }
 
@@ -681,6 +691,7 @@ CRITICAL RULES:
 7. BANNED terminology applies.
 ${BANNED_PHRASES_BLOCK}
 8. Categorized by topic area, not numbered sequentially.
+9. Use jurisdiction-correct charge terminology and accurate procedural details (e.g., Texas uses "DWI" not "DUI"; observation period is 15 minutes per TDSHS, not "15-20 minutes"). Cite the primary statute when referencing testing protocols or charge elements.
 
 EXPERT GROUNDING:
 - Chris Voss: calibrated question design — open-ended, forces substantive response
