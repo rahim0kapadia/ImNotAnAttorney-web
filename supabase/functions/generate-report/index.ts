@@ -883,8 +883,8 @@ SELF-VERIFICATION — Before output:
 18. "How to Document Everything" guidance present (notes + summary email + recording consent + case journal)
 19. Admin process callout present when applicable (DUI→ALR, drug→forfeiture, sex→registry) — framed as efficacy, not alarm
 20. Verify-facts box split into "Confirm these facts from your intake" (verification) + "Get these facts before your meeting" (new tasks)
-21. Every "What to listen for" → in-meeting response + post-meeting action sequence + Step reference in Your Advocacy Steps
-22. Every question has "If the answer is vague" follow-up probe (4th part of question format)
+21. Q1-Q5 "What to listen for" includes action sequence. Q6-Q15 "What to listen for" varies — not all need Step references or summary email mentions
+22. Q1-Q5 have full 5-part format including "If the answer is vague" probe. Q6-Q15 use compact 3-part format
 23. TIME-SENSITIVE marker on ADDRESS FIRST items with deadlines
 24. Meeting logistics ("What to Bring" + "What to Expect") present in Your Next 7 Days
 25. "If You're Feeling Overwhelmed, Start Here" callout present with ONE action (send email, 30 seconds)
@@ -902,6 +902,49 @@ SELF-VERIFICATION — Before output:
 37. If defendant mentions a career/profession, the Letter and report address career-identity loss SPECIFICALLY (nursing license, CDL, teaching certificate, professional license, security clearance) — not buried in a generic collateral consequences list.
 38. If co_defendants = "Yes", co-defendant dynamics are addressed (cooperation pressure, betrayal fear, feeling singled out) in Questions for Your Attorney and Things Worth Asking About.
 Revise if any check fails.
+
+NATURAL VOICE — ANTI-FORMULAIC RULES:
+
+PHRASE VARIATION — MANDATORY:
+"You told us" / "You mentioned" / "You shared" / "From your intake" /
+"Based on what you shared" — use each NO MORE THAN 5 TIMES across the
+entire report. After 5 uses, state the fact directly without attribution
+("Your BAC was .09" not "You told us your BAC was .09"). Total intake-
+attribution phrases across all variants: max 15 in the full report.
+
+QUESTION ENDING VARIATION — MANDATORY:
+Do NOT end every question's "What to listen for" with the same action
+sequence. Vary the post-meeting guidance:
+- Some questions: "Note this in your case journal."
+- Some questions: "This is worth a follow-up email if the answer changes."
+- Some questions: "If you get a clear answer, you can cross this one off."
+- Some questions: Just end with the pattern to listen for — no action needed.
+- Reference "Your Advocacy Steps" or "summary email" in at most 5 of the
+  15 questions, not all of them.
+
+SECTION TRANSITION VARIATION — MANDATORY:
+Bridge sentences between sections must NOT follow a formula. Vary:
+- Some transitions: a question ("So what does this mean for your meeting?")
+- Some transitions: a forward reference ("The next section gives you the words.")
+- Some transitions: just end the section cleanly — not every section needs
+  a bridge sentence. If the next heading is self-explanatory, skip the bridge.
+
+IMMIGRATION / COLLATERAL PARAGRAPH TRANSITIONS:
+When inserting the immigration paragraph or life-impacts note, add a
+1-sentence contextual lead-in. Example: "One thing many people don't think
+about with a criminal charge:" before the immigration paragraph. Do NOT
+drop standalone paragraphs between sections without context.
+
+ACTION SECTION VOICE:
+The 7-Day Plan, "If You're Feeling Overwhelmed," and Meeting Ready Sheet
+are ACTION sections — not legal analysis. In these sections ONLY, use
+direct language:
+- "Send the email (30 seconds)" NOT "You may want to consider sending the email"
+- "Review your five priority questions" NOT "One option is to review..."
+- "Gather your materials" NOT "One option is to gather..."
+The action IS the information — describing what Day 1 looks like is not
+legal advice. Reserve hedged language ("you may want to consider," "one
+option is") for legal analysis sections where UPL caution is warranted.
 
 COLLATERAL CONSEQUENCES — MANDATORY CITATION RULES:
 Every collateral consequence mentioned ANYWHERE in the report MUST cite
@@ -1401,6 +1444,10 @@ NEVER use "You indicated" / "You reported" / "You selected" — these sound clin
 NEVER blame the attorney. Frame gaps as things to CLARIFY: "Communication gaps are common but not acceptable — you're entitled to understand what's happening in your case."
 End with: "This is not a grade on your attorney or your case. It's a map of what you know and what you don't know — based on what you shared with us."
 After the closing line, add: "**What this tells you:** The 'What to Ask About' column is the starting point for your next conversation. The questions in Questions for Your Attorney go deeper."
+
+TABLE CELL BREVITY: Each cell in the "Where Things Stand" table must be
+under 30 words. Use short, scannable phrases — not full sentences. If a
+cell needs more detail, move it to a bullet list below the table.
 </section>
 
 <section id="s2" title="Understanding Your Charges" max_words="500">
@@ -1490,17 +1537,30 @@ Q6-Q15: Additional questions organized by topic.
 QUESTION TONE: Questions sound like a CLIENT asking for help — conversational, respectful. Keep legal jargon in "Why it matters" only. No yes/no questions — every question must require a substantive answer.
 Overall methodology: Calibrated questions adapted from Chris Voss (FBI lead hostage negotiator) — repurposed for attorney communication.
 
-Each question has EXACTLY 5 parts — no more, no less:
-1. **Question:** Calibrated question (conversational, never yes/no) — references intake data: "You told us..."
-2. **Why it matters:** Grounded in named expert's methodology + "You told us..." link.
+QUESTION FORMAT — TIERED:
+
+Q1-Q5 (PRIORITY — full format, 5 parts each):
+1. **Question:** Calibrated question (conversational, never yes/no) — references intake data
+2. **Why it matters:** Grounded in named expert's methodology + intake link.
    Weave expert attributions NATURALLY into this paragraph (e.g., "This
    question draws on Martin Weinberg's framework for evaluating intent
    defenses"). This paragraph is where the expert name appears.
 3. **Good answer:** Specific deliverable (notes, filings, correspondence)
 4. **If the answer is vague:** "[empathetic follow-up probe for in-meeting use]"
-5. **What to listen for:** "[pattern]" — Here's what to do: [in-meeting response] + [post-meeting action: document, send summary email] + [Step reference in Your Advocacy Steps]
+5. **What to listen for:** "[pattern]" + what to do with the answer
 
-Then --- and the next question heading. The question structure has EXACTLY these 5 bold-labeled parts. No additional bold-labeled lines of any kind after part 5 — the --- separator follows immediately.
+Q6-Q15 (ADDITIONAL — compact format, 3 parts each):
+1. **Question:** Calibrated question (conversational, never yes/no)
+2. **Why it matters:** 2-3 sentences — expert grounding + intake link
+3. **What to listen for:** Key signal + one action if needed
+
+This tiering serves the reader: Q1-Q5 get deep treatment because they are
+the priority questions drawn from this defendant's intake. Q6-Q15 are
+important but don't need the same depth — the defendant will skim these
+and focus on the ones that resonate. The format change also prevents the
+"template fatigue" where all 15 questions feel identical.
+
+Then --- and the next question heading. Q1-Q5 have EXACTLY 5 bold-labeled parts. Q6-Q15 have EXACTLY 3 bold-labeled parts. No additional bold-labeled lines after the last part — the --- separator follows immediately.
 
 After writing all 15, count them. If not exactly 15, revise.
 </section>
