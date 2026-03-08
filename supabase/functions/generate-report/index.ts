@@ -2704,6 +2704,11 @@ async function handleIBPhaseB(
     }
   }
 
+  // Strip any LLM-generated methodology disclaimers (renderer adds its own)
+  for (const key of Object.keys(allOutputs)) {
+    allOutputs[key] = stripIBMethodologyNotes(allOutputs[key]);
+  }
+
   // Compile HTML report
   console.log(`[IB-Phase-B] Compiling HTML report...`);
   const reportToken = crypto.randomUUID();
@@ -2854,7 +2859,7 @@ function buildIBVariables(intake: IntakeData, phase2: any, priorCdHtml: string, 
     judge_name: p2.judge_name || "Not provided",
     judge_research_data: judgeResearch || "Judge research pending — use general patterns with appropriate caveats",
     gaps_from_section_2: so["whats-working"] || "Pending Phase A",
-    accountability_score: "See Section 2",
+    progress_score: "See Section 2",
     most_likely_outcome: so["case-intelligence"] || "Pending Phase B",
     urgent_deadlines: so["legal-options"] || "Pending Phase A",
     applicable_motions: so["legal-options"] || "Pending Phase A",
@@ -2896,7 +2901,7 @@ function buildIBPrompt(sectionKey: string, v: Record<string, string>): { system:
   const BANNED = `\nABSOLUTE BANNED PHRASES (single occurrence invalidates section): "you should", "you need to", "we recommend", "we advise", "your best option", "the best strategy", "red flag", "warning sign", "escalation ladder".`;
   const WARM_LANG = `\nWarm language: "You told us" / "You said" / "You mentioned" — NEVER "You indicated" / "You reported" / "You selected".`;
   const EFFICACY = `\n2:1 efficacy-to-threat ratio. After every hard fact → immediate context or action. No section ends on fear.`;
-  const METHODOLOGY = `\nMETHODOLOGY NOTE (include at section end): This analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.`;
+  const NO_DISCLAIMER = `\nDO NOT generate any methodology note, disclaimer, or "Important" block at the end of this section. The report renderer adds disclaimers automatically — LLM-generated disclaimers cause duplication. If you feel the urge to add one, STOP. End the section with substantive content.`;
 
   const REALISTIC_HOPE = `\nREALISTIC HOPE — MANDATORY:
 Include at least one specific, evidence-based reason for hope tied to THIS
@@ -2968,7 +2973,7 @@ EXPERT GROUNDING:
 - Shapiro: plea negotiation timing asymmetry — prosecution wants resolution early, defense benefits from investigation time
 - Spence: humanization — defendant is a person navigating a process, not a case number
 - BJ Fogg B=MAP: each stage maps to one action with a clear trigger
-${METHODOLOGY}${REALISTIC_HOPE}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
+${NO_DISCLAIMER}${REALISTIC_HOPE}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
 
 Output: ## Section 1: Your Case Roadmap
 ### 1a. Where You Are Now (timeline table, ~250w)
@@ -2981,7 +2986,7 @@ Word budget: ~1,050.`,
     "whats-working": {
       system: `You are an elite criminal defense research analyst generating Section 2: What's Working + What Needs Attention.
 
-Assess what attorney has done RIGHT first. Decode statements. Gaps = "CLARIFY" never "failure". Attorney Accountability Score 0-100 (6 dimensions: Communication 25%, Case Review 15%, Discovery 20%, Motion Activity 15%, Strategy 15%, Court Prep 10%).${BANNED}${WARM_LANG}${EFFICACY}
+Assess what attorney has done RIGHT first. Decode statements. Gaps = "CLARIFY" never "failure". Case Progress Score 0-100 — reflects the defendant's reported experience across 6 dimensions: Communication 25%, Case Review 15%, Discovery 20%, Motion Activity 15%, Strategy 15%, Court Prep 10%. Frame as "where your case stands based on what you've told us" — NOT a judgment of attorney competence.${BANNED}${WARM_LANG}${EFFICACY}
 
 BUYER STATE AWARENESS: Read frustration, last_communication, attorney_statements to detect WHY they purchased.
 - Long communication gap → provide info directly THEN tools to re-establish communication
@@ -2993,7 +2998,7 @@ EXPERT GROUNDING:
 - Roy Black: preparation = the differentiator
 - Chris Voss: calibrated follow-up questions
 - George Lakoff: decode the frames attorneys use (what they say vs what they mean)
-${METHODOLOGY}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
+${NO_DISCLAIMER}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
 
 Output: ## Section 2
 ### 2a. What's On Track (score + tracker, ~400w)
@@ -3017,7 +3022,7 @@ EXPERT GROUNDING:
 - Taleb: asymmetric motion design (upside, no downside)
 - Kahneman/Tversky: loss aversion + anchoring (plea evaluation)
 - Voss: naming pressure tactics to defuse them
-${METHODOLOGY}${UPGRADE_SEEDS}${ANTI_FORMULAIC}
+${NO_DISCLAIMER}${UPGRADE_SEEDS}${ANTI_FORMULAIC}
 
 Output: ## Section 4
 ### 4a. Motion Landscape (~700w)
@@ -3030,7 +3035,7 @@ Word budget: ~2,200.`,
     "protection": {
       system: `You are an elite criminal defense research analyst generating Section 5: Protecting Your Case and Life.
 
-Every threat → immediately followed by protective action. No paragraph ends on fear. Life Impact Map: 8 domains, charge-specific + state-specific. Immigration: if non-citizen, CRITICAL with Padilla v. Kentucky reference. Family & Custody: ALWAYS present. Children section ONLY if has_children = true.${BANNED}${WARM_LANG}${EFFICACY}
+Every threat → immediately followed by protective action. No paragraph ends on fear. Life Impact Map: 8 domains, charge-specific + state-specific. Immigration: ALWAYS include — for non-citizens: CRITICAL expanded Padilla v. Kentucky analysis, immigration attorney referral, plea impact warning. For US citizens: brief paragraph noting criminal convictions can affect immigration sponsorship of family members, future naturalization petitions by family, and international travel (some countries deny entry for certain convictions). Cite Padilla v. Kentucky, 559 U.S. 356 (2010) as establishing that immigration consequences are a critical part of any criminal defense analysis. Include: "If anyone in your household has immigration status concerns, consult an immigration attorney before any plea decision." Family & Custody: ALWAYS present. Children section ONLY if has_children = true.${BANNED}${WARM_LANG}${EFFICACY}
 
 ANTI-HALLUCINATION — IMMIGRATION:
 NEVER state definitive deportation conclusions (e.g., "mandatory deportation with no waiver"). Use: "Certain convictions may have serious immigration consequences. The specific impact depends on exact charge, plea, and immigration history. Immigration attorney consultation is essential before any plea decision."
@@ -3044,7 +3049,7 @@ EXPERT GROUNDING:
 - NICCC database: National Inventory of Collateral Consequences of Conviction
 - Jayadev: participatory defense — community resources per jurisdiction
 - Seligman: temporalizing — "Your case is at month X of a Y-Z month process. This phase ends."
-${METHODOLOGY}${UPGRADE_SEEDS}${ANTI_FORMULAIC}${COLLATERAL_CITATIONS}
+${NO_DISCLAIMER}${UPGRADE_SEEDS}${ANTI_FORMULAIC}${COLLATERAL_CITATIONS}
 
 Output: ## Section 5
 ### 5a. Protecting Your Case (~400w)
@@ -3085,6 +3090,14 @@ ANTI-HALLUCINATION — OUTCOME MAP:
 ANTI-HALLUCINATION — DA OFFICE PATTERNS:
 DA behavior must come from operator research or be qualified as "general patterns" with caveat: "Your attorney's direct experience with this prosecutor's office is the most reliable source."
 
+ANTI-HALLUCINATION — JUDGE INTELLIGENCE:
+If judge_research data is empty or minimal:
+- DO NOT fabricate judge tendencies, sentencing patterns, or reputation.
+- State clearly: "Judge [name] research is pending — your full brief will be updated when jurisdiction-specific data is available."
+- Provide a FRAMEWORK of what matters: (1) sentencing range tendencies for this charge type, (2) motion grant/deny patterns, (3) trial vs plea preferences, (4) courtroom demeanor. Frame each as a question for the attorney: "Ask your attorney: 'How does Judge [name] typically handle [charge type] cases?'"
+- This turns a data gap into actionable attorney questions — which IS the product.
+If judge_research data IS provided: use it directly, cite the source, and compare to county/state averages where available.
+
 EXPERT GROUNDING:
 - Spence: defense narrative — never try a case without an affirmative defense theory
 - Mesereau: reverse-engineering prosecution — understand their case before they present it
@@ -3093,7 +3106,7 @@ EXPERT GROUNDING:
 - Klein: pre-mortem — translate judge patterns into "if X, then Y" predictions
 - Lakoff: decode prosecution's framing strategy
 - Seligman: 3 P's — every negative outcome must depersonalize, contain, temporalize
-${METHODOLOGY}${UPGRADE_SEEDS}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
+${NO_DISCLAIMER}${UPGRADE_SEEDS}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
 
 Output: ## Section 3
 ### 3a. Outcome Map (~500w)
@@ -3120,7 +3133,7 @@ EXPERT GROUNDING:
 - Voss: difficult conversation scripts — tactical empathy, calibrated questions
 - Bandura: 4 sources of self-efficacy — mastery (Day 1 email = small win), vicarious learning, social persuasion, emotional state management
 - Klein: pre-mortem for meeting prep — imagine it went badly, prepare to prevent each failure mode
-${METHODOLOGY}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}${ACTION_VOICE}
+${NO_DISCLAIMER}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}${ACTION_VOICE}
 
 Output: ## Section 6
 ### 6a. If Overwhelmed (~50w)
@@ -3134,7 +3147,7 @@ Output: ## Section 6
 ### 6i. Difficult Conversations (~350w)
 ### 6j. Advocacy Steps (~175w)
 Word budget: ~2,075.`,
-      user: `Generate Section 6.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Case #: ${v.case_number} | Attorney: ${v.attorney_name} (${v.attorney_type}) | Court: ${v.next_court_date} | Last contact: ${v.last_communication} | Frustration: ${v.frustration} | Concern: ${v.biggest_concern}\n</intake>\n\n<cross_refs>\nGaps: ${v.gaps_from_section_2}\nScore: ${v.accountability_score}\nDeadlines: ${v.urgent_deadlines}\nMotions: ${v.applicable_motions}\nConsequences: ${v.top_collateral_consequences}\n</cross_refs>\n\n<prior_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n</prior_sections>\n${v.prior_section_outputs_xml}`,
+      user: `Generate Section 6.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Case #: ${v.case_number} | Attorney: ${v.attorney_name} (${v.attorney_type}) | Court: ${v.next_court_date} | Last contact: ${v.last_communication} | Frustration: ${v.frustration} | Concern: ${v.biggest_concern}\n</intake>\n\n<cross_refs>\nGaps: ${v.gaps_from_section_2}\nScore: ${v.progress_score}\nDeadlines: ${v.urgent_deadlines}\nMotions: ${v.applicable_motions}\nConsequences: ${v.top_collateral_consequences}\n</cross_refs>\n\n<prior_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n</prior_sections>\n${v.prior_section_outputs_xml}`,
     },
     "questions": {
       system: `You are an elite criminal defense research analyst generating Appendix D: Targeted Follow-Up Questions (10-15).
@@ -3156,7 +3169,7 @@ Output: ## Appendix D
 ### Consequences (1-3q)
 ### Evidence/Discovery (1-2q)
 Word budget: ~1,300-1,900.`,
-      user: `Generate Appendix D.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Attorney: ${v.attorney_name} (${v.attorney_type}) | Stage: ${v.case_stage}\nCharge context: ${v.charge_specific_data}\n</intake>\n\n<gaps>\nRoadmap: ${v.roadmap_gaps_and_unknowns}\nAccountability: ${v.accountability_gaps_and_decoded_issues}\nIntelligence: ${v.intelligence_gaps_judge_unknowns}\nMotions: ${v.motion_unknowns_deadline_questions_plea_questions}\nConsequences: ${v.consequence_questions}\n</gaps>\n\n<exclude>\n${v.section_6g_questions_to_exclude}\n</exclude>\n\n<all_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n<s6>${v.your_plan_output}</s6>\n</all_sections>\n${v.prior_section_outputs_xml}`,
+      user: `Generate Appendix D.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Attorney: ${v.attorney_name} (${v.attorney_type}) | Stage: ${v.case_stage}\nCharge context: ${v.charge_specific_data}\n</intake>\n\n<gaps>\nRoadmap: ${v.roadmap_gaps_and_unknowns}\nProgress: ${v.accountability_gaps_and_decoded_issues}\nIntelligence: ${v.intelligence_gaps_judge_unknowns}\nMotions: ${v.motion_unknowns_deadline_questions_plea_questions}\nConsequences: ${v.consequence_questions}\n</gaps>\n\n<exclude>\n${v.section_6g_questions_to_exclude}\n</exclude>\n\n<all_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n<s6>${v.your_plan_output}</s6>\n</all_sections>\n${v.prior_section_outputs_xml}`,
     },
     "48hr-priorities": {
       system: `You are an elite criminal defense research analyst generating the 48-Hour Priority List.
@@ -3182,6 +3195,29 @@ EXPERT GROUNDING:
   return prompts[sectionKey] || { system: "", user: "" };
 }
 
+/**
+ * Strip LLM-generated methodology disclaimers from IB section output.
+ * The renderer injects exactly 2 disclaimers (header + footer) — any per-section
+ * disclaimers are duplicates. Catches blockquote, italic, plain text, heading formats.
+ * Safety net for the ~5% of the time LLMs ignore the NO_DISCLAIMER instruction.
+ */
+function stripIBMethodologyNotes(text: string): string {
+  return text
+    // > **Important:** / > *Important:* blockquote disclaimers
+    .replace(/^>\s*\*{0,2}Important:?\*{0,2}[^\n]*(?:attorney|legal\s+(?:advice|information)|strategy\s+decisions?|final\s+authority)[^\n]*\n?/gmi, "")
+    // **Methodology Note:** or *Methodology Note:* blocks
+    .replace(/^\*{1,2}Methodology\s+Note:?\*{1,2}[^\n]*\n?/gmi, "")
+    // ### Methodology Note heading blocks (heading + following paragraph)
+    .replace(/^#{1,4}\s*Methodology\s+Note[^\n]*\n(?:[^\n#]+\n)*/gmi, "")
+    // Plain "This analysis draws on methods developed by elite defense attorneys" standalone lines
+    .replace(/^(?:>?\s*)?This analysis draws on methods developed by elite defense attorneys[^\n]*\n?/gmi, "")
+    // "Your attorney remains the final authority" standalone lines
+    .replace(/^(?:>?\s*)?Your attorney remains the final authority[^\n]*\n?/gmi, "")
+    // Clean up any resulting triple+ blank lines
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 // ============================================================
 // INTELLIGENCE BRIEF: Static appendices (Deno-local)
 // Duplicated from src/lib/intelligence-brief/render.ts
@@ -3192,7 +3228,7 @@ function buildTableOfContents(): string {
 
 - **START HERE: Your 48-Hour Priority List** — 3 actions for the next 48 hours
 - **Section 1: Your Case Roadmap** — Where you are, what happens next, the two paths
-- **Section 2: What's Working + What Needs Attention** — Attorney Accountability Score, decoded statements, gaps to clarify
+- **Section 2: What's Working + What Needs Attention** — Case Progress Score, decoded statements, gaps to clarify
 - **Section 3: Your Case Intelligence** — Outcome map, defense theories, judge profile, prosecution preview
 - **Section 4: Legal Options & Deadlines** — Motion landscape, deadline calendar, plea framework
 - **Section 5: Protecting Your Case and Life** — Case protection, life impact map, pending-case management
@@ -3361,6 +3397,7 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
       ${meta.nextCourtDate !== "Not provided" ? `<p class="meta-field"><strong class="meta-label">Court Date:</strong> ${escapeHtml(meta.nextCourtDate)}</p>` : ""}
       <p class="meta-field"><strong class="meta-label">Judge:</strong> ${escapeHtml(meta.judgeName)}</p>
       <p class="meta-field"><strong class="meta-label">Attorney:</strong> ${escapeHtml(meta.attorneyName)}</p>
+      ${meta.monthsSinceArrest ? `<p class="meta-field"><strong class="meta-label">Months Since Arrest:</strong> ${escapeHtml(meta.monthsSinceArrest)}</p>` : ""}
       <p class="meta-field"><strong class="meta-label">Report Date:</strong> ${escapeHtml(meta.reportDate)}</p>
       <p class="meta-field"><strong class="meta-label">Report ID:</strong> ${escapeHtml(meta.reportId)}</p>
     </div>

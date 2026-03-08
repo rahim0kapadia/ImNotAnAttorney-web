@@ -29,7 +29,7 @@ A defendant was charged with trafficking in amphetamine (25 grams or more). Mand
 
 We reviewed the discovery. The attorney had raised none of the following issues.
 
-**Attorney Accountability Score: 0 out of 7 critical issues identified.**
+**Case Progress Score: 0 out of 7 critical issues identified.**
 
 | Issue | Found by Attorney? |
 |-------|-------------------|
@@ -180,7 +180,7 @@ Large cash amounts are used by prosecutors to imply drug dealing. If the amount 
 
 ---
 
-## Attorney Accountability Checklist
+## Case Progress Checklist
 
 Print this. Bring it to your next attorney meeting. Check each item off.
 

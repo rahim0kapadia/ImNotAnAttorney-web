@@ -16,7 +16,7 @@
  *   3. Optional email capture — "Get our free Discovery Checklist" (soft ask)
  *   4. CTA to Case Decoder ($197) — "Want the full breakdown + 15 questions?"
  *
- * The 7 questions map to key attorney accountability indicators:
+ * The 7 questions map to key case progress indicators:
  *   1. chargeType — What charge (drug, DUI, white collar, etc.)
  *   2. timeSinceArrest — How long since arrest (speed matters for motions)
  *   3. hasAttorney — Private, public defender, or none
@@ -239,7 +239,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
           <p className="mt-2 text-sm text-zinc-400">
             23 DUI-specific questions for your attorney, a breathalyzer calibration
             checklist, DMV deadline guide, case stage roadmap, and attorney
-            accountability scorecard. Instant PDF.
+            Case Progress Scorecard. Instant PDF.
           </p>
           <p className="mt-2 text-xs text-zinc-500">
             Full credit toward Case Decoder within 30 days.

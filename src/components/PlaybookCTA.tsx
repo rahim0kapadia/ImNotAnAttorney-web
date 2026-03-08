@@ -20,7 +20,7 @@ export function PlaybookCTA() {
       </h3>
       <p className="mt-2 text-sm text-zinc-400">
         Instant PDF download. Breathalyzer calibration checklist, case stage
-        roadmap, 12 red flags, and an attorney accountability scorecard.
+        roadmap, 12 red flags, and a Case Progress Scorecard.
         Built from 40+ elite DUI defense attorneys&apos; documented strategies.
       </p>
       <div className="mt-4 flex flex-col gap-3 sm:flex-row">

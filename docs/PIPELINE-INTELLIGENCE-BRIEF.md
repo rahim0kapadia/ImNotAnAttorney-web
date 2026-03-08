@@ -168,7 +168,7 @@ All items below have been built and deployed. Kept for historical reference.
 
 **Day 0 — Delivery** (`post_intelligence_brief_delivery`)
 - Triggered: At delivery time by `/api/deliver` drip recording
-- Content: Instructions to start with 48-Hour Priority List, read Attorney Accountability Score, review 10-15 questions in Appendix D
+- Content: Instructions to start with 48-Hour Priority List, read Case Progress Score, review 10-15 questions in Appendix D
 - CTA: Reply with which question got the most reaction (story harvest)
 
 **Day 5 after delivery** (`post_intelligence_brief_story_harvest`)

@@ -58,7 +58,7 @@ export default function PrivacyPage() {
                 <strong className="text-zinc-300">Case information:</strong>{" "}
                 Charge type, state, county, attorney status, discovery status,
                 and situation description (when you submit the intake form or
-                use our Attorney Accountability Score tool). Also includes
+                use our Case Progress Score tool). Also includes
                 service-related details provided at checkout: court date (if
                 provided), priority delivery selection, and applicable upgrade
                 credits
@@ -377,7 +377,7 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <strong className="text-zinc-300">
-                  Free tool submissions (Attorney Accountability Score):
+                  Free tool submissions (Case Progress Score):
                 </strong>{" "}
                 Processed server-side and returned immediately. We do not store
                 score inputs permanently.

@@ -118,7 +118,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "26 Questions Your DUI Attorney Hopes You Never Ask (6-part format)",
       "DUI Case Stage Roadmap — arrest through resolution timeline",
       "Red Flag Checklist — 12 evidence and procedural red flags",
-      "Attorney Accountability Scorecard — rate your attorney on 10 behaviors",
+      "Case Progress Scorecard — rate your attorney on 10 behaviors",
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
@@ -181,7 +181,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     features: [
       "Case Decoder report delivered within 48 hours",
       "Everything in Case Decoder, plus:",
-      "Attorney Accountability Score — 6-dimension tracking with milestone timeline",
+      "Case Progress Score — 6-dimension tracking with milestone timeline",
       "Prosecution Case Vulnerability Report — where the prosecution's case has gaps, informed by court records and sentencing trends in your jurisdiction",
       "Charge exposure map",
       "Judge intelligence profile",

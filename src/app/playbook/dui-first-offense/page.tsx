@@ -73,7 +73,7 @@ export default function DUIPlaybookPage() {
         </h1>
         <p className="mt-4 text-lg text-zinc-400">
           26 questions your DUI attorney hopes you never ask — plus a case stage
-          roadmap, red flag checklist, and attorney accountability scorecard.
+          roadmap, red flag checklist, and case progress scorecard.
         </p>
         <div className="mt-6 flex items-center justify-center gap-3">
           <span className="text-4xl font-extrabold text-amber-400">{TIER_CORE["dui-first-offense"].priceDisplay}</span>
@@ -205,7 +205,7 @@ export default function DUIPlaybookPage() {
               value: "$97",
             },
             {
-              title: "Attorney Accountability Scorecard",
+              title: "Case Progress Scorecard",
               desc: "Rate your attorney on 10 behaviors before it's too late to switch. A $5,000 attorney who challenges evidence beats a $10,000 one who takes the plea.",
               value: "$97",
             },

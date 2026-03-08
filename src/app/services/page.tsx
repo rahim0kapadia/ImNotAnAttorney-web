@@ -413,7 +413,7 @@ export default function ServicesPage() {
               <p className="mt-2 text-sm text-zinc-400">
                 26 questions your DUI attorney hopes you never ask.
                 Breathalyzer calibration checklist, case stage roadmap, 12 red
-                flags, attorney accountability scorecard. Instant PDF.
+                flags, Case Progress Scorecard. Instant PDF.
               </p>
               <p className="mt-2 text-xs text-zinc-500">
                 {TIER_CORE["dui-first-offense"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.

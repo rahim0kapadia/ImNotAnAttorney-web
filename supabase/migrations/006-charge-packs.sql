@@ -42,13 +42,13 @@ VALUES (
   'DUI Defense Playbook',
   'dui',
   9700,
-  'Instant DUI defense playbook with 26 questions, case stage roadmap, red flag checklist, and attorney accountability scorecard.',
+  'Instant DUI defense playbook with 26 questions, case stage roadmap, red flag checklist, and case progress scorecard.',
   '[
     {"section": 1, "title": "Charge Reality Report", "description": "Plain-English DUI first offense breakdown — elements, dual-track (DMV + criminal), sentencing ranges", "anchor_value": 297},
     {"section": 2, "title": "26 Questions Your DUI Attorney Hopes You Never Ask", "description": "Elite defense attorney methodologies in 6-part format per question", "anchor_value": 197},
     {"section": 3, "title": "DUI Case Stage Roadmap", "description": "Arrest through resolution timeline with milestones and deadlines", "anchor_value": 97},
     {"section": 4, "title": "Red Flag Checklist", "description": "12 evidence and procedural red flags — breathalyzer calibration, FST protocol, 15-min observation", "anchor_value": 97},
-    {"section": 5, "title": "Attorney Accountability Scorecard", "description": "10 behaviors to rate your attorney on before it is too late to switch", "anchor_value": 97}
+    {"section": 5, "title": "Case Progress Scorecard", "description": "10 behaviors to rate your attorney on before it is too late to switch", "anchor_value": 97}
   ]'::jsonb,
   'charge-packs/dui-first-offense/dui-defense-playbook.pdf'
 )

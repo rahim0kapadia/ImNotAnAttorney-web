@@ -334,7 +334,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>Your full Intelligence Brief has been delivered — check your inbox for the report link. Here's how to use it:</p>
       <ol>
         <li><strong style="color: white;">Start with the 48-Hour Priority List</strong> — your three most urgent actions right now</li>
-        <li><strong style="color: white;">Read the Attorney Accountability Score in Section 2</strong> — see where your representation stands</li>
+        <li><strong style="color: white;">Read the Case Progress Score in Section 2</strong> — see where your representation stands</li>
         <li><strong style="color: white;">Review the 10-15 questions in Appendix D — pick your top 5</strong> for your next attorney meeting</li>
       </ol>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
@@ -456,7 +456,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">Know Someone Facing Charges?</h1>
       <p>You know what it's like to face the system without enough information. If someone you know is in the same position, you can help them skip the confusion.</p>
       <p style="font-size: 18px; color: white;"><strong>Send them to ${link("imnotanattorney.com", "/")}</strong></p>
-      <p>They can start with a free Attorney Accountability Score — no payment, no commitment. Just clarity on where they stand.</p>
+      <p>They can start with a free Case Progress Score — no payment, no commitment. Just clarity on where they stand.</p>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
         Every defendant deserves to walk into their attorney's office with the right questions. You did it. They can too.
       </p>

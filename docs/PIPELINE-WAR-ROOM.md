@@ -234,7 +234,7 @@ War Room has two post-purchase emails defined in `src/lib/drip-emails.ts`. Weekl
 - Key: `post_war_room_referral`
 - Trigger: Cron job, 14 days after `cases.delivered_at` (uses `relativeToDelivery: true`)
 - Subject: "Know someone facing charges?"
-- Content: Encourages customer to refer others, links to free Attorney Accountability Score
+- Content: Encourages customer to refer others, links to free Case Progress Score
 - Purpose: Word-of-mouth acquisition from high-value customers
 
 ### Why No Automated Story Harvest or Update Emails

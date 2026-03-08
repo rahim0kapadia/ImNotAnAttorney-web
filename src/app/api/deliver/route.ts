@@ -468,7 +468,7 @@ export async function POST(req: NextRequest) {
         <p style="margin: 0; color: white; font-weight: bold;">How to use your Intelligence Brief:</p>
         <ol style="color: #D4D4D8; padding-left: 20px; margin-top: 12px;">
           <li style="margin-bottom: 8px;"><strong style="color: white;">Start with the 48-Hour Priority List</strong> — three actions ranked by urgency</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Read the Attorney Accountability Score</strong> in Section 2 — understand where communication stands</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Read the Case Progress Score</strong> in Section 2 — understand where communication stands</li>
           <li style="margin-bottom: 8px;"><strong style="color: white;">Review the 10-15 questions in Appendix D</strong> — pick your top 5 for your next attorney meeting</li>
           <li style="margin-bottom: 8px;"><strong style="color: white;">Use the Meeting Ready Sheet</strong> in Section 6 — bring it to your next appointment</li>
         </ol>

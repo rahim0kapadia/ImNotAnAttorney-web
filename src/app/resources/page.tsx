@@ -220,7 +220,7 @@ export default function ResourcesPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 text-amber-400">&#10003;</span>
-                    Attorney Accountability Scorecard
+                    Case Progress Scorecard
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 text-amber-400">&#10003;</span>

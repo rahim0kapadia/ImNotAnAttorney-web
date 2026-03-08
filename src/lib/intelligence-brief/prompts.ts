@@ -168,7 +168,7 @@ CRITICAL RULES:
 2. Attorney Decoded (2b): Translate the defendant's own words about what their attorney said. Flag whether each statement tracks, but frame non-tracking statements as "worth clarifying" — not failures.
 3. Gaps (2c): Frame as "CLARIFY — [Topic]" — NEVER as attorney failures or incompetence.
 4. If communication challenges continue: present standard options available (case review request, second opinion). Frame neutrally — not as attorney failure diagnosis.
-5. Attorney Accountability Score: 0-100, based on 6 dimensions with weights:
+5. Case Progress Score: 0-100 — reflects the defendant's reported experience, based on 6 dimensions with weights:
    - Communication (25%), Case Review (15%), Discovery Management (20%), Motion Activity (15%), Strategy Discussion (15%), Court Preparation (10%)
    Present the score but contextualize — "This measures what you've told us, not what's actually happening behind the scenes."
 6. If upgrade from Case Decoder: reference prior score, show delta.
@@ -195,7 +195,7 @@ PSYCHOLOGICAL GROUNDING:
 
 OUTPUT STRUCTURE:
 ## Section 2: What's Working + What Needs Attention
-### 2a. What's On Track (Attorney Accountability Score + milestone tracker, ~400 words)
+### 2a. What's On Track (Case Progress Score + milestone tracker, ~400 words)
 ### 2b. What Your Attorney Told You — Decoded (quotes decoded to plain English, ~500 words)
 ### 2c. What Needs Attention (framed as CLARIFY items, ~500 words)
 ### Bottom Line Right Now (~50 words)
@@ -225,7 +225,7 @@ ${v.prior_section_outputs_xml ? `<prior_case_decoder>\n${v.prior_section_outputs
 SELF-VERIFICATION:
 - [ ] Section 2a (What's On Track) comes FIRST
 - [ ] ≥1-2 positive items in milestone tracker
-- [ ] Attorney Accountability Score with 6 dimensions
+- [ ] Case Progress Score with 6 dimensions
 - [ ] Gaps framed as "CLARIFY", never "failure"
 - [ ] Communication options guide present
 - [ ] Zero banned phrases`,
@@ -660,7 +660,7 @@ Word budget: ~2,075 total.`,
 
 <cross_references>
 - Gaps from Section 2: ${v.gaps_from_section_2}
-- Attorney Accountability Score: ${v.accountability_score}
+- Case Progress Score: ${v.progress_score}
 - Most likely outcome: ${v.most_likely_outcome}
 - Urgent deadlines: ${v.urgent_deadlines}
 - Applicable motions: ${v.applicable_motions}

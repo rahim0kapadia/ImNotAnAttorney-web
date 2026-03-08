@@ -126,7 +126,7 @@ export interface IBVariables {
 
   // Phase B cross-references (populated after Phase A)
   gaps_from_section_2: string;
-  accountability_score: string;
+  progress_score: string;
   most_likely_outcome: string;
   urgent_deadlines: string;
   applicable_motions: string;
@@ -292,7 +292,7 @@ export function extractVariables(
     gaps_from_section_2: so["whats-working"]
       ? extractGaps(so["whats-working"])
       : "Pending Phase A completion",
-    accountability_score: so["whats-working"]
+    progress_score: so["whats-working"]
       ? extractScore(so["whats-working"])
       : "Pending",
     most_likely_outcome: so["case-intelligence"]
@@ -362,9 +362,9 @@ function extractGaps(output: string): string {
   return gaps.length > 0 ? gaps.join("\n") : "No major gaps identified";
 }
 
-/** Extract Attorney Accountability Score from What's Working output */
+/** Extract Case Progress Score from What's Working output */
 function extractScore(output: string): string {
-  const match = output.match(/(?:score|accountability)[:\s]*(\d{1,3})/i);
+  const match = output.match(/(?:score|progress)[:\s]*(\d{1,3})/i);
   return match ? match[1] : "See Section 2";
 }
 
