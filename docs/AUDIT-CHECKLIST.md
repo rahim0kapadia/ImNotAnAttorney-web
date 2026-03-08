@@ -12,7 +12,7 @@ Reusable per-tier checklist for auditing the entire customer pipeline. Created 2
 | `ImNotAnAttorney/docs/plans/2026-02-19-full-launch-readiness.md` | 2026-02-19 | Original build plan | Complete |
 | Plan: peppy-launching-rabbit | 2026-02-24 | 4-round deep audit, 26 gaps | Complete |
 | 3-agent IB pipeline audit | 2026-03-03 | IB happy-path + gaps | Complete — fixes in this commit |
-| 5-team discovery tier audit | 2026-03-06 | X-Ray, War Room, Situation Room — UPL, Psych, Legal, Defendant, Conversion (18 issues) | Complete — all fixes applied |
+| 6-team discovery tier audit | 2026-03-06 | X-Ray, War Room, Situation Room — UPL, Psych, Legal, Defendant, Conversion (18 issues) | Complete — all fixes applied |
 
 ## Checklist (Per Tier)
 
@@ -114,7 +114,7 @@ Reusable per-tier checklist for auditing the entire customer pipeline. Created 2
 ## Discovery Tiers — 5-Team Audit Results (2026-03-06)
 
 **Scope:** X-Ray ($2,497), War Room ($4,997), Situation Room ($9,997) — all prompt templates, report templates, delivery SOPs, and related web code.
-**Framework:** Same 50-criteria 5-team audit (UPL, Psych, Legal, Defendant, Conversion) used for IB audit.
+**Framework:** Same 70-criteria 6-team audit (UPL, Psych, Legal, Defendant, Conversion, Rendering) used for IB audit.
 **Issues found:** 18 across 5 categories. All fixed.
 
 ### GATE Priority (UPL — blocks shipment)
