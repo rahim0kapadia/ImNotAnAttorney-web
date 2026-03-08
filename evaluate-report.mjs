@@ -1,5 +1,5 @@
 /**
- * evaluate-report.mjs — DB-driven 5-team report audit tool (v2.0)
+ * evaluate-report.mjs — DB-driven 6-team report audit tool (v3.0)
  *
  * Reads criteria from Supabase eval_criteria + pipeline_eval_weights,
  * runs LLM-based evaluation per team, saves results to audit_runs table.
@@ -13,7 +13,7 @@
  *   node evaluate-report.mjs --case-id <UUID>
  *   node evaluate-report.mjs --file report.md --no-db
  *
- * Teams: upl, psych, legal, defendant, conversion (default: all non-LOW)
+ * Teams: upl, psych, legal, defendant, conversion, rendering (default: all non-LOW)
  * Model: Opus 4.6 default (quality first), --model sonnet|haiku for budget runs
  *
  * Requires: ANTHROPIC_API_KEY in .env.local
@@ -233,6 +233,7 @@ const TEAM_NAMES = {
   legal: "Legal Substance",
   defendant: "Defendant Experience",
   conversion: "Conversion & Value Architecture",
+  rendering: "Rendering & Delivery",
 };
 
 const TEAM_SYSTEM_PROMPTS = {
@@ -297,6 +298,15 @@ Expert grounding:
 - Andre Chaperon — Post-purchase drip delivers value
 - Robert Cialdini — Authority signals
 - Seth Godin — Permission marketing + tribal identity`,
+
+  rendering: `You are Team 6: Rendering & Delivery — an expert evaluation panel for criminal defendant legal information products.
+
+Your purpose: Validate that what the customer SEES in the browser matches the designed experience. The markdown may be perfect, but rendering bugs, stripped elements, broken tables, or missing metadata destroy the customer's trust. You audit the rendered HTML output.
+
+Expert grounding:
+- Rendering pipeline — renderReportHtml() converts markdown to styled HTML. Tables, checkboxes, blockquotes, and styled divs must all survive the conversion.
+- sanitize-html — The report page sanitizes HTML before rendering. Elements that should be visible must not be stripped.
+- Print UX — Defendants print these reports. Print styles must invert to light theme and hide upgrade CTAs.`,
 };
 
 const HARDCODED_CRITERIA = {
@@ -348,6 +358,15 @@ const HARDCODED_CRITERIA = {
     { id: "D9", criterion_name: "Immediacy of value", what_to_check: "First page delivers something usable today", fail_triggers: "Opening with disclaimers/methodology before value" },
     { id: "D10", criterion_name: "Upgrade path integrity", what_to_check: "Upsell is genuinely value-adding", fail_triggers: "Upsell before value, fear-based upsell" },
     { id: "D11", criterion_name: "Buyer state alignment", what_to_check: "Acknowledges underlying need from intake", fail_triggers: '"Ask your attorney" 5+ times to someone whose attorney won\'t respond' },
+    { id: "D12", criterion_name: "Repetition audit", what_to_check: "No phrase repeated >5 times without variation", fail_triggers: "Same phrase appearing 6+ times verbatim" },
+    { id: "D13", criterion_name: "Format fatigue resistance", what_to_check: "Repeated structural blocks have meaningful variation", fail_triggers: "All 15 questions having identical length and structure" },
+    { id: "D14", criterion_name: "Natural voice in action sections", what_to_check: "Action steps use direct, natural language; UPL hedging belongs in legal analysis not action items", fail_triggers: "Overly cautious phrasing in sections where the action IS the information" },
+    { id: "D15", criterion_name: "Contextual transitions", what_to_check: "Section transitions have natural lead-ins; no cold drops between unrelated topics", fail_triggers: "Immigration paragraph after a rights box with no transition" },
+    { id: "D16", criterion_name: "Mobile scannability", what_to_check: "Table cells under 30 words; key actions not buried in dense paragraphs", fail_triggers: "Table cells with 40+ words; critical action buried in 5-sentence paragraph" },
+    { id: "D17", criterion_name: "Reddit relief test", what_to_check: "Full report addresses top 3 fears in first 2 sections; concrete action within 60 seconds", fail_triggers: "Defendant finishes reading and still feels same anxiety" },
+    { id: "D18", criterion_name: "Realistic hope", what_to_check: "At least one specific, evidence-based reason for hope tied to THEIR case facts", fail_triggers: "Generic reassurance not tied to actual facts; ending informed but hopeless" },
+    { id: "D19", criterion_name: "Courtroom demystification", what_to_check: "Tells defendant what to physically expect at next court appearance", fail_triggers: "Discusses strategy but leaves defendant with no idea what will happen in court" },
+    { id: "D20", criterion_name: "Unknown unknowns", what_to_check: "Proactively surfaces 2-3 things defendant does not know to worry about yet", fail_triggers: "Only answers questions defendant already had" },
   ],
   conversion: [
     { id: "C1", criterion_name: "Value equation clarity (Hormozi)", what_to_check: "Price trivial vs. stakes", fail_triggers: "Price before value, buried value prop" },
@@ -361,17 +380,29 @@ const HARDCODED_CRITERIA = {
     { id: "C9", criterion_name: "Crisis-moment interception (Suby)", what_to_check: "Structured for reading at worst moment", fail_triggers: "Slow build when they need answers NOW" },
     { id: "C10", criterion_name: "Tribal identity (Godin)", what_to_check: '"People who prepare" without judgment', fail_triggers: "Shaming defendants who haven't prepared" },
   ],
+  rendering: [
+    { id: "R1", criterion_name: "Header completeness", what_to_check: "All metadata present in header block: name, charges, jurisdiction, case #, court date, days since arrest, report date, report ID", fail_triggers: "Any metadata field missing when intake data provided it" },
+    { id: "R2", criterion_name: "Methodology note", what_to_check: "Expert names correct for charge type, disclaimer language matches approved text", fail_triggers: "Wrong experts for charge type, missing or altered disclaimer" },
+    { id: "R3", criterion_name: "Table rendering", what_to_check: "All markdown tables convert to HTML tables, no broken pipes or raw markdown visible", fail_triggers: "Raw pipe characters visible, tables rendered as plain text" },
+    { id: "R4", criterion_name: "Section structure", what_to_check: "All sections have proper h2 headings, correct order per spec, no missing sections", fail_triggers: "Missing required section, wrong section order, internal IDs in headings" },
+    { id: "R5", criterion_name: "Footer disclaimer", what_to_check: "A note on what this is block present with approved language at bottom", fail_triggers: "Missing footer, altered footer language, footer before report content" },
+    { id: "R6", criterion_name: "Upgrade CTA", what_to_check: "Correct tier name, correct price, correct credit amount, link to /checkout", fail_triggers: "Wrong price, wrong tier name, wrong credit amount, broken link" },
+    { id: "R7", criterion_name: "Print safety", what_to_check: "no-print class on upgrade CTA, print styles present, dark-to-light inversion", fail_triggers: "Upgrade CTA prints, no print styles, dark background prints" },
+    { id: "R8", criterion_name: "Sanitization survival", what_to_check: "No elements stripped by sanitize-html that should be visible", fail_triggers: "Checkboxes missing, blockquotes stripped, content visually broken" },
+    { id: "R9", criterion_name: "Special characters", what_to_check: "Em dashes, checkmarks, Unicode renders correctly", fail_triggers: "Mojibake characters, encoding errors, missing glyphs" },
+    { id: "R10", criterion_name: "Content completeness", what_to_check: "Word count within budget, correct question count, all conditional sections present/omitted per intake", fail_triggers: "Under/over word budget by >20%, wrong question count, missing conditional section" },
+  ],
 };
 
 const HARDCODED_WEIGHTS = {
-  "case-decoder":       { upl: "GATE", psych: "HIGH", legal: "MEDIUM", defendant: "HIGH", conversion: "MEDIUM" },
-  "intelligence-brief": { upl: "GATE", psych: "HIGH", legal: "HIGH",   defendant: "HIGH", conversion: "MEDIUM" },
-  "x-ray":              { upl: "GATE", psych: "MEDIUM", legal: "HIGH", defendant: "HIGH", conversion: "LOW" },
-  "war-room":           { upl: "GATE", psych: "HIGH", legal: "HIGH",   defendant: "HIGH", conversion: "MEDIUM" },
-  "situation-room":     { upl: "GATE", psych: "HIGH", legal: "HIGH",   defendant: "HIGH", conversion: "LOW" },
-  "content-seo-blog":   { upl: "MEDIUM", psych: "MEDIUM", legal: "LOW", defendant: "HIGH", conversion: "HIGH" },
-  "email-sequences":    { upl: "MEDIUM", psych: "MEDIUM", legal: "LOW", defendant: "HIGH", conversion: "HIGH" },
-  "score-tool":         { upl: "GATE", psych: "MEDIUM", legal: "LOW",  defendant: "HIGH", conversion: "HIGH" },
+  "case-decoder":       { upl: "GATE", psych: "HIGH", legal: "MEDIUM", defendant: "HIGH", conversion: "MEDIUM", rendering: "HIGH" },
+  "intelligence-brief": { upl: "GATE", psych: "HIGH", legal: "HIGH",   defendant: "HIGH", conversion: "MEDIUM", rendering: "HIGH" },
+  "x-ray":              { upl: "GATE", psych: "MEDIUM", legal: "HIGH", defendant: "HIGH", conversion: "LOW", rendering: "HIGH" },
+  "war-room":           { upl: "GATE", psych: "HIGH", legal: "HIGH",   defendant: "HIGH", conversion: "MEDIUM", rendering: "HIGH" },
+  "situation-room":     { upl: "GATE", psych: "HIGH", legal: "HIGH",   defendant: "HIGH", conversion: "LOW", rendering: "HIGH" },
+  "content-seo-blog":   { upl: "MEDIUM", psych: "MEDIUM", legal: "LOW", defendant: "HIGH", conversion: "HIGH", rendering: "LOW" },
+  "email-sequences":    { upl: "MEDIUM", psych: "MEDIUM", legal: "LOW", defendant: "HIGH", conversion: "HIGH", rendering: "LOW" },
+  "score-tool":         { upl: "GATE", psych: "MEDIUM", legal: "LOW",  defendant: "HIGH", conversion: "HIGH", rendering: "LOW" },
 };
 
 // ================================================================
@@ -426,6 +457,65 @@ const PERSONAS = {
     },
   },
 };
+
+// ================================================================
+// MARKDOWN → HTML RENDERING (mirrors src/lib/claude.ts renderReportHtml)
+// ================================================================
+
+function escapeHtmlForRender(str) {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function renderMarkdownToHtml(markdown, meta = {}) {
+  let html = markdown
+    .replace(/^#### (.+)$/gm, "<h4>$1</h4>")
+    .replace(/^### (.+)$/gm, "<h3>$1</h3>")
+    .replace(/^## (.+)$/gm, "<h2>$1</h2>")
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.+?)\*/g, "<em>$1</em>")
+    .replace(/^> (.+)$/gm, "<blockquote>$1</blockquote>")
+    .replace(/^- \[x\] (.+)$/gm, "<li>&#9745; $1</li>")
+    .replace(/^- \[ \] (.+)$/gm, "<li>&#9744; $1</li>")
+    .replace(/^- (.+)$/gm, "<li>$1</li>")
+    .replace(/^\d+\. (.+)$/gm, "<li>$1</li>")
+    .replace(/\|(.+)\|/g, (match) => {
+      const cells = match.split("|").filter(Boolean).map(c => c.trim());
+      if (cells.every(c => /^[-:]+$/.test(c))) return "";
+      const tag = cells.some(c => c.startsWith("**")) ? "th" : "td";
+      return "<tr>" + cells.map(c => `<${tag}>${c}</${tag}>`).join("") + "</tr>";
+    })
+    .replace(/^(?!<[a-z]|$)(.+)$/gm, "<p>$1</p>");
+
+  html = html.replace(/(<tr>[\s\S]*?<\/tr>(\s*<tr>[\s\S]*?<\/tr>)*)/g, "<table>$1</table>");
+
+  const name = meta.firstName ? escapeHtmlForRender(meta.firstName) : "Defendant";
+  const charges = meta.charges ? escapeHtmlForRender(meta.charges) : "";
+  const jurisdiction = meta.jurisdiction ? escapeHtmlForRender(meta.jurisdiction) : "";
+
+  return `<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>Report — ${name}</title></head>
+<body>
+<div class="header-block">
+  <h1>CASE DECODER REPORT</h1>
+  <p>Prepared for: ${name}</p>
+  ${charges ? "<p>Charge(s): " + charges + "</p>" : ""}
+  ${jurisdiction ? "<p>Jurisdiction: " + jurisdiction + "</p>" : ""}
+  ${meta.caseNumber ? "<p>Case Number: " + escapeHtmlForRender(meta.caseNumber) + "</p>" : ""}
+  ${meta.courtDate ? "<p>Next Court Date: " + escapeHtmlForRender(meta.courtDate) + "</p>" : ""}
+  ${meta.daysSinceArrest != null ? "<p>Days Since Arrest: " + meta.daysSinceArrest + "</p>" : ""}
+  ${meta.reportDate ? "<p>Report Date: " + escapeHtmlForRender(meta.reportDate) + "</p>" : ""}
+  ${meta.reportId ? "<p>Report ID: " + escapeHtmlForRender(meta.reportId) + "</p>" : ""}
+</div>
+${html}
+<div class="footer-disclaimer">
+  <p><strong>A note on what this is:</strong> This report gives you legal information, context, and questions — not legal advice.</p>
+</div>
+<div class="no-print upgrade-cta">
+  <a href="/checkout">Upgrade — 100% Credit Applied</a>
+  <p>Your $197 is credited toward any higher tier within 12 months.</p>
+</div>
+</body></html>`;
+}
 
 // ================================================================
 // HELPERS
@@ -563,7 +653,7 @@ ${intake.plea_terms ? `- Plea Terms: ${intake.plea_terms}` : ""}
 // EVALUATE ONE TEAM
 // ================================================================
 
-async function evaluateTeam(teamKey, teamCriteria, weight, chargeType, reportText, modelId) {
+async function evaluateTeam(teamKey, teamCriteria, weight, chargeType, reportText, modelId, htmlText) {
   const teamName = TEAM_NAMES[teamKey] || teamKey;
 
   // Build criteria block from either DB rows or hardcoded objects
@@ -599,7 +689,7 @@ CHARGE TYPE: ${chargeType}
 
 DELIVERABLE TO EVALUATE:
 
-${reportText}`;
+${teamKey === "rendering" && htmlText ? htmlText : reportText}`;
 
   const start = Date.now();
   const { text, usage } = await callClaude(systemPrompt, userPrompt, modelId);
@@ -663,7 +753,7 @@ Options:
   }
 
   console.log("\n" + "═".repeat(65));
-  console.log("  REPORT AUDIT — DB-Driven 5-Team Evaluation (v2.0)");
+  console.log("  REPORT AUDIT — DB-Driven 6-Team Evaluation (v3.0)");
   console.log("═".repeat(65) + "\n");
 
   // ---- Load report text ----
@@ -773,7 +863,12 @@ Options:
     process.stdout.write(`  🔍 ${TEAM_NAMES[teamKey]} (${weights[teamKey]})...`);
 
     try {
-      const result = await evaluateTeam(teamKey, teamCriteria, weights[teamKey], chargeType, reportText, modelId);
+      // Auto-render HTML for Team 6 (Rendering & Delivery)
+      let htmlForTeam6 = null;
+      if (teamKey === "rendering") {
+        htmlForTeam6 = renderMarkdownToHtml(reportText);
+      }
+      const result = await evaluateTeam(teamKey, teamCriteria, weights[teamKey], chargeType, reportText, modelId, htmlForTeam6);
       allResults[teamKey] = result;
 
       totalPass += result.passed;
