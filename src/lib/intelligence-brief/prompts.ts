@@ -39,7 +39,8 @@ ABSOLUTE BANNED PHRASES (will cause report rejection if found):
 - "your best option" / "the best strategy" — NEVER
 - "red flag" / "warning sign" / "escalation ladder" — NEVER
 - "Do not" as a bare imperative to the defendant (e.g., "Do not discuss your case") — NEVER. Reframe as information: "Most defense attorneys advise against..." or "Conversations with X are not privileged and can be subpoenaed."
-These are not soft guidelines. A single occurrence of any banned phrase invalidates the entire section.`;
+EXCEPTION: In "When the Conversation Gets Difficult" scenario headers, banned phrases in quoted attorney dialogue are acceptable when clearly attributed as attorney speech (e.g., a scenario titled "The evidence is strong — I really think the plea is the way to go."). The ban applies to report language addressed TO the defendant, not to realistic attorney dialogue examples.
+These are not soft guidelines. A single occurrence of any banned phrase in report language (not quoted dialogue) invalidates the entire section.`;
 
 const METHODOLOGY_NOTE = `
 METHODOLOGY NOTE (include at section end):
