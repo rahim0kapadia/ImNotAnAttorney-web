@@ -715,6 +715,165 @@ export const WHITE_COLLAR: PlaybookConfig = {
 };
 
 // ---------------------------------------------------------------------------
+// Sex Offense
+// ---------------------------------------------------------------------------
+
+export const SEX_OFFENSE: PlaybookConfig = {
+  slug: "sex-offense",
+  seoTitle:
+    "26 questions your sex offense attorney hopes you never ask. Forensic evidence checklist, registration guide, red flag checklist, attorney scorecard. Instant PDF download.",
+  seoDescription:
+    "26 questions your sex offense attorney hopes you never ask. Forensic interview challenges, SORNA registration tiers, collateral consequences, red flag checklist, attorney scorecard. Instant PDF download.",
+  hero: {
+    eyebrow: "Sex Offense Defense Playbook",
+    headline: "The Accusation Is Not the Conviction.",
+    subheadline:
+      "26 questions your attorney hopes you never ask \u2014 plus a case stage roadmap, red flag checklist, and case progress scorecard.",
+  },
+  agitate: {
+    headline:
+      "You shouldn\u2019t have to figure this out from Reddit threads.",
+    paragraphs: [
+      "The day you got the call \u2014 or the knock on the door \u2014 everything changed. The charge, the bail conditions, the looks from people who already decided you\u2019re guilty. You didn\u2019t know what to say, so you said nothing. Or you said too much.",
+      "Now you\u2019re home. Maybe it\u2019s 2 AM. And you\u2019re Googling everything. You want to know: how bad is this? What does a sex offense charge actually mean for your freedom, your family, your career, your life?",
+      "Is your attorney telling you the truth when they say they\u2019ll handle it?",
+    ],
+    cards: [
+      {
+        title: "The Evidence Can Be Challenged",
+        text: "Forensic interviews, DNA analysis, SANE exam findings, digital forensics \u2014 every piece of evidence was produced by someone working for the prosecution. Independent analysis finds what their experts miss.",
+      },
+      {
+        title: "Registration Is a Life Sentence",
+        text: "Sex offender registration lasts 15 years to lifetime. Residency restrictions, employment bars, travel restrictions, social media monitoring \u2014 the courtroom sentence is only the beginning.",
+      },
+      {
+        title: "\u201CTrust Me\u201D Isn\u2019t a Strategy",
+        text: "If your attorney\u2019s plan is \u2018wait for the plea offer\u2019 \u2014 that\u2019s not a plan. That\u2019s an assembly line. Sex offense cases require specialized defense \u2014 not general criminal practice.",
+      },
+    ],
+  },
+  proof: {
+    headline: "Built from elite sex offense defense methodology",
+    methods: [
+      {
+        name: "Forensic Interview Analysis",
+        title: "Foundation of the evidence challenge section",
+        insight:
+          "Systematic analysis of forensic interview protocol compliance \u2014 identifying suggestive questioning, NICHD protocol deviations, and interviewer bias that can undermine the reliability of child witness statements.",
+      },
+      {
+        name: "DNA and Digital Evidence Challenge",
+        title: "Applied to every forensic evidence question",
+        insight:
+          "Independent re-analysis methodology for DNA profiles, chain of custody verification, digital attribution challenges, and SANE exam finding review \u2014 the techniques that expose what prosecution experts overlook.",
+      },
+      {
+        name: "Full Consequence Mapping",
+        title: "Beyond the courtroom sentence",
+        insight:
+          "Registration tiers, residency restrictions, employment bars, custody impacts, immigration consequences, international travel restrictions, and civil commitment risk \u2014 every consequence mapped before any plea decision.",
+      },
+    ],
+  },
+  valueStack: {
+    sections: [
+      {
+        title: "Charge Reality Report",
+        desc: "Sex offense elements explained in plain English \u2014 sexual assault, child abuse, statutory rape, internet offenses, federal charges. Sentencing ranges, registration tiers, what the prosecution must prove.",
+        value: "$297",
+      },
+      {
+        title: "26 Questions Your Sex Offense Attorney Hopes You Never Ask",
+        desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
+        value: "$197",
+      },
+      {
+        title: "Sex Offense Case Stage Roadmap",
+        desc: "Accusation through post-conviction \u2014 10 stages with milestones, attorney benchmarks, and red flags. Includes plea negotiation strategy and civil commitment risk assessment.",
+        value: "$97",
+      },
+      {
+        title: "Red Flag Checklist",
+        desc: "12 specific issues that could change the outcome \u2014 forensic interview protocol violations, SANE exam ambiguity, digital attribution gaps, accuser credibility concerns.",
+        value: "$97",
+      },
+      {
+        title: "Case Progress Scorecard",
+        desc: "Rate your attorney on 10 behaviors before it\u2019s too late to switch. An attorney who challenges forensic evidence beats one who accepts the prosecution\u2019s reports.",
+        value: "$97",
+      },
+    ],
+    totalValue: "$785",
+  },
+  guarantee: {
+    headline:
+      "5 questions you never thought to ask \u2014 or full refund.",
+    body: "If you read this Playbook and cannot find at least 5 questions you have never thought to ask your attorney, send us one email and we will refund every dollar. No explanation required.",
+  },
+  audience: {
+    forYou: [
+      "You\u2019re accused of or charged with a sex offense (any type)",
+      "You have an attorney but aren\u2019t sure they specialize in sex offense defense",
+      "You want to understand the forensic evidence and how it can be challenged",
+      "You want to know the full scope of consequences beyond prison \u2014 registration, residency, employment, custody",
+      "You want to know what questions to ask before your next meeting",
+    ],
+    notForYou: [
+      "You\u2019re looking for legal advice (we provide information, not advice)",
+      "You want someone to represent you in court",
+      "You\u2019ve already been sentenced and are not pursuing an appeal",
+      "You\u2019re seeking resources for victims of sex offenses (this is a defense information resource)",
+    ],
+  },
+  methodologyText:
+    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common sex offense defense patterns. Your attorney remains the final authority on strategy decisions.",
+  urgency: {
+    headline: "Time-sensitive actions in your case",
+    items: [
+      {
+        deadline: "Immediately",
+        what: "Do NOT contact the accuser or any witnesses. Do NOT delete any digital evidence. Exercise your Fifth Amendment right \u2014 say nothing to investigators without your attorney present.",
+      },
+      {
+        deadline: "Within 72 hours of arrest",
+        what: "Document everything you remember about your whereabouts, any witnesses, and any digital evidence (texts, photos, location data). Memory fades fast.",
+      },
+    ],
+  },
+  faq: [
+    {
+      q: "Is this legal advice?",
+      a: "No. We provide legal INFORMATION \u2014 not legal ADVICE. The Playbook compiles documented defense strategies from elite sex offense defense attorneys into an information resource. Your attorney gives legal advice. We give you the questions.",
+    },
+    {
+      q: "What if I already have an attorney?",
+      a: "That\u2019s exactly who this is for. The Playbook makes every conversation with your attorney more productive. Most defendants leave attorney meetings without knowing what to ask. This gives you 26 specific questions.",
+    },
+    {
+      q: "Does this cover my specific charge type?",
+      a: "Yes. The questions apply to all sex offense charges \u2014 sexual assault, child abuse, statutory rape, indecent exposure, internet offenses, CSAM charges, failure to register. The charge-specific details (elements, sentencing, registration tiers) are covered in Section 1.",
+    },
+    {
+      q: "How is this delivered?",
+      a: "Instant PDF download. After payment, you\u2019ll receive an email with a download link within 60 seconds. No intake form, no waiting.",
+    },
+    {
+      q: "What\u2019s your refund policy?",
+      a: "If you read this Playbook and cannot find at least 5 questions you never thought to ask your attorney, send us one email and we\u2019ll refund every dollar. No explanation required.",
+    },
+    {
+      q: "Is this just generic information I can find online?",
+      a: "Everything here was built from documented defense strategies used by attorneys who have dedicated their careers exclusively to sex offense defense \u2014 including attorneys with 39 not-guilty verdicts and decades of specialized practice. This is not a blog post. It\u2019s the prosecution pattern playbook \u2014 inverted.",
+    },
+  ],
+  comparisonLine:
+    "A 30-minute sex offense attorney consultation costs $300\u2013$750.",
+  summaryLine:
+    "Instant PDF. 26 questions. 12 red flags. Case stage roadmap. Registration guide. Attorney scorecard.",
+};
+
+// ---------------------------------------------------------------------------
 // Registry — add new configs here
 // ---------------------------------------------------------------------------
 
@@ -723,6 +882,7 @@ const PLAYBOOK_CONFIGS: Record<string, PlaybookConfig> = {
   "drug-possession": DRUG_POSSESSION,
   "probation-violation": PROBATION_VIOLATION,
   "white-collar": WHITE_COLLAR,
+  "sex-offense": SEX_OFFENSE,
 };
 
 /** Look up a playbook config by slug. Returns undefined if not found. */
