@@ -43,7 +43,7 @@ export default async function Image() {
             lineHeight: 1.2,
           }}
         >
-          <span style={{ color: "#f59e0b" }}>Im</span>NotAnAttorney
+          Im<span style={{ color: "#f59e0b" }}>Not</span>AnAttorney
         </div>
         <div
           style={{

@@ -10,19 +10,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { TIER_CORE, upgradePrice } from "@/lib/tiers";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: `${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay} Instant Download | ImNotAnAttorney`,
   description:
     `26 questions your DUI attorney hopes you never ask. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download. ${TIER_CORE["dui-first-offense"].priceDisplay}.`,
   alternates: {
-    canonical: "https://imnotanattorney.com/playbook/dui-first-offense",
+    canonical: `${SITE_URL}/playbook/dui-first-offense`,
   },
   openGraph: {
     title: `${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay} Instant Download`,
     description:
       `26 questions your DUI attorney hopes you never ask. Instant PDF. ${TIER_CORE["dui-first-offense"].priceDisplay}.`,
-    url: "https://imnotanattorney.com/playbook/dui-first-offense",
+    url: `${SITE_URL}/playbook/dui-first-offense`,
     type: "website",
   },
 };

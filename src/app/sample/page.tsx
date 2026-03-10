@@ -80,7 +80,7 @@ function InlineCTA({ variant }: { variant: "mid" | "end" }) {
         href="/checkout?tier=case-decoder"
         className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
       >
-        Find What&apos;s in My Case — {TIER_CORE["case-decoder"].priceDisplay} →
+        Get Questions My Attorney Can&apos;t Dodge — {TIER_CORE["case-decoder"].priceDisplay} →
       </Link>
     </div>
   );

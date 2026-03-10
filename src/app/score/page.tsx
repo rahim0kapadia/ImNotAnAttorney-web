@@ -223,7 +223,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
               {emailSubmitting ? "..." : "Send"}
             </button>
           </form>
-          {emailError && <p className="mt-2 text-sm text-red-400">{emailError}</p>}
+          {emailError && <p role="alert" className="mt-2 text-sm text-red-400">{emailError}</p>}
         </div>
       )}
       {emailSent && (
@@ -389,7 +389,7 @@ export default function ScorePage() {
             ))}
 
             {error && (
-              <div className="rounded-lg border border-red-500/50 bg-red-500/10 p-3">
+              <div role="alert" className="rounded-lg border border-red-500/50 bg-red-500/10 p-3">
                 <p className="text-sm text-red-400">{error}</p>
               </div>
             )}

@@ -39,6 +39,7 @@ export function FAQAccordion({ items }: FAQAccordionProps) {
           className="rounded-lg border border-zinc-800 bg-zinc-900/50"
         >
           <button
+            id={`faq-question-${i}`}
             onClick={() => setOpenIndex(openIndex === i ? null : i)}
             className="flex w-full items-center justify-between px-6 py-4 text-left"
             aria-expanded={openIndex === i}
@@ -51,13 +52,17 @@ export function FAQAccordion({ items }: FAQAccordionProps) {
               {openIndex === i ? "−" : "+"}
             </span>
           </button>
-          {openIndex === i && (
-            <div id={`faq-answer-${i}`} role="region" className="border-t border-zinc-800 px-6 py-4">
-              <p className="text-sm leading-relaxed text-zinc-400">
-                {item.answer}
-              </p>
-            </div>
-          )}
+          <div
+            id={`faq-answer-${i}`}
+            role="region"
+            aria-labelledby={`faq-question-${i}`}
+            hidden={openIndex !== i}
+            className="border-t border-zinc-800 px-6 py-4"
+          >
+            <p className="text-sm leading-relaxed text-zinc-400">
+              {item.answer}
+            </p>
+          </div>
         </div>
       ))}
     </div>

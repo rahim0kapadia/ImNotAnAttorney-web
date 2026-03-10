@@ -2,7 +2,7 @@
  * robots.ts -- Search engine crawl rules served at `/robots.txt`.
  *
  * Allowed paths: Public content pages (homepage, blog, services, resources, about,
- * intake, terms, privacy, guides, score).
+ * intake, terms, privacy, guides, score, sample, contact, playbook).
  *
  * Disallowed paths:
  *   - /api/*       -- API routes (not for indexing)
@@ -34,6 +34,9 @@ export default function robots(): MetadataRoute.Robots {
         "/privacy",
         "/guides/*",
         "/score",
+        "/sample",
+        "/contact",
+        "/playbook/*",
       ],
       disallow: [
         "/api/*",

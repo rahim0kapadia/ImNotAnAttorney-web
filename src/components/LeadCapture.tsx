@@ -76,7 +76,7 @@ export function LeadCapture() {
         them. Based on a real case we reviewed. Used by defendants who refuse to
         go into court blind.
       </p>
-      <form onSubmit={handleSubmit} className="mt-4 flex gap-3">
+      <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-3 sm:flex-row">
         <input
           type="email"
           required
@@ -89,7 +89,7 @@ export function LeadCapture() {
         <button
           type="submit"
           disabled={status === "loading"}
-          className="rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-amber-400 disabled:opacity-50"
+          className="rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-amber-400 disabled:opacity-50 sm:w-auto"
         >
           {status === "loading" ? "..." : "Send Me the Checklist"}
         </button>

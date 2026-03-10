@@ -137,7 +137,7 @@ export default function Home() {
       {/* finding that immediately differentiates us from generic legal      */}
       {/* services. Subtext adds CI phone, drug type, and fingerprint       */}
       {/* findings for credibility. Two CTAs:                               */}
-      {/*   Primary: "Find What's in My Case — $197" -> /checkout           */}
+      {/*   Primary: "Get Questions My Attorney Can't Dodge — $197" -> /checkout */}
       {/*   Secondary: "See What We Found" -> /sample (proof before buy)    */}
       {/* Below CTAs: free score link (/score) as low-commitment fallback.  */}
       {/* ------------------------------------------------------------------ */}
@@ -166,7 +166,7 @@ export default function Home() {
               href="/checkout?tier=case-decoder"
               className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400"
             >
-              Find What&apos;s in My Case — {TIER_CORE["case-decoder"].priceDisplay} →
+              Get Questions My Attorney Can&apos;t Dodge — {TIER_CORE["case-decoder"].priceDisplay} →
             </Link>
             <Link
               href="/sample"
@@ -593,7 +593,7 @@ export default function Home() {
             href="/checkout?tier=case-decoder"
             className="mt-8 inline-block rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400"
           >
-            Find What&apos;s in My Case — {TIER_CORE["case-decoder"].priceDisplay} →
+            Get Questions My Attorney Can&apos;t Dodge — {TIER_CORE["case-decoder"].priceDisplay} →
           </Link>
         </div>
       </section>

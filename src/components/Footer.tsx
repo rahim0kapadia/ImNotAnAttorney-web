@@ -27,7 +27,7 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <Link href="/" className="text-lg font-bold tracking-tight">
-              <span className="text-amber-400">Im</span>NotAnAttorney
+              Im<span className="text-amber-400">Not</span>AnAttorney
             </Link>
             <p className="mt-3 text-sm text-zinc-400">
               We Research. You Ask.

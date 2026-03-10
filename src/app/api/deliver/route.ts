@@ -267,9 +267,15 @@ export async function GET(req: NextRequest) {
     <form method="POST" action="${origin}/api/deliver">
       <input type="hidden" name="token" value="${escapeHtml(token)}" />
       <input type="hidden" name="case" value="${escapeHtml(caseId)}" />
-      <button type="submit" style="margin-top: 16px; padding: 14px 32px; background: #22C55E; color: white; font-weight: bold; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">
-        Confirm Delivery
-      </button>
+      ${caseData.eval_results?.gate_passed === false
+        ? `<button type="button" disabled style="margin-top: 16px; padding: 14px 32px; background: #7F1D1D; color: #FCA5A5; font-weight: bold; border: 2px solid #EF4444; border-radius: 8px; font-size: 16px; cursor: not-allowed; opacity: 0.8;">
+            Delivery Blocked — UPL Gate Failed
+          </button>
+          <p style="margin-top: 8px; color: #EF4444; font-size: 13px;">Report cannot be delivered until evaluation issues are resolved and gate_passed is true.</p>`
+        : `<button type="submit" style="margin-top: 16px; padding: 14px 32px; background: #22C55E; color: white; font-weight: bold; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">
+            Confirm Delivery
+          </button>`
+      }
     </form>
   </div>
 </body>
@@ -362,6 +368,35 @@ export async function POST(req: NextRequest) {
   const now = new Date().toISOString();
 
   // ──────────────────────────────────────────────────────────────
+  // EVAL GATE HARD BLOCK: Prevent delivering UPL-failing reports
+  // ──────────────────────────────────────────────────────────────
+  // If eval_results exists and gate_passed is explicitly false, block
+  // delivery. If eval_results is null (eval not run), allow delivery
+  // with existing behavior (operator acknowledgment).
+  //
+  // IMPORTANT: This check runs BEFORE the atomic status claim below.
+  // Previously it was after the claim, which left the case in "delivered"
+  // status even when the gate blocked delivery — an inconsistent state.
+  if (caseData.eval_results?.gate_passed === false) {
+    return new NextResponse(
+      `<!DOCTYPE html>
+<html>
+<head><title>Delivery Blocked</title></head>
+<body style="font-family: Arial, sans-serif; background: #0C0A09; color: #D4D4D8; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0;">
+  <div style="text-align: center; max-width: 500px; padding: 32px;">
+    <div style="font-size: 48px; margin-bottom: 16px; color: #EF4444;">&#10007;</div>
+    <h1 style="color: #EF4444;">Delivery Blocked — UPL Gate Failed</h1>
+    <p>This report cannot be delivered because the evaluation gate failed. The report may contain UPL violations that must be resolved before delivery.</p>
+    <p style="margin-top: 16px; color: #71717A;">Case ID: ${escapeHtml(caseId)}</p>
+    <p style="margin-top: 8px; color: #71717A;">Fix the report, re-run evaluation, and ensure gate_passed is true before attempting delivery.</p>
+  </div>
+</body>
+</html>`,
+      { status: 403, headers: { "Content-Type": "text/html" } }
+    );
+  }
+
+  // ──────────────────────────────────────────────────────────────
   // ATOMIC DELIVERY GUARD: Claim the case for delivery
   // ──────────────────────────────────────────────────────────────
   // Uses a conditional UPDATE (eq status "review") as a database-level
@@ -405,6 +440,7 @@ export async function POST(req: NextRequest) {
       { status: 400, headers: { "Content-Type": "text/html" } }
     );
   }
+
   // B11: Validate report_token is a UUID before interpolating into HTML
   const reportToken = caseData.report_token;
   if (!reportToken || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(reportToken)) {

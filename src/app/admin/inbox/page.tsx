@@ -7,7 +7,8 @@
  * Secret is sent via X-Operator-Secret header (never in URL).
  */
 
-import { useEffect, useState, useCallback, Suspense } from "react";
+import { useEffect, useState, useCallback, useMemo, Suspense } from "react";
+import sanitizeHtml from "sanitize-html";
 
 interface Email {
   id: string;
@@ -418,13 +419,40 @@ function InboxContent() {
                   </div>
                 )}
 
-                {/* Email body */}
+                {/* Email body — sanitized to prevent XSS from malicious inbound emails */}
                 <div className="border-t border-zinc-800 pt-4">
                   {selected.body_html ? (
                     <div
                       className="prose prose-invert prose-sm max-w-none"
                       dangerouslySetInnerHTML={{
-                        __html: selected.body_html,
+                        __html: sanitizeHtml(selected.body_html, {
+                          allowedTags: [
+                            "h1", "h2", "h3", "h4", "h5", "h6",
+                            "p", "a", "div", "span",
+                            "ul", "ol", "li",
+                            "strong", "em", "b", "i", "u",
+                            "table", "tr", "td", "th", "thead", "tbody",
+                            "br", "hr",
+                            "blockquote", "img",
+                          ],
+                          allowedAttributes: {
+                            "*": ["style"],
+                            a: ["href", "target", "rel"],
+                            img: ["src", "alt", "width", "height"],
+                          },
+                          allowedSchemes: ["http", "https", "mailto"],
+                          allowedStyles: {
+                            "*": {
+                              color: [/^#[0-9a-fA-F]{3,8}$/, /^rgb\(/, /^rgba\(/, /^[a-zA-Z]+$/],
+                              "background-color": [/^#[0-9a-fA-F]{3,8}$/, /^rgb\(/, /^rgba\(/, /^[a-zA-Z]+$/],
+                              "font-size": [/^\d+(?:px|em|rem|%)$/],
+                              "font-weight": [/^(?:bold|normal|\d{3})$/],
+                              "text-align": [/^(?:left|center|right|justify)$/],
+                              margin: [/^[-\d]+(?:px|em|rem|%)(?:\s|$)/],
+                              padding: [/^[\d]+(?:px|em|rem|%)(?:\s|$)/],
+                            },
+                          },
+                        }),
                       }}
                     />
                   ) : selected.body_text ? (

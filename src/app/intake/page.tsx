@@ -52,6 +52,7 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { Suspense } from "react";
 import { TIER_CORE } from "@/lib/tiers";
 
@@ -635,9 +636,9 @@ function IntakeForm() {
           </p>
           <p className="mt-6 text-sm text-zinc-400">
             In the meantime, read our{" "}
-            <a href="/blog" className="text-amber-400 underline decoration-amber-400/50 hover:decoration-amber-400">
+            <Link href="/blog" className="text-amber-400 underline decoration-amber-400/50 hover:decoration-amber-400">
               blog
-            </a>{" "}
+            </Link>{" "}
             &mdash; it&apos;s full of free information about your rights.
           </p>
         </div>

@@ -29,11 +29,21 @@ export function Header() {
     return () => document.removeEventListener("keydown", handleEsc);
   }, [mobileOpen]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         <Link href="/" className="text-xl font-bold tracking-tight">
-          <span className="text-amber-400">Im</span>NotAnAttorney
+          Im<span className="text-amber-400">Not</span>AnAttorney
         </Link>
 
         {/* Desktop nav */}

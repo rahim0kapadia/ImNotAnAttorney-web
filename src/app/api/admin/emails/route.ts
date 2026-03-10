@@ -9,12 +9,18 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { timingSafeEqual } from "crypto";
 
 function isAuthorized(req: NextRequest): boolean {
   const password = process.env.ADMIN_PASSWORD;
   if (!password) return false;
   const fromHeader = req.headers.get("x-admin-password");
-  return fromHeader === password;
+  if (!fromHeader) return false;
+  // Constant-time comparison to prevent timing attacks
+  const a = Buffer.from(password);
+  const b = Buffer.from(fromHeader);
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
 }
 
 export async function GET(req: NextRequest) {

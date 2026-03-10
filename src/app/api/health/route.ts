@@ -3,6 +3,10 @@
  *
  * Checks Supabase connectivity and presence of required env vars.
  * Returns 200 if healthy, 503 if degraded.
+ *
+ * Security: The names of missing env vars are NOT exposed in the response
+ * to prevent information disclosure (attackers learning which services are
+ * configured). Only the count is returned. Full details are logged server-side.
  */
 
 import { NextResponse } from "next/server";
@@ -23,6 +27,10 @@ const REQUIRED_ENV = [
 export async function GET() {
   const missingEnv = REQUIRED_ENV.filter((k) => !process.env[k]);
 
+  if (missingEnv.length > 0) {
+    console.warn("[Health] Missing env vars:", missingEnv.join(", "));
+  }
+
   let dbOk = false;
   try {
     const supabase = createAdminClient();
@@ -38,7 +46,7 @@ export async function GET() {
     {
       status: healthy ? "ok" : "degraded",
       db: dbOk ? "connected" : "unreachable",
-      missingEnv: missingEnv.length > 0 ? missingEnv : undefined,
+      missingEnvCount: missingEnv.length > 0 ? missingEnv.length : undefined,
       timestamp: new Date().toISOString(),
     },
     { status: healthy ? 200 : 503 }

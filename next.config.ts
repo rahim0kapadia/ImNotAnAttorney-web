@@ -19,8 +19,15 @@
  *     referrer for same-origin requests, but only the origin (no path) for cross-origin.
  *     Prevents leaking sensitive URL paths (like /report/case-id) to external sites.
  *
- * No CSP (Content-Security-Policy) header is configured yet. Consider adding one
- * before handling real customer data.
+ *   - Content-Security-Policy: Restricts script, style, image, font, and connect
+ *     sources to 'self' and trusted third-party domains (Stripe, Vercel). Blocks
+ *     inline scripts except those with nonces (Next.js handles this). 'unsafe-inline'
+ *     is allowed for styles because Tailwind CSS and inline email styles require it.
+ *     frame-ancestors 'none' reinforces X-Frame-Options DENY.
+ *
+ *   - Permissions-Policy: Disables browser features not used by this application
+ *     (camera, microphone, geolocation, payment). Reduces attack surface from
+ *     compromised third-party scripts.
  */
 import type { NextConfig } from "next";
 
@@ -46,6 +53,25 @@ const nextConfig: NextConfig = {
           {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
+          },
+          {
+            key: "Content-Security-Policy",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://vercel.live",
+              "style-src 'self' 'unsafe-inline'",
+              "img-src 'self' data: https:",
+              "font-src 'self'",
+              "connect-src 'self' https://api.stripe.com https://vercel.live https://*.supabase.co",
+              "frame-src https://js.stripe.com https://hooks.stripe.com",
+              "frame-ancestors 'none'",
+              "base-uri 'self'",
+              "form-action 'self' https://checkout.stripe.com",
+            ].join("; "),
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(), payment=(self)",
           },
         ],
       },

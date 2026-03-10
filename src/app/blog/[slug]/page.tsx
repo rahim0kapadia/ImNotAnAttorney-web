@@ -153,6 +153,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             <a
               href={`sms:?body=${encodeURIComponent(`Read this — it might help with your case: ${SITE_URL}/blog/${slug}`)}`}
               className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-white transition-colors hover:bg-zinc-700"
+              aria-label="Share via text message"
             >
               📱 Text
             </a>
@@ -161,12 +162,14 @@ export default async function BlogPostPage({ params }: PageProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-white transition-colors hover:bg-zinc-700"
+              aria-label="Share via WhatsApp"
             >
               WhatsApp
             </a>
             <a
               href={`mailto:?subject=${encodeURIComponent(`This might help — ${post.title}`)}&body=${encodeURIComponent(`I thought this might be useful for your case:\n\n${post.title}\n${SITE_URL}/blog/${slug}\n\nIt covers questions you should be asking your attorney.`)}`}
               className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-white transition-colors hover:bg-zinc-700"
+              aria-label="Share via email"
             >
               ✉️ Email
             </a>
@@ -175,6 +178,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-white transition-colors hover:bg-zinc-700"
+              aria-label="Share on Twitter / X"
             >
               𝕏 Twitter
             </a>
@@ -183,6 +187,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-white transition-colors hover:bg-zinc-700"
+              aria-label="Share on Facebook"
             >
               Facebook
             </a>
