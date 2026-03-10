@@ -40,7 +40,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 import { CONTACT_EMAIL } from "@/lib/site";
-import { TIER_CORE, upgradePrice } from "@/lib/tiers";
+import { TIER_CORE, upgradePrice, type TierSlug } from "@/lib/tiers";
 
 
 /**
@@ -65,11 +65,26 @@ const TIER_NEXT_STEPS: Record<
     showUpload: false,
     isDigitalProduct: true,
   },
+  "drug-possession": {
+    name: TIER_CORE["drug-possession"].name,
+    delivery: TIER_CORE["drug-possession"].delivery,
+    action:
+      "Your Drug Possession Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+    showUpload: false,
+    isDigitalProduct: true,
+  },
+  "probation-violation": {
+    name: TIER_CORE["probation-violation"].name,
+    delivery: TIER_CORE["probation-violation"].delivery,
+    action:
+      "Your Probation Violation Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+    showUpload: false,
+    isDigitalProduct: true,
+  },
   "case-decoder": {
     name: TIER_CORE["case-decoder"].name,
     delivery: TIER_CORE["case-decoder"].delivery,
-    action:
-      "Your Case Decoder report is being prepared. Check your email within 48 hours.",
+    action: TIER_CORE["case-decoder"].deliveryDetail,
     showUpload: false,
     noIntakeAction:
       "Complete your case details so we can start generating your report.",
@@ -146,6 +161,7 @@ function SuccessContent() {
   const [timeLeft, setTimeLeft] = useState<string>("");
   const [customerEmail, setCustomerEmail] = useState<string>("");
   const [sessionCreated, setSessionCreated] = useState<number | null>(null);
+  const [priorityDelivery, setPriorityDelivery] = useState(false);
 
   // Verify the Stripe checkout session server-side via /api/checkout/verify.
   // This confirms the payment actually completed (prevents URL spoofing).
@@ -161,6 +177,7 @@ function SuccessContent() {
         setVerified(data.verified === true);
         if (data.email) setCustomerEmail(data.email);
         if (data.sessionCreated) setSessionCreated(data.sessionCreated);
+        if (data.priorityDelivery) setPriorityDelivery(true);
       })
       .catch(() => setVerified(false));
   }, [sessionId]);
@@ -264,9 +281,17 @@ function SuccessContent() {
           <>
             <p className="mt-3 text-lg text-amber-400">{info.name}</p>
             <p className="mt-4 text-zinc-400">{info.action}</p>
-            <p className="mt-2 text-sm text-zinc-400">
-              Delivery: {info.delivery}
-            </p>
+            {priorityDelivery && tier && TIER_CORE[tier as keyof typeof TIER_CORE]?.priorityDelivery ? (
+              <div className="mt-3 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-2">
+                <p className="text-sm font-semibold text-amber-400">
+                  Priority Delivery: {TIER_CORE[tier as keyof typeof TIER_CORE].priorityDelivery}
+                </p>
+              </div>
+            ) : (
+              <p className="mt-2 text-sm text-zinc-400">
+                Delivery: {info.delivery}
+              </p>
+            )}
 
             {/* INTAKE CTA — Case Decoder customers may not have submitted case  */}
             {/* details yet (intake is separate from checkout). Shows CTA to    */}
@@ -311,7 +336,7 @@ function SuccessContent() {
             {/* adds, and the upgrade cost (current purchase credited).     */}
             {/* Only visible while timeLeft is active (24h window).         */}
             {/* ------------------------------------------------------------ */}
-            {timeLeft && timeLeft !== "Expired" && tier === "dui-first-offense" && (
+            {timeLeft && timeLeft !== "Expired" && (tier === "dui-first-offense" || tier === "drug-possession" || tier === "probation-violation") && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
                   Upgrade offer — {timeLeft} remaining
@@ -320,7 +345,7 @@ function SuccessContent() {
                   Get Case-Specific Questions — Case Decoder
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Your {TIER_CORE["dui-first-offense"].priceDisplay} is already credited. The Playbook gives you generic DUI questions — the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
+                  Your {TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay ?? "$97"} is already credited. The Playbook gives you general questions — the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
                 </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: personalized charge breakdown, ready-to-send email templates, phone scripts, 7-day action plan, attorney meeting prep.
@@ -329,7 +354,7 @@ function SuccessContent() {
                   href="/checkout?tier=case-decoder"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Upgrade to {TIER_CORE["case-decoder"].name} — {upgradePrice("dui-first-offense")} &rarr;
+                  Upgrade to {TIER_CORE["case-decoder"].name} — {upgradePrice(tier as TierSlug)} &rarr;
                 </Link>
               </div>
             )}

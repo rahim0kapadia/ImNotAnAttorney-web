@@ -441,21 +441,28 @@ export default function ServicesPage() {
                 {TIER_CORE["drug-possession"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 opacity-60">
-              <span className="mb-2 inline-block rounded-full bg-zinc-800 px-2 py-0.5 text-xs font-semibold text-zinc-400">
-                Coming Soon
+            <Link
+              href="/checkout?tier=probation-violation"
+              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+            >
+              <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                Available Now
               </span>
               <div className="flex items-baseline justify-between">
                 <h3 className="font-semibold text-white">
-                  Domestic Violence Playbook
+                  Probation Violation Playbook
                 </h3>
-                <span className="text-lg font-bold text-zinc-500">{TIER_CORE["dui-first-offense"].priceDisplay}</span>
+                <span className="text-lg font-bold text-amber-400">{TIER_CORE["probation-violation"].priceDisplay}</span>
               </div>
-              <p className="mt-2 text-sm text-zinc-500">
-                Accuser credibility framework, protective order strategy,
-                evidence preservation, communication boundaries.
+              <p className="mt-2 text-sm text-zinc-400">
+                26 questions for revocation hearings. Willfulness defense,
+                state cap laws, alternatives to revocation, graduated sanctions.
+                Zero competition.
               </p>
-            </div>
+              <p className="mt-2 text-xs text-zinc-500">
+                {TIER_CORE["probation-violation"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
+              </p>
+            </Link>
           </div>
         </section>
 

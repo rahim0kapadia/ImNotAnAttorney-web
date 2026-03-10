@@ -80,6 +80,8 @@ import { TIER_CORE } from "@/lib/tiers";
 /** Maps tier slugs to display names for alert emails. */
 const TIER_NAMES: Record<string, string> = {
   "dui-first-offense": "DUI Defense Playbook",
+  "drug-possession": "Drug Possession Defense Playbook",
+  "probation-violation": "Probation Violation Defense Playbook",
   "case-decoder": "Case Decoder",
   "intelligence-brief": "Intelligence Brief",
   "x-ray": "X-Ray",
@@ -404,6 +406,36 @@ export async function GET(req: NextRequest) {
             .order("created_at", { ascending: false })
             .limit(1)
             .maybeSingle();
+
+          // ── GUARD: Intake reminder only sends if intake hasn't been submitted ──
+          // Skip the intake reminder if the customer has already submitted intake
+          // (case is no longer in awaiting-intake status).
+          if (nextEmail.key === "post_case_decoder_intake_reminder" && linkedCase) {
+            if (linkedCase.status !== "awaiting-intake") {
+              skipped++;
+              continue;
+            }
+          }
+
+          // ── GUARD: IB Phase 2 reminder only sends if Phase 2 intake hasn't been submitted ──
+          // The IB case sits in "intake" status until Phase 2 is submitted. Once
+          // Phase 2 triggers generation, status moves to "auto-generating" or later.
+          if (nextEmail.key === "post_intelligence_brief_phase2_reminder") {
+            const { data: ibCase } = await supabase
+              .from("cases")
+              .select("status")
+              .eq("email", order.email.toLowerCase())
+              .eq("tier", "intelligence-brief")
+              .order("created_at", { ascending: false })
+              .limit(1)
+              .maybeSingle();
+
+            // Skip if IB case doesn't exist or has progressed past intake
+            if (!ibCase || ibCase.status !== "intake") {
+              skipped++;
+              continue;
+            }
+          }
 
           // ── GUARD: Status update emails only send after upload submission ──
           // Discovery tier status updates should only fire once the customer
