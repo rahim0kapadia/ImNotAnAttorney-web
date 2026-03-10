@@ -874,6 +874,165 @@ export const SEX_OFFENSE: PlaybookConfig = {
 };
 
 // ---------------------------------------------------------------------------
+// Federal Criminal
+// ---------------------------------------------------------------------------
+
+export const FEDERAL_CRIMINAL: PlaybookConfig = {
+  slug: "federal-criminal",
+  seoTitle:
+    "26 questions your federal criminal attorney hopes you never ask. Sentencing guidelines calculator, cooperation decisions, BOP designation guide, red flag checklist. Instant PDF download.",
+  seoDescription:
+    "26 questions your federal criminal attorney hopes you never ask. Sentencing guidelines breakdown, cooperation strategy, BOP designation, mandatory minimums, red flag checklist, attorney scorecard. Instant PDF download.",
+  hero: {
+    eyebrow: "Federal Criminal Defense Playbook",
+    headline: "Federal Court Is a Different Game. Learn the Rules.",
+    subheadline:
+      "26 questions your attorney hopes you never ask \u2014 plus a 13-stage federal case roadmap, red flag checklist, and case progress scorecard.",
+  },
+  agitate: {
+    headline:
+      "You shouldn\u2019t have to figure this out from Reddit threads.",
+    paragraphs: [
+      "The day you got the target letter \u2014 or the knock on the door from federal agents \u2014 everything changed. This isn\u2019t state court. There\u2019s no parole. 97% of federal cases end in conviction. The sentencing guidelines are a formula, and the math determines your life.",
+      "Now you\u2019re home. Maybe it\u2019s 2 AM. And you\u2019re Googling everything. You want to know: how do the guidelines work? What does cooperation actually mean? What\u2019s the real difference between the plea offer and going to trial?",
+      "Is your attorney telling you the truth when they say they\u2019ll handle it?",
+    ],
+    cards: [
+      {
+        title: "The Guidelines Are Not a Black Box",
+        text: "Base offense level, specific offense characteristics, adjustments, criminal history category \u2014 each component can be challenged. An attorney who doesn\u2019t independently calculate the range is relying on the government\u2019s math.",
+      },
+      {
+        title: "Cooperation Is a Business Decision",
+        text: "Proffer agreements, 5K1.1 motions, substantial assistance \u2014 cooperation can cut your sentence dramatically. But it can also be used against you. You need to understand the terms before you sign anything.",
+      },
+      {
+        title: "\u201CTrust Me\u201D Isn\u2019t a Strategy",
+        text: "If your attorney\u2019s plan is \u2018wait for the plea offer\u2019 \u2014 that\u2019s not a plan. That\u2019s an assembly line. Federal cases require specialized defense \u2014 not general state court practice.",
+      },
+    ],
+  },
+  proof: {
+    headline: "Built from elite federal criminal defense methodology",
+    methods: [
+      {
+        name: "Sentencing Guidelines Analysis",
+        title: "Foundation of the outcome assessment section",
+        insight:
+          "Independent guideline calculation methodology \u2014 challenging base offense levels, specific offense characteristics, relevant conduct scope, and criminal history scoring. Data-driven sentencing forecasts using analytics from 1.6 million federal cases.",
+      },
+      {
+        name: "Government Evidence Verification",
+        title: "Applied to every evidence and discovery question",
+        insight:
+          "Systematic independent analysis of cooperator testimony, financial records, electronic surveillance, and forensic evidence \u2014 the techniques that expose what prosecution summaries conceal.",
+      },
+      {
+        name: "Federal Consequence Mapping",
+        title: "Beyond the prison sentence",
+        insight:
+          "BOP designation, RDAP eligibility, First Step Act credits, supervised release, restitution, forfeiture, immigration consequences, professional license impacts \u2014 every consequence mapped before any plea decision.",
+      },
+    ],
+  },
+  valueStack: {
+    sections: [
+      {
+        title: "Federal System Reality Report",
+        desc: "How the federal system actually works \u2014 sentencing guidelines formula, mandatory minimums, grand jury process, cooperation mechanics, BOP designation. Everything your attorney assumes you already know.",
+        value: "$297",
+      },
+      {
+        title: "26 Questions Your Federal Attorney Hopes You Never Ask",
+        desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
+        value: "$197",
+      },
+      {
+        title: "Federal Case Stage Roadmap",
+        desc: "Target letter through post-conviction \u2014 13 stages with milestones, attorney benchmarks, and red flags. Includes cooperation decision points and sentencing preparation timeline.",
+        value: "$97",
+      },
+      {
+        title: "Red Flag Checklist",
+        desc: "12 specific issues that could change the outcome \u2014 guideline miscalculations, missed departure arguments, cooperation terms gaps, Brady violations, PSR objection deadlines.",
+        value: "$97",
+      },
+      {
+        title: "Case Progress Scorecard",
+        desc: "Rate your attorney on 10 behaviors before it\u2019s too late to switch. An attorney who independently calculates the guidelines beats one who accepts the government\u2019s version.",
+        value: "$97",
+      },
+    ],
+    totalValue: "$785",
+  },
+  guarantee: {
+    headline:
+      "5 questions you never thought to ask \u2014 or full refund.",
+    body: "If you read this Playbook and cannot find at least 5 questions you have never thought to ask your attorney, send us one email and we will refund every dollar. No explanation required.",
+  },
+  audience: {
+    forYou: [
+      "You\u2019re under federal investigation or charged with a federal crime",
+      "You have an attorney but aren\u2019t sure they specialize in federal defense",
+      "You want to understand how the sentencing guidelines apply to your case",
+      "You\u2019re considering cooperation and want to understand what that actually means",
+      "You want to know what questions to ask before your next meeting",
+    ],
+    notForYou: [
+      "You\u2019re looking for legal advice (we provide information, not advice)",
+      "You want someone to represent you in court",
+      "You\u2019ve already been sentenced and are not pursuing an appeal or post-conviction relief",
+      "Your case is in state court, not federal (see our other playbooks)",
+    ],
+  },
+  methodologyText:
+    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common federal criminal defense patterns. Your attorney remains the final authority on strategy decisions.",
+  urgency: {
+    headline: "Time-sensitive actions in your case",
+    items: [
+      {
+        deadline: "Immediately",
+        what: "Do NOT speak to federal agents without your attorney present. Do NOT destroy any documents, emails, texts, or financial records. Destruction of evidence is a separate federal crime.",
+      },
+      {
+        deadline: "Within 72 hours",
+        what: "Document everything you remember about the events in question. Identify potential witnesses. Gather financial records, communication records, and any documents relevant to your case. Memory and evidence quality degrade fast.",
+      },
+    ],
+  },
+  faq: [
+    {
+      q: "Is this legal advice?",
+      a: "No. We provide legal INFORMATION \u2014 not legal ADVICE. The Playbook compiles documented defense strategies from elite federal criminal defense attorneys into an information resource. Your attorney gives legal advice. We give you the questions.",
+    },
+    {
+      q: "What if I already have an attorney?",
+      a: "That\u2019s exactly who this is for. The Playbook makes every conversation with your attorney more productive. Most defendants leave attorney meetings without knowing what to ask. This gives you 26 specific questions.",
+    },
+    {
+      q: "Does this cover my specific federal charge?",
+      a: "Yes. The questions apply to all federal charges \u2014 wire fraud, mail fraud, conspiracy, RICO, drug offenses, firearms, money laundering, tax evasion, immigration offenses. The charge-specific details (elements, sentencing, mandatory minimums) are covered in Section 1.",
+    },
+    {
+      q: "How is this delivered?",
+      a: "Instant PDF download. After payment, you\u2019ll receive an email with a download link within 60 seconds. No intake form, no waiting.",
+    },
+    {
+      q: "What\u2019s your refund policy?",
+      a: "If you read this Playbook and cannot find at least 5 questions you never thought to ask your attorney, send us one email and we\u2019ll refund every dollar. No explanation required.",
+    },
+    {
+      q: "I\u2019m in state court, not federal. Is this still useful?",
+      a: "This Playbook is specifically for federal cases \u2014 the sentencing guidelines, cooperation mechanics, BOP designation, and federal procedures are unique to the federal system. If your case is in state court, check our DUI, Drug Possession, or other state-specific playbooks.",
+    },
+  ],
+  comparisonLine:
+    "A 30-minute federal criminal attorney consultation costs $400\u2013$1,000.",
+  summaryLine:
+    "Instant PDF. 26 questions. 12 red flags. 13-stage roadmap. Guidelines breakdown. Attorney scorecard.",
+};
+
+// ---------------------------------------------------------------------------
 // Registry — add new configs here
 // ---------------------------------------------------------------------------
 
@@ -883,6 +1042,7 @@ const PLAYBOOK_CONFIGS: Record<string, PlaybookConfig> = {
   "probation-violation": PROBATION_VIOLATION,
   "white-collar": WHITE_COLLAR,
   "sex-offense": SEX_OFFENSE,
+  "federal-criminal": FEDERAL_CRIMINAL,
 };
 
 /** Look up a playbook config by slug. Returns undefined if not found. */
