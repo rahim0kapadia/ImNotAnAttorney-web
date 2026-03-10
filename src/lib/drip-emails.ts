@@ -9,12 +9,13 @@
  *
  * 2. **Post-purchase sequences** (POST_PURCHASE_EMAILS) — tier-specific emails
  *    triggered after a purchase. Each tier has its own sequence:
- *      - Case Decoder: delivery → story harvest → upsell → referral
- *      - Intelligence Brief: delivery → story harvest → upsell
- *      - X-Ray: delivery → upload reminder → story harvest
- *      - War Room: delivery → referral (operator handles updates directly)
- *      - Situation Room: delivery → story harvest
- *      - Witness Pack / Extra Witness: delivery → upsell
+ *      - Case Decoder: intake reminder → delivery → meeting prep → story harvest → upsell → referral
+ *      - Intelligence Brief: phase2 reminder → delivery → meeting prep → story harvest → upsell → referral
+ *      - X-Ray: intake reminder → delivery → upload reminder → meeting prep → story harvest → upsell → referral → status update
+ *      - War Room: intake reminder → delivery → meeting prep → story harvest → status update → referral
+ *      - Situation Room: intake reminder → delivery → meeting prep → story harvest → status update → referral
+ *      - Witness Pack: delivery → upload reminder → status update → story harvest → upsell
+ *      - Extra Witness: delivery
  *
  * KEY DESIGN DECISIONS:
  *
@@ -230,6 +231,21 @@ export const NURTURE_EMAILS: DripEmail[] = [
 export const POST_PURCHASE_EMAILS: DripEmail[] = [
   // --- Case Decoder ($197) ---
   {
+    key: "post_case_decoder_intake_reminder",
+    delayDays: 2,
+    tier: "case-decoder",
+    subject: "Your Case Decoder report is waiting for you",
+    html: `
+      <h1 style="color: #F59E0B;">Your Report Is Waiting for You</h1>
+      <p>You purchased the Case Decoder — but we can't generate your report until we have your case details.</p>
+      <p><strong style="color: white;">It takes about 3 minutes.</strong> We need your charges, jurisdiction, and a few details about your situation. That's it.</p>
+      ${cta("Complete Your Case Details →", "/intake")}
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">48-hour delivery guarantee</strong> starts when you submit your case details. The sooner you complete intake, the sooner you get your report.
+      </p>
+    `,
+  },
+  {
     key: "post_case_decoder_delivery",
     delayDays: 0,
     tier: "case-decoder",
@@ -248,17 +264,37 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
   {
+    key: "post_case_decoder_meeting_prep",
+    delayDays: 3,
+    tier: "case-decoder",
+    relativeToDelivery: true,
+    subject: "How to prepare for your attorney meeting",
+    html: `
+      <h1 style="color: #F59E0B;">How to Prepare for Your Attorney Meeting</h1>
+      <p>Your Case Decoder report includes a <strong style="color: white;">Meeting Ready Sheet</strong> and an <strong style="color: white;">email template</strong> you can send before your meeting. Here's how to use them:</p>
+      <ol>
+        <li><strong style="color: white;">Print the Meeting Ready Sheet</strong> — it's in Section 10 of your report. Bring it to the meeting.</li>
+        <li><strong style="color: white;">Pick your top 5 questions</strong> — start with the Golden Question (the one that matters most for YOUR case).</li>
+        <li><strong style="color: white;">Read them out loud once</strong> — hearing yourself say the question makes it easier to say in the room.</li>
+        <li><strong style="color: white;">Send the pre-meeting email</strong> — the template is ready to copy-paste. Your attorney will come prepared.</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Need to find your report?</strong> <a href="{{REPORT_URL}}" style="color: #F59E0B; text-decoration: underline;">View your Case Decoder report here</a>
+      </p>
+    `,
+  },
+  {
     key: "post_case_decoder_story_harvest",
     delayDays: 5,
     tier: "case-decoder",
     relativeToDelivery: true,
-    subject: "You met with your attorney — what was the first question they stopped to think about?",
+    subject: "Whether or not you've met with your attorney yet — one quick question",
     html: `
-      <h1 style="color: #F59E0B;">How Did It Go?</h1>
-      <p>You had your attorney meeting. I have one question:</p>
-      <p style="font-size: 18px; color: white;"><strong>Which question got the most reaction?</strong></p>
-      <p>Was it the one about elements the prosecution must prove? The email template? The 7-day action plan?</p>
-      <p>Just reply to this email. One sentence is fine. Your experience helps us build better questions for every defendant who comes after you.</p>
+      <h1 style="color: #F59E0B;">One Quick Question</h1>
+      <p>Whether you've already met with your attorney or you're still preparing — I have one question:</p>
+      <p style="font-size: 18px; color: white;"><strong>Which part of your report has been most useful so far?</strong></p>
+      <p>Was it the questions? The email template? Understanding what the prosecution has to prove? The 7-day action plan?</p>
+      <p>Just reply to this email. One sentence is fine. Your experience helps us build better reports for every defendant who comes after you.</p>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
         <strong style="color: white;">Need to find your report?</strong> <a href="{{REPORT_URL}}" style="color: #F59E0B; text-decoration: underline;">View your Case Decoder report here</a>
       </p>
@@ -342,17 +378,76 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       </p>
     `,
   },
+  // --- IB Phase 2 Intake Reminder (5 days after purchase) ---
+  // IB customers receive their CD report first (~48h), then need to submit a
+  // Phase 2 intake to trigger Phase A generation. 5 days from purchase gives
+  // ~3 days after CD delivery. Uses purchase-relative timing because the IB
+  // case itself hasn't been delivered yet at this point.
+  // Cron guard: skipped if IB case already has Phase 2 intake (status != "intake").
+  {
+    key: "post_intelligence_brief_phase2_reminder",
+    delayDays: 5,
+    tier: "intelligence-brief",
+    subject: "Complete your Intelligence Brief intake — your Case Decoder is ready",
+    html: `
+      <h1 style="color: #F59E0B;">Your Case Decoder Is Ready — Next Step Inside</h1>
+      <p>Your Case Decoder report has been delivered. To generate your full Intelligence Brief, we need a few more details about your judge, jurisdiction, and case stage.</p>
+      <p><strong style="color: white;">It takes about 5 minutes.</strong> Once you submit, your Intelligence Brief will be generated within 72 hours — including judge intelligence, motion landscape, and your priority questions.</p>
+      ${cta("Complete Intelligence Brief Details →", "/intake/intelligence-brief")}
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Your Case Decoder gave you the foundation.</strong> The Intelligence Brief goes deeper — your judge's actual patterns, defense theories specific to your charge, and a 14-day action plan with scripts for difficult conversations.
+      </p>
+    `,
+  },
+  // --- IB Meeting Prep (3 days after IB delivery) ---
+  // Guides IB customers on how to use their 9-section report in an attorney meeting.
+  {
+    key: "post_intelligence_brief_meeting_prep",
+    delayDays: 3,
+    tier: "intelligence-brief",
+    relativeToDelivery: true,
+    subject: "How to use your Intelligence Brief in your next meeting",
+    html: `
+      <h1 style="color: #F59E0B;">How to Use Your Intelligence Brief</h1>
+      <p>Your Intelligence Brief has everything you need for your next attorney meeting. Here's how to make the most of it:</p>
+      <ol>
+        <li><strong style="color: white;">Start with the 48-Hour Priority List</strong> — three actions, in order. Priority 1 first.</li>
+        <li><strong style="color: white;">Print the Judge Intelligence Card (Appendix F)</strong> — one page, designed for the meeting. Bring it.</li>
+        <li><strong style="color: white;">Pick your top 5 questions from Appendix D</strong> — the Golden Question is marked. Start there.</li>
+        <li><strong style="color: white;">Review the Plea Decision Checklist (Appendix G)</strong> — if a plea is on the table, this is your pre-signing checklist.</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Pro tip:</strong> Don't share the full report with your attorney. Share your <em>questions</em>, not the analysis. The Meeting Ready Sheet in Section 6 is designed to be safe if your attorney sees it. Let them read the full report on their own time — if you choose to share it at all.
+      </p>
+    `,
+  },
   {
     key: "post_intelligence_brief_story_harvest",
     delayDays: 5,
     tier: "intelligence-brief",
     relativeToDelivery: true,
-    subject: "You met with your attorney — what was the first question they stopped to think about?",
+    subject: "Whether or not you've met with your attorney yet — one quick question",
     html: `
-      <h1 style="color: #F59E0B;">How Did It Go?</h1>
-      <p>You had your attorney meeting with your Intelligence Brief questions in hand. I have one question:</p>
-      <p style="font-size: 18px; color: white;"><strong>Which question made your attorney pause?</strong></p>
-      <p>Just reply to this email. Your experience helps us refine every report for every defendant who comes after you.</p>
+      <h1 style="color: #F59E0B;">One Quick Question</h1>
+      <p>Whether you've already met with your attorney or you're still preparing — I have one question:</p>
+      <p style="font-size: 18px; color: white;"><strong>Which part of your Intelligence Brief has been most useful so far?</strong></p>
+      <p>Was it the judge intelligence? The priority questions? The 14-day action plan? The difficult conversation scripts?</p>
+      <p>Just reply to this email. One sentence is fine. Your experience helps us build better reports for every defendant who comes after you.</p>
+    `,
+  },
+  // --- IB Referral (14 days after delivery) ---
+  {
+    key: "post_intelligence_brief_referral",
+    delayDays: 14,
+    tier: "intelligence-brief",
+    relativeToDelivery: true,
+    subject: "Know someone facing charges?",
+    html: `
+      <h1 style="color: #F59E0B;">Know Someone Facing Charges?</h1>
+      <p>If your Intelligence Brief helped you ask better questions, it can help someone else too.</p>
+      <p>Every defendant deserves to walk into their attorney's office knowing what's in their case — not guessing.</p>
+      ${cta("Share ImNotAnAttorney →", "/?ref=friend")}
+      <p style="color: #71717A;">Every defendant deserves to know what's in their case.</p>
     `,
   },
   {
@@ -378,7 +473,23 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
 
-  // --- X-Ray+ ($997+) ---
+  // --- X-Ray ($2,497) ---
+  // Intake reminder (2 days after purchase, skipped if intake already submitted)
+  {
+    key: "post_x_ray_intake_reminder",
+    delayDays: 2,
+    tier: "x-ray",
+    subject: "Complete your case details to start your X-Ray analysis",
+    html: `
+      <h1 style="color: #F59E0B;">Your X-Ray Analysis Is Waiting</h1>
+      <p>You purchased The X-Ray — your included Case Decoder and Intelligence Brief are generated first, then your full discovery analysis. Complete your case details to get the process started.</p>
+      <p><strong style="color: white;">It takes about 3 minutes.</strong> We need your charges, jurisdiction, and a few details about your situation.</p>
+      ${cta("Complete Your Case Details →", "/intake")}
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Your included reports start generating</strong> as soon as we have your case details. The sooner you complete intake, the sooner analysis begins.
+      </p>
+    `,
+  },
   {
     key: "post_x_ray_delivery",
     delayDays: 0,
@@ -424,7 +535,82 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
 
+  // --- X-Ray Meeting Prep (3 days after delivery) ---
+  {
+    key: "post_x_ray_meeting_prep",
+    delayDays: 3,
+    tier: "x-ray",
+    relativeToDelivery: true,
+    subject: "How to use your X-Ray analysis in your next meeting",
+    html: `
+      <h1 style="color: #F59E0B;">How to Use Your X-Ray Analysis</h1>
+      <p>Your X-Ray has everything you need for your next attorney meeting. Here's how to make the most of it:</p>
+      <ol>
+        <li><strong style="color: white;">Lead with the Discrepancy Report</strong> — these are the findings that matter most. Weight differences, date conflicts, contradictions between documents.</li>
+        <li><strong style="color: white;">Use the Red Flags summary as your meeting agenda</strong> — each flag is a topic to explore with your attorney.</li>
+        <li><strong style="color: white;">Review the timeline</strong> — look for date conflicts and gaps that your attorney may want to investigate.</li>
+        <li><strong style="color: white;">Pick your top 10 from the 35+ questions</strong> — start with the ones connected to discrepancies.</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Pro tip:</strong> Your attorney may not have seen these patterns — the questions frame them as topics to explore together, not accusations. Let the findings speak for themselves.
+      </p>
+    `,
+  },
+  // --- X-Ray Upsell to War Room (10 days after delivery) ---
+  {
+    key: "post_x_ray_upsell",
+    delayDays: 10,
+    tier: "x-ray",
+    relativeToDelivery: true,
+    subject: "Your discovery revealed patterns — here's how to go deeper",
+    html: `
+      <h1 style="color: #F59E0B;">Your Discovery Revealed Patterns</h1>
+      <p>Your X-Ray analyzed every document. But some of those patterns — witness contradictions, evidence gaps, timeline conflicts — deserve a deeper investigation.</p>
+      <p>The <strong style="color: white;">${TIER_CORE["war-room"].name} (${TIER_CORE["war-room"].priceDisplay})</strong> turns those findings into a full intelligence operation:</p>
+      <ul style="padding-left: 20px;">
+        <li>Witness dossiers (up to 8) — full background, statement analysis, cross-examination questions</li>
+        <li>Prosecution strategy analysis — what they're building and where it's weak</li>
+        <li>Case law package — relevant precedents organized by issue</li>
+        <li>Motion landscape — every applicable motion with strategic assessment</li>
+        <li>Weekly updates for the duration of your case</li>
+      </ul>
+      <p><strong style="color: white;">Your ${TIER_CORE["x-ray"].priceDisplay} is already credited.</strong> Upgrade for just ${upgradePrice("x-ray")}.</p>
+      ${cta(`Upgrade to ${TIER_CORE["war-room"].name} — ${upgradePrice("x-ray")} →`, "/checkout?tier=war-room")}
+    `,
+  },
+  // --- X-Ray Referral (14 days after delivery) ---
+  {
+    key: "post_x_ray_referral",
+    delayDays: 14,
+    tier: "x-ray",
+    relativeToDelivery: true,
+    subject: "Know someone facing charges?",
+    html: `
+      <h1 style="color: #F59E0B;">Know Someone Facing Charges?</h1>
+      <p>If your discovery analysis revealed what your attorney missed, imagine what it could find in someone else's case.</p>
+      <p>Share this with anyone facing charges who needs clarity about their evidence:</p>
+      ${cta("Share ImNotAnAttorney →", "/?ref=friend")}
+      <p style="color: #71717A;">Every defendant deserves to know what's in their discovery.</p>
+    `,
+  },
+
   // --- War Room ($4,997) ---
+  // Intake reminder (2 days after purchase, skipped if intake already submitted)
+  {
+    key: "post_war_room_intake_reminder",
+    delayDays: 2,
+    tier: "war-room",
+    subject: "Complete your case details to begin your War Room engagement",
+    html: `
+      <h1 style="color: #F59E0B;">Your War Room Engagement Is Waiting</h1>
+      <p>You purchased The War Room — your included reports (Case Decoder, Intelligence Brief, X-Ray) are delivered first while we prepare your full intelligence operation. Complete your case details to get started.</p>
+      <p><strong style="color: white;">It takes about 3 minutes.</strong> We need your charges, jurisdiction, and a few details about your situation.</p>
+      ${cta("Complete Your Case Details →", "/intake")}
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Your included reports start generating</strong> as soon as we have your case details. The full War Room operation begins in parallel.
+      </p>
+    `,
+  },
   {
     key: "post_war_room_delivery",
     delayDays: 0,
@@ -463,7 +649,60 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
 
+  // --- War Room Meeting Prep (3 days after delivery) ---
+  {
+    key: "post_war_room_meeting_prep",
+    delayDays: 3,
+    tier: "war-room",
+    relativeToDelivery: true,
+    subject: "How to use your War Room package with your attorney",
+    html: `
+      <h1 style="color: #F59E0B;">How to Use Your War Room Package</h1>
+      <p>Your War Room package is comprehensive. Here's how to make the most of it in your next attorney meeting:</p>
+      <ol>
+        <li><strong style="color: white;">Start with the 3 most critical findings</strong> — don't hand over the whole package at once. Let your attorney absorb the key points first.</li>
+        <li><strong style="color: white;">Lead with the witness dossiers</strong> — inconsistencies in witness statements are the most actionable findings.</li>
+        <li><strong style="color: white;">Reference the prosecution analysis</strong> — knowing what the other side is building helps your attorney prepare.</li>
+        <li><strong style="color: white;">Save the case law package for follow-up</strong> — offer the full file after the meeting. Let your attorney review it on their own time.</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Pro tip:</strong> Start with the 3 most critical findings — don't hand over the whole package at once. Let your attorney absorb the key points, then offer the full file.
+      </p>
+    `,
+  },
+  // --- War Room Story Harvest (7 days after delivery — longer because bigger package) ---
+  {
+    key: "post_war_room_story_harvest",
+    delayDays: 7,
+    tier: "war-room",
+    relativeToDelivery: true,
+    subject: "Whether or not you've met with your attorney yet — one quick question",
+    html: `
+      <h1 style="color: #F59E0B;">One Quick Question</h1>
+      <p>Whether you've already met with your attorney or you're still reviewing the package — I have one question:</p>
+      <p style="font-size: 18px; color: white;"><strong>Which part of your War Room package has been most useful so far?</strong></p>
+      <p>Was it the witness dossiers? The prosecution analysis? The motion landscape? The case law references?</p>
+      <p>Just reply to this email. One sentence is fine. Your experience at this level helps us build better intelligence for every defendant who comes after you.</p>
+    `,
+  },
+
   // --- Situation Room ($9,997) ---
+  // Intake reminder (2 days after purchase, skipped if intake already submitted)
+  {
+    key: "post_situation_room_intake_reminder",
+    delayDays: 2,
+    tier: "situation-room",
+    subject: "Complete your case details — your Situation Room engagement is active",
+    html: `
+      <h1 style="color: #F59E0B;">Your Situation Room Is Active</h1>
+      <p>You purchased The Situation Room — priority analysis begins as soon as we have your case details. Complete intake now so your included reports can start generating on our priority timeline.</p>
+      <p><strong style="color: white;">It takes about 3 minutes.</strong> We need your charges, jurisdiction, and a few details about your situation.</p>
+      ${cta("Complete Your Case Details →", "/intake")}
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Priority timeline:</strong> Your case moves to the front of the queue. The sooner you complete intake, the sooner we begin.
+      </p>
+    `,
+  },
   {
     key: "post_situation_room_delivery",
     delayDays: 0,
@@ -494,6 +733,43 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>You're in the Situation Room — the most comprehensive intelligence package available. I have one question:</p>
       <p style="font-size: 18px; color: white;"><strong>What's made the biggest difference so far?</strong></p>
       <p>Just reply to this email. Your experience at this level is invaluable for refining every aspect of what we deliver.</p>
+    `,
+  },
+
+  // --- Situation Room Meeting Prep (3 days after delivery) ---
+  {
+    key: "post_situation_room_meeting_prep",
+    delayDays: 3,
+    tier: "situation-room",
+    relativeToDelivery: true,
+    subject: "How to use your Situation Room intelligence with your attorney",
+    html: `
+      <h1 style="color: #F59E0B;">How to Use Your Situation Room Intelligence</h1>
+      <p>Your Situation Room package is the most comprehensive intelligence available. Here's how to use it with your attorney:</p>
+      <ol>
+        <li><strong style="color: white;">Start with the 3 most critical findings</strong> — same approach as any meeting. Key points first, full file after.</li>
+        <li><strong style="color: white;">Focus on trial prep materials</strong> — JOA research questions, witness background research, and prosecution strategy analysis.</li>
+        <li><strong style="color: white;">Review the daily debrief schedule</strong> — when trial begins, you get an evening debrief + morning prep brief every trial day.</li>
+        <li><strong style="color: white;">Use your priority response line</strong> — 2-hour response during trial prep, 4-hour during trial. Use it when new information comes in.</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Your priority response line is active</strong> — use it when new information comes in during trial prep. Don't wait for the next scheduled update.
+      </p>
+    `,
+  },
+  // --- Situation Room Referral (21 days after delivery — longer relationship) ---
+  {
+    key: "post_situation_room_referral",
+    delayDays: 21,
+    tier: "situation-room",
+    relativeToDelivery: true,
+    subject: "Know someone facing charges?",
+    html: `
+      <h1 style="color: #F59E0B;">Know Someone Facing Charges?</h1>
+      <p>You know what it's like to face the system without enough information. If someone you know is in the same position, you can help them skip the confusion.</p>
+      <p>They don't need the Situation Room to start. A free Case Progress Score gives them clarity on where they stand — no payment, no commitment.</p>
+      ${cta("Share ImNotAnAttorney →", "/?ref=friend")}
+      <p style="color: #71717A;">Every defendant deserves to walk into their attorney's office with the right questions.</p>
     `,
   },
 
@@ -664,6 +940,55 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p><strong style="color: white;">Your ${TIER_CORE["witness-pack"].priceDisplay} is already credited.</strong> Upgrade for ${upgradeCostBetween("witness-pack", "x-ray")}.</p>
       ${cta(`Upgrade to ${TIER_CORE["x-ray"].name} — ${upgradeCostBetween("witness-pack", "x-ray")} →`, "/checkout?tier=x-ray")}
       <p style="margin-top: 16px;">Or go deeper with <strong style="color: white;">${TIER_CORE["war-room"].name} (${TIER_CORE["war-room"].priceDisplay})</strong> — full intelligence operation with weekly updates. Your ${TIER_CORE["witness-pack"].priceDisplay} credit applies. ${link("Learn more →", "/services")}</p>
+    `,
+  },
+
+  // --- Witness Pack Upload Reminder (2 days after purchase) ---
+  {
+    key: "post_witness_pack_upload_reminder",
+    delayDays: 2,
+    tier: "witness-pack",
+    subject: "Reminder: Upload your discovery documents to begin witness analysis",
+    html: `
+      <h1 style="color: #F59E0B;">Upload Reminder</h1>
+      <p>We're ready to analyze up to 3 witnesses — but we need your discovery documents first.</p>
+      <p>If you've already uploaded them, ignore this email. If not:</p>
+      ${cta("Upload Discovery Documents →", "/upload?case={{CASE_ID}}&email={{EMAIL}}")}
+      <p style="color: #71717A;">Not sure what to upload? Send everything your attorney gave you — witness statements, police reports, any documents mentioning your witnesses.</p>
+    `,
+  },
+  // --- Witness Pack Status Update (3 days after purchase) ---
+  {
+    key: "post_witness_pack_status_update",
+    delayDays: 3,
+    tier: "witness-pack",
+    subject: "Your witness analysis is in progress",
+    html: `
+      <h1 style="color: #F59E0B;">Your Witness Analysis Is In Progress</h1>
+      <p>We received your discovery documents and witness analysis is underway:</p>
+      <ul style="padding-left: 20px;">
+        <li><strong style="color: white;">Statement analysis</strong> — reviewing each witness's statements for inconsistencies</li>
+        <li><strong style="color: white;">Inconsistency identification</strong> — cross-referencing statements against physical evidence and each other</li>
+        <li><strong style="color: white;">Cross-examination questions</strong> — building targeted questions per witness for your attorney</li>
+      </ul>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Expected delivery: 3-5 business days from upload.</strong> We'll email you as soon as your witness analysis is ready.
+      </p>
+    `,
+  },
+  // --- Witness Pack Story Harvest (5 days after delivery) ---
+  {
+    key: "post_witness_pack_story_harvest",
+    delayDays: 5,
+    tier: "witness-pack",
+    relativeToDelivery: true,
+    subject: "Whether or not you've met with your attorney yet — one quick question",
+    html: `
+      <h1 style="color: #F59E0B;">One Quick Question</h1>
+      <p>Whether you've already met with your attorney or you're still reviewing — I have one question:</p>
+      <p style="font-size: 18px; color: white;"><strong>Which part of your witness analysis has been most useful so far?</strong></p>
+      <p>Was it the statement inconsistencies? The cross-examination questions? The behavioral patterns?</p>
+      <p>Just reply to this email. One sentence is fine. Your experience helps us build better analysis for every defendant who comes after you.</p>
     `,
   },
 

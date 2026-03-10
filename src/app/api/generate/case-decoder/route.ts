@@ -28,6 +28,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { sendEmail } from "@/lib/email";
+import { caseThreadId } from "@/lib/site";
 
 /**
  * Thin dispatcher — validates auth + idempotency, then fires off
@@ -151,6 +153,43 @@ export async function POST(req: NextRequest) {
   }).catch((err) =>
     console.error("[Generate] Edge function invocation failed:", err)
   );
+
+  // ──────────────────────────────────────────────────────────────
+  // "WE'VE STARTED" TRANSACTIONAL EMAIL
+  // ──────────────────────────────────────────────────────────────
+  // Let the customer know their CD is being generated. Same pattern as IB route.
+  // Fire-and-forget — don't block the response on email delivery.
+  const { data: caseForEmail } = await supabase
+    .from("cases")
+    .select("email")
+    .eq("id", caseId)
+    .single();
+
+  if (caseForEmail?.email) {
+    sendEmail({
+      to: caseForEmail.email,
+      subject: "We're analyzing your case now",
+      unsubscribeEmail: caseForEmail.email,
+      threadingHeaders: {
+        inReplyTo: caseThreadId(caseId),
+        references: caseThreadId(caseId),
+      },
+      html: `
+        <h1 style="color: #F59E0B;">Your Case Decoder Is Being Built</h1>
+        <p>Your case details are in. We're generating your Case Decoder report — including:</p>
+        <ul style="padding-left: 20px;">
+          <li><strong style="color: white;">Charge analysis</strong> — what the prosecution must prove, explained in plain English</li>
+          <li><strong style="color: white;">15 calibrated questions</strong> — each traced to methods used by elite defense attorneys</li>
+          <li><strong style="color: white;">Communication tools</strong> — email template and phone script for your attorney</li>
+          <li><strong style="color: white;">7-day action plan</strong> — one action per day with a Meeting Ready Sheet</li>
+        </ul>
+        <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+          <strong style="color: white;">Expected delivery: within 48 hours.</strong> We'll email you as soon as your Case Decoder is ready.
+        </p>
+      `,
+    }, { category: "transactional", case_id: caseId, metadata: { tier: "case-decoder", event: "generation-started" } })
+      .catch((err) => console.error("[CD-Generate] Started email failed:", err));
+  }
 
   // ──────────────────────────────────────────────────────────────
   // RESPONSE: Confirm generation started

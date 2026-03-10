@@ -407,10 +407,11 @@ export async function GET(req: NextRequest) {
             .limit(1)
             .maybeSingle();
 
-          // ── GUARD: Intake reminder only sends if intake hasn't been submitted ──
-          // Skip the intake reminder if the customer has already submitted intake
-          // (case is no longer in awaiting-intake status).
-          if (nextEmail.key === "post_case_decoder_intake_reminder" && linkedCase) {
+          // ── GUARD: Intake reminders only send if intake hasn't been submitted ──
+          // Applies to all tier intake reminders (CD, X-Ray, War Room, Situation Room).
+          // Skip if the customer has already submitted intake (case is no longer
+          // in awaiting-intake status).
+          if (nextEmail.key.endsWith("_intake_reminder") && linkedCase) {
             if (linkedCase.status !== "awaiting-intake") {
               skipped++;
               continue;
