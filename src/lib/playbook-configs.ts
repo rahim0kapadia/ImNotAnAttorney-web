@@ -556,6 +556,165 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
 };
 
 // ---------------------------------------------------------------------------
+// White Collar / Fraud
+// ---------------------------------------------------------------------------
+
+export const WHITE_COLLAR: PlaybookConfig = {
+  slug: "white-collar",
+  seoTitle:
+    "26 questions your white collar attorney hopes you never ask. Loss calculation guide, sentencing guidelines, forfeiture defense, red flag checklist, attorney scorecard. Instant PDF download.",
+  seoDescription:
+    "26 questions your white collar attorney hopes you never ask. Federal sentencing guidelines, loss calculation challenge, forfeiture defense, red flag checklist, attorney scorecard. Instant PDF download.",
+  hero: {
+    eyebrow: "White Collar Defense Playbook",
+    headline: "The Loss Amount Is Not the Sentence.",
+    subheadline:
+      "26 questions your white collar attorney hopes you never ask \u2014 plus a federal case stage roadmap, red flag checklist, and case progress scorecard.",
+  },
+  agitate: {
+    headline:
+      "You shouldn\u2019t have to figure this out from Reddit threads.",
+    paragraphs: [
+      "The day you got the call \u2014 or the knock on the door \u2014 everything changed. The subpoena, the search warrant, the agents who said \u201Cwe just want to talk.\u201D You didn\u2019t know what to say, so you said nothing. Or you said too much.",
+      "Now you\u2019re home. Maybe it\u2019s 2 AM. And you\u2019re Googling everything. You want to know: how bad is this? What does a federal fraud charge actually mean for your career, your assets, your family, your life?",
+      "Is your attorney telling you the truth when they say \u201Cwe\u2019ll work something out\u201D?",
+    ],
+    cards: [
+      {
+        title: "The Loss Amount Drives Everything",
+        text: "Your sentence is calculated from the government\u2019s loss figure \u2014 not the charge itself. A $50K loss and a $5M loss on the same wire fraud charge produce dramatically different sentences. Challenge the math.",
+      },
+      {
+        title: "Documents Can Be Challenged",
+        text: "Every financial record, email, and digital file the prosecution relies on must be authenticated, verified, and its chain of custody confirmed. Independent forensic analysis finds what the government\u2019s experts miss.",
+      },
+      {
+        title: "\u201CTrust Me\u201D Isn\u2019t a Strategy",
+        text: "If your attorney\u2019s plan is \u2018wait for the plea offer\u2019 \u2014 that\u2019s not a plan. That\u2019s an assembly line. White collar cases have more defense avenues than most attorneys use.",
+      },
+    ],
+  },
+  proof: {
+    headline: "Built from elite federal defense methodology",
+    methods: [
+      {
+        name: "Exhaustive Case Analysis",
+        title: "Foundation of every defense strategy",
+        insight:
+          "NACDL Lifetime Achievement-level methodology that analyzes every detail from day one \u2014 simultaneously challenging evidence, legal theories, and procedural issues across multiple fronts.",
+      },
+      {
+        name: "Asset Forfeiture Defense",
+        title: "Protecting what the government wants to seize",
+        insight:
+          "The definitive forfeiture defense methodology \u2014 innocent owner defenses, proportionality challenges under Timbs v. Indiana, tracing challenges, and CAFRA procedural protections.",
+      },
+      {
+        name: "Cross-Examination Methodology",
+        title: "Exposing cooperator credibility failures",
+        insight:
+          "Intensive preparation that controls witnesses and exposes the bias, incentives, and prior inconsistencies that undermine government cooperators.",
+      },
+    ],
+  },
+  valueStack: {
+    sections: [
+      {
+        title: "Charge Reality Report",
+        desc: "White collar offense elements explained in plain English \u2014 wire fraud, embezzlement, tax evasion, identity theft, securities fraud, money laundering. Loss amount table, sentencing guidelines, what the prosecution must prove.",
+        value: "$297",
+      },
+      {
+        title: "26 Questions Your White Collar Attorney Hopes You Never Ask",
+        desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
+        value: "$197",
+      },
+      {
+        title: "Federal Case Stage Roadmap",
+        desc: "Pre-indictment investigation through post-conviction \u2014 9 stages with milestones, attorney benchmarks, and red flags at each stage.",
+        value: "$97",
+      },
+      {
+        title: "Red Flag Checklist",
+        desc: "12 specific issues that could change the outcome \u2014 loss calculation gaps, undisclosed Brady material, unchallenged cooperators, forfeiture exposure, missing motions.",
+        value: "$97",
+      },
+      {
+        title: "Case Progress Scorecard",
+        desc: "Rate your attorney on 10 behaviors before it\u2019s too late to switch. An attorney who challenges the loss calculation beats one who accepts the government\u2019s number.",
+        value: "$97",
+      },
+    ],
+    totalValue: "$785",
+  },
+  guarantee: {
+    headline:
+      "5 questions you never thought to ask \u2014 or full refund.",
+    body: "If you read this Playbook and cannot find at least 5 questions you have never thought to ask your attorney, send us one email and we will refund every dollar. No explanation required.",
+  },
+  audience: {
+    forYou: [
+      "You\u2019re under investigation or charged with a white collar offense (fraud, embezzlement, tax evasion, identity theft, securities violations)",
+      "You have an attorney but aren\u2019t sure they\u2019re doing enough",
+      "You want to understand the sentencing guidelines and loss calculation that will determine your sentence",
+      "You want to know what questions to ask before your next meeting",
+      "You want to understand forfeiture, restitution, and collateral consequences",
+    ],
+    notForYou: [
+      "You\u2019re looking for legal advice (we provide information, not advice)",
+      "You want someone to represent you in court",
+      "Your case is a civil regulatory matter only (no criminal charges)",
+      "You\u2019ve already been sentenced",
+    ],
+  },
+  methodologyText:
+    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common white collar and fraud defense patterns. Your attorney remains the final authority on strategy decisions.",
+  urgency: {
+    headline: "Time-sensitive deadlines in your white collar case",
+    items: [
+      {
+        deadline: "Immediately upon contact from agents",
+        what: "Exercise your Fifth Amendment rights. Do NOT answer questions, even casually. Do NOT destroy any documents \u2014 that\u2019s a separate federal crime (18 U.S.C. \u00A7 1519).",
+      },
+      {
+        deadline: "Before any plea or cooperation decision",
+        what: "Ensure your attorney has calculated your sentencing guideline range, reviewed all discovery, and challenged the loss calculation. These decisions are irreversible.",
+      },
+    ],
+  },
+  faq: [
+    {
+      q: "Is this legal advice?",
+      a: "No. We provide legal INFORMATION \u2014 not legal ADVICE. The Playbook compiles documented defense strategies from elite white collar defense attorneys into an information resource. Your attorney gives legal advice. We give you the questions.",
+    },
+    {
+      q: "What if I already have an attorney?",
+      a: "That\u2019s exactly who this is for. The Playbook makes every conversation with your attorney more productive. Most defendants leave attorney meetings without knowing what to ask. This gives you 26 specific questions.",
+    },
+    {
+      q: "Does this cover my specific charge?",
+      a: "Yes. The questions apply to all white collar offenses \u2014 wire fraud, mail fraud, embezzlement, tax evasion, identity theft, securities fraud, money laundering, insurance fraud. The charge-specific details (elements, sentencing, collateral consequences) are covered in Section 1.",
+    },
+    {
+      q: "How is this delivered?",
+      a: "Instant PDF download. After payment, you\u2019ll receive an email with a download link within 60 seconds. No intake form, no waiting.",
+    },
+    {
+      q: "What\u2019s your refund policy?",
+      a: "If you read this Playbook and cannot find at least 5 questions you never thought to ask your attorney, send us one email and we\u2019ll refund every dollar. No explanation required.",
+    },
+    {
+      q: "Is this just generic information I can find online?",
+      a: "Everything here was built from documented defense strategies used by attorneys who have defended the highest-stakes white collar cases in America \u2014 including NACDL Lifetime Achievement recipients and Trial Lawyer Hall of Fame members. This is not a blog post. It\u2019s the prosecution pattern playbook \u2014 inverted.",
+    },
+  ],
+  comparisonLine:
+    "A 30-minute white collar attorney consultation costs $300\u2013$750.",
+  summaryLine:
+    "Instant PDF. 26 questions. 12 red flags. Federal case roadmap. Loss calculation guide. Attorney scorecard.",
+};
+
+// ---------------------------------------------------------------------------
 // Registry — add new configs here
 // ---------------------------------------------------------------------------
 
@@ -563,6 +722,7 @@ const PLAYBOOK_CONFIGS: Record<string, PlaybookConfig> = {
   "dui-first-offense": DUI_FIRST_OFFENSE,
   "drug-possession": DRUG_POSSESSION,
   "probation-violation": PROBATION_VIOLATION,
+  "white-collar": WHITE_COLLAR,
 };
 
 /** Look up a playbook config by slug. Returns undefined if not found. */
