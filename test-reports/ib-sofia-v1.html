@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Intelligence Brief — Sofia</title>
+<style>
+/* === Base === */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0C0A09;
+  color: #D4D4D8;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* === Header === */
+.header-block {
+  background: #1C1917;
+  padding: 32px;
+  border-radius: 12px;
+  border: 2px solid #F59E0B;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.header-title {
+  color: #F59E0B;
+  font-size: 28px;
+  margin: 0;
+}
+.header-subtitle {
+  color: #A1A1AA;
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+.header-meta {
+  margin-top: 24px;
+  text-align: left;
+}
+.meta-field {
+  margin: 4px 0;
+}
+.meta-label {
+  color: white;
+}
+
+/* === Content typography === */
+.section-h2 {
+  color: #F59E0B;
+  font-size: 20px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #3f3f46;
+}
+.section-h3 {
+  color: white;
+  font-size: 17px;
+  margin-top: 24px;
+  letter-spacing: 0.02em;
+}
+.section-h4 {
+  color: #F59E0B;
+  font-size: 14px;
+  margin-top: 20px;
+}
+.bold-text {
+  color: white;
+}
+.body-text {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+/* === Tables === */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+.table-header {
+  padding: 8px 12px;
+  border: 1px solid #3f3f46;
+  border-bottom: 2px solid #3f3f46;
+  text-align: left;
+  background: #1a1a1e;
+  font-weight: bold;
+  overflow-wrap: break-word;
+}
+.table-cell {
+  padding: 8px 12px;
+  border: 1px solid #3f3f46;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+tr:nth-child(even) > .table-cell {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* === Blockquotes === */
+.blockquote {
+  border-left: 4px solid #F59E0B;
+  padding: 12px 16px;
+  margin: 16px 0;
+  color: #A1A1AA;
+  background: rgba(245, 158, 11, 0.05);
+  border-radius: 0 4px 4px 0;
+}
+
+/* === Lists === */
+.list-item {
+  margin-bottom: 6px;
+  margin-left: 24px;
+}
+.checkbox-item {
+  list-style: none;
+}
+
+/* === Footer === */
+.footer-disclaimer {
+  background: #1C1917;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 40px;
+  border-left: 4px solid #A1A1AA;
+}
+.footer-disclaimer-text {
+  margin: 0;
+  font-size: 13px;
+  color: #71717A;
+}
+.footer-disclaimer-label {
+  color: #A1A1AA;
+}
+.copyright-block {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 2px solid #27272A;
+  text-align: center;
+}
+.copyright-text {
+  margin: 0;
+  font-size: 12px;
+  color: #71717A;
+}
+.copyright-meta {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #52525B;
+}
+
+/* === Upgrade CTA === */
+.upgrade-cta {
+  margin-top: 32px;
+  text-align: center;
+}
+.upgrade-cta-text {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #A1A1AA;
+}
+.upgrade-btn {
+  display: inline-block;
+  padding: 16px 32px;
+  background: #F59E0B;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.upgrade-credit-note {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #71717A;
+}
+
+/* === Page breaks === */
+.page-break {
+  page-break-after: always;
+}
+
+/* === Mobile responsive === */
+@media (max-width: 640px) {
+  .container { padding: 16px 12px; }
+  .header-block { padding: 20px; }
+  .header-title { font-size: 22px; }
+  .section-h2 { font-size: 17px; margin-top: 24px; padding-top: 16px; }
+  .section-h3 { font-size: 15px; }
+  .report-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table-header, .table-cell { padding: 6px 8px; font-size: 13px; }
+  .upgrade-btn { padding: 14px 24px; font-size: 15px; }
+}
+
+/* === Print === */
+@media print {
+  body { background: white !important; color: #1a1a1a !important; }
+  * { color: #1a1a1a !important; }
+  .section-h2, .section-h3, .section-h4 { color: #92400e !important; page-break-after: avoid; }
+  .bold-text, .meta-label { color: #1a1a1a !important; }
+  .blockquote { border-left-color: #92400e !important; background: #f5f5f4 !important; page-break-inside: avoid; }
+  .report-table { page-break-inside: avoid; }
+  .table-header, .table-cell { border-color: #d4d4d4 !important; }
+  .table-header { background: #e5e5e5 !important; }
+  .no-print { display: none !important; }
+  .header-block { background: #f5f5f4 !important; border-color: #92400e !important; }
+  a { color: #92400e !important; }
+  .body-text { orphans: 3; widows: 3; }
+  @page { margin: 1in; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header-block">
+    <h1 class="header-title">CASE INTELLIGENCE BRIEF</h1>
+    <p class="header-subtitle">ImNotAnAttorney | We Research. You Ask.</p>
+    <div class="header-meta">
+      <p class="meta-field"><strong class="meta-label">Prepared for:</strong> Sofia</p>
+      <p class="meta-field"><strong class="meta-label">Charge(s):</strong> Assault — Family Violence (Tex. Penal Code § 22.01(b))</p>
+      <p class="meta-field"><strong class="meta-label">Jurisdiction:</strong> Bexar County, Texas</p>
+      <p class="meta-field"><strong class="meta-label">Case Number:</strong> 2025-CR-87432</p>
+      <p class="meta-field"><strong class="meta-label">Next Court Date:</strong> April 25, 2026</p>
+      <p class="meta-field"><strong class="meta-label">Judge:</strong> Judge Robert Mendez</p>
+      <p class="meta-field"><strong class="meta-label">Attorney:</strong> Lisa Chen (Public Defender)</p>
+      <p class="meta-field"><strong class="meta-label">Months Since Arrest:</strong> 2</p>
+      <p class="meta-field"><strong class="meta-label">Report Date:</strong> March 8, 2026</p>
+      <p class="meta-field"><strong class="meta-label">Report ID:</strong> IB-TEST-SOFIA-V1</p>
+    </div>
+  </div>
+  <blockquote class="blockquote" style="margin: 20px 0; padding: 12px 16px;">
+    <p class="body-text"><strong class="bold-text">METHODOLOGY NOTE</strong></p>
+    <p class="body-text">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on Robert Tayac, Andrew Branca, Don West, Chris Voss, BJ Fogg — selected for Assault — Family Violence (Tex. Penal Code § 22.01(b)) cases. Expert attributions appear throughout.</p>
+    <p class="body-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+  </blockquote>
+  <h2 class="section-h2">START HERE: Your 48-Hour Priority List</h2>
+
+<p class="body-text">These three actions protect your position right now. Everything else can wait.</p>
+
+<strong class="bold-text">Priority 1 — TODAY (under 5 minutes):</strong>
+<p class="body-text">Send the pre-written email in Section 6 to Lisa Chen. It's already written with your case number, hearing date, and five specific questions embedded. Copy, paste, send. Done.</p>
+
+<p class="body-text">You've just created a written record — professional, direct, and it ensures your questions are in her file even if a phone call gets missed.</p>
+
+<strong class="bold-text">Priority 2 — THIS WEEK:</strong>
+<p class="body-text">Review the no-contact order conditions. Make sure you understand every restriction — no contact means no contact through any channel, including through friends, family, or the children. A violation is a separate criminal charge with its own penalties. If there's anything unclear about the conditions, ask Chen to clarify.</p>
+
+<p class="body-text">The justifiable-force question is your strongest starting point if the facts support it. Whether the BWC footage shows context that supports your account — or contradicts the initial report — is the most important evidence question in this case.</p>
+
+<strong class="bold-text">Priority 3 — BEFORE APRIL 25:</strong>
+<p class="body-text">Read Section 4 (Legal Options & Deadlines) before the pre-trial hearing. Two questions for Chen: "What will happen at this hearing?" and "Will the DA make an initial offer?" If she hasn't discussed the hearing at all, that tells you something important about communication patterns (see Section 2).</p>
+
+<p class="body-text">Everything else can wait. Start with Priority 1.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Table of Contents</h2>
+
+<li class="list-item"><strong class="bold-text">START HERE: Your 48-Hour Priority List</strong> — 3 actions for the next 48 hours</li>
+<li class="list-item"><strong class="bold-text">Section 1: Your Case Roadmap</strong> — Where you are, what happens next, the two paths</li>
+<li class="list-item"><strong class="bold-text">Section 2: What's Working + What Needs Attention</strong> — Case Progress Score, decoded statements, gaps to clarify</li>
+<li class="list-item"><strong class="bold-text">Section 3: Your Case Intelligence</strong> — Outcome map, defense theories, judge profile, prosecution preview</li>
+<li class="list-item"><strong class="bold-text">Section 4: Legal Options & Deadlines</strong> — Motion landscape, deadline calendar, plea framework</li>
+<li class="list-item"><strong class="bold-text">Section 5: Protecting Your Case and Life</strong> — Case protection, life impact map, pending-case management</li>
+<li class="list-item"><strong class="bold-text">Section 6: Your Plan</strong> — Email template, phone script, 14-day plan, meeting prep, difficult conversations</li>
+<li class="list-item"><strong class="bold-text">Appendix A: Brady/Giglio Checklist</strong> — Evidence the prosecution must disclose</li>
+<li class="list-item"><strong class="bold-text">Appendix B: Next Court Date Prep</strong> — What to expect, wear, bring, and do</li>
+<li class="list-item"><strong class="bold-text">Appendix C: Your Rights</strong> — Key rights during criminal proceedings</li>
+<li class="list-item"><strong class="bold-text">Appendix D: Questions for Your Attorney</strong> — 10-15 targeted, gap-based questions</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 1: Your Case Roadmap</h2>
+
+<h3 class="section-h3">1a. Where You Are Now</h3>
+
+<p class="body-text">Sofia, here is where things stand:</p>
+
+<table class="report-table"><tr><td class="table-cell">Detail</td><td class="table-cell">Your Case</td></tr>
+
+<tr><td class="table-cell">Case Number</td><td class="table-cell">2025-CR-87432</td></tr>
+<tr><td class="table-cell">Charge</td><td class="table-cell">Assault — Family Violence (Tex. Penal Code § 22.01(b))</td></tr>
+<tr><td class="table-cell">Classification</td><td class="table-cell">Class A Misdemeanor — up to 1 year in county jail, $4,000 fine</td></tr>
+<tr><td class="table-cell">Court</td><td class="table-cell">Bexar County Criminal Court</td></tr>
+<tr><td class="table-cell">Arrest Date</td><td class="table-cell">January 25, 2026</td></tr>
+<tr><td class="table-cell">Time Since Arrest</td><td class="table-cell">~2 months</td></tr>
+<tr><td class="table-cell">Next Court Date</td><td class="table-cell">April 25, 2026 — Pre-trial hearing</td></tr>
+<tr><td class="table-cell">Judge</td><td class="table-cell">Judge Robert Mendez</td></tr>
+<tr><td class="table-cell">Attorney</td><td class="table-cell">Lisa Chen (Public Defender)</td></tr>
+<tr><td class="table-cell">Alleged Victim</td><td class="table-cell">Estranged husband</td></tr>
+<tr><td class="table-cell">Children</td><td class="table-cell">Two minor children</td></tr>
+<tr><td class="table-cell">Protective Order</td><td class="table-cell">Active — no-contact order in place</td></tr></table>
+
+<p class="body-text">Under Texas law, assault family violence requires proving: (1) intentional, knowing, or reckless bodily injury, (2) to a family member, household member, or person in a dating relationship. Even though this is classified as a misdemeanor, the "family violence" designation triggers collateral consequences that exceed most felonies — including a lifetime federal weapons prohibition.</p>
+
+<h3 class="section-h3">1b. What Happens Next</h3>
+
+<p class="body-text">Here is the typical timeline for this type of case in Bexar County:</p>
+
+<strong class="bold-text">Stage 1: Pre-Trial Hearing (April 25, 2026)</strong>
+<p class="body-text">The court reviews the no-contact order status, addresses bond conditions, and discusses case scheduling. The prosecution may present their initial offer. This hearing typically lasts 15-30 minutes, but plan for 1-2 hours at the courthouse.</p>
+
+<strong class="bold-text">Stage 2: Evidence Exchange</strong>
+<p class="body-text">The prosecution provides police reports, BWC footage, medical records, 911 recordings, and witness statements. Lisa Chen reviews everything the state has and identifies what supports a defense.</p>
+
+<strong class="bold-text">Stage 3: Motion Practice</strong>
+<p class="body-text">Based on the evidence, Chen may file motions to suppress evidence, challenge the complaining witness's statements, or seek dismissal. In cases like yours, the complaining witness's cooperation with the prosecution is a significant variable.</p>
+
+<strong class="bold-text">Stage 4: Negotiation or Trial Preparation</strong>
+<p class="body-text">Texas domestic-related cases are commonly resolved through plea negotiations, deferred adjudication, or dismissal. Understanding all available options before evaluating any offer is essential.</p>
+
+<strong class="bold-text">Stage 5: Resolution</strong>
+<p class="body-text">The matter resolves through dismissal, deferred adjudication, negotiated plea, or trial.</p>
+
+<h3 class="section-h3">1c. The Two Paths</h3>
+
+<strong class="bold-text">Path A — Challenge the State's Theory:</strong>
+<p class="body-text">If self-defense applies, Texas law provides strong protections. Under Tex. Penal Code § 9.31, a person is justified in using force when they reasonably believe force is immediately necessary to protect themselves against another's use or attempted use of unlawful force. The state must disprove self-defense beyond a reasonable doubt once raised.</p>
+
+<strong class="bold-text">Path B — Negotiate a Favorable Resolution:</strong>
+<p class="body-text">Deferred adjudication (Tex. Code Crim. Proc. Art. 42A.101) allows the judge to place you on community supervision without entering a conviction. Upon successful completion, the charge is dismissed. However, deferred adjudication for this charge carries important limitations — it cannot be sealed or expunged under current Texas law, and it still triggers the federal weapons ban.</p>
+
+<p class="body-text">Which path depends on what the evidence shows. The questions in this brief are designed to help you and Chen evaluate both options.</p>
+
+<h3 class="section-h3">Bottom Line Right Now</h3>
+
+<p class="body-text">You are 2 months into a process that typically takes 4-8 months for a misdemeanor domestic-related charge in Bexar County. Your one action: send the email in Section 6 today.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 2: What's Working + What Needs Attention</h2>
+
+<h3 class="section-h3">2a. What's On Track</h3>
+
+<strong class="bold-text">Case Progress Score: 35/100</strong>
+
+<p class="body-text">This score reflects where preparation stands based on the information you've shared across six dimensions. It measures communication and transparency — not Lisa Chen's legal ability. Public defenders carry heavy caseloads, which makes proactive communication from you even more important.</p>
+
+<table class="report-table"><tr><td class="table-cell">Area (Weight)</td><td class="table-cell">What We Know</td><td class="table-cell">Gap to Clarify</td><td class="table-cell">Priority Qs</td></tr>
+
+<tr><td class="table-cell">Communication (25%)</td><td class="table-cell">Initial meeting happened but follow-up has been limited; last update was 2 weeks ago</td><td class="table-cell">Preferred contact method and update frequency</td><td class="table-cell">Q1, Q2</td></tr>
+<tr><td class="table-cell">Case Review (15%)</td><td class="table-cell">She has the police report but hasn't discussed specifics with you</td><td class="table-cell">What the report says about both sides of the incident</td><td class="table-cell">Q3, Q6</td></tr>
+<tr><td class="table-cell">Evidence Review (20%)</td><td class="table-cell">BWC footage and 911 recording status unknown</td><td class="table-cell">Whether this evidence helps or hurts the defense</td><td class="table-cell">Q4, Q6</td></tr>
+<tr><td class="table-cell">Motion Activity (15%)</td><td class="table-cell">No motions filed or discussed</td><td class="table-cell">Whether suppression or dismissal motions are being considered</td><td class="table-cell">Q7</td></tr>
+<tr><td class="table-cell">Strategy (15%)</td><td class="table-cell">"We'll see what the DA offers" — no proactive defense strategy discussed</td><td class="table-cell">Whether the defense theory is being investigated</td><td class="table-cell">Q3, Q5</td></tr>
+<tr><td class="table-cell">Court Prep (10%)</td><td class="table-cell">Pre-trial hearing set for April 25</td><td class="table-cell">What to expect and what preparation is needed</td><td class="table-cell">Q8</td></tr></table>
+
+<strong class="bold-text">What IS working:</strong>
+<li class="list-item">No prior criminal record — this matters significantly at sentencing and in plea negotiations</li>
+<li class="list-item">The justifiable-force defense is a recognized legal theory, not wishful thinking — if the facts support it, the burden shifts to the prosecution</li>
+<li class="list-item">The no-contact order is a separate civil matter — compliance with it demonstrates responsibility</li>
+<li class="list-item">Bexar County has specialized domestic courts with judges experienced in these dynamics</li>
+
+<h3 class="section-h3">2b. Decoded Statements</h3>
+
+<p class="body-text">When attorneys speak in shorthand, there's often a fuller picture underneath:</p>
+
+<strong class="bold-text">"We'll see what the DA offers"</strong>
+<p class="body-text">In cases like yours, this can reflect a wait-and-see approach that's common with heavy caseloads. But after 2 months, Chen should be able to discuss the police report and her initial impressions. The distinction: "I'm building our position before responding to their offer" is different from "I'm waiting for them to go first without preparing."</p>
+
+<strong class="bold-text">The limited communication</strong>
+<p class="body-text">Public defenders manage dozens of cases simultaneously. Limited communication isn't necessarily a sign of neglect — but it does mean being proactive about driving the conversation matters. Written questions create accountability and a record.</p>
+
+<strong class="bold-text">No mention of the defense theory</strong>
+<p class="body-text">If you have a justifiable-force claim and Chen hasn't discussed it, that's a gap worth addressing directly. This defense in Texas requires specific factual investigation — it's not something that can be raised at the last minute without preparation.</p>
+
+<h3 class="section-h3">2c. What Needs Attention</h3>
+
+<strong class="bold-text">CLARIFY: Has Chen reviewed the officer's recording and 911 call?</strong> These are often the most important pieces of evidence in domestic-related cases — they capture the immediate aftermath and may support the defense theory.
+
+<strong class="bold-text">CLARIFY: Defense theory investigation.</strong> Has Chen investigated the justifiable-force angle? This requires documenting your account of the incident, any injuries you sustained, the history of the relationship, and any prior incidents.
+
+<strong class="bold-text">CLARIFY: What "we'll see what the DA offers" means specifically.</strong> After 2 months, you're entitled to an update on the evidence and her initial assessment of the defense options.
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">Public defenders are capable attorneys handling complex cases daily. The communication pattern requires you to be proactive — the email template in Section 6 creates a written record that moves things forward.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 3: Your Case Intelligence</h2>
+
+<h3 class="section-h3">3a. Outcome Map</h3>
+
+<p class="body-text">Here is the range of outcomes. These are not predictions — they represent the landscape your attorney helps you navigate.</p>
+
+<table class="report-table"><tr><td class="table-cell">Outcome</td><td class="table-cell">What It Means</td><td class="table-cell">How Common Here</td><td class="table-cell">Key Question</td></tr>
+
+<tr><td class="table-cell">Dismissal</td><td class="table-cell">State drops the charge — insufficient evidence, complaining witness non-cooperation, or successful suppression motion</td><td class="table-cell">Possible, especially if the witness doesn't cooperate and the officer's recording supports the defense</td><td class="table-cell">"Is there a realistic path to dismissal based on the evidence?"</td></tr>
+<tr><td class="table-cell">Acquittal at Trial</td><td class="table-cell">Judge or jury finds insufficient proof beyond a reasonable doubt</td><td class="table-cell">Less common for the charge but the defense theory can be compelling</td><td class="table-cell">"What are the realistic trial prospects given the evidence?"</td></tr>
+<tr><td class="table-cell">Deferred Adjudication</td><td class="table-cell">Judge places you on community supervision without entering a conviction; dismissed upon completion</td><td class="table-cell">Common for first-offense — but still triggers the federal weapons ban</td><td class="table-cell">"Is deferred adjudication available, and what are the conditions?"</td></tr>
+<tr><td class="table-cell">Plea — Reduced Charge</td><td class="table-cell">Plea to a lesser offense (e.g., Class C assault without the FV finding)</td><td class="table-cell">The defense goal in negotiation — removes the designation</td><td class="table-cell">"Can we negotiate a plea that avoids the family violence finding?"</td></tr>
+<tr><td class="table-cell">Plea — As Charged</td><td class="table-cell">Plea to the charge as filed with agreed sentence</td><td class="table-cell">Common resolution — typically community supervision for first offense</td><td class="table-cell">"What is the typical sentence for a first-offense charge like mine in this court?"</td></tr></table>
+
+<strong class="bold-text">The critical negotiation point:</strong> The difference between a plea WITH the FV finding and one WITHOUT it is enormous. A Class C assault (fine only, no jail) without the FV designation avoids the weapons prohibition, the custody implications, and the enhancement for future charges. Whether this is negotiable depends on the evidence and the DA's position.
+
+<h3 class="section-h3">3b. Defense Theories</h3>
+
+<p class="body-text">These are established categories of defense inquiry for cases like yours. Your attorney determines which apply to your specific facts.</p>
+
+<strong class="bold-text">Self-Defense (Branca framework)</strong>
+<p class="body-text">Andrew Branca's five-element analysis of justifiable force applies directly: (1) innocence — you didn't initiate the physical confrontation, (2) imminence — the threat was immediate, (3) proportionality — your response matched the threat level, (4) avoidance — retreat wasn't safely available, and (5) reasonableness — a reasonable person in your situation would have responded similarly. Texas law does not require retreat in your own home (Castle Doctrine, Tex. Penal Code § 9.32). The question for Chen: "Based on what I've told you about the incident, do the facts support a self-defense claim?"</p>
+
+<strong class="bold-text">Complaining Witness Credibility</strong>
+<p class="body-text">Robert Tayac's framework for domestic defense emphasizes that domestic situations involve complex relationship dynamics. The complaining witness's account is one perspective — the officer's recording, 911 call, physical evidence, and your account provide additional context. If the evidence contradicts the initial report, that creates reasonable doubt.</p>
+
+<strong class="bold-text">Insufficient Evidence</strong>
+<p class="body-text">Domestic-related cases with a reluctant or non-cooperative complaining witness present distinct challenges for the prosecution. Without the witness's testimony, the state must prove its case through other evidence — the officer's recording, medical records, and physical evidence. If that evidence is ambiguous or supports the defense, the case weakens significantly.</p>
+
+<h3 class="section-h3">3c. Judge Intelligence</h3>
+
+<p class="body-text">Judge Robert Mendez — Bexar County Criminal Court.</p>
+
+<p class="body-text">Judge-specific research is pending — the full brief will be updated when jurisdiction-specific data becomes available.</p>
+
+<p class="body-text">In the meantime, here are the four factors that matter most. Each is framed as a question for Chen, whose courtroom experience is the most reliable source:</p>
+
+<li class="list-item"><strong class="bold-text">Sentencing patterns:</strong> "How does Judge Mendez typically handle first-offense cases like mine? Does he favor deferred adjudication or community supervision?"</li>
+
+<li class="list-item"><strong class="bold-text">Motion tendencies:</strong> "How receptive is he to motions to dismiss or suppress in cases like mine?"</li>
+
+<li class="list-item"><strong class="bold-text">Justified-force rulings:</strong> "How has he handled justifiable-force claims in cases like mine?"</li>
+
+<li class="list-item"><strong class="bold-text">Plea negotiation involvement:</strong> "Does he typically accept negotiated plea agreements, or does he impose his own conditions?"</li>
+
+<p class="body-text">An attorney who has appeared before Judge Mendez can calibrate strategy based on his patterns. If Chen hasn't, asking a colleague in the PD office who has is standard practice.</p>
+
+<h3 class="section-h3">3d. Prosecution Preview</h3>
+
+<p class="body-text">Here's how the state is likely to frame the situation:</p>
+
+<strong class="bold-text">"She's the one who was arrested."</strong> Their lead argument: law enforcement determined you were the primary aggressor. They'll present the arrest itself as evidence of guilt.
+
+<p class="body-text">How to think about this: An arrest reflects the responding officer's on-scene assessment, not a legal determination of guilt. Officers responding to domestic calls must make rapid decisions, and misidentification of the primary aggressor is documented and studied. The recording may show context the officer's report omits or minimizes.</p>
+
+<strong class="bold-text">"The injuries prove the assault."</strong> They'll present photographs or medical records showing the complaining witness's injuries.
+
+<p class="body-text">How to think about this: Injuries are consistent with a physical encounter — but they don't establish who initiated it. If you also sustained injuries, that evidence supports a mutual encounter or justifiable force. The question is not whether contact occurred, but who was the aggressor and whether force was justified.</p>
+
+<strong class="bold-text">"The 911 call says it all."</strong> They'll use the 911 recording as the complaining witness's immediate account.
+
+<p class="body-text">How to think about this: 911 calls capture one side of a high-emotion moment. They don't capture what happened before the call. The caller's emotional state can make the account sound credible, but emotion and accuracy are different things. What the caller says happened — and what the footage and physical evidence show — may tell different stories.</p>
+
+<p class="body-text">Something most defendants facing these charges don't realize: the "FV" designation on ANY resolution — even deferred adjudication — triggers collateral consequences that can follow you for decades. A plea that removes this designation (e.g., to Class C simple assault) changes the entire long-term picture. That's exactly the kind of negotiation analysis The X-Ray ($2,497) provides using your actual evidence. The $997 is already credited, so the additional cost is $1,500.</p>
+
+<h3 class="section-h3">3e. Jurisdiction Profile</h3>
+
+<p class="body-text">Bexar County handles a significant volume of domestic-related cases. Key local factors:</p>
+
+<li class="list-item"><strong class="bold-text">Specialized domestic courts</strong> — judges with experience in household dynamics, complaining witness behavior, and justifiable-force claims</li>
+<li class="list-item"><strong class="bold-text">DA's office</strong> has a dedicated domestic violence unit with specific policies on plea negotiations</li>
+<li class="list-item"><strong class="bold-text">Victim advocacy programs</strong> — the complaining witness may have an assigned advocate who influences whether they cooperate with prosecution</li>
+<li class="list-item"><strong class="bold-text">Community supervision</strong> is the typical outcome for a first-offense charge like yours — jail time is uncommon absent aggravating factors</li>
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">The justifiable-force theory is your strongest starting point if the facts support it — and in Texas, the burden shifts to the prosecution to disprove it. The questions in Appendix D are designed to find out what Chen's initial read is on the evidence and whether the facts support the defense theory or a negotiated plea that avoids the FV finding.</p>
+
+<blockquote class="blockquote"><strong class="bold-text">What an evidence review would add:</strong> This analysis is based on what you shared with us. The X-Ray ($2,497) examines the actual evidence: body camera footage, 911 recording, medical records, witness statements, and the responding officer's complete report. If Chen has already reviewed the evidence, this confirms her analysis with a second set of eyes. If she hasn't gotten to it yet, this fills the gap. The $997 is fully credited — the additional cost is $1,500, not $2,497. Every dollar rolls forward. No pressure — see how the pre-trial hearing goes first.</blockquote>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 4: Legal Options & Deadlines</h2>
+
+<h3 class="section-h3">4a. Motion Landscape</h3>
+
+<p class="body-text">The following motions are commonly considered in cases like yours. Your attorney determines which apply.</p>
+
+<table class="report-table"><tr><td class="table-cell">Motion</td><td class="table-cell">What It Does</td><td class="table-cell">Why It Matters Here</td></tr>
+
+<tr><td class="table-cell">Motion to Suppress (statements)</td><td class="table-cell">Challenges admissibility of statements made without Miranda warnings or under coercive circumstances</td><td class="table-cell">If you made statements at the scene before being Mirandized, they may be excludable</td></tr>
+<tr><td class="table-cell">Motion to Suppress (evidence)</td><td class="table-cell">Challenges how physical evidence was obtained — search, seizure, photographs</td><td class="table-cell">If officers entered the home without consent or warrant, evidence may be suppressed</td></tr>
+<tr><td class="table-cell">Motion to Dismiss (insufficient evidence)</td><td class="table-cell">Challenges whether the state can prove its case beyond a reasonable doubt</td><td class="table-cell">If the complaining witness doesn't cooperate and other evidence is thin, dismissal becomes viable</td></tr>
+<tr><td class="table-cell">Motion to Modify Protective Order</td><td class="table-cell">Requests modification of no-contact conditions — often relevant for co-parenting</td><td class="table-cell">Must be filed through the civil court that issued the order, not the criminal court</td></tr></table>
+
+<p class="body-text">Whether any motion would succeed depends on the evidence — particularly the officer's recording, 911 call, and medical records.</p>
+
+<h3 class="section-h3">4b. Deadline Calendar</h3>
+
+<table class="report-table"><tr><td class="table-cell">Timeframe</td><td class="table-cell">What's Coming</td><td class="table-cell">Action</td></tr>
+
+<tr><td class="table-cell"><strong class="bold-text">Now — April 25</strong></td><td class="table-cell">Evidence review</td><td class="table-cell">Ask: "Have you reviewed the body camera footage and 911 recording?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">April 25</strong></td><td class="table-cell">Pre-trial hearing — judge reviews case status</td><td class="table-cell">Ask: "What will happen at this hearing? Will the DA make an offer?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Post-hearing</strong></td><td class="table-cell">Motion filing deadlines (if applicable)</td><td class="table-cell">Ask: "Are there motions we should prepare before the filing deadline?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">4-8 months</strong></td><td class="table-cell">Trial or resolution</td><td class="table-cell">Understanding the full timeline helps manage expectations</td></tr></table>
+
+<strong class="bold-text">ACTION — Evidence review:</strong> The body camera footage and 911 recording are often the most significant evidence in cases like yours. Without knowing what they show, neither you nor Chen can evaluate the defense options. Ask directly: "Have you reviewed the body camera footage? Does it support our version of events?"
+
+<h3 class="section-h3">4c. Resolution Options</h3>
+
+<p class="body-text">Cases involving this charge in Texas have several possible resolutions. Understanding each one before evaluating any offer is essential:</p>
+
+<strong class="bold-text">Before evaluating any offer, explore these questions:</strong>
+
+<li class="list-item">"What is the DA's initial offer, and how does it compare to typical outcomes for a first-offense charge like mine in this court?"</li>
+<li class="list-item">"Is deferred adjudication available, and what are its limitations for this charge?"</li>
+<li class="list-item">"What are the conditions of community supervision, and how long would it last?"</li>
+<li class="list-item">"What happens if I complete deferred adjudication — can the record be sealed?"</li>
+
+<strong class="bold-text">What an FV conviction means for your record:</strong> Under Tex. Penal Code § 22.01(b), assault family violence is a Class A Misdemeanor carrying up to 1 year in county jail and a $4,000 fine. A conviction — or even deferred adjudication — triggers a lifetime federal weapons ban under 18 U.S.C. § 922(g)(9) (the Lautenberg Amendment). This applies even though the charge is a misdemeanor. Additionally, the FV finding affects custody proceedings, employment background checks, and housing applications.
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">Most time-sensitive question: Has Chen reviewed the body camera footage and 911 recording? Without knowing what they show, evaluating defense options or offers is impossible.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 5: Protecting Your Case and Life</h2>
+
+<h3 class="section-h3">5a. Protecting Your Case</h3>
+
+<strong class="bold-text">Protective order compliance:</strong> Follow every condition of the no-contact order meticulously. Even accidental contact — a text, a phone call, showing up at a shared location — can result in a separate criminal charge (Tex. Penal Code § 25.07, violation of protective order, a Class A Misdemeanor). Courts take violations extremely seriously in domestic-related cases.
+
+<strong class="bold-text">Evidence preservation:</strong> Do not delete any text messages, photos, voicemails, or social media posts related to the relationship or the incident. This includes evidence that may support the defense theory — photographs of injuries you sustained, messages showing the history of the relationship, or communications with family members describing events.
+
+<strong class="bold-text">Social media silence:</strong> Do not post about the incident, the case, the court order, or the relationship on any social media platform. Prosecutors routinely search social media, and even innocent posts can be taken out of context.
+
+<h3 class="section-h3">5b. Life Impact Map</h3>
+
+<p class="body-text">Your primary concerns are your children, your employment, and the no-contact order situation. Here is how this matter can affect each area:</p>
+
+<table class="report-table"><tr><td class="table-cell">Life Area</td><td class="table-cell">Potential Impact</td><td class="table-cell">Source</td><td class="table-cell">Question for Attorney</td></tr>
+
+<tr><td class="table-cell"><strong class="bold-text">Children/Custody</strong></td><td class="table-cell">An FV finding can affect custody, visitation, and CPS involvement. Court may consider the finding in any pending or future family court proceedings.</td><td class="table-cell">Tex. Family Code § 153.004</td><td class="table-cell">"How does this case affect my custody situation?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Employment</strong></td><td class="table-cell">Background checks show the charge. Some employers (healthcare, education, childcare) may terminate or not hire with a pending charge.</td><td class="table-cell">State licensing boards; employer policies</td><td class="table-cell">"How does this affect my current job and future employment?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Housing</strong></td><td class="table-cell">Landlords may deny applications based on the charge. Section 8 housing has specific domestic violence provisions.</td><td class="table-cell">Fair Housing Act; local policies</td><td class="table-cell">"Are there housing protections I should know about?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Firearms</strong></td><td class="table-cell">Federal lifetime firearms prohibition under 18 U.S.C. § 922(g)(9) — even for misdemeanor conviction or deferred adjudication with an FV finding.</td><td class="table-cell">Lautenberg Amendment</td><td class="table-cell">"Does deferred adjudication trigger the firearms prohibition?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Immigration</strong></td><td class="table-cell">Crime involving moral turpitude. Domestic violence conviction triggers deportability under INA § 237(a)(2)(E).</td><td class="table-cell">Immigration and Nationality Act</td><td class="table-cell">"How does this affect immigration status?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Future charges</strong></td><td class="table-cell">A second offense becomes a third-degree felony (2-10 years prison) under Tex. Penal Code § 22.01(b-1).</td><td class="table-cell">Tex. Penal Code § 22.01(b-1)</td><td class="table-cell">"What are the consequences if this happens again?"</td></tr></table>
+
+<strong class="bold-text">Immigration & International Travel:</strong> Even for US citizens, a conviction on this charge can affect:
+<li class="list-item">Immigration sponsorship of family members — domestic violence is a crime involving moral turpitude</li>
+<li class="list-item">Future naturalization petitions by family members</li>
+<li class="list-item">International travel — some countries deny entry based on violent offense convictions</li>
+
+<p class="body-text">Under <em>Padilla v. Kentucky</em>, 559 U.S. 356 (2010), criminal defense must include immigration consequence analysis. If anyone in your household has immigration status concerns, consult an immigration attorney before any plea decision.</p>
+
+<strong class="bold-text">What most people facing these charges don't realize:</strong> The federal firearms prohibition is the collateral consequence that catches defendants off guard. Under the Lautenberg Amendment (18 U.S.C. § 922(g)(9)), ANY conviction — including deferred adjudication — that includes an FV finding triggers a lifetime federal ban on possessing guns or ammunition. This applies even though the underlying charge is a misdemeanor. There is no exception for hunting, sport shooting, or home defense. Understanding this before accepting any offer is critical.
+
+<h3 class="section-h3">5c. Life While Pending</h3>
+
+<p class="body-text">The matter will likely be pending for 4-8 months in Bexar County:</p>
+
+<li class="list-item"><strong class="bold-text">Comply with the court order absolutely.</strong> No contact of any kind — not through friends, family, children, or social media. A violation is a separate criminal charge.</li>
+<li class="list-item"><strong class="bold-text">Attend every court date.</strong> Missing a court appearance results in a warrant and potential bond revocation.</li>
+<li class="list-item"><strong class="bold-text">Document your compliance.</strong> Keep records of community supervision meetings, any required classes, and proof of compliance with all bond conditions.</li>
+<li class="list-item"><strong class="bold-text">Maintain stability.</strong> Courts view continued employment, stable housing, and engagement with children (through approved channels) favorably.</li>
+
+<p class="body-text">This period feels indefinite, but it isn't. You're at month 2 of a 4-8 month process. The pre-trial hearing will set the next concrete milestone.</p>
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">The Lautenberg prohibition is the collateral consequence most defendants facing these charges don't see coming. It applies to misdemeanors, it applies to deferred adjudication, and it's permanent under current federal law. Every question in Appendix D is designed with these realities in mind.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 6: Your Plan</h2>
+
+<h3 class="section-h3">6a. If Overwhelmed</h3>
+
+<p class="body-text">Start here. One action. Thirty seconds.</p>
+
+<p class="body-text">Send the email below. It's already written. Copy, paste, send. You've just created a written record with your five most important questions — more than most defendants ever do.</p>
+
+<h3 class="section-h3">6b. Email Template (Ready to Send)</h3>
+
+<strong class="bold-text">Subject:</strong> Case Update Request — Sofia, Case #2025-CR-87432
+
+<p class="body-text">Dear Ms. Chen,</p>
+
+<p class="body-text">I hope you're doing well. I want to be well-prepared for my April 25 pre-trial hearing, and I have a few questions I'd like to discuss:</p>
+
+<li class="list-item">You mentioned "we'll see what the DA offers" — based on the police report and any evidence you've reviewed, what is your initial read on the strength of the state's case?</li>
+<li class="list-item">Have you reviewed the body camera footage and 911 recording? Do they support the defense theory?</li>
+<li class="list-item">Is self-defense a viable theory based on what you know? What investigation would we need to support it?</li>
+<li class="list-item">Is deferred adjudication available, and does it trigger the federal firearms prohibition even though this is a misdemeanor?</li>
+<li class="list-item">Can we negotiate a plea that avoids the "family violence" finding — for example, to a Class C simple assault?</li>
+
+<p class="body-text">I know you have a heavy caseload and I appreciate your work on my behalf. I want to make sure I understand where things stand so I can be a prepared and helpful client.</p>
+
+<p class="body-text">Could we schedule a brief call or meeting before the pre-trial hearing? I'm available any time that works for you.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Sofia</p>
+<p class="body-text">Case #2025-CR-87432</p>
+
+<h3 class="section-h3">6c. Phone Script</h3>
+
+<p class="body-text">"Hi, this is Sofia Martinez — I'm a client of Lisa Chen in the Public Defender's office, case number 2025-CR-87432. I have a pre-trial hearing on April 25 and I'd like to schedule a brief conversation before then. I also sent an email with my questions. Could you let her know I called? Thank you."</p>
+
+<h3 class="section-h3">6d. 14-Day Plan</h3>
+
+<table class="report-table"><tr><td class="table-cell">Day</td><td class="table-cell">Action</td></tr>
+
+<tr><td class="table-cell">Day 1</td><td class="table-cell">Send the email above. Copy, paste, send — 30 seconds. You've just created a written record.</td></tr>
+<tr><td class="table-cell">Day 2</td><td class="table-cell">Read Q1-Q5 on your Meeting Ready Sheet below. Highlight the ones that matter most to you.</td></tr>
+<tr><td class="table-cell">Day 3</td><td class="table-cell">If no email response, call using the phone script. Public defender offices are busy — persistence is expected.</td></tr>
+<tr><td class="table-cell">Day 4</td><td class="table-cell">Gather materials: print the Meeting Ready Sheet, grab a pen, have your case number ready.</td></tr>
+<tr><td class="table-cell">Day 5</td><td class="table-cell">Read your questions aloud once. Saying them out loud makes them easier to ask in person.</td></tr>
+<tr><td class="table-cell">Day 6</td><td class="table-cell">Still no response? Call again and ask to schedule a specific time. You're entitled to communicate with your attorney.</td></tr>
+<tr><td class="table-cell">Day 7</td><td class="table-cell">Rest. You've done the work this week.</td></tr>
+<tr><td class="table-cell">Days 8-14</td><td class="table-cell">Attend your meeting or continue following up. Bring your Meeting Ready Sheet. Ask, listen, write down answers.</td></tr></table>
+
+<p class="body-text">In two weeks, you'll walk into that meeting as the most prepared client in the office.</p>
+
+<h3 class="section-h3">6e. Follow-Up Template</h3>
+
+<strong class="bold-text">Subject:</strong> Follow-Up: Case Update Request — Sofia, Case #2025-CR-87432
+
+<p class="body-text">Dear Ms. Chen,</p>
+
+<p class="body-text">I'm following up on my email from [date]. I want to make sure my questions reached you before the pre-trial hearing:</p>
+
+<li class="list-item">Based on the evidence, what is your initial read on the strength of the state's case?</li>
+<li class="list-item">Have you reviewed the body camera footage and 911 recording?</li>
+<li class="list-item">Is self-defense viable based on what you know?</li>
+<li class="list-item">Does deferred adjudication trigger the federal firearms prohibition?</li>
+<li class="list-item">Can we negotiate a plea that avoids the FV finding?</li>
+
+<p class="body-text">If email isn't the best way to reach you, please let me know the best method.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Sofia</p>
+<p class="body-text">Case #2025-CR-87432</p>
+
+<h3 class="section-h3">6f. What to Bring to Attorney Meeting</h3>
+
+<li class="list-item">Printed Meeting Ready Sheet (below)</li>
+<li class="list-item">Pen and notepad</li>
+<li class="list-item">Case number: 2025-CR-87432</li>
+<li class="list-item">Government-issued photo ID</li>
+<li class="list-item">Phone on silent</li>
+<li class="list-item">Any photographs of injuries YOU sustained during the incident — but do NOT bring anything without asking Chen first</li>
+<li class="list-item">Timeline notes: what happened before, during, and after the incident (written from memory)</li>
+
+<h3 class="section-h3">6g. Meeting Ready Sheet</h3>
+
+<strong class="bold-text">Bring this to your next meeting with Lisa Chen:</strong>
+
+<strong class="bold-text">Q1 (Golden Question):</strong> "Based on the police report and any evidence you've reviewed, what is your initial read on the strength of the state's case and the defense options?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Q2:</strong> "Have you reviewed the body camera footage and 911 recording? Do they support or undermine a self-defense claim?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Q3:</strong> "Is deferred adjudication available, and does it trigger the federal firearms prohibition even though this is a misdemeanor?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Q4:</strong> "Can we negotiate a plea that avoids the 'family violence' finding — such as reduction to Class C simple assault?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Q5:</strong> "How does this case affect my custody situation and the protective order?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Post-Meeting Checklist:</strong>
+<li class="list-item checkbox-item">&#9744; Got answers to priority questions</li>
+<li class="list-item checkbox-item">&#9744; Wrote down responses during the meeting</li>
+<li class="list-item checkbox-item">&#9744; Sent summary email within 24 hours</li>
+<li class="list-item checkbox-item">&#9744; Updated case journal with dates and next steps</li>
+<li class="list-item checkbox-item">&#9744; Understand what happens at the pre-trial hearing</li>
+
+<h3 class="section-h3">6h. Post-Meeting</h3>
+
+<p class="body-text">Within 24 hours, send this email:</p>
+
+<strong class="bold-text">Subject:</strong> Meeting Summary — Sofia, Case #2025-CR-87432
+
+<p class="body-text">Dear Ms. Chen,</p>
+
+<p class="body-text">Thank you for meeting with me. I want to make sure I understood everything correctly:</p>
+
+<p class="body-text">[List 3-5 key points from the meeting]</p>
+
+<p class="body-text">Please let me know if I missed anything or misunderstood.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Sofia</p>
+
+<h3 class="section-h3">6i. Difficult Conversations</h3>
+
+<strong class="bold-text">"Just take the deal."</strong>
+<p class="body-text">What's happening: She may believe the plea is the strongest outcome, or may not have time to investigate alternatives.</p>
+<p class="body-text">What you can say: "Before I decide, I want to make sure I understand all the options. Could you walk me through what would happen if we raised the justifiable-force defense? And how each outcome — conviction, deferred adjudication, reduction to Class C — affects the firearms prohibition and my custody situation?"</p>
+<p class="body-text">Why it works: Gathers information without rejecting her judgment.</p>
+
+<strong class="bold-text">"The complaining witness wants to drop the charges."</strong>
+<p class="body-text">What's happening: The complaining witness may have told you or others that they don't want to proceed, but in Texas, the DA decides whether to prosecute — not the complaining witness.</p>
+<p class="body-text">What you can say: "I understand the witness has expressed reluctance. Has the DA indicated whether they'll proceed without the witness's cooperation? And how does that affect our strategy?"</p>
+<p class="body-text">Why it works: Shows you understand the process while asking for strategic implications.</p>
+
+<strong class="bold-text">"Self-defense is hard to prove."</strong>
+<p class="body-text">What's happening: She may be right — or she may not have investigated the facts that support it.</p>
+<p class="body-text">What you can say: "I understand it's not automatic. Have you been able to review the body camera footage to see whether it corroborates what I described? And do I have photographs of injuries that support this defense?"</p>
+<p class="body-text">Why it works: Asks for specific evidence assessment rather than debating the legal standard.</p>
+
+<strong class="bold-text">Attorney seems overwhelmed.</strong>
+<p class="body-text">What you can say: "I can see you have a lot on your plate. Could we schedule 15 minutes where I can go through my top 3 questions? I'll have them written down so we can be efficient."</p>
+<p class="body-text">Why it works: Respects the caseload reality while securing focused time.</p>
+
+<h3 class="section-h3">6j. Advocacy Steps</h3>
+
+<li class="list-item"><strong class="bold-text">Send written questions</strong> — the email template above is ready to go</li>
+<li class="list-item"><strong class="bold-text">Request a case update meeting</strong> — your Meeting Ready Sheet serves as the agenda</li>
+<li class="list-item"><strong class="bold-text">Follow up in writing</strong> if no response within 5-7 business days</li>
+<li class="list-item"><strong class="bold-text">Request written answers</strong> if verbal responses are vague</li>
+<li class="list-item"><strong class="bold-text">Seek a second opinion</strong> — always your right. Criminal defense consultations typically run $150-300. Organizations like the National Association of Criminal Defense Lawyers (NACDL) or local legal aid can provide referrals. A second opinion is information-gathering, not disloyalty.</li>
+
+<p class="body-text">Most situations resolve at Steps 1-3.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix A: Brady/Giglio Checklist</h2>
+
+<strong class="bold-text">What This Is:</strong> Under <em>Brady v. Maryland</em> (1963) and <em>Giglio v. United States</em> (1972), the prosecution is constitutionally required to disclose evidence that is favorable to the defense. This includes exculpatory evidence (Brady) and impeachment evidence (Giglio).
+
+<strong class="bold-text">Ask your attorney:</strong> "Have you received all Brady/Giglio material? Is there anything outstanding?"
+
+<h3 class="section-h3">Evidence the Prosecution Must Disclose:</h3>
+
+<li class="list-item checkbox-item">&#9744; Exculpatory evidence (anything suggesting innocence)</li>
+<li class="list-item checkbox-item">&#9744; Impeachment evidence (anything undermining prosecution witnesses)</li>
+<li class="list-item checkbox-item">&#9744; Prior inconsistent statements by witnesses</li>
+<li class="list-item checkbox-item">&#9744; Deals, promises, or inducements to witnesses</li>
+<li class="list-item checkbox-item">&#9744; Criminal records of prosecution witnesses</li>
+<li class="list-item checkbox-item">&#9744; Evidence of witness bias or motive to lie</li>
+<li class="list-item checkbox-item">&#9744; Lab reports, forensic analysis, chain of custody documentation</li>
+<li class="list-item checkbox-item">&#9744; Surveillance footage, body camera footage, dashcam footage</li>
+<li class="list-item checkbox-item">&#9744; 911 calls and dispatch records</li>
+<li class="list-item checkbox-item">&#9744; Prior complaints against arresting officers</li>
+<li class="list-item checkbox-item">&#9744; Internal affairs investigations of involved officers</li>
+<li class="list-item checkbox-item">&#9744; Evidence contradicting the prosecution's theory</li>
+
+<h3 class="section-h3">What to Ask Your Attorney:</h3>
+
+<li class="list-item">"Have you filed a specific Brady demand or are you relying on the general obligation?"</li>
+<li class="list-item">"Is there a standing discovery order in this case?"</li>
+<li class="list-item">"Have you received all police reports, including supplemental reports?"</li>
+<li class="list-item">"Are there any witnesses the prosecution hasn't disclosed?"</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix B: Next Court Date Prep</h2>
+
+<strong class="bold-text">Your next court date:</strong> April 25, 2026
+<strong class="bold-text">Hearing type:</strong> Pre-trial hearing
+<strong class="bold-text">Judge:</strong> Judge Robert Mendez
+<strong class="bold-text">Location:</strong> Bexar County Criminal Court (confirm exact courtroom with Lisa Chen or the clerk's office)
+
+<h3 class="section-h3">What This Hearing Is</h3>
+
+<p class="body-text">A pre-trial hearing is a case management proceeding. The judge reviews the case status, the prosecution may present an initial offer, and scheduling issues are addressed. Typically 15-30 minutes, though plan for 1-2 hours at the courthouse. In cases like yours, the court may also address the no-contact order status.</p>
+
+<h3 class="section-h3">Step by Step</h3>
+
+<li class="list-item"><strong class="bold-text">Arrive 30 minutes early.</strong> Courthouse security screening takes time. Allow extra.</li>
+<li class="list-item"><strong class="bold-text">Wait in the courtroom.</strong> Bexar County dockets can be busy — bring patience.</li>
+<li class="list-item"><strong class="bold-text">Stand when the judge enters and when your name is called.</strong></li>
+<li class="list-item"><strong class="bold-text">Let Lisa Chen speak.</strong> She addresses the judge on case status and any pending issues.</li>
+<li class="list-item"><strong class="bold-text">If the judge addresses you directly,</strong> answer briefly and respectfully: "Yes, Your Honor" / "No, Your Honor."</li>
+<li class="list-item"><strong class="bold-text">When dismissed,</strong> step outside quietly. Meet with Chen to discuss what happened and next steps.</li>
+
+<p class="body-text">Public defenders typically review the case with you before the hearing — if that hasn't been scheduled, request a pre-hearing meeting using the email in Section 6.</p>
+
+<h3 class="section-h3">What to Wear</h3>
+
+<li class="list-item">Business casual or professional (clean, pressed clothing)</li>
+<li class="list-item">The standard: look like someone the judge takes seriously</li>
+<li class="list-item">No clothing with logos, graphics, or anything that could be perceived as confrontational</li>
+
+<h3 class="section-h3">What to Bring</h3>
+
+<li class="list-item">Meeting Ready Sheet from Section 6 (printed)</li>
+<li class="list-item">Pen and notepad</li>
+<li class="list-item">Case number: 2025-CR-87432</li>
+<li class="list-item">Government-issued photo ID</li>
+<li class="list-item">Phone on silent</li>
+
+<h3 class="section-h3">What NOT to Do</h3>
+
+<li class="list-item">Do not speak to the judge unless directly addressed</li>
+<li class="list-item">Do not speak to the prosecutor or any investigators</li>
+<li class="list-item">Do not attempt any contact with the complaining witness — even eye contact in the courtroom can be interpreted as a no-contact order violation</li>
+<li class="list-item">Do not discuss the matter in the hallway or waiting area</li>
+<li class="list-item">Do not be late — a missed court date triggers an arrest warrant</li>
+
+<h3 class="section-h3">If Attorney Isn't There</h3>
+
+<p class="body-text">Public defenders occasionally have scheduling conflicts across multiple courtrooms:</p>
+<li class="list-item">Tell the judge: "Your Honor, I'm represented by Lisa Chen from the Public Defender's office. I believe she may be in another courtroom."</li>
+<li class="list-item">The judge will typically continue the matter briefly or contact the PD office.</li>
+<li class="list-item">Do not try to represent yourself or discuss the matter.</li>
+<li class="list-item">After the hearing, contact the PD office immediately and document what happened.</li>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix C: Your Rights During Criminal Proceedings</h2>
+
+<strong class="bold-text">These rights exist regardless of your charge, your attorney, or your county.</strong>
+
+<h3 class="section-h3">Constitutional Rights:</h3>
+<li class="list-item"><strong class="bold-text">Right to remain silent</strong> (5th Amendment) — You cannot be compelled to testify against yourself</li>
+<li class="list-item"><strong class="bold-text">Right to an attorney</strong> (6th Amendment) — If you cannot afford one, one will be appointed</li>
+<li class="list-item"><strong class="bold-text">Right to a speedy trial</strong> (6th Amendment) — Timelines vary by state and jurisdiction</li>
+<li class="list-item"><strong class="bold-text">Right to confront witnesses</strong> (6th Amendment) — You can cross-examine anyone who testifies against you</li>
+<li class="list-item"><strong class="bold-text">Right against unreasonable search and seizure</strong> (4th Amendment) — Evidence obtained illegally may be suppressed</li>
+<li class="list-item"><strong class="bold-text">Right to a jury trial</strong> (6th Amendment) — For serious offenses, you have the right to be judged by a jury of your peers</li>
+<li class="list-item"><strong class="bold-text">Right to due process</strong> (14th Amendment) — Fair procedures must be followed</li>
+<li class="list-item"><strong class="bold-text">Right against double jeopardy</strong> (5th Amendment) — You cannot be tried twice for the same offense</li>
+<li class="list-item"><strong class="bold-text">Right to be presumed innocent</strong> — The prosecution must prove guilt beyond a reasonable doubt</li>
+
+<h3 class="section-h3">Your Rights With Your Attorney:</h3>
+<li class="list-item">You have the right to know what is happening in your case at all times</li>
+<li class="list-item">You have the right to be consulted before major decisions are made</li>
+<li class="list-item">You have the right to make the final decision on whether to accept a plea or go to trial</li>
+<li class="list-item">You have the right to effective assistance of counsel (Strickland v. Washington)</li>
+<li class="list-item">You have the right to change attorneys at any time (though timing and procedural requirements apply)</li>
+
+<h3 class="section-h3">If You Feel Your Rights Are Being Violated:</h3>
+<li class="list-item">Document everything in writing (dates, times, what was said)</li>
+<li class="list-item">Follow the Advocacy Steps in Section 6 of this brief</li>
+<li class="list-item">Contact your state bar association's client protection hotline</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix D: Targeted Follow-Up Questions</h2>
+
+<p class="body-text">These questions fill the specific gaps in what you know. Each is calibrated to elicit a substantive answer.</p>
+
+<h3 class="section-h3">Case Strategy</h3>
+
+<strong class="bold-text">Q1 (Golden Question):</strong> "Based on the police report and any evidence you've reviewed, what is your initial read on the strength of the state's case and the defense options?"
+
+<p class="body-text">Why this is urgent: After 2 months, this answer is foundational. Robert Tayac's framework for domestic defense begins with evaluating all the evidence — not just the complaining witness's account. Chen's "we'll see what the DA offers" may reflect genuine strategy in progress — but you're entitled to know her initial assessment of the evidence.</p>
+
+<p class="body-text">What you want to hear: She describes the state's case with specifics — what the police report says, whether the footage has been reviewed, and what defense theories the evidence supports.</p>
+
+<p class="body-text">If she's vague: "Could you identify the 3-5 most important pieces of evidence and tell me what they show about what happened?"</p>
+
+<p class="body-text">The key signal: Specific evidence with analysis of what it means for the defense — not generalities about cases like yours.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q2:</strong> "I've had difficulty reaching you consistently. What's the most reliable way to communicate — email, phone, in-person meetings, a paralegal contact?"
+
+<p class="body-text">This solves the communication challenge rather than assigning blame. Public defenders manage heavy caseloads — establishing a reliable communication channel is practical, not personal. A strong response: a specific method and expected response time. If vague: "Could you name the single best way to reach you and a realistic timeline for responses?"</p>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Evidence Review</h3>
+
+<strong class="bold-text">Q3:</strong> "Have you reviewed the body camera footage and 911 recording? Do they support or contradict a self-defense claim?"
+
+<p class="body-text">This is the most important evidence question. The officer's recording captures the immediate scene — positioning, injuries, demeanor, and statements from both parties. The 911 recording captures the caller's account but not what happened before the call. If Chen hasn't reviewed them: "When do you expect to review the footage? Could we discuss it before the hearing?"</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q4:</strong> "Do I have photographs or medical records documenting injuries I sustained? How do we preserve and present that evidence?"
+
+<table class="report-table"><tr><td class="table-cell">🟢 Green flag</td><td class="table-cell">🔴 Red flag</td></tr>
+
+<tr><td class="table-cell">She's already identified your injuries as relevant evidence</td><td class="table-cell">"I didn't know you were injured"</td></tr>
+<tr><td class="table-cell">Has a plan to document and preserve the evidence</td><td class="table-cell">Hasn't requested medical records</td></tr>
+<tr><td class="table-cell">Connects the injuries to the defense theory</td><td class="table-cell">Doesn't mention the defense at all</td></tr></table>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q5:</strong> "Is self-defense viable based on what you know? What specific facts support or undermine it?"
+
+<p class="body-text">Andrew Branca's five-element framework applies: innocence (who initiated), imminence (immediate threat), proportionality (response matched threat), avoidance (retreat wasn't safe — Castle Doctrine may apply), and reasonableness (what a reasonable person would do). A good answer addresses each element specifically, not generically.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q6:</strong> "What evidence has the state produced? Is there anything outstanding we need to request?"
+
+<table class="report-table"><tr><td class="table-cell">🟢 Green flag</td><td class="table-cell">🔴 Red flag</td></tr>
+
+<tr><td class="table-cell">Lists specific items produced and outstanding</td><td class="table-cell">"I think we have everything" without specifics</td></tr>
+<tr><td class="table-cell">Has reviewed the police report in detail</td><td class="table-cell">Hasn't reviewed the report yet</td></tr>
+<tr><td class="table-cell">Has requested the officer's recording</td><td class="table-cell">Doesn't know if footage exists</td></tr></table>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Motions & Deadlines</h3>
+
+<strong class="bold-text">Q7 + Q8</strong> (ask together — they're related):
+
+<p class="body-text">"Are there any motions — suppress statements, suppress evidence, dismiss — that we should consider filing?" AND "What is the motion filing deadline, and does the pre-trial hearing affect it?"</p>
+
+<p class="body-text">Both are deadline-sensitive. Having a motion strategy before the hearing is ideal — filing after the deadline requires showing good cause. If Chen answers Q7 with "I haven't looked into it," ask Q8 immediately — it tests whether time-sensitive items are being tracked. If vague: "Can we discuss this before April 25?"</p>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Plea Evaluation</h3>
+
+<strong class="bold-text">Q9:</strong> "If the DA offers a plea, how do I evaluate whether it's fair? What is the typical outcome for a first-offense charge like mine in this court?"
+
+<li class="list-item"><strong class="bold-text">If she describes a typical plea →</strong> Ask whether it includes the FV finding</li>
+<li class="list-item"><strong class="bold-text">If deferred adjudication is mentioned →</strong> Ask about the Lautenberg prohibition and whether the record can be sealed</li>
+<li class="list-item"><strong class="bold-text">If she hasn't considered it yet →</strong> "When do plea discussions typically begin in cases like mine in Bexar County?"</li>
+
+<strong class="bold-text">Q10:</strong> "Can we negotiate a plea that removes the 'family violence' finding — for example, reduction to Class C simple assault?"
+
+<blockquote class="blockquote">This is the single most consequential negotiation point. The difference between a resolution WITH the FV finding and one WITHOUT it affects gun rights, custody proceedings, future charge enhancements, employment, and housing — for decades. Understanding whether this is negotiable in your case is worth exploring carefully.</blockquote>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Judge & Jurisdiction</h3>
+
+<strong class="bold-text">Q11:</strong> "What is Judge Mendez's approach to cases like mine? Does he favor deferred adjudication, community supervision, or alternative resolutions?"
+
+<p class="body-text">Judges in this court see these cases daily. Understanding a judge's patterns — whether they lean toward treatment-based outcomes, whether they support reduced charges, how they handle justifiable-force claims — is critical for strategy. If Chen hasn't appeared before him, asking a colleague in the PD office who has is standard practice.</p>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Consequences</h3>
+
+<strong class="bold-text">Q12 + Q13</strong> (pair these — the second follows naturally from the first):
+
+<p class="body-text">First ask: "What are the realistic best-case and worst-case outcomes, given everything you know right now?"</p>
+<p class="body-text">Then: "How does each outcome affect my custody situation, the protective order, and the firearms prohibition?"</p>
+
+<p class="body-text">A calibrated range helps you decide with data instead of fear or hope. In cases like yours, the collateral consequences (custody, gun rights, enhancement) often matter more than the direct criminal penalty. Understanding the full impact of each option — not just jail time — is essential.</p>
+
+<strong class="bold-text">Q14:</strong> "What exactly does the state's evidence show about who initiated the physical contact? Are there any witnesses besides the complaining witness?"
+
+<table class="report-table"><tr><td class="table-cell">What to listen for</td><td class="table-cell">Why it matters</td></tr>
+
+<tr><td class="table-cell">"The recording shows him advancing toward you"</td><td class="table-cell">Supports the defense theory — shifts burden to prosecution</td></tr>
+<tr><td class="table-cell">"There are no independent witnesses"</td><td class="table-cell">Case relies on complaining witness + officer observations</td></tr>
+<tr><td class="table-cell">"He also had visible injuries"</td><td class="table-cell">Supports mutual encounter or justifiable-force theory</td></tr></table>
+
+<strong class="bold-text">Q15:</strong> "Is there anything about my case that concerns you or that I should know?"
+
+<p class="body-text">This open-ended question invites information attorneys might not volunteer. Candor — even if it includes concerns — is what enables informed decisions.</p>
+  <div class="footer-disclaimer">
+    <p class="footer-disclaimer-text">
+      <strong class="footer-disclaimer-label">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.
+    </p>
+  </div>
+  <div class="copyright-block">
+    <p class="copyright-text">&copy; 2026 ImNotAnAttorney. Legal information, not legal advice.</p>
+    <p class="copyright-meta">Report ID: IB-TEST-SOFIA-V1 | Generated: March 8, 2026</p>
+  </div>
+  <div class="no-print upgrade-cta">
+    <p class="upgrade-cta-text">If you receive discovery evidence and want a deeper analysis, The X-Ray reviews your actual case files — officer recordings, lab reports, chain of custody, witness statements.</p>
+    <a href="/checkout?tier=x-ray" class="upgrade-btn">The X-Ray — $2,497 ($1,500 after credit)</a>
+    <p class="upgrade-credit-note">Every dollar you've paid rolls forward. Your $997 is fully credited toward any tier — you only pay the difference. Credits valid for 12 months.</p>
+  </div>
+</div>
+</body>
+</html>

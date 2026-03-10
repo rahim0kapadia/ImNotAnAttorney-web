@@ -1,0 +1,363 @@
+{
+  "evaluated_at": "2026-03-05T02:08:23.628Z",
+  "eval_version": "2.0",
+  "source": "Case 1a66d8b2-ed47-4398-81a3-e31c5a016918",
+  "charge_type": "drug-trafficking",
+  "tier": "case-decoder",
+  "model_used": "opus",
+  "gate_passed": false,
+  "complete": true,
+  "teams": {
+    "upl": {
+      "name": "UPL Compliance",
+      "weight": "GATE",
+      "model": "claude-opus-4-6",
+      "score": "1/10",
+      "passed": 1,
+      "needs_work": 3,
+      "failed": 6,
+      "criteria": [
+        {
+          "id": "U1",
+          "result": "FAIL",
+          "justification": "Multiple directive statements throughout the report cross from information into advice, including direct instructions on what to do and what not to do.",
+          "problematic_text": "Do NOT show this report or your Defense Milestone Score to your attorney.; Never Show This Report to Your Attorney; Do not accept the plea until you have reviewed all discovery with your attorney; Do not accept the plea until you have discussed alternatives; Do not accept the plea until you have discussed trial risk; Do not agree to continuances without understanding the impact; Send a written request for a meeting; Request a response within 5 business days; If no response, escalate to Tier 3; If still no response, consider changing attorneys; Print the 500+ pages of discovery; Create a document with your questions; Note the specific discrepancies you've identified; Bring a notebook to write down answers; Write down everything your attorney said"
+        },
+        {
+          "id": "U2",
+          "result": "NEEDS_WORK",
+          "justification": "Many sections include 'ask your attorney' redirects, but several sections lack any attorney redirect — notably the Escalation Ladder Levels 7-8, the Pre-Meeting Protocol, Post-Meeting Protocol, and the 'Never Show This Report' section, which provide standalone directives without attorney consultation language.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U3",
+          "result": "FAIL",
+          "justification": "The Defense Milestone Score system with band labels ('CRITICAL,' 'Severely Deficient') and the detailed red flag system effectively evaluate attorney competence and tell the defendant their attorney is performing poorly, despite the brief disclaimer paragraph.",
+          "problematic_text": "Overall Score: 28/100 — CRITICAL; Communication 4/25 Severely Deficient; Preparation 6/25 Severely Deficient; Strategy 8/25 Severely Deficient; Filing Activity 10/25 Severely Deficient; A plea recommendation without strategy discussion is a red flag; Red Flag 1.1: Lack of Communication (CRITICAL); Red Flag 1.2: No Strategy Discussion (CRITICAL); Red Flag 1.3: Premature Plea Recommendation (CRITICAL); Any analysis that suggests your attorney is failing"
+        },
+        {
+          "id": "U4",
+          "result": "PASS",
+          "justification": "The report header contains a disclaimer stating it contains 'legal INFORMATION and QUESTIONS — not legal advice' and the footer includes 'Legal information, not legal advice' language.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U5",
+          "result": "FAIL",
+          "justification": "Motions and legal options are presented as things that 'should' be filed and as directives rather than factors that may be relevant to explore with an attorney.",
+          "problematic_text": "Suppression motions filed Day 90 ✗ Not filed CRITICAL; If suppression motions are not filed by the deadline, you waive those claims forever; Your attorney must determine whether suppression motions are viable and file them if appropriate; If suppression motions are viable but not filed, escalate immediately; Suppression motions can eliminate key evidence and force the prosecution to dismiss charges"
+        },
+        {
+          "id": "U6",
+          "result": "FAIL",
+          "justification": "Immigration consequences are mentioned in the collateral consequences section but are listed generically without citing Padilla v. Kentucky and without a specific referral to consult both the defendant's attorney and an immigration attorney.",
+          "problematic_text": "Immigration consequences (if non-citizen)"
+        },
+        {
+          "id": "U7",
+          "result": "NEEDS_WORK",
+          "justification": "Defense theories in Section 3 are generally framed with 'ask your attorney' questions, but some language edges toward strategic recommendation by labeling evidence as 'your leverage point' and 'powerful' defense evidence, implicitly recommending pursuit of those theories.",
+          "problematic_text": "This is your biggest leverage point; This is powerful. It suggests either: The drugs were handled by others (not you); The fingerprint evidence was mishandled; You were not the primary possessor; 21 unmatched prints suggest weak possession-only case"
+        },
+        {
+          "id": "U8",
+          "result": "FAIL",
+          "justification": "The 8-Level Escalation Ladder explicitly includes steps that cross into legal strategy and action, including filing a formal complaint with the Florida Bar (Level 7) and changing attorneys (Level 8), which are directives to take legal action.",
+          "problematic_text": "Level 7: Formal Complaint — I'm not satisfied with the level of communication and case preparation. I'd like to file a complaint with the Florida Bar about the lack of discovery discussion and case strategy.; Level 8: Attorney Change — I've decided to seek new counsel. Please provide me with all case files and discovery materials.; If still no response, consider changing attorneys"
+        },
+        {
+          "id": "U9",
+          "result": "NEEDS_WORK",
+          "justification": "Most questions are framed as 'Question for Your Attorney' or 'Ask your attorney,' which is empowering. However, the 'Red Flag Response' sections and the 'What a Good Answer Sounds Like' sections implicitly script the defendant to evaluate and pressure their attorney based on predetermined criteria, which edges toward accusatory framing.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U10",
+          "result": "FAIL",
+          "justification": "Collateral consequences are listed without citation to any statute, regulation, or named database such as the NICCC. Claims about felony record, driver's license suspension, professional license loss, immigration consequences, gun rights loss, and employment barriers are all unsourced.",
+          "problematic_text": "Felony record (permanent); Driver's license suspension (2 years minimum); Professional license loss (if applicable); Immigration consequences (if non-citizen); Gun rights loss (federal); Employment barriers (most employers conduct background checks)"
+        }
+      ],
+      "summary": "GATE BLOCKED — Report fails on 6 criteria (U1, U3, U5, U6, U8, U10) with pervasive directive language, attorney competence scoring with severity bands, unsourced collateral consequences, escalation steps that direct legal action, motion filing presented as directives rather than exploratory information, and immigration consequences lacking Padilla v. Kentucky citation and immigration attorney referral.",
+      "elapsed": "36.3",
+      "cost_usd": 0.34055
+    },
+    "psych": {
+      "name": "Psychological Architecture",
+      "weight": "HIGH",
+      "model": "claude-opus-4-6",
+      "score": "5/10",
+      "passed": 5,
+      "needs_work": 5,
+      "failed": 0,
+      "criteria": [
+        {
+          "id": "P1",
+          "result": "PASS",
+          "justification": "The report opens with 'A Letter to You' that validates Marcus's emotional state, normalizes his instinct to pause and analyze, and establishes the report as a tool for understanding before any threatening content appears — this is textbook Herman Stage 1 safety and orientation.",
+          "problematic_text": ""
+        },
+        {
+          "id": "P2",
+          "result": "NEEDS_WORK",
+          "justification": "Most threat-action pairing is strong (e.g., weight discrepancy → ask attorney, suppression deadline → file motions), but the Realistic Penalty Range section lists devastating collateral consequences (felony record, license suspension, employment barriers, immigration consequences, gun rights loss) as a bare list with no paired actions, no 'here's what you can do,' and no reference to mitigation strategies.",
+          "problematic_text": "Collateral Consequences: Felony record (permanent) Driver's license suspension (2 years minimum) Professional license loss (if applicable) Immigration consequences (if non-citizen) Gun rights loss (federal) Employment barriers (most employers conduct background checks)"
+        },
+        {
+          "id": "P3",
+          "result": "PASS",
+          "justification": "The report consistently depersonalizes ('you're facing serious charges' not 'you are a trafficker'), contains scope ('this score reflects communication and preparation transparency, not ultimate case outcome'), and temporalizes ('a low score at this stage is recoverable if your attorney shifts approach immediately'). Language treats the charge as a situation to navigate, not an identity.",
+          "problematic_text": ""
+        },
+        {
+          "id": "P4",
+          "result": "PASS",
+          "justification": "The report provides at least 3 of Bandura's 4 sources: mastery experience (Marcus already identified weight discrepancies — 'your instinct to pause and analyze is sound'), vicarious examples (40+ legendary defense attorneys and their specific case wins), and social persuasion/affirmation ('That combination creates legitimate concern, and your instinct to pause and analyze is sound'). The evidence pattern checklist also builds mastery through structured small wins.",
+          "problematic_text": ""
+        },
+        {
+          "id": "P5",
+          "result": "NEEDS_WORK",
+          "justification": "Priority actions are generally well-designed and specific, but the Pre-Meeting Protocol asks Marcus to 'Print the 500+ pages of discovery (or organize them digitally)' and 'Create a document with your questions' — these are large, unscoped tasks without specific steps. The Evidence Pattern Checklist also asks the user to 'Go through the 500+ pages of discovery' which is overwhelming without guidance on where to start or how to chunk the task.",
+          "problematic_text": "Go through the 500+ pages of discovery For each pattern, note whether it appears in your case"
+        },
+        {
+          "id": "P6",
+          "result": "NEEDS_WORK",
+          "justification": "The 3 Priority Milestones section correctly narrows to three items, but within each milestone, multiple sub-actions are listed without clear single-step prioritization. More critically, the 5 Priority Questions in Section 7 present five questions 'in this order' which is good sequencing, but the broader Section 7 then expands to 15+ questions across 4 clusters without clear guidance on which to skip if time is limited. The plea decision — the highest-stakes decision — presents 4 alternatives (drug court, PTI, deferred prosecution, lesser charge) without a clear recommended path or decision tree.",
+          "problematic_text": ""
+        },
+        {
+          "id": "P7",
+          "result": "NEEDS_WORK",
+          "justification": "The report builds strong agency throughout the middle sections (questions to ask, evidence to review, escalation ladder), but it ends abruptly mid-sentence in the Plea Deal Assessment section ('Depends on prosecution's willingness to negotiate Depends') followed by a copyright notice and an upsell. There is no closing section that consolidates Marcus's agency, affirms his capacity to navigate this, or provides a forward-looking empowerment statement. The final emotional note is a sales pitch, not reconnection.",
+          "problematic_text": "Depends on prosecution's willingness to negotiate Depends © 2026 ImNotAnAttorney. Legal information, not legal advice. Report ID: 1B5BF78B | Generated: February 25, 2026 Upgrade — 100% Credit Applied Your $197 is credited toward any higher tier within 12 months."
+        },
+        {
+          "id": "P8",
+          "result": "NEEDS_WORK",
+          "justification": "The arc begins well (grounding letter → orientation via score → intelligence via evidence analysis → action via questions and communication playbook), but the emotional progression breaks down in the final third. The Red Flags section (Section 9) is extremely long and repetitive, creating fatigue and anxiety accumulation without relief. The report then ends abruptly mid-sentence with a sales upsell, meaning the arc is grounding → orientation → intelligence → action → anxiety accumulation → abandonment, rather than ending on empowerment.",
+          "problematic_text": "Upgrade — 100% Credit Applied Your $197 is credited toward any higher tier within 12 months."
+        },
+        {
+          "id": "P9",
+          "result": "PASS",
+          "justification": "Legal terms are consistently defined on first use in plain language (e.g., 'Brady/Giglio motions' explained contextually, 'chain of custody is the documented path of evidence from collection to trial,' trafficking elements broken into plain English). Action items use short, direct sentences. The 'Plain English' subsection for the charge is well-executed.",
+          "problematic_text": ""
+        },
+        {
+          "id": "P10",
+          "result": "PASS",
+          "justification": "The report acknowledges that Marcus may not be ready to act immediately, provides a graduated escalation ladder (8 levels from collaborative to attorney change), and the opening letter validates his hesitation ('your instinct to pause and analyze is sound'). The Defensive Attorney Protocol acknowledges resistance dynamics. The tone does not assume Marcus is ready to fire his attorney or go to trial — it meets him where he is.",
+          "problematic_text": ""
+        }
+      ],
+      "summary": "The report demonstrates strong trauma-informed architecture in its opening, depersonalization, and self-efficacy building, but critically fails to close with an empowering arc — ending mid-sentence on a sales pitch — and needs work on pairing all threat content with actions (collateral consequences section), reducing cognitive overload in the Red Flags section, and providing clearer single-path recommendations for the highest-stakes plea decision.",
+      "elapsed": "39.5",
+      "cost_usd": 0.34782
+    },
+    "legal": {
+      "name": "Legal Substance",
+      "weight": "MEDIUM",
+      "model": "claude-opus-4-6",
+      "score": "0/6",
+      "passed": 0,
+      "needs_work": 5,
+      "failed": 1,
+      "criteria": [
+        {
+          "id": "L1",
+          "result": "NEEDS_WORK",
+          "justification": "The report correctly identifies Florida as the jurisdiction and references drug trafficking with mandatory minimums, but fails to cite the specific Florida trafficking statute (F.S. §893.135) or identify the specific controlled substance, which determines the exact weight thresholds and mandatory minimums — the report generically says '28 grams or more for cocaine, 4 grams or more for fentanyl' without tying it to Marcus's actual charge or confirming which substance is involved.",
+          "problematic_text": "In a quantity that triggers trafficking charges (typically 28 grams or more for cocaine, 4 grams or more for fentanyl, etc.)"
+        },
+        {
+          "id": "L2",
+          "result": "NEEDS_WORK",
+          "justification": "The report covers weight challenges, CI impeachment, fingerprint evidence, Miranda/statement suppression, and search/seizure suppression, which is solid. However, it is missing several established defense theories for trafficking: (1) no discussion of challenging the 'knowledge of quantity' element — Florida trafficking requires knowledge of the illicit nature but case law around knowledge of specific quantity is a viable defense; (2) no discussion of entrapment defense given CI involvement in what may be a controlled buy scenario; (3) no discussion of mere presence/proximity defense; (4) no discussion of challenging the substance identification itself (is it actually the alleged drug, purity analysis affecting net weight vs. gross weight under §893.135).",
+          "problematic_text": ""
+        },
+        {
+          "id": "L6",
+          "result": "NEEDS_WORK",
+          "justification": "The report mentions suppression motions generically (motion to suppress search, statements, CI identity) and references Brady/Giglio motions, but fails to identify specific Florida procedural rules governing these motions (e.g., Fla. R. Crim. P. 3.190 for motions to dismiss, 3.190(g) for motions to suppress), does not specify actual filing deadlines under Florida rules, and does not mention Florida-specific motions like a Motion for Disclosure of CI Identity under Fla. R. Crim. P. 3.220(g)(2) or the Roviaro balancing test as applied in Florida. The statement that suppression motions have a hard 'deadline' that results in waiver is generally correct but no specific deadline or rule is cited.",
+          "problematic_text": "If suppression motions are not filed by the deadline, you waive those claims forever."
+        },
+        {
+          "id": "L7",
+          "result": "NEEDS_WORK",
+          "justification": "The collateral consequences section lists generic consequences (felony record, driver's license suspension, professional license loss, immigration consequences, gun rights loss, employment barriers) but does not cite specific Florida statutes. The '2 years minimum' driver's license suspension appears to reference F.S. §322.055 but is not cited and the actual revocation period under that statute is 1 year for first offense (not 2 years minimum). Immigration consequences are mentioned without noting they are case-specific and substance-specific under federal immigration law. Gun rights loss is noted as 'federal' which is partially correct but Florida also has its own prohibition under F.S. §790.23.",
+          "problematic_text": "Driver's license suspension (2 years minimum)"
+        },
+        {
+          "id": "L8",
+          "result": "NEEDS_WORK",
+          "justification": "The report references several expert frameworks by name — Scheck's chain of custody methodology, Lichtman's CI destruction protocol, Spence's investigation standards, Shapiro's plea negotiation framework — and applies them with reasonable specificity. However, the application is sometimes surface-level rather than reflecting deep framework knowledge. Notably, Lichtman's approach in drug cases emphasizes destroying the physical evidence BEFORE attacking the narrative (evidence-first approach), but the report leads with weight challenges rather than systematically applying Lichtman's evidence-first hierarchy. The 'Ron Chapman II' attribution appears fabricated — he is not a widely recognized defense attorney framework creator in the same tier as the others listed. Additionally, Lawrence Taylor's DUI procedural methodology is not applicable here but Brandon Garrett's forensic evidence reliability framework is relevant and entirely absent.",
+          "problematic_text": "Ron Chapman II's Drug Forensic Protocols emphasize that lab analysts are often vulnerable to cross-examination on methodology, qualifications, and prior errors."
+        },
+        {
+          "id": "L9",
+          "result": "FAIL",
+          "justification": "The report fails to cite the primary applicable statute — Florida Statute §893.135 (Trafficking) — anywhere in the document. The only statute-like citation is Florida Rule of Criminal Procedure 3.191 for speedy trial, which is correct but insufficient. For a drug trafficking case in Florida, the report must cite §893.135 with the relevant subsection for the specific substance, the corresponding mandatory minimum schedule, and the weight thresholds. No statute numbers are provided for the trafficking charge itself, the collateral consequences (§322.055 for license revocation, §790.23 for firearms), or the discovery rules (Fla. R. Crim. P. 3.220). The report also states the prosecution must prove 'You intended to sell, manufacture, or deliver it (or the quantity itself creates a presumption of intent)' — but under §893.135, trafficking is a strict quantity offense; the state does NOT need to prove intent to distribute for a trafficking conviction based on possession of the threshold quantity, which is a significant legal error.",
+          "problematic_text": "You intended to sell, manufacture, or deliver it (or the quantity itself creates a presumption of intent)"
+        }
+      ],
+      "summary": "The report demonstrates strong structural organization and practical client communication frameworks, but contains a critical legal error regarding Florida trafficking elements (intent is not required for possession-based trafficking under §893.135), fails to cite the primary trafficking statute anywhere, and lacks jurisdiction-specific procedural detail on motions and collateral consequences.",
+      "elapsed": "37.0",
+      "cost_usd": 0.32852
+    },
+    "defendant": {
+      "name": "Defendant Experience",
+      "weight": "HIGH",
+      "model": "claude-opus-4-6",
+      "score": "7/10",
+      "passed": 7,
+      "needs_work": 3,
+      "failed": 0,
+      "criteria": [
+        {
+          "id": "D1",
+          "result": "NEEDS_WORK",
+          "justification": "The opening letter and Defense Milestone Score deliver immediate emotional validation and a clear crisis signal (28/100), which is useful at 3 AM. However, the report is extremely long (15,000+ words) with no quick-reference summary card or single-page action sheet, meaning a panicked defendant at 3 AM would drown before reaching the actionable content buried in Sections 5-7.",
+          "problematic_text": ""
+        },
+        {
+          "id": "D2",
+          "result": "PASS",
+          "justification": "Questions are consistently calibrated, open-ended, and non-threatening (e.g., 'Walk me through the specific evidence the prosecution is relying on,' 'What is the weight discrepancy between the arrest report and lab results, and what does it mean?'). They do not require legal knowledge to understand and are designed to elicit substantive information rather than yes/no answers.",
+          "problematic_text": ""
+        },
+        {
+          "id": "D3",
+          "result": "NEEDS_WORK",
+          "justification": "The report identifies 3 Priority Milestones in Section 4 and 5 Priority Questions in Section 7, which is good hierarchy. However, the most critical immediate action (contacting the attorney using the Tier 1 email template) is buried in Section 5, page 8+ of the report. A defendant must read through the Milestone Score, Case Clock, Charges explanation, and Case Stage Benchmark before reaching the communication playbook they need to act on TODAY.",
+          "problematic_text": ""
+        },
+        {
+          "id": "D5",
+          "result": "NEEDS_WORK",
+          "justification": "Action sections are generally written at an accessible level with good plain-English explanations (e.g., 'Drug trafficking in Florida is the crime of selling, manufacturing, delivering, or possessing with intent to sell controlled substances'). However, several critical action sections contain paragraphs exceeding 5 sentences and use undefined legal terms inline without immediate definition.",
+          "problematic_text": "Suppression motions can eliminate key evidence and force the prosecution to dismiss charges. If your attorney is not pursuing suppression motions, you need to understand why."
+        },
+        {
+          "id": "D6",
+          "result": "PASS",
+          "justification": "The report explicitly deconstructs prosecution framing throughout. It reframes the weight discrepancy as 'your leverage point,' reframes 21 unmatched fingerprints as 'powerful defense evidence' suggesting Marcus was not the primary possessor, reframes the CI as 'often the prosecution's weakest link,' and reframes the plea offer as 'an opening position, not a final offer.' The defendant is consistently given alternative frames to counter the prosecution's narrative.",
+          "problematic_text": ""
+        },
+        {
+          "id": "D7",
+          "result": "PASS",
+          "justification": "The report is exemplary in empowering Marcus as an active participant. It provides an 8-level escalation ladder, pre/post-meeting protocols, an evidence pattern checklist for Marcus to use himself on discovery documents, email templates he can send, and explicit instructions like 'Go through the 500+ pages of discovery' and 'Create a document with your questions.' The report never tells Marcus to passively wait.",
+          "problematic_text": ""
+        },
+        {
+          "id": "D8",
+          "result": "PASS",
+          "justification": "The report directly validates Marcus's frustration with the process, identifying specific procedural justice violations: information vacuum ('You are operating in an information vacuum while a major decision looms'), lack of voice ('A plea recommendation without strategy discussion is a red flag'), and lack of respect in communication ('Last contact was over 2 weeks ago... this is below standard'). The Defense Milestone Score quantifies these failures rather than dismissing them.",
+          "problematic_text": ""
+        },
+        {
+          "id": "D9",
+          "result": "PASS",
+          "justification": "The first page delivers a personalized letter acknowledging Marcus's specific situation, followed immediately by the Defense Milestone Score (28/100 — CRITICAL) with category breakdowns. This is immediately usable: it validates his concerns, quantifies the problem, and tells him his case is at a critical juncture. The disclaimer is brief (two sentences) and does not delay value delivery.",
+          "problematic_text": ""
+        },
+        {
+          "id": "D10",
+          "result": "PASS",
+          "justification": "The upsell is minimal — a single line at the very end of the report ('Upgrade — 100% Credit Applied. Your $197 is credited toward any higher tier within 12 months.'). It appears after all value has been delivered, is not fear-based, and offers full credit toward upgrade. However, it is vague about what higher tiers include, which is a minor gap but not manipulative.",
+          "problematic_text": ""
+        },
+        {
+          "id": "D11",
+          "result": "PASS",
+          "justification": "Marcus's intake signals are clear: attorney barely communicating, discovery not discussed, plea pressure without analysis, information vacuum, and distrust. The report directly addresses every one of these signals — it never says 'just ask your attorney' without providing the specific question, the expected good answer, and the red flag response. It provides escalation paths up to and including attorney replacement. The report delivers substantive analysis (weight discrepancy leverage, fingerprint defense, CI impeachment framework) rather than deferring everything to the attorney Marcus doesn't trust.",
+          "problematic_text": ""
+        }
+      ],
+      "summary": "A strong, defendant-empowering report that excels at frame deconstruction, participatory defense, and buyer state alignment, but needs a one-page quick-action summary at the front and better action hierarchy so the most critical next step (sending the Tier 1 email TODAY) is impossible to miss at 3 AM.",
+      "elapsed": "35.6",
+      "cost_usd": 0.33396
+    },
+    "conversion": {
+      "name": "Conversion & Value Architecture",
+      "weight": "MEDIUM",
+      "model": "claude-opus-4-6",
+      "score": "8/10",
+      "passed": 8,
+      "needs_work": 2,
+      "failed": 0,
+      "criteria": [
+        {
+          "id": "C1",
+          "result": "PASS",
+          "justification": "The report opens by grounding Marcus in the severity of his situation (3-year mandatory minimum plea, 500+ pages of unreviewed discovery, weight discrepancies, communication failures) before any mention of price, and the $197 price appears only at the very end after delivering extensive value — making the price trivial compared to what's at stake.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C2",
+          "result": "PASS",
+          "justification": "The report delivers a complete, standalone product: a Defense Milestone Score with detailed breakdowns, case clock analysis, charge explanation, 15+ calibrated attorney questions with good/bad answer benchmarks, an evidence pattern checklist, red flag identification, plea deal assessment with alternatives, communication playbook with escalation ladder, and email templates — all usable without any upgrade.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C3",
+          "result": "NEEDS_WORK",
+          "justification": "The upgrade mention at the end ('Upgrade — 100% Credit Applied') appears as a brief line without connecting it to specific needs uncovered by the report's analysis; it doesn't explain what the next tier contains or why the report's findings (e.g., CI destruction protocol, suppression motion complexity) naturally reveal the need for deeper analysis.",
+          "problematic_text": "Upgrade — 100% Credit Applied Your $197 is credited toward any higher tier within 12 months."
+        },
+        {
+          "id": "C4",
+          "result": "PASS",
+          "justification": "All urgency in the report is tied to real deadlines: the April 15, 2026 court date, Florida's 175-day speedy trial rule, suppression motion filing deadlines, and the approaching plea decision window. No fake countdown timers, manufactured scarcity, or 'limited spots' language appears anywhere.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C5",
+          "result": "PASS",
+          "justification": "The report systematically moves Marcus from problem-aware (you have communication and preparation gaps) to solution-aware (here are the specific defense approaches, evidence patterns, and questions that address those gaps) to product-aware (this report gives you the tools to have substantive conversations with your attorney). Legal concepts like Brady/Giglio, chain of custody, suppression motions, and CI impeachment are all explained in plain English before being applied.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C6",
+          "result": "NEEDS_WORK",
+          "justification": "There is no evidence of a post-purchase email drip sequence described or referenced in the deliverable. While the report itself delivers substantial value, there is no indication of what happens after purchase — no mention of follow-up emails delivering additional value, court date reminders, or milestone check-ins.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C7",
+          "result": "PASS",
+          "justification": "Expert sourcing is specific and named throughout: Barry Scheck's Chain of Custody Methodology (375+ Innocence Project exonerations), Jeffrey Lichtman's 7-Pillar CI Destruction Protocol (El Chapo defense, 3 Gotti mistrials), Ron Chapman II's Drug Forensic Protocols, Gerry Spence's Investigation Standards (never lost a criminal trial), Robert Shapiro's Plea Negotiation Framework, and Alan Dershowitz's Appellate Preservation Framework. Each is tied to specific questions and defense approaches.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C8",
+          "result": "PASS",
+          "justification": "The entire report is deeply personalized to Marcus's specific situation: drug trafficking in Florida, 500+ pages of discovery, weight discrepancies, CI involvement, 21 unmatched fingerprints, 3-year mandatory minimum plea offer, attorney communication gaps, and April 15 court date. Every section addresses his specific charge type and circumstances. The upgrade mention is relevant to his case tier.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C9",
+          "result": "PASS",
+          "justification": "The report is designed for the crisis moment — Marcus is 3-6 months post-arrest with a plea offer on the table, a court date approaching, and an attorney who isn't communicating. The opening letter acknowledges his exact crisis state, the Case Clock section creates real-deadline awareness, and the Communication Playbook with email templates provides immediately actionable tools for his next attorney interaction.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C10",
+          "result": "PASS",
+          "justification": "The report consistently reinforces that Marcus's instinct to analyze is sound ('your instinct to pause and analyze is sound'), frames preparation as the smart default ('This report is designed to give you the information and questions you need'), and positions the Defense Milestone Score as a tool for empowerment rather than judgment. The 'What This Score Does NOT Mean' section explicitly avoids shaming by noting the low score 'does not mean your attorney is incompetent' and is 'recoverable.'",
+          "problematic_text": ""
+        }
+      ],
+      "summary": "This is an exceptionally strong deliverable that delivers massive standalone value with specific expert attribution, real urgency tied to actual deadlines, and deeply personalized crisis-moment content; the two NEEDS_WORK items are the absence of a visible post-purchase value drip strategy and the upgrade mention being disconnected from the report's own findings rather than naturally revealed by them.",
+      "elapsed": "33.5",
+      "cost_usd": 0.32706
+    }
+  },
+  "total_pass": 21,
+  "total_needs_work": 18,
+  "total_fail": 7,
+  "cost_usd": 1.67791,
+  "duration_ms": 181980
+}

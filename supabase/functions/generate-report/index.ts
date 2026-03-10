@@ -443,6 +443,8 @@ PER-SECTION WORD BUDGETS:
 |---------|-----------|
 | A Letter to You | 150 |
 | Where Things Stand | 400 |
+| What's Working | 100 |
+| Case Progress Score | 200 |
 | Understanding Your Charges | 500 |
 | Your Attorney Meeting Toolkit | 1,400 |
 NOTE: The section heading is "Your Attorney Meeting Toolkit" — NOT
@@ -462,21 +464,24 @@ Use ONLY the human-readable section name as the heading.
 Cross-references use section names ("See Questions for Your Attorney"),
 NEVER codes ("See S4"). Question references (Q1, Q2) are fine.
 
-SECTION STRUCTURE — 7 ALWAYS + 0-2 CONDITIONAL:
+SECTION STRUCTURE — 9 ALWAYS + 0-2 CONDITIONAL:
 
 Always present (in this order):
 1. A Letter to You (Relief)
 2. Where Things Stand — 4-area diagnostic table, NO aggregate score (Clarity)
-3. Understanding Your Charges — elements, penalties, rights (Knowledge)
-4. [Time and Deadlines — ONLY IF arrest_date exists AND charge has speedy trial] (Awareness)
-5. Your Attorney Meeting Toolkit — email templates, scripts, advocacy tools (Empowerment)
-6. Questions for Your Attorney — 15 questions (Agency)
-7. Things Worth Asking About — 5-6 prioritized items (Focus)
-8. [What a Plea Really Means — ONLY IF plea offered or attorney pushing plea] (Understanding)
-9. Is There Something We Missed? — open channel (Trust)
-10. What Only Your Attorney Can Tell You — honest limits (Redirect)
-11. Your Next 7 Days — 7-day plan + Meeting Ready Sheet (Determination)
-12. What Comes Next — natural next step (upgrade language HERE ONLY)
+3. What's Working — 2-3 positive observations from intake data (Encouragement)
+4. Case Progress Score — 0-100 composite, 5 dimensions, anti-hallucination rules (Awareness)
+5. Understanding Your Charges — elements, penalties, rights (Knowledge)
+6. [Time and Deadlines — ONLY IF arrest_date exists AND charge has speedy trial] (Awareness)
+7. Your Attorney Meeting Toolkit — email templates, scripts, advocacy tools (Empowerment)
+8. Questions for Your Attorney — 15 questions (Agency)
+9. Things Worth Asking About — 5-6 prioritized items (Focus)
+10. [What a Plea Really Means — ONLY IF plea offered or attorney pushing plea] (Understanding)
+11. Is There Something We Missed? — open channel (Trust)
+12. What Only Your Attorney Can Tell You — honest limits (Redirect)
+13. How to Share This With Your Attorney — handoff instructions (Preparation)
+14. Your Next 7 Days — 7-day plan + Meeting Ready Sheet (Determination)
+15. What Comes Next — natural next step (upgrade language HERE ONLY)
 
 REMOVED SECTIONS (do NOT generate these):
 - NO prosecution difficulty ratings (Strong/Moderate/Weak) — we haven't
@@ -653,10 +658,12 @@ in this report are designed to help you protect all of it."
 
 EMOTIONAL ARC:
 Letter (Relief) → Where Things Stand (Clarity) →
+What's Working (Encouragement) → Case Progress Score (Awareness) →
 Understanding Your Charges (Knowledge) → Your Attorney Meeting Toolkit (Empowerment) →
 Questions for Your Attorney (Agency) → Things Worth Asking About (Focus) →
 Is There Something We Missed? (Trust) →
 What Only Your Attorney Can Tell You (Honest redirect) →
+How to Share This With Your Attorney (Preparation) →
 Your Next 7 Days (Determination — emotional climax) →
 What Comes Next (Natural next step)
 
@@ -696,6 +703,39 @@ Each row: "What You Told Us" | "What to Ask About" | "Priority Questions" (→ Q
 NO aggregate score. Gain-framed: emphasis on what they CAN DO.
 Every row says "You told us..." / "You said..." / "You mentioned..." / "You shared..."
 NEVER use "You indicated" or "You reported" or "You selected" — these are clinical.
+
+WHAT'S WORKING:
+2-3 bullet points identifying positive aspects of the defendant's case situation.
+Examples: has an attorney, case is in early stages, no prior record, cooperating,
+has family support, evidence may be challengeable based on intake details.
+Frame as observable facts from intake data — NOT attorney evaluation.
+If nothing positive can be identified, OMIT this section entirely.
+
+CASE PROGRESS SCORE (CPS):
+0-100 composite based on 5 dimensions, each scored 0-20:
+1. Communication Recency (last attorney contact timeframe)
+2. Case Awareness (what the defendant knows about their case status)
+3. Preparation Level (meeting prep, documents gathered, evidence awareness)
+4. Filing Activity (awareness of motions filed or pending)
+5. Time Position (where they are relative to speedy trial, case stage)
+
+ANTI-HALLUCINATION RULES FOR CPS — CRITICAL:
+- Score ONLY dimensions where the intake provides direct evidence.
+- If a dimension has no intake data, mark it "Insufficient Data" — do NOT
+  estimate or infer.
+- Every CPS dimension score MUST cite the specific intake response that
+  supports it.
+- If fewer than 3 dimensions have sufficient data, display CPS as
+  "Limited Data Available" with only the scoreable dimensions.
+- CPS does NOT grade or evaluate attorney performance.
+- Disclaimer: "This score reflects your case's current position based on
+  what you shared with us. It does not evaluate your attorney's competence."
+
+HOW TO SHARE THIS WITH YOUR ATTORNEY (static — same for every report):
+5 bullet points: print the report, bring to meeting, start with Priority
+Questions, let attorney review before reacting, focus on YOUR questions.
+Note that Meeting Ready Sheet is safe if attorney sees it. This section
+goes after "What Only Your Attorney Can Tell You" and before "Your Next 7 Days."
 
 UNDERSTANDING YOUR CHARGES:
 Elements table with "Question for Your Attorney" column per element —
@@ -844,12 +884,11 @@ your attorney's judgment — informed by your full case file — should
 take priority. Use this report to ask better questions, not to
 overrule your attorney."
 
-YOUR NEXT 7 DAYS — EMOTIONAL CLIMAX (6 SUBSECTIONS):
+YOUR NEXT 7 DAYS — EMOTIONAL CLIMAX (5 SUBSECTIONS):
 This section is the DETERMINATION payoff. The report ends here.
-1. "If You're Feeling Overwhelmed, Start Here" — ONE action: send the
-   pre-written email from Your Attorney Meeting Toolkit. 30 seconds. Done.
-   Shine moment: "You've just done something most defendants never do."
-2. 7-Day Plan — ONE action per day, sequenced (Fogg). Each day ends
+NOTE: "If Overwhelmed" has been MOVED to immediately after the Letter
+(first thing after the opening). Do NOT duplicate it here.
+1. 7-Day Plan — ONE action per day, sequenced (Fogg). Each day ends
    with a Shine moment. Days 1-7 = Steps 1-3 sprint from Your Advocacy
    Steps. Day 1: Send email. Day 2: Review priority questions. Day 3:
    Follow up. Day 4: Gather materials. Day 5: Practice questions aloud.
@@ -860,15 +899,15 @@ This section is the DETERMINATION payoff. The report ends here.
    INSTEAD: “Day 1: You may want to consider sending the email from your toolkit (30 seconds).”
    “Day 4: One option is to gather [X] before the meeting.”
    The Shine moment after each action can affirm the step — but the action label must never be a bare imperative.
-3. What to Bring — checklist: printed Meeting Ready Sheet + pen +
+2. What to Bring — checklist: printed Meeting Ready Sheet + pen +
    case # + documents from intake + phone (if one-party consent state).
-4. What to Expect — 2-3 sentences based on attorney type (PD: shorter
+3. What to Expect — 2-3 sentences based on attorney type (PD: shorter
    meetings, may happen at courthouse / private: scheduled office visit).
    Doctor analogy framing (Jayadev).
-5. What to Expect While Your Case Is Pending — 4-6 bullets addressing
+4. What to Expect While Your Case Is Pending — 4-6 bullets addressing
    employment, family, daily life, travel, and mental health during the
    pending period. See LIFE WHILE YOUR CASE IS PENDING section above.
-6. Meeting Ready Sheet — pre-filled with Q1 through Q5 (not
+5. Meeting Ready Sheet — pre-filled with Q1 through Q5 (not
    blank lines). Q1 = Golden Question marked. Space for answers.
    Model may add more questions if relevant to this defendant.
    Post-Meeting Checklist includes "Sent summary email to attorney."
@@ -906,7 +945,7 @@ Stance-calibrated bridging:
 - DISSOCIATER: Hard fact → action (skip the emotional bridge — go direct)
 
 SELF-VERIFICATION — Before output:
-1. All 7 always-present sections + letter + closing + postscript present
+1. All 9 always-present sections + letter + closing + postscript present (including What's Working, CPS, How to Share This With Your Attorney)
 2. Conditional sections included ONLY when conditions met
 3. Questions for Your Attorney = exactly 15 questions
 4. Things Worth Asking About = 5-6 items max
@@ -1789,39 +1828,70 @@ appropriate for any client — the analysis is for your eyes only."
 "The Meeting Ready Sheet in Your Next 7 Days is designed to be safe
 if your attorney sees it — it contains only questions, not analysis."
 
+ORIGIN STORY (1 sentence): "This report was built by ImNotAnAttorney.com
+— founded by a defendant who went through exactly what you're going
+through. It's powered by documented strategies from 40+ elite defense
+attorneys. Every question below traces to one of them."
+
+TRIBE SIGNAL (1 sentence): "Defendants who prepare instead of wait have
+better conversations with their attorneys. You are about to become one
+of them."
+
+FAMILY BUYER (1 sentence): "If someone who cares about you shared this
+report, they did the right thing."
+
+After the letter content, add an "If Overwhelmed" callout:
+> You don't have to do everything today. If you can only do one thing
+> right now, do this: **Copy the email from Your Attorney Meeting Toolkit,
+> paste it into your email, and hit send.** That's it. 30 seconds. You've
+> just taken the most important step. Everything else can wait until
+> tomorrow.
+
 Do NOT generate a methodology note or disclaimer — it is injected
 automatically by the system after your output is rendered.
 </section>
 
 <section id="s1" title="Where Things Stand" max_words="400">
 Use ONLY the section title as the heading — never prefix with internal id.
-4-area diagnostic table. NO aggregate score (no X/100). Each row:
+4-area diagnostic in STRUCTURED LIST FORMAT (NOT a table — mobile-first design).
+NO aggregate score (no X/100). Format each area as:
 
-| Area | What You Told Us | What to Ask About | Priority Questions |
-|------|-----------------|-------------------|-------------------|
-| Communication | "You told us [specific intake answer]..." | "[Specific thing to ask]" | → Q[N], Q[N] |
-| Preparation | "You mentioned [specific intake answer]..." | "[Specific thing to ask]" | → Q[N], Q[N] |
-| Strategy | "You said [specific intake answer]..." | "[Specific thing to ask]" | → Q[N], Q[N] |
-| Filing Activity | "You shared [specific intake answer]..." | "[Specific thing to ask]" | → Q[N], Q[N] |
+**Communication**
+You told us [specific intake answer]. Communication gaps happen — sometimes attorneys are working behind the scenes. The questions below will help you find out.
+→ Ask: "[Specific thing to ask]" — See Q[N], Q[N]
 
-EVERY row must use warm language: "You told us..." / "You said..." / "You mentioned..." / "You shared..."
+**Preparation**
+You mentioned [specific intake answer]. At [X] days since arrest, this is worth asking about.
+→ Ask: "[Specific thing to ask]" — See Q[N], Q[N]
+
+**Strategy**
+You said [specific intake answer]. Understanding the full picture will help you make informed decisions.
+→ Ask: "[Specific thing to ask]" — See Q[N], Q[N]
+
+**Filing Activity**
+You shared [specific intake answer]. That's a common gap — most defendants aren't told about filings proactively.
+→ Ask: "[Specific thing to ask]" — See Q[N], Q[N]
+
+EVERY area must use warm language: "You told us..." / "You said..." / "You mentioned..." / "You shared..."
 NEVER use "You indicated" / "You reported" / "You selected" — these sound clinical.
-NEVER blame the attorney. Frame gaps as things to CLARIFY: "Communication gaps are common but not acceptable — you're entitled to understand what's happening in your case."
-End with: "This is not a grade on your attorney or your case. It's a map of what you know and what you don't know — based on what you shared with us."
-After the closing line, add: "**What this tells you:** The 'What to Ask About' column is the starting point for your next conversation. The questions in Questions for Your Attorney go deeper."
-
-TABLE CELL BREVITY: Each cell in the "Where Things Stand" table must be
-under 30 words. Use short, scannable phrases — not full sentences. If a
-cell needs more detail, move it to a bullet list below the table.
+NEVER blame the attorney. Frame gaps as things to CLARIFY.
+Start with: "This is not a grade on your attorney or your case. It's a map of what you know and what you don't know — based on what you shared with us."
+End with: "**What this tells you:** The 'Ask' lines give you the starting point for your next conversation. The questions in Questions for Your Attorney go deeper."
 </section>
 
 <section id="s2" title="Understanding Your Charges" max_words="500">
 Use ONLY the section title as the heading — never prefix with internal id.
-Elements table with "Question for Your Attorney" column — NOT difficulty ratings:
+Elements in STRUCTURED LIST FORMAT (NOT a table — mobile-first design):
 
-| Element Prosecution Must Prove | Plain English | Question for Your Attorney |
-|-------------------------------|---------------|---------------------------|
-| [Element] | [Plain English explanation] | "[What to ask]" |
+**Element 1: [Element Name]**
+In plain English: [Plain English explanation]
+→ Ask your attorney: "[What to ask about this element]"
+
+**Element 2: [Element Name]**
+In plain English: [Plain English explanation]
+→ Ask your attorney: "[What to ask about this element]"
+
+(Repeat for each element the prosecution must prove.)
 
 Penalty range with statutory citation. Charge-specific intake data reflected: "You told us your substance was [X]..."
 BRIDGING — MANDATORY after penalty range: "These are statutory maximums, not predictions. The questions in this report help you understand the realistic range for YOUR case."
@@ -2012,6 +2082,7 @@ Short, warm, non-transactional. "We built this report from what you shared — b
 <section id="closing" title="What Only Your Attorney Can Tell You" max_words="100">
 Use ONLY the section title as the heading — never prefix with internal id.
 This is a REDIRECT, not a deflation. Frame it as: your attorney has information we don't — which is exactly why the questions in this report matter.
+NO-ATTORNEY REFRAME (1 sentence): "If you don't have an attorney yet, these questions help you evaluate candidates during consultations. The answers tell you whether you're hiring a defender or buying a spot on an assembly line."
 Honest limitations: haven't seen evidence, can't predict outcomes, can't replace attorney. "If anything in this report contradicts what your attorney tells you, your attorney's judgment — informed by your full case file — should take priority. Use this report to ask better questions, not to overrule your attorney."
 </section>
 
@@ -2019,9 +2090,9 @@ Honest limitations: haven't seen evidence, can't predict outcomes, can't replace
 Use ONLY the section title as the heading — never prefix with internal id.
 This is the EMOTIONAL CLIMAX — the report ends here on determination, not disclaimers.
 
-**"IF YOU'RE FEELING OVERWHELMED, START HERE"** callout:
-ONE action: send the pre-written email from Your Attorney Meeting Toolkit. 30 seconds. Done.
-Shine moment: "You've just done something most defendants never do."
+NOTE: "If Overwhelmed" callout has been MOVED to immediately after the
+Letter section. Do NOT generate it again here. Start directly with the
+7-Day Plan.
 
 **7-DAY PLAN** — ONE action per day (Fogg sequencing):
 | Day | Action | Note |
@@ -2511,7 +2582,7 @@ tr:nth-child(even) > .table-cell {
   page-break-after: always;
 }
 
-/* === Mobile responsive === */
+/* === Mobile responsive (tablet) === */
 @media (max-width: 640px) {
   .container { padding: 16px 12px; }
   .header-block { padding: 20px; }
@@ -2520,7 +2591,56 @@ tr:nth-child(even) > .table-cell {
   .section-h3 { font-size: 15px; }
   .report-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .table-header, .table-cell { padding: 6px 8px; font-size: 13px; }
-  .upgrade-btn { padding: 14px 24px; font-size: 15px; }
+  .blockquote { padding: 8px 12px; }
+  .report-list { padding-left: 16px; }
+  .list-item { margin-left: 16px; }
+  .upgrade-btn { padding: 14px 24px; font-size: 15px; min-height: 44px; }
+}
+
+/* === Mobile responsive (phone) === */
+@media (max-width: 480px) {
+  .body-text { font-size: 15px; }
+  .section-h2 { font-size: 16px; }
+  .section-h3 { font-size: 14px; }
+  .header-title { font-size: 20px; }
+  .header-block { padding: 16px; }
+
+  /* Tables: stack vertically as card layout */
+  .report-table { border: none; }
+  .report-table thead { display: none; }
+  .report-table tr {
+    display: block;
+    margin-bottom: 12px;
+    border: 1px solid #3f3f46;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .report-table td,
+  .table-cell {
+    display: block;
+    padding: 6px 12px;
+    border: none;
+    border-bottom: 1px solid #27272A;
+    text-align: left;
+    font-size: 14px;
+  }
+  .report-table td:before,
+  .table-cell:before {
+    content: attr(data-label);
+    display: block;
+    font-size: 11px;
+    color: #F59E0B;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+  .report-table td:last-child,
+  .table-cell:last-child { border-bottom: none; }
+
+  .blockquote { padding: 8px 10px; margin: 12px 0; font-size: 14px; }
+  .report-list { padding-left: 12px; }
+  .list-item { margin-left: 12px; }
+  .methodology-note { padding: 12px; }
+  .upgrade-btn { display: block; width: 100%; text-align: center; min-height: 48px; line-height: 48px; padding: 0 16px; box-sizing: border-box; }
 }
 
 /* === Print === */
@@ -2596,7 +2716,30 @@ function renderReportHtml(
       if (rows.length > 0) {
         rows[0] = rows[0].replace(/<td class="table-cell"/g, '<th class="table-header"').replace(/<\/td>/g, '</th>');
       }
-      return '<table class="report-table">' + rows.map((r: string) => r.trim() ? r.trim() + '</tr>' : '').filter(Boolean).join('\n') + '</table>';
+      // Extract header labels for mobile data-label attributes
+      const headerLabels: string[] = [];
+      const headerMatch = rows[0]?.match(/<th[^>]*>(.*?)<\/th>/g);
+      if (headerMatch) {
+        for (const h of headerMatch) {
+          const label = h.replace(/<[^>]+>/g, '').replace(/\*\*/g, '').trim();
+          headerLabels.push(label);
+        }
+      }
+      // Inject data-label into td cells for mobile card layout
+      const processedRows = rows.map((r: string, i: number) => {
+        if (!r.trim()) return '';
+        let row = r.trim();
+        if (i > 0 && headerLabels.length > 0) {
+          let cellIdx = 0;
+          row = row.replace(/<td class="table-cell">/g, () => {
+            const label = headerLabels[cellIdx] || '';
+            cellIdx++;
+            return `<td class="table-cell" data-label="${label}">`;
+          });
+        }
+        return row + '</tr>';
+      }).filter(Boolean);
+      return '<table class="report-table"><thead>' + processedRows[0] + '</thead><tbody>' + processedRows.slice(1).join('\n') + '</tbody></table>';
     }
   );
 
@@ -2644,7 +2787,7 @@ function renderReportHtml(
   </div>
   ${meta.expertNames ? `<blockquote class="methodology-note">
     <p class="methodology-note-title">METHODOLOGY NOTE</p>
-    <p class="methodology-note-text">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)} — selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
+    <p class="methodology-note-text">Built by ImNotAnAttorney.com — founded by a defendant, powered by 40+ elite defense attorneys' documented strategies. Your report draws on ${escapeHtml(meta.expertNames)} — selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
     <p class="methodology-note-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
   </blockquote>` : ""}
   ${html}
@@ -3704,7 +3847,29 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
         if (rows.length > 0) {
           rows[0] = rows[0].replace(/<td class="table-cell"/g, '<th class="table-header"').replace(/<\/td>/g, '</th>');
         }
-        return '<table class="report-table">' + rows.map((r: string) => r.trim() ? r.trim() + '</tr>' : '').filter(Boolean).join('\n') + '</table>';
+        // Extract header labels for mobile data-label attributes
+        const headerLabels: string[] = [];
+        const headerMatch = rows[0]?.match(/<th[^>]*>(.*?)<\/th>/g);
+        if (headerMatch) {
+          for (const hdr of headerMatch) {
+            const label = hdr.replace(/<[^>]+>/g, '').replace(/\*\*/g, '').trim();
+            headerLabels.push(label);
+          }
+        }
+        const processedRows = rows.map((r: string, i: number) => {
+          if (!r.trim()) return '';
+          let row = r.trim();
+          if (i > 0 && headerLabels.length > 0) {
+            let cellIdx = 0;
+            row = row.replace(/<td class="table-cell">/g, () => {
+              const label = headerLabels[cellIdx] || '';
+              cellIdx++;
+              return `<td class="table-cell" data-label="${label}">`;
+            });
+          }
+          return row + '</tr>';
+        }).filter(Boolean);
+        return '<table class="report-table"><thead>' + processedRows[0] + '</thead><tbody>' + processedRows.slice(1).join('\n') + '</tbody></table>';
       }
     );
     // Wrap consecutive <li> in <ul>
@@ -4031,6 +4196,21 @@ Deno.serve(async (req: Request) => {
 
     // --- Operator review email ---
     if (resendKey) {
+      // Check if this is a priority delivery order
+      let isPriorityDelivery = false;
+      if (caseData.order_id) {
+        try {
+          const orderRows = await supabaseSelect(supabaseUrl, supabaseKey, "orders", `id=eq.${caseData.order_id}&select=priority_delivery`);
+          isPriorityDelivery = orderRows?.[0]?.priority_delivery === true;
+        } catch { /* non-critical — badge just won't show */ }
+      }
+
+      const priorityBadge = isPriorityDelivery
+        ? `<div style="background: #7C2D12; padding: 8px 16px; border-radius: 8px; margin: 8px 0; border-left: 4px solid #F59E0B;">
+             <p style="margin: 0; color: #FDE68A; font-weight: bold;">⚡ PRIORITY — Same-day delivery guaranteed</p>
+           </div>`
+        : "";
+
       const inclusionBadge = caseData.is_included_deliverable
         ? `<div style="background: #422006; padding: 8px 16px; border-radius: 8px; margin: 8px 0; border-left: 4px solid #F59E0B;">
              <p style="margin: 0; color: #FDE68A; font-weight: bold;">INCLUDED DELIVERABLE</p>
@@ -4040,9 +4220,10 @@ Deno.serve(async (req: Request) => {
 
       await sendEmail({
         to: operatorEmail,
-        subject: `Review Report: ${escapeHtml(intake.charge_type)} — ${escapeHtml(intake.first_name)}${caseData.is_included_deliverable ? " (Included)" : ""}`,
+        subject: `${isPriorityDelivery ? "⚡ PRIORITY — " : ""}Review Report: ${escapeHtml(intake.charge_type)} — ${escapeHtml(intake.first_name)}${caseData.is_included_deliverable ? " (Included)" : ""}`,
         html: `
           <h1 style="color: #F59E0B;">Case Decoder Report Ready for Review</h1>
+          ${priorityBadge}
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
             <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(intake.first_name)} ${escapeHtml(intake.last_name || "")}</p>
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Email:</strong> ${escapeHtml(caseData.email)}</p>

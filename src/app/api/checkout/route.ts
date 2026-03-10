@@ -190,14 +190,13 @@ export async function POST(req: NextRequest) {
 
     // =========================================================================
     // 6. SERVER-SIDE CONSENT VALIDATION
-    // Tiers at $2,497+ (The X-Ray and above) require the customer to check a
-    // consent box on the checkout page acknowledging they understand the service
-    // provides legal INFORMATION, not legal ADVICE. This is enforced server-side
-    // because client-side validation alone can be bypassed. The consent timestamp
-    // is recorded in Stripe session metadata for compliance records.
-    // Price comparison is in cents: $2,497 = 249700 cents.
+    // All non-digital tiers require the customer to check a consent box
+    // acknowledging they understand the service provides legal INFORMATION,
+    // not legal ADVICE. This is enforced server-side because client-side
+    // validation alone can be bypassed. The consent timestamp is recorded
+    // in Stripe session metadata for compliance records.
     // =========================================================================
-    if (tierConfig.price >= 249700 && !consent) {
+    if (!tierConfig.isDigitalProduct && !consent) {
       return NextResponse.json(
         { error: "Consent required for this tier" },
         { status: 400 }
@@ -412,6 +411,9 @@ export async function POST(req: NextRequest) {
       customer_email: normalizedEmail || undefined,
       line_items: lineItems,
       ...(stripeCouponId && { discounts: [{ coupon: stripeCouponId }] }),
+      payment_intent_data: {
+        statement_descriptor_suffix: "LEGAL INFO",
+      },
       metadata: {
         tier,
         product_name: tierConfig.name,

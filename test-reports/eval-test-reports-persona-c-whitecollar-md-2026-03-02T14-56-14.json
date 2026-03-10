@@ -1,0 +1,29 @@
+{
+  "evaluated_at": "2026-03-02T14:56:14.662Z",
+  "eval_version": "1.0",
+  "source": "persona-c-whitecollar.md",
+  "charge_type": "White Collar",
+  "gate_passed": true,
+  "teams": {
+    "defendant": {
+      "name": "Defendant Experience",
+      "weight": "HIGH",
+      "error": "API Error (529): {\"type\":\"error\",\"error\":{\"type\":\"overloaded_error\",\"message\":\"Overloaded\"},\"request_id\":\"req_011CYeStCfmskXafa2xL4P1P\"}",
+      "elapsed": "14.5"
+    },
+    "legal": {
+      "name": "Legal Substance",
+      "weight": "MEDIUM",
+      "error": "API Error (529): {\"type\":\"error\",\"error\":{\"type\":\"overloaded_error\",\"message\":\"Overloaded\"},\"request_id\":\"req_011CYeSuFXhJsyZaPLN8zF3S\"}",
+      "elapsed": "12.0"
+    },
+    "conversion": {
+      "name": "Conversion & Value Architecture",
+      "weight": "MEDIUM",
+      "error": "API Error (529): {\"type\":\"error\",\"error\":{\"type\":\"overloaded_error\",\"message\":\"Overloaded\"},\"request_id\":\"req_011CYeSv8gyFNdpotddpgBu1\"}",
+      "elapsed": "12.5"
+    }
+  },
+  "cost_usd": 0,
+  "duration_ms": 38903
+}

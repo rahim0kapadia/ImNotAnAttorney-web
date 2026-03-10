@@ -1,0 +1,15 @@
+{
+  "firstName": "Marcus",
+  "charges": "Possession of Cannabis (Florida Statute § 893.13(6)(a))",
+  "stateCounty": "Florida, Duval County",
+  "caseNumber": "2025-CF-008812",
+  "nextCourtDate": "May 8, 2026",
+  "judgeName": "Judge Robert Clarkson",
+  "attorneyName": "Sarah Whitfield (Private Attorney)",
+  "reportId": "IB-TEST-MARCUS-V1",
+  "monthsSinceArrest": "4",
+  "ibPriceDisplay": "$997",
+  "xrayPriceDisplay": "$2,497",
+  "xrayUpgradeCost": "$1,500",
+  "expertNames": "Jeffrey Lichtman, Ron Chapman II, Michael Levine, Chris Voss, BJ Fogg"
+}

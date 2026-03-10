@@ -1,0 +1,80 @@
+{
+  "evaluated_at": "2026-03-02T14:55:09.769Z",
+  "eval_version": "1.0",
+  "source": "persona-c-whitecollar.md",
+  "charge_type": "White Collar",
+  "gate_passed": true,
+  "teams": {
+    "psych": {
+      "name": "Psychological Architecture",
+      "weight": "HIGH",
+      "score": "9/10",
+      "passed": 9,
+      "needs_work": 1,
+      "failed": 0,
+      "criteria": [
+        {
+          "id": "P1",
+          "result": "PASS",
+          "justification": "The report opens with a warm, validating letter that establishes safety, acknowledges Jennifer's words, affirms her instincts as a business owner, and explicitly gives permission to pace herself ('You don't have to read this all at once... start with the Letter and Your Next 7 Days'), fully consistent with Herman Stage 1 safety and orientation before any threatening content."
+        },
+        {
+          "id": "P2",
+          "result": "PASS",
+          "justification": "Every threat or negative consequence is paired with an action. The penalty range section (20 years, $250,000 fines) immediately follows with 'These are statutory maximums, not predictions' and directs to Q6. Collateral consequences in the plea section each have a corresponding attorney question. The co-defendant cooperation risk is flagged as time-sensitive and immediately paired with specific questions (Q3, Q11) and the ready-to-send email."
+        },
+        {
+          "id": "P3",
+          "result": "PASS",
+          "justification": "Language consistently depersonalizes ('You're charged with wire fraud' not 'You are a fraudster'), contains scope ('These are statutory maximums, not predictions,' 'This is not a grade on your attorney or your case'), and temporalizes ('In two weeks you will be the most prepared defendant,' the 7-Day Plan creates a bounded timeline). The charge is treated as something happening in a legal process, not an identity."
+        },
+        {
+          "id": "P4",
+          "result": "PASS",
+          "justification": "The report provides at least 3 of Bandura's 4 sources: mastery experience (sending the email as a 30-second win, daily checklist completions, 'You've just done something most defendants never do'), social persuasion ('That instinct will serve you here,' 'You're not alone in this. And you're not powerless,' 'that's what prepared defendants do'), and emotional state management (permission to pace, 'If it's late and this feels like a lot,' grounding before action)."
+        },
+        {
+          "id": "P5",
+          "result": "PASS",
+          "justification": "Actions are tiny, specific, and prompted throughout. Day 1 is 'Open your email and send the ready-to-send message... Copy, paste, send. Done.' The 7-Day Plan breaks preparation into one action per day. The advocacy escalation ladder is numbered and sequential. Even the Meeting Ready Sheet has checkboxes. No action is vague or overwhelming."
+        },
+        {
+          "id": "P6",
+          "result": "PASS",
+          "justification": "High-stakes decisions are presented with clear prioritization. Q1 is explicitly labeled the 'Golden Question' with 'If you only ask one question, ask this one.' The 7-Day Plan presents ONE action per day. The advocacy steps are numbered 1-8 with the explicit note 'Most situations resolve by Step 3.' The plea section distills to 'Three Questions Before You Sign Anything.' Critical decisions are not presented as menus."
+        },
+        {
+          "id": "P7",
+          "result": "PASS",
+          "justification": "The arc moves from 'You're not powerless' in the opening to 'you will be the most prepared defendant your attorney has ever worked with' in the closing. The final line is 'Right now, Day 1 is tomorrow' — forward-looking agency. Jennifer is consistently positioned as an active navigator ('partner in your own defense,' 'you took control'), not a passive victim."
+        },
+        {
+          "id": "P8",
+          "result": "PASS",
+          "justification": "The emotional arc follows grounding (letter, permission to pace) → orientation (Where Things Stand table) → intelligence (charges, elements, rights) → action (questions, scripts, escalation) → empowerment (7-Day Plan, closing affirmation). The report ends stronger than the middle, with the Meeting Ready Sheet and the affirming closing paragraph. No emotional whiplash detected."
+        },
+        {
+          "id": "P9",
+          "result": "NEEDS_WORK",
+          "justification": "Legal terms are generally well-defined — mens rea is explained as 'intent to defraud,' Brady is contextualized, 5K1.1 is explained. However, some terms appear without immediate plain-language definition on first use: 'allocute' in Q2 ('this is called the factual basis, and it becomes part of the permanent record' is defined but 'allocute' itself is not), 'proffer' in Q1's good-answer section is used without definition, and 'joint-and-several liability' in Q12 is used before being explained. A few action-section sentences also run long."
+        },
+        {
+          "id": "P10",
+          "result": "PASS",
+          "justification": "The tone expertly matches Jennifer's likely stage — she's engaged enough to purchase the report and ask hard questions, but resistant to the plea and potentially angry at her attorney. The report validates her resistance ('you believe you didn't know... this is a defensible legal position'), doesn't push her toward the plea, acknowledges the attorney relationship diplomatically ('Communication gaps happen — sometimes attorneys are working behind the scenes'), and frames every action as her choice. Scenario scripts acknowledge difficult emotions without dismissing them."
+        }
+      ],
+      "summary": "This is an exceptionally well-architected deliverable that follows a deliberate emotional arc from safety through empowerment, pairs every threat with action, builds genuine self-efficacy through micro-wins, and respects the defendant's resistance stage — with only minor plain-language refinements needed for a few undefined legal terms.",
+      "elapsed": "43.7",
+      "cost_usd": 0.253905
+    },
+    "defendant": {
+      "name": "Defendant Experience",
+      "weight": "HIGH",
+      "error": "API Error (529): {\"type\":\"error\",\"error\":{\"type\":\"overloaded_error\",\"message\":\"Overloaded\"},\"request_id\":\"req_011CYeSqPZn7Nc6CgPBb8X9P\"}",
+      "elapsed": "12.0"
+    }
+  },
+  "cost_usd": 0.253905,
+  "duration_ms": 55728
+}

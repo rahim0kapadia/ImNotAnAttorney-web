@@ -1,0 +1,356 @@
+{
+  "evaluated_at": "2026-03-02T21:12:43.505Z",
+  "eval_version": "1.0",
+  "source": "persona-c-whitecollar.md",
+  "charge_type": "Drug",
+  "gate_passed": true,
+  "teams": {
+    "upl": {
+      "name": "UPL Compliance",
+      "weight": "GATE",
+      "score": "6/10",
+      "passed": 6,
+      "needs_work": 4,
+      "failed": 0,
+      "criteria": [
+        {
+          "id": "U1",
+          "result": "NEEDS_WORK",
+          "justification": "The report largely avoids classic directive language, but several phrases border on directive framing, such as 'Open your email, paste the Ready-to-Send Email... and hit send' and 'Send the Ready-to-Send Email... That's it.' While these are framed as action steps rather than legal strategy advice, the imperative tone is strong. No exact trigger phrases ('you should,' 'you need to,' 'we recommend,' 'we advise,' 'your best option,' 'the best strategy') appear.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U2",
+          "result": "PASS",
+          "justification": "Every substantive section redirects to the defendant's attorney for case-specific decisions, including explicit 'ask your attorney' redirects, the 'What Only Your Attorney Can Tell You' section, and attorney question redirects embedded throughout every table and question block.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U3",
+          "result": "NEEDS_WORK",
+          "justification": "The report does not use explicit competence labels like 'Strong' or 'Weak' or say 'your attorney is failing.' However, several passages implicitly evaluate attorney performance in a negative light, such as 'monthly contact is the bare minimum — and communication gaps are common but not acceptable' and 'This may be sound advice or it may be a time-saving shortcut,' which subtly suggest the attorney may be cutting corners. These do not cross the bright-line FAIL triggers but warrant caution.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U4",
+          "result": "PASS",
+          "justification": "The methodology note in the report header contains the required disclaimer: 'This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.'",
+          "problematic_text": ""
+        },
+        {
+          "id": "U5",
+          "result": "PASS",
+          "justification": "Motions are presented as items to ask about and explore with the attorney, not as recommendations to file. For example, 'suppression motions... motions to sever... and motions to dismiss specific counts can all reshape the landscape' is informational framing, and Q9 asks 'What motions have we filed or are we considering' rather than directing the defendant to file anything.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U6",
+          "result": "PASS",
+          "justification": "The immigration consequence is cited to 8 U.S.C. § 1101(a)(43)(M) and Padilla v. Kentucky (2010), framed as a factual consequence with a question redirect to the attorney: 'Are there any immigration consequences I need to know about?' The report does not provide generic immigration advice without attorney referral.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U7",
+          "result": "NEEDS_WORK",
+          "justification": "Defense theories are generally framed as items to explore with the attorney (e.g., Q8 asks 'What would a trial defense look like'). However, the 'Things Worth Asking About' section states 'The intent element (Q1) and the trial defense theory (Q8) should be explored *before* any plea decision is final,' which, while using 'explored,' carries a mildly directive tone about sequencing strategy. Additionally, the Arguedas methodology references frame a specific defense theory (lack of knowledge/alternative theory) as particularly relevant, which approaches strategic recommendation territory without quite crossing the line.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U8",
+          "result": "PASS",
+          "justification": "The advocacy steps are bounded to information-gathering and communication (sending emails, calling, documenting, seeking a second opinion, contacting the bar association for informational purposes). Step 8 mentions substitution of counsel as a 'last resort' and frames it as something a second opinion helps decide, rather than directing the defendant to fire their attorney.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U9",
+          "result": "NEEDS_WORK",
+          "justification": "The questions are generally framed as empowering rather than accusatory. However, the 'When the Conversation Gets Difficult' section includes 'What you say:' headers with scripted responses, which functions similarly to 'What to Say' language. While the section is titled differently, the practical effect is scripting the defendant's words in attorney conversations, which could be seen as pressuring the attorney relationship.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U10",
+          "result": "PASS",
+          "justification": "Collateral consequences are cited to specific sources: Cal. Bus. & Prof. Code § 490 (licensing), FAR 9.406-2 (debarment), 18 U.S.C. § 922(g)(1) (firearms), Cal. Const. art. II, § 4 (voting), 8 U.S.C. § 1101(a)(43)(M) (immigration), Emich Motors v. General Motors (civil liability). Each consequence in the table includes a statutory or case citation.",
+          "problematic_text": ""
+        }
+      ],
+      "summary": "The report passes the core UPL requirements — it contains proper disclaimers, sources collateral consequences, redirects to the attorney throughout, and frames motions and defense theories as exploratory rather than directive — but has NEEDS_WORK items around implicit attorney competence evaluation, scripted conversation responses that function like 'What to Say' guidance, and occasional directive tone in action steps that, while not crossing bright-line FAIL triggers, warrant tightening before shipment.",
+      "elapsed": "30.4",
+      "cost_usd": 0.24402
+    },
+    "psych": {
+      "name": "Psychological Architecture",
+      "weight": "HIGH",
+      "score": "9/10",
+      "passed": 9,
+      "needs_work": 1,
+      "failed": 0,
+      "criteria": [
+        {
+          "id": "P1",
+          "result": "PASS",
+          "justification": "The report opens by reflecting Jennifer's own words back to her, validating her identity concerns, and explicitly offering permission to start small ('If it's 2 AM and this feels like a lot — start with Your Next 7 Days'), establishing safety and orientation before any threatening content like penalty ranges."
+        },
+        {
+          "id": "P2",
+          "result": "PASS",
+          "justification": "Every threat or negative consequence is paired with an action. The penalty range paragraph (up to 20 years, $250,000 fines) immediately follows with 'These are statutory maximums, not predictions. The questions in this report help you understand the realistic range for your case.' The collateral consequences table pairs each consequence with a specific question for the attorney. The restitution bankruptcy concern is paired with Q4 and a specific follow-up script."
+        },
+        {
+          "id": "P3",
+          "result": "PASS",
+          "justification": "Language consistently depersonalizes ('You've been charged with' not 'You committed'), contains scope ('what evidence they have against you personally — not just against the overall scheme'), and temporalizes ('In two weeks, Jennifer, you will be the most prepared defendant your attorney has ever worked with'). The charge is framed as something the prosecution must prove, not an identity statement."
+        },
+        {
+          "id": "P4",
+          "result": "PASS",
+          "justification": "The report provides at least 3 of Bandura's 4 sources: mastery experiences (Day 1 small win of sending an email, with affirmation 'You've started. That's the hardest part'), social persuasion ('You now know more than 90% of defendants about their own case,' 'You are now the most prepared client in that office'), and emotional state management ('If you're feeling overwhelmed, start here' with a 30-second action, plus the 2 AM permission statement)."
+        },
+        {
+          "id": "P5",
+          "result": "PASS",
+          "justification": "Actions are tiny, specific, and prompted. Day 1 is 'Open your email, paste the Ready-to-Send Email, and hit send' — not 'research your options.' The 7-day plan breaks everything into single daily actions with checkboxes. The advocacy escalation ladder is numbered and sequential with specific wait times (5-7 business days)."
+        },
+        {
+          "id": "P6",
+          "result": "PASS",
+          "justification": "High-stakes decisions are presented with clear prioritization. The 'Things Worth Asking About' section labels items as 'ADDRESS FIRST' vs. 'LOOK INTO' vs. 'ASK ABOUT.' The Meeting Ready Sheet selects 7 priority questions from 15, with Q1 marked as 'Ask This First.' The plea section distills to 3 specific questions before signing. The advocacy steps are numbered 1-8 with explicit note that 'Most situations resolve in Steps 1-5.'"
+        },
+        {
+          "id": "P7",
+          "result": "PASS",
+          "justification": "The report ends with a clear agency arc: 'In two weeks, Jennifer, you will be the most prepared defendant your attorney has ever worked with. Not because you became a lawyer overnight — but because you walked into that meeting knowing what to ask and why it matters.' The final line is an action prompt: 'Open your email. Paste the message. Hit send.' This is active navigation, not passive victimhood."
+        },
+        {
+          "id": "P8",
+          "result": "PASS",
+          "justification": "The emotional arc follows grounding (opening validation, permission to pace) → orientation (Where Things Stand table) → intelligence (charges, elements, rights, questions) → action (toolkit, 7-day plan) → empowerment (closing affirmation and agency statement). The report ends stronger than the middle, with the most empowering language in the final sections."
+        },
+        {
+          "id": "P9",
+          "result": "NEEDS_WORK",
+          "justification": "Most legal terms are defined on first use (discovery, proffer, severance, joint-and-several liability, tolling, mens rea). However, some terms could be clearer: 'superseding indictment' is not defined, 'PACER' is not explained, '3500 material' and 'Jencks Act disclosures' appear in Q2's follow-up without plain-language definition, and 'debarment' in the collateral consequences table is not defined. Several sentences in the charges section exceed 25 words."
+        },
+        {
+          "id": "P10",
+          "result": "PASS",
+          "justification": "The tone consistently acknowledges Jennifer's likely resistance and ambivalence rather than pushing through it. The 'When the Conversation Gets Difficult' section validates that her attorney's advice 'may be sound' while honoring her right to understand. The cooperation question (Q12) explicitly says 'This is not a recommendation.' The report respects her stated belief in innocence without dismissing the plea option, matching a contemplation-stage defendant who is weighing options."
+        }
+      ],
+      "summary": "An exceptionally well-architected deliverable that follows a deliberate emotional arc from safety through empowerment, pairs every threat with action, and builds genuine self-efficacy through small wins — with minor improvement needed on plain-language definitions for a few legal terms.",
+      "elapsed": "31.4",
+      "cost_usd": 0.2397
+    },
+    "legal": {
+      "name": "Legal Substance",
+      "weight": "MEDIUM",
+      "score": "3/10",
+      "passed": 3,
+      "needs_work": 3,
+      "failed": 3,
+      "criteria": [
+        {
+          "id": "L1",
+          "result": "FAIL",
+          "justification": "The product is tagged as CHARGE TYPE: Drug, but the entire deliverable addresses wire fraud under 18 U.S.C. § 1343 — a completely different charge type. The statute, elements, penalties, defense theories, and collateral consequences all pertain to federal wire fraud, not any drug offense.",
+          "problematic_text": "You've been charged with **wire fraud under 18 U.S.C. § 1343**."
+        },
+        {
+          "id": "L2",
+          "result": "FAIL",
+          "justification": "Since the charge type is Drug but the report addresses wire fraud, no drug-specific defense theories are presented — no suppression analysis, no weight/quantity challenges, no chain of custody for controlled substances, no constructive possession analysis, no challenges to CI reliability, and no Lichtman-style evidence-first approach to drug evidence.",
+          "problematic_text": "Your report draws on **Martin Weinberg** (mens rea deconstruction in federal fraud cases), **Cristina Arguedas** (alternative-theory reconstruction and factual innocence defense), and **David Smith** (asset preservation and forfeiture defense) — selected specifically for federal white-collar fraud cases."
+        },
+        {
+          "id": "L3",
+          "result": "NEEDS_WORK",
+          "justification": "Setting aside the charge-type mismatch, the prosecution strategy discussion for the wire fraud case is reasonably realistic — it addresses co-defendant cooperation, digital evidence, and the government's need to prove personal intent. However, it lacks specifics about how federal prosecutors actually build wire fraud cases (e.g., summary charts, cooperator testimony sequencing, financial analyst testimony, use of business records exception). It's competent but not elite-level prosecution preview.",
+          "problematic_text": ""
+        },
+        {
+          "id": "L4",
+          "result": "N/A",
+          "justification": "No judge profile is included, which is consistent with the Case Decoder ($197) product tier. Scored N/A per instructions.",
+          "problematic_text": ""
+        },
+        {
+          "id": "L5",
+          "result": "NEEDS_WORK",
+          "justification": "The report does not provide explicit outcome probabilities or an outcome map with calibrated percentages. It references a plea offer of 2-4 years and discusses guidelines ranges in general terms, but never presents probability-weighted outcomes for trial vs. plea vs. dismissal. This avoids the risk of unrealistic claims but also fails to provide the calibrated outcome intelligence the criterion requires.",
+          "problematic_text": ""
+        },
+        {
+          "id": "L6",
+          "result": "NEEDS_WORK",
+          "justification": "The report mentions suppression motions, severance motions, and motions to dismiss in general terms appropriate for federal court, and correctly references Carpenter v. United States for digital evidence challenges. However, it does not identify specific Federal Rules of Criminal Procedure numbers for these motions (e.g., Rule 12(b)(3), Rule 14), filing deadlines, or local rules for the Central District of California. The motion landscape is directional but lacks procedural specificity. Note: This is evaluated against the wire fraud charge actually discussed, not the drug charge type listed.",
+          "problematic_text": ""
+        },
+        {
+          "id": "L7",
+          "result": "PASS",
+          "justification": "The collateral consequences table is well-sourced and accurate for a federal fraud conviction by a California resident: Cal. Bus. & Prof. Code § 490 for licensing, FAR 9.406-2 for debarment, 18 U.S.C. § 922(g)(1) for firearms, Cal. Const. art. II § 4 for voting restoration, 8 U.S.C. § 1101(a)(43)(M) for immigration, and Padilla v. Kentucky. These are correctly cited and jurisdiction-appropriate for the wire fraud charge actually discussed.",
+          "problematic_text": ""
+        },
+        {
+          "id": "L8",
+          "result": "FAIL",
+          "justification": "The charge type is Drug, which requires Lichtman's evidence-first approach (destroy the evidence before the narrative), Taylor's procedural challenge methodology for applicable cases, and Scheck/Garrett forensic evidence frameworks. Instead, the report applies Weinberg, Arguedas, and Smith — appropriate for wire fraud but completely wrong for the designated charge type. Even evaluated on its own terms, the expert frameworks are applied as attribution labels rather than as structured methodologies with specific analytical steps.",
+          "problematic_text": "Your report draws on **Martin Weinberg** (mens rea deconstruction in federal fraud cases), **Cristina Arguedas** (alternative-theory reconstruction and factual innocence defense), and **David Smith** (asset preservation and forfeiture defense) — selected specifically for federal white-collar fraud cases."
+        },
+        {
+          "id": "L9",
+          "result": "PASS",
+          "justification": "For the wire fraud charge actually discussed, the statute citations are accurate and currently in force: 18 U.S.C. § 1343 (wire fraud), 18 U.S.C. § 3663A (mandatory restitution), 18 U.S.C. § 3664 (restitution procedures), 18 U.S.C. § 3161 (Speedy Trial Act), 18 U.S.C. § 922(g)(1) (felon firearms prohibition), Cal. Bus. & Prof. Code § 490, Cal. Penal Code § 632, 8 U.S.C. § 1101(a)(43)(M), and FAR 9.406-2. All are correct.",
+          "problematic_text": ""
+        },
+        {
+          "id": "L10",
+          "result": "PASS",
+          "justification": "The report addresses 5K1.1 cooperation mechanisms, joint-and-several restitution liability under § 3664, sentencing guidelines calculation methodology (base offense level, role adjustments, acceptance of responsibility, criminal history), and the distinction between statutory maximums and guidelines ranges. It also discusses pretrial diversion and deferred prosecution as alternatives. This reflects actual federal practice rather than generic sentencing information.",
+          "problematic_text": ""
+        }
+      ],
+      "summary": "The report is a well-crafted wire fraud Case Decoder with accurate legal information, strong collateral consequences analysis, and solid plea/sentencing intelligence — but it was evaluated against a Drug charge type, creating a fundamental mismatch: no drug-specific defense theories, no drug evidence challenges, and wrong expert frameworks are applied for the designated charge category.",
+      "elapsed": "34.1",
+      "cost_usd": 0.27381
+    },
+    "defendant": {
+      "name": "Defendant Experience",
+      "weight": "HIGH",
+      "score": "9/10",
+      "passed": 9,
+      "needs_work": 1,
+      "failed": 0,
+      "criteria": [
+        {
+          "id": "D1",
+          "result": "PASS",
+          "justification": "The report explicitly addresses the 3 AM scenario ('If it's 2 AM and this feels like a lot — start with Your Next 7 Days'), provides a single 30-second action as an entry point, and structures the entire document so a panicking defendant can grab the email template and send it immediately without reading anything else."
+        },
+        {
+          "id": "D2",
+          "result": "PASS",
+          "justification": "All 15 attorney questions are open-ended and calibrated in the Voss style — 'Walk me through...', 'What does the digital evidence specifically show...', 'Can you walk me through exactly what I'd be giving up...' — none are yes/no, none are accusatory, and each includes a follow-up probe for vague answers that maintains a respectful, information-seeking tone."
+        },
+        {
+          "id": "D3",
+          "result": "PASS",
+          "justification": "The single most important action (send the email) is also the easiest (copy-paste-send, 30 seconds), is the most prominent element in the 7-Day Plan, is repeated at the close of the report, and is separated from all other actions with the framing 'One action. Thirty seconds.' The golden question is starred and labeled 'Ask This First' on the Meeting Ready Sheet."
+        },
+        {
+          "id": "D4",
+          "result": "NEEDS_WORK",
+          "justification": "The report addresses professional licenses, business operations, financial exposure (restitution/bankruptcy), government contracting, firearms, voting, immigration, civil liability, and future business formation — which are substantial life domains. However, it does not address employment during the pending case, childcare/family logistics during potential incarceration, relationship strain, mental health resources, or the emotional toll of being a business owner under indictment. Jennifer is a small business owner — guidance on whether/how to continue operating the business while the case is pending is conspicuously absent."
+        },
+        {
+          "id": "D5",
+          "result": "PASS",
+          "justification": "Critical action items are written in plain, short sentences ('Open your email, paste the Ready-to-Send Email, and hit send'). Legal jargon is consistently defined inline — 'proffer (a meeting where you share information with prosecutors in exchange for potential leniency)', 'discovery (evidence and documents the prosecution has)', 'severance motion (requesting a separate trial)', 'joint-and-several liability (each person can be held responsible for the full amount, not just their share)'. The action sections read at approximately an 8th-grade level."
+        },
+        {
+          "id": "D6",
+          "result": "PASS",
+          "justification": "The report systematically deconstructs prosecution framing: it reframes 'the evidence is strong' as potentially a 'time-saving shortcut' that needs interrogation; it separates 'the scheme existed' from 'you personally intended to defraud'; it reframes the plea push against Jennifer's own claim of innocence as a 'gap' that 'needs to be reconciled'; and it explicitly coaches Jennifer to demand evidence against her specifically 'not just against the overall scheme.' The motive question (Q14) directly challenges the prosecution's narrative construction."
+        },
+        {
+          "id": "D7",
+          "result": "PASS",
+          "justification": "The report empowers Jennifer as an active participant at every level: she prepares questions, sends the initial email, documents meetings, sends summary emails creating a paper trail, gathers her own documents, practices questions aloud, maintains a case journal, and has an 8-step advocacy escalation ladder. The framing is consistently 'you are the decision-maker' — 'The decision to plead guilty is yours, not your attorney's' — and the report explicitly positions her as a prepared, active client rather than a passive recipient of legal services."
+        },
+        {
+          "id": "D8",
+          "result": "PASS",
+          "justification": "The report helps Jennifer identify voice violations (monthly communication as 'bare minimum — and communication gaps are common but not acceptable'), neutrality concerns (co-defendants potentially shaping the narrative against her without her knowledge), respect issues (coaching for when attorney is 'rushed, checking the clock'), and trustworthiness gaps ('This may be sound advice or it may be a time-saving shortcut. You can't tell without seeing the evidence yourself'). The advocacy escalation to the State Bar and substitution of counsel provides structural recourse for systemic fairness violations."
+        },
+        {
+          "id": "D9",
+          "result": "PASS",
+          "justification": "The first page opens with Jennifer's own words, validates her core concern about identity and livelihood, directs her to the most immediately actionable section ('start with Your Next 7 Days'), and includes the strategic instruction not to show the report to her attorney — all of which are immediately useful. No disclaimers, methodology, or structural overview precede value delivery; the methodology note is brief and positioned after the personal address."
+        },
+        {
+          "id": "D10",
+          "result": "PASS",
+          "justification": "The upsell appears only at the very end of the report, after all value has been delivered. It is framed as optional ('That's a decision for later'), credits the current purchase price, gives a 12-month window, and explicitly redirects attention back to the immediate action: 'What matters today is Day 1. Open your email. Paste the message. Hit send.' There is no fear-based language or urgency manipulation."
+        }
+      ],
+      "summary": "This is an exceptionally well-crafted defendant-facing deliverable that passes the 3 AM panic test, empowers active participation, and delivers immediate actionable value — the only meaningful gap is the absence of life-while-pending guidance for a small business owner facing the practical realities of operating a business, managing finances, and maintaining personal well-being during a federal prosecution.",
+      "elapsed": "142.1",
+      "cost_usd": 0.25983
+    },
+    "conversion": {
+      "name": "Conversion & Value Architecture",
+      "weight": "MEDIUM",
+      "score": "10/10",
+      "passed": 10,
+      "needs_work": 0,
+      "failed": 0,
+      "criteria": [
+        {
+          "id": "C1",
+          "result": "PASS",
+          "justification": "The report establishes stakes immediately — professional licenses, business future, $180K restitution that could cause bankruptcy, up to 20 years per count — long before any price is mentioned, making $197 feel trivial against those consequences.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C2",
+          "result": "PASS",
+          "justification": "The Case Decoder delivers a complete, usable product: 15 fully developed questions with good/vague answer guidance, ready-to-send email templates, phone scripts, a 7-day action plan, a printable Meeting Ready Sheet, collateral consequences analysis, charge element breakdown, and an 8-step advocacy escalation ladder — all standalone and actionable without any upgrade.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C3",
+          "result": "PASS",
+          "justification": "The Intelligence Brief mention comes only at the very end, positioned as relevant only IF the attorney meeting raises new questions or the defendant wants independent verification of what they learn — a need that naturally emerges from using this tier's tools, not a forced upsell.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C4",
+          "result": "PASS",
+          "justification": "All urgency is grounded in real facts: the May 15, 2026 court date, the Speedy Trial Act clock, the time-sensitive nature of co-defendant cooperation locking in a narrative, and the reality that the prosecution is building its case now. No countdown timers or manufactured scarcity appear anywhere.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C5",
+          "result": "PASS",
+          "justification": "The report consistently bridges from problem-awareness to solution-awareness by defining every legal term in plain English on first use — grand jury indictment ('a formal charging process where prosecutors present evidence to a citizen panel'), discovery, proffer, joint-and-several liability, severance, tolling, mens rea — and explains WHY each concept matters to Jennifer specifically.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C6",
+          "result": "PASS",
+          "justification": "Value density remains high throughout: the opening orients and validates, the status table maps known vs. unknown, the charge breakdown teaches elements, each of the 15 questions adds new strategic insight with attribution and escalation paths, the plea section delivers a comprehensive collateral consequences framework, and the 7-day plan converts everything into action. No section feels like filler.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C7",
+          "result": "PASS",
+          "justification": "Expert sourcing is specific and contextual: Martin Weinberg is cited for mens rea deconstruction in federal fraud, Cristina Arguedas for alternative-theory reconstruction and factual innocence defense, David Smith for asset preservation and forfeiture defense — each named in the methodology note AND attributed at the specific questions where their frameworks apply, with explanations of why each was selected for this case type.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C8",
+          "result": "PASS",
+          "justification": "The report consistently respects Jennifer's autonomy: 'Your attorney remains the final authority,' 'The decision to plead guilty is yours,' 'This is not a recommendation — it's information you deserve,' 'That's a decision for later,' and 'For many people, this report and those conversations are enough.' No guilt-tripping or manipulative framing appears.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C9",
+          "result": "PASS",
+          "justification": "The report is explicitly structured for crisis-moment reading: the opening says 'If it's 2 AM and this feels like a lot — start with Your Next 7 Days,' the 7-day plan opens with 'One action. Thirty seconds,' and the status table provides an immediate visual map. The defendant can get actionable value in under 60 seconds or read the full analysis when ready.",
+          "problematic_text": ""
+        },
+        {
+          "id": "C10",
+          "result": "PASS",
+          "justification": "Tribal identity is reinforced positively throughout: 'You've just done something most defendants never do,' 'You now know more than 90% of defendants about their own case,' 'You are now the most prepared client in that office,' and 'you will be the most prepared defendant your attorney has ever worked with' — all framing preparation as empowerment without shaming those who haven't prepared.",
+          "problematic_text": ""
+        }
+      ],
+      "summary": "This is an exceptionally well-constructed deliverable that delivers massive standalone value at the $197 tier, respects the defendant's autonomy and crisis state throughout, grounds all urgency in real legal deadlines, and reveals the next tier only as a natural consequence of needs uncovered by using this product — a near-flawless execution across all ten conversion and value architecture criteria.",
+      "elapsed": "28.4",
+      "cost_usd": 0.230775
+    }
+  },
+  "cost_usd": 1.248135,
+  "duration_ms": 266518
+}

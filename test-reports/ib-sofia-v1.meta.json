@@ -1,0 +1,15 @@
+{
+  "firstName": "Sofia",
+  "charges": "Assault — Family Violence (Tex. Penal Code § 22.01(b))",
+  "stateCounty": "Bexar County, Texas",
+  "caseNumber": "2025-CR-87432",
+  "nextCourtDate": "April 25, 2026",
+  "judgeName": "Judge Robert Mendez",
+  "attorneyName": "Lisa Chen (Public Defender)",
+  "reportId": "IB-TEST-SOFIA-V1",
+  "monthsSinceArrest": "2",
+  "ibPriceDisplay": "$997",
+  "xrayPriceDisplay": "$2,497",
+  "xrayUpgradeCost": "$1,500",
+  "expertNames": "Robert Tayac, Andrew Branca, Don West, Chris Voss, BJ Fogg"
+}

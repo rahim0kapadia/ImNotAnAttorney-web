@@ -29,6 +29,8 @@ function escapeHtml(str: string): string {
  */
 function markdownToHtml(markdown: string): string {
   let html = markdown
+    // Strip bare blockquote continuation lines ("> " with no text) before processing
+    .replace(/^>\s*$/gm, '')
     .replace(/^#### (.+)$/gm, '<h4 class="section-h4">$1</h4>')
     .replace(/^### (.+)$/gm, '<h3 class="section-h3">$1</h3>')
     .replace(/^## (.+)$/gm, '<h2 class="section-h2">$1</h2>')
@@ -293,6 +295,8 @@ export interface IBReportMeta {
   xrayPriceDisplay?: string;
   /** X-Ray upgrade cost after IB credit. */
   xrayUpgradeCost?: string;
+  /** Comma-separated expert names for methodology note. */
+  expertNames?: string;
 }
 
 /**
@@ -365,6 +369,11 @@ export function renderIntelligenceBriefHtml(
       <p class="meta-field"><strong class="meta-label">Report ID:</strong> ${escapeHtml(meta.reportId)}</p>
     </div>
   </div>
+  ${meta.expertNames ? `<blockquote class="blockquote" style="margin: 20px 0; padding: 12px 16px;">
+    <p class="body-text"><strong class="bold-text">METHODOLOGY NOTE</strong></p>
+    <p class="body-text">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)} — selected for ${escapeHtml(meta.charges)} cases. Expert attributions appear throughout.</p>
+    <p class="body-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+  </blockquote>` : ""}
   ${bodyHtml}
   <div class="footer-disclaimer">
     <p class="footer-disclaimer-text">
@@ -376,9 +385,9 @@ export function renderIntelligenceBriefHtml(
     <p class="copyright-meta">Report ID: ${escapeHtml(meta.reportId)} | Generated: ${escapeHtml(meta.reportDate)}</p>
   </div>
   <div class="no-print upgrade-cta">
-    <p class="upgrade-cta-text">When you get discovery evidence, we can go even deeper:</p>
+    <p class="upgrade-cta-text">If you receive discovery evidence and want a deeper analysis, The X-Ray reviews your actual case files — officer recordings, lab reports, chain of custody, witness statements.</p>
     <a href="/checkout?tier=x-ray" class="upgrade-btn">The X-Ray — ${meta.xrayPriceDisplay || "$2,497"} (${meta.xrayUpgradeCost || "$1,500"} after credit)</a>
-    <p class="upgrade-credit-note">Your ${meta.ibPriceDisplay || "$997"} is fully credited toward any tier within 12 months.</p>
+    <p class="upgrade-credit-note">Every dollar you've paid rolls forward. Your ${meta.ibPriceDisplay || "$997"} is fully credited toward any tier — you only pay the difference. Credits valid for 12 months.</p>
   </div>
 </div>
 </body>

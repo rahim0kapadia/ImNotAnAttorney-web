@@ -1,0 +1,67 @@
+{
+  "evaluated_at": "2026-03-02T23:24:18.457Z",
+  "eval_version": "2.0",
+  "source": "tmp-dummy-report.md",
+  "charge_type": "Drug",
+  "tier": "case-decoder",
+  "model_used": "opus",
+  "gate_passed": true,
+  "complete": false,
+  "teams": {
+    "legal": {
+      "name": "Legal Substance",
+      "weight": "MEDIUM",
+      "model": "claude-opus-4-6",
+      "score": "0/6",
+      "passed": 0,
+      "needs_work": 0,
+      "failed": 6,
+      "criteria": [
+        {
+          "id": "L1",
+          "result": "FAIL",
+          "justification": "The report contains no specific charge, statute, or jurisdiction — it is a placeholder with no legal substance whatsoever.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L2",
+          "result": "FAIL",
+          "justification": "For a drug charge, the report must include defense theories such as suppression of evidence, weight/substance challenges, constructive possession arguments, and entrapment — none are present.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L6",
+          "result": "FAIL",
+          "justification": "No motions are identified, no jurisdiction is specified, and no filing deadlines are referenced — the motion landscape is entirely absent.",
+          "problematic_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        },
+        {
+          "id": "L7",
+          "result": "FAIL",
+          "justification": "No collateral consequences are discussed — no state-specific statutes, no felony classification, no immigration/employment/housing/licensing impacts for a drug charge.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L8",
+          "result": "FAIL",
+          "justification": "A drug defense report must reflect Jeffrey Lichtman's framework of destroying the evidence before the narrative (chain of custody, lab methodology, CI reliability) — no expert framework is applied.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L9",
+          "result": "FAIL",
+          "justification": "Zero statute citations appear anywhere in the report — no controlled substance statutes, no procedural statutes, no sentencing statutes.",
+          "problematic_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. This report provides legal INFORMATION — not legal ADVICE."
+        }
+      ],
+      "summary": "This is a dummy placeholder document with zero legal content; it fails every substantive criterion for a drug charge criminal defense report and must not ship under any circumstances.",
+      "elapsed": "10.7",
+      "cost_usd": 0.05742
+    }
+  },
+  "total_pass": 0,
+  "total_needs_work": 0,
+  "total_fail": 6,
+  "cost_usd": 0.05742,
+  "duration_ms": 10737
+}

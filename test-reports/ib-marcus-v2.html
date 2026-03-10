@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Intelligence Brief — Marcus</title>
+<style>
+/* === Base === */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0C0A09;
+  color: #D4D4D8;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* === Header === */
+.header-block {
+  background: #1C1917;
+  padding: 32px;
+  border-radius: 12px;
+  border: 2px solid #F59E0B;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.header-title {
+  color: #F59E0B;
+  font-size: 28px;
+  margin: 0;
+}
+.header-subtitle {
+  color: #A1A1AA;
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+.header-meta {
+  margin-top: 24px;
+  text-align: left;
+}
+.meta-field {
+  margin: 4px 0;
+}
+.meta-label {
+  color: white;
+}
+
+/* === Content typography === */
+.section-h2 {
+  color: #F59E0B;
+  font-size: 20px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #3f3f46;
+}
+.section-h3 {
+  color: white;
+  font-size: 17px;
+  margin-top: 24px;
+  letter-spacing: 0.02em;
+}
+.section-h4 {
+  color: #F59E0B;
+  font-size: 14px;
+  margin-top: 20px;
+}
+.bold-text {
+  color: white;
+}
+.body-text {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+/* === Tables === */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+.table-header {
+  padding: 8px 12px;
+  border: 1px solid #3f3f46;
+  border-bottom: 2px solid #3f3f46;
+  text-align: left;
+  background: #1a1a1e;
+  font-weight: bold;
+  overflow-wrap: break-word;
+}
+.table-cell {
+  padding: 8px 12px;
+  border: 1px solid #3f3f46;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+tr:nth-child(even) > .table-cell {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* === Blockquotes === */
+.blockquote {
+  border-left: 4px solid #F59E0B;
+  padding: 12px 16px;
+  margin: 16px 0;
+  color: #A1A1AA;
+  background: rgba(245, 158, 11, 0.05);
+  border-radius: 0 4px 4px 0;
+}
+
+/* === Lists === */
+.list-item {
+  margin-bottom: 6px;
+  margin-left: 24px;
+}
+.checkbox-item {
+  list-style: none;
+}
+
+/* === Footer === */
+.footer-disclaimer {
+  background: #1C1917;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 40px;
+  border-left: 4px solid #A1A1AA;
+}
+.footer-disclaimer-text {
+  margin: 0;
+  font-size: 13px;
+  color: #71717A;
+}
+.footer-disclaimer-label {
+  color: #A1A1AA;
+}
+.copyright-block {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 2px solid #27272A;
+  text-align: center;
+}
+.copyright-text {
+  margin: 0;
+  font-size: 12px;
+  color: #71717A;
+}
+.copyright-meta {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #52525B;
+}
+
+/* === Upgrade CTA === */
+.upgrade-cta {
+  margin-top: 32px;
+  text-align: center;
+}
+.upgrade-cta-text {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #A1A1AA;
+}
+.upgrade-btn {
+  display: inline-block;
+  padding: 16px 32px;
+  background: #F59E0B;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.upgrade-credit-note {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #71717A;
+}
+
+/* === Page breaks === */
+.page-break {
+  page-break-after: always;
+}
+
+/* === Mobile responsive === */
+@media (max-width: 640px) {
+  .container { padding: 16px 12px; }
+  .header-block { padding: 20px; }
+  .header-title { font-size: 22px; }
+  .section-h2 { font-size: 17px; margin-top: 24px; padding-top: 16px; }
+  .section-h3 { font-size: 15px; }
+  .report-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table-header, .table-cell { padding: 6px 8px; font-size: 13px; }
+  .upgrade-btn { padding: 14px 24px; font-size: 15px; }
+}
+
+/* === Print === */
+@media print {
+  body { background: white !important; color: #1a1a1a !important; }
+  * { color: #1a1a1a !important; }
+  .section-h2, .section-h3, .section-h4 { color: #92400e !important; page-break-after: avoid; }
+  .bold-text, .meta-label { color: #1a1a1a !important; }
+  .blockquote { border-left-color: #92400e !important; background: #f5f5f4 !important; page-break-inside: avoid; }
+  .report-table { page-break-inside: avoid; }
+  .table-header, .table-cell { border-color: #d4d4d4 !important; }
+  .table-header { background: #e5e5e5 !important; }
+  .no-print { display: none !important; }
+  .header-block { background: #f5f5f4 !important; border-color: #92400e !important; }
+  a { color: #92400e !important; }
+  .body-text { orphans: 3; widows: 3; }
+  @page { margin: 1in; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header-block">
+    <h1 class="header-title">CASE INTELLIGENCE BRIEF</h1>
+    <p class="header-subtitle">ImNotAnAttorney | We Research. You Ask.</p>
+    <div class="header-meta">
+      <p class="meta-field"><strong class="meta-label">Prepared for:</strong> Marcus</p>
+      <p class="meta-field"><strong class="meta-label">Charge(s):</strong> Possession of Cannabis Over 20 Grams (F.S. § 893.13)</p>
+      <p class="meta-field"><strong class="meta-label">Jurisdiction:</strong> Florida, Hillsborough County</p>
+      <p class="meta-field"><strong class="meta-label">Case Number:</strong> 2025-CF-018734</p>
+      <p class="meta-field"><strong class="meta-label">Next Court Date:</strong> April 22, 2026</p>
+      <p class="meta-field"><strong class="meta-label">Judge:</strong> Judge Robert Daniels</p>
+      <p class="meta-field"><strong class="meta-label">Attorney:</strong> Sandra Williams (Retained, Private)</p>
+      <p class="meta-field"><strong class="meta-label">Months Since Arrest:</strong> 4</p>
+      <p class="meta-field"><strong class="meta-label">Report Date:</strong> March 8, 2026</p>
+      <p class="meta-field"><strong class="meta-label">Report ID:</strong> IB-TEST-MARCUS-V2</p>
+    </div>
+  </div>
+  <blockquote class="blockquote" style="margin: 20px 0; padding: 12px 16px;">
+    <p class="body-text"><strong class="bold-text">METHODOLOGY NOTE</strong></p>
+    <p class="body-text">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on Jeffrey Lichtman, Ron Chapman II, Michael Levine, Chris Voss, BJ Fogg — selected for Possession of Cannabis Over 20 Grams (F.S. § 893.13) cases. Expert attributions appear throughout.</p>
+    <p class="body-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+  </blockquote>
+  <h2 class="section-h2">START HERE: Your 48-Hour Priority List</h2>
+
+<p class="body-text">These three actions protect your position right now. Everything else can wait.</p>
+
+<strong class="bold-text">Priority 1 — TODAY (under 5 minutes):</strong>
+<p class="body-text">Send the pre-written email in Section 6 to Sandra Williams. It includes your case number, court date, and five specific questions. Copy, paste, send. Done.</p>
+
+<p class="body-text">You've just created a written record — harder to ignore than a voicemail, and documentation that tracks your efforts to engage.</p>
+
+<strong class="bold-text">Priority 2 — THIS WEEK:</strong>
+<p class="body-text">Request discovery status. You told us discovery hasn't been discussed. Under Florida's discovery rules (Fla. R. Crim. P. 3.220), your attorney is required to file a demand for discovery — and the prosecution must respond. This is the foundation of any defense strategy. Ask Williams directly: "Have you filed a demand for discovery, and if so, what has the prosecution produced?"</p>
+
+<p class="body-text">Your specific question — whether the search was legal — depends entirely on what the body camera footage shows. That footage is in the discovery file. Without it, no one can evaluate whether the search holds up.</p>
+
+<strong class="bold-text">Priority 3 — BEFORE APRIL 22:</strong>
+<p class="body-text">Read Section 4 (Legal Options & Deadlines) before your pre-trial conference. If a motion to suppress the search is viable, it must be filed before trial — and under Fla. R. Crim. P. 3.190, suppression motions must typically be filed at least 10 days before trial. The question for Williams: "Given my court date, are there any motion deadlines approaching?"</p>
+
+<p class="body-text">Everything else can wait. Start with Priority 1.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Table of Contents</h2>
+
+<li class="list-item"><strong class="bold-text">START HERE: Your 48-Hour Priority List</strong> — 3 actions for the next 48 hours</li>
+<li class="list-item"><strong class="bold-text">Section 1: Your Case Roadmap</strong> — Where you are, what happens next, the two paths</li>
+<li class="list-item"><strong class="bold-text">Section 2: What's Working + What Needs Attention</strong> — Case Progress Score, decoded statements, gaps to clarify</li>
+<li class="list-item"><strong class="bold-text">Section 3: Your Case Intelligence</strong> — Outcome map, defense theories, judge profile, prosecution preview</li>
+<li class="list-item"><strong class="bold-text">Section 4: Legal Options & Deadlines</strong> — Motion landscape, deadline calendar, plea framework</li>
+<li class="list-item"><strong class="bold-text">Section 5: Protecting Your Case and Life</strong> — Case protection, life impact map, pending-case management</li>
+<li class="list-item"><strong class="bold-text">Section 6: Your Plan</strong> — Email template, phone script, 14-day plan, meeting prep, difficult conversations</li>
+<li class="list-item"><strong class="bold-text">Appendix A: Brady/Giglio Checklist</strong> — Evidence the prosecution must disclose</li>
+<li class="list-item"><strong class="bold-text">Appendix B: Next Court Date Prep</strong> — What to expect, wear, bring, and do</li>
+<li class="list-item"><strong class="bold-text">Appendix C: Your Rights</strong> — Key rights during criminal proceedings</li>
+<li class="list-item"><strong class="bold-text">Appendix D: Questions for Your Attorney</strong> — 10-15 targeted, gap-based questions</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 1: Your Case Roadmap</h2>
+
+<h3 class="section-h3">1a. Where You Are Now</h3>
+
+<p class="body-text">Marcus, here is where your case stands:</p>
+
+<table class="report-table"><tr><td class="table-cell">Detail</td><td class="table-cell">Your Case</td></tr>
+
+<tr><td class="table-cell">Case Number</td><td class="table-cell">2025-CF-018734</td></tr>
+<tr><td class="table-cell">Charge</td><td class="table-cell">Possession of Cannabis Over 20 Grams (F.S. § 893.13)</td></tr>
+<tr><td class="table-cell">Classification</td><td class="table-cell">Third-degree felony</td></tr>
+<tr><td class="table-cell">County</td><td class="table-cell">Hillsborough County, Florida</td></tr>
+<tr><td class="table-cell">Arrest Date</td><td class="table-cell">November 8, 2025</td></tr>
+<tr><td class="table-cell">Time Since Arrest</td><td class="table-cell">~4 months</td></tr>
+<tr><td class="table-cell">Next Court Date</td><td class="table-cell">April 22, 2026 — Pre-trial conference</td></tr>
+<tr><td class="table-cell">Judge</td><td class="table-cell">Judge Robert Daniels</td></tr>
+<tr><td class="table-cell">Attorney</td><td class="table-cell">Sandra Williams (Retained, Private — $5,000 paid)</td></tr>
+<tr><td class="table-cell">Search Type</td><td class="table-cell">Consent search during traffic stop</td></tr>
+<tr><td class="table-cell">Discovery</td><td class="table-cell">Not discussed</td></tr></table>
+
+<p class="body-text">You were pulled over for a broken tail light and consented to a search while nervous. That detail — the circumstances of your consent — is the most important fact in your case. Defense attorneys who specialize in drug cases, like Jeffrey Lichtman, approach consent searches by examining whether the consent was truly voluntary. When someone agrees to a search during a traffic stop with officers standing over their car, the "voluntariness" of that consent becomes a real legal question.</p>
+
+<h3 class="section-h3">1b. What Happens Next</h3>
+
+<p class="body-text">Typical progression for a third-degree felony drug case in Hillsborough County:</p>
+
+<table class="report-table"><tr><td class="table-cell">Stage</td><td class="table-cell">What Happens</td><td class="table-cell">Typical Timeline</td><td class="table-cell">Your Status</td></tr>
+
+<tr><td class="table-cell">Arraignment</td><td class="table-cell">Formal charges, plea entered</td><td class="table-cell">Within 30 days of arrest</td><td class="table-cell">Completed</td></tr>
+<tr><td class="table-cell">Discovery exchange</td><td class="table-cell">Prosecution produces evidence, defense reviews</td><td class="table-cell">2-4 months post-arraignment</td><td class="table-cell"><strong class="bold-text">Not confirmed — ask Williams</strong></td></tr>
+<tr><td class="table-cell">Pre-trial conference</td><td class="table-cell">Case status, motion deadlines, discovery issues</td><td class="table-cell">3-6 months post-arrest</td><td class="table-cell"><strong class="bold-text">April 22 — your next date</strong></td></tr>
+<tr><td class="table-cell">Motion hearings</td><td class="table-cell">Suppression motions, evidence challenges</td><td class="table-cell">Before trial, if filed</td><td class="table-cell">Depends on whether Williams files</td></tr>
+<tr><td class="table-cell">Plea negotiations</td><td class="table-cell">Prosecution offers terms, defense counters</td><td class="table-cell">Ongoing</td><td class="table-cell">Williams said "we'll see what they offer"</td></tr>
+<tr><td class="table-cell">Trial (if needed)</td><td class="table-cell">6-person jury for third-degree felony</td><td class="table-cell">6-18 months post-arrest</td><td class="table-cell">Only if no resolution</td></tr></table>
+
+<strong class="bold-text">Hillsborough County context:</strong> The Thirteenth Judicial Circuit handles a high volume of drug cases. The State Attorney's Office under Andrew Warren has historically supported diversion programs for certain drug offenses, though policies shift. Whether your case qualifies for pre-trial intervention (PTI) depends on the specifics — and on whether Williams has asked.
+
+<h3 class="section-h3">1c. The Two Paths</h3>
+
+<strong class="bold-text">Path A — Negotiated Resolution:</strong>
+<p class="body-text">The prosecution makes an offer. Williams negotiates terms. If acceptable, you enter a plea. For a first offense on this charge, common outcomes in Hillsborough County include PTI (which can lead to dismissal), probation with drug education, community service, and fines. A negotiated plea to a misdemeanor charge is possible in some cases.</p>
+
+<strong class="bold-text">Path B — Trial:</strong>
+<p class="body-text">If no acceptable resolution is reached, the case goes before a jury. The prosecution must prove every element beyond a reasonable doubt — including that the search was lawful and the substance was properly identified and weighed. Given the circumstances of the search, the voluntariness of your agreement is a genuine trial issue.</p>
+
+<p class="body-text">Neither path is inherently better. The right choice depends on what the evidence shows — starting with the recording of your traffic stop.</p>
+
+<h3 class="section-h3">Bottom Line Right Now</h3>
+
+<p class="body-text">You are 4 months into a case where discovery hasn't been discussed and no strategy has been communicated. Your single most important action: send the email in Section 6 to move Williams from passive to active before April 22.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 2: What's Working + What Needs Attention</h2>
+
+<h3 class="section-h3">2a. What's On Track</h3>
+
+<strong class="bold-text">Case Progress Score: 18/100</strong>
+
+<p class="body-text">This score reflects where your case stands based on what you've told us across six dimensions. It is not a judgment of Sandra Williams or the quality of your representation — it maps what's been communicated to you versus what you need to know.</p>
+
+<table class="report-table"><tr><td class="table-cell">Dimension</td><td class="table-cell">Weight</td><td class="table-cell">Your Status</td><td class="table-cell">Score</td></tr>
+
+<tr><td class="table-cell">Communication</td><td class="table-cell">25%</td><td class="table-cell">Rarely communicates, calls not returned</td><td class="table-cell">3/25</td></tr>
+<tr><td class="table-cell">Case Review</td><td class="table-cell">15%</td><td class="table-cell">No indication of evidence review</td><td class="table-cell">2/15</td></tr>
+<tr><td class="table-cell">Discovery</td><td class="table-cell">20%</td><td class="table-cell">Not discussed — you don't know if it's been requested</td><td class="table-cell">1/20</td></tr>
+<tr><td class="table-cell">Motion Activity</td><td class="table-cell">15%</td><td class="table-cell">No motions discussed or filed</td><td class="table-cell">1/15</td></tr>
+<tr><td class="table-cell">Strategy</td><td class="table-cell">15%</td><td class="table-cell">"We'll see what they offer" — no defense theory communicated</td><td class="table-cell">3/15</td></tr>
+<tr><td class="table-cell">Court Prep</td><td class="table-cell">10%</td><td class="table-cell">Pre-trial conference approaching, no preparation discussed</td><td class="table-cell">8/10</td></tr></table>
+
+<strong class="bold-text">What this tells you:</strong> A score of 18 doesn't mean Williams is incompetent — it means critical information hasn't been communicated to you. She may have done work you're not aware of. But four months in, you're entitled to know the basics: has discovery been requested, has the stop footage been reviewed, is there a defense strategy beyond waiting for an offer. The questions in this report are designed to surface that information.
+
+<h3 class="section-h3">2b. Decoded Statements</h3>
+
+<p class="body-text">You told us Williams said "we'll see what they offer and go from there." Here is what that phrase typically means in criminal defense practice — and what to ask next:</p>
+
+<strong class="bold-text">"We'll see what they offer"</strong> — This phrase has two possible meanings. It may signal that Williams is waiting for the prosecution's initial offer as a negotiation starting point — which is a legitimate tactic if she's simultaneously building a defense position to negotiate from. Or it may mean the case is being handled reactively — no independent investigation, no motion strategy, just waiting to evaluate whatever the prosecution puts on the table. The difference matters enormously for your outcome.
+
+<p class="body-text">In criminal defense practice, when an attorney's only stated strategy is to wait for an offer, it sometimes means the case is being processed rather than defended. The "standard offer" for your charge type exists regardless of your case facts — prosecutors have baseline offers for every charge. The question is whether Williams is working to move you below that baseline or planning to evaluate the standard offer and pass it along.</p>
+
+<blockquote class="blockquote"><strong class="bold-text">Question for Williams:</strong> "Are you building a defense position to negotiate from, or are we waiting to see the prosecution's offer first? I'd like to understand the strategy."</blockquote>
+
+<strong class="bold-text">"Go from there"</strong> — This vague ending signals no specific plan. After four months and $5,000, you're entitled to hear something more concrete: "I've reviewed the footage and here's what I see," or "I've filed a demand for discovery and we're waiting on the prosecution's response," or "I've identified a potential suppression argument based on the search."
+
+<blockquote class="blockquote"><strong class="bold-text">Question for Williams:</strong> "Can you walk me through what you've done on my case since I retained you? I want to understand where things stand."</blockquote>
+
+<h3 class="section-h3">2c. What Needs Attention</h3>
+
+<strong class="bold-text">CLARIFY — Discovery Status:</strong>
+<p class="body-text">Discovery hasn't been discussed — and for a drug case where the central question is whether the search was legal, discovery IS the case. Under Florida's discovery rules (Fla. R. Crim. P. 3.220), your attorney files a demand and the prosecution must produce body camera footage, police reports, field test results, lab analysis, and officer testimony. Without discovery, there is no way to evaluate the search's legality, the substance identification, or the weight measurement. This is foundational — everything else depends on it.</p>
+
+<strong class="bold-text">CLARIFY — Search Legality Evaluation:</strong>
+<p class="body-text">You asked whether the search was legal. The answer depends on facts that only the stop recording can confirm: Did the officers tell you that you could refuse? Were you free to leave? Were you in the back of a patrol car when asked? Were there multiple officers present? Were you told what they were looking for? Under Florida law and the Fourth Amendment, consent must be voluntary — and the totality of the circumstances determines voluntariness. Williams should have evaluated this by now.</p>
+
+<strong class="bold-text">CLARIFY — The $5,000 Retainer:</strong>
+<p class="body-text">You paid $5,000 four months ago. In private criminal defense, a retainer buys a defined scope of work. Here is the structural reality: once a flat fee is paid, the attorney's financial incentive to invest additional hours drops significantly. This doesn't mean Williams is acting in bad faith — but it means the economic pressure to resolve your case quickly (by accepting a standard plea offer) increases over time. Understanding this dynamic helps you evaluate whether the "wait and see" approach serves your case or her caseload.</p>
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">Williams acknowledged your case exists. She hasn't communicated what she's done with it. The email in Section 6 bridges that gap — and the questions are designed to reveal whether work has been happening behind the scenes or whether the silence reflects inaction.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 3: Your Case Intelligence</h2>
+
+<h3 class="section-h3">3a. Outcome Map</h3>
+
+<p class="body-text">Five realistic scenarios for a first-offense felony drug case in Hillsborough County:</p>
+
+<table class="report-table"><tr><td class="table-cell">Outcome</td><td class="table-cell">What It Means</td><td class="table-cell">How Common in Hillsborough County</td><td class="table-cell">Key Factors</td></tr>
+
+<tr><td class="table-cell">Dismissal (via suppression)</td><td class="table-cell">Evidence suppressed, charges dropped</td><td class="table-cell">Uncommon, but viable when the search's legality is contested</td><td class="table-cell">Voluntariness of agreement, body camera footage</td></tr>
+<tr><td class="table-cell">PTI (Pre-Trial Intervention)</td><td class="table-cell">Diversion program; completion leads to dismissal</td><td class="table-cell">Common for first offense in Hillsborough</td><td class="table-cell">Clean record, program eligibility, prosecutor discretion</td></tr>
+<tr><td class="table-cell">Reduced charge</td><td class="table-cell">Felony reduced to misdemeanor (under 20g)</td><td class="table-cell">Moderate</td><td class="table-cell">Negotiation leverage, evidence weaknesses, quantity disputes</td></tr>
+<tr><td class="table-cell">Probation with adjudication withheld</td><td class="table-cell">No formal conviction, but record of adjudication withheld</td><td class="table-cell">Common first-offense outcome</td><td class="table-cell">Cooperation, clean history, judge discretion</td></tr>
+<tr><td class="table-cell">Standard felony probation</td><td class="table-cell">Formal conviction, probation conditions, felony on record</td><td class="table-cell">Less common for first offense if defense is active</td><td class="table-cell">Default outcome when no negotiation occurs</td></tr></table>
+
+<strong class="bold-text">Important:</strong> Florida law treats this substance over 20 grams as a third-degree felony under F.S. § 893.13(6)(a), punishable by up to 5 years in prison and a $5,000 fine. However, for a first offense with no prior record, incarceration is unlikely if the case is managed actively. The realistic question is whether you end up with a felony on your record — or avoid it through PTI, adjudication withheld, or a reduced charge.
+
+<blockquote class="blockquote">Whether the search holds up determines your negotiating position. That analysis requires the body camera footage — which lives in the discovery file. The X-Ray ($2,497, or $1,500 after your $997 credit) reviews your actual evidence frame by frame, including the moment of consent.</blockquote>
+
+<h3 class="section-h3">3b. Defense Theories</h3>
+
+<p class="body-text">Based on the methodologies of Jeffrey Lichtman and Ron Chapman II — both of whom have won federal drug case acquittals by systematically challenging evidence foundations — the following theories apply:</p>
+
+<strong class="bold-text">1. Consent Search Voluntariness (Fourth Amendment)</strong>
+<p class="body-text">The central question. Under <em>Schneckloth v. Bustamonte</em>, 412 U.S. 218 (1973), consent must be voluntary under the totality of the circumstances. Factors courts examine: Were you told you could refuse? Were you detained or free to leave? How many officers were present? Was the request phrased as a question or a command? Were you in a coercive environment (handcuffed, in the patrol car, surrounded)? You said you agreed because you were "nervous and didn't know I could say no." If the body camera footage confirms a coercive environment, the consent — and everything found as a result — may be suppressible.</p>
+
+<strong class="bold-text">2. Traffic Stop Duration (Rodriguez v. United States)</strong>
+<p class="body-text">Under <em>Rodriguez v. United States</em>, 575 U.S. 348 (2015), officers cannot extend a traffic stop beyond the time needed to address the traffic violation without reasonable suspicion of additional criminal activity. If the officers detained you beyond the time needed to issue a tail light citation before requesting consent, the extended detention may have been unlawful — tainting the consent that followed.</p>
+
+<strong class="bold-text">3. Substance Identification Challenge</strong>
+<p class="body-text">The field test was positive for cannabis. However, field tests have documented false positive rates — NIJ research shows some reagent tests produce false positives for legal substances including CBD products, certain teas, and even cat litter. Has the substance been sent for confirmatory lab analysis? If the lab report doesn't match the field test, or if the analysis was done with improper methodology, the identification is challengeable. Ron Chapman's methodology: demand the lab report, review the analyst's qualifications, and examine the chain of custody.</p>
+
+<strong class="bold-text">4. Weight Challenge</strong>
+<p class="body-text">The charge threshold is 20 grams. If the actual net weight (substance only, excluding packaging) is at or near 20 grams, the precision of the scale, the inclusion of packaging weight, and the moisture content all become relevant challenges. Ask Williams: "What was the exact weight on the lab report, and does it include packaging?"</p>
+
+<h3 class="section-h3">3c. Judge Intelligence</h3>
+
+<strong class="bold-text">Judge Robert Daniels — Hillsborough County</strong>
+
+<p class="body-text">Jurisdiction-specific data on Judge Daniels's drug case tendencies is not available for this report. The most reliable source for his courtroom patterns is Williams's direct experience — use the questions below to extract that intelligence. Here is a framework for what to ask and why it matters:</p>
+
+<li class="list-item"><strong class="bold-text">Sentencing patterns for drug possession:</strong> Does Daniels tend toward probation or incarceration for a first-offense felony charge? Does he typically withhold adjudication for first offenders?</li>
+<li class="list-item"><strong class="bold-text">Motion rulings:</strong> How does he handle suppression motions, particularly challenges to search voluntariness? Some judges scrutinize these carefully; others defer to the officer's account.</li>
+<li class="list-item"><strong class="bold-text">PTI receptiveness:</strong> Does Daniels support pre-trial intervention for drug cases? Some judges actively encourage it for first offenders.</li>
+<li class="list-item"><strong class="bold-text">Courtroom style:</strong> Formal and procedure-driven, or more conversational? This affects how Williams should present your case.</li>
+
+<blockquote class="blockquote"><strong class="bold-text">Questions for Williams about Judge Daniels:</strong></blockquote>
+<blockquote class="blockquote">- "How does Daniels typically handle first-offense cannabis possession over 20 grams?"</blockquote>
+<blockquote class="blockquote">- "Has he granted suppression motions challenging the legality of a search?"</blockquote>
+<blockquote class="blockquote">- "Does he typically withhold adjudication for first offenders?"</blockquote>
+
+<p class="body-text">Williams's direct experience with Daniels is the most reliable intelligence available.</p>
+
+<h3 class="section-h3">3d. Prosecution Preview</h3>
+
+<p class="body-text">Here is how the Hillsborough County State Attorney's Office typically builds a felony drug case:</p>
+
+<strong class="bold-text">The prosecution's likely case theory:</strong> You were stopped (broken tail light — documented reasonable suspicion), you consented to a search, officers found cannabis, field test was positive, quantity exceeded 20 grams. Under F.S. § 893.13(6)(a), the charged offense is a third-degree felony.
+
+<strong class="bold-text">Their strengths:</strong>
+<li class="list-item">A documented traffic stop basis (broken tail light)</li>
+<li class="list-item">Your verbal consent to the search</li>
+<li class="list-item">Field test positive for the substance</li>
+<li class="list-item">Quantity exceeding the felony threshold</li>
+
+<strong class="bold-text">Their pressure points:</strong>
+<li class="list-item">Voluntariness of consent under the circumstances (coercive environment, lack of refusal advisement)</li>
+<li class="list-item">Potential <em>Rodriguez</em> violation if the stop was extended</li>
+<li class="list-item">Field test reliability (false positive rates)</li>
+<li class="list-item">Weight precision (actual net weight versus packaging weight)</li>
+<li class="list-item">No prior record — weakens the "dangerous offender" narrative</li>
+
+<strong class="bold-text">How Hillsborough County drug cases typically proceed:</strong> The State Attorney's Office tends to lead with the physical evidence and the consent. For first offenders, they often open with a probation offer to move the case. The question is whether Williams negotiates that offer down or accepts it as offered. Without a defense position (suppression argument, weight challenge, consent challenge), there's nothing to negotiate with.
+
+<h3 class="section-h3">3e. Jurisdiction Profile</h3>
+
+<strong class="bold-text">Hillsborough County, Florida (Thirteenth Judicial Circuit):</strong>
+
+<li class="list-item"><strong class="bold-text">Court system:</strong> Circuit court for felony cases</li>
+<li class="list-item"><strong class="bold-text">Jury size:</strong> 6-person jury for third-degree felony</li>
+<li class="list-item"><strong class="bold-text">Speedy trial:</strong> Florida's speedy trial rule (Fla. R. Crim. P. 3.191) requires trial within 90 days of arrest for misdemeanors, 175 days for felonies. Your arrest was November 8, 2025 — the 175-day window extends to approximately May 2, 2026. This is approaching. If the speedy trial clock hasn't been tolled by waivers or continuances, it's a critical deadline.</li>
+<li class="list-item"><strong class="bold-text">PTI program:</strong> Hillsborough County offers PTI through the State Attorney's Office. Eligibility typically requires first offense, non-violent charge, and victim consent (N/A for this charge). Successful completion results in charge dismissal.</li>
+<li class="list-item"><strong class="bold-text">Cannabis-specific:</strong> Florida has no legal recreational cannabis. Medical marijuana is legal but does not provide a defense to holding non-medical marijuana.</li>
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">Your case has a genuine suppression argument that most drug cases don't have — the circumstances of your consent. Whether that argument becomes a motion depends on whether Williams evaluates the stop footage. The questions below are designed to find out whether she has.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 4: Legal Options & Deadlines</h2>
+
+<h3 class="section-h3">4a. Motion Landscape</h3>
+
+<p class="body-text">The following motions are applicable to your case:</p>
+
+<table class="report-table"><tr><td class="table-cell">Motion</td><td class="table-cell">What It Does</td><td class="table-cell">Basis</td><td class="table-cell">Filing Consideration</td></tr>
+
+<tr><td class="table-cell">Motion to Suppress (Consent)</td><td class="table-cell">Challenges the voluntariness of your consent to search</td><td class="table-cell">Fourth Amendment + <em>Schneckloth v. Bustamonte</em></td><td class="table-cell">Must be filed pre-trial; Fla. R. Crim. P. 3.190</td></tr>
+<tr><td class="table-cell">Motion to Suppress (<em>Rodriguez</em>)</td><td class="table-cell">Challenges the extension of the traffic stop beyond its purpose</td><td class="table-cell"><em>Rodriguez v. United States</em>, 575 U.S. 348</td><td class="table-cell">Must be filed pre-trial</td></tr>
+<tr><td class="table-cell">Demand for Discovery</td><td class="table-cell">Compels prosecution to produce all evidence</td><td class="table-cell">Fla. R. Crim. P. 3.220</td><td class="table-cell">Should have been filed already; can be filed anytime</td></tr>
+<tr><td class="table-cell">Motion to Suppress (Lab Analysis)</td><td class="table-cell">Challenges the substance identification or weight</td><td class="table-cell">Lab methodology, chain of custody</td><td class="table-cell">After discovery review</td></tr>
+<tr><td class="table-cell">Motion for PTI</td><td class="table-cell">Requests diversion program consideration</td><td class="table-cell">F.S. § 948.08</td><td class="table-cell">Typically filed early in the case</td></tr></table>
+
+<strong class="bold-text">Under Fla. R. Crim. P. 3.190, suppression motions must typically be filed at least 10 days before trial.</strong> Given your upcoming court date, Williams can confirm whether any motion deadlines are approaching — and whether any waivers or continuances have affected the timeline.
+
+<h3 class="section-h3">4b. Deadline Calendar</h3>
+
+<table class="report-table"><tr><td class="table-cell">Window</td><td class="table-cell">Action</td><td class="table-cell">Status</td></tr>
+
+<tr><td class="table-cell">⏰ ~May 2, 2026</td><td class="table-cell">Florida speedy trial clock (175 days from arrest)</td><td class="table-cell">Approaching — ask Williams if any waivers have been filed</td></tr>
+<tr><td class="table-cell">⏰ Before April 22</td><td class="table-cell">Pre-trial motion filing assessment</td><td class="table-cell">Ask Williams which motions, if any, are being prepared</td></tr>
+<tr><td class="table-cell">Ongoing</td><td class="table-cell">Demand for discovery (Fla. R. Crim. P. 3.220)</td><td class="table-cell">Confirm whether filed</td></tr>
+<tr><td class="table-cell">Before trial</td><td class="table-cell">Suppression motions (consent, <em>Rodriguez</em>, lab)</td><td class="table-cell">Depends on discovery review</td></tr>
+<tr><td class="table-cell">Anytime</td><td class="table-cell">PTI application</td><td class="table-cell">Ask Williams about eligibility and timing</td></tr></table>
+
+<strong class="bold-text">Speedy trial note:</strong> Florida's 175-day speedy trial clock is a real deadline. If Williams has filed no waivers or continuances, the prosecution must bring your case to trial before approximately May 2, 2026, or you can move for discharge under Fla. R. Crim. P. 3.191. Ask Williams: "Has the speedy trial clock been tolled? If so, by what?"
+
+<h3 class="section-h3">4c. Pre-Trial Intervention</h3>
+
+<p class="body-text">PTI is the most favorable realistic outcome for your case — successful completion leads to dismissal, meaning no felony on your record. Here is what to understand:</p>
+
+<strong class="bold-text">Eligibility factors:</strong> First offense (you qualify), non-violent charge (you qualify), no prior diversions, willingness to comply with program conditions. The State Attorney's Office makes the eligibility determination, but Williams can advocate for your inclusion.
+
+<strong class="bold-text">Program conditions typically include:</strong> Drug education courses, community service hours, random drug testing, supervision fees, and no new arrests during the program (typically 6-12 months).
+
+<strong class="bold-text">Why it matters for your career:</strong> You told us a felony would end your career — you were recently promoted to IT project manager at a healthcare company. PTI avoids the felony entirely. If PTI isn't available, adjudication withheld (a judge's decision) avoids a formal conviction while still resulting in a finding — it appears on some background checks but not as a conviction. Williams should know which option Daniels typically favors.
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">The hearing is approaching. The questions above determine whether you enter that room with a defense position or wait for whatever the prosecution offers. Send the email in Section 6 before that date.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 5: Protecting Your Case and Life</h2>
+
+<h3 class="section-h3">5a. Protecting Your Case</h3>
+
+<strong class="bold-text">Things that help your case right now:</strong>
+<li class="list-item"><strong class="bold-text">Do not consent to any future searches.</strong> You have the right to refuse. A polite "I don't consent to searches" is enough. This applies to your home, car, phone, and person.</li>
+<li class="list-item"><strong class="bold-text">Document everything.</strong> Every communication with Williams — date, time, what was said. If you call and leave a voicemail, note it. If you email, save a copy. This creates a timeline.</li>
+<li class="list-item"><strong class="bold-text">Do not discuss your case.</strong> Not on social media, not with coworkers, not in text messages. Anything you say can potentially be used against you.</li>
+<li class="list-item"><strong class="bold-text">Preserve evidence.</strong> If you have dashcam footage, photos of your car from that night, text messages establishing your timeline, or receipts — keep them.</li>
+
+<strong class="bold-text">Something most defendants don't think about until it's too late:</strong> The officer's recording from your traffic stop has a retention period. Hillsborough County Sheriff's Office policies set specific retention windows — if no litigation hold has been placed, footage can be overwritten. If Williams hasn't requested preservation, this evidence could disappear. Ask her directly.
+
+<h3 class="section-h3">5b. Life Impact Map</h3>
+
+<table class="report-table"><tr><td class="table-cell">Area</td><td class="table-cell">While Case Is Pending</td><td class="table-cell">If Convicted (Felony)</td><td class="table-cell">What You Can Do Now</td></tr>
+
+<tr><td class="table-cell">Employment</td><td class="table-cell">Not convicted yet; disclosure depends on employer policy</td><td class="table-cell">Felony conviction visible on background checks under FCRA (15 U.S.C. § 1681 et seq.)</td><td class="table-cell">Check your employment agreement for disclosure requirements</td></tr>
+<tr><td class="table-cell">Career Growth</td><td class="table-cell">Promotion intact while pending</td><td class="table-cell">Healthcare industry background checks are rigorous; felony may trigger review</td><td class="table-cell">Pursue PTI or adjudication withheld to avoid conviction</td></tr>
+<tr><td class="table-cell">Driver's License</td><td class="table-cell">Mandatory 2-year suspension under F.S. § 322.055 for drug conviction</td><td class="table-cell">Revocation if convicted</td><td class="table-cell">Ask Williams about hardship license</td></tr>
+<tr><td class="table-cell">Housing</td><td class="table-cell">No impact while pending</td><td class="table-cell">Felony can affect lease applications</td><td class="table-cell">N/A for now</td></tr>
+<tr><td class="table-cell">Professional License</td><td class="table-cell">N/A unless in a licensed profession</td><td class="table-cell">Board-specific review possible</td><td class="table-cell">Check if your role requires any licensing</td></tr>
+<tr><td class="table-cell">Voting</td><td class="table-cell">No impact while pending</td><td class="table-cell">Florida restores voting rights after completion of sentence (Amendment 4, 2018)</td><td class="table-cell">N/A for now</td></tr></table>
+
+<strong class="bold-text">Your specific concern — your career:</strong> You told us a felony would end your career. This is exactly why the difference between a felony conviction, adjudication withheld, PTI dismissal, and a reduced misdemeanor charge matters so much. Each produces a different result on a background check:
+
+<li class="list-item"><strong class="bold-text">PTI dismissal:</strong> No conviction. Eligible for expunction under F.S. § 943.0585. Effectively invisible.</li>
+<li class="list-item"><strong class="bold-text">Adjudication withheld:</strong> No formal conviction, but appears on some background checks. Not eligible for standard expunction, but eligible for record sealing under F.S. § 943.059.</li>
+<li class="list-item"><strong class="bold-text">Felony conviction:</strong> Permanent record. Visible on all standard background checks.</li>
+
+<p class="body-text">Williams should be fighting for the first option, or at minimum the second. If the conversation hasn't included these distinctions, the questions in this report will surface them.</p>
+
+<strong class="bold-text">Driver's license:</strong> Florida mandates a 2-year driver's license suspension for any drug conviction under F.S. § 322.055 — even for drug offenses. This applies regardless of whether the offense involved driving. Ask Williams whether this has been discussed and whether a hardship license is available.
+
+<strong class="bold-text">Immigration note:</strong> You told us you're a US citizen. Criminal convictions can affect immigration sponsorship of family members and international travel — some countries deny entry for drug-related convictions. Under <em>Padilla v. Kentucky</em>, 559 U.S. 356 (2010) — a Supreme Court ruling establishing that immigration consequences are part of criminal defense analysis — if anyone in your household has immigration status concerns, consult an immigration attorney before any plea decision.
+
+<h3 class="section-h3">5c. Life While Pending</h3>
+
+<p class="body-text">Marcus, here is what the next few months look like:</p>
+
+<strong class="bold-text">Work:</strong> You are not required to disclose a pending charge to your employer unless your employment agreement specifically requires it or your company's HR policy mandates disclosure for pending felonies. Healthcare companies often have such policies — check yours quietly, without drawing attention to the situation.
+
+<strong class="bold-text">Stress management:</strong> You told us you're frustrated — you paid $5,000 and feel like nothing has happened. That frustration is valid. But the next step isn't anger — it's information. After you send the email and have a conversation with Williams, you'll know whether work has been happening behind the scenes or whether the silence reflects inaction. That distinction changes your next move entirely.
+
+<strong class="bold-text">In two weeks,</strong> you'll have answers to the five questions in the email. Those answers will tell you whether Williams has a plan — or whether you need to evaluate your options, including seeking a second opinion from a drug defense specialist.
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">Your career concern is addressable — PTI and adjudication withheld both exist in Hillsborough County for exactly this type of case. The email in Section 6 puts these questions directly to Williams alongside the evidence and strategy questions.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 6: Your Plan</h2>
+
+<h3 class="section-h3">6a. If You're Feeling Overwhelmed, Start Here</h3>
+
+<p class="body-text">One action. Send the email below. It takes 30 seconds — it's already written with your case number, court date, and five questions embedded. Copy, paste, send.</p>
+
+<p class="body-text">You've just done something most defendants never do: put your questions in writing to an attorney who's been hard to reach.</p>
+
+<h3 class="section-h3">6b. Email to Sandra Williams</h3>
+
+<strong class="bold-text">Subject:</strong> Case Update Request — Marcus, Case #2025-CF-018734
+
+<p class="body-text">Dear Ms. Williams,</p>
+
+<p class="body-text">I hope this message finds you well. I'm writing because our pre-trial conference on April 22 is approaching and I want to make sure I'm prepared.</p>
+
+<p class="body-text">I have five specific questions I'd like to discuss before that date:</p>
+
+<li class="list-item">Have you filed a demand for discovery under Fla. R. Crim. P. 3.220, and if so, has the prosecution produced the body camera footage from my November 8 traffic stop?</li>
+<li class="list-item">I consented to the car search because I was nervous and didn't know I could refuse — have you evaluated whether that consent was voluntary under <em>Schneckloth v. Bustamonte</em>, and is a motion to suppress viable?</li>
+<li class="list-item">What is the current defense strategy for my case? When you said "we'll see what they offer," I want to understand whether we're building a negotiating position or waiting for the standard offer.</li>
+<li class="list-item">Am I eligible for pre-trial intervention (PTI) in Hillsborough County? Avoiding a felony record is critical for my career in healthcare IT.</li>
+<li class="list-item">Has the speedy trial clock been tolled by any waivers or continuances, and if so, what is the current timeline?</li>
+
+<p class="body-text">I understand you're managing a heavy caseload and I appreciate the work you're doing on my behalf. I want to be the most prepared client you have this month.</p>
+
+<p class="body-text">Could we schedule a call or meeting before April 22? I'm flexible on timing.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Marcus</p>
+
+<h3 class="section-h3">6c. Phone Script</h3>
+
+<p class="body-text">If you prefer calling:</p>
+
+<em>"Hi, this is Marcus — case number 2025-CF-018734. I'm calling because our pre-trial conference is coming up on April 22 and I have five questions I'd like to go through before that date. I also sent you an email with the questions in writing. Could we schedule a time to talk this week? I'm flexible and I'll be brief. Thank you."</em>
+
+<p class="body-text">Keep it under 60 seconds. If you reach voicemail, leave this message and follow up in writing.</p>
+
+<h3 class="section-h3">6d. 14-Day Plan</h3>
+
+<table class="report-table"><tr><td class="table-cell">Day</td><td class="table-cell">Action</td><td class="table-cell">Note</td></tr>
+
+<tr><td class="table-cell">Day 1</td><td class="table-cell">Send the email above</td><td class="table-cell">Copy, paste, send. Written record created.</td></tr>
+<tr><td class="table-cell">Day 2</td><td class="table-cell">Read your priority questions (Q1-Q5 in Appendix D)</td><td class="table-cell">Highlight the ones that matter most.</td></tr>
+<tr><td class="table-cell">Day 3</td><td class="table-cell">Follow up by phone if no email response</td><td class="table-cell">Use the phone script above. Reference your email.</td></tr>
+<tr><td class="table-cell">Day 4</td><td class="table-cell">Check your employment agreement for felony disclosure requirements</td><td class="table-cell">Know what you need to disclose and when.</td></tr>
+<tr><td class="table-cell">Day 5</td><td class="table-cell">Practice your top 3 questions aloud once</td><td class="table-cell">It helps you sound prepared, not confrontational.</td></tr>
+<tr><td class="table-cell">Day 6</td><td class="table-cell">Send the follow-up email (Section 6e) if still no response</td><td class="table-cell">Second written record with timestamped questions.</td></tr>
+<tr><td class="table-cell">Day 7</td><td class="table-cell">Review Section 4 (Legal Options) — note any questions that came up</td><td class="table-cell">Write them on your Meeting Ready Sheet.</td></tr>
+<tr><td class="table-cell">Day 8-9</td><td class="table-cell">Rest. The preparation is done.</td><td class="table-cell">Seriously — you've done the work.</td></tr>
+<tr><td class="table-cell">Day 10-12</td><td class="table-cell">Prepare for your meeting — review your Meeting Ready Sheet</td><td class="table-cell">Bring it with you.</td></tr>
+<tr><td class="table-cell">Day 13</td><td class="table-cell">Attend your meeting with Williams (or court date, whichever comes first)</td><td class="table-cell">Bring your sheet, pen, phone. Florida is a two-party consent state for recording — inform Williams if you plan to record.</td></tr>
+<tr><td class="table-cell">Day 14</td><td class="table-cell">Send a post-meeting summary email to Williams (Section 6h)</td><td class="table-cell">Confirm what was discussed and next steps.</td></tr></table>
+
+<p class="body-text">Each day's action takes 5-15 minutes. You've already started by reading this report.</p>
+
+<h3 class="section-h3">6e. Follow-Up Email (If No Response After 5-7 Days)</h3>
+
+<strong class="bold-text">Subject:</strong> Follow-Up: Case #2025-CF-018734 — Pre-Trial Conference April 22
+
+<p class="body-text">Dear Ms. Williams,</p>
+
+<p class="body-text">I sent an email on [date] with five questions ahead of our pre-trial conference. I understand you're managing a heavy caseload. These questions are important to me because the date is approaching and I want to be prepared — particularly regarding discovery status and the search legality question.</p>
+
+<p class="body-text">Could you let me know a good time to talk? Even a 10-minute call would help.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Marcus</p>
+
+<h3 class="section-h3">6f. What to Bring to Your Meeting</h3>
+
+<li class="list-item checkbox-item">&#9744; Printed Meeting Ready Sheet (below) + pen</li>
+<li class="list-item checkbox-item">&#9744; Your case number: 2025-CF-018734</li>
+<li class="list-item checkbox-item">&#9744; Any records from November 8 (photos, receipts, GPS data, text messages)</li>
+<li class="list-item checkbox-item">&#9744; Phone (Florida is a two-party consent state — F.S. § 934.03 — inform Williams before recording)</li>
+<li class="list-item checkbox-item">&#9744; This report (for your reference only — do not show it to Williams)</li>
+
+<h3 class="section-h3">6g. Meeting Ready Sheet</h3>
+
+<em>This sheet is safe if your attorney sees it — it contains only questions, not analysis.</em>
+
+<strong class="bold-text">Case:</strong> 2025-CF-018734 <table class="report-table"><tr><td class="table-cell"><strong class="bold-text">Date:</strong> April 22, 2026</td></tr></table> <strong class="bold-text">Attorney:</strong> Sandra Williams
+
+<strong class="bold-text">Q1 (Golden Question — if you only ask one, ask this one):</strong>
+<p class="body-text">Have you filed a demand for discovery under Fla. R. Crim. P. 3.220, and if so, has the prosecution produced the body camera footage from my November 8 traffic stop?</p>
+
+<p class="body-text">Attorney's answer: _______________________________________________</p>
+
+<strong class="bold-text">Q2:</strong>
+<p class="body-text">I consented to the car search because I was nervous and didn't know I could refuse — have you evaluated whether that consent was voluntary under <em>Schneckloth v. Bustamonte</em>, and is a motion to suppress viable?</p>
+
+<p class="body-text">Attorney's answer: _______________________________________________</p>
+
+<strong class="bold-text">Q3:</strong>
+<p class="body-text">What is the current defense strategy for my case? When you said "we'll see what they offer," I want to understand whether we're building a negotiating position or waiting for the standard offer.</p>
+
+<p class="body-text">Attorney's answer: _______________________________________________</p>
+
+<strong class="bold-text">Q4:</strong>
+<p class="body-text">Am I eligible for pre-trial intervention (PTI) in Hillsborough County? Avoiding a felony record is critical for my career in healthcare IT.</p>
+
+<p class="body-text">Attorney's answer: _______________________________________________</p>
+
+<strong class="bold-text">Q5:</strong>
+<p class="body-text">Has the speedy trial clock been tolled by any waivers or continuances, and if so, what is the current timeline?</p>
+
+<p class="body-text">Attorney's answer: _______________________________________________</p>
+
+<strong class="bold-text">After the Meeting:</strong>
+<li class="list-item checkbox-item">&#9744; Got answers to my questions?</li>
+<li class="list-item checkbox-item">&#9744; Wrote down what was discussed?</li>
+<li class="list-item checkbox-item">&#9744; Understand what happens next?</li>
+<li class="list-item checkbox-item">&#9744; Know the next court date and what to expect?</li>
+
+<h3 class="section-h3">6h. Post-Meeting Summary Email</h3>
+
+<p class="body-text">Send within 24 hours of your meeting:</p>
+
+<strong class="bold-text">Subject:</strong> Summary — Meeting on [Date], Case #2025-CF-018734
+
+<p class="body-text">Dear Ms. Williams,</p>
+
+<p class="body-text">Thank you for meeting with me. I want to make sure I understood everything correctly. Here is my summary:</p>
+
+<li class="list-item">We discussed: [your notes]</li>
+<li class="list-item">Next steps: [what Williams said]</li>
+<li class="list-item">Next court date: [date]</li>
+<li class="list-item">Outstanding items: [anything unresolved]</li>
+
+<p class="body-text">Please let me know if I missed anything or if there's something I should do before our next date.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Marcus</p>
+
+<h3 class="section-h3">6i. When the Conversation Gets Difficult</h3>
+
+<strong class="bold-text">Scenario 1: "Trust me, I'm handling it."</strong>
+<li class="list-item"><strong class="bold-text">What's happening:</strong> This may be genuine reassurance — or a deflection. An attorney who's actively working a case can usually name what they've done.</li>
+<li class="list-item"><strong class="bold-text">What you can say:</strong> "I trust your expertise — I'd just like to understand the specifics so I can be a better partner. Can you tell me what you've done on my case since November?"</li>
+<li class="list-item"><strong class="bold-text">Why it works:</strong> Positions you as collaborative. A prepared attorney will have specifics.</li>
+
+<strong class="bold-text">Scenario 2: "The offer is your best option."</strong>
+<li class="list-item"><strong class="bold-text">What's happening:</strong> This could be accurate legal advice — or it could mean Williams hasn't investigated alternatives. The standard offer exists for every charge type. The question is whether she's negotiated it down.</li>
+<li class="list-item"><strong class="bold-text">What you can say:</strong> "I want to understand before I decide. What was the standard offer for this charge, and how does this compare? Have you explored PTI or a reduced charge?"</li>
+<li class="list-item"><strong class="bold-text">Why it works:</strong> You're not rejecting the offer — you're asking for context. A strong attorney will explain why the offer is good. A weak explanation tells you something.</li>
+
+<strong class="bold-text">Scenario 3: Williams seems defensive about your questions.</strong>
+<li class="list-item"><strong class="bold-text">What's happening:</strong> Some attorneys interpret client questions as distrust. Others welcome them.</li>
+<li class="list-item"><strong class="bold-text">What you can say:</strong> "I'm not questioning your judgment — I'm trying to be an informed client. These questions come from my own research. I'd rather ask you than Google."</li>
+<li class="list-item"><strong class="bold-text">Why it works:</strong> Validates her role. Reframes your questions as engagement, not criticism.</li>
+
+<strong class="bold-text">Scenario 4: "I haven't had time to get to the discovery yet."</strong>
+<li class="list-item"><strong class="bold-text">What's happening:</strong> Honest, and not uncommon. The follow-up matters more than the admission.</li>
+<li class="list-item"><strong class="bold-text">What you can say:</strong> "I appreciate the honesty. When can I expect you'll have reviewed it? The search legality question is my top priority, and I want to make sure we have time before any deadlines."</li>
+<li class="list-item"><strong class="bold-text">Why it works:</strong> Creates a concrete timeline without confrontation.</li>
+
+<h3 class="section-h3">6j. Your Advocacy Steps</h3>
+
+<strong class="bold-text">Step 1:</strong> Send the email (Section 6b). Done today.
+<strong class="bold-text">Step 2:</strong> Follow up by phone if no response within 3-5 days. Reference your email and request a specific time.
+<strong class="bold-text">Step 3:</strong> Send the follow-up email (Section 6e) after 5-7 days. Creates a second written record.
+<strong class="bold-text">Step 4:</strong> Request written answers to your five questions. "Could you respond to my questions in writing before the hearing?"
+<strong class="bold-text">Step 5:</strong> Consider seeking a second opinion from a drug defense specialist. This is your right. The Hillsborough County Bar Association Lawyer Referral Service can connect you with attorneys who focus on drug cases. A second opinion is not disloyalty — it's due diligence.
+
+<p class="body-text">One thing to understand: attorneys in the same jurisdiction often know each other through referral networks, bar associations, and professional circles. Some may be reluctant to directly criticize another attorney's work — this is normal professional courtesy, not a conspiracy. When seeking a second opinion, ask the new attorney to evaluate your <em>case</em> (the evidence, the search, the timeline), not your current attorney. A good specialist will focus on whether the legal issues have been properly identified — that tells you what you need to know.</p>
+
+<p class="body-text">Most situations resolve at Steps 1-3. Steps 4-5 are there if you need more structure.</p>
+
+<strong class="bold-text">A note about the $5,000:</strong> If you do seek a second opinion and decide to change attorneys, you may be entitled to a partial refund of the retainer for services not yet rendered. Florida Bar rules require attorneys to return unearned fees. This is a question for the new attorney, not a decision to make right now.
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix A: Brady/Giglio Checklist</h2>
+
+<strong class="bold-text">What This Is:</strong> Under <em>Brady v. Maryland</em> (1963) and <em>Giglio v. United States</em> (1972), the prosecution is constitutionally required to disclose evidence that is favorable to the defense. This includes exculpatory evidence (Brady) and impeachment evidence (Giglio).
+
+<strong class="bold-text">Ask your attorney:</strong> "Have you received all Brady/Giglio material? Is there anything outstanding?"
+
+<h3 class="section-h3">Evidence the Prosecution Must Disclose:</h3>
+
+<li class="list-item checkbox-item">&#9744; Exculpatory evidence (anything suggesting innocence)</li>
+<li class="list-item checkbox-item">&#9744; Impeachment evidence (anything undermining prosecution witnesses)</li>
+<li class="list-item checkbox-item">&#9744; Prior inconsistent statements by witnesses</li>
+<li class="list-item checkbox-item">&#9744; Deals, promises, or inducements to witnesses</li>
+<li class="list-item checkbox-item">&#9744; Criminal records of prosecution witnesses</li>
+<li class="list-item checkbox-item">&#9744; Evidence of witness bias or motive to lie</li>
+<li class="list-item checkbox-item">&#9744; Lab reports, forensic analysis, chain of custody documentation</li>
+<li class="list-item checkbox-item">&#9744; Surveillance footage, body camera footage, dashcam footage</li>
+<li class="list-item checkbox-item">&#9744; 911 calls and dispatch records</li>
+<li class="list-item checkbox-item">&#9744; Prior complaints against arresting officers</li>
+<li class="list-item checkbox-item">&#9744; Internal affairs investigations of involved officers</li>
+<li class="list-item checkbox-item">&#9744; Evidence contradicting the prosecution's theory</li>
+
+<h3 class="section-h3">What to Ask Your Attorney:</h3>
+
+<li class="list-item">"Have you filed a specific Brady demand or are you relying on the general obligation?"</li>
+<li class="list-item">"Is there a standing discovery order in this case?"</li>
+<li class="list-item">"Have you received all police reports, including supplemental reports?"</li>
+<li class="list-item">"Are there any witnesses the prosecution hasn't disclosed?"</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix B: Next Court Date Prep</h2>
+
+<h3 class="section-h3">What This Hearing Is</h3>
+
+<p class="body-text">Your April 22 hearing is a <strong class="bold-text">pre-trial conference</strong> — a status check where the judge reviews case progress, discovery status, and any pending or planned motions. It's not a trial. You will likely not be asked to testify or present evidence.</p>
+
+<h3 class="section-h3">Step by Step</h3>
+
+<li class="list-item"><strong class="bold-text">Arrive 30 minutes early.</strong> The George E. Edgecomb Courthouse is at 800 E. Twiggs St, Tampa, FL 33602. Go through security — no weapons, no recording devices except your phone.</li>
+<li class="list-item"><strong class="bold-text">Find the right courtroom.</strong> Check the posted docket or ask at the clerk's window for case 2025-CF-018734.</li>
+<li class="list-item"><strong class="bold-text">Meet Williams.</strong> She may be handling multiple cases in the same courtroom. Look for her, introduce yourself, and let her know you're there. If she's not present, wait — she may arrive from another courtroom.</li>
+<li class="list-item"><strong class="bold-text">Wait for your case to be called.</strong> The judge works through a docket. Expect to wait 30 minutes to 2 hours.</li>
+<li class="list-item"><strong class="bold-text">When your case is called:</strong> Stand when called. Approach the bench with Williams. Judge Daniels will ask about case status — discovery, motions, next steps.</li>
+<li class="list-item"><strong class="bold-text">You probably won't speak.</strong> Williams handles the talking. If Daniels addresses you directly: "Yes, Your Honor" or "No, Your Honor."</li>
+<li class="list-item"><strong class="bold-text">After your case:</strong> Note the next court date and any deadlines. Discuss with Williams in the hallway.</li>
+
+<h3 class="section-h3">What to Wear</h3>
+
+<p class="body-text">Business casual — collared shirt, khakis or slacks, closed-toe shoes. No jeans, no athletic wear, no hats. You're making an impression on Judge Daniels.</p>
+
+<h3 class="section-h3">What to Bring</h3>
+
+<li class="list-item checkbox-item">&#9744; Meeting Ready Sheet (Section 6g) — printed, with a pen</li>
+<li class="list-item checkbox-item">&#9744; Case number: 2025-CF-018734</li>
+<li class="list-item checkbox-item">&#9744; Government-issued ID</li>
+<li class="list-item checkbox-item">&#9744; Phone (airplane mode in courtroom)</li>
+<li class="list-item checkbox-item">&#9744; This report in your bag (reference only — do not show the judge or prosecution)</li>
+
+<h3 class="section-h3">What NOT to Do</h3>
+
+<li class="list-item">Do not be late. Judges issue bench warrants for no-shows.</li>
+<li class="list-item">Do not speak out of turn. Let Williams talk unless directly addressed.</li>
+<li class="list-item">Do not bring contraband of any kind through courthouse security.</li>
+<li class="list-item">Do not show frustration in the courtroom, even if you disagree. Note it and discuss afterward.</li>
+
+<h3 class="section-h3">If Williams Isn't There</h3>
+
+<p class="body-text">If Williams doesn't appear and your case is called, tell the judge: "Your Honor, I'm Marcus [last name], case number 2025-CF-018734. My attorney, Sandra Williams, is not present. May I request a brief continuance?" After court, contact Williams Law Group directly to find out what happened. If you cannot reach her, the Hillsborough County Bar Association can assist.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix C: Your Rights During Criminal Proceedings</h2>
+
+<strong class="bold-text">These rights exist regardless of your charge, your attorney, or your county.</strong>
+
+<h3 class="section-h3">Constitutional Rights:</h3>
+<li class="list-item"><strong class="bold-text">Right to remain silent</strong> (5th Amendment) — You cannot be compelled to testify against yourself</li>
+<li class="list-item"><strong class="bold-text">Right to an attorney</strong> (6th Amendment) — If you cannot afford one, one will be appointed</li>
+<li class="list-item"><strong class="bold-text">Right to a speedy trial</strong> (6th Amendment) — Timelines vary by state and jurisdiction</li>
+<li class="list-item"><strong class="bold-text">Right to confront witnesses</strong> (6th Amendment) — You can cross-examine anyone who testifies against you</li>
+<li class="list-item"><strong class="bold-text">Right against unreasonable search and seizure</strong> (4th Amendment) — Evidence obtained illegally may be suppressed</li>
+<li class="list-item"><strong class="bold-text">Right to a jury trial</strong> (6th Amendment) — For serious offenses, you have the right to be judged by a jury of your peers</li>
+<li class="list-item"><strong class="bold-text">Right to due process</strong> (14th Amendment) — Fair procedures must be followed</li>
+<li class="list-item"><strong class="bold-text">Right against double jeopardy</strong> (5th Amendment) — You cannot be tried twice for the same offense</li>
+<li class="list-item"><strong class="bold-text">Right to be presumed innocent</strong> — The prosecution must prove guilt beyond a reasonable doubt</li>
+
+<h3 class="section-h3">Your Rights With Your Attorney:</h3>
+<li class="list-item">You have the right to know what is happening in your case at all times</li>
+<li class="list-item">You have the right to be consulted before major decisions are made</li>
+<li class="list-item">You have the right to make the final decision on whether to accept a plea or go to trial</li>
+<li class="list-item">You have the right to effective assistance of counsel (Strickland v. Washington)</li>
+<li class="list-item">You have the right to change attorneys at any time (though timing and procedural requirements apply)</li>
+
+<h3 class="section-h3">If You Feel Your Rights Are Being Violated:</h3>
+<li class="list-item">Document everything in writing (dates, times, what was said)</li>
+<li class="list-item">Follow the Advocacy Steps in Section 6 of this brief</li>
+<li class="list-item">Contact your state bar association's client protection hotline</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix D: Targeted Follow-Up Questions</h2>
+
+<p class="body-text">These questions go deeper than the five on your Meeting Ready Sheet. Bring any that resonate to your next conversation with Williams.</p>
+
+<h3 class="section-h3">Case Strategy</h3>
+
+<strong class="bold-text">Q1 — The Deep-Dive Version of Your Golden Question:</strong>
+<p class="body-text">"Have you obtained and personally reviewed the body camera footage from my November 8 traffic stop? Specifically, does the footage show the officers advising me that I could refuse the search?"</p>
+
+<strong class="bold-text">Why it matters:</strong> Jeffrey Lichtman's methodology for drug case defense starts with the evidence the prosecution relies on most. In your case, that's the search itself. If the footage shows officers told you that you could refuse and you consented anyway, the suppression argument weakens. If they didn't advise you — or if the request was phrased as a command rather than a question — the argument strengthens considerably.
+
+<strong class="bold-text">A strong response:</strong> Williams can describe the footage in detail — the officer's exact words, the environment, your body language, whether you were told about your right to refuse.
+
+<strong class="bold-text">If she hasn't reviewed it:</strong> "When will you review it? The consent question is the foundation of my defense, and I'd like to understand our position before the pre-trial conference."
+
+<strong class="bold-text">The key signal:</strong> Whether Williams treats the footage as central to the defense or peripheral. For a case built on your agreement to the search, it's everything.
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q2:</strong> "What is the prosecution's standard offer for first-offense cannabis possession over 20 grams in Hillsborough County, and have you begun negotiating below that baseline?"
+
+<strong class="bold-text">Background:</strong> Every charge type has a standard offer — prosecutors use schedules. The question is whether Williams is negotiating from a position of leverage (suppression arguments, consent challenges, weight disputes) or accepting the baseline. Her answer reveals whether she's building a case or processing one.
+
+<strong class="bold-text">What you want to hear:</strong> "The standard offer is [X], and I've communicated to the prosecutor that we have potential suppression issues that make their case less certain."
+
+<strong class="bold-text">If vague:</strong> "What specifically gives us leverage to negotiate below the standard offer?"
+
+<strong class="bold-text">Pay attention to:</strong> Whether Williams can name the standard offer and explain how your case differs from it.
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q3:</strong> "Has the substance been sent for confirmatory lab analysis, and does the lab report confirm the field test? What was the exact weight, and does it include packaging?"
+
+<blockquote class="blockquote">This is two questions in one, but they're inseparable. The field test identifies the substance on-scene, but confirmatory lab analysis is the legal standard. If there's a discrepancy between the field test and the lab, or if the weight is close to 20 grams, both become defense tools. Ron Chapman's methodology: never accept the field test as the final word.</blockquote>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Judge & Jurisdiction</h3>
+
+<strong class="bold-text">Q4:</strong> "What is your experience with Judge Daniels in drug cases — does he typically support PTI for first offenders, and does he usually withhold adjudication?"
+
+<strong class="bold-text">Why this matters for your career:</strong> The difference between PTI (dismissal), adjudication withheld (no formal conviction), and conviction is the difference between your career surviving or ending. Daniels's tendencies on this question are the single most important piece of information Williams can provide.
+
+<blockquote class="blockquote">If Williams hasn't appeared before Daniels in a drug case, ask: "Is there another attorney in your firm or network who has? I'd like to understand his patterns."</blockquote>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q5:</strong>
+<p class="body-text">"Given the November arrest date and the 175-day speedy trial window under Fla. R. Crim. P. 3.191, what is the current status of the speedy trial clock? Has it been tolled?"</p>
+
+<p class="body-text">The math: November 8, 2025 + 175 days ≈ May 2, 2026. If no waivers have been filed, the prosecution must bring the case to trial by then — or you can move for discharge. This is a real deadline.</p>
+
+<strong class="bold-text">If tolled → "What tolled it, and for how long?"</strong>
+<strong class="bold-text">If not tolled → "Are we using this as leverage in negotiations?"</strong>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Motions & Deadlines</h3>
+
+<strong class="bold-text">Q6:</strong> "Are you planning to file a motion to suppress the search, and if so, what is the deadline for filing under Fla. R. Crim. P. 3.190?"
+
+<p class="body-text">Two things to listen for: whether a motion is being considered at all, and whether the deadline is approaching. Under Florida rules, suppression motions must typically be filed at least 10 days before trial. If the conference on April 22 leads to a trial date, the window closes fast.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q7:</strong>
+<blockquote class="blockquote">"If the body camera footage shows the officers didn't tell me I could refuse the search, what are the chances a motion to suppress succeeds in front of Judge Daniels?"</blockquote>
+
+<p class="body-text">This forces a concrete assessment. An attorney who has reviewed the footage and knows the judge can give a qualitative answer. An attorney who hasn't done either will deflect.</p>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Consequences</h3>
+
+<strong class="bold-text">Q8:</strong> "If I'm convicted of a felony, what specifically happens to my driver's license under F.S. § 322.055, and is a hardship license available?"
+
+<p class="body-text">Florida's mandatory 2-year license suspension for drug convictions catches many defendants off guard — it applies even though the offense had nothing to do with driving. Ask Williams whether she's factored this into the negotiation strategy.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q9:</strong> "Walk me through the practical difference between PTI dismissal, adjudication withheld, and felony conviction — specifically for employment background checks in the healthcare industry."
+
+<blockquote class="blockquote">This isn't a legal question — it's a career question. But your attorney should know the answer because these distinctions drive plea negotiations. If Williams can't explain the difference and how it affects your employer, she's negotiating without understanding what's at stake for you.</blockquote>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Evidence & Discovery</h3>
+
+<strong class="bold-text">Q10:</strong> "Has a litigation hold been placed on the body camera footage? What is the retention policy for the department that arrested me?"
+
+<strong class="bold-text">What to listen for:</strong>
+<li class="list-item checkbox-item">&#9744; "Yes, I sent a preservation letter" → Good. Ask for a copy.</li>
+<li class="list-item checkbox-item">&#9744; "I'll take care of it" → Ask when, and follow up in writing.</li>
+<li class="list-item checkbox-item">&#9744; Silence or deflection → This is urgent. Footage retention policies vary by department — some delete after 90 days. If Williams hasn't preserved it, the most important evidence in your case could already be gone.</li>
+
+<strong class="bold-text">If the answer is anything other than "yes":</strong> Ask Williams to send a written preservation request to the arresting agency within 48 hours and confirm in writing when it's done.
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q11:</strong> "Have you obtained the chain of custody records for the cannabis — from the scene to the evidence locker to the lab? Are there any gaps?"
+
+<p class="body-text">Chain of custody gaps are defense gold. If the substance was improperly stored, transferred without documentation, or tested by an unqualified analyst, the evidence's admissibility is challengeable.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q12:</strong> "What did the arresting officer's report say about why they asked to search my car? Was there anything beyond the broken tail light that they claim gave them reason to search?"
+
+<p class="body-text">If the officers documented an additional basis for the search (odor of marijuana, visible contraband, your behavior), the consent issue becomes secondary — they may argue probable cause. If the only basis was your consent during a routine stop, the suppression argument is stronger.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q13:</strong> "I paid $5,000 four months ago. Can you help me understand what that retainer covers and what work has been done? I'm not questioning the fee — I'm trying to understand the value of what I've invested."
+
+<table class="report-table"><tr><td class="table-cell">Answer You Hear</td><td class="table-cell">What It Likely Means</td></tr>
+
+<tr><td class="table-cell">Itemized list of calls, filings, research hours</td><td class="table-cell">Work has been done — you just weren't informed. Communication issue, not a competence issue.</td></tr>
+<tr><td class="table-cell">"I've been working on it" (no specifics)</td><td class="table-cell">Vague. Ask: "Could you send me an itemized summary?" Florida Bar rules require attorneys to maintain records of work performed.</td></tr>
+<tr><td class="table-cell">Defensive or dismissive response</td><td class="table-cell">Worth noting. An attorney comfortable with their billing can explain it. One who can't may not have done much.</td></tr>
+<tr><td class="table-cell">Offers to provide a written accounting</td><td class="table-cell">Good sign — transparency builds trust. Ask for it in writing before your next meeting.</td></tr></table>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q14:</strong> "If we decide to proceed to trial, what is the realistic timeline, and how would you prepare for it?"
+
+<p class="body-text">This question reveals whether trial is being treated as a real option or an empty threat. An attorney who can describe trial preparation (witness lists, expert retention, motion practice) has thought about it. An attorney who says "let's hope it doesn't come to that" hasn't.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q15:</strong> "After this conversation, what is the single most important thing I should do to help my case move forward?"
+
+<p class="body-text">End on action. Give Williams the chance to direct your energy — and hold her accountable for a concrete next step.</p>
+  <div class="footer-disclaimer">
+    <p class="footer-disclaimer-text">
+      <strong class="footer-disclaimer-label">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.
+    </p>
+  </div>
+  <div class="copyright-block">
+    <p class="copyright-text">&copy; 2026 ImNotAnAttorney. Legal information, not legal advice.</p>
+    <p class="copyright-meta">Report ID: IB-TEST-MARCUS-V2 | Generated: March 8, 2026</p>
+  </div>
+  <div class="no-print upgrade-cta">
+    <p class="upgrade-cta-text">If you receive discovery evidence and want a deeper analysis, The X-Ray reviews your actual case files — officer recordings, lab reports, chain of custody, witness statements.</p>
+    <a href="/checkout?tier=x-ray" class="upgrade-btn">The X-Ray — $2,497 ($1,500 after credit)</a>
+    <p class="upgrade-credit-note">Every dollar you've paid rolls forward. Your $997 is fully credited toward any tier — you only pay the difference. Credits valid for 12 months.</p>
+  </div>
+</div>
+</body>
+</html>

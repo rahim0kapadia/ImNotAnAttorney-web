@@ -20,6 +20,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { sendEmail } from "@/lib/email";
+import { caseThreadId } from "@/lib/site";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -108,6 +110,43 @@ export async function POST(req: NextRequest) {
   }).catch((err) =>
     console.error("[IB-Generate] Edge function invocation failed:", err),
   );
+
+  // ── "WE'VE STARTED" TRANSACTIONAL EMAIL ──────────────────────
+  // Let the customer know their IB is being generated. This fills the
+  // silence gap between CD delivery and IB delivery (up to 72 hours).
+  // Fire-and-forget — don't block the response on email delivery.
+  const { data: caseForEmail } = await supabase
+    .from("cases")
+    .select("email")
+    .eq("id", caseId)
+    .single();
+
+  if (caseForEmail?.email) {
+    sendEmail({
+      to: caseForEmail.email,
+      subject: "We're building your Intelligence Brief now",
+      unsubscribeEmail: caseForEmail.email,
+      threadingHeaders: {
+        inReplyTo: caseThreadId(caseId),
+        references: caseThreadId(caseId),
+      },
+      html: `
+        <h1 style="color: #F59E0B;">Your Intelligence Brief Is Being Built</h1>
+        <p>Your Case Decoder has been delivered. We're now generating your full Intelligence Brief — including:</p>
+        <ul style="padding-left: 20px;">
+          <li><strong style="color: white;">Judge intelligence</strong> — your judge's actual sentencing patterns and tendencies</li>
+          <li><strong style="color: white;">Motion landscape</strong> — every motion that applies to your case, with deadlines</li>
+          <li><strong style="color: white;">Defense theory analysis</strong> — established defense strategies for your charge type</li>
+          <li><strong style="color: white;">Priority questions</strong> — 10-15 targeted questions with follow-up probes</li>
+          <li><strong style="color: white;">14-day action plan</strong> — one action per day, with scripts for difficult conversations</li>
+        </ul>
+        <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+          <strong style="color: white;">Expected delivery: within 72 hours.</strong> We'll email you as soon as your Intelligence Brief is ready.
+        </p>
+      `,
+    }, { category: "transactional", case_id: caseId, metadata: { tier: "intelligence-brief", event: "generation-started" } })
+      .catch((err) => console.error("[IB-Generate] Started email failed:", err));
+  }
 
   return NextResponse.json({
     success: true,

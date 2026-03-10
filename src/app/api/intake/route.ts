@@ -288,23 +288,29 @@ export async function POST(req: NextRequest) {
     //     - Links to services page and Case Decoder checkout directly
     const hasPendingCase = pendingCases && pendingCases.length > 0;
     const hasIBCase = pendingCases?.some((c) => c.tier === "intelligence-brief");
+
+    // Build case-specific detail block for "we're analyzing your case" email
+    const caseDetailBlock = `
+      <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
+        <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(chargeType.replace(/-/g, " "))}</p>
+        ${body.state ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">State:</strong> ${escapeHtml(body.state)}</p>` : ""}
+        ${body.hasAttorney ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Attorney:</strong> ${escapeHtml(body.hasAttorney)}</p>` : ""}
+        ${body.courtDate ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Next Court Date:</strong> ${escapeHtml(body.courtDate)}</p>` : ""}
+      </div>`;
+
     const confirmationHtml = hasPendingCase
       ? hasIBCase
         ? `
-        <h1 style="color: #F59E0B;">Case Details Received</h1>
-        <p>Thank you, ${escapeHtml(firstName)}. We've received your intake form and your Case Decoder is being generated.</p>
-        <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
-          <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(chargeType)}</p>
-        </div>
-        <p style="color: #D4D4D8;">After you receive your Case Decoder, we'll send you a short follow-up form to complete your Intelligence Brief.</p>
+        <h1 style="color: #F59E0B;">We're Analyzing Your Case Now</h1>
+        <p>Thank you, ${escapeHtml(firstName)}. We've received your case details and your Case Decoder report is being generated. Here's what we're looking at:</p>
+        ${caseDetailBlock}
+        <p style="color: #D4D4D8;">You'll receive your Case Decoder report within 48 hours. After that, we'll send you a short follow-up form to complete your Intelligence Brief.</p>
       `
         : `
-        <h1 style="color: #F59E0B;">Case Details Received</h1>
-        <p>Thank you, ${escapeHtml(firstName)}. We've received your intake form and your report is being generated.</p>
-        <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
-          <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(chargeType)}</p>
-        </div>
-        <p style="color: #D4D4D8;">You'll receive an email when your report is ready to view. Keep an eye on your inbox.</p>
+        <h1 style="color: #F59E0B;">We're Analyzing Your Case Now</h1>
+        <p>Thank you, ${escapeHtml(firstName)}. We've received your case details and your report is being generated. Here's what we're looking at:</p>
+        ${caseDetailBlock}
+        <p style="color: #D4D4D8;">You'll receive your report within 48 hours. We'll email you as soon as it's ready.</p>
       `
       : `
         <h1 style="color: #F59E0B;">Case Details Received</h1>
@@ -323,7 +329,9 @@ export async function POST(req: NextRequest) {
 
     await sendEmail({
       to: email.toLowerCase().trim(),
-      subject: `We Received Your Case Details, ${escapeHtml(firstName)}`,
+      subject: hasPendingCase
+        ? `We're analyzing your case now, ${escapeHtml(firstName)}`
+        : `We Received Your Case Details, ${escapeHtml(firstName)}`,
       unsubscribeEmail: email.toLowerCase().trim(),
       html: confirmationHtml,
     }, { category: "intake-confirmation", metadata: { charge_type: chargeType } });

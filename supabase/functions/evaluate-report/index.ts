@@ -176,7 +176,8 @@ Respond with ONLY a JSON object (no markdown, no code fences) matching this stru
 }`;
 
 const UPL_CRITERIA = `U1: No advice language
-  Every statement framed as information, never directive. FAIL triggers: "you should," "you need to," "we recommend," "we advise," "your best option," "the best strategy"
+  Every statement framed as information, never directive. FAIL triggers: "you should," "you need to," "we recommend," "we advise," "your best option," "the best strategy" — in report language to defendant.
+  EXCEPTION: In scenario headers, banned phrases inside quoted attorney dialogue (e.g., "When Your Attorney Says: 'You should take the plea'") are acceptable when clearly attributed as attorney speech — the report is preparing the defendant for a conversation, not giving advice.
 
 U2: Attorney redirection
   Every section redirects to the defendant's attorney for case-specific decisions. FAIL: Any section that lacks "ask your attorney" or equivalent redirect

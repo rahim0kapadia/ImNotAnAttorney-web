@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Intelligence Brief — Jennifer</title>
+<style>
+/* === Base === */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0C0A09;
+  color: #D4D4D8;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* === Header === */
+.header-block {
+  background: #1C1917;
+  padding: 32px;
+  border-radius: 12px;
+  border: 2px solid #F59E0B;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.header-title {
+  color: #F59E0B;
+  font-size: 28px;
+  margin: 0;
+}
+.header-subtitle {
+  color: #A1A1AA;
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+.header-meta {
+  margin-top: 24px;
+  text-align: left;
+}
+.meta-field {
+  margin: 4px 0;
+}
+.meta-label {
+  color: white;
+}
+
+/* === Content typography === */
+.section-h2 {
+  color: #F59E0B;
+  font-size: 20px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #3f3f46;
+}
+.section-h3 {
+  color: white;
+  font-size: 17px;
+  margin-top: 24px;
+  letter-spacing: 0.02em;
+}
+.section-h4 {
+  color: #F59E0B;
+  font-size: 14px;
+  margin-top: 20px;
+}
+.bold-text {
+  color: white;
+}
+.body-text {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+/* === Tables === */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+.table-header {
+  padding: 8px 12px;
+  border: 1px solid #3f3f46;
+  border-bottom: 2px solid #3f3f46;
+  text-align: left;
+  background: #1a1a1e;
+  font-weight: bold;
+  overflow-wrap: break-word;
+}
+.table-cell {
+  padding: 8px 12px;
+  border: 1px solid #3f3f46;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+tr:nth-child(even) > .table-cell {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* === Blockquotes === */
+.blockquote {
+  border-left: 4px solid #F59E0B;
+  padding: 12px 16px;
+  margin: 16px 0;
+  color: #A1A1AA;
+  background: rgba(245, 158, 11, 0.05);
+  border-radius: 0 4px 4px 0;
+}
+
+/* === Lists === */
+.list-item {
+  margin-bottom: 6px;
+  margin-left: 24px;
+}
+.checkbox-item {
+  list-style: none;
+}
+
+/* === Footer === */
+.footer-disclaimer {
+  background: #1C1917;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 40px;
+  border-left: 4px solid #A1A1AA;
+}
+.footer-disclaimer-text {
+  margin: 0;
+  font-size: 13px;
+  color: #71717A;
+}
+.footer-disclaimer-label {
+  color: #A1A1AA;
+}
+.copyright-block {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 2px solid #27272A;
+  text-align: center;
+}
+.copyright-text {
+  margin: 0;
+  font-size: 12px;
+  color: #71717A;
+}
+.copyright-meta {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #52525B;
+}
+
+/* === Upgrade CTA === */
+.upgrade-cta {
+  margin-top: 32px;
+  text-align: center;
+}
+.upgrade-cta-text {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #A1A1AA;
+}
+.upgrade-btn {
+  display: inline-block;
+  padding: 16px 32px;
+  background: #F59E0B;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.upgrade-credit-note {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #71717A;
+}
+
+/* === Page breaks === */
+.page-break {
+  page-break-after: always;
+}
+
+/* === Mobile responsive === */
+@media (max-width: 640px) {
+  .container { padding: 16px 12px; }
+  .header-block { padding: 20px; }
+  .header-title { font-size: 22px; }
+  .section-h2 { font-size: 17px; margin-top: 24px; padding-top: 16px; }
+  .section-h3 { font-size: 15px; }
+  .report-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table-header, .table-cell { padding: 6px 8px; font-size: 13px; }
+  .upgrade-btn { padding: 14px 24px; font-size: 15px; }
+}
+
+/* === Print === */
+@media print {
+  body { background: white !important; color: #1a1a1a !important; }
+  * { color: #1a1a1a !important; }
+  .section-h2, .section-h3, .section-h4 { color: #92400e !important; page-break-after: avoid; }
+  .bold-text, .meta-label { color: #1a1a1a !important; }
+  .blockquote { border-left-color: #92400e !important; background: #f5f5f4 !important; page-break-inside: avoid; }
+  .report-table { page-break-inside: avoid; }
+  .table-header, .table-cell { border-color: #d4d4d4 !important; }
+  .table-header { background: #e5e5e5 !important; }
+  .no-print { display: none !important; }
+  .header-block { background: #f5f5f4 !important; border-color: #92400e !important; }
+  a { color: #92400e !important; }
+  .body-text { orphans: 3; widows: 3; }
+  @page { margin: 1in; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header-block">
+    <h1 class="header-title">CASE INTELLIGENCE BRIEF</h1>
+    <p class="header-subtitle">ImNotAnAttorney | We Research. You Ask.</p>
+    <div class="header-meta">
+      <p class="meta-field"><strong class="meta-label">Prepared for:</strong> Jennifer</p>
+      <p class="meta-field"><strong class="meta-label">Charge(s):</strong> Wire Fraud (18 U.S.C. § 1343)</p>
+      <p class="meta-field"><strong class="meta-label">Jurisdiction:</strong> Federal, Northern District of California</p>
+      <p class="meta-field"><strong class="meta-label">Case Number:</strong> 2025-CR-00234</p>
+      <p class="meta-field"><strong class="meta-label">Next Court Date:</strong> June 12, 2026</p>
+      <p class="meta-field"><strong class="meta-label">Judge:</strong> Judge Sarah Kim</p>
+      <p class="meta-field"><strong class="meta-label">Attorney:</strong> David Rothstein (Federal Public Defender)</p>
+      <p class="meta-field"><strong class="meta-label">Months Since Arrest:</strong> 5</p>
+      <p class="meta-field"><strong class="meta-label">Report Date:</strong> March 8, 2026</p>
+      <p class="meta-field"><strong class="meta-label">Report ID:</strong> IB-TEST-JENNIFER-V1</p>
+    </div>
+  </div>
+  <blockquote class="blockquote" style="margin: 20px 0; padding: 12px 16px;">
+    <p class="body-text"><strong class="bold-text">METHODOLOGY NOTE</strong></p>
+    <p class="body-text">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on Martin Weinberg, Cristina Arguedas, David Smith, Chris Voss, BJ Fogg — selected for Wire Fraud (18 U.S.C. § 1343) cases. Expert attributions appear throughout.</p>
+    <p class="body-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+  </blockquote>
+  <h2 class="section-h2">START HERE: Your 48-Hour Priority List</h2>
+
+<p class="body-text">These three actions protect your position right now. Everything else can wait.</p>
+
+<strong class="bold-text">Priority 1 — TODAY (under 5 minutes):</strong>
+<p class="body-text">Send the pre-written email in Section 6 to David Rothstein. It's already written with your case number, conference date, and five specific questions embedded. Copy, paste, send. Done.</p>
+
+<p class="body-text">You've just created a written record — professional, direct, and it ensures your questions are in his file even if a phone call gets missed.</p>
+
+<strong class="bold-text">Priority 2 — THIS WEEK:</strong>
+<p class="body-text">Request a sentencing estimate. Ask directly: "Have you run an initial Sentencing Guidelines calculation based on the government's loss figure and my role?" That framework drives every federal plea negotiation — without this number, neither of you can evaluate where things stand. The loss amount under U.S.S.G. § 2B1.1 and whether you qualify for a minimal role adjustment (§ 3B1.2) can shift the recommended range by years.</p>
+
+<p class="body-text">The intent question is your strongest defense angle. Whether you knew the financial representations were inaccurate — versus following the executive's instructions in good faith — is the core question. That's a real defense inquiry, not wishful thinking.</p>
+
+<strong class="bold-text">Priority 3 — BEFORE JUNE 12:</strong>
+<p class="body-text">Read Section 4 (Legal Options & Deadlines) before the status conference. Two questions for Rothstein: "What will happen at the status conference?" and "Are there motions we should prepare?" If he hasn't discussed the conference at all, that tells you something important about communication patterns (see Section 2).</p>
+
+<p class="body-text">Everything else can wait. Start with Priority 1.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Table of Contents</h2>
+
+<li class="list-item"><strong class="bold-text">START HERE: Your 48-Hour Priority List</strong> — 3 actions for the next 48 hours</li>
+<li class="list-item"><strong class="bold-text">Section 1: Your Case Roadmap</strong> — Where you are, what happens next, the two paths</li>
+<li class="list-item"><strong class="bold-text">Section 2: What's Working + What Needs Attention</strong> — Case Progress Score, decoded statements, gaps to clarify</li>
+<li class="list-item"><strong class="bold-text">Section 3: Your Case Intelligence</strong> — Outcome map, defense theories, judge profile, prosecution preview</li>
+<li class="list-item"><strong class="bold-text">Section 4: Legal Options & Deadlines</strong> — Motion landscape, deadline calendar, plea framework</li>
+<li class="list-item"><strong class="bold-text">Section 5: Protecting Your Case and Life</strong> — Case protection, life impact map, pending-case management</li>
+<li class="list-item"><strong class="bold-text">Section 6: Your Plan</strong> — Email template, phone script, 14-day plan, meeting prep, difficult conversations</li>
+<li class="list-item"><strong class="bold-text">Appendix A: Brady/Giglio Checklist</strong> — Evidence the prosecution must disclose</li>
+<li class="list-item"><strong class="bold-text">Appendix B: Next Court Date Prep</strong> — What to expect, wear, bring, and do</li>
+<li class="list-item"><strong class="bold-text">Appendix C: Your Rights</strong> — Key rights during criminal proceedings</li>
+<li class="list-item"><strong class="bold-text">Appendix D: Questions for Your Attorney</strong> — 10-15 targeted, gap-based questions</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 1: Your Case Roadmap</h2>
+
+<h3 class="section-h3">1a. Where You Are Now</h3>
+
+<p class="body-text">Jennifer, here is where things stand:</p>
+
+<table class="report-table"><tr><td class="table-cell">Detail</td><td class="table-cell">Your Case</td></tr>
+
+<tr><td class="table-cell">Case Number</td><td class="table-cell">2025-CR-00234</td></tr>
+<tr><td class="table-cell">Charge</td><td class="table-cell">Wire Fraud (18 U.S.C. § 1343)</td></tr>
+<tr><td class="table-cell">Classification</td><td class="table-cell">Federal felony — up to 20 years per count, $250,000 fine</td></tr>
+<tr><td class="table-cell">Court</td><td class="table-cell">Northern District of California</td></tr>
+<tr><td class="table-cell">Indictment Date</td><td class="table-cell">January 8, 2026</td></tr>
+<tr><td class="table-cell">Time Since Indictment</td><td class="table-cell">~5 months</td></tr>
+<tr><td class="table-cell">Next Court Date</td><td class="table-cell">June 12, 2026 — Status conference</td></tr>
+<tr><td class="table-cell">Judge</td><td class="table-cell">Judge Sarah Kim</td></tr>
+<tr><td class="table-cell">Attorney</td><td class="table-cell">David Rothstein (Federal Public Defender)</td></tr>
+<tr><td class="table-cell">Your Role</td><td class="table-cell">CFO of NovaTech Solutions</td></tr>
+<tr><td class="table-cell">Government Theory</td><td class="table-cell">Misrepresentation of financials to investors via interstate communications</td></tr>
+<tr><td class="table-cell">Discovery</td><td class="table-cell">Partial — financial records produced, additional documents pending</td></tr></table>
+
+<p class="body-text">Wire fraud under 18 U.S.C. § 1343 requires the government to prove four elements: (1) a scheme to defraud, (2) intent to defraud, (3) material misrepresentation, and (4) use of interstate wire communications in furtherance of the scheme. Your defense centers on element two — intent. Following instructions from a CEO is not the same as forming independent intent to defraud.</p>
+
+<h3 class="section-h3">1b. What Happens Next</h3>
+
+<p class="body-text">Federal white collar cases follow a distinct timeline. Here is the typical path at this stage:</p>
+
+<strong class="bold-text">Stage 1: Status Conference (June 12, 2026)</strong>
+<p class="body-text">The court reviews production progress, addresses scheduling, and may set a trial date. Federal judges in the Northern District expect both sides to have a production schedule. Rothstein may raise outstanding evidence issues.</p>
+
+<strong class="bold-text">Stage 2: Discovery Production</strong>
+<p class="body-text">The government produces financial records, emails, wire transfer documentation, investor communications, and internal company records. In white collar cases, the production is typically voluminous — thousands of documents requiring forensic accounting review. The defense reviews everything the government has and identifies what's missing.</p>
+
+<strong class="bold-text">Stage 3: Motion Practice</strong>
+<p class="body-text">Based on the evidence produced, Rothstein may file motions to suppress evidence, challenge the indictment's specificity, or seek dismissal on legal grounds. Federal white collar motions often target the government's theory of knowledge — arguing that the conduct, even if it occurred, doesn't constitute fraud.</p>
+
+<strong class="bold-text">Stage 4: Plea Negotiation or Trial Preparation</strong>
+<p class="body-text">Federal plea negotiations involve the U.S. Sentencing Guidelines, which calculate a recommended sentencing range based on offense level, loss amount, role in the offense, and criminal history. Understanding that calculation is essential before evaluating any offer.</p>
+
+<strong class="bold-text">Stage 5: Resolution</strong>
+<p class="body-text">The case resolves through dismissal, negotiated plea with a sentencing recommendation, cooperation agreement, or trial.</p>
+
+<h3 class="section-h3">1c. The Two Paths</h3>
+
+<strong class="bold-text">Path A — Challenge the Government's Theory:</strong>
+<p class="body-text">The government must prove YOU intended to defraud — not just that fraud occurred at NovaTech. Martin Weinberg's framework for federal fraud defense starts here: isolate the defendant's knowledge from the organization's conduct. If you followed the executive's instructions believing them to be legitimate, the government's case on that element weakens significantly.</p>
+
+<strong class="bold-text">Path B — Negotiate from Strength:</strong>
+<p class="body-text">Federal plea negotiations are driven by the Sentencing Guidelines. A lower offense level, minimal role adjustment (U.S.S.G. § 3B1.2), and acceptance of responsibility (U.S.S.G. § 3B1.3) can dramatically reduce the recommended range. Understanding where the calculation places you — before any negotiation — is how you evaluate whether an offer is fair.</p>
+
+<p class="body-text">Which path depends on what the evidence shows about your knowledge and involvement. The questions in this brief are designed to surface that information.</p>
+
+<h3 class="section-h3">Bottom Line Right Now</h3>
+
+<p class="body-text">You are 5 months into a federal process that typically takes 12-18 months for white collar cases in the Northern District. The timeline is longer than state cases, which means more time to investigate — but also more time in uncertainty. Your one action: send the email in Section 6 today.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 2: What's Working + What Needs Attention</h2>
+
+<h3 class="section-h3">2a. What's On Track</h3>
+
+<strong class="bold-text">Case Progress Score: 30/100</strong>
+
+<p class="body-text">This score reflects where preparation stands based on the information you've shared across six dimensions. It measures communication and transparency — not Rothstein's legal ability. Federal public defenders carry heavy caseloads, which makes proactive communication from you even more important.</p>
+
+<table class="report-table"><tr><td class="table-cell">Area (Weight)</td><td class="table-cell">What We Know</td><td class="table-cell">Gap to Clarify</td><td class="table-cell">Priority Qs</td></tr>
+
+<tr><td class="table-cell">Communication (25%)</td><td class="table-cell">Initial meetings happened but follow-up has been sporadic; last substantive update was 3 weeks ago</td><td class="table-cell">Preferred contact method and case update frequency</td><td class="table-cell">Q1, Q2</td></tr>
+<tr><td class="table-cell">Case Review (15%)</td><td class="table-cell">He's received partial production but hasn't discussed findings with you</td><td class="table-cell">What he's found in the financial records and emails</td><td class="table-cell">Q3, Q6</td></tr>
+<tr><td class="table-cell">Discovery (20%)</td><td class="table-cell">Partial production — financial records in, but internal emails and investor communications still pending</td><td class="table-cell">Complete discovery status and timeline</td><td class="table-cell">Q4, Q6</td></tr>
+<tr><td class="table-cell">Motion Activity (15%)</td><td class="table-cell">No motions filed or discussed</td><td class="table-cell">Whether knowledge-based or procedural motions are being considered</td><td class="table-cell">Q7</td></tr>
+<tr><td class="table-cell">Strategy (15%)</td><td class="table-cell">"We need to see what they have" — no strategy discussion beyond waiting for the evidence</td><td class="table-cell">Which defense theory applies to your facts</td><td class="table-cell">Q3, Q5</td></tr>
+<tr><td class="table-cell">Court Prep (10%)</td><td class="table-cell">Status conference set for June 12</td><td class="table-cell">What to expect and what should happen before then</td><td class="table-cell">Q8</td></tr></table>
+
+<strong class="bold-text">What IS working:</strong>
+<li class="list-item">No prior criminal record — this matters significantly for federal sentencing</li>
+<li class="list-item">The defense theory is genuine — following an executive's instructions is a recognized legal framework, not wishful thinking</li>
+<li class="list-item">Federal public defenders in the Northern District handle complex white collar cases regularly — Rothstein's office has the expertise</li>
+<li class="list-item">Partial production is already in — the review process has begun</li>
+
+<h3 class="section-h3">2b. Decoded Statements</h3>
+
+<p class="body-text">When attorneys speak in shorthand, there's often a fuller picture underneath:</p>
+
+<strong class="bold-text">"We need to see what they have"</strong>
+<p class="body-text">In federal white collar cases, this is often legitimate — the government's document production can reshape the entire defense strategy. But after 5 months, Rothstein should be able to discuss what's been produced so far and what initial impressions the financial records and emails create. The distinction: "I'm analyzing the documents" is different from "I haven't opened the file."</p>
+
+<strong class="bold-text">The sporadic communication</strong>
+<p class="body-text">Federal public defenders manage dozens of cases simultaneously. Sporadic communication isn't necessarily a sign of neglect — but it does mean being proactive about driving the conversation. Written questions create accountability and a record.</p>
+
+<strong class="bold-text">No strategy discussion yet</strong>
+<p class="body-text">In federal cases, early strategy discussions sometimes wait for key evidence. But you can still ask: "Based on what you've seen so far, what's your initial read on the government's theory?" An attorney who has reviewed the materials can answer this even if the full picture isn't clear.</p>
+
+<h3 class="section-h3">2c. What Needs Attention</h3>
+
+<strong class="bold-text">CLARIFY: What has Rothstein found in the evidence produced so far?</strong> Five months of partial production — he should have initial impressions of the financial records and any emails involving you directly.
+
+<strong class="bold-text">CLARIFY: Sentencing calculation.</strong> Has Rothstein run an initial sentencing estimate? The loss amount drives the offense level, and whether you qualify for a minimal role adjustment (§ 3B1.2) can shift the range by years.
+
+<strong class="bold-text">CLARIFY: What "we need to see what they have" means specifically.</strong> After 5 months, you're entitled to an update on what he has seen, what's outstanding, and what his initial assessment is.
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">Federal public defenders are capable attorneys handling complex federal cases. The communication pattern requires you to be proactive — the email template in Section 6 creates a written record that moves things forward.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 3: Your Case Intelligence</h2>
+
+<h3 class="section-h3">3a. Outcome Map</h3>
+
+<p class="body-text">Here is the range of outcomes. These are not predictions — they represent the landscape your attorney helps you navigate.</p>
+
+<table class="report-table"><tr><td class="table-cell">Outcome</td><td class="table-cell">What It Means</td><td class="table-cell">How Common Here</td><td class="table-cell">Key Question</td></tr>
+
+<tr><td class="table-cell">Dismissal</td><td class="table-cell">Government drops the case — insufficient evidence or legal deficiency</td><td class="table-cell">Uncommon in federal cases (government conviction rate ~90%), but viable if the mental element can't be proven</td><td class="table-cell">"Is there a basis to challenge the indictment or move for dismissal?"</td></tr>
+<tr><td class="table-cell">Acquittal at Trial</td><td class="table-cell">Jury finds insufficient proof beyond reasonable doubt</td><td class="table-cell">Less common given federal conviction rates, but knowledge-based defenses can be effective</td><td class="table-cell">"What are the realistic trial prospects given the evidence?"</td></tr>
+<tr><td class="table-cell">Plea — Reduced Charge</td><td class="table-cell">Plea to a lesser offense (e.g., misprision of felony, conspiracy) with a lower sentencing range</td><td class="table-cell">Common in federal white collar cases — often the negotiated resolution</td><td class="table-cell">"What lesser charges might the government accept?"</td></tr>
+<tr><td class="table-cell">Plea — As Charged</td><td class="table-cell">Plea to the charge with acceptance of responsibility credit</td><td class="table-cell">Common — the reduction for acceptance can significantly lower the range</td><td class="table-cell">"What is the sentencing range with full acceptance credit?"</td></tr>
+<tr><td class="table-cell">Cooperation Agreement</td><td class="table-cell">Substantial assistance to the government in exchange for a § 5K1.1 departure below the recommended range</td><td class="table-cell">Available if you have information about others' conduct</td><td class="table-cell">"Is cooperation realistic, and what would it involve?"</td></tr></table>
+
+<strong class="bold-text">Note on federal conviction rates:</strong> The ~90% federal conviction rate reflects that federal prosecutors are selective about which cases they bring — not that defense is futile. The cases that go to trial and result in acquittal often involve exactly the kind of knowledge question at issue here.
+
+<h3 class="section-h3">3b. Defense Theories</h3>
+
+<p class="body-text">These are established categories of defense inquiry for federal fraud cases. Your attorney determines which apply to your specific facts.</p>
+
+<strong class="bold-text">Lack of Intent (Weinberg methodology)</strong>
+<p class="body-text">Martin Weinberg's framework for federal fraud defense begins with the intent element. The government must prove YOU knowingly participated in a scheme to defraud — not just that you performed job functions that were later characterized as fraudulent. If you prepared financial documents at the CEO's direction and believed them to be accurate, the question becomes: what did YOU know, and when did you know it?</p>
+
+<strong class="bold-text">Good Faith Defense</strong>
+<p class="body-text">A defendant who acted in good faith — genuinely believing that the representations were accurate or that the business would succeed — lacks the intent to defraud. Good faith is a complete defense to wire fraud. The question for Rothstein: "Can we establish a good faith timeline showing what I believed at each stage?"</p>
+
+<strong class="bold-text">Reliance on Counsel / Reliance on Others</strong>
+<p class="body-text">If you relied on the executive's representations, the company's legal counsel, or the company's auditors in preparing or transmitting financial information, that reliance can negate the mental element. The question: "Were there internal legal reviews, board approvals, or auditor sign-offs that I relied on?"</p>
+
+<strong class="bold-text">Materiality Challenge (Arguedas methodology)</strong>
+<p class="body-text">Cristina Arguedas's cross-examination preparation methodology scrutinizes whether the alleged misrepresentations were actually material to investor decisions. If investors would have made the same investment regardless of the specific representations at issue, materiality fails — and without materiality, there's no fraud.</p>
+
+<h3 class="section-h3">3c. Judge Intelligence</h3>
+
+<p class="body-text">Judge Sarah Kim — Northern District of California.</p>
+
+<p class="body-text">Judge-specific research is pending — the full brief will be updated when jurisdiction-specific data becomes available.</p>
+
+<p class="body-text">In the meantime, here are the four factors that matter most. Each is framed as a question for Rothstein, whose courtroom experience is the most reliable source:</p>
+
+<li class="list-item"><strong class="bold-text">Sentencing patterns:</strong> "How does Judge Kim typically sentence in white collar cases? Does she tend to follow the recommended range or depart?"</li>
+
+<li class="list-item"><strong class="bold-text">Motion tendencies:</strong> "How receptive is she to motions to dismiss or motions challenging the government's loss calculation?"</li>
+
+<li class="list-item"><strong class="bold-text">Trial management:</strong> "How does she manage white collar trials — jury instructions on the mental element, expert testimony rules, document presentation?"</li>
+
+<li class="list-item"><strong class="bold-text">Plea practices:</strong> "Does she typically accept plea agreements at the recommended range, or does she sentence independently?"</li>
+
+<p class="body-text">An attorney who has appeared before Judge Kim can calibrate strategy based on her patterns. If Rothstein hasn't, asking him to consult a colleague in the FPD office who has is standard practice.</p>
+
+<h3 class="section-h3">3d. Prosecution Preview</h3>
+
+<p class="body-text">Here's how the government is likely to frame the situation:</p>
+
+<strong class="bold-text">"She was the CFO — she knew the numbers were wrong."</strong> Their lead argument: your position gave you the knowledge and responsibility to catch misrepresentations. They'll argue you had access to the real financial data and chose to transmit false information.
+
+<p class="body-text">How to think about this: Having access to information is not the same as having knowledge that it was false. CFOs often rely on department heads, auditors, and CEOs for the accuracy of inputs they compile. The question is what you specifically knew was inaccurate — not what you theoretically could have known.</p>
+
+<strong class="bold-text">"The wire transfers prove the scheme."</strong> They'll present each wire transfer or electronic communication as a separate "use of wire" satisfying element four.
+
+<p class="body-text">How to think about this: The wire element is usually easy for the government to prove — routine business communications satisfy it. The defense typically concedes the wire element and focuses on knowledge and materiality. The fact that emails were sent isn't the question — the question is whether they were sent as part of a knowing scheme.</p>
+
+<strong class="bold-text">"Investors lost money."</strong> They'll present investor losses as proof that the representations were material and fraudulent.
+
+<p class="body-text">How to think about this: Investor losses can result from legitimate business failure, market conditions, or management decisions that turned out badly — none of which constitute fraud. The government must prove the losses resulted from deliberate deception, not just poor business outcomes.</p>
+
+<p class="body-text">Something most defendants in federal fraud cases don't realize: the government's loss calculation under U.S.S.G. § 2B1.1 can dramatically inflate the sentencing range. The difference between a $1 million loss and a $10 million loss can mean years of additional prison time. Whether the government's methodology is accurate — and whether the defense can present a lower, more accurate figure — is worth examining closely. That's exactly what The X-Ray ($2,497) analyzes using your actual financial records. The $997 is already credited, so the additional cost is $1,500.</p>
+
+<h3 class="section-h3">3e. Jurisdiction Profile</h3>
+
+<p class="body-text">The Northern District of California handles a significant volume of white collar and technology-related fraud cases. Key local factors:</p>
+
+<li class="list-item"><strong class="bold-text">Federal public defenders</strong> in this district have deep white collar experience — tech fraud, securities fraud, and startup-related cases are common</li>
+<li class="list-item"><strong class="bold-text">Judges</strong> are generally experienced with complex financial evidence and expert testimony</li>
+<li class="list-item"><strong class="bold-text">Jury pools</strong> drawn from the Bay Area tend to be educated and comfortable with technical financial concepts</li>
+<li class="list-item"><strong class="bold-text">Plea negotiation culture</strong> is active — most federal white collar cases resolve through negotiated pleas with sentencing calculations</li>
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">The intent defense is your strongest starting point. The government must prove that YOU knowingly participated in fraud — not just that fraud occurred at NovaTech. The questions in Appendix D are designed to find out what Rothstein's initial read is on the evidence and which defense theory the evidence supports.</p>
+
+<blockquote class="blockquote"><strong class="bold-text">What an evidence review would add:</strong> This analysis is based on what you shared with us. The X-Ray ($2,497) examines the actual evidence: financial records, emails, wire transfer documentation, investor communications, and internal company records. If Rothstein has already reviewed the discovery, this confirms his analysis with a second set of eyes. If he hasn't gotten to it yet, this fills the gap. The $997 is fully credited — the additional cost is $1,500, not $2,497. Every dollar rolls forward. No pressure — see how the status conference goes first.</blockquote>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 4: Legal Options & Deadlines</h2>
+
+<h3 class="section-h3">4a. Motion Landscape</h3>
+
+<p class="body-text">The following motions are commonly considered in federal fraud cases. Your attorney determines which apply.</p>
+
+<table class="report-table"><tr><td class="table-cell">Motion</td><td class="table-cell">What It Does</td><td class="table-cell">Why It Matters Here</td></tr>
+
+<tr><td class="table-cell">Motion to Dismiss (insufficiency)</td><td class="table-cell">Challenges whether the indictment adequately alleges all elements of wire fraud</td><td class="table-cell">If the indictment doesn't specify YOUR intent vs. the company's conduct, it may be deficient</td></tr>
+<tr><td class="table-cell">Bill of Particulars</td><td class="table-cell">Forces the government to specify which wire communications, which misrepresentations, and your specific role</td><td class="table-cell">Narrows the government's theory and reveals their evidence strategy</td></tr>
+<tr><td class="table-cell">Suppress Evidence</td><td class="table-cell">Challenges how evidence was obtained — search warrants, subpoenas, voluntary production</td><td class="table-cell">If the government obtained records improperly, those records may be inadmissible</td></tr>
+<tr><td class="table-cell">Sever Counts or Defendants</td><td class="table-cell">If multiple counts or co-defendants, separates your trial from others</td><td class="table-cell">Prevents jury from conflating your conduct with the CEO's or the company's</td></tr></table>
+
+<p class="body-text">Whether any motion would succeed depends on the evidence — particularly the emails and financial records that establish your role versus the executive's directives.</p>
+
+<h3 class="section-h3">4b. Deadline Calendar</h3>
+
+<table class="report-table"><tr><td class="table-cell">Timeframe</td><td class="table-cell">What's Coming</td><td class="table-cell">Action</td></tr>
+
+<tr><td class="table-cell"><strong class="bold-text">Now — June 12</strong></td><td class="table-cell">Outstanding production requests</td><td class="table-cell">Ask: "What materials are still pending, and when do we expect them?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">June 12</strong></td><td class="table-cell">Status conference — judge reviews case progress</td><td class="table-cell">Ask: "What will happen at this conference? Will a trial date be set?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Post-conference</strong></td><td class="table-cell">Motion filing deadlines (typically set by the court)</td><td class="table-cell">Ask: "Are there motions we should prepare before the filing deadline?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">6-12 months</strong></td><td class="table-cell">Trial or plea resolution</td><td class="table-cell">Understanding the full timeline helps manage expectations</td></tr></table>
+
+<strong class="bold-text">ACTION — Sentencing estimate:</strong> The Federal Sentencing Guidelines drive every federal plea negotiation. Without an initial estimate, evaluating any future offer is impossible. Ask Rothstein: "Have you run an initial sentencing calculation based on the loss amount and my role?" This is the single most important piece of information for your case strategy.
+
+<h3 class="section-h3">4c. Plea Framework</h3>
+
+<p class="body-text">If a plea is eventually offered, federal plea negotiations work differently from state cases:</p>
+
+<strong class="bold-text">Before evaluating any federal plea, explore these questions:</strong>
+
+<li class="list-item">"What is the Guidelines range based on the government's loss calculation versus your assessment?"</li>
+<li class="list-item">"Am I eligible for a minimal role adjustment under § 3B1.2?"</li>
+<li class="list-item">"What does acceptance of responsibility (§ 3E1.1) look like in terms of timing?"</li>
+<li class="list-item">"Is cooperation (§ 5K1.1) an option, and what would that involve?"</li>
+
+<strong class="bold-text">What a federal wire fraud conviction means for your record:</strong> Under 18 U.S.C. § 1343, wire fraud is a federal felony carrying up to 20 years per count and fines up to $250,000. A conviction creates a permanent federal criminal record. Federal convictions cannot be expunged. Supervised release typically follows any sentence. Restitution to victims is mandatory under the Mandatory Victims Restitution Act (18 U.S.C. § 3663A). Professional licensing consequences vary by state but are typically severe for financial professionals.
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">Most time-sensitive question: Has Rothstein run an initial sentencing calculation? Without it, neither of you can evaluate where the situation actually stands — or whether any future offer is fair.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 5: Protecting Your Case and Life</h2>
+
+<h3 class="section-h3">5a. Protecting Your Case</h3>
+
+<strong class="bold-text">Evidence you control:</strong> Do not delete any emails, financial records, text messages, or documents related to NovaTech — even personal copies. Destruction of evidence in a federal case can result in obstruction charges (18 U.S.C. § 1519) that carry penalties independent of the underlying charge.
+
+<strong class="bold-text">Privilege boundaries:</strong> Only conversations with Rothstein are legally protected. Do not discuss case details with former colleagues, investors, co-defendants, or anyone else — their statements to you are not privileged and they can be called as witnesses.
+
+<strong class="bold-text">Bond conditions:</strong> Follow every condition meticulously. Federal judges take bond violations seriously, and revocation is significantly harder to reverse than in state court.
+
+<h3 class="section-h3">5b. Life Impact Map</h3>
+
+<p class="body-text">Your primary concerns are your career in finance and professional licensing. Here is how this matter can affect each area:</p>
+
+<table class="report-table"><tr><td class="table-cell">Life Area</td><td class="table-cell">Potential Impact</td><td class="table-cell">Source</td><td class="table-cell">Question for Attorney</td></tr>
+
+<tr><td class="table-cell"><strong class="bold-text">Career</strong></td><td class="table-cell">Federal felony conviction disqualifies from most financial industry positions. SEC and FINRA bars are common after fraud convictions.</td><td class="table-cell">SEC Administrative Proceedings; FINRA rules</td><td class="table-cell">"How does conviction versus dismissal affect my ability to work in finance?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Professional Licensing</strong></td><td class="table-cell">CPA, Series licenses, and other financial certifications revoked or suspended upon conviction.</td><td class="table-cell">State licensing boards; FINRA</td><td class="table-cell">"Which of my licenses are at risk, and is there a way to preserve them?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Housing</strong></td><td class="table-cell">Federal conviction visible on background checks. Some landlords and mortgage applications ask about felony convictions.</td><td class="table-cell">Fair Credit Reporting Act</td><td class="table-cell">"How does this affect my housing situation?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Financial</strong></td><td class="table-cell">Restitution potentially in the millions (tied to loss amount). Fines up to $250,000 per count. Asset forfeiture possible under 18 U.S.C. § 982.</td><td class="table-cell">Mandatory Victims Restitution Act; § 982</td><td class="table-cell">"What is the government's estimated loss amount?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Travel</strong></td><td class="table-cell">Valid passport may be surrendered as bond condition. Some countries deny entry for fraud convictions.</td><td class="table-cell">Bond conditions; country-specific policies</td><td class="table-cell">"Are there travel restrictions I need to know about?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Tax</strong></td><td class="table-cell">Restitution payments are not tax-deductible. Fines are not deductible. Legal fees may be partially deductible.</td><td class="table-cell">IRC § 162(f)</td><td class="table-cell">"What are the tax implications of each outcome?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Voting</strong></td><td class="table-cell">Federal felony conviction does not automatically remove voting rights — varies by state of residence.</td><td class="table-cell">State-specific felon disenfranchisement laws</td><td class="table-cell">"Does a federal conviction affect my voting rights in California?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Firearms</strong></td><td class="table-cell">Federal felony conviction triggers lifetime firearms prohibition under 18 U.S.C. § 922(g)(1).</td><td class="table-cell">18 U.S.C. § 922(g)(1)</td><td class="table-cell">"Any firearms I should transfer before resolution?"</td></tr></table>
+
+<strong class="bold-text">Immigration & International Travel:</strong> Even for US citizens, a federal fraud conviction can affect:
+<li class="list-item">Immigration sponsorship of family members — fraud convictions are crimes involving moral turpitude under immigration law</li>
+<li class="list-item">Future naturalization petitions by family members</li>
+<li class="list-item">International travel — many countries deny entry for fraud convictions; Canada and the UK have specific fraud-related exclusions</li>
+
+<p class="body-text">Under <em>Padilla v. Kentucky</em>, 559 U.S. 356 (2010), criminal defense must include immigration consequence analysis. If anyone in your household has immigration status concerns, consult an immigration attorney before any plea decision.</p>
+
+<strong class="bold-text">What most people in federal white collar cases don't realize:</strong> Restitution in federal fraud cases is mandatory under the Mandatory Victims Restitution Act — judges cannot waive it regardless of ability to pay. The amount is tied to the government's loss calculation, which can be disputed. Understanding how the government calculates loss (and whether their methodology is accurate) is one of the most consequential issues in federal fraud defense. It drives both the Guidelines range and the restitution order.
+
+<h3 class="section-h3">5c. Life While Pending</h3>
+
+<p class="body-text">The matter will likely be pending for 12-18 months in federal court:</p>
+
+<li class="list-item"><strong class="bold-text">Work carefully.</strong> If you're still in a financial role, ensure every transaction is documented and above reproach. Courts view continued responsible employment favorably.</li>
+<li class="list-item"><strong class="bold-text">Attend every court date.</strong> Missing a federal court appearance results in a warrant and bond revocation — significantly more serious than state court.</li>
+<li class="list-item"><strong class="bold-text">Comply with all bond conditions.</strong> Travel restrictions, check-ins, and any financial reporting requirements — strict compliance.</li>
+<li class="list-item"><strong class="bold-text">Keep a case journal.</strong> Date, who you spoke to, what was said, next steps. This becomes invaluable during a 12-18 month process.</li>
+
+<p class="body-text">This period feels indefinite, but it isn't. You're at month 5 of a 12-18 month process. The status conference will set the next concrete milestone.</p>
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">The mandatory restitution issue is the collateral consequence most federal defendants don't see coming — it's separate from fines and can exceed the actual loss. The difference between the government's loss calculation and what the defense can demonstrate matters enormously. Every question in Appendix D is designed with these realities in mind.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 6: Your Plan</h2>
+
+<h3 class="section-h3">6a. If Overwhelmed</h3>
+
+<p class="body-text">Start here. One action. Thirty seconds.</p>
+
+<p class="body-text">Send the email below. It's already written. Copy, paste, send. You've just created a written record with your five most important questions — more than most defendants ever do in federal court.</p>
+
+<h3 class="section-h3">6b. Email Template (Ready to Send)</h3>
+
+<strong class="bold-text">Subject:</strong> Case Update Request — Jennifer, Case #2025-CR-00234
+
+<p class="body-text">Dear Mr. Rothstein,</p>
+
+<p class="body-text">I hope you're doing well. I want to be well-prepared for my June 12 status conference, and I have a few questions I'd like to discuss:</p>
+
+<li class="list-item">You mentioned "we need to see what they have" — based on the discovery produced so far, what is your initial read on the government's theory and the evidence against me specifically?</li>
+<li class="list-item">Have you reviewed the financial records and emails that have been produced? What do they show about my role versus the CEO's directives?</li>
+<li class="list-item">Have you run an initial sentencing calculation based on the government's loss figure and my role?</li>
+<li class="list-item">Am I eligible for a minimal role adjustment under § 3B1.2, and what factors would support or undermine that?</li>
+<li class="list-item">What is the total financial exposure — restitution, fines, forfeiture — under the government's current theory?</li>
+
+<p class="body-text">I know you have a heavy caseload and I appreciate your work on my behalf. I want to make sure I understand where things stand so I can be a prepared and helpful client.</p>
+
+<p class="body-text">Could we schedule a brief call or meeting before the status conference? I'm available any time that works for you.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Jennifer</p>
+<p class="body-text">Case #2025-CR-00234</p>
+
+<h3 class="section-h3">6c. Phone Script</h3>
+
+<p class="body-text">"Hi, this is Jennifer Chen — I'm a client of Mr. Rothstein in the Federal Public Defender's office, case number 2025-CR-00234. I have a status conference on June 12 and I'd like to schedule a brief conversation before then. I also sent an email with my questions. Could you let him know I called? Thank you."</p>
+
+<h3 class="section-h3">6d. 14-Day Plan</h3>
+
+<table class="report-table"><tr><td class="table-cell">Day</td><td class="table-cell">Action</td></tr>
+
+<tr><td class="table-cell">Day 1</td><td class="table-cell">Send the email above. Copy, paste, send — 30 seconds. You've just created a written record.</td></tr>
+<tr><td class="table-cell">Day 2</td><td class="table-cell">Read Q1-Q5 on your Meeting Ready Sheet below. Highlight the ones that matter most to you.</td></tr>
+<tr><td class="table-cell">Day 3</td><td class="table-cell">If no email response, call using the phone script. Federal public defender offices are busy — persistence is expected.</td></tr>
+<tr><td class="table-cell">Day 4</td><td class="table-cell">Gather materials: print the Meeting Ready Sheet, grab a pen, have your case number ready.</td></tr>
+<tr><td class="table-cell">Day 5</td><td class="table-cell">Read your questions aloud once. Saying them out loud makes them easier to ask in person.</td></tr>
+<tr><td class="table-cell">Day 6</td><td class="table-cell">Still no response? Call again and ask to schedule a specific time. You're entitled to communicate with your attorney.</td></tr>
+<tr><td class="table-cell">Day 7</td><td class="table-cell">Rest. You've done the work this week.</td></tr>
+<tr><td class="table-cell">Days 8-14</td><td class="table-cell">Attend your meeting or continue following up. Bring your Meeting Ready Sheet. Ask, listen, write down answers.</td></tr></table>
+
+<p class="body-text">In two weeks, you'll walk into that meeting as the most prepared client in the office.</p>
+
+<h3 class="section-h3">6e. Follow-Up Template</h3>
+
+<strong class="bold-text">Subject:</strong> Follow-Up: Case Update Request — Jennifer, Case #2025-CR-00234
+
+<p class="body-text">Dear Mr. Rothstein,</p>
+
+<p class="body-text">I'm following up on my email from [date]. I want to make sure my questions reached you before the status conference:</p>
+
+<li class="list-item">Based on the evidence so far, what is your initial read on the government's theory against me specifically?</li>
+<li class="list-item">What do the financial records and emails show about my role versus his directives?</li>
+<li class="list-item">Have you run an initial sentencing calculation based on the loss figure and my role?</li>
+<li class="list-item">Am I eligible for a minimal role adjustment under § 3B1.2?</li>
+<li class="list-item">What is the total financial exposure under the government's current theory?</li>
+
+<p class="body-text">If email isn't the best way to reach you, please let me know the best method.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Jennifer</p>
+<p class="body-text">Case #2025-CR-00234</p>
+
+<h3 class="section-h3">6f. What to Bring to Attorney Meeting</h3>
+
+<li class="list-item">Printed Meeting Ready Sheet (below)</li>
+<li class="list-item">Pen and notepad</li>
+<li class="list-item">Case number: 2025-CR-00234</li>
+<li class="list-item">Government-issued photo ID</li>
+<li class="list-item">Phone on silent (federal courthouses may prohibit phones entirely)</li>
+<li class="list-item">Any documents you have related to NovaTech that weren't produced through the government's production — but do NOT bring anything without asking Rothstein first</li>
+
+<h3 class="section-h3">6g. Meeting Ready Sheet</h3>
+
+<strong class="bold-text">Bring this to your next meeting with David Rothstein:</strong>
+
+<strong class="bold-text">Q1 (Golden Question):</strong> "Based on the discovery produced so far, what is your initial read on the government's theory and the evidence against me specifically?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Q2:</strong> "What do the financial records and emails show about my role versus the CEO's directives? Is there evidence supporting a good faith defense?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Q3:</strong> "Have you run an initial sentencing calculation? What is the range based on the government's loss figure?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Q4:</strong> "Am I eligible for a minimal role adjustment under § 3B1.2? What factors support that?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Q5:</strong> "What is the total financial exposure — restitution, fines, potential forfeiture — under the government's current theory?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Post-Meeting Checklist:</strong>
+<li class="list-item checkbox-item">&#9744; Got answers to priority questions</li>
+<li class="list-item checkbox-item">&#9744; Wrote down responses during the meeting</li>
+<li class="list-item checkbox-item">&#9744; Sent summary email within 24 hours</li>
+<li class="list-item checkbox-item">&#9744; Updated case journal with dates and next steps</li>
+<li class="list-item checkbox-item">&#9744; Understand what happens at the status conference</li>
+
+<h3 class="section-h3">6h. Post-Meeting</h3>
+
+<p class="body-text">Within 24 hours, send this email:</p>
+
+<strong class="bold-text">Subject:</strong> Meeting Summary — Jennifer, Case #2025-CR-00234
+
+<p class="body-text">Dear Mr. Rothstein,</p>
+
+<p class="body-text">Thank you for meeting with me. I want to make sure I understood everything correctly:</p>
+
+<p class="body-text">[List 3-5 key points from the meeting]</p>
+
+<p class="body-text">Please let me know if I missed anything or misunderstood.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Jennifer</p>
+
+<h3 class="section-h3">6i. Difficult Conversations</h3>
+
+<strong class="bold-text">"The federal system is different — trust the process."</strong>
+<p class="body-text">What's happening: He may be managing your expectations about federal timelines, which genuinely are longer.</p>
+<p class="body-text">What you can say: "I appreciate that, and I understand federal cases take longer. Could you help me understand what specific steps are happening during this period? I want to be a useful partner, not a passive bystander."</p>
+<p class="body-text">Why it works: Acknowledges his expertise while requesting transparency.</p>
+
+<strong class="bold-text">"The loss amount is what it is."</strong>
+<p class="body-text">What's happening: He may not have challenged the government's loss calculation yet, or may view it as accurate.</p>
+<p class="body-text">What you can say: "I understand the government has a number. Have you independently assessed whether their methodology is accurate? The loss calculation drives the sentencing range — I want to make sure we're not accepting their figure without scrutiny."</p>
+<p class="body-text">Why it works: Shows you understand the significance without challenging his competence.</p>
+
+<strong class="bold-text">Attorney seems overwhelmed.</strong>
+<p class="body-text">What you can say: "I can see you have a lot on your plate. Could we schedule 15 minutes where I can go through my top 3 questions? I'll have them written down so we can be efficient."</p>
+<p class="body-text">Why it works: Respects the caseload reality while securing focused time.</p>
+
+<strong class="bold-text">"Consider cooperating."</strong>
+<p class="body-text">What you can say: "Before I decide anything about cooperation, I want to understand all the options. Could you walk me through what a § 5K1.1 motion involves, what I'd need to provide, and how it compares to a straight plea with acceptance of responsibility?"</p>
+<p class="body-text">Why it works: Gathers information without committing. Cooperation is a major decision that requires full understanding.</p>
+
+<h3 class="section-h3">6j. Advocacy Steps</h3>
+
+<li class="list-item"><strong class="bold-text">Send written questions</strong> — the email template above is ready to go</li>
+<li class="list-item"><strong class="bold-text">Request a case update meeting</strong> — your Meeting Ready Sheet serves as the agenda</li>
+<li class="list-item"><strong class="bold-text">Follow up in writing</strong> if no response within 5-7 business days</li>
+<li class="list-item"><strong class="bold-text">Request written answers</strong> if verbal responses are vague</li>
+<li class="list-item"><strong class="bold-text">Seek a second opinion</strong> — always your right. Federal criminal defense consultations typically run $300-500. Organizations like the National Association of Criminal Defense Lawyers (NACDL) can provide referrals. A second opinion is information-gathering, not disloyalty.</li>
+
+<p class="body-text">Most situations resolve at Steps 1-3.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix A: Brady/Giglio Checklist</h2>
+
+<strong class="bold-text">What This Is:</strong> Under <em>Brady v. Maryland</em> (1963) and <em>Giglio v. United States</em> (1972), the prosecution is constitutionally required to disclose evidence that is favorable to the defense. This includes exculpatory evidence (Brady) and impeachment evidence (Giglio).
+
+<strong class="bold-text">Ask your attorney:</strong> "Have you received all Brady/Giglio material? Is there anything outstanding?"
+
+<h3 class="section-h3">Evidence the Prosecution Must Disclose:</h3>
+
+<li class="list-item checkbox-item">&#9744; Exculpatory evidence (anything suggesting innocence)</li>
+<li class="list-item checkbox-item">&#9744; Impeachment evidence (anything undermining prosecution witnesses)</li>
+<li class="list-item checkbox-item">&#9744; Prior inconsistent statements by witnesses</li>
+<li class="list-item checkbox-item">&#9744; Deals, promises, or inducements to witnesses</li>
+<li class="list-item checkbox-item">&#9744; Criminal records of prosecution witnesses</li>
+<li class="list-item checkbox-item">&#9744; Evidence of witness bias or motive to lie</li>
+<li class="list-item checkbox-item">&#9744; Lab reports, forensic analysis, chain of custody documentation</li>
+<li class="list-item checkbox-item">&#9744; Surveillance footage, body camera footage, dashcam footage</li>
+<li class="list-item checkbox-item">&#9744; 911 calls and dispatch records</li>
+<li class="list-item checkbox-item">&#9744; Prior complaints against arresting officers</li>
+<li class="list-item checkbox-item">&#9744; Internal affairs investigations of involved officers</li>
+<li class="list-item checkbox-item">&#9744; Evidence contradicting the prosecution's theory</li>
+
+<h3 class="section-h3">What to Ask Your Attorney:</h3>
+
+<li class="list-item">"Have you filed a specific Brady demand or are you relying on the general obligation?"</li>
+<li class="list-item">"Is there a standing discovery order in this case?"</li>
+<li class="list-item">"Have you received all police reports, including supplemental reports?"</li>
+<li class="list-item">"Are there any witnesses the prosecution hasn't disclosed?"</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix B: Next Court Date Prep</h2>
+
+<strong class="bold-text">Your next court date:</strong> June 12, 2026
+<strong class="bold-text">Hearing type:</strong> Status conference
+<strong class="bold-text">Judge:</strong> Judge Sarah Kim
+<strong class="bold-text">Location:</strong> United States Courthouse, Northern District of California (confirm exact courtroom with Rothstein or the clerk's office)
+
+<h3 class="section-h3">What This Hearing Is</h3>
+
+<p class="body-text">A federal status conference is an administrative proceeding. The judge reviews production progress, addresses scheduling issues, may set a trial date, and resolves any pending procedural matters. Typically 15-30 minutes, though plan for 1-2 hours of waiting. Federal court runs on a stricter schedule than state court — arrive early.</p>
+
+<h3 class="section-h3">Step by Step</h3>
+
+<li class="list-item"><strong class="bold-text">Arrive 45 minutes early.</strong> Federal courthouses have security screening. Allow extra time.</li>
+<li class="list-item"><strong class="bold-text">Wait in the courtroom.</strong> Federal dockets are typically smaller than state court — less waiting, but be patient.</li>
+<li class="list-item"><strong class="bold-text">Stand when the judge enters and when your case is called.</strong></li>
+<li class="list-item"><strong class="bold-text">Let Rothstein speak.</strong> He addresses the judge on production status, scheduling, and any pending issues.</li>
+<li class="list-item"><strong class="bold-text">If the judge addresses you directly,</strong> answer briefly and respectfully: "Yes, Your Honor" / "No, Your Honor."</li>
+<li class="list-item"><strong class="bold-text">When dismissed,</strong> step outside quietly. Meet with Rothstein to discuss what happened and next steps.</li>
+
+<p class="body-text">Federal public defenders typically review the case with you before the hearing — if that hasn't been scheduled, request a pre-hearing meeting using the email in Section 6.</p>
+
+<h3 class="section-h3">What to Wear</h3>
+
+<li class="list-item">Business professional (suit or equivalent)</li>
+<li class="list-item">Federal court has higher formality expectations than state court</li>
+<li class="list-item">The standard: look like a professional the judge takes seriously</li>
+
+<h3 class="section-h3">What to Bring</h3>
+
+<li class="list-item">Meeting Ready Sheet from Section 6 (printed)</li>
+<li class="list-item">Pen and notepad</li>
+<li class="list-item">Case number: 2025-CR-00234</li>
+<li class="list-item">Government-issued photo ID (required for federal courthouse entry)</li>
+<li class="list-item">Phone on silent (most federal courtrooms prohibit phones entirely — check the local rules)</li>
+
+<h3 class="section-h3">What NOT to Do</h3>
+
+<li class="list-item">Do not speak to the judge unless directly addressed</li>
+<li class="list-item">Do not speak to government counsel or investigators</li>
+<li class="list-item">Do not discuss the matter in the hallway or elevator — federal courthouses are full of prosecutors, agents, and cooperating witnesses</li>
+<li class="list-item">Do not be late — a missed federal court date triggers an arrest warrant and bond revocation hearing</li>
+
+<h3 class="section-h3">If Attorney Isn't There</h3>
+
+<p class="body-text">Federal public defenders occasionally have scheduling conflicts across multiple courtrooms:</p>
+<li class="list-item">Tell the judge: "Your Honor, I'm represented by David Rothstein from the Federal Public Defender's office. I believe he may be in another courtroom."</li>
+<li class="list-item">The judge will typically continue the matter briefly or contact the FPD office.</li>
+<li class="list-item">Do not try to represent yourself or discuss the matter.</li>
+<li class="list-item">After the hearing, contact the FPD office immediately and document what happened.</li>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix C: Your Rights During Criminal Proceedings</h2>
+
+<strong class="bold-text">These rights exist regardless of your charge, your attorney, or your county.</strong>
+
+<h3 class="section-h3">Constitutional Rights:</h3>
+<li class="list-item"><strong class="bold-text">Right to remain silent</strong> (5th Amendment) — You cannot be compelled to testify against yourself</li>
+<li class="list-item"><strong class="bold-text">Right to an attorney</strong> (6th Amendment) — If you cannot afford one, one will be appointed</li>
+<li class="list-item"><strong class="bold-text">Right to a speedy trial</strong> (6th Amendment) — Timelines vary by state and jurisdiction</li>
+<li class="list-item"><strong class="bold-text">Right to confront witnesses</strong> (6th Amendment) — You can cross-examine anyone who testifies against you</li>
+<li class="list-item"><strong class="bold-text">Right against unreasonable search and seizure</strong> (4th Amendment) — Evidence obtained illegally may be suppressed</li>
+<li class="list-item"><strong class="bold-text">Right to a jury trial</strong> (6th Amendment) — For serious offenses, you have the right to be judged by a jury of your peers</li>
+<li class="list-item"><strong class="bold-text">Right to due process</strong> (14th Amendment) — Fair procedures must be followed</li>
+<li class="list-item"><strong class="bold-text">Right against double jeopardy</strong> (5th Amendment) — You cannot be tried twice for the same offense</li>
+<li class="list-item"><strong class="bold-text">Right to be presumed innocent</strong> — The prosecution must prove guilt beyond a reasonable doubt</li>
+
+<h3 class="section-h3">Your Rights With Your Attorney:</h3>
+<li class="list-item">You have the right to know what is happening in your case at all times</li>
+<li class="list-item">You have the right to be consulted before major decisions are made</li>
+<li class="list-item">You have the right to make the final decision on whether to accept a plea or go to trial</li>
+<li class="list-item">You have the right to effective assistance of counsel (Strickland v. Washington)</li>
+<li class="list-item">You have the right to change attorneys at any time (though timing and procedural requirements apply)</li>
+
+<h3 class="section-h3">If You Feel Your Rights Are Being Violated:</h3>
+<li class="list-item">Document everything in writing (dates, times, what was said)</li>
+<li class="list-item">Follow the Advocacy Steps in Section 6 of this brief</li>
+<li class="list-item">Contact your state bar association's client protection hotline</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix D: Targeted Follow-Up Questions</h2>
+
+<p class="body-text">These questions fill the specific gaps in what you know. Each is calibrated to elicit a substantive answer.</p>
+
+<h3 class="section-h3">Case Strategy</h3>
+
+<strong class="bold-text">Q1 (Golden Question):</strong> "Based on the discovery produced so far, what is your initial read on the government's theory and the evidence against me specifically?"
+
+<p class="body-text">Why this is urgent: After 5 months and partial production, this answer is foundational. Martin Weinberg's approach to federal fraud defense begins with isolating the defendant's knowledge and state of mind from the organization's conduct. Rothstein's "we need to see what they have" may reflect genuine analysis in progress — but you're entitled to know what the initial read is on what's been produced.</p>
+
+<p class="body-text">What you want to hear: He describes the government's theory with specifics — which documents they're relying on, which communications involve you, and how they're connecting your role to the alleged scheme.</p>
+
+<p class="body-text">If he's vague: "Could you identify the 3-5 most important documents the government has produced and tell me what they show about my involvement?"</p>
+
+<p class="body-text">The key signal: Specific evidence with analysis of what it means for your defense — not generalities about federal cases.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q2:</strong> "I've had difficulty reaching you consistently. What's the most reliable way to communicate — email, phone, in-person meetings, a paralegal contact?"
+
+<p class="body-text">This solves the communication challenge rather than assigning blame. Federal public defenders manage heavy caseloads — establishing a reliable communication channel is practical, not personal. A strong response: a specific method and expected response time. If vague: "Could you name the single best way to reach you and a realistic timeline for responses?"</p>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Evidence & Discovery</h3>
+
+<strong class="bold-text">Q3:</strong> "What do the financial records and emails show about my role? Is there evidence distinguishing my actions from the CEO's directives?"
+
+<p class="body-text">This is the heart of the defense theory. The evidence should show the chain of communication — who directed what, who reviewed what, and whether you had independent knowledge of any misrepresentations. Listen for whether Rothstein has identified specific documents that help or hurt the knowledge argument. If he hasn't reviewed them in detail: "When do you expect to complete your review of the produced documents?"</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q4:</strong> "Have you run an initial sentencing calculation? What offense level, loss amount, and role adjustment are we looking at?"
+
+<p class="body-text">The Sentencing Guidelines calculation (U.S.S.G. § 2B1.1 for fraud) is the foundation of every federal plea discussion. Key variables:</p>
+<li class="list-item"><strong class="bold-text">Base offense level:</strong> 7 for fraud</li>
+<li class="list-item"><strong class="bold-text">Loss enhancement:</strong> Increases based on loss amount (this is where the biggest jumps happen)</li>
+<li class="list-item"><strong class="bold-text">Role adjustment:</strong> Minimal participant (§ 3B1.2) reduces by 2-4 levels; organizer/leader (§ 3B1.1) increases</li>
+<li class="list-item"><strong class="bold-text">Acceptance of responsibility:</strong> 2-3 level reduction (§ 3E1.1) if timely</li>
+
+<p class="body-text">Without this calculation, evaluating any plea offer is impossible. If he hasn't run it: "Could you run an initial estimate this week? I'd like to understand the range before the status conference."</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q5:</strong> "Is there a viable good faith defense based on what you've seen? Were there internal legal reviews, auditor sign-offs, or board approvals I relied on?"
+
+<p class="body-text">Good faith is a complete defense to wire fraud. If you genuinely believed the financial representations were accurate — because you relied on the CEO, legal counsel, or auditors — you lacked the requisite mental state. This question tests whether Rothstein has identified the evidence that supports or undermines a good faith narrative.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q6:</strong> "What discovery is still outstanding? When do you expect the government to produce internal emails and investor communications?"
+
+<table class="report-table"><tr><td class="table-cell">🟢 Green flag</td><td class="table-cell">🔴 Red flag</td></tr>
+
+<tr><td class="table-cell">He lists specific categories produced and outstanding</td><td class="table-cell">"I think we have most of it" without specifics</td></tr>
+<tr><td class="table-cell">Gives a timeline for outstanding production</td><td class="table-cell">Can't describe what's been received</td></tr>
+<tr><td class="table-cell">Has organized the documents by relevance</td><td class="table-cell">Hasn't reviewed the production yet</td></tr></table>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Motions & Deadlines</h3>
+
+<strong class="bold-text">Q7 + Q8</strong> (ask together — they're related):
+
+<p class="body-text">"Are there any motions — dismissal, bill of particulars, suppression — that we should consider filing?" AND "What is the motion filing deadline in this district, and does the status conference affect it?"</p>
+
+<p class="body-text">Both are deadline-sensitive. Federal judges typically set motion deadlines at the status conference. Having a motion strategy before the conference is ideal — filing after the deadline requires showing good cause. If Rothstein answers Q7 with "I haven't looked into it," ask Q8 immediately — it tests whether time-sensitive items are being tracked. If vague: "Can we discuss this before June 12?"</p>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Plea Evaluation</h3>
+
+<strong class="bold-text">Q9:</strong> "If the government offers a plea, how do I evaluate whether it's fair? What is the standard plea structure for wire fraud in this district?"
+
+<li class="list-item"><strong class="bold-text">If he describes a typical plea →</strong> Ask how it compares to your specific sentencing calculation</li>
+<li class="list-item"><strong class="bold-text">If cooperation is mentioned →</strong> Ask what cooperation involves, what risks it carries, and whether it's worth exploring</li>
+<li class="list-item"><strong class="bold-text">If he hasn't considered it yet →</strong> "When do plea discussions typically begin in federal white collar cases in this district?"</li>
+
+<strong class="bold-text">Q10:</strong> "What is the total financial exposure — restitution, fines, forfeiture, supervised release costs — under each potential outcome?"
+
+<blockquote class="blockquote">A financial comparison helps you evaluate options with data. Federal restitution under the Mandatory Victims Restitution Act (18 U.S.C. § 3663A) is mandatory and tied to the loss amount. The difference between the government's loss calculation and what the defense can demonstrate can mean hundreds of thousands of dollars. Understanding total exposure — not just prison time — is essential for an informed decision.</blockquote>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Judge & Jurisdiction</h3>
+
+<strong class="bold-text">Q11:</strong> "What is Judge Kim's approach to white collar cases? Does she tend to follow the recommended range or sentence independently?"
+
+<p class="body-text">Federal judges have wide discretion after <em>United States v. Booker</em>, 543 U.S. 220 (2005), which made the Sentencing Guidelines advisory. Some judges follow them closely; others depart significantly. Understanding the judge's pattern is critical for both plea evaluation and trial strategy. If Rothstein hasn't appeared before her, asking a colleague in the FPD office is standard and expected.</p>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Consequences</h3>
+
+<strong class="bold-text">Q12 + Q13</strong> (pair these — the second follows naturally from the first):
+
+<p class="body-text">First ask: "What are the realistic best-case and worst-case outcomes, given everything you know right now?"</p>
+<p class="body-text">Then: "If I don't accept a plea, what happens? Does the offer typically get worse after a trial loss?"</p>
+
+<p class="body-text">A calibrated range helps you decide with data instead of fear or hope. In federal court, there is a "trial tax" — defendants who go to trial and lose typically receive harsher sentences than those who accept responsibility early. Understanding this dynamic is essential, and it's not the same as pressure to plead — it's a factual reality of federal sentencing.</p>
+
+<strong class="bold-text">Q14:</strong> "What exactly does the government say about my knowledge? Are there specific emails or documents where they claim I knew the representations were false?"
+
+<table class="report-table"><tr><td class="table-cell">What to listen for</td><td class="table-cell">Why it matters</td></tr>
+
+<tr><td class="table-cell">"They have an email where you questioned the numbers"</td><td class="table-cell">Cuts both ways — shows awareness but also shows concern about accuracy</td></tr>
+<tr><td class="table-cell">"They're relying on your title and position, not specific communications"</td><td class="table-cell">Positional argument is weaker than documentary evidence of knowledge</td></tr>
+<tr><td class="table-cell">"I haven't identified their key evidence yet"</td><td class="table-cell">The most important question in your defense is unresolved after 5 months — escalate</td></tr></table>
+
+<strong class="bold-text">Q15:</strong> "Is there anything about my case that concerns you or that I should know?"
+
+<p class="body-text">This open-ended question invites information attorneys might not volunteer. Candor — even if it includes concerns — is what enables informed decisions.</p>
+  <div class="footer-disclaimer">
+    <p class="footer-disclaimer-text">
+      <strong class="footer-disclaimer-label">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.
+    </p>
+  </div>
+  <div class="copyright-block">
+    <p class="copyright-text">&copy; 2026 ImNotAnAttorney. Legal information, not legal advice.</p>
+    <p class="copyright-meta">Report ID: IB-TEST-JENNIFER-V1 | Generated: March 8, 2026</p>
+  </div>
+  <div class="no-print upgrade-cta">
+    <p class="upgrade-cta-text">If you receive discovery evidence and want a deeper analysis, The X-Ray reviews your actual case files — officer recordings, lab reports, chain of custody, witness statements.</p>
+    <a href="/checkout?tier=x-ray" class="upgrade-btn">The X-Ray — $2,497 ($1,500 after credit)</a>
+    <p class="upgrade-credit-note">Every dollar you've paid rolls forward. Your $997 is fully credited toward any tier — you only pay the difference. Credits valid for 12 months.</p>
+  </div>
+</div>
+</body>
+</html>

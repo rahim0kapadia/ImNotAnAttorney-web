@@ -1,0 +1,330 @@
+{
+  "evaluated_at": "2026-03-05T14:54:31.521Z",
+  "eval_version": "2.0",
+  "source": "Case 1a66d8b2-ed47-4398-81a3-e31c5a016918",
+  "charge_type": "drug-trafficking",
+  "tier": "case-decoder",
+  "model_used": "opus",
+  "gate_passed": true,
+  "complete": true,
+  "teams": {
+    "upl": {
+      "name": "UPL Compliance",
+      "weight": "GATE",
+      "model": "claude-opus-4-6",
+      "score": "8/10",
+      "passed": 8,
+      "needs_work": 2,
+      "failed": 0,
+      "criteria": [
+        {
+          "id": "U1",
+          "result": "NEEDS_WORK",
+          "justification": "The report generally avoids classic directive language ('you should,' 'you need to,' 'we recommend,' 'we advise'), using softer framing like 'you may want to consider' and 'one option is.' However, the 7-Day Plan contains imperative-adjacent language such as 'Copy the email... paste it into your email, fill in your attorney's name, and send it. That's it.' and 'send that email' which, while motivational, edges toward directive instruction rather than pure information framing.",
+          "problematic_text": "Copy the email from Your Attorney Meeting Toolkit, paste it into your email, fill in your attorney's name, and send it. That's it."
+        },
+        {
+          "id": "U2",
+          "result": "PASS",
+          "justification": "Every substantive section redirects to the defendant's attorney for case-specific decisions, including explicit language like 'your attorney remains the final authority on strategy decisions,' 'if anything in this report contradicts what your attorney tells you, your attorney's judgment... takes priority,' and attorney consultation redirects embedded throughout the questions and collateral consequences sections.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U3",
+          "result": "NEEDS_WORK",
+          "justification": "The report does not use explicit competence-scoring language or band labels, and it states the 'Where Things Stand' table 'isn't a grade on your attorney or your case.' However, several passages carry implicit negative judgment about the attorney's performance, such as 'without walking through any of it,' 'your attorney hasn't addressed with you,' and 'What to listen for: If your attorney can't cite the specific weights or hasn't compared them, that's a question worth raising' — which collectively build a narrative suggesting the attorney may be underperforming without explicitly saying so.",
+          "problematic_text": "A retained attorney recommending a 3-year mandatory minimum — without walking through any of it."
+        },
+        {
+          "id": "U4",
+          "result": "PASS",
+          "justification": "The report contains multiple disclaimers: the header methodology note states 'This report provides legal INFORMATION — not legal ADVICE,' the closing states 'This report gives you legal information, context, and questions — not legal advice,' and the footer reads 'Legal information, not legal advice.'",
+          "problematic_text": ""
+        },
+        {
+          "id": "U5",
+          "result": "PASS",
+          "justification": "Motions and legal options are consistently framed as informational items and questions to explore with the attorney, using language like 'Alternatives Worth Discussing,' 'whether any motions have been considered,' and 'are there any motions you're considering.' No instances of 'you should file,' 'this motion will work,' or 'file this motion' were found.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U6",
+          "result": "PASS",
+          "justification": "The immigration section explicitly cites Padilla v. Kentucky, 559 U.S. 356 (2010), references 8 U.S.C. § 1101(a)(43), and directs the defendant to consult 'BOTH your criminal defense attorney AND a separate immigration attorney who specializes in criminal immigration matters.' This meets the dual-referral requirement.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U7",
+          "result": "PASS",
+          "justification": "Defense theories such as entrapment, weight challenges, constructive vs. actual possession, and CI credibility are consistently framed as questions to explore with the attorney ('has entrapment been evaluated as a possible defense,' 'alternatives worth discussing') rather than as recommended strategies. No instance of 'pursue this defense' or 'this is your strongest argument' was found.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U8",
+          "result": "PASS",
+          "justification": "The advocacy steps are limited to five steps focused on communication and information-gathering: sending an email, requesting a meeting, following up, requesting written answers, and consulting a second attorney. There are no Steps 6+ crossing into legal strategy, no instructions to fire the attorney, and no instructions to file complaints or take legal action.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U9",
+          "result": "PASS",
+          "justification": "Attorney questions are consistently framed as 'Question for Your Attorney' throughout the elements table and the Q1-Q15 section. The Meeting Ready Sheet contains only questions. No 'What to Say' headers were found. The 'When the Conversation Gets Difficult' section uses 'What you can say' framing, which is suggestive rather than scripting, and the scenarios are empowering and non-accusatory toward the attorney.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U10",
+          "result": "PASS",
+          "justification": "Collateral consequences are cited to specific sources: expungement to F.S. § 943.0585, employment to FCRA (15 U.S.C. § 1681 et seq.), firearms to 18 U.S.C. § 922(g)(1) and F.S. § 790.23, voting rights to Fla. Const. Art. VI § 4, immigration to Padilla v. Kentucky and 8 U.S.C. § 1101(a)(43), and driver's license to F.S. § 322.055. All claims are sourced to statute or case law.",
+          "problematic_text": ""
+        }
+      ],
+      "summary": "The report passes the UPL gate with two NEEDS_WORK items: a few imperative-adjacent phrasings in the 7-Day Plan that edge toward directive language (U1), and implicit negative characterization of the attorney's performance that, while stopping short of explicit competence evaluation, builds a suggestive narrative (U3) — neither rises to FAIL level but both warrant revision before final shipment.",
+      "elapsed": "29.6",
+      "cost_usd": 0.24308
+    },
+    "psych": {
+      "name": "Psychological Architecture",
+      "weight": "HIGH",
+      "model": "claude-opus-4-6",
+      "score": "10/10",
+      "passed": 10,
+      "needs_work": 0,
+      "failed": 0,
+      "criteria": [
+        {
+          "id": "P1",
+          "result": "PASS",
+          "justification": "The report opens by acknowledging Marcus's question, affirming his instincts, orienting him to what he shared, and offering a gentle on-ramp ('if it's late and this feels heavy, start with Your Next 7 Days') before any discussion of charges, penalties, or consequences."
+        },
+        {
+          "id": "P2",
+          "result": "PASS",
+          "justification": "Every threat or consequence is paired with an action. The penalty range section explicitly states 'These are statutory ranges, not predictions. The questions in this report help you understand where your case realistically falls — and whether the weight even meets the threshold.' The collateral consequences table pairs each consequence with a specific question for the attorney. The 'Things Worth Asking About' section pairs each risk with specific question numbers and action steps."
+        },
+        {
+          "id": "P3",
+          "result": "PASS",
+          "justification": "Language consistently depersonalizes ('drug trafficking is defined by the weight of the substance, not by whether you were actually selling'), contains scope ('This single question could determine whether a 3-year mandatory minimum is even legally justified'), and temporalizes ('Your Next 7 Days,' 'What needs to happen between now and April 15'). No identity-fusing, global, or permanent language detected."
+        },
+        {
+          "id": "P4",
+          "result": "PASS",
+          "justification": "The report provides all four Bandura sources: mastery experiences (Day 1 tiny win with email, progressive daily steps with affirmations like 'You've started. That's more than most people ever do'), vicarious examples ('most defendants never do'), social persuasion ('the fact that you're asking it tells us something important about your instincts,' 'you will be the most prepared defendant your attorney has ever worked with'), and emotional state management ('If You're Feeling Overwhelmed, Start Here,' scenario scripts for difficult conversations)."
+        },
+        {
+          "id": "P5",
+          "result": "PASS",
+          "justification": "Actions are tiny, specific, and prompted. Day 1: 'Copy the email from Your Attorney Meeting Toolkit, paste it into your email, fill in your attorney's name, and send it. That's it. (30 seconds.)' The 7-day plan breaks everything into single daily actions with time estimates. The 5 advocacy steps are sequenced and prioritized rather than presented as a simultaneous list."
+        },
+        {
+          "id": "P6",
+          "result": "PASS",
+          "justification": "The 'If You're Feeling Overwhelmed, Start Here' section presents ONE clear action: send the email. The Golden Question is explicitly marked as 'If You Ask Only One Question, Ask This One.' The 7-day plan sequences actions one per day rather than presenting a menu. High-stakes decisions (plea) are funneled through a single recommended path: meet with attorney, ask these questions, then decide."
+        },
+        {
+          "id": "P7",
+          "result": "PASS",
+          "justification": "The report ends with strong agency language: 'In two weeks, Marcus, you will be the most prepared defendant your attorney has ever worked with. You've already started — you did this research, you read this report, and you're asking the right questions.' The final sections shift from information to empowerment, and the closing reframes Marcus as an active navigator: 'This report makes sure you know what to ask them — and why it matters.'"
+        },
+        {
+          "id": "P8",
+          "result": "PASS",
+          "justification": "The emotional arc is deliberate and well-engineered: grounding (opening affirmation and orientation) → orientation ('Where Things Stand' table) → intelligence (charges, elements, questions) → action (toolkit, 7-day plan) → empowerment (closing affirmations, 'you will be the most prepared defendant'). The report builds in intensity through the middle and resolves with agency at the end. No emotional whiplash detected."
+        },
+        {
+          "id": "P9",
+          "result": "PASS",
+          "justification": "Legal jargon is consistently defined on first use with parenthetical plain-language explanations: 'discovery (the evidence and documents the prosecution has about your case),' 'motions (formal requests asking the court to take action),' 'suppression motions (requests to exclude improperly obtained evidence),' 'constructive possession (not on your person but you had knowledge and ability to control it),' 'Brady v. Maryland... (the prosecution's obligation to disclose favorable evidence),' 'impeachment (contradictions that undermine credibility),' 'chain of custody (the documented trail showing who handled the evidence and when).' Action items use short, direct sentences."
+        },
+        {
+          "id": "P10",
+          "result": "PASS",
+          "justification": "The tone consistently uses autonomy-preserving language matching a defendant who may be in various readiness stages: 'You may want to consider,' 'One option is to,' 'Some defendants find it helpful to.' The report acknowledges potential resistance in the 'When the Conversation Gets Difficult' scenarios and validates the attorney relationship rather than pushing against it. The opening acknowledges overwhelm ('if it's late and this feels heavy') and the 7-day plan doesn't demand immediate action on everything."
+        }
+      ],
+      "summary": "This is an exceptionally well-crafted deliverable that passes all ten psychological architecture criteria — the emotional arc is deliberate and effective, every threat is paired with action, the language consistently builds self-efficacy without weaponizing fear, and the tone respects the defendant's readiness stage while gently moving toward agency.",
+      "elapsed": "32.9",
+      "cost_usd": 0.2523
+    },
+    "legal": {
+      "name": "Legal Substance",
+      "weight": "MEDIUM",
+      "model": "claude-opus-4-6",
+      "score": "3/6",
+      "passed": 3,
+      "needs_work": 3,
+      "failed": 0,
+      "criteria": [
+        {
+          "id": "L1",
+          "result": "NEEDS_WORK",
+          "justification": "The report correctly identifies F.S. § 893.135 as the trafficking statute and accurately describes weight-based thresholds and mandatory minimums, but never identifies the specific substance or specific weight tier involved, making it impossible to verify whether the 3-year mandatory minimum cited is correct for this particular charge — the report acknowledges this gap but doesn't flag that 3 years corresponds only to certain substances (e.g., 28g+ cocaine, 25 lbs+ cannabis, 4g+ opioids) and the accuracy of the plea offer cannot be assessed without that detail.",
+          "problematic_text": ""
+        },
+        {
+          "id": "L2",
+          "result": "PASS",
+          "justification": "The report covers weight-threshold challenges, constructive vs. actual possession (mens rea/knowledge), suppression motions, CI credibility attacks, chain of custody challenges, entrapment, fingerprint non-match as a gap in the possession chain, substantial assistance, and trial viability assessment — this is a comprehensive set of defense theories for a Florida trafficking charge, and the weight challenge is appropriately elevated as the primary issue."
+        },
+        {
+          "id": "L6",
+          "result": "NEEDS_WORK",
+          "justification": "The report mentions suppression motions, CI reliability challenges, and weight challenges as available pretrial motions but provides no Florida-specific filing deadlines, procedural requirements, or references to the applicable rules (e.g., Fla. R. Crim. P. 3.190 for motions to dismiss, or the requirement that suppression motions under 3.190(g)/(h) be filed before trial or within specific timeframes set by the court); with a court date of April 15, the absence of deadline urgency is a notable gap.",
+          "problematic_text": ""
+        },
+        {
+          "id": "L7",
+          "result": "PASS",
+          "justification": "Collateral consequences are accurately cited with correct Florida and federal statutes: F.S. § 943.0585 for expungement ineligibility, 18 U.S.C. § 922(g)(1) and F.S. § 790.23 for firearms, Fla. Const. Art. VI § 4 for voting rights, F.S. § 322.055 for driver's license, Padilla v. Kentucky for immigration duty to advise, and the report appropriately notes that immigration consequences are case-specific and recommends consulting a separate immigration attorney."
+        },
+        {
+          "id": "L8",
+          "result": "PASS",
+          "justification": "The report applies Lichtman's evidence-first and CI destruction methodology to the fingerprint non-match and CI credibility analysis, Ron Chapman II's pretrial dismissal and weight-threshold-first approach to the weight discrepancy, and Jose Baez's forensic scrutiny methodology to the lab report and chain of custody — these are specific framework applications rather than generic legal information, and the attributions are woven into the question rationales rather than being superficial name-drops."
+        },
+        {
+          "id": "L9",
+          "result": "NEEDS_WORK",
+          "justification": "Core Florida statutes are correctly cited (§ 893.135, § 893.135(4), § 943.0585, § 790.23, § 322.055, § 934.03, Fla. R. Crim. P. 3.220, 3.172) and federal citations are accurate (Brady v. Maryland, Padilla v. Kentucky, 18 U.S.C. § 922(g)(1), 8 U.S.C. § 1101(a)(43)); however, the report references the federal safety valve provision (18 U.S.C. § 3553(f)) in the context of a Florida state case without clearly stating that this provision is inapplicable in state court, which could mislead the reader.",
+          "problematic_text": "Federal cases may also have a safety valve provision (18 U.S.C. § 3553(f))."
+        }
+      ],
+      "summary": "A strong, charge-specific report that accurately applies elite defense frameworks to a Florida trafficking case with correct core statutes and comprehensive defense theories, but needs improvement on motion filing deadlines/procedural specifics and should more clearly delineate the federal safety valve as inapplicable to state proceedings.",
+      "elapsed": "23.7",
+      "cost_usd": 0.22467
+    },
+    "defendant": {
+      "name": "Defendant Experience",
+      "weight": "HIGH",
+      "model": "claude-opus-4-6",
+      "score": "10/10",
+      "passed": 10,
+      "needs_work": 0,
+      "failed": 0,
+      "criteria": [
+        {
+          "id": "D1",
+          "result": "PASS",
+          "justification": "The report opens with a direct, personal address to Marcus's specific question about the plea and weight discrepancies, immediately orients him with 'if it's late and this feels heavy, start with Your Next 7 Days,' and the 7-Day Plan begins with a 30-second action — all designed for a panicked, overwhelmed defendant at 3 AM."
+        },
+        {
+          "id": "D2",
+          "result": "PASS",
+          "justification": "All 15 attorney questions are open-ended and calibrated — e.g., 'Can you walk me through...', 'Help me understand why...', 'What would happen if...' — none are yes/no, none are accusatory, and each includes a 'if the answer is vague' follow-up that is also non-threatening and designed to elicit information without legal knowledge prerequisites."
+        },
+        {
+          "id": "D3",
+          "result": "PASS",
+          "justification": "The most important action (send the email — 30 seconds) is the most prominent and easiest, placed at the top of 'Your Next 7 Days' with its own bold callout; Q1 is clearly marked as the Golden Question with a star; the 'ADDRESS FIRST' priority flags create a clear hierarchy; less critical items are labeled 'LOOK INTO' and 'ASK ABOUT.'"
+        },
+        {
+          "id": "D5",
+          "result": "PASS",
+          "justification": "Critical action sections use short sentences, plain language, and inline definitions for every legal term — e.g., 'suppression motions (requests to exclude improperly obtained evidence),' 'constructive possession (not on your person but you had knowledge and ability to control it),' 'Brady v. Maryland... (the prosecution's obligation to disclose favorable evidence).' Action paragraphs are consistently under 5 sentences."
+        },
+        {
+          "id": "D6",
+          "result": "PASS",
+          "justification": "The report explicitly deconstructs the prosecution's framing — e.g., reframing trafficking as weight-dependent rather than conduct-dependent ('defined by the weight of the substance, not by whether you were actually selling or distributing it'), highlighting the fingerprint non-match as a gap in the prosecution's possession theory, and questioning the CI's reliability rather than accepting it. It empowers Marcus to see the weight discrepancy as potentially case-dispositive rather than a minor detail."
+        },
+        {
+          "id": "D7",
+          "result": "PASS",
+          "justification": "The entire report is structured around empowering Marcus as an active participant — providing ready-to-send emails, phone scripts, meeting preparation tools, documentation guidance, difficult conversation scripts, and a 7-day action plan. It explicitly frames him as the decision-maker ('Your attorney cannot enter a plea on your behalf without your informed consent') and never tells him to passively wait."
+        },
+        {
+          "id": "D8",
+          "result": "PASS",
+          "justification": "The report validates Marcus's frustration with the process — 'Most defendants aren't told proactively about filings, motions, or strategy — that's common, but it's not acceptable when a plea decision is on the table' — and explicitly identifies his rights to discovery review, informed consent before plea, effective assistance of counsel, and a second opinion. It names the communication gap as a real problem, not a misunderstanding."
+        },
+        {
+          "id": "D9",
+          "result": "PASS",
+          "justification": "The first page delivers immediate, personalized value: it addresses Marcus's specific question about the plea and weight discrepancies, summarizes the key facts from his intake, directs him to start with 'Your Next 7 Days' if overwhelmed, and provides the 'Where Things Stand' table mapping known facts to priority questions — all before any methodology or structural explanation."
+        },
+        {
+          "id": "D10",
+          "result": "PASS",
+          "justification": "The upsell appears only at the very end after all value has been delivered, is framed as a post-meeting decision ('You don't need to decide now. That's a decision for later'), clearly describes what the next tier provides (independent expert review of actual case materials), credits the current purchase price, and uses no fear-based language."
+        },
+        {
+          "id": "D11",
+          "result": "PASS",
+          "justification": "Marcus's intake signals an information vacuum (500+ pages unreviewed, no strategy discussion, rare communication, plea pressure without evidence walkthrough) and distrust of the process. The report directly addresses every one of these: it provides substantive analysis of the weight discrepancy, fingerprints, and CI issues; gives him tools to break the communication logjam; and never dismisses his concerns with 'ask your attorney' without first providing the context and specific question to ask. The report treats his instincts as valid rather than assuming trust."
+        }
+      ],
+      "summary": "This is an exceptionally well-crafted defendant-facing deliverable that passes every criterion — it meets the 3 AM panic test with immediate actionable value, empowers Marcus as an active participant with calibrated questions and ready-to-use tools, maintains appropriate reading level with inline definitions, deconstructs prosecution framing, validates his procedural justice concerns, and handles the upsell with integrity.",
+      "elapsed": "32.8",
+      "cost_usd": 0.24632
+    },
+    "conversion": {
+      "name": "Conversion & Value Architecture",
+      "weight": "MEDIUM",
+      "model": "claude-opus-4-6",
+      "score": "9/10",
+      "passed": 9,
+      "needs_work": 1,
+      "failed": 0,
+      "criteria": [
+        {
+          "id": "C1",
+          "result": "PASS",
+          "justification": "The report opens with Marcus's specific situation — a plea decision involving a 3-year mandatory minimum, weight discrepancies, unmatched fingerprints, and unreviewed discovery — making the stakes viscerally clear before any price is mentioned. Price appears only at the very end, after the full report has been delivered, and is framed against what's at stake (mandatory minimum, felony record, collateral consequences)."
+        },
+        {
+          "id": "C2",
+          "result": "PASS",
+          "justification": "The report is comprehensively complete as a standalone deliverable: it includes charge element breakdowns, 15 attorney questions with good/vague answer benchmarks, email/phone templates, a 7-day action plan, a printable Meeting Ready Sheet, difficult conversation scripts, documentation guidance, collateral consequences table, and plea analysis. A defendant could use this report and never purchase anything else and still be dramatically better prepared."
+        },
+        {
+          "id": "C3",
+          "result": "PASS",
+          "justification": "The next tier is revealed naturally at the end — after the report has delivered full value and explicitly states 'For many people, this report and those conversations are enough.' The Intelligence Brief is positioned as a verification layer needed only if the attorney meeting leaves questions unanswered, which is a need the defendant wouldn't have known about until going through this report's process."
+        },
+        {
+          "id": "C4",
+          "result": "PASS",
+          "justification": "All urgency is tied to the real April 15, 2026 court date. The 7-day plan is structured around preparing for an actual attorney meeting before a real deadline. The 12-month credit window is generous, not pressuring. There are no countdown timers, no 'limited spots,' and no manufactured scarcity anywhere in the report."
+        },
+        {
+          "id": "C5",
+          "result": "PASS",
+          "justification": "The report systematically bridges awareness: it starts with Marcus's own words and confusion (problem-aware), educates him on what the prosecution must prove and what his rights are (solution-aware), and only then positions the report's tools — questions, templates, action plan — as the mechanism to act on that knowledge (product-aware). Legal terms are consistently defined in plain English parentheticals (e.g., 'suppression motions (requests to exclude improperly obtained evidence)')."
+        },
+        {
+          "id": "C6",
+          "result": "NEEDS_WORK",
+          "justification": "The report references 'reply directly to the email that delivered this report' and the 'Is There Something We Missed?' section implies ongoing communication, but there is no explicit description of a post-purchase email drip sequence. We cannot evaluate whether post-purchase emails deliver value or lead with upsells because the drip sequence is not documented in this deliverable."
+        },
+        {
+          "id": "C7",
+          "result": "PASS",
+          "justification": "Expert sourcing is specific and visible throughout: Jeffrey Lichtman's CI Destruction Protocol, Ron Chapman II's pretrial dismissal methodology and weight-threshold analysis, Jose Baez's forensic evidence scrutiny from 'Conquering the Courtroom,' Brady v. Maryland (373 U.S. 83), and specific Florida statutes are cited with section numbers. The methodology note at the top names the experts and explains why they were selected for drug-trafficking cases."
+        },
+        {
+          "id": "C8",
+          "result": "PASS",
+          "justification": "Every element is personalized to Marcus's specific situation — his charge, his jurisdiction (Florida), his court date, his specific facts (weight discrepancy, fingerprints, CI, 500+ pages of discovery, retained attorney). The report addresses his exact intake question ('Should I accept the plea when there are weight discrepancies?'). The next-tier mention is specifically relevant to drug trafficking evidence verification, not a generic upsell."
+        },
+        {
+          "id": "C9",
+          "result": "PASS",
+          "justification": "The report is designed for the pretrial crisis moment — Marcus is facing a plea decision before an April 15 court date. The 'If You're Feeling Overwhelmed, Start Here' section provides a 30-second first action. The 7-day plan is structured for immediate use. The report acknowledges the emotional weight ('if it's late and this feels heavy, start with Your Next 7 Days') and provides graduated engagement from one email to full preparation."
+        },
+        {
+          "id": "C10",
+          "result": "PASS",
+          "justification": "The report consistently reinforces preparation as smart and normal: 'You've already started — you did this research, you read this report, and you're asking the right questions. That matters more than you know.' It frames preparation positively ('You've just done something most defendants never do') without shaming those who haven't. The tone throughout is empowering, not judgmental — 'Most defendants aren't told proactively about filings, motions, or strategy — that's common.'"
+        }
+      ],
+      "summary": "This is an exceptionally well-constructed deliverable that delivers comprehensive standalone value, uses real urgency tied to actual court dates, bridges awareness naturally, and positions the next tier honestly after full value delivery — the only gap is the absence of a documented post-purchase email drip sequence to evaluate.",
+      "elapsed": "31.7",
+      "cost_usd": 0.24497
+    }
+  },
+  "total_pass": 40,
+  "total_needs_work": 6,
+  "total_fail": 0,
+  "cost_usd": 1.21134,
+  "duration_ms": 150692
+}

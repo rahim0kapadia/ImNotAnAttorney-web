@@ -556,6 +556,7 @@ function renderReportHtml(markdown, meta) {
     .replace(/^## (.+)$/gm, '<h2 style="color: #F59E0B; font-size: 20px; margin-top: 32px; padding-top: 24px; border-top: 1px solid #27272A;">$1</h2>')
     .replace(/\*\*(.+?)\*\*/g, '<strong style="color: white;">$1</strong>')
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
+    .replace(/^>\s*$/gm, '')
     .replace(/^> (.+)$/gm, '<blockquote style="border-left: 3px solid #F59E0B; padding-left: 16px; margin: 16px 0; color: #A1A1AA;">$1</blockquote>')
     .replace(/^- \[x\] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9745; $1</li>')
     .replace(/^- \[ \] (.+)$/gm, '<li style="margin-bottom: 4px; list-style: none;">&#9744; $1</li>')

@@ -1,0 +1,15 @@
+{
+  "firstName": "Jennifer",
+  "charges": "Wire Fraud (18 U.S.C. § 1343)",
+  "stateCounty": "Federal, Northern District of California",
+  "caseNumber": "2025-CR-00234",
+  "nextCourtDate": "June 12, 2026",
+  "judgeName": "Judge Sarah Kim",
+  "attorneyName": "David Rothstein (Federal Public Defender)",
+  "reportId": "IB-TEST-JENNIFER-V1",
+  "monthsSinceArrest": "5",
+  "ibPriceDisplay": "$997",
+  "xrayPriceDisplay": "$2,497",
+  "xrayUpgradeCost": "$1,500",
+  "expertNames": "Martin Weinberg, Cristina Arguedas, David Smith, Chris Voss, BJ Fogg"
+}

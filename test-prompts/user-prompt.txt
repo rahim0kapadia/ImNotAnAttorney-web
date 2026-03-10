@@ -1,0 +1,276 @@
+Analyze the following case intake and generate a complete Case Decoder report.
+
+**INTAKE DATA:**
+- Client First Name: TestUser
+- Charges: dui
+- Jurisdiction: STATE court
+- State/County: Florida / Pinellas County
+- Arrest Date: 2026-01-15
+- Days Since Arrest: 51
+- Attorney Type: Private attorney
+- Attorney Strategy: Working on a defense strategy
+- Communication Frequency: Monthly
+- Last Attorney Contact: Last week
+- Plea Offered: no
+- Plea Terms: N/A
+- Discovery Status: Not specified
+- Evidence Types (defendant's belief): body camera
+- Arrest Circumstances: Traffic stop
+- Co-Defendants: No
+- Case Number: TEST-26-001
+- Next Court Date: 2026-04-15
+- Time Since Arrest: About 6 weeks
+- Primary Frustration (their words): Test case for pipeline validation. DUI checkpoint stop, BAC .09.
+- Specific Question (their words): Can a .09 BAC really lead to conviction when the limit is .08?
+
+CHARGE-SPECIFIC CONTEXT — DUI/DWI (STATE):
+GOD MODE EXPERTS (triangulated — use their methodology):
+1. Lawrence Taylor — Wrote Drunk Driving Defense (9th Ed), cited by SCOTUS in Missouri v. McNeely, NCDD co-founder. Methodology: systematic challenge of every procedural step from stop to test.
+2. William "Bubba" Head — Voted Best DUI Attorney in America (NCDD), 48+ years. Methodology: SFST administration error exploitation, officer training gaps.
+3. Justin McShane — First attorney designated "Forensic Lawyer Scientist" by American Chemical Society. Methodology: instrument precision challenges, scientific reliability attacks.
+
+Focus: BAC methodology challenge, field sobriety test validity, rising BAC defense, implied consent, calibration records, medical conditions (diabetes, GERD).
+CHARGE-SPECIFIC INTAKE DATA:
+  - bac_level: 0.09
+  - refusal: No
+  - field_sobriety: Performed
+  - prior_dui: None
+  - accident_involved: No
+Attorney communication frequency: Monthly.
+
+EVIDENCE ACCOUNTABILITY CONTEXT (defendant's beliefs about evidence — not confirmed):
+BODY CAMERA (defendant believes BWC footage exists): Attorney accountability — has attorney obtained and reviewed all footage? Identified gaps? Compared to police narrative?
+
+INCLUDE "Time and Deadlines": arrest_date exists, 51 days since arrest. Generate informational speedy trial status with question and waiver/tolling caveat. NO "URGENT" red box.
+OMIT "What a Plea Really Means": No plea offered and attorney not pushing plea.
+
+**GENERATE ALL SECTIONS BELOW. Stay within each section's word budget.**
+
+<section id="letter" title="Letter" max_words="150">
+NO section heading — do NOT write "## A Letter to You" or any heading.
+Start directly with the defendant's first name and a comma (e.g.,
+"Jennifer,") — a letter doesn't announce itself.
+
+Quote their "Primary Frustration" and "Specific Question" directly.
+Validate their instinct: "the fact that you're doing this research
+tells us something important." If they asked a specific question, tell
+them which section addresses it (by name, e.g., "Questions for Your
+Attorney"). Normalize: "you're not alone in this." Permission to be
+scared: reframe fear as caring about their future. NO blaming the
+attorney — frame gaps as things to clarify. Use client first name.
+This is NOT generic — write it TO THIS defendant.
+
+DEMONSTRATE understanding by reflecting specific details from their
+intake — do NOT announce empathy with phrases like "We heard every
+word" or "We listened carefully." Show you listened by responding to
+what they actually said.
+
+Preview what this report gives: "This report gives you three things:
+a clear picture of where things stand, 15 questions that will get you
+real answers from your attorney, and tools to start the conversation."
+Include "Do NOT show this report to your attorney" WITH this
+explanation: "If your attorney sees this analysis, they may anchor
+their responses to it rather than giving you their independent
+assessment. You want their unfiltered answers first. The questions are
+appropriate for any client — the analysis is for your eyes only."
+"The Meeting Ready Sheet in Your Next 7 Days is designed to be safe
+if your attorney sees it — it contains only questions, not analysis."
+
+Do NOT generate a methodology note or disclaimer — it is injected
+automatically by the system after your output is rendered.
+</section>
+
+<section id="s1" title="Where Things Stand" max_words="400">
+Use ONLY the section title as the heading — never prefix with internal id.
+4-area diagnostic table. NO aggregate score (no X/100). Each row:
+
+| Area | What You Told Us | What to Ask About | Priority Questions |
+|------|-----------------|-------------------|-------------------|
+| Communication | "You told us [specific intake answer]..." | "[Specific thing to ask]" | → Q[N], Q[N] |
+| Preparation | "You mentioned [specific intake answer]..." | "[Specific thing to ask]" | → Q[N], Q[N] |
+| Strategy | "You said [specific intake answer]..." | "[Specific thing to ask]" | → Q[N], Q[N] |
+| Filing Activity | "You shared [specific intake answer]..." | "[Specific thing to ask]" | → Q[N], Q[N] |
+
+EVERY row must use warm language: "You told us..." / "You said..." / "You mentioned..." / "You shared..."
+NEVER use "You indicated" / "You reported" / "You selected" — these sound clinical.
+NEVER blame the attorney. Frame gaps as things to CLARIFY: "Communication gaps are common but not acceptable — you're entitled to understand what's happening in your case."
+End with: "This is not a grade on your attorney or your case. It's a map of what you know and what you don't know — based on what you shared with us."
+After the closing line, add: "**What this tells you:** The 'What to Ask About' column is the starting point for your next conversation. The questions in Questions for Your Attorney go deeper."
+</section>
+
+<section id="s2" title="Understanding Your Charges" max_words="500">
+Use ONLY the section title as the heading — never prefix with internal id.
+Elements table with "Question for Your Attorney" column — NOT difficulty ratings:
+
+| Element Prosecution Must Prove | Plain English | Question for Your Attorney |
+|-------------------------------|---------------|---------------------------|
+| [Element] | [Plain English explanation] | "[What to ask]" |
+
+Penalty range with statutory citation. Charge-specific intake data reflected: "You told us your substance was [X]..."
+BRIDGING — MANDATORY after penalty range: "These are statutory maximums, not predictions. The questions in this report help you understand the realistic range for YOUR case."
+After the penalty range and bridging, add a "**What this means:**" paragraph — plain English explanation of the charge with zero legalese. This is the defendant's anchor for understanding their situation.
+"Your Rights in This Process" box: right to see discovery, right to be consulted before plea, right to understand strategy, right to a second legal opinion — with state-specific citations.
+
+ADMIN PROCESS CALLOUT — CONDITIONAL:
+If DUI/DWI → Include ALR/implied consent hearing deadline. Frame as "Something Your Attorney Can Help With" — efficacy-first. End with question + Q reference.
+If drug charge → Include asset forfeiture possibility. Same framing.
+If sex offense → Include registry requirements. Same framing.
+Expert attributions should appear throughout the report where specific methods are referenced.
+</section>
+
+<section id="c1" title="Time and Deadlines" max_words="100">
+Use ONLY the section title as the heading — never prefix with internal id.
+Based on arrest date of 2026-01-15 and jurisdiction speedy trial rules. NO "URGENT" red box. Informational + question: "Ask your attorney: What is our current speedy trial status, and have any waivers been filed?" ALWAYS caveat: "This does NOT account for waivers, continuances, or tolling."
+</section>
+
+<section id="s3" title="Your Attorney Meeting Toolkit" max_words="1400">
+Use ONLY the section title as the heading — never prefix with internal id.
+
+**1. DO NOT SHOW WARNING:**
+"Do NOT show this report to your attorney" with anchoring bias explanation.
+The Meeting Ready Sheet in Your Next 7 Days is safe if attorney sees it.
+
+**2. READY-TO-SEND EMAIL:**
+Copy-paste ready. Personalized: case # in subject line, court date reference, 2-3 intake-specific questions, defendant name signoff.
+Tone: collaborative ("I want to be well-prepared for our next conversation").
+Subject: "Case Update Request — [Name], Case #[Number]"
+
+**3. PHONE SCRIPT:**
+Read-aloud ready. Personalized with name, case #, court date. For defendants who prefer calling.
+
+**4. FOLLOW-UP TEMPLATE:**
+If no response within 5-7 business days. References Step 3 of Your Advocacy Steps.
+
+**5. YOUR ADVOCACY STEPS (8 steps — NOT "escalation ladder"):**
+Contextualized to attorney type (PD vs private) + jurisdiction (state bar complaint process).
+**Steps 1-5 — Collaborative (start here):**
+Step 1: Send the email from subsection 2 above
+Step 2: Follow up by phone — reference your email, request a specific time
+Step 3: Send the follow-up email template — written record with timestamped questions
+Step 4: Formal letter requesting case status update
+Step 5: Request meeting with supervising partner/PD office
+
+**Steps 6-8 — Structural safety nets (so you always have a next step):**
+Step 6: Written request to management for case review
+Step 7: State bar inquiry about communication obligations
+Step 8: Consultation with second attorney for case review
+"Most situations resolve at Steps 1-3. Steps 4-5 are there when you need more structure. Steps 6-8 are structural safety nets — so you always have a next step."
+If PD: Step 8 includes legal aid organizations, PD substitution process, cost acknowledgment.
+
+**6. WHEN THE CONVERSATION GETS DIFFICULT:**
+3-4 scenarios. Each with: What you hear → What's happening → What you say → Why it works.
+Attorney ALWAYS feels respected. Defendant positioned as wanting to be a good client, not a watchdog.
+Scenarios: "Trust me, I'm handling it" / "You don't need to worry about that" / Attorney seems rushed / Won't answer a specific question.
+
+**7. HOW TO DOCUMENT EVERYTHING:**
+Notes during meeting (what to write down). Post-meeting summary email template (send within 24 hours). Recording consent note (state-specific: one-party vs two-party consent). Case journal (what to track over time).
+</section>
+
+<section id="s4" title="Questions for Your Attorney" max_words="2200" question_count="15">
+Use ONLY the section title as the heading — never prefix with internal id.
+Generate EXACTLY 15 questions. Every question asks the ATTORNEY.
+
+**SPLIT VERIFY-FACTS — Two callout boxes at top:**
+Box 1: "✅ Confirm these facts from your intake" — arrest date, charges as filed, attorney type (intake verification).
+Box 2: "📋 Get these facts before your meeting" — charge-specific discovery items the defendant should request or confirm (new tasks).
+
+Q1 = GOLDEN QUESTION — marked: "(Golden Question — if you only ask one question, ask this one)"
+Q1-Q5 are PRIORITY questions drawn from THIS defendant's specific intake answers. Each "don't know" from intake becomes a priority question.
+Q6-Q15: Additional questions organized by topic.
+
+QUESTION TONE: Questions sound like a CLIENT asking for help — conversational, respectful. Keep legal jargon in "Why it matters" only. No yes/no questions — every question must require a substantive answer.
+Overall methodology: Calibrated questions adapted from Chris Voss (FBI lead hostage negotiator) — repurposed for attorney communication.
+
+Each question has EXACTLY 5 parts — no more, no less:
+1. **Question:** Calibrated question (conversational, never yes/no) — references intake data: "You told us..."
+2. **Why it matters:** Grounded in named expert's methodology + "You told us..." link.
+   Weave expert attributions NATURALLY into this paragraph (e.g., "This
+   question draws on Martin Weinberg's framework for evaluating intent
+   defenses"). This paragraph is where the expert name appears.
+3. **Good answer:** Specific deliverable (notes, filings, correspondence)
+4. **If the answer is vague:** "[empathetic follow-up probe for in-meeting use]"
+5. **What to listen for:** "[pattern]" — Here's what to do: [in-meeting response] + [post-meeting action: document, send summary email] + [Step reference in Your Advocacy Steps]
+
+Then --- and the next question heading. The question structure has EXACTLY these 5 bold-labeled parts. No additional bold-labeled lines of any kind after part 5 — the --- separator follows immediately.
+
+After writing all 15, count them. If not exactly 15, revise.
+</section>
+
+<section id="s5" title="Things Worth Asking About" max_words="450">
+Use ONLY the section title as the heading — never prefix with internal id.
+5-6 items max. Two categories:
+
+**Based on What You Told Us** (directly from intake):
+Each item starts with "You told us..." / "You mentioned..." and uses labels: ADDRESS FIRST / LOOK INTO / ASK ABOUT (NOT ACT NOW / INVESTIGATE / MONITOR — no panic triggers).
+
+ADDRESS FIRST items with deadlines get TIME-SENSITIVE marker:
+"⏰ ADDRESS FIRST — [Topic] — TIME-SENSITIVE"
+(e.g., body cam footage retention periods, ALR hearing windows, evidence preservation deadlines,
+pre-trial motion filing deadlines — when flagging suppression motions or other pre-trial motions,
+add: “Given your upcoming court date, your attorney can confirm whether motion
+deadlines are approaching — Fla. R. Crim. P. 3.190 governs suppression motion timing in Florida.”)
+
+**Things You Told Us You Don't Know** (gaps to fill):
+Each "don't know" answer from intake. Normalize: "Most defendants aren't told proactively — that's why we ask."
+
+EVERY item links to a specific Q number in Questions for Your Attorney AND a specific tool in Your Attorney Meeting Toolkit (reference by name, not S4/S3).
+NEVER blame the attorney: "This may have a simple explanation — but you're entitled to know."
+</section>
+
+<!-- What a Plea Really Means: OMITTED (conditions not met) -->
+
+<section id="s6" title="Is There Something We Missed?" max_words="100">
+Use ONLY the section title as the heading — never prefix with internal id.
+Short, warm, non-transactional. "We built this report from what you shared — but intake forms can't capture everything." Invite follow-up: reply to delivery email or help@imnotanattorney.com. Ask: "What's keeping you up at night that this report didn't address?" NO upgrade pitch here.
+</section>
+
+<section id="closing" title="What Only Your Attorney Can Tell You" max_words="100">
+Use ONLY the section title as the heading — never prefix with internal id.
+This is a REDIRECT, not a deflation. Frame it as: your attorney has information we don't — which is exactly why the questions in this report matter.
+Honest limitations: haven't seen evidence, can't predict outcomes, can't replace attorney. "If anything in this report contradicts what your attorney tells you, your attorney's judgment — informed by your full case file — should take priority. Use this report to ask better questions, not to overrule your attorney."
+</section>
+
+<section id="s7" title="Your Next 7 Days" max_words="900">
+Use ONLY the section title as the heading — never prefix with internal id.
+This is the EMOTIONAL CLIMAX — the report ends here on determination, not disclaimers.
+
+**"IF YOU'RE FEELING OVERWHELMED, START HERE"** callout:
+ONE action: send the pre-written email from Your Attorney Meeting Toolkit. 30 seconds. Done.
+Shine moment: "You've just done something most defendants never do."
+
+**7-DAY PLAN** — ONE action per day (Fogg sequencing):
+| Day | Action | Note |
+|-----|--------|------|
+| Day 1 | Send the email | Copy-paste from Your Attorney Meeting Toolkit. Done. |
+| Day 2 | Review your priority questions | Read the 5 Priority Questions. Highlight what matters most. |
+| Day 3 | Follow up if no response | Send the follow-up template. Step 3 of Your Advocacy Steps. |
+| Day 4 | Gather your materials | Use the What to Bring checklist below. |
+| Day 5 | Practice your questions | Read them aloud once. It helps. |
+| Day 6-7 | Attend your meeting | Bring your Meeting Ready Sheet. Ask, listen, write. |
+Each day ends with a Shine moment ("You've just...").
+After the table: "Days 1-7 = Steps 1-3 of Your Advocacy Steps. If you need Steps 4-8, they're in Your Attorney Meeting Toolkit — but most people never need to go past Step 3."
+
+**WHAT TO BRING TO YOUR MEETING:**
+Checklist: printed Meeting Ready Sheet + pen + case # + documents referenced in intake + phone (for recording if one-party consent state).
+
+**WHAT TO EXPECT:**
+2-3 sentences based on attorney type (PD: shorter meetings, may happen at courthouse, be focused / private: scheduled office visit, more time). Doctor analogy (Jayadev): "Just as you'd prepare for a doctor's appointment..."
+
+**MEETING READY SHEET** (safe if attorney sees it):
+Always include Q1, Q2, Q3, Q4, and Q5. Q1 = Golden Question marked.
+If additional questions are relevant for this defendant, add them after Q5.
+Space for attorney's answers after each question.
+Post-Meeting Checklist: Got answers? Documented responses? Sent summary email to attorney? Updated your case journal with dates and next steps? Understand what happens next?
+
+Future pacing using their name: "In two weeks, [Name], you will be the most prepared defendant your attorney has ever worked with. You'll have asked the right questions, documented the answers, and have a clear picture of where your defense stands — not from guessing, but from direct conversation with your attorney."
+End on empowerment, NOT disclaimers.
+</section>
+
+<section id="postscript" title="What Comes Next" max_words="100">
+FIRST acknowledge: "For many people, this report and those conversations are enough."
+Then redirect to action: "That's a decision for later. Right now,
+your Day 1 action is ready — send that email."
+If mentioning the Intelligence Brief ($997), frame as verification of what they learned.
+"You don't need to decide now. Your $197 is fully credited toward any tier within 12 months."
+THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
+</section>

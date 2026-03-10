@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Intelligence Brief — Sofia</title>
+<style>
+/* === Base === */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0C0A09;
+  color: #D4D4D8;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* === Header === */
+.header-block {
+  background: #1C1917;
+  padding: 32px;
+  border-radius: 12px;
+  border: 2px solid #F59E0B;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.header-title {
+  color: #F59E0B;
+  font-size: 28px;
+  margin: 0;
+}
+.header-subtitle {
+  color: #A1A1AA;
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+.header-meta {
+  margin-top: 24px;
+  text-align: left;
+}
+.meta-field {
+  margin: 4px 0;
+}
+.meta-label {
+  color: white;
+}
+
+/* === Content typography === */
+.section-h2 {
+  color: #F59E0B;
+  font-size: 20px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #3f3f46;
+}
+.section-h3 {
+  color: white;
+  font-size: 17px;
+  margin-top: 24px;
+  letter-spacing: 0.02em;
+}
+.section-h4 {
+  color: #F59E0B;
+  font-size: 14px;
+  margin-top: 20px;
+}
+.bold-text {
+  color: white;
+}
+.body-text {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+/* === Tables === */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+.table-header {
+  padding: 8px 12px;
+  border: 1px solid #3f3f46;
+  border-bottom: 2px solid #3f3f46;
+  text-align: left;
+  background: #1a1a1e;
+  font-weight: bold;
+  overflow-wrap: break-word;
+}
+.table-cell {
+  padding: 8px 12px;
+  border: 1px solid #3f3f46;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+tr:nth-child(even) > .table-cell {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* === Blockquotes === */
+.blockquote {
+  border-left: 4px solid #F59E0B;
+  padding: 12px 16px;
+  margin: 16px 0;
+  color: #A1A1AA;
+  background: rgba(245, 158, 11, 0.05);
+  border-radius: 0 4px 4px 0;
+}
+
+/* === Lists === */
+.list-item {
+  margin-bottom: 6px;
+  margin-left: 24px;
+}
+.checkbox-item {
+  list-style: none;
+}
+
+/* === Footer === */
+.footer-disclaimer {
+  background: #1C1917;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 40px;
+  border-left: 4px solid #A1A1AA;
+}
+.footer-disclaimer-text {
+  margin: 0;
+  font-size: 13px;
+  color: #71717A;
+}
+.footer-disclaimer-label {
+  color: #A1A1AA;
+}
+.copyright-block {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 2px solid #27272A;
+  text-align: center;
+}
+.copyright-text {
+  margin: 0;
+  font-size: 12px;
+  color: #71717A;
+}
+.copyright-meta {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #52525B;
+}
+
+/* === Upgrade CTA === */
+.upgrade-cta {
+  margin-top: 32px;
+  text-align: center;
+}
+.upgrade-cta-text {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #A1A1AA;
+}
+.upgrade-btn {
+  display: inline-block;
+  padding: 16px 32px;
+  background: #F59E0B;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.upgrade-credit-note {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #71717A;
+}
+
+/* === Page breaks === */
+.page-break {
+  page-break-after: always;
+}
+
+/* === Mobile responsive === */
+@media (max-width: 640px) {
+  .container { padding: 16px 12px; }
+  .header-block { padding: 20px; }
+  .header-title { font-size: 22px; }
+  .section-h2 { font-size: 17px; margin-top: 24px; padding-top: 16px; }
+  .section-h3 { font-size: 15px; }
+  .report-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table-header, .table-cell { padding: 6px 8px; font-size: 13px; }
+  .upgrade-btn { padding: 14px 24px; font-size: 15px; }
+}
+
+/* === Print === */
+@media print {
+  body { background: white !important; color: #1a1a1a !important; }
+  * { color: #1a1a1a !important; }
+  .section-h2, .section-h3, .section-h4 { color: #92400e !important; page-break-after: avoid; }
+  .bold-text, .meta-label { color: #1a1a1a !important; }
+  .blockquote { border-left-color: #92400e !important; background: #f5f5f4 !important; page-break-inside: avoid; }
+  .report-table { page-break-inside: avoid; }
+  .table-header, .table-cell { border-color: #d4d4d4 !important; }
+  .table-header { background: #e5e5e5 !important; }
+  .no-print { display: none !important; }
+  .header-block { background: #f5f5f4 !important; border-color: #92400e !important; }
+  a { color: #92400e !important; }
+  .body-text { orphans: 3; widows: 3; }
+  @page { margin: 1in; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header-block">
+    <h1 class="header-title">CASE INTELLIGENCE BRIEF</h1>
+    <p class="header-subtitle">ImNotAnAttorney | We Research. You Ask.</p>
+    <div class="header-meta">
+      <p class="meta-field"><strong class="meta-label">Prepared for:</strong> Sofia</p>
+      <p class="meta-field"><strong class="meta-label">Charge(s):</strong> Assault — Family Violence (Texas Penal Code § 22.01(b)(2))</p>
+      <p class="meta-field"><strong class="meta-label">Jurisdiction:</strong> Texas, Bexar County</p>
+      <p class="meta-field"><strong class="meta-label">Case Number:</strong> 2025-CR-09218-B</p>
+      <p class="meta-field"><strong class="meta-label">Next Court Date:</strong> April 28, 2026</p>
+      <p class="meta-field"><strong class="meta-label">Judge:</strong> Judge Maria Elena Gutierrez</p>
+      <p class="meta-field"><strong class="meta-label">Attorney:</strong> James Whitfield (Public Defender)</p>
+      <p class="meta-field"><strong class="meta-label">Months Since Arrest:</strong> 6</p>
+      <p class="meta-field"><strong class="meta-label">Report Date:</strong> March 8, 2026</p>
+      <p class="meta-field"><strong class="meta-label">Report ID:</strong> IB-TEST-SOFIA-V2</p>
+    </div>
+  </div>
+  <blockquote class="blockquote" style="margin: 20px 0; padding: 12px 16px;">
+    <p class="body-text"><strong class="bold-text">METHODOLOGY NOTE</strong></p>
+    <p class="body-text">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on Lisa Wayne, Lenore Walker, Susan Criss, Chris Voss, BJ Fogg — selected for Assault — Family Violence (Texas Penal Code § 22.01(b)(2)) cases. Expert attributions appear throughout.</p>
+    <p class="body-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+  </blockquote>
+  <h2 class="section-h2">START HERE: Your 48-Hour Priority List</h2>
+
+<p class="body-text">These three actions protect your position right now. Everything else can wait.</p>
+
+<strong class="bold-text">Priority 1 — TODAY (under 5 minutes):</strong>
+<p class="body-text">Send the pre-written email in Section 6 to James Whitfield. It includes your case number, court date, and five specific questions. Copy, paste, send. Done.</p>
+
+<p class="body-text">You've just created a written record — harder to ignore than a voicemail, and documentation that you're actively engaged in your defense.</p>
+
+<strong class="bold-text">Priority 2 — THIS WEEK:</strong>
+<p class="body-text">Document your injuries. You told us you had bruising on your arms and neck that was documented at booking. If those injuries haven't been photographed by anyone other than the booking process, take clear, dated photos now. Ask a trusted person (your sister) to witness and sign a written description. These photos may become critical evidence — they tell a very different story than the one Roberto presented to police.</p>
+
+<p class="body-text">Your specific question — whether calling 911 matters legally — has a clear answer: yes, it does. Courts consider who initiated the call as one factor in determining the primary aggressor. Under Texas Family Code § 71.0021 and the responding officers' training, the 911 caller's identity is relevant evidence.</p>
+
+<strong class="bold-text">Priority 3 — BEFORE APRIL 28:</strong>
+<p class="body-text">Read Section 4 (Legal Options & Deadlines) before your pre-trial hearing. If a self-defense argument is viable, Whitfield needs to develop it before any plea conversation advances. Texas Penal Code § 9.31 (the defense of justification) and § 9.32 (deadly force — not applicable here, but the framework applies) provide the legal basis. The question for Whitfield: "Have you reviewed the officer footage and the medical records from booking? Do they support this defense theory?"</p>
+
+<p class="body-text">Everything else can wait. Start with Priority 1.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Table of Contents</h2>
+
+<li class="list-item"><strong class="bold-text">START HERE: Your 48-Hour Priority List</strong> — 3 actions for the next 48 hours</li>
+<li class="list-item"><strong class="bold-text">Section 1: Your Case Roadmap</strong> — Where you are, what happens next, the two paths</li>
+<li class="list-item"><strong class="bold-text">Section 2: What's Working + What Needs Attention</strong> — Case Progress Score, decoded statements, gaps to clarify</li>
+<li class="list-item"><strong class="bold-text">Section 3: Your Case Intelligence</strong> — Outcome map, defense theories, judge profile, prosecution preview</li>
+<li class="list-item"><strong class="bold-text">Section 4: Legal Options & Deadlines</strong> — Motion landscape, deadline calendar, plea framework</li>
+<li class="list-item"><strong class="bold-text">Section 5: Protecting Your Case and Life</strong> — Case protection, life impact map, pending-case management</li>
+<li class="list-item"><strong class="bold-text">Section 6: Your Plan</strong> — Email template, phone script, 14-day plan, meeting prep, difficult conversations</li>
+<li class="list-item"><strong class="bold-text">Appendix A: Brady/Giglio Checklist</strong> — Evidence the prosecution must disclose</li>
+<li class="list-item"><strong class="bold-text">Appendix B: Next Court Date Prep</strong> — What to expect, wear, bring, and do</li>
+<li class="list-item"><strong class="bold-text">Appendix C: Your Rights</strong> — Key rights during criminal proceedings</li>
+<li class="list-item"><strong class="bold-text">Appendix D: Questions for Your Attorney</strong> — 10-15 targeted, gap-based questions</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 1: Your Case Roadmap</h2>
+
+<h3 class="section-h3">1a. Where You Are Now</h3>
+
+<p class="body-text">Sofia, here is where your case stands:</p>
+
+<table class="report-table"><tr><td class="table-cell">Detail</td><td class="table-cell">Your Case</td></tr>
+
+<tr><td class="table-cell">Case Number</td><td class="table-cell">2025-CR-09218-B</td></tr>
+<tr><td class="table-cell">Charge</td><td class="table-cell">Assault — Family Violence (Tex. Penal Code § 22.01(b)(2))</td></tr>
+<tr><td class="table-cell">Classification</td><td class="table-cell">Class A misdemeanor (enhanced due to FV designation)</td></tr>
+<tr><td class="table-cell">County</td><td class="table-cell">Bexar County, Texas</td></tr>
+<tr><td class="table-cell">Arrest Date</td><td class="table-cell">September 22, 2025</td></tr>
+<tr><td class="table-cell">Time Since Arrest</td><td class="table-cell">~6 months</td></tr>
+<tr><td class="table-cell">Next Court Date</td><td class="table-cell">April 28, 2026 — Pre-trial hearing</td></tr>
+<tr><td class="table-cell">Judge</td><td class="table-cell">Judge Maria Elena Gutierrez</td></tr>
+<tr><td class="table-cell">Attorney</td><td class="table-cell">James Whitfield (Public Defender)</td></tr>
+<tr><td class="table-cell">Alleged Victim</td><td class="table-cell">Roberto (husband, married 8 years)</td></tr>
+<tr><td class="table-cell">911 Caller</td><td class="table-cell">You</td></tr>
+<tr><td class="table-cell">Protective Order</td><td class="table-cell">Emergency protective order against you</td></tr>
+<tr><td class="table-cell">Children</td><td class="table-cell">Two (ages 4 and 7) — currently with your husband</td></tr></table>
+
+<p class="body-text">Here is what works in your favor: you called 911. That is the single most important fact in your case. When the person who initiates the call for help is arrested instead, it raises a specific question: did the officers correctly identify the primary aggressor? Defense attorneys who handle DV cases, like Lisa Wayne (former president of the National Association of Criminal Defense Lawyers), look at four things first — who called, who had injuries, the history of the relationship, and who was afraid. On every one of those factors, your account tells a different story than the arrest report.</p>
+
+<h3 class="section-h3">1b. What Happens Next</h3>
+
+<p class="body-text">Typical progression for a DV assault case in Bexar County:</p>
+
+<table class="report-table"><tr><td class="table-cell">Stage</td><td class="table-cell">What Happens</td><td class="table-cell">Typical Timeline</td><td class="table-cell">Your Status</td></tr>
+
+<tr><td class="table-cell">Arraignment</td><td class="table-cell">Formal charges, bond conditions, the EPO</td><td class="table-cell">Within 48 hours of arrest</td><td class="table-cell">Completed</td></tr>
+<tr><td class="table-cell">EPO hearing</td><td class="table-cell">Review/modification of emergency order</td><td class="table-cell">14-21 days post-arrest</td><td class="table-cell"><strong class="bold-text">Ask Whitfield — may have occurred</strong></td></tr>
+<tr><td class="table-cell">Evidence exchange</td><td class="table-cell">Prosecution produces police reports, body cam, medical records</td><td class="table-cell">1-3 months post-arraignment</td><td class="table-cell"><strong class="bold-text">Not sure — ask Whitfield</strong></td></tr>
+<tr><td class="table-cell">Pre-trial hearing</td><td class="table-cell">Case status, plea discussions, motion deadlines</td><td class="table-cell">3-6 months post-arrest</td><td class="table-cell"><strong class="bold-text">April 28 — your next date</strong></td></tr>
+<tr><td class="table-cell">Motion hearings</td><td class="table-cell">§ 9.31 defense, suppression of statements, order modification</td><td class="table-cell">Before trial, if filed</td><td class="table-cell">Depends on whether Whitfield files</td></tr>
+<tr><td class="table-cell">Plea negotiations</td><td class="table-cell">Standard offer, defense counters, terms negotiation</td><td class="table-cell">Ongoing</td><td class="table-cell">Whitfield said "usually plead out"</td></tr>
+<tr><td class="table-cell">Trial (if needed)</td><td class="table-cell">6-person jury (misdemeanor)</td><td class="table-cell">6-12 months post-arrest</td><td class="table-cell">Only if no resolution</td></tr></table>
+
+<strong class="bold-text">Bexar County context:</strong> The Bexar County District Attorney's Office handles a high volume of DV cases. Texas has a mandatory arrest policy for domestic violence calls — officers are trained to identify the primary aggressor, but the identification isn't always accurate. The DA's dedicated DV division typically offers standard plea packages. Whether that standard offer is appropriate for your case depends on evidence Whitfield should have reviewed by now.
+
+<h3 class="section-h3">1c. The Two Paths</h3>
+
+<strong class="bold-text">Path A — Negotiated Resolution:</strong>
+<p class="body-text">The prosecution makes an offer. Whitfield said "these cases usually plead out" — that's true statistically, but it doesn't mean it's right for your case. A conviction under this charge in Texas has serious collateral consequences that outlast the sentence: permanent firearms prohibition, a DV finding on your record that affects custody, employment restrictions for teachers, and no possibility of expunction. Before accepting any plea, you're entitled to know what the evidence actually shows.</p>
+
+<strong class="bold-text">Path B — Trial:</strong>
+<p class="body-text">If no acceptable resolution is reached, the case goes before a 6-person jury. The prosecution must prove every element beyond a reasonable doubt — including that YOU were the aggressor, not the victim. Given that you called 911, that you had injuries documented at booking, and that your husband's injuries were described as scratch marks (consistent with defensive contact), there are genuine questions about whether the prosecution can meet that burden.</p>
+
+<p class="body-text">Neither path is inherently better. But Path A should only be chosen after evidence review — not as a default.</p>
+
+<h3 class="section-h3">Bottom Line Right Now</h3>
+
+<p class="body-text">You are 6 months into a case where your public defender met you once for five minutes and suggested you'll probably plead out. Before any plea conversation advances, the question is whether the evidence supports a defense. Send the email in Section 6.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 2: What's Working + What Needs Attention</h2>
+
+<h3 class="section-h3">2a. What's On Track</h3>
+
+<strong class="bold-text">Case Progress Score: 12/100</strong>
+
+<p class="body-text">This score reflects where your case stands based on what you've told us across six dimensions. It is not a judgment of James Whitfield or the quality of your representation — it maps what's been communicated to you versus what matters at this stage.</p>
+
+<table class="report-table"><tr><td class="table-cell">Dimension</td><td class="table-cell">Weight</td><td class="table-cell">Your Status</td><td class="table-cell">Score</td></tr>
+
+<tr><td class="table-cell">Communication</td><td class="table-cell">25%</td><td class="table-cell">Met once for 5 minutes, rarely communicates, calls not returned</td><td class="table-cell">2/25</td></tr>
+<tr><td class="table-cell">Case Review</td><td class="table-cell">15%</td><td class="table-cell">No indication the footage or medical records have been reviewed</td><td class="table-cell">1/15</td></tr>
+<tr><td class="table-cell">Evidence Production</td><td class="table-cell">20%</td><td class="table-cell">Not sure — you don't know if evidence has been exchanged</td><td class="table-cell">1/20</td></tr>
+<tr><td class="table-cell">Motion Activity</td><td class="table-cell">15%</td><td class="table-cell">No motions discussed or filed</td><td class="table-cell">1/15</td></tr>
+<tr><td class="table-cell">Strategy</td><td class="table-cell">15%</td><td class="table-cell">"Usually plead out" — no defense theory communicated</td><td class="table-cell">2/15</td></tr>
+<tr><td class="table-cell">Court Prep</td><td class="table-cell">10%</td><td class="table-cell">Pre-trial hearing approaching, no preparation discussed</td><td class="table-cell">5/10</td></tr></table>
+
+<strong class="bold-text">What this tells you:</strong> A score of 12 is one of the lowest we've seen. That doesn't mean Whitfield is incompetent — public defenders carry caseloads that can exceed 200-300 cases per year. They are salaried employees with no per-case financial incentive: more time on your case means less time on someone else's. This is a structural constraint, not a personal failing. But it means you've received virtually no information about your own case in six months. The questions in this report are designed to change that — and to make the most of whatever time Whitfield gives you.
+
+<h3 class="section-h3">2b. Decoded Statements</h3>
+
+<p class="body-text">Whitfield told you "these cases usually plead out." Here's what that statement reveals:</p>
+
+<table class="report-table"><tr><td class="table-cell">What He Said</td><td class="table-cell">What It Likely Means</td><td class="table-cell">Question to Ask</td></tr>
+
+<tr><td class="table-cell">"These cases usually plead out"</td><td class="table-cell">Statistically true — most DV cases in Texas resolve by plea. But "usually" describes a category, not YOUR case. It suggests Whitfield is applying a pattern rather than analyzing your facts.</td><td class="table-cell">"Have you reviewed the body camera footage and my booking injuries? Do the facts of MY case support a plea, or is there a § 9.31 defense?"</td></tr></table>
+
+<strong class="bold-text">What's missing from the conversation:</strong> Whitfield hasn't discussed a defense theory. You told us you asked about strategy and got a vague answer. In DV defense practice, this pattern has a name — insiders call it "meet 'em, greet 'em, plead 'em." It describes a volume approach where the attorney meets the client, enters a plea, waits for the standard offer, and passes it along. That may not be what's happening here — but the question to ask is whether Whitfield has a theory of defense or is waiting for the prosecution's offer to define the path forward.
+
+<p class="body-text">Your attorney rarely communicates or hasn't returned calls. This is the #1 complaint filed with state bar associations across the country. It's not just frustrating — it's a pattern. Understanding the economics helps you see it as a system issue, not a personal slight. The questions in this report are designed to break through that pattern.</p>
+
+<h3 class="section-h3">2c. What Needs Attention</h3>
+
+<strong class="bold-text">CLARIFY — Evidence review status:</strong> You're not sure about evidence exchange — and that itself is a signal. The prosecution's evidence against you includes the police report, the stop footage, medical records from booking, your husband's statement, witness statements (including your kids', if taken), and the 911 call recording. Whitfield should have explained what he's received, whether he's reviewed it, and what it shows. The fact that you don't know means either it hasn't been discussed or it was discussed in terms you didn't recognize.
+
+<strong class="bold-text">CLARIFY — Defense theory analysis:</strong> Your booking photos show bruising on your arms and neck. Your husband's injuries were described as scratch marks on his arm. This pattern — defensive injuries on you, minor contact injuries on him — is consistent with defending yourself, not assault. Has Whitfield analyzed this? If he hasn't reviewed the medical records or the footage, he can't evaluate whether a § 9.31 claim applies.
+
+<strong class="bold-text">CLARIFY — EPO status:</strong> An emergency no-contact order was issued at arrest. These typically expire after 31-91 days in Texas (Tex. Code Crim. Proc. Art. 17.292). Has it been extended? Modified? You mentioned you can't go home or see your children. Understanding the current status of the order — and whether modification is possible — is urgent.
+
+<strong class="bold-text">CLARIFY — Primary aggressor determination:</strong> Texas law (Tex. Fam. Code § 71.0021) requires officers to identify the primary aggressor at a domestic violence scene. The factors include: who called 911, relative severity of injuries, history of domestic violence, and whether either party acted defensively. On every factor, your account suggests the officers may have gotten it wrong. Has Whitfield raised this with the prosecution?
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">Your score is 12 because virtually no information has flowed to you. That changes with the email in Section 6 — and the questions in this report give you the tools to have a real conversation with Whitfield before April 28.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 3: Your Case Intelligence</h2>
+
+<h3 class="section-h3">3a. Outcome Map</h3>
+
+<p class="body-text">Five realistic outcomes for a first-offense DV assault case in Bexar County with these facts:</p>
+
+<table class="report-table"><tr><td class="table-cell">Outcome</td><td class="table-cell">What It Means</td><td class="table-cell">How Common in Bexar County</td><td class="table-cell">Key Variables</td></tr>
+
+<tr><td class="table-cell">Dismissal</td><td class="table-cell">Charges dropped — prosecution declines or can't prove case</td><td class="table-cell">Moderate for contested DV cases with § 9.31 evidence</td><td class="table-cell">Strength of the defense theory, body cam content, the alleged victim's cooperation with prosecution</td></tr>
+<tr><td class="table-cell">Deferred adjudication</td><td class="table-cell">Guilty plea, probation, no final conviction if completed</td><td class="table-cell">Common — standard offer for first offense in Texas</td><td class="table-cell">Tex. Code Crim. Proc. Art. 42A.102; 12-24 months probation, classes, fees</td></tr>
+<tr><td class="table-cell">Plea to lesser charge</td><td class="table-cell">Reduced charge (Class C assault) with lower consequences</td><td class="table-cell">Moderate — depends on prosecution's assessment of evidence</td><td class="table-cell">Negotiation leverage, evidence strength</td></tr>
+<tr><td class="table-cell">Acquittal at trial</td><td class="table-cell">Jury finds prosecution failed to prove you were the aggressor</td><td class="table-cell">Possible — especially with § 9.31 evidence and 911 call</td><td class="table-cell">Footage content, injury documentation, jury composition</td></tr>
+<tr><td class="table-cell">Conviction at trial</td><td class="table-cell">Jury finds guilt — Class A misdemeanor</td><td class="table-cell">Possible but less likely given your facts</td><td class="table-cell">Quality of defense, jury instructions on the § 9.31 claim</td></tr></table>
+
+<strong class="bold-text">Critical note on deferred adjudication and this charge type:</strong> In Texas, deferred adjudication for a DV offense is NOT the same as deferred adjudication for other offenses. Under Tex. Code Crim. Proc. Art. 42A.111, a deferred adjudication under this designation CANNOT be expunged or sealed through non-disclosure. It stays on your record permanently. For a teacher, this distinction is the difference between eventually clearing your record and living with this finding forever.
+
+<h3 class="section-h3">3b. Defense Theories</h3>
+
+<p class="body-text">Based on your intake, three viable defense theories emerge:</p>
+
+<strong class="bold-text">1. Self-defense (primary — Tex. Penal Code § 9.31)</strong>
+<p class="body-text">You called 911 because your husband was threatening you. When police arrived, he told them you hit him. Your booking photos show bruising on your arms and neck — injuries consistent with being grabbed or restrained. His injuries (scratch marks on his arm) are consistent with defensive contact — someone trying to pull away from a grip. This pattern is the textbook § 9.31 scenario that defense attorneys like Lisa Wayne train on. The question for Whitfield: "Have you analyzed whether the injury patterns support this defense theory?"</p>
+
+<strong class="bold-text">2. Insufficient evidence of intent / Primary aggressor misidentification</strong>
+<p class="body-text">The prosecution must prove you intentionally or knowingly caused bodily injury. If you were defending yourself, the scratches on his arm were incidental to protecting yourself — not an intentional assault. Combined with the 911 call (why would the aggressor call for help?) and your injuries (why would the aggressor have defensive wounds?), the prosecution's theory has gaps. Lenore Walker's research on defensive injuries in domestic violence has established that the pattern you describe — the actual victim being arrested — is a documented phenomenon called "dual arrest" or "wrong party arrest."</p>
+
+<strong class="bold-text">3. Credibility challenge / Motive to fabricate</strong>
+<p class="body-text">Your husband told police you hit him after you called 911 for help. If your account is accurate, he had a motive to reverse the narrative — whoever tells the police the other person was the aggressor gains control of the no-contact order, the kids, and the house. This doesn't mean the jury will automatically believe you, but it establishes a credibility contest that the prosecution must win beyond reasonable doubt.</p>
+
+<h3 class="section-h3">3c. Judge Intelligence</h3>
+
+<p class="body-text">Jurisdiction-specific data on Judge Maria Elena Gutierrez's DV case tendencies is not available for this report. The most reliable source for her courtroom patterns is Whitfield's direct experience — use the questions below to extract that intelligence.</p>
+
+<strong class="bold-text">Framework — what matters about your judge:</strong>
+
+<li class="list-item"><strong class="bold-text">Approach to this charge type:</strong> Does Gutierrez take a hard line on DV cases, or does she seriously consider § 9.31 arguments? Ask Whitfield: "In your experience, how does Judge Gutierrez handle cases like mine where the defendant claims they were defending themselves?"</li>
+
+<li class="list-item"><strong class="bold-text">Order modifications:</strong> Will Gutierrez consider modifying the current restrictions to allow supervised contact? Some judges are open to modification with conditions; others maintain strict no-contact. Ask: "Has Judge Gutierrez modified these orders in similar cases?"</li>
+
+<li class="list-item"><strong class="bold-text">Plea vs trial tendencies:</strong> Does Gutierrez sentence more harshly after a failed trial bid? Some judges do; others sentence based on facts regardless of how the case resolved. Ask: "If we go to trial and lose, how does Gutierrez typically sentence compared to what the plea would have been?"</li>
+
+<li class="list-item"><strong class="bold-text">Jury instruction approach:</strong> In § 9.31 cases, the jury instructions are critical. Does Gutierrez give detailed defense instructions that help? Ask: "What's Gutierrez's approach to jury instructions on this defense theory in DV cases?"</li>
+
+<h3 class="section-h3">3d. Prosecution Preview</h3>
+
+<strong class="bold-text">How the DA's DV division will likely build its case:</strong>
+
+<p class="body-text">The prosecution's narrative is simple: your husband had scratch marks, you were arrested, and you're charged with assault. They will present the officer's report, his statement, and the physical evidence of his injuries.</p>
+
+<strong class="bold-text">What to watch for:</strong>
+
+<li class="list-item"><strong class="bold-text">The alleged victim's willingness to testify:</strong> In Texas, the prosecution can compel testimony from a spouse in DV cases (Tex. Code Crim. Proc. Art. 38.10 exception). However, if he is reluctant or his story is inconsistent, the prosecution's case weakens significantly. Many cases like yours collapse when the alleged victim doesn't cooperate.</li>
+
+<li class="list-item"><strong class="bold-text">The recording:</strong> The most important evidence. If the footage shows you crying, afraid, with visible injuries while your husband is calm and controlled, the prosecution's "Sofia was the aggressor" narrative falls apart. If the footage shows something different, Whitfield needs to address that honestly.</li>
+
+<li class="list-item"><strong class="bold-text">Children's statements:</strong> If officers or CPS spoke to your kids (ages 4 and 7), their statements may have been recorded. A 7-year-old's account of what happened could be significant. Has Whitfield obtained these statements?</li>
+
+<li class="list-item"><strong class="bold-text">911 call recording:</strong> Your call is evidence. The tone, content, and context of your call — a woman calling for help because her husband is threatening her — directly contradicts the prosecution's theory that you were the aggressor.</li>
+
+<h3 class="section-h3">3e. Jurisdiction Profile</h3>
+
+<p class="body-text">Bexar County processes a high volume of DV cases through its specialized courts. The DA's office has a dedicated domestic violence division. Texas's mandatory arrest policy means officers must arrest someone at a DV scene — even when the facts are ambiguous. This results in a documented percentage of wrong-party arrests, particularly when the actual victim has defensive injuries. The San Antonio defense bar includes attorneys who specialize in challenging primary aggressor determinations.</p>
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">Your case has genuine defense possibilities — stronger than most DV cases because of the 911 call, the injury pattern, and the § 9.31 framework. But every theory depends on what the footage shows. Whitfield needs to review that footage before your pre-trial hearing.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 4: Legal Options & Deadlines</h2>
+
+<h3 class="section-h3">4a. Motion Landscape</h3>
+
+<p class="body-text">Applicable motions in a DV assault case with your facts:</p>
+
+<table class="report-table"><tr><td class="table-cell">Motion</td><td class="table-cell">Legal Basis</td><td class="table-cell">What It Does</td><td class="table-cell">Viability in Your Case</td></tr>
+
+<tr><td class="table-cell">Motion to dismiss (primary aggressor)</td><td class="table-cell">Tex. Fam. Code § 71.0021</td><td class="table-cell">Argues officers misidentified the primary aggressor based on evidence</td><td class="table-cell">Moderate to strong — 911 call + injury pattern support it</td></tr>
+<tr><td class="table-cell">§ 9.31 instruction request</td><td class="table-cell">Tex. Penal Code § 9.31</td><td class="table-cell">Ensures jury hears the defense theory with proper instructions</td><td class="table-cell">Strong — injury evidence supports raising this defense</td></tr>
+<tr><td class="table-cell">Motion to modify the EPO</td><td class="table-cell">Tex. Fam. Code § 85.025</td><td class="table-cell">Modify terms to allow supervised contact with children or property retrieval</td><td class="table-cell">Moderate — depends on judge's approach</td></tr>
+<tr><td class="table-cell">Motion to suppress statements</td><td class="table-cell">Tex. Code Crim. Proc. Art. 38.22</td><td class="table-cell">Challenge admissibility of statements made without Miranda warnings</td><td class="table-cell">Depends on when/how officers questioned you</td></tr>
+<tr><td class="table-cell">Brady/Giglio request</td><td class="table-cell">Brady v. Maryland</td><td class="table-cell">Compel disclosure of exculpatory evidence (911 call, the alleged victim's prior reports)</td><td class="table-cell">Standard — should already be filed</td></tr>
+<tr><td class="table-cell">Motion for counter-order against your husband</td><td class="table-cell">Tex. Fam. Code § 82.001</td><td class="table-cell">File a counter-order based on your injuries and 911 call</td><td class="table-cell">Viable — but may be better handled in family court</td></tr></table>
+
+<strong class="bold-text">Priority motions:</strong> EPO modification (for the kids and your belongings) and evidence review (the footage, medical records, 911 recording) are the most urgent.
+
+<h3 class="section-h3">4b. Deadline Calendar</h3>
+
+<table class="report-table"><tr><td class="table-cell">Window</td><td class="table-cell">Action</td><td class="table-cell">Who Acts</td></tr>
+
+<tr><td class="table-cell"><strong class="bold-text">Now</strong></td><td class="table-cell">Review the officer footage and booking medical records</td><td class="table-cell">Whitfield</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Now</strong></td><td class="table-cell">File evidence request if not done</td><td class="table-cell">Whitfield</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Now - April 28</strong></td><td class="table-cell">Evaluate EPO modification options</td><td class="table-cell">Whitfield</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">At April 28 hearing</strong></td><td class="table-cell">Raise the § 9.31 theory, evidence status, order modification</td><td class="table-cell">Whitfield</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">30 days post-hearing</strong></td><td class="table-cell">File pre-trial motions (suppression, dismissal)</td><td class="table-cell">Whitfield</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Before any plea</strong></td><td class="table-cell">Full evidence review + § 9.31 analysis</td><td class="table-cell">Whitfield</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Speedy trial</strong></td><td class="table-cell">Texas speedy trial: 180 days from arrest for misdemeanor (Tex. Code Crim. Proc. Art. 32A.02) — clock may have been tolled</td><td class="table-cell">Both — ask Whitfield about current status</td></tr></table>
+
+<h3 class="section-h3">4c. Understanding the Plea Offer</h3>
+
+<p class="body-text">Whitfield said the prosecution is "discussing" a plea. For first-offense DV assault in Bexar County, the standard offer typically includes:</p>
+
+<table class="report-table"><tr><td class="table-cell">Component</td><td class="table-cell">Typical Terms</td><td class="table-cell">What It Means for You</td></tr>
+
+<tr><td class="table-cell">Charge</td><td class="table-cell">Class A misdemeanor — Assault FV</td><td class="table-cell">The designation stays on record permanently</td></tr>
+<tr><td class="table-cell">Probation</td><td class="table-cell">12-24 months deferred adjudication or regular probation</td><td class="table-cell">Must complete all conditions or face jail time</td></tr>
+<tr><td class="table-cell">BATIP classes</td><td class="table-cell">Battering Intervention and Prevention Program (18-26 weeks)</td><td class="table-cell">Required weekly attendance — treats you as the batterer</td></tr>
+<tr><td class="table-cell">Fees/fines</td><td class="table-cell">$500-2,000+ in fines and court costs</td><td class="table-cell">Financial burden during employment disruption</td></tr>
+<tr><td class="table-cell">No-contact order</td><td class="table-cell">May continue restrictions on contact with your spouse and kids</td><td class="table-cell">Could extend separation from your kids</td></tr></table>
+
+<h3 class="section-h3">4d. Why This Plea Deserves Scrutiny</h3>
+
+<p class="body-text">You've been offered a plea and Whitfield is hard to reach. When an attorney goes silent after a plea offer arrives, it sometimes means they expect you to accept it — and they're waiting for you to come to that conclusion on your own. Before accepting any plea, you're entitled to understand every right you'd be waiving, the full collateral consequences, and whether the offer is above or below the standard offer for your charge type in Bexar County.</p>
+
+<p class="body-text">You've been offered a plea deal, but Whitfield hasn't discussed a defense strategy. This is the pattern: prosecutors have standard offers for every charge type. The question is whether Whitfield negotiated DOWN from the standard — or just passed it along. Ask: "What was the standard offer for my charge type, and how does this compare?" and "What would our defense look like if we don't take this offer?"</p>
+
+<strong class="bold-text">Before accepting any plea, ask Whitfield these 5 questions:</strong>
+<li class="list-item">What are the full collateral consequences of a DV conviction for a teacher?</li>
+<li class="list-item">Can this charge be expunged or sealed if I complete deferred adjudication? (The answer is no — Tex. Code Crim. Proc. Art. 42A.111.)</li>
+<li class="list-item">What does the officer footage show? Have you reviewed it?</li>
+<li class="list-item">Have you analyzed whether the § 9.31 defense applies to my case?</li>
+<li class="list-item">What does our case look like if we reject this offer and go to trial?</li>
+
+<strong class="bold-text">Something most defendants in cases like yours don't think about:</strong> The BATIP classes required as part of most DV pleas don't just take time — they frame you as the abuser. For 18-26 weeks, you'd attend classes designed for people who batter their partners. If you are actually the victim, this requirement adds psychological harm to an already unjust outcome. Whether this distinction matters enough to fight depends on the evidence — and that's what The X-Ray ($2,497) examines in detail. Your $997 is already credited, so it's $1,500. No rush — see how your conversation with Whitfield goes first.
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">The motion landscape has real options — particularly the § 9.31 defense and order modification. But every option depends on evidence review, which hasn't happened.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 5: Protecting Your Case and Life</h2>
+
+<h3 class="section-h3">5a. Protecting Your Case</h3>
+
+<strong class="bold-text">Do not contact your husband directly — the order prohibits it, and any contact can result in additional charges.</strong>
+
+<p class="body-text">This is not just legal advice — it's protective. Any text, call, email, social media message, or in-person contact with him while the order is active is a separate criminal offense (violation of the EPO, Tex. Penal Code § 25.07). Even responding to a message from HIM can be charged against YOU.</p>
+
+<strong class="bold-text">Specific protections:</strong>
+
+<li class="list-item"><strong class="bold-text">Communication about the children:</strong> All communication about your kids should go through a third party (your sister, a family member, or an attorney). Do not communicate with him directly, even about pickups, school, or medical appointments.</li>
+
+<li class="list-item"><strong class="bold-text">Social media:</strong> Do not post about the case, your spouse, the order, your kids, or your situation. Do not post photos showing you in social situations that could be used to characterize your emotional state. Lock all accounts.</li>
+
+<li class="list-item"><strong class="bold-text">Documentation:</strong> Keep a dated journal of everything: attempts to contact Whitfield, impacts on your employment, effects on the kids, and your emotional state. This documentation serves two purposes — evidence for your defense and evidence for any future custody proceeding.</li>
+
+<h3 class="section-h3">5b. Life Impact Map</h3>
+
+<table class="report-table"><tr><td class="table-cell">Domain</td><td class="table-cell">If Convicted (FV Designation)</td><td class="table-cell">Protective Action</td></tr>
+
+<tr><td class="table-cell">Employment</td><td class="table-cell">Teacher with a DV conviction — school districts may terminate. TEA (Texas Education Agency) licensing board reviews.</td><td class="table-cell">Notify your union rep (if applicable). Understand TEA's process before it starts.</td></tr>
+<tr><td class="table-cell">Custody</td><td class="table-cell">A DV finding = presumption against custody under Tex. Fam. Code § 153.004. He can use this in custody proceedings.</td><td class="table-cell">Consult a family law attorney NOW. Document your parenting involvement.</td></tr>
+<tr><td class="table-cell">Housing</td><td class="table-cell">If the order continues, you cannot return home. Conviction can affect future housing applications.</td><td class="table-cell">Stabilize your living situation. Your sister's support is critical right now.</td></tr>
+<tr><td class="table-cell">Firearms</td><td class="table-cell">ANY conviction under this charge = permanent federal firearms prohibition under 18 U.S.C. § 922(g)(9) (the Lautenberg Amendment). No exceptions.</td><td class="table-cell">This is permanent. Factor into plea evaluation.</td></tr>
+<tr><td class="table-cell">Background checks</td><td class="table-cell">A conviction under this designation cannot be sealed under Art. 42A.111. Appears on all background checks permanently.</td><td class="table-cell">Understand: this is NOT like other misdemeanors. No expunction path exists for FV deferred adjudication in Texas.</td></tr>
+<tr><td class="table-cell">Professional licensing</td><td class="table-cell">TEA may revoke or suspend teaching certificate. Other professional licenses may be affected.</td><td class="table-cell">Check TEA disciplinary rules before accepting any plea.</td></tr>
+<tr><td class="table-cell">Voting</td><td class="table-cell">Texas does not restrict voting for misdemeanor convictions.</td><td class="table-cell">Your right to vote is not affected.</td></tr>
+<tr><td class="table-cell">No-contact order</td><td class="table-cell">Current restrictions limit your access to home and kids. Conviction may result in a permanent order.</td><td class="table-cell">Ask Whitfield about modification — supervised contact with children may be possible.</td></tr></table>
+
+<strong class="bold-text">Immigration note (Padilla v. Kentucky, 559 U.S. 356 (2010)):</strong> You are a US citizen, so deportation is not a concern for you personally. However, the Supreme Court's ruling in <em>Padilla</em> — a decision requiring criminal defense to include immigration consequence analysis — is relevant if anyone in your household has immigration status concerns. A conviction under this charge can affect your ability to sponsor family members for immigration benefits and may complicate international travel (some countries deny entry for domestic violence convictions). If immigration is relevant to anyone in your family, consult an immigration attorney before any plea decision.
+
+<h3 class="section-h3">5c. Life While Pending</h3>
+
+<strong class="bold-text">Your children:</strong> You told us your biggest concern is losing your kids. Your husband has them and you're terrified he'll use this for full custody. Here's what matters right now:
+
+<p class="body-text">The emergency order is temporary. It can be modified. If Whitfield hasn't raised this with the court, ask him to — supervised visitation is often available even during a pending DV case. Your children — ages 4 and 7 — need their mother. Courts recognize this. But the modification request needs to happen proactively, not passively.</p>
+
+<p class="body-text">Document every aspect of your parenting before the arrest: school involvement, medical appointments, extracurricular activities, daily routines. This documentation becomes your primary evidence in any custody proceeding. Consult a family law attorney independently of your criminal case — the two cases (criminal and custody) may be handled by different attorneys, and they intersect.</p>
+
+<strong class="bold-text">Employment:</strong> You're on administrative leave as a teacher. A conviction under this charge would likely end your career. But administrative leave during a pending case is not termination — the school is waiting to see what happens. The strongest thing you can do for your employment is resolve this case without a DV conviction. An acquittal or dismissal preserves your career. A plea to this charge likely doesn't.
+
+<strong class="bold-text">Stress management:</strong> Six months of separation from your son and daughter while staying with your sister is genuinely hard. Your emotional response to this situation is not a weakness — it's evidence that you are a mother who loves her kids. Channel that energy into preparation: organized questions, documented evidence, and engaged advocacy with Whitfield. Build a routine. Physical activity helps. Sleep protects your judgment.
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">The most protective thing you can do today: silence (don't contact your husband), stability (maintain your routine and employment), and preparation (send the email, engage Whitfield, document everything).</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 6: Your Plan</h2>
+
+<h3 class="section-h3">6a. If You're Feeling Overwhelmed, Start Here</h3>
+
+<p class="body-text">One action. Send the email below. It takes 30 seconds — it's already written with your case number, court date, and five questions embedded. Copy, paste, send.</p>
+
+<p class="body-text">You've just done something most defendants never do: put your questions in writing to a public defender carrying hundreds of cases. Written questions get attention because they create a record.</p>
+
+<h3 class="section-h3">6b. Pre-Written Email to James Whitfield</h3>
+
+<strong class="bold-text">Subject:</strong> Case Questions — Sofia, Case #2025-CR-09218-B
+
+<p class="body-text">Dear Mr. Whitfield,</p>
+
+<p class="body-text">I hope this message finds you well. I'm writing because our pre-trial hearing on April 28 is approaching and I want to make sure I'm prepared.</p>
+
+<p class="body-text">I have five specific questions I'd like to discuss before that date:</p>
+
+<li class="list-item">Have you reviewed the body camera footage from my arrest on September 22, and do the officers' actions and the footage support a self-defense argument under Texas Penal Code § 9.31?</li>
+<li class="list-item">My booking photos show bruising on my arms and neck while Roberto's injuries were scratch marks on his arm — has anyone analyzed whether this injury pattern is consistent with self-defense rather than assault?</li>
+<li class="list-item">Can we file a motion to modify the protective order so I can have supervised contact with my children? They are 4 and 7 and I haven't seen them in months.</li>
+<li class="list-item">What are the full consequences of a family violence plea for my teaching career — specifically, can a deferred adjudication for family violence be sealed in Texas?</li>
+<li class="list-item">I called 911 because Roberto was threatening me — have you raised the primary aggressor misidentification issue with the prosecution?</li>
+
+<p class="body-text">I understand you're managing a heavy caseload and I appreciate the work you're doing on my behalf. I want to be the most prepared client you have this month.</p>
+
+<p class="body-text">Could we schedule a call or meeting before April 28? I'm flexible on timing.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Sofia</p>
+
+<h3 class="section-h3">6c. Phone Script</h3>
+
+<p class="body-text">If you prefer calling:</p>
+
+<em>"Hi, this is Sofia — case number 2025-CR-09218-B. I'm calling because our pre-trial hearing is coming up on April 28 and I have five questions I'd like to go through before that date. I also sent you an email with the questions in writing. Could we schedule a time to talk this week? I'm flexible and I'll be brief. Thank you."</em>
+
+<p class="body-text">Keep it under 60 seconds. If you reach voicemail, leave this message and follow up in writing.</p>
+
+<h3 class="section-h3">6d. Your 14-Day Plan</h3>
+
+<table class="report-table"><tr><td class="table-cell">Day</td><td class="table-cell">Action</td><td class="table-cell">Why</td></tr>
+
+<tr><td class="table-cell">Day 1</td><td class="table-cell">Send the email above</td><td class="table-cell">Copy, paste, send. Written record created.</td></tr>
+<tr><td class="table-cell">Day 2</td><td class="table-cell">Take dated photos of any remaining visible injuries; have your sister witness</td><td class="table-cell">Preserve evidence while it exists.</td></tr>
+<tr><td class="table-cell">Day 3</td><td class="table-cell">Follow up by phone if no email response</td><td class="table-cell">Use the phone script above. Reference your email.</td></tr>
+<tr><td class="table-cell">Day 4</td><td class="table-cell">Write a timeline of the September 22 incident — who said what, in order</td><td class="table-cell">Your memory is sharpest now. This helps Whitfield and helps you.</td></tr>
+<tr><td class="table-cell">Day 5</td><td class="table-cell">Practice your top 3 questions aloud once</td><td class="table-cell">It helps you sound prepared, not emotional.</td></tr>
+<tr><td class="table-cell">Day 6</td><td class="table-cell">Send the follow-up email (Section 6e) if still no response</td><td class="table-cell">Second written record with timestamped questions.</td></tr>
+<tr><td class="table-cell">Day 7</td><td class="table-cell">Review Section 4 — note any questions that came up</td><td class="table-cell">Write them on your Meeting Ready Sheet.</td></tr>
+<tr><td class="table-cell">Day 8-9</td><td class="table-cell">Rest. The preparation is done.</td><td class="table-cell">Seriously — you've done the work. Take care of yourself.</td></tr>
+<tr><td class="table-cell">Day 10-12</td><td class="table-cell">Prepare for your meeting — review your Meeting Ready Sheet</td><td class="table-cell">Bring it with you.</td></tr>
+<tr><td class="table-cell">Day 13</td><td class="table-cell">Attend your meeting with Whitfield (or court date, whichever comes first)</td><td class="table-cell">Bring your sheet, pen, phone. Texas is a one-party consent state — you can record without informing the other party.</td></tr>
+<tr><td class="table-cell">Day 14</td><td class="table-cell">Send a post-meeting summary email to Whitfield (Section 6h)</td><td class="table-cell">Confirm what was discussed and next steps.</td></tr></table>
+
+<h3 class="section-h3">6e. Follow-Up Email</h3>
+
+<strong class="bold-text">Subject:</strong> Follow-Up: Case #2025-CR-09218-B — Pre-Trial Hearing April 28
+
+<p class="body-text">Dear Mr. Whitfield,</p>
+
+<p class="body-text">I sent an email on [date] with five questions ahead of our pre-trial hearing. I understand you're managing a heavy caseload. These questions are important to me because the hearing is approaching and I need to understand the § 9.31 question and the order situation before any plea discussion moves forward.</p>
+
+<p class="body-text">Could you let me know a good time to talk? Even a 10-minute call would help.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Sofia</p>
+
+<h3 class="section-h3">6f. What to Bring to Your Meeting</h3>
+
+<li class="list-item checkbox-item">&#9744; Printed Meeting Ready Sheet (below) + pen</li>
+<li class="list-item checkbox-item">&#9744; Your case number: 2025-CR-09218-B</li>
+<li class="list-item checkbox-item">&#9744; Photos of your injuries (dated)</li>
+<li class="list-item checkbox-item">&#9744; Your written timeline of September 22</li>
+<li class="list-item checkbox-item">&#9744; A list of questions that came up while reading this report</li>
+<li class="list-item checkbox-item">&#9744; This report (for your reference only — do not show it to Whitfield)</li>
+
+<h3 class="section-h3">6g. Meeting Ready Sheet</h3>
+
+<em>This sheet is safe if your attorney sees it — it contains only questions, not analysis.</em>
+
+<strong class="bold-text">Case:</strong> 2025-CR-09218-B <table class="report-table"><tr><td class="table-cell"><strong class="bold-text">Date:</strong> April 28, 2026</td></tr></table> <strong class="bold-text">Attorney:</strong> James Whitfield
+
+<strong class="bold-text">Q1 (Golden Question — if you only ask one, ask this one):</strong>
+<p class="body-text">Have you reviewed the body camera footage from my arrest on September 22, and do the officers' actions and the footage support a self-defense argument under Texas Penal Code § 9.31?</p>
+
+<p class="body-text">Attorney's answer: _______________________________________________</p>
+
+<strong class="bold-text">Q2:</strong>
+<p class="body-text">My booking photos show bruising on my arms and neck while Roberto's injuries were scratch marks on his arm — has anyone analyzed whether this injury pattern is consistent with self-defense rather than assault?</p>
+
+<p class="body-text">Attorney's answer: _______________________________________________</p>
+
+<strong class="bold-text">Q3:</strong>
+<p class="body-text">Can we file a motion to modify the protective order so I can have supervised contact with my children? They are 4 and 7 and I haven't seen them in months.</p>
+
+<p class="body-text">Attorney's answer: _______________________________________________</p>
+
+<strong class="bold-text">Q4:</strong>
+<p class="body-text">What are the full consequences of a family violence plea for my teaching career — specifically, can a deferred adjudication for family violence be sealed in Texas?</p>
+
+<p class="body-text">Attorney's answer: _______________________________________________</p>
+
+<strong class="bold-text">Q5:</strong>
+<p class="body-text">I called 911 because Roberto was threatening me — have you raised the primary aggressor misidentification issue with the prosecution?</p>
+
+<p class="body-text">Attorney's answer: _______________________________________________</p>
+
+<strong class="bold-text">After the Meeting:</strong>
+<li class="list-item checkbox-item">&#9744; Got answers to my questions?</li>
+<li class="list-item checkbox-item">&#9744; Wrote down what was discussed?</li>
+<li class="list-item checkbox-item">&#9744; Understand what happens next?</li>
+<li class="list-item checkbox-item">&#9744; Know the next court date and what to expect?</li>
+
+<h3 class="section-h3">6h. Post-Meeting Summary Email</h3>
+
+<strong class="bold-text">Subject:</strong> Summary — Meeting on [Date], Case #2025-CR-09218-B
+
+<p class="body-text">Dear Mr. Whitfield,</p>
+
+<p class="body-text">Thank you for meeting with me. I want to make sure I captured our discussion correctly:</p>
+
+<li class="list-item">Footage / § 9.31 defense: [what he said]</li>
+<li class="list-item">Injury analysis: [what he said]</li>
+<li class="list-item">Order modification / contact with your kids: [what he said]</li>
+<li class="list-item">Plea consequences for teaching: [what he said]</li>
+<li class="list-item">Next steps: [what he said]</li>
+
+<p class="body-text">If I've misunderstood anything, could you let me know? I want to make sure we're on the same page.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Sofia</p>
+
+<h3 class="section-h3">6i. Difficult Conversations</h3>
+
+<strong class="bold-text">Scenario 1: "The evidence is what it is — Roberto has injuries."</strong>
+<li class="list-item"><strong class="bold-text">What's happening:</strong> Oversimplifying. He has scratches. You have bruising on your arms and neck.</li>
+<li class="list-item"><strong class="bold-text">What you can say:</strong> "I understand he has injuries. But I also had injuries — bruising documented at booking. Has anyone compared the two? Scratches on his arm and bruises on my neck tell different stories about who was defending themselves."</li>
+<li class="list-item"><strong class="bold-text">Why it works:</strong> Redirects to the evidence pattern rather than arguing about who's telling the truth.</li>
+
+<strong class="bold-text">Scenario 2: "The plea offer is a good deal — deferred adjudication means no conviction."</strong>
+<li class="list-item"><strong class="bold-text">What's happening:</strong> Technically true but critically misleading. Deferred adjudication for this charge type CANNOT be sealed in Texas.</li>
+<li class="list-item"><strong class="bold-text">What you can say:</strong> "I understand deferred adjudication avoids a final conviction — but my research shows that DV deferred adjudication can't be sealed under Article 42A.111. That means it appears on background checks permanently. As a teacher, that distinction matters for my career. Can we explore whether the evidence supports a stronger position?"</li>
+<li class="list-item"><strong class="bold-text">Why it works:</strong> Shows you understand the specific consequences. Reframes the conversation from "take the deal" to "is the deal actually good?"</li>
+
+<strong class="bold-text">Scenario 3: "I haven't had time to review the footage."</strong>
+<li class="list-item"><strong class="bold-text">What's happening:</strong> Caseload pressure. Common for public defenders.</li>
+<li class="list-item"><strong class="bold-text">What you can say:</strong> "I understand your caseload is heavy. Can we set a specific date by which you'll have reviewed the recording and my booking medical records? The § 9.31 question is my biggest concern, and the answer depends on what the footage shows."</li>
+<li class="list-item"><strong class="bold-text">Why it works:</strong> Creates accountability with empathy.</li>
+
+<strong class="bold-text">Scenario 4: "The judge won't modify the order during a pending case."</strong>
+<li class="list-item"><strong class="bold-text">What's happening:</strong> May be accurate for this specific judge — or may be a general assumption.</li>
+<li class="list-item"><strong class="bold-text">What you can say:</strong> "Has Judge Gutierrez specifically declined to modify these orders in similar cases? My son and daughter are 4 and 7, and supervised contact is different from removing the order entirely. Can we at least make the request?"</li>
+<li class="list-item"><strong class="bold-text">Why it works:</strong> Distinguishes between this judge's actual history and a generalized assumption.</li>
+
+<h3 class="section-h3">6j. Your Advocacy Steps</h3>
+
+<strong class="bold-text">Step 1:</strong> Send the email (Section 6b). Done today.
+<strong class="bold-text">Step 2:</strong> Follow up by phone if no response within 3-5 days. Reference your email and request a specific time.
+<strong class="bold-text">Step 3:</strong> Send the follow-up email (Section 6e) after 5-7 days. Creates a second written record.
+<strong class="bold-text">Step 4:</strong> Request written answers to your five questions. "Could you respond to my questions in writing before the hearing?"
+<strong class="bold-text">Step 5:</strong> Consider seeking a second opinion from a DV defense specialist. This is your right. The San Antonio Bar Association Lawyer Referral Service can connect you with attorneys who focus on domestic violence defense. A second opinion is not disloyalty — it's due diligence.
+
+<p class="body-text">One thing to understand: attorneys in the same jurisdiction often know each other through referral networks, bar associations, and shared courtrooms. Some may be reluctant to directly criticize Whitfield's approach — this is professional courtesy, not a conspiracy. When seeking a second opinion, ask the new attorney to evaluate your <em>case</em> (the evidence, the injuries, the 911 call), not your current attorney. A good specialist will focus on whether the defense theory has been properly analyzed — that tells you everything you're looking for.</p>
+
+<p class="body-text">Most situations resolve at Steps 1-3. Steps 4-5 are there if you need more structure.</p>
+
+<strong class="bold-text">A note about the plea:</strong> Whitfield said "these cases usually plead out." Before your meeting, understand what that means in context: most DV cases plead out because the evidence usually supports the arrest. YOUR case has unusual facts — you called 911, you had defensive injuries, and the alleged victim's injuries are consistent with someone being pushed away. Not all DV cases are the same. Insist on evidence review before any plea discussion.
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix A: Brady/Giglio Checklist</h2>
+
+<strong class="bold-text">What This Is:</strong> Under <em>Brady v. Maryland</em> (1963) and <em>Giglio v. United States</em> (1972), the prosecution is constitutionally required to disclose evidence that is favorable to the defense. This includes exculpatory evidence (Brady) and impeachment evidence (Giglio).
+
+<strong class="bold-text">Ask your attorney:</strong> "Have you received all Brady/Giglio material? Is there anything outstanding?"
+
+<h3 class="section-h3">Evidence the Prosecution Must Disclose:</h3>
+
+<li class="list-item checkbox-item">&#9744; Exculpatory evidence (anything suggesting innocence)</li>
+<li class="list-item checkbox-item">&#9744; Impeachment evidence (anything undermining prosecution witnesses)</li>
+<li class="list-item checkbox-item">&#9744; Prior inconsistent statements by witnesses</li>
+<li class="list-item checkbox-item">&#9744; Deals, promises, or inducements to witnesses</li>
+<li class="list-item checkbox-item">&#9744; Criminal records of prosecution witnesses</li>
+<li class="list-item checkbox-item">&#9744; Evidence of witness bias or motive to lie</li>
+<li class="list-item checkbox-item">&#9744; Lab reports, forensic analysis, chain of custody documentation</li>
+<li class="list-item checkbox-item">&#9744; Surveillance footage, body camera footage, dashcam footage</li>
+<li class="list-item checkbox-item">&#9744; 911 calls and dispatch records</li>
+<li class="list-item checkbox-item">&#9744; Prior complaints against arresting officers</li>
+<li class="list-item checkbox-item">&#9744; Internal affairs investigations of involved officers</li>
+<li class="list-item checkbox-item">&#9744; Evidence contradicting the prosecution's theory</li>
+
+<h3 class="section-h3">What to Ask Your Attorney:</h3>
+
+<li class="list-item">"Have you filed a specific Brady demand or are you relying on the general obligation?"</li>
+<li class="list-item">"Is there a standing discovery order in this case?"</li>
+<li class="list-item">"Have you received all police reports, including supplemental reports?"</li>
+<li class="list-item">"Are there any witnesses the prosecution hasn't disclosed?"</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix B: Next Court Date Prep</h2>
+
+<h3 class="section-h3">What This Hearing Is</h3>
+
+<p class="body-text">Your April 28 hearing is a pre-trial hearing. In Bexar County, this is a case management proceeding — the judge, prosecution, and defense discuss case status, evidence exchange, pending motions, and whether the case is moving toward plea or trial. You may or may not be asked questions directly.</p>
+
+<h3 class="section-h3">Step by Step</h3>
+
+<li class="list-item"><strong class="bold-text">Arrive 30 minutes early.</strong> The courthouse has security screening. Bring government-issued ID. Your phone is allowed but must be silenced.</li>
+
+<li class="list-item"><strong class="bold-text">Check in with Whitfield.</strong> Find him in the hallway or courtroom before the hearing begins. Confirm he received your email and questions. If you haven't met since the initial 5-minute meeting, reintroduce yourself and have your Meeting Ready Sheet ready.</li>
+
+<li class="list-item"><strong class="bold-text">During the hearing:</strong> Sit quietly. The judge will primarily address the attorneys. Listen for: (a) evidence exchange deadlines, (b) motion filing deadlines, (c) the prosecution's position on the case, (d) any discussion of the order.</li>
+
+<li class="list-item"><strong class="bold-text">Take notes.</strong> Write down every date the judge mentions. If the judge addresses you directly, stand, answer respectfully, and keep it brief.</li>
+
+<li class="list-item"><strong class="bold-text">After the hearing:</strong> Ask Whitfield to walk you through what happened. "What did the judge set for deadlines? What's our next step? Can we discuss modifying the order?" Send the post-meeting email (Section 6h) the same day.</li>
+
+<h3 class="section-h3">What to Wear</h3>
+
+<p class="body-text">Professional attire. You are appearing before a judge. Conservative colors, professional fit. First impressions matter — particularly in a case like this where the judge's perception of you as a person starts forming.</p>
+
+<h3 class="section-h3">What to Bring</h3>
+
+<li class="list-item checkbox-item">&#9744; Meeting Ready Sheet (Section 6g) — printed, with a pen</li>
+<li class="list-item checkbox-item">&#9744; Case number: 2025-CR-09218-B</li>
+<li class="list-item checkbox-item">&#9744; Government-issued ID</li>
+<li class="list-item checkbox-item">&#9744; Photos of your injuries (on your phone, in case Whitfield needs them)</li>
+<li class="list-item checkbox-item">&#9744; This report (for your reference only — do not show it to Whitfield)</li>
+
+<h3 class="section-h3">What NOT to Do</h3>
+
+<li class="list-item">Do not speak to the judge unless directly addressed</li>
+<li class="list-item">Do not speak to the prosecutors</li>
+<li class="list-item">Do not react visibly if your husband is in the courtroom — no eye contact, no gestures, no comments</li>
+<li class="list-item">Do not approach him or anyone who may be there supporting him</li>
+<li class="list-item">Do not discuss the case in the hallway — others can hear</li>
+
+<h3 class="section-h3">If Attorney Isn't There</h3>
+
+<p class="body-text">Public defenders in Bexar County occasionally juggle multiple courtrooms on the same day. If Whitfield isn't there:</p>
+
+<li class="list-item">Wait 15 minutes past the scheduled time.</li>
+<li class="list-item">Ask the courtroom clerk whether your case has been called or continued.</li>
+<li class="list-item">Call the Bexar County Public Defender's Office and ask for Whitfield's supervisor.</li>
+<li class="list-item">Do not proceed without counsel. Tell the judge: "Your Honor, my attorney is not present. I'd like to request a continuance."</li>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix C: Your Rights During Criminal Proceedings</h2>
+
+<strong class="bold-text">These rights exist regardless of your charge, your attorney, or your county.</strong>
+
+<h3 class="section-h3">Constitutional Rights:</h3>
+<li class="list-item"><strong class="bold-text">Right to remain silent</strong> (5th Amendment) — You cannot be compelled to testify against yourself</li>
+<li class="list-item"><strong class="bold-text">Right to an attorney</strong> (6th Amendment) — If you cannot afford one, one will be appointed</li>
+<li class="list-item"><strong class="bold-text">Right to a speedy trial</strong> (6th Amendment) — Timelines vary by state and jurisdiction</li>
+<li class="list-item"><strong class="bold-text">Right to confront witnesses</strong> (6th Amendment) — You can cross-examine anyone who testifies against you</li>
+<li class="list-item"><strong class="bold-text">Right against unreasonable search and seizure</strong> (4th Amendment) — Evidence obtained illegally may be suppressed</li>
+<li class="list-item"><strong class="bold-text">Right to a jury trial</strong> (6th Amendment) — For serious offenses, you have the right to be judged by a jury of your peers</li>
+<li class="list-item"><strong class="bold-text">Right to due process</strong> (14th Amendment) — Fair procedures must be followed</li>
+<li class="list-item"><strong class="bold-text">Right against double jeopardy</strong> (5th Amendment) — You cannot be tried twice for the same offense</li>
+<li class="list-item"><strong class="bold-text">Right to be presumed innocent</strong> — The prosecution must prove guilt beyond a reasonable doubt</li>
+
+<h3 class="section-h3">Your Rights With Your Attorney:</h3>
+<li class="list-item">You have the right to know what is happening in your case at all times</li>
+<li class="list-item">You have the right to be consulted before major decisions are made</li>
+<li class="list-item">You have the right to make the final decision on whether to accept a plea or go to trial</li>
+<li class="list-item">You have the right to effective assistance of counsel (Strickland v. Washington)</li>
+<li class="list-item">You have the right to change attorneys at any time (though timing and procedural requirements apply)</li>
+
+<h3 class="section-h3">If You Feel Your Rights Are Being Violated:</h3>
+<li class="list-item">Document everything in writing (dates, times, what was said)</li>
+<li class="list-item">Follow the Advocacy Steps in Section 6 of this brief</li>
+<li class="list-item">Contact your state bar association's client protection hotline</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix D: Targeted Follow-Up Questions</h2>
+
+<p class="body-text">These questions go deeper than the five on your Meeting Ready Sheet. Bring any that resonate to your next conversation with Whitfield.</p>
+
+<h3 class="section-h3">Case Strategy</h3>
+
+<strong class="bold-text">Q1 — The Deep-Dive Version of Your Golden Question:</strong>
+<p class="body-text">"Have you watched the full body camera footage from start to finish — not just the summary in the police report? Specifically, when the officers arrived, who appeared afraid, who was crying, who had visible injuries, and did the officers ask ME what happened before deciding to arrest me?"</p>
+
+<strong class="bold-text">Why this is the question that matters most:</strong> The footage captures what actually happened — not the officer's summary of what happened. Officers arrive, assess the scene, and write a report. The report may omit details that the footage preserves: your demeanor, your injuries, your husband's demeanor, the officers' decision-making process. If the footage shows officers arriving to find a frightened woman with bruises and a calm man with scratches — and then arresting the woman — that's your defense.
+
+<strong class="bold-text">A strong response sounds like:</strong> "I've watched the footage. Here's what I see..." or "The footage shows [specific detail] that supports self-defense."
+
+<strong class="bold-text">If Whitfield says he hasn't watched it:</strong> "This is the most important piece of evidence in my case. When can I expect you'll have reviewed it? The self-defense analysis can't happen without it."
+
+<strong class="bold-text">What to listen for:</strong> Whether Whitfield is speaking from the footage or from the police report. An attorney who references specific moments in the video has done the work. One who talks only about what the report says is relying on the prosecution's version.
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q2:</strong> "What does Lenore Walker's research on defensive injuries say about cases like mine — and has anyone in the DA's office been trained on primary aggressor identification errors?"
+
+<strong class="bold-text">Background:</strong> The pattern you describe — victim arrested, aggressor controls the narrative — is a documented phenomenon in domestic violence research. Lenore Walker's work on battered women's syndrome and defensive injuries has been used in courts nationwide. The question isn't whether this phenomenon exists (it does) — it's whether Whitfield knows about it and is prepared to use it.
+
+<strong class="bold-text">What you want to hear:</strong> Recognition that wrongful arrest of DV victims is a known issue, and that the injury pattern in your case is consistent with established research.
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q3:</strong> "I called 911 because Roberto was threatening me. Has anyone pulled the 911 recording, and what does it sound like? My voice on that recording — scared, asking for help — is evidence of who the real victim is."
+
+<blockquote class="blockquote">The 911 recording is independent evidence. It was made before police arrived, before your husband had a chance to construct his narrative. Your voice asking for help is the most powerful piece of evidence in your case — and it's the one the prosecution has to overcome. Has Whitfield obtained it?</blockquote>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Judge & Jurisdiction</h3>
+
+<strong class="bold-text">Q4:</strong> "What is your experience with Judge Gutierrez in family violence cases — does she take self-defense arguments seriously, and has she ever dismissed a DV case based on primary aggressor misidentification?"
+
+<strong class="bold-text">Why this matters:</strong> If Gutierrez is receptive to § 9.31 arguments, trial becomes a viable option. If she's historically skeptical, negotiation from strength (using the evidence as leverage) may produce a better outcome. Either way, Whitfield's answer reveals whether he knows the judge — or whether he's guessing.
+
+<blockquote class="blockquote">If Whitfield hasn't appeared before Gutierrez in DV cases: "Can you check with a colleague who has?"</blockquote>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q5:</strong>
+<p class="body-text">"What is the current status of the protective order? Has it been extended beyond the initial emergency period, and what would it take to modify it for supervised contact with them?"</p>
+
+<strong class="bold-text">If the order has expired → "Then why am I still prohibited from seeing them?"</strong>
+<strong class="bold-text">If extended → "On what basis? And can we request modification for supervised visitation?"</strong>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Motions & Deadlines</h3>
+
+<strong class="bold-text">Q6:</strong> "Are you planning to file a motion challenging the primary aggressor determination, and if so, what is the deadline?"
+
+<p class="body-text">Two things to listen for: whether this motion is being considered at all, and whether Whitfield can articulate the legal basis. Under Texas Family Code § 71.0021, the factors favor you — but the motion needs to be filed to matter.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q7:</strong>
+<blockquote class="blockquote">"Have the children been interviewed by CPS or the police? If so, what did they say? My 7-year-old saw what happened — her account matters."</blockquote>
+
+<p class="body-text">This is uncomfortable but critical. If your daughter told anyone what she saw, that statement is evidence. If she said "Daddy was hurting Mommy," the prosecution's case collapses. If no one asked her, that's a question too — why didn't they?</p>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Consequences</h3>
+
+<strong class="bold-text">Q8:</strong> "Walk me through exactly what happens to my teaching certificate if I accept a family violence plea. Contact the Texas Education Agency — what is their process, and is there any way to preserve my license?"
+
+<strong class="bold-text">What to listen for:</strong>
+<li class="list-item checkbox-item">&#9744; "I've checked with TEA" → Good. Ask for the specific rule.</li>
+<li class="list-item checkbox-item">&#9744; "I'll look into it" → Ask when, and follow up.</li>
+<li class="list-item checkbox-item">&#9744; "I'm not sure" → This is a core consequence. If Whitfield doesn't know, ask him to research it before the hearing.</li>
+
+<strong class="bold-text">If TEA revocation is likely:</strong> That changes the entire plea calculation. A career-ending consequence justifies fighting harder.
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q9:</strong> "If I accept deferred adjudication, I understand it cannot be sealed under Article 42A.111. Does that mean a family violence finding follows me forever on background checks?"
+
+<table class="report-table"><tr><td class="table-cell">What He Says</td><td class="table-cell">What It Means</td></tr>
+
+<tr><td class="table-cell">"Yes, family violence deferred can't be sealed"</td><td class="table-cell">Honest. This is the law. Factor it into your decision.</td></tr>
+<tr><td class="table-cell">"Deferred adjudication isn't really a conviction"</td><td class="table-cell">Technically true but misleading — it still appears on background checks and carries the FV designation.</td></tr>
+<tr><td class="table-cell">"We can worry about sealing later"</td><td class="table-cell">Wrong. There IS no "later" for FV deferred adjudication in Texas.</td></tr>
+<tr><td class="table-cell">"Let me research that"</td><td class="table-cell">Acceptable — but should have been researched already. Follow up.</td></tr></table>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Evidence</h3>
+
+<strong class="bold-text">Q10:</strong> "Have you obtained the 911 call recording, the full police report (not just the summary), the body camera footage, my booking medical records, and any witness statements — including any interviews with my kids?"
+
+<p class="body-text">This is a comprehensive evidence checklist. Ask Whitfield to go through each item:</p>
+
+<li class="list-item checkbox-item">&#9744; 911 call recording — obtained? reviewed?</li>
+<li class="list-item checkbox-item">&#9744; Officer footage — obtained? watched in full?</li>
+<li class="list-item checkbox-item">&#9744; Police report (complete, not summary) — obtained?</li>
+<li class="list-item checkbox-item">&#9744; Booking medical records (your injuries) — obtained?</li>
+<li class="list-item checkbox-item">&#9744; The alleged victim's medical records or photos — obtained?</li>
+<li class="list-item checkbox-item">&#9744; Witness statements — obtained? Kids interviewed?</li>
+<li class="list-item checkbox-item">&#9744; Any prior calls to the address — checked?</li>
+
+<p class="body-text">Any item not obtained is an item Whitfield needs to request before the hearing.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q11:</strong> "Were there any prior 911 calls from our address? Any prior police reports involving Roberto — even from a previous relationship?"
+
+<blockquote class="blockquote">Prior calls to the same address or prior reports involving your husband establish a pattern. If he has a history — even unreported — it's relevant. If this is the first call from your address, that's relevant too: it means you called for help when you were in danger. Either answer helps your defense.</blockquote>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q12:</strong> "Have you spoken to any potential witnesses — neighbors who may have heard the altercation, my sister (who saw my injuries), or anyone else who could testify about my relationship with Roberto?"
+
+<p class="body-text">Witness testimony corroborates your account. Your sister saw your injuries. Neighbors may have heard screaming. Friends or family may have observed his behavior over the years. None of this is visible to Whitfield unless he asks — and he hasn't asked you about witnesses yet.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q13:</strong> "What happens to the protective order if I'm acquitted? Does Roberto automatically regain his ability to restrict my contact with them, or does acquittal reset everything?"
+
+<table class="report-table"><tr><td class="table-cell">Outcome</td><td class="table-cell">What Happens to the Order</td></tr>
+
+<tr><td class="table-cell">Acquittal</td><td class="table-cell">The criminal order dissolves. Your husband would need to file a separate civil order — and prove his case fresh.</td></tr>
+<tr><td class="table-cell">Dismissal</td><td class="table-cell">Same as acquittal — order dissolves with the case.</td></tr>
+<tr><td class="table-cell">Plea/conviction</td><td class="table-cell">The order may become permanent or be replaced by probation conditions.</td></tr></table>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q14:</strong> "If we go to trial, what is the realistic timeline, and how would you prepare my self-defense argument?"
+
+<p class="body-text">This reveals whether trial is being treated as a real option. An attorney who can describe preparation — expert witnesses on defensive injuries, 911 call evidence, jury selection in DV cases, § 9.31 jury instructions — has thought about it. One who says "let's hope it doesn't come to that" is planning for a plea.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q15:</strong> "After this conversation, what is the single most important thing I can do to help my defense?"
+
+<p class="body-text">End on action. Give Whitfield the chance to direct your energy — and hold him accountable for a concrete next step.</p>
+  <div class="footer-disclaimer">
+    <p class="footer-disclaimer-text">
+      <strong class="footer-disclaimer-label">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.
+    </p>
+  </div>
+  <div class="copyright-block">
+    <p class="copyright-text">&copy; 2026 ImNotAnAttorney. Legal information, not legal advice.</p>
+    <p class="copyright-meta">Report ID: IB-TEST-SOFIA-V2 | Generated: March 8, 2026</p>
+  </div>
+  <div class="no-print upgrade-cta">
+    <p class="upgrade-cta-text">If you receive discovery evidence and want a deeper analysis, The X-Ray reviews your actual case files — officer recordings, lab reports, chain of custody, witness statements.</p>
+    <a href="/checkout?tier=x-ray" class="upgrade-btn">The X-Ray — $2,497 ($1,500 after credit)</a>
+    <p class="upgrade-credit-note">Every dollar you've paid rolls forward. Your $997 is fully credited toward any tier — you only pay the difference. Credits valid for 12 months.</p>
+  </div>
+</div>
+</body>
+</html>

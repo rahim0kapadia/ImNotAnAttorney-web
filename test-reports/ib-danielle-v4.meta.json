@@ -1,0 +1,15 @@
+{
+  "firstName": "Danielle",
+  "charges": "DWI (Tex. Penal Code § 49.04)",
+  "stateCounty": "Harris County, Texas",
+  "caseNumber": "2025-CR-44891",
+  "nextCourtDate": "April 18, 2026",
+  "judgeName": "Judge Patricia Alvarez",
+  "attorneyName": "Michael Torres (Public Defender)",
+  "reportId": "IB-TEST-DANIELLE-V4",
+  "monthsSinceArrest": "3",
+  "ibPriceDisplay": "$997",
+  "xrayPriceDisplay": "$2,497",
+  "xrayUpgradeCost": "$1,500",
+  "expertNames": "William \"Bubba\" Head, Justin McShane, Steven Oberman, Chris Voss, BJ Fogg"
+}

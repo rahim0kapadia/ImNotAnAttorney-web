@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Intelligence Brief — Danielle</title>
+<style>
+/* === Base === */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0C0A09;
+  color: #D4D4D8;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* === Header === */
+.header-block {
+  background: #1C1917;
+  padding: 32px;
+  border-radius: 12px;
+  border: 2px solid #F59E0B;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.header-title {
+  color: #F59E0B;
+  font-size: 28px;
+  margin: 0;
+}
+.header-subtitle {
+  color: #A1A1AA;
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+.header-meta {
+  margin-top: 24px;
+  text-align: left;
+}
+.meta-field {
+  margin: 4px 0;
+}
+.meta-label {
+  color: white;
+}
+
+/* === Content typography === */
+.section-h2 {
+  color: #F59E0B;
+  font-size: 20px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #3f3f46;
+}
+.section-h3 {
+  color: white;
+  font-size: 17px;
+  margin-top: 24px;
+  letter-spacing: 0.02em;
+}
+.section-h4 {
+  color: #F59E0B;
+  font-size: 14px;
+  margin-top: 20px;
+}
+.bold-text {
+  color: white;
+}
+.body-text {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+/* === Tables === */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+.table-header {
+  padding: 8px 12px;
+  border: 1px solid #3f3f46;
+  border-bottom: 2px solid #3f3f46;
+  text-align: left;
+  background: #1a1a1e;
+  font-weight: bold;
+  overflow-wrap: break-word;
+}
+.table-cell {
+  padding: 8px 12px;
+  border: 1px solid #3f3f46;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+tr:nth-child(even) > .table-cell {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* === Blockquotes === */
+.blockquote {
+  border-left: 4px solid #F59E0B;
+  padding: 12px 16px;
+  margin: 16px 0;
+  color: #A1A1AA;
+  background: rgba(245, 158, 11, 0.05);
+  border-radius: 0 4px 4px 0;
+}
+
+/* === Lists === */
+.list-item {
+  margin-bottom: 6px;
+  margin-left: 24px;
+}
+.checkbox-item {
+  list-style: none;
+}
+
+/* === Footer === */
+.footer-disclaimer {
+  background: #1C1917;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 40px;
+  border-left: 4px solid #A1A1AA;
+}
+.footer-disclaimer-text {
+  margin: 0;
+  font-size: 13px;
+  color: #71717A;
+}
+.footer-disclaimer-label {
+  color: #A1A1AA;
+}
+.copyright-block {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 2px solid #27272A;
+  text-align: center;
+}
+.copyright-text {
+  margin: 0;
+  font-size: 12px;
+  color: #71717A;
+}
+.copyright-meta {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #52525B;
+}
+
+/* === Upgrade CTA === */
+.upgrade-cta {
+  margin-top: 32px;
+  text-align: center;
+}
+.upgrade-cta-text {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #A1A1AA;
+}
+.upgrade-btn {
+  display: inline-block;
+  padding: 16px 32px;
+  background: #F59E0B;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.upgrade-credit-note {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #71717A;
+}
+
+/* === Page breaks === */
+.page-break {
+  page-break-after: always;
+}
+
+/* === Mobile responsive === */
+@media (max-width: 640px) {
+  .container { padding: 16px 12px; }
+  .header-block { padding: 20px; }
+  .header-title { font-size: 22px; }
+  .section-h2 { font-size: 17px; margin-top: 24px; padding-top: 16px; }
+  .section-h3 { font-size: 15px; }
+  .report-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table-header, .table-cell { padding: 6px 8px; font-size: 13px; }
+  .upgrade-btn { padding: 14px 24px; font-size: 15px; }
+}
+
+/* === Print === */
+@media print {
+  body { background: white !important; color: #1a1a1a !important; }
+  * { color: #1a1a1a !important; }
+  .section-h2, .section-h3, .section-h4 { color: #92400e !important; page-break-after: avoid; }
+  .bold-text, .meta-label { color: #1a1a1a !important; }
+  .blockquote { border-left-color: #92400e !important; background: #f5f5f4 !important; page-break-inside: avoid; }
+  .report-table { page-break-inside: avoid; }
+  .table-header, .table-cell { border-color: #d4d4d4 !important; }
+  .table-header { background: #e5e5e5 !important; }
+  .no-print { display: none !important; }
+  .header-block { background: #f5f5f4 !important; border-color: #92400e !important; }
+  a { color: #92400e !important; }
+  .body-text { orphans: 3; widows: 3; }
+  @page { margin: 1in; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header-block">
+    <h1 class="header-title">CASE INTELLIGENCE BRIEF</h1>
+    <p class="header-subtitle">ImNotAnAttorney | We Research. You Ask.</p>
+    <div class="header-meta">
+      <p class="meta-field"><strong class="meta-label">Prepared for:</strong> Danielle</p>
+      <p class="meta-field"><strong class="meta-label">Charge(s):</strong> DWI (Tex. Penal Code § 49.04)</p>
+      <p class="meta-field"><strong class="meta-label">Jurisdiction:</strong> Harris County, Texas</p>
+      <p class="meta-field"><strong class="meta-label">Case Number:</strong> 2025-CR-44891</p>
+      <p class="meta-field"><strong class="meta-label">Next Court Date:</strong> April 18, 2026</p>
+      <p class="meta-field"><strong class="meta-label">Judge:</strong> Judge Patricia Alvarez</p>
+      <p class="meta-field"><strong class="meta-label">Attorney:</strong> Michael Torres (Public Defender)</p>
+      <p class="meta-field"><strong class="meta-label">Months Since Arrest:</strong> 3</p>
+      <p class="meta-field"><strong class="meta-label">Report Date:</strong> March 8, 2026</p>
+      <p class="meta-field"><strong class="meta-label">Report ID:</strong> IB-TEST-DANIELLE-V4</p>
+    </div>
+  </div>
+  <blockquote class="blockquote" style="margin: 20px 0; padding: 12px 16px;">
+    <p class="body-text"><strong class="bold-text">METHODOLOGY NOTE</strong></p>
+    <p class="body-text">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on William &quot;Bubba&quot; Head, Justin McShane, Steven Oberman, Chris Voss, BJ Fogg — selected for DWI (Tex. Penal Code § 49.04) cases. Expert attributions appear throughout.</p>
+    <p class="body-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+  </blockquote>
+  <h2 class="section-h2">START HERE: Your 48-Hour Priority List</h2>
+
+<p class="body-text">These three actions protect your position right now. Everything else can wait.</p>
+
+<strong class="bold-text">Priority 1 — TODAY (under 5 minutes):</strong>
+<p class="body-text">Send the pre-written email in Section 6 to Michael Torres. It's already written with your case number, court date, and five specific questions embedded. Copy, paste, send. Done.</p>
+
+<p class="body-text">You've just created a written record — harder to ignore than a voicemail and useful documentation if you ever need it.</p>
+
+<strong class="bold-text">Priority 2 — THIS WEEK:</strong>
+<p class="body-text">Request body camera footage status. Ask directly: "Have you obtained the body camera footage from my traffic stop, and have you reviewed it?" Retention policies vary by department — footage can be deleted after a set period. This is time-sensitive.</p>
+
+<p class="body-text">Your blood alcohol concentration (BAC) was 0.09 — one hundredth above the 0.08 legal limit. Breathalyzer instruments carry a documented margin of error (typically ±0.005 to ±0.02), which means this reading raises legitimate defense questions. That's a factual starting point, not false hope.</p>
+
+<strong class="bold-text">Priority 3 — BEFORE APRIL 15:</strong>
+<p class="body-text">Read Section 4 (Legal Options & Deadlines) before your pre-trial hearing. Pre-trial motions in Texas are generally filed before this hearing. The question for your attorney: "Are there any motions we should consider filing before April 15?" If the answer is "no," ask why. If the answer is "I haven't looked into it yet," that tells you something important (see Section 2).</p>
+
+<p class="body-text">Everything else can wait. Start with Priority 1.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Table of Contents</h2>
+
+<li class="list-item"><strong class="bold-text">START HERE: Your 48-Hour Priority List</strong> — 3 actions for the next 48 hours</li>
+<li class="list-item"><strong class="bold-text">Section 1: Your Case Roadmap</strong> — Where you are, what happens next, the two paths</li>
+<li class="list-item"><strong class="bold-text">Section 2: What's Working + What Needs Attention</strong> — Case Progress Score, decoded statements, gaps to clarify</li>
+<li class="list-item"><strong class="bold-text">Section 3: Your Case Intelligence</strong> — Outcome map, defense theories, judge profile, prosecution preview</li>
+<li class="list-item"><strong class="bold-text">Section 4: Legal Options & Deadlines</strong> — Motion landscape, deadline calendar, plea framework</li>
+<li class="list-item"><strong class="bold-text">Section 5: Protecting Your Case and Life</strong> — Case protection, life impact map, pending-case management</li>
+<li class="list-item"><strong class="bold-text">Section 6: Your Plan</strong> — Email template, phone script, 14-day plan, meeting prep, difficult conversations</li>
+<li class="list-item"><strong class="bold-text">Appendix A: Brady/Giglio Checklist</strong> — Evidence the prosecution must disclose</li>
+<li class="list-item"><strong class="bold-text">Appendix B: Next Court Date Prep</strong> — What to expect, wear, bring, and do</li>
+<li class="list-item"><strong class="bold-text">Appendix C: Your Rights</strong> — Key rights during criminal proceedings</li>
+<li class="list-item"><strong class="bold-text">Appendix D: Questions for Your Attorney</strong> — 10-15 targeted, gap-based questions</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 1: Your Case Roadmap</h2>
+
+<h3 class="section-h3">1a. Where You Are Now</h3>
+
+<p class="body-text">Danielle, here is where your case stands:</p>
+
+<table class="report-table"><tr><td class="table-cell">Detail</td><td class="table-cell">Your Case</td></tr>
+
+<tr><td class="table-cell">Case Number</td><td class="table-cell">2025-CR-44891</td></tr>
+<tr><td class="table-cell">Charge</td><td class="table-cell">DWI, First Offense (Texas Penal Code § 49.04)</td></tr>
+<tr><td class="table-cell">County</td><td class="table-cell">Harris County, Texas</td></tr>
+<tr><td class="table-cell">Arrest Date</td><td class="table-cell">December 15, 2025</td></tr>
+<tr><td class="table-cell">Time Since Arrest</td><td class="table-cell">~3 months</td></tr>
+<tr><td class="table-cell">Next Court Date</td><td class="table-cell">April 15, 2026 — Pre-trial hearing</td></tr>
+<tr><td class="table-cell">Judge</td><td class="table-cell">Judge Patricia Martinez</td></tr>
+<tr><td class="table-cell">Attorney</td><td class="table-cell">Michael Torres (Public Defender)</td></tr>
+<tr><td class="table-cell">BAC</td><td class="table-cell">0.09 (legal limit: 0.08)</td></tr>
+<tr><td class="table-cell">Discovery</td><td class="table-cell">Not yet received</td></tr></table>
+
+<p class="body-text">A BAC of 0.09 places this in what defense attorneys call "borderline" territory — readings close enough to the legal limit that instrument precision, testing protocol, and timing all become relevant questions. Michael Torres recognized this when he said the reading is "borderline and there might be options." That recognition matters. The next step is understanding what those options specifically are.</p>
+
+<h3 class="section-h3">1b. What Happens Next</h3>
+
+<p class="body-text">Here is the typical path for a first-offense DWI in Harris County at this stage:</p>
+
+<strong class="bold-text">Stage 1: Pre-Trial Hearing (April 15, 2026)</strong>
+<p class="body-text">The court checks case status, addresses any filed motions, and may set future dates. If motions have been filed, they may be discussed. If not, the hearing is primarily administrative.</p>
+
+<strong class="bold-text">Stage 2: Discovery Exchange</strong>
+<p class="body-text">The prosecution provides evidence — police reports, breathalyzer records, body camera footage, officer training records, calibration logs. For a near-limit case, the calibration records and testing protocol are particularly significant.</p>
+
+<strong class="bold-text">Stage 3: Motion Practice</strong>
+<p class="body-text">Based on what discovery reveals, he may file motions to suppress evidence. Near-limit cases are precisely where suppression motions carry the most weight.</p>
+
+<strong class="bold-text">Stage 4: Plea Negotiation or Trial Preparation</strong>
+<p class="body-text">Successful motions weaken the prosecution's case, shifting plea dynamics. Denied motions still preserve issues for appeal. Either way, the case moves toward a negotiated resolution or trial setting.</p>
+
+<strong class="bold-text">Stage 5: Resolution</strong>
+<p class="body-text">The case concludes through plea agreement, trial verdict, or dismissal. First-offense DWI cases in Harris County may also be resolved through pre-trial diversion programs, depending on eligibility.</p>
+
+<h3 class="section-h3">1c. The Two Paths</h3>
+
+<strong class="bold-text">Path A — Negotiated Resolution:</strong>
+<p class="body-text">The plea currently discussed (6 months probation, $2,500 fine, DWI education program) is one possible outcome. Before evaluating it, the questions in Appendix D help determine whether this reflects the evidence strength or is a standard first offer.</p>
+
+<strong class="bold-text">Path B — Contested Case:</strong>
+<p class="body-text">With a reading this close to the limit, there are legitimate questions about instrument precision, observation period compliance, and field sobriety test administration. Contesting doesn't necessarily mean trial — filing motions often changes the negotiation landscape entirely.</p>
+
+<p class="body-text">Neither path is inherently better. The right path depends on facts Torres has access to and you don't — yet. That's what the questions in this brief are designed to uncover.</p>
+
+<h3 class="section-h3">Bottom Line Right Now</h3>
+
+<p class="body-text">You are 3 months into a process that typically takes 6-12 months for a first-offense DWI in Harris County, and your options remain open. Your one action: send the email in Section 6 today.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 2: What's Working + What Needs Attention</h2>
+
+<h3 class="section-h3">2a. What's On Track</h3>
+
+<strong class="bold-text">Case Progress Score: 42/100</strong>
+
+<p class="body-text">This score reflects where preparation stands based on the information you've shared across six dimensions. It measures communication and transparency — not Torres's legal ability. A lower score with a public defender carrying a heavy caseload is common and doesn't mean neglect. It does mean you need better tools to get the information you're entitled to.</p>
+
+<table class="report-table"><tr><td class="table-cell">Area (Weight)</td><td class="table-cell">What We Know</td><td class="table-cell">Gap to Clarify</td><td class="table-cell">Priority Qs</td></tr>
+
+<tr><td class="table-cell">Communication (25%)</td><td class="table-cell">Called 4 times, 1 callback in 6 weeks</td><td class="table-cell">Best method to reliably reach him</td><td class="table-cell">Q1, Q2</td></tr>
+<tr><td class="table-cell">Case Review (15%)</td><td class="table-cell">No discovery materials shared with you</td><td class="table-cell">Whether body cam and calibration records have been obtained</td><td class="table-cell">Q3, Q6</td></tr>
+<tr><td class="table-cell">Discovery (20%)</td><td class="table-cell">No information on what evidence exists</td><td class="table-cell">What's been received vs. outstanding</td><td class="table-cell">Q4, Q6</td></tr>
+<tr><td class="table-cell">Motion Activity (15%)</td><td class="table-cell">No motions discussed or filed</td><td class="table-cell">What's being considered and filing deadlines</td><td class="table-cell">Q7</td></tr>
+<tr><td class="table-cell">Strategy (15%)</td><td class="table-cell">"Borderline" and "options" but no specifics</td><td class="table-cell">Which defense options apply and are being pursued</td><td class="table-cell">Q3, Q5</td></tr>
+<tr><td class="table-cell">Court Prep (10%)</td><td class="table-cell">Pre-trial hearing set for April 15</td><td class="table-cell">What to expect and whether anything should happen first</td><td class="table-cell">Q8</td></tr></table>
+
+<strong class="bold-text">What IS working:</strong>
+<li class="list-item">He correctly identified the reading as "borderline" — he recognizes the reading creates defense questions</li>
+<li class="list-item">Plea discussions have started, indicating the prosecution is open to negotiation</li>
+<li class="list-item">By ordering this brief, you're already more engaged with your defense than most defendants at this stage</li>
+
+<h3 class="section-h3">2b. Decoded Statements</h3>
+
+<p class="body-text">When attorneys speak in shorthand, there's often a fuller picture underneath:</p>
+
+<strong class="bold-text">"The BAC is borderline"</strong>
+<p class="body-text">A reading of 0.09 is only 0.01 above the legal limit. Defense attorneys who focus on DWI cases recognize that breathalyzer margin of error (typically ±0.005 to ±0.02) makes this factually contestable. He may be signaling a potential suppression opportunity — but hasn't had the bandwidth to investigate yet.</p>
+
+<strong class="bold-text">"There might be options"</strong>
+<p class="body-text">From a public defender carrying 200-400 cases on a typical Harris County docket, this often means: "I see potential here but haven't carved out the time to dig in." The email in Section 6 is designed to move that investigation forward.</p>
+
+<strong class="bold-text">The 6-week communication gap</strong>
+<p class="body-text">Four calls with one callback in six weeks is below the communication standards most bar associations publish. This pattern is frustratingly common with heavy-caseload public defenders — not because they don't care, but because proactive outreach is nearly impossible. The fix is switching to written communication that creates a record.</p>
+
+<h3 class="section-h3">2c. What Needs Attention</h3>
+
+<strong class="bold-text">CLARIFY: What "options" means specifically.</strong> After 3 months, vague language needs specifics. The email in Section 6 asks this directly.
+
+<strong class="bold-text">CLARIFY: Discovery status.</strong> Has Torres received any discovery materials? Has he reviewed them? The answer reveals where case preparation actually stands.
+
+<strong class="bold-text">CLARIFY: Motion deadlines.</strong> Pre-trial motions in Texas are generally filed before the hearing. Your court date is roughly 5 weeks away — the window narrows each week.
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">The communication pattern is frustrating but fixable. The email template in Section 6 creates a written record — which works better than phone calls for attorneys managing heavy dockets.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 3: Your Case Intelligence</h2>
+
+<h3 class="section-h3">3a. Outcome Map</h3>
+
+<p class="body-text">Here is the range of outcomes. These are not predictions — they represent the landscape your defender helps you navigate.</p>
+
+<table class="report-table"><tr><td class="table-cell">Outcome</td><td class="table-cell">What It Means</td><td class="table-cell">How Common Here</td><td class="table-cell">Key Question</td></tr>
+
+<tr><td class="table-cell">Dismissal</td><td class="table-cell">Charges dropped via successful suppression or procedural errors</td><td class="table-cell">Uncommon overall, more plausible with near-limit readings</td><td class="table-cell">"Are there grounds to suppress the test result or the stop?"</td></tr>
+<tr><td class="table-cell">Reduction</td><td class="table-cell">Reduced to a lesser offense (obstruction, reckless driving)</td><td class="table-cell">Moderate — depends on evidence and prosecutor</td><td class="table-cell">"Is a reduction realistic given the evidence?"</td></tr>
+<tr><td class="table-cell">Pre-Trial Diversion</td><td class="table-cell">Program completion → dismissal</td><td class="table-cell">Varies — attorney can assess eligibility</td><td class="table-cell">"Does this county offer a DWI diversion program?"</td></tr>
+<tr><td class="table-cell">Plea as Discussed</td><td class="table-cell">6 months probation, $2,500 fine, DWI education</td><td class="table-cell">Common first-offense structure</td><td class="table-cell">"Is this negotiated or the standard first offer?"</td></tr>
+<tr><td class="table-cell">Trial</td><td class="table-cell">Decided by judge or jury</td><td class="table-cell">Rare for first-offense, but a margin-range reading improves viability</td><td class="table-cell">"What are the realistic risks and benefits?"</td></tr></table>
+
+<strong class="bold-text">Note on diversion:</strong> Texas law prohibits deferred adjudication for DWI (Code of Criminal Procedure Art. 42A.102), but some Harris County programs operate as separate diversion mechanisms. Your attorney can clarify current availability and eligibility.
+
+<h3 class="section-h3">3b. Defense Theories</h3>
+
+<p class="body-text">These are established categories of defense inquiry for near-limit cases. Your attorney determines which apply to your specific facts.</p>
+
+<strong class="bold-text">Instrument Precision Challenge (Taylor/McShane methodology)</strong>
+<p class="body-text">Breathalyzers have documented margins of error — typically ±0.005 to ±0.02. A 0.09 reading on an instrument with a ±0.01 margin means the true level could fall from 0.08 to 0.10. At 0.08, you're at the legal limit — not above it. Applicability depends on the specific model, calibration history, and operator certification.</p>
+
+<strong class="bold-text">Rising BAC Defense</strong>
+<p class="body-text">Blood alcohol continues rising after the last drink. If there was a meaningful delay between driving and the breath test, the actual level while driving may have been below 0.08. This is a timeline question Torres can map.</p>
+
+<strong class="bold-text">Field Sobriety Test Validity (Head methodology)</strong>
+<p class="body-text">William "Bubba" Head's approach examines whether standardized field sobriety tests (SFSTs) were administered per National Highway Traffic Safety Administration (NHTSA) protocol. Deviations — wrong instructions, uneven surface, inadequate demonstration — undermine reliability. Body camera footage is the critical evidence here.</p>
+
+<strong class="bold-text">Traffic Stop Legality</strong>
+<p class="body-text">Every DWI case begins with a traffic stop. If the officer lacked reasonable suspicion, a motion to suppress can exclude everything that followed — including the breath test.</p>
+
+<h3 class="section-h3">3c. Judge Intelligence</h3>
+
+<p class="body-text">Judge Patricia Martinez — Harris County Criminal Court.</p>
+
+<p class="body-text">Judge-specific research is pending — your full brief will be updated when jurisdiction-specific data becomes available.</p>
+
+<p class="body-text">In the meantime, here are the four factors that matter most. Each is framed as a question for Torres, whose courtroom experience is the most reliable source:</p>
+
+<li class="list-item"><strong class="bold-text">Sentencing tendencies:</strong> "How does Judge Martinez typically sentence first-offense DWI cases? Lighter, standard, or heavier for near-limit readings?"</li>
+
+<li class="list-item"><strong class="bold-text">Motion patterns:</strong> "How does she typically rule on suppression motions in DWI cases? Has she granted any recently?"</li>
+
+<li class="list-item"><strong class="bold-text">Trial vs. plea preferences:</strong> "Does she prefer negotiated resolutions, or is she comfortable taking cases to trial?"</li>
+
+<li class="list-item"><strong class="bold-text">Diversion stance:</strong> "Does she support diversion or alternative resolution programs for first-time offenders?"</li>
+
+<p class="body-text">An attorney who has appeared before Judge Martinez can calibrate strategy based on her patterns. If yours hasn't, asking him to consult a colleague who has is a standard and reasonable request.</p>
+
+<h3 class="section-h3">3d. Prosecution Preview</h3>
+
+<p class="body-text">Here's how the prosecution is likely to frame the situation:</p>
+
+<strong class="bold-text">"The number speaks for itself."</strong> Their lead argument: the reading — presented as objective, scientific evidence above the legal limit. They will frame the breathalyzer as reliable and the result as conclusive.
+
+<p class="body-text">How to think about this: An instrument <em>registered</em> 0.09. Whether that accurately reflects your level at the time of driving depends on calibration, timing, and testing protocol. The number is a starting point, not the end.</p>
+
+<strong class="bold-text">"Officer observations confirm impairment."</strong> They'll pair the reading with officer observations — driving pattern, SFST performance, demeanor, odor — building a "totality" argument.
+
+<p class="body-text">How to think about this: Officer observations are subjective. Body camera footage often reveals a different picture than the police report narrative.</p>
+
+<strong class="bold-text">"Above the limit is above the limit."</strong> If challenged on margin of error, the prosecution may argue that 0.09 exceeds 0.08 regardless of precision questions.
+
+<p class="body-text">Your attorney can counter with the instrument's documented specifications and calibration history.</p>
+
+<p class="body-text">Something most defendants don't consider: the prosecution's evidence includes the officer's training records and the instrument operator's certification. If either reveals procedural issues, that affects admissibility. These are discoverable records. Whether they reveal anything useful depends on the actual documents — which is exactly what The X-Ray ($2,497) analyzes. Your $997 is already credited, so it's $1,500.</p>
+
+<h3 class="section-h3">3e. Jurisdiction Profile</h3>
+
+<p class="body-text">Harris County processes a high volume of DWI cases. Key local factors:</p>
+
+<li class="list-item"><strong class="bold-text">PD caseloads</strong> are among the highest in the state, consistent with the communication frequency you've experienced</li>
+<li class="list-item"><strong class="bold-text">Diversion programs</strong> exist but eligibility varies</li>
+<li class="list-item"><strong class="bold-text">Motion practice</strong> is active — judges regularly hear suppression motions in DWI cases</li>
+<li class="list-item">Near-limit cases receive more scrutiny of testing procedures than higher-BAC cases</li>
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">A reading within instrument margin creates more defense questions than a higher one. The theories above are investigative paths — not guarantees. The questions in Appendix D are designed to find out which ones he is pursuing.</p>
+
+<blockquote class="blockquote"><strong class="bold-text">What a discovery review would add:</strong> This analysis is based on what you shared with us. The X-Ray ($2,497) examines the actual evidence: calibration logs, operator certification, body camera footage frame by frame, officer training records, and chain of custody. Your $997 is fully credited — it's $1,500, not $2,497. Every dollar rolls forward. No pressure — see how the meeting goes first.</blockquote>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 4: Legal Options & Deadlines</h2>
+
+<h3 class="section-h3">4a. Motion Landscape</h3>
+
+<p class="body-text">The following motions are commonly considered in margin-range DWI cases. Your attorney can assess which apply.</p>
+
+<table class="report-table"><tr><td class="table-cell">Motion</td><td class="table-cell">What It Does</td><td class="table-cell">Why It Matters Here</td></tr>
+
+<tr><td class="table-cell">Suppress Breathalyzer</td><td class="table-cell">Challenges admissibility of the result (calibration, operator, observation period)</td><td class="table-cell">A 0.09 is within instrument margin of error — calibration records could be decisive</td></tr>
+<tr><td class="table-cell">Suppress Traffic Stop</td><td class="table-cell">Challenges reasonable suspicion for the initial stop</td><td class="table-cell">If the stop lacked legal basis, all subsequent evidence may be excludable</td></tr>
+<tr><td class="table-cell">Compel Discovery</td><td class="table-cell">Forces prosecution to provide all evidence</td><td class="table-cell">Footage, maintenance records, and training records can reveal procedural issues</td></tr>
+<tr><td class="table-cell">Suppress Field Sobriety</td><td class="table-cell">Challenges SFST administration per NHTSA standards</td><td class="table-cell">Protocol deviations affect reliability and admissibility</td></tr></table>
+
+<p class="body-text">Whether any motion would succeed depends on evidence in the discovery file — police report, calibration logs, body camera footage, and officer training records.</p>
+
+<h3 class="section-h3">4b. Deadline Calendar</h3>
+
+<table class="report-table"><tr><td class="table-cell">Timeframe</td><td class="table-cell">What's Coming</td><td class="table-cell">Action</td></tr>
+
+<tr><td class="table-cell"><strong class="bold-text">Now — April 15</strong></td><td class="table-cell">Pre-trial motion filing window</td><td class="table-cell">Ask: "Are there motions we should file before the hearing?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Past due (likely)</strong></td><td class="table-cell">Administrative License Revocation (ALR) hearing request — 15-day window from arrest</td><td class="table-cell">Ask: "Was an ALR hearing requested within the 15-day window?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Ongoing</strong></td><td class="table-cell">Discovery requests</td><td class="table-cell">Ask: "Have you requested all discovery, including body cam and calibration records?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">60-90 days</strong></td><td class="table-cell">Trial setting (if unresolved)</td><td class="table-cell">No action now — understanding the timeline helps evaluate the plea</td></tr></table>
+
+<strong class="bold-text">ACTION — ALR deadline:</strong> The ALR process runs on a completely separate track from your criminal case. The 15-day request window started at arrest. If missed, your license may face automatic administrative suspension regardless of the criminal outcome. <strong class="bold-text">Raise this with Torres immediately.</strong>
+
+<p class="body-text">Implied consent consequences under Texas Transportation Code § 724.011 also trigger administrative penalties independent of the criminal case.</p>
+
+<h3 class="section-h3">4c. Plea Framework</h3>
+
+<p class="body-text">The plea being discussed — 6 months probation, $2,500 fine, DWI education program:</p>
+
+<strong class="bold-text">Before evaluating any plea, explore these questions with him:</strong>
+
+<li class="list-item">"Is this the standard first offer, or has it been negotiated based on my specific facts?"</li>
+<li class="list-item">"If we file motions challenging the breath test evidence, does the offer change?"</li>
+<li class="list-item">"What happens to my nursing license under each outcome — conviction, reduction, diversion dismissal?"</li>
+<li class="list-item">"What is the typical conviction rate for first-offense DWI cases here?" Your attorney's courtroom experience is the most reliable source.</li>
+
+<strong class="bold-text">What a plea means for your nursing license:</strong> A DWI conviction triggers mandatory reporting to the Texas Board of Nursing under Texas Occupations Code § 301.452. A reduction to a non-DWI offense or dismissal through diversion may not trigger the same reporting. The difference could determine whether you keep your career.
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">Most time-sensitive question: are there motions to file before the hearing? Second: was the ALR hearing requested within the 15-day window?</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 5: Protecting Your Case and Life</h2>
+
+<h3 class="section-h3">5a. Protecting Your Case</h3>
+
+<strong class="bold-text">Evidence you control:</strong> Anything posted on social media can be used by the prosecution — including indirect references. Most defense attorneys advise against social media activity related to a pending case.
+
+<strong class="bold-text">Privilege boundaries:</strong> Only conversations with your attorney are legally protected. Be mindful of what you share with friends, family, and coworkers.
+
+<strong class="bold-text">Bond conditions:</strong> Follow every condition exactly. A violation while pending fundamentally changes the negotiation landscape.
+
+<h3 class="section-h3">5b. Life Impact Map</h3>
+
+<p class="body-text">Your biggest concern is your nursing license. Here's how this case can affect each area of your life:</p>
+
+<table class="report-table"><tr><td class="table-cell">Life Area</td><td class="table-cell">Potential Impact</td><td class="table-cell">Source</td><td class="table-cell">Question for Attorney</td></tr>
+
+<tr><td class="table-cell"><strong class="bold-text">Nursing License</strong></td><td class="table-cell">Conviction triggers mandatory Board of Nursing reporting. Could result in probation, restriction, or revocation.</td><td class="table-cell">Tex. Occ. Code § 301.452</td><td class="table-cell">"How does each outcome affect my license?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Employment</strong></td><td class="table-cell">Hospital likely has criminal conviction policies. Impact differs by outcome.</td><td class="table-cell">Employer policy</td><td class="table-cell">"Could a conviction affect my current position?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Driving</strong></td><td class="table-cell">Suspension possible through criminal case and separate ALR process.</td><td class="table-cell">Tex. Transp. Code §§ 524, 521.344</td><td class="table-cell">"What is my current license status?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Insurance</strong></td><td class="table-cell">Significant premium increases for 3-5 years. An SR-22 (certificate of financial responsibility) may be required.</td><td class="table-cell">State insurance regulations</td><td class="table-cell">"How does conviction vs. reduction affect rates?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Children</strong></td><td class="table-cell">As sole provider for two, custody implications deserve attention.</td><td class="table-cell">Tex. Family Code § 153.004</td><td class="table-cell">"Could this affect my custody arrangement?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Firearms</strong></td><td class="table-cell">First-offense misdemeanor generally doesn't trigger federal prohibition, but probation may restrict.</td><td class="table-cell">18 U.S.C. § 922(g)(1); Tex. Penal Code § 46.04</td><td class="table-cell">"Any restrictions during probation?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Financial</strong></td><td class="table-cell">Fines, court costs, insurance increases, potential lost wages.</td><td class="table-cell">Plea terms + ancillary costs</td><td class="table-cell">"Total financial cost of each outcome?"</td></tr>
+<tr><td class="table-cell"><strong class="bold-text">Background</strong></td><td class="table-cell">Conviction appears on checks. Dismissed charges may be eligible for expunction.</td><td class="table-cell">Tex. Code Crim. Proc. Ch. 55A</td><td class="table-cell">"If dismissed, can I get it expunged?"</td></tr></table>
+
+<strong class="bold-text">Immigration & International Travel:</strong> Even for US citizens, a DWI conviction can affect:
+<li class="list-item">Immigration sponsorship of family members</li>
+<li class="list-item">Future naturalization petitions by family</li>
+<li class="list-item">International travel — some countries (Canada, Australia, Japan) deny entry for certain convictions</li>
+
+<p class="body-text">Under <em>Padilla v. Kentucky</em>, 559 U.S. 356 (2010) — a Supreme Court ruling requiring criminal defense to include immigration consequence analysis — these factors are a critical part of any case evaluation. If anyone in your household has immigration status concerns, consult an immigration attorney before any plea decision.</p>
+
+<strong class="bold-text">What most defendants don't realize:</strong> The Texas Board of Nursing may independently investigate based on the arrest alone — not just a conviction. Proactive disclosure and legal guidance on board communications can make a significant difference. Whether a preemptive board strategy makes sense depends on the specific facts in your discovery file. That's what The X-Ray ($2,497) examines, and your $997 is already credited — it's $1,500.
+
+<h3 class="section-h3">5c. Life While Pending</h3>
+
+<p class="body-text">The matter will likely be pending for 6-12 months:</p>
+
+<li class="list-item"><strong class="bold-text">Work normally.</strong> Courts view continued employment favorably. Document your performance.</li>
+<li class="list-item"><strong class="bold-text">Attend every court date.</strong> Missing one results in a warrant and additional charges.</li>
+<li class="list-item"><strong class="bold-text">Follow bond conditions exactly.</strong> No exceptions.</li>
+<li class="list-item"><strong class="bold-text">Keep a case journal.</strong> Date, who you spoke to, what was said, next steps.</li>
+
+<p class="body-text">This period feels indefinite, but it isn't. You're at month 3 of a 6-12 month process. The pre-trial hearing will provide the next concrete milestone.</p>
+
+<h3 class="section-h3">Bottom Line</h3>
+
+<p class="body-text">Your nursing license is the highest-stakes collateral consequence. The difference between conviction, reduction, and diversion dismissal could determine Board action under § 301.452. Every question in Appendix D is designed with this reality in mind.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Section 6: Your Plan</h2>
+
+<h3 class="section-h3">6a. If Overwhelmed</h3>
+
+<p class="body-text">Start here. One action. Thirty seconds.</p>
+
+<p class="body-text">Send the email below. It's already written. Copy, paste, send. You've just created a written record with your five most important questions — more than most defendants ever do.</p>
+
+<h3 class="section-h3">6b. Email Template (Ready to Send)</h3>
+
+<strong class="bold-text">Subject:</strong> Case Update Request — Danielle, Case #2025-CR-44891
+
+<p class="body-text">Dear Mr. Torres,</p>
+
+<p class="body-text">I hope you're doing well. I want to be well-prepared for my April 15 pre-trial hearing, and I have a few questions I'd like to discuss:</p>
+
+<li class="list-item">You mentioned my BAC is "borderline" and there might be options — can you walk me through what those options are and which ones apply to my case?</li>
+<li class="list-item">Have you obtained and reviewed the body camera footage from my traffic stop?</li>
+<li class="list-item">What is the margin of error for the breathalyzer model used in my test, and does my 0.09 fall within that margin?</li>
+<li class="list-item">Are there any motions we should file before the April 15 hearing?</li>
+<li class="list-item">I'm a registered nurse and sole provider for two children. How does a DWI conviction versus a reduction or diversion dismissal affect my nursing license under Texas Occupations Code § 301.452?</li>
+
+<p class="body-text">I know you carry a heavy caseload and I appreciate your work on my case. I want to make sure I understand where things stand so I can be a prepared and helpful client.</p>
+
+<p class="body-text">Could we schedule a brief call or meeting before the hearing? I'm available any time that works for you.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Danielle</p>
+<p class="body-text">Case #2025-CR-44891</p>
+
+<h3 class="section-h3">6c. Phone Script</h3>
+
+<p class="body-text">"Hi, this is Danielle — I'm a client of Mr. Torres, case number 2025-CR-44891. I have a pre-trial hearing on April 15 and I'd like to schedule a brief conversation before then. I also sent an email with my questions. Could you let him know I called? Thank you."</p>
+
+<h3 class="section-h3">6d. 14-Day Plan</h3>
+
+<table class="report-table"><tr><td class="table-cell">Day</td><td class="table-cell">Action</td></tr>
+
+<tr><td class="table-cell">Day 1</td><td class="table-cell">Send the email above. Copy, paste, send — 30 seconds. You've just created a written record.</td></tr>
+<tr><td class="table-cell">Day 2</td><td class="table-cell">Read Q1-Q5 on your Meeting Ready Sheet below. Highlight the ones that matter most.</td></tr>
+<tr><td class="table-cell">Day 3</td><td class="table-cell">If no email response, call using the phone script. Reference your email so there's both a written and verbal record.</td></tr>
+<tr><td class="table-cell">Day 4</td><td class="table-cell">Gather materials: print the Meeting Ready Sheet, grab a pen, have your case number handy.</td></tr>
+<tr><td class="table-cell">Day 5</td><td class="table-cell">Read your questions aloud once. Saying them out loud makes them easier to ask in person.</td></tr>
+<tr><td class="table-cell">Day 6</td><td class="table-cell">Still no response? Send the follow-up email (Section 6e). Persistent, not difficult.</td></tr>
+<tr><td class="table-cell">Day 7</td><td class="table-cell">Rest. You've done the work this week.</td></tr>
+<tr><td class="table-cell">Days 8-14</td><td class="table-cell">Attend your meeting or continue following up. Bring your Meeting Ready Sheet. Ask, listen, write down answers.</td></tr></table>
+
+<p class="body-text">In two weeks, you'll walk into that meeting as the most prepared client he's seen this month.</p>
+
+<h3 class="section-h3">6e. Follow-Up Template</h3>
+
+<strong class="bold-text">Subject:</strong> Follow-Up: Case Update Request — Danielle, Case #2025-CR-44891
+
+<p class="body-text">Dear Mr. Torres,</p>
+
+<p class="body-text">I'm following up on my email from [date]. I want to make sure my questions reached you before the hearing:</p>
+
+<li class="list-item">What specific defense options are you considering given the borderline reading?</li>
+<li class="list-item">Have you reviewed the body camera footage?</li>
+<li class="list-item">What's the breathalyzer's margin of error relative to my 0.09 reading?</li>
+<li class="list-item">Are there motion deadlines approaching before the pre-trial hearing?</li>
+<li class="list-item">How do the possible outcomes affect my nursing license under § 301.452?</li>
+
+<p class="body-text">If email isn't the best way to reach you, please let me know the best method.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Danielle</p>
+<p class="body-text">Case #2025-CR-44891</p>
+
+<h3 class="section-h3">6f. What to Bring to Attorney Meeting</h3>
+
+<li class="list-item">Printed Meeting Ready Sheet (below)</li>
+<li class="list-item">Pen and notepad</li>
+<li class="list-item">Case number: 2025-CR-44891</li>
+<li class="list-item">Photo ID</li>
+<li class="list-item">Phone on silent (Texas is a one-party consent state — you may record without informing the other party, but consider the relationship impact)</li>
+
+<h3 class="section-h3">6g. Meeting Ready Sheet</h3>
+
+<strong class="bold-text">Bring this to your next meeting with Michael Torres:</strong>
+
+<strong class="bold-text">Q1 (Golden Question):</strong> "You mentioned my BAC is "borderline" and there might be options — can you walk me through what those options are and which ones apply to my case?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Q2:</strong> "Have you obtained and reviewed the body camera footage from my traffic stop?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Q3:</strong> "What is the margin of error for the breathalyzer model used in my test, and does my 0.09 fall within that margin?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Q4:</strong> "Are there any motions we should file before the April 15 hearing?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Q5:</strong> "I'm a registered nurse and sole provider for two children. How does a DWI conviction versus a reduction or diversion dismissal affect my nursing license under Texas Occupations Code § 301.452?"
+<p class="body-text">Attorney's answer: _________________________________________________</p>
+
+<strong class="bold-text">Post-Meeting Checklist:</strong>
+<li class="list-item checkbox-item">&#9744; Got answers to priority questions</li>
+<li class="list-item checkbox-item">&#9744; Wrote down responses during the meeting</li>
+<li class="list-item checkbox-item">&#9744; Sent summary email within 24 hours</li>
+<li class="list-item checkbox-item">&#9744; Updated case journal with dates and next steps</li>
+<li class="list-item checkbox-item">&#9744; Understand what happens at the pre-trial hearing</li>
+
+<h3 class="section-h3">6h. Post-Meeting</h3>
+
+<p class="body-text">Within 24 hours, send this email:</p>
+
+<strong class="bold-text">Subject:</strong> Meeting Summary — Danielle, Case #2025-CR-44891
+
+<p class="body-text">Dear Mr. Torres,</p>
+
+<p class="body-text">Thank you for meeting with me. I want to make sure I understood everything correctly:</p>
+
+<p class="body-text">[List 3-5 key points from the meeting]</p>
+
+<p class="body-text">Please let me know if I missed anything or misunderstood.</p>
+
+<p class="body-text">Thank you,</p>
+<p class="body-text">Danielle</p>
+
+<h3 class="section-h3">6i. Difficult Conversations</h3>
+
+<strong class="bold-text">"Trust me, I'm handling it."</strong>
+<p class="body-text">What's happening: He may be working on the matter but hasn't communicated progress.</p>
+<p class="body-text">What you can say: "I appreciate that, and I trust your expertise. Could you help me understand what specific steps have happened so far? I want to be a good partner in my defense."</p>
+<p class="body-text">Why it works: Collaborative, not adversarial. Asks for specifics without challenging competence.</p>
+
+<strong class="bold-text">"You don't need to worry about that."</strong>
+<p class="body-text">What's happening: He may be shielding you from complexity, or may not have investigated yet.</p>
+<p class="body-text">What you can say: "I understand it might be complex. I'm a nurse — I work with complex information every day. Even a high-level overview would help me plan, especially regarding my license."</p>
+<p class="body-text">Why it works: Establishes your capacity. Connects to your professional identity.</p>
+
+<strong class="bold-text">Attorney seems rushed.</strong>
+<p class="body-text">What you can say: "I can see you're pressed for time. Could we schedule 15 minutes where I can go through my top 3 questions? I'll have them written down so we can be efficient."</p>
+<p class="body-text">Why it works: Respects his time while securing a focused conversation.</p>
+
+<strong class="bold-text">"Just take the plea."</strong>
+<p class="body-text">What you can say: "Before I decide, I want to make sure I understand all the options. Could you walk me through what would happen if we filed a suppression motion? And how each outcome affects my nursing license?"</p>
+<p class="body-text">Why it works: Doesn't reject advice — asks for information needed to make an informed decision.</p>
+
+<h3 class="section-h3">6j. Advocacy Steps</h3>
+
+<li class="list-item"><strong class="bold-text">Send written questions</strong> — the email template above is ready to go</li>
+<li class="list-item"><strong class="bold-text">Request a case update meeting</strong> — your Meeting Ready Sheet serves as the agenda</li>
+<li class="list-item"><strong class="bold-text">Follow up in writing</strong> if no response within 5-7 business days</li>
+<li class="list-item"><strong class="bold-text">Request written answers</strong> if verbal responses are vague</li>
+<li class="list-item"><strong class="bold-text">Seek a second opinion</strong> — always your right. Texas legal aid organizations (Lone Star Legal Aid, Texas RioGrande Legal Aid) offer consultations. Private DWI consultations run $150-300. A second opinion is information-gathering, not disloyalty.</li>
+
+<p class="body-text">Most situations resolve at Steps 1-3.</p>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix A: Brady/Giglio Checklist</h2>
+
+<strong class="bold-text">What This Is:</strong> Under <em>Brady v. Maryland</em> (1963) and <em>Giglio v. United States</em> (1972), the prosecution is constitutionally required to disclose evidence that is favorable to the defense. This includes exculpatory evidence (Brady) and impeachment evidence (Giglio).
+
+<strong class="bold-text">Ask your attorney:</strong> "Have you received all Brady/Giglio material? Is there anything outstanding?"
+
+<h3 class="section-h3">Evidence the Prosecution Must Disclose:</h3>
+
+<li class="list-item checkbox-item">&#9744; Exculpatory evidence (anything suggesting innocence)</li>
+<li class="list-item checkbox-item">&#9744; Impeachment evidence (anything undermining prosecution witnesses)</li>
+<li class="list-item checkbox-item">&#9744; Prior inconsistent statements by witnesses</li>
+<li class="list-item checkbox-item">&#9744; Deals, promises, or inducements to witnesses</li>
+<li class="list-item checkbox-item">&#9744; Criminal records of prosecution witnesses</li>
+<li class="list-item checkbox-item">&#9744; Evidence of witness bias or motive to lie</li>
+<li class="list-item checkbox-item">&#9744; Lab reports, forensic analysis, chain of custody documentation</li>
+<li class="list-item checkbox-item">&#9744; Surveillance footage, body camera footage, dashcam footage</li>
+<li class="list-item checkbox-item">&#9744; 911 calls and dispatch records</li>
+<li class="list-item checkbox-item">&#9744; Prior complaints against arresting officers</li>
+<li class="list-item checkbox-item">&#9744; Internal affairs investigations of involved officers</li>
+<li class="list-item checkbox-item">&#9744; Evidence contradicting the prosecution's theory</li>
+
+<h3 class="section-h3">What to Ask Your Attorney:</h3>
+
+<li class="list-item">"Have you filed a specific Brady demand or are you relying on the general obligation?"</li>
+<li class="list-item">"Is there a standing discovery order in this case?"</li>
+<li class="list-item">"Have you received all police reports, including supplemental reports?"</li>
+<li class="list-item">"Are there any witnesses the prosecution hasn't disclosed?"</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix B: Next Court Date Prep</h2>
+
+<strong class="bold-text">Your next court date:</strong> April 15, 2026
+<strong class="bold-text">Hearing type:</strong> Pre-trial hearing
+<strong class="bold-text">Judge:</strong> Judge Patricia Martinez
+<strong class="bold-text">Location:</strong> Harris County Criminal Court (confirm exact courtroom with your attorney or the court clerk)
+
+<h3 class="section-h3">What This Hearing Is</h3>
+
+<p class="body-text">A pre-trial hearing is an administrative checkpoint. The judge reviews case status, addresses pending motions, and sets future dates. Typically 5-15 minutes of courtroom time, though plan for 2-3 hours of waiting. You will likely not need to speak unless the judge addresses you directly.</p>
+
+<h3 class="section-h3">Step by Step</h3>
+
+<li class="list-item"><strong class="bold-text">Arrive 30 minutes early.</strong> Find the courtroom, check in with the clerk.</li>
+<li class="list-item"><strong class="bold-text">Wait for your case to be called.</strong> Docket order — 1-3 hours possible.</li>
+<li class="list-item"><strong class="bold-text">Stand when called.</strong> Move to the front with your attorney.</li>
+<li class="list-item"><strong class="bold-text">Let him speak.</strong> He addresses the judge on status, motions, and scheduling.</li>
+<li class="list-item"><strong class="bold-text">If the judge asks you directly,</strong> answer briefly: "Yes, Your Honor" / "No, Your Honor."</li>
+<li class="list-item"><strong class="bold-text">When dismissed,</strong> step outside quietly. Meet with Torres to discuss what happened.</li>
+
+<p class="body-text">As a public defender client, your meeting with him may happen briefly at the courthouse before the hearing. Have your top 3 questions written down to use that time efficiently.</p>
+
+<h3 class="section-h3">What to Wear</h3>
+
+<li class="list-item">Business casual at minimum (dress slacks, blouse or collared shirt)</li>
+<li class="list-item">No logos, slogans, or distracting patterns</li>
+<li class="list-item">The standard: look like someone the judge takes seriously</li>
+
+<h3 class="section-h3">What to Bring</h3>
+
+<li class="list-item">Meeting Ready Sheet from Section 6 (printed)</li>
+<li class="list-item">Pen and notepad</li>
+<li class="list-item">Case number: 2025-CR-44891</li>
+<li class="list-item">Photo ID</li>
+<li class="list-item">Phone on silent (some courtrooms prohibit phones entirely)</li>
+
+<h3 class="section-h3">What NOT to Do</h3>
+
+<li class="list-item">Do not speak to the judge unless directly addressed</li>
+<li class="list-item">Do not speak to the prosecutor or their staff</li>
+<li class="list-item">Do not discuss your case in the hallway — you don't know who's listening</li>
+<li class="list-item">Do not be late — a missed date results in a warrant</li>
+
+<h3 class="section-h3">If Attorney Isn't There</h3>
+
+<p class="body-text">Public defenders sometimes have scheduling conflicts. If he isn't present when your case is called:</p>
+<li class="list-item">Tell the judge: "Your Honor, I'm represented by Michael Torres from the Public Defender's Office. I believe he may be in another courtroom."</li>
+<li class="list-item">The judge will typically pass your case and come back to it.</li>
+<li class="list-item">Do not try to represent yourself or discuss case details.</li>
+<li class="list-item">After the hearing, document what happened and send a written summary.</li>
+
+<p class="body-text">---</p>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix C: Your Rights During Criminal Proceedings</h2>
+
+<strong class="bold-text">These rights exist regardless of your charge, your attorney, or your county.</strong>
+
+<h3 class="section-h3">Constitutional Rights:</h3>
+<li class="list-item"><strong class="bold-text">Right to remain silent</strong> (5th Amendment) — You cannot be compelled to testify against yourself</li>
+<li class="list-item"><strong class="bold-text">Right to an attorney</strong> (6th Amendment) — If you cannot afford one, one will be appointed</li>
+<li class="list-item"><strong class="bold-text">Right to a speedy trial</strong> (6th Amendment) — Timelines vary by state and jurisdiction</li>
+<li class="list-item"><strong class="bold-text">Right to confront witnesses</strong> (6th Amendment) — You can cross-examine anyone who testifies against you</li>
+<li class="list-item"><strong class="bold-text">Right against unreasonable search and seizure</strong> (4th Amendment) — Evidence obtained illegally may be suppressed</li>
+<li class="list-item"><strong class="bold-text">Right to a jury trial</strong> (6th Amendment) — For serious offenses, you have the right to be judged by a jury of your peers</li>
+<li class="list-item"><strong class="bold-text">Right to due process</strong> (14th Amendment) — Fair procedures must be followed</li>
+<li class="list-item"><strong class="bold-text">Right against double jeopardy</strong> (5th Amendment) — You cannot be tried twice for the same offense</li>
+<li class="list-item"><strong class="bold-text">Right to be presumed innocent</strong> — The prosecution must prove guilt beyond a reasonable doubt</li>
+
+<h3 class="section-h3">Your Rights With Your Attorney:</h3>
+<li class="list-item">You have the right to know what is happening in your case at all times</li>
+<li class="list-item">You have the right to be consulted before major decisions are made</li>
+<li class="list-item">You have the right to make the final decision on whether to accept a plea or go to trial</li>
+<li class="list-item">You have the right to effective assistance of counsel (Strickland v. Washington)</li>
+<li class="list-item">You have the right to change attorneys at any time (though timing and procedural requirements apply)</li>
+
+<h3 class="section-h3">If You Feel Your Rights Are Being Violated:</h3>
+<li class="list-item">Document everything in writing (dates, times, what was said)</li>
+<li class="list-item">Follow the Advocacy Steps in Section 6 of this brief</li>
+<li class="list-item">Contact your state bar association's client protection hotline</li>
+<div class="page-break"></div>
+<h2 class="section-h2">Appendix D: Targeted Follow-Up Questions</h2>
+
+<p class="body-text">These questions fill the specific gaps in what you know. Each is calibrated to elicit a substantive answer.</p>
+
+<h3 class="section-h3">Case Strategy</h3>
+
+<strong class="bold-text">Q1 (Golden Question):</strong> "You mentioned my BAC is "borderline" and there might be options — can you walk me through what those options are and which ones apply to my case?"
+
+<p class="body-text">Why this is urgent: After 3 months, this answer is overdue. Lawrence Taylor's DWI defense methodology identifies near-limit cases as having the widest range of defense options — but only if investigated. Torres flagged the issue; now you need specifics.</p>
+
+<p class="body-text">What you want to hear: He names 2-3 specific theories (instrument margin of error, rising blood alcohol, SFST protocol) and explains which he's investigated or plans to investigate.</p>
+
+<p class="body-text">If he's vague: "Could you narrow it to the top two options and what information you'd need to evaluate them?"</p>
+
+<p class="body-text">The key signal: Specific theories with a factual basis — not generalities. Note each option and include them in your summary email.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q2:</strong> "I've called four times in six weeks and received one callback. What's the most reliable way to reach you — email, portal, scheduled calls?"
+
+<p class="body-text">This solves the communication problem rather than assigning blame — what Chris Voss calls a "calibrated question." A strong response: a specific method and expected response time. If vague: "Could you name the single best channel to reach you?" Pay attention to whether he gives a concrete plan vs. reassurance.</p>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Evidence & Discovery</h3>
+
+<strong class="bold-text">Q3:</strong> "Have you obtained and reviewed the body camera footage from my traffic stop?"
+
+<p class="body-text">William "Bubba" Head's methodology begins with footage review — it provides objective documentation of the encounter.</p>
+
+<li class="list-item"><strong class="bold-text">If "Yes, I've watched it" →</strong> Ask what he noticed. This is the gold standard response.</li>
+<li class="list-item"><strong class="bold-text">If "I've requested it but haven't reviewed it yet" →</strong> Ask when he expects to review it and whether it will happen before the hearing.</li>
+<li class="list-item"><strong class="bold-text">If "I haven't requested it" →</strong> "Can we request it now? Retention policies vary — footage can be deleted." This is time-sensitive.</li>
+
+<p class="body-text">Whether footage has been obtained AND reviewed — not just requested — tells you where preparation stands.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q4:</strong> "What is the margin of error for the breathalyzer model used in my test, and does my 0.09 reading fall within that margin?"
+
+<p class="body-text">Justin McShane's forensic methodology focuses on instrument precision. Most breathalyzers have a margin of ±0.005 to ±0.02 — meaning a 0.09 could represent a true level from 0.07 to 0.11. A good answer identifies the specific model, margin, and last calibration date. If he doesn't know, that's a discovery item to follow up on.</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q5:</strong> "I'm a registered nurse and sole provider for two children. How would a DWI conviction versus a reduction versus a dismissal through diversion affect my nursing license?"
+
+<p class="body-text">Under Texas Occupations Code § 301.452, the Board of Nursing reviews criminal convictions. The difference between outcomes may determine whether the Board acts — career-defining territory. Listen for whether the nursing license has been factored into strategy, not just the criminal outcome. If not: "Could you connect me with someone experienced with professional licensing consequences?"</p>
+
+<p class="body-text">---</p>
+
+<strong class="bold-text">Q6:</strong> "Have you received all discovery materials — police report, calibration records, officer training records, and body camera footage?"
+
+<table class="report-table"><tr><td class="table-cell">🟢 Green flag</td><td class="table-cell">🔴 Red flag</td></tr>
+
+<tr><td class="table-cell">He lists specific items received and outstanding</td><td class="table-cell">"I think so" or "I'll have to check"</td></tr>
+<tr><td class="table-cell">Gives a timeline for outstanding items</td><td class="table-cell">Can't name what's been received</td></tr>
+<tr><td class="table-cell">Has already reviewed what he has</td><td class="table-cell">Hasn't opened the file since arraignment</td></tr></table>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Motions & Deadlines</h3>
+
+<strong class="bold-text">Q7 + Q8</strong> (ask together — they're related):
+
+<p class="body-text">"Are there any motions — suppression, discovery compulsion — that we should consider filing before April 15?" AND "Was an ALR hearing requested within the 15-day window after my arrest?"</p>
+
+<p class="body-text">Both are deadline-sensitive. Pre-trial motions are generally filed before the hearing, and the ALR (Administrative License Revocation) process runs on a completely separate track with its own 15-day window from arrest. If he answers Q7 with "I haven't looked into it," ask Q8 immediately — it tests whether time-sensitive items are being tracked. A clear yes or no on the ALR is factual. If vague: "Can you check? The ALR is separate from the criminal case."</p>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Plea Evaluation</h3>
+
+<strong class="bold-text">Q9:</strong> "Is the current plea offer the standard first offer, or has it been negotiated based on my situation?"
+
+<li class="list-item"><strong class="bold-text">If yes, it's standard →</strong> "What would a negotiated offer look like, and what would we need to get there?"</li>
+<li class="list-item"><strong class="bold-text">If it's been negotiated →</strong> "What did the original offer look like, and what moved the needle?"</li>
+<li class="list-item"><strong class="bold-text">If he doesn't know →</strong> That's an answer too. Standard offers are starting positions, not final ones.</li>
+
+<strong class="bold-text">Q10:</strong> "Does Harris County offer pre-trial diversion for first-time DWI? Would I qualify?"
+
+<p class="body-text">Diversion could mean dismissal — which matters enormously for your nursing license. Texas prohibits deferred adjudication for DWI (Art. 42A.102), but diversion is a separate mechanism. If he hasn't investigated: "Could you find out? Dismissal vs. conviction is the difference for my license."</p>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Judge & Jurisdiction</h3>
+
+<blockquote class="blockquote"><strong class="bold-text">Q11:</strong> "What is Judge Martinez's approach to first-offense DWI cases? How does she handle suppression motions?"</blockquote>
+
+<blockquote class="blockquote">Judge tendencies shape strategy directly. If he hasn't appeared before her, asking him to consult a colleague who has is reasonable and standard.</blockquote>
+
+<p class="body-text">---</p>
+
+<h3 class="section-h3">Consequences</h3>
+
+<strong class="bold-text">Q12 + Q13</strong> (pair these — the second follows naturally from the first):
+
+<p class="body-text">First ask: "What are the realistic best-case and worst-case outcomes, given everything you know right now?"</p>
+<p class="body-text">Then: "If I don't accept the plea, what happens? Does the offer get worse, stay the same, or is there room?"</p>
+
+<p class="body-text">A calibrated range helps you decide with data instead of fear or hope. The second question tests whether the current offer is a ceiling or a floor. Follow-up: "Have you seen cases where the offer improved after motions were filed?"</p>
+
+<strong class="bold-text">Q14:</strong> "Were the field sobriety tests recorded, and were they administered per NHTSA standards?"
+
+<table class="report-table"><tr><td class="table-cell">What to listen for</td><td class="table-cell">Why it matters</td></tr>
+
+<tr><td class="table-cell">"Yes, I've reviewed the footage"</td><td class="table-cell">He's doing his job — good sign</td></tr>
+<tr><td class="table-cell">"I've only read the police report"</td><td class="table-cell">Reports omit officer errors. Footage is the objective record.</td></tr>
+<tr><td class="table-cell">"I don't think they were recorded"</td><td class="table-cell">Dash cam and body cam policies vary. Worth confirming.</td></tr></table>
+
+<strong class="bold-text">Q15:</strong> "Is there anything about my case that concerns you or that I should know?"
+
+<p class="body-text">This open-ended question invites information attorneys might not volunteer. Candor — even if it includes concerns — is what enables informed decisions.</p>
+  <div class="footer-disclaimer">
+    <p class="footer-disclaimer-text">
+      <strong class="footer-disclaimer-label">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.
+    </p>
+  </div>
+  <div class="copyright-block">
+    <p class="copyright-text">&copy; 2026 ImNotAnAttorney. Legal information, not legal advice.</p>
+    <p class="copyright-meta">Report ID: IB-TEST-DANIELLE-V4 | Generated: March 8, 2026</p>
+  </div>
+  <div class="no-print upgrade-cta">
+    <p class="upgrade-cta-text">If you receive discovery evidence and want a deeper analysis, The X-Ray reviews your actual case files — officer recordings, lab reports, chain of custody, witness statements.</p>
+    <a href="/checkout?tier=x-ray" class="upgrade-btn">The X-Ray — $2,497 ($1,500 after credit)</a>
+    <p class="upgrade-credit-note">Every dollar you've paid rolls forward. Your $997 is fully credited toward any tier — you only pay the difference. Credits valid for 12 months.</p>
+  </div>
+</div>
+</body>
+</html>

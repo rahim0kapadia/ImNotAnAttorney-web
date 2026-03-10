@@ -1,0 +1,67 @@
+{
+  "evaluated_at": "2026-03-02T23:23:29.685Z",
+  "eval_version": "2.0",
+  "source": "tmp-dummy-report.md",
+  "charge_type": "Drug",
+  "tier": "case-decoder",
+  "model_used": "opus",
+  "gate_passed": true,
+  "complete": false,
+  "teams": {
+    "legal": {
+      "name": "Legal Substance",
+      "weight": "MEDIUM",
+      "model": "claude-opus-4-6",
+      "score": "0/6",
+      "passed": 0,
+      "needs_work": 0,
+      "failed": 6,
+      "criteria": [
+        {
+          "id": "L1",
+          "result": "FAIL",
+          "justification": "The report contains no charge-specific legal information whatsoever — no statute, no jurisdiction, no charge type analysis, and no drug-specific content despite being classified as a Drug charge report.",
+          "problematic_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. This report provides legal INFORMATION — not legal ADVICE."
+        },
+        {
+          "id": "L2",
+          "result": "FAIL",
+          "justification": "Zero defense theories are presented — no suppression analysis, no weight challenge, no mens rea discussion, no constructive possession analysis, no chain of custody challenge, and no lab testing methodology challenge as required for a drug case.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L6",
+          "result": "FAIL",
+          "justification": "No motions are identified at all — no motion to suppress, no Franks hearing motion, no motion to compel discovery of lab protocols, no jurisdiction-specific filing deadlines or procedural requirements.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L7",
+          "result": "FAIL",
+          "justification": "No collateral consequences are cited — no discussion of driver's license suspension, federal financial aid ineligibility, immigration consequences, professional licensing impacts, housing disqualification, or firearm rights as applicable to drug convictions.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L8",
+          "result": "FAIL",
+          "justification": "No expert frameworks are applied — no reflection of Lichtman's evidence-first destruction approach for drug cases, no Scheck/Garrett forensic reliability challenge for lab analysis, no Spence affirmative defense theory, and no prosecution reverse-engineering per Mesereau.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        },
+        {
+          "id": "L9",
+          "result": "FAIL",
+          "justification": "No statutes are cited anywhere in the report — not a single statute number, section, or subsection for any jurisdiction.",
+          "problematic_text": "This is a minimal report for testing criteria loading. It contains enough text to pass the 100-character minimum check but is not a real report."
+        }
+      ],
+      "summary": "This is a placeholder/test dummy document containing zero substantive legal content; it fails every criterion and cannot be shipped in any form — it requires complete replacement with an actual drug defense report.",
+      "elapsed": "12.2",
+      "cost_usd": 0.06677
+    }
+  },
+  "total_pass": 0,
+  "total_needs_work": 0,
+  "total_fail": 6,
+  "cost_usd": 0.06677,
+  "duration_ms": 12168
+}

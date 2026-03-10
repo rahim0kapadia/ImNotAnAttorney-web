@@ -89,7 +89,7 @@ You are 3 months into a process that typically takes 6-12 months for a first-off
 
 **Case Progress Score: 42/100**
 
-This score measures the communication and transparency you've described — not Michael Torres's legal ability. A low communication score is common with public defenders carrying heavy caseloads. It doesn't mean your case is being neglected, but it does mean you need tools to get answers.
+This score measures the communication and transparency you've described — not Michael Torres's legal ability. A low communication score is common with public defenders carrying heavy caseloads. It doesn't mean your case is being neglected, but it does mean having tools to get answers matters.
 
 | Area (Weight) | What You Told Us | What to Ask About | Priority Qs |
 |---------------|-----------------|-------------------|-------------|
@@ -455,7 +455,7 @@ Why it works: Respects his time while securing a focused conversation. The Meeti
 **"Just take the plea."**
 What's happening: He may believe the plea is the best outcome, or may not have had time to investigate alternatives.
 What you can say: "Before I decide, I want to make sure I understand all the options. Could you walk me through what would happen if we filed a motion to suppress the breathalyzer results? And how each outcome — conviction, reduction, diversion — affects my nursing license?"
-Why it works: Doesn't reject his advice — asks for the information you need to make an informed decision.
+Why it works: Doesn't reject his advice — asks for the information that leads to an informed decision.
 
 ### 6j. Advocacy Steps
 

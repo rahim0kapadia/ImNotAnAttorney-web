@@ -1,5 +1,5 @@
 /**
- * evaluate-report.mjs — DB-driven 6-team report audit tool (v3.0)
+ * evaluate-report.mjs — DB-driven 7-team report audit tool (v3.1)
  *
  * Reads criteria from Supabase eval_criteria + pipeline_eval_weights,
  * runs LLM-based evaluation per team, saves results to audit_runs table.
@@ -13,7 +13,7 @@
  *   node evaluate-report.mjs --case-id <UUID>
  *   node evaluate-report.mjs --file report.md --no-db
  *
- * Teams: upl, psych, legal, defendant, conversion, rendering (default: all non-LOW)
+ * Teams: upl, psych, legal, defendant, conversion, rendering, system-truth (default: all non-LOW)
  * Model: Opus 4.6 default (quality first), --model sonnet|haiku for budget runs
  *
  * Requires: ANTHROPIC_API_KEY in .env.local
@@ -234,6 +234,7 @@ const TEAM_NAMES = {
   defendant: "Defendant Experience",
   conversion: "Conversion & Value Architecture",
   rendering: "Rendering & Delivery",
+  'system-truth': "System Truth",
 };
 
 const TEAM_SYSTEM_PROMPTS = {
@@ -307,11 +308,25 @@ Expert grounding:
 - Rendering pipeline — renderReportHtml() converts markdown to styled HTML. Tables, checkboxes, blockquotes, and styled divs must all survive the conversion.
 - sanitize-html — The report page sanitizes HTML before rendering. Elements that should be visible must not be stripped.
 - Print UX — Defendants print these reports. Print styles must invert to light theme and hide upgrade CTAs.`,
+
+  'system-truth': `You are Team 7: System Truth — an expert evaluation panel for criminal defendant legal information products.
+
+Your purpose: Validate that every deliverable weaves in the insider realities of the criminal defense system — the business incentives, emotional tactics, and structural patterns that defendants experience but nobody names. This is the credibility and differentiation layer. A deliverable that passes Teams 1-6 but fails Team 7 is technically correct but generic — it reads like every other legal information site.
+
+Expert grounding:
+- Amy Bach — "Ordinary injustice" framing: courts fail through routine negligence, not dramatic misconduct
+- Alexandra Natapoff — The numbers: 13M misdemeanor cases/year processed in minutes
+- Dan Canon — Plea bargaining as social control, not justice
+- Stephen Bright — Outcome determined by lawyer quality, not crime severity
+- Mark Godsey — Defense negligence as root cause of wrongful conviction
+- Norm Pattis — Active attorney calling out system dysfunction from inside
+- Joshua Baron / Atticus Advantage / Fretzin — The business playbook that reveals incentive structures
+- Strickland v. Washington — The legal standard that enables it all`,
 };
 
 const HARDCODED_CRITERIA = {
   upl: [
-    { id: "U1", criterion_name: "No advice language", what_to_check: 'Every statement framed as information, never directive', fail_triggers: '"you should," "you need to," "we recommend," "we advise," "your best option," "the best strategy"' },
+    { id: "U1", criterion_name: "No advice language", what_to_check: 'Every statement framed as information, never directive. EXCEPTION: Banned phrases inside quoted attorney dialogue in scenario headers are acceptable when clearly attributed as attorney speech — the ban applies to report language addressed TO the defendant.', fail_triggers: '"you should," "you need to," "we recommend," "we advise," "your best option," "the best strategy" — in report language to defendant (quoted attorney dialogue exempt when clearly attributed)' },
     { id: "U2", criterion_name: "Attorney redirection", what_to_check: "Every section redirects to the defendant's attorney", fail_triggers: "Any section lacking 'ask your attorney' or equivalent" },
     { id: "U3", criterion_name: "No attorney judgment", what_to_check: "Never evaluates attorney competence", fail_triggers: '"your attorney is failing," competence scoring with band labels' },
     { id: "U4", criterion_name: "Disclaimer presence", what_to_check: "Header/footer contains required disclaimers", fail_triggers: 'Missing "legal information" framing' },
@@ -337,7 +352,7 @@ const HARDCODED_CRITERIA = {
   legal: [
     { id: "L1", criterion_name: "Charge-specific accuracy", what_to_check: "Matches specific charge, statute, jurisdiction", fail_triggers: "Wrong statute, wrong mandatory minimum" },
     { id: "L2", criterion_name: "Defense theory completeness", what_to_check: "All established theories for this charge type", fail_triggers: "Missing suppression for drug, missing weight challenge" },
-    { id: "L3", criterion_name: "Prosecution strategy realism", what_to_check: "Reflects how cases are ACTUALLY prosecuted", fail_triggers: 'Generic "prosecution will prove their case"', applicable_tiers: ["intelligence-brief", "x-ray", "war-room", "situation-room"] },
+    { id: "L3", criterion_name: "Prosecution strategy realism", what_to_check: "Reflects how cases are ACTUALLY prosecuted", fail_triggers: 'Generic "prosecution will prove their case"' },
     { id: "L4", criterion_name: "Judge intelligence utility", what_to_check: "Actionable info (sentencing patterns, motion tendencies)", fail_triggers: 'Generic "judge is fair" — note: N/A if judge section absent', applicable_tiers: ["intelligence-brief", "x-ray", "war-room", "situation-room"] },
     { id: "L5", criterion_name: "Outcome map calibration", what_to_check: "Reflects actual data for charge type + jurisdiction", fail_triggers: "Unrealistic probability claims", applicable_tiers: ["intelligence-brief", "x-ray", "war-room", "situation-room"] },
     { id: "L6", criterion_name: "Motion landscape specificity", what_to_check: "Available in this jurisdiction with deadlines", fail_triggers: "Wrong state motions, federal for state cases" },
@@ -350,7 +365,7 @@ const HARDCODED_CRITERIA = {
     { id: "D1", criterion_name: "3 AM panic test", what_to_check: "Useful to a just-arrested defendant at 3 AM", fail_triggers: "Academic analysis requiring calm reading" },
     { id: "D2", criterion_name: "Question quality (Voss)", what_to_check: "Calibrated: open-ended, non-threatening", fail_triggers: "Closed yes/no, accusatory questions" },
     { id: "D3", criterion_name: "Action hierarchy (Thaler)", what_to_check: "Most important = easiest and most prominent", fail_triggers: "Burying critical actions, 10 equal-weight actions" },
-    { id: "D4", criterion_name: "Family/life guidance", what_to_check: "Addresses real concerns with practical advice", fail_triggers: 'Generic "take care of yourself"', applicable_tiers: ["intelligence-brief", "x-ray", "war-room", "situation-room"] },
+    { id: "D4", criterion_name: "Family/life guidance", what_to_check: "Addresses real concerns with practical advice", fail_triggers: 'Generic "take care of yourself"' },
     { id: "D5", criterion_name: "Reading level (Rudd)", what_to_check: "Action sections 8th-grade; legal 10th max", fail_triggers: "College-level action items, undefined acronyms" },
     { id: "D6", criterion_name: "Frame deconstruction (Lakoff)", what_to_check: "Identifies prosecution framing + alternative frames", fail_triggers: "Accepting prosecution framing uncritically" },
     { id: "D7", criterion_name: "Participatory defense (Jayadev)", what_to_check: "Empowers defendant as active participant", fail_triggers: '"Let your attorney handle everything"' },
@@ -390,19 +405,38 @@ const HARDCODED_CRITERIA = {
     { id: "R7", criterion_name: "Print safety", what_to_check: "no-print class on upgrade CTA, print styles present, dark-to-light inversion", fail_triggers: "Upgrade CTA prints, no print styles, dark background prints" },
     { id: "R8", criterion_name: "Sanitization survival", what_to_check: "No elements stripped by sanitize-html that should be visible", fail_triggers: "Checkboxes missing, blockquotes stripped, content visually broken" },
     { id: "R9", criterion_name: "Special characters", what_to_check: "Em dashes, checkmarks, Unicode renders correctly", fail_triggers: "Mojibake characters, encoding errors, missing glyphs" },
-    { id: "R10", criterion_name: "Content completeness", what_to_check: "Word count within budget, correct question count, all conditional sections present/omitted per intake", fail_triggers: "Under/over word budget by >20%, wrong question count, missing conditional section" },
+    { id: "R10", criterion_name: "Content completeness", what_to_check: "Word count within budget (~6,500 base + ~300 per conditional section), correct question count, all conditional sections present/omitted per intake", fail_triggers: "Under/over word budget by >20%, wrong question count, missing conditional section" },
+    { id: "R11", criterion_name: "Conditional section adequacy", what_to_check: "Each conditional section contains its required elements (plea → collateral table + alternatives + pre-signing questions; deadlines → speedy trial + waiver caveat; life-pending → employment + family + travel)", fail_triggers: "Conditional section present but hollow — missing required elements for that section type" },
+  ],
+  'system-truth': [
+    { id: "ST1", criterion_name: "Plea mill exposure", what_to_check: "Explains WHY attorneys push pleas (flat fee economics, caseload, courthouse relationships)", fail_triggers: "Presenting plea offers as neutral without explaining system incentives" },
+    { id: "ST2", criterion_name: "Instinct validation", what_to_check: "Validates defendant's gut feeling with specifics, not platitudes", fail_triggers: 'Generic "make sure you\'re comfortable" without naming what discomfort means' },
+    { id: "ST3", criterion_name: "Good answer / bad answer", what_to_check: "Every attorney question has what a real answer sounds like vs. what a dodge sounds like", fail_triggers: "Questions without answer benchmarks" },
+    { id: "ST4", criterion_name: "Insider language", what_to_check: "Uses or explains system terms (meet-greet-plead, standard offer, waive time, hallway deal)", fail_triggers: "Sanitized language that sounds like a law firm website" },
+    { id: "ST5", criterion_name: "Financial incentive transparency", what_to_check: "Explains the economics (flat fee trap, volume practice math, no incentive after payment)", fail_triggers: "Treating attorney-client relationship as purely professional without acknowledging money dynamics" },
+    { id: "ST6", criterion_name: "Blue wall exposure", what_to_check: "Explains why second opinions from other attorneys are unreliable (professional courtesy, referral networks, bar politics)", fail_triggers: 'Suggesting "get a second opinion" without explaining why other attorneys won\'t criticize' },
+    { id: "ST7", criterion_name: "Assembly-line indicators", what_to_check: "Teaches defendants to recognize volume practice signs (continuance games, paralegal-only review, per-diem attorneys, associate shuffle)", fail_triggers: "Assuming all attorneys provide individualized attention" },
+    { id: "ST8", criterion_name: "Fear tactic recognition", what_to_check: "Helps defendant distinguish real legal risk from inflated fear used as control tool", fail_triggers: "Presenting attorney warnings at face value without teaching evaluation" },
+    { id: "ST9", criterion_name: "Dependency pattern recognition", what_to_check: 'Names ways attorneys keep defendants passive ("trust the process," jargon as weapon, discovery withholding)', fail_triggers: "Assumes attorney-client information flow is normal and healthy" },
+    { id: "ST10", criterion_name: "Dignity awareness", what_to_check: "Validates daily indignities defendants experience — names them as system features, not personal failings", fail_triggers: "Ignores emotional experience of being a defendant" },
+    { id: "ST11", criterion_name: "Rights they won't tell you", what_to_check: "Tells defendants rights attorneys don't: fire attorney, fee arbitration, bar complaints, see discovery, refuse plea", fail_triggers: "Assumes defendants know their rights within the attorney-client relationship" },
+    { id: "ST12", criterion_name: "Agency without advice", what_to_check: "Empowers defendant to see clearly WITHOUT crossing into directives", fail_triggers: 'Either "fire your attorney" (UPL) OR so cautious it fails to validate' },
+    { id: "ST13", criterion_name: "System literacy", what_to_check: "Teaches HOW the system works (courthouse ecosystem, prosecutor-defense dynamics, Strickland bar)", fail_triggers: "Legal information without system context" },
+    { id: "ST14", criterion_name: "Credibility grounding", what_to_check: "System critiques grounded in real data, named sources, or documented patterns", fail_triggers: "Unsourced claims about attorney behavior; bitterness without evidence" },
+    { id: "ST15", criterion_name: "Intake-signal alignment", what_to_check: "System truth calibrated to THIS defendant's actual intake data — communication pattern, attorney type, strategy status", fail_triggers: "Flat-fee framing for hourly attorney, communication blackout framing for monthly contact, PD caseload framing for private attorney" },
   ],
 };
 
 const HARDCODED_WEIGHTS = {
-  "case-decoder":       { upl: "GATE", psych: "HIGH", legal: "MEDIUM", defendant: "HIGH", conversion: "MEDIUM", rendering: "HIGH" },
-  "intelligence-brief": { upl: "GATE", psych: "HIGH", legal: "HIGH",   defendant: "HIGH", conversion: "MEDIUM", rendering: "HIGH" },
-  "x-ray":              { upl: "GATE", psych: "MEDIUM", legal: "HIGH", defendant: "HIGH", conversion: "LOW", rendering: "HIGH" },
-  "war-room":           { upl: "GATE", psych: "HIGH", legal: "HIGH",   defendant: "HIGH", conversion: "MEDIUM", rendering: "HIGH" },
-  "situation-room":     { upl: "GATE", psych: "HIGH", legal: "HIGH",   defendant: "HIGH", conversion: "LOW", rendering: "HIGH" },
-  "content-seo-blog":   { upl: "MEDIUM", psych: "MEDIUM", legal: "LOW", defendant: "HIGH", conversion: "HIGH", rendering: "LOW" },
-  "email-sequences":    { upl: "MEDIUM", psych: "MEDIUM", legal: "LOW", defendant: "HIGH", conversion: "HIGH", rendering: "LOW" },
-  "score-tool":         { upl: "GATE", psych: "MEDIUM", legal: "LOW",  defendant: "HIGH", conversion: "HIGH", rendering: "LOW" },
+  "playbook":           { upl: "GATE", psych: "HIGH", legal: "HIGH",   defendant: "HIGH", conversion: "HIGH", rendering: "HIGH", 'system-truth': "HIGH" },
+  "case-decoder":       { upl: "GATE", psych: "HIGH", legal: "MEDIUM", defendant: "HIGH", conversion: "MEDIUM", rendering: "HIGH", 'system-truth': "HIGH" },
+  "intelligence-brief": { upl: "GATE", psych: "HIGH", legal: "HIGH",   defendant: "HIGH", conversion: "HIGH", rendering: "HIGH", 'system-truth': "MEDIUM" },
+  "x-ray":              { upl: "GATE", psych: "MEDIUM", legal: "HIGH", defendant: "HIGH", conversion: "LOW", rendering: "HIGH", 'system-truth': "LOW" },
+  "war-room":           { upl: "GATE", psych: "HIGH", legal: "HIGH",   defendant: "HIGH", conversion: "MEDIUM", rendering: "HIGH", 'system-truth': "LOW" },
+  "situation-room":     { upl: "GATE", psych: "HIGH", legal: "HIGH",   defendant: "HIGH", conversion: "LOW", rendering: "HIGH", 'system-truth': "LOW" },
+  "content-seo-blog":   { upl: "MEDIUM", psych: "MEDIUM", legal: "LOW", defendant: "HIGH", conversion: "HIGH", rendering: "LOW", 'system-truth': "HIGH" },
+  "email-sequences":    { upl: "MEDIUM", psych: "MEDIUM", legal: "LOW", defendant: "HIGH", conversion: "HIGH", rendering: "LOW", 'system-truth': "MEDIUM" },
+  "score-tool":         { upl: "GATE", psych: "MEDIUM", legal: "LOW",  defendant: "HIGH", conversion: "HIGH", rendering: "LOW", 'system-truth': "MEDIUM" },
 };
 
 // ================================================================
@@ -753,7 +787,7 @@ Options:
   }
 
   console.log("\n" + "═".repeat(65));
-  console.log("  REPORT AUDIT — DB-Driven 6-Team Evaluation (v3.0)");
+  console.log("  REPORT AUDIT — DB-Driven 7-Team Evaluation (v3.1)");
   console.log("═".repeat(65) + "\n");
 
   // ---- Load report text ----

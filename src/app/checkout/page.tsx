@@ -707,8 +707,8 @@ function CheckoutContent() {
             </label>
           )}
 
-          {/* CONSENT GATE — Required for tiers >= $2,497. Hidden for digital products. */}
-          {!info.isDigitalProduct && info.priceNum >= 2497 && (
+          {/* INFO CONSENT — Required for all non-digital tiers. UPL defense. */}
+          {!info.isDigitalProduct && (
             <label className="mt-4 flex items-start gap-3 rounded-lg border border-zinc-700 bg-zinc-800/50 p-4 cursor-pointer">
               <input
                 type="checkbox"
@@ -717,9 +717,8 @@ function CheckoutContent() {
                 className="mt-0.5 h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
               />
               <span className="text-xs text-zinc-400">
-                I understand this service involves custom research specific to my case. Work begins
-                upon intake submission and is non-refundable once delivered. If we miss the stated
-                delivery deadline, I receive a full refund.
+                I understand this product provides legal information and research — not legal advice. No attorney-client relationship is created.
+                {info.priceNum >= 2497 && " This service involves custom research specific to my case. Work begins upon intake submission and is non-refundable once delivered. If we miss the stated delivery deadline, I receive a full refund."}
               </span>
             </label>
           )}
@@ -734,7 +733,7 @@ function CheckoutContent() {
           {/* Price shown includes priority delivery add-on when selected.    */}
           <button
             onClick={handleCheckout}
-            disabled={loading || !email || (!info.isDigitalProduct && info.priceNum >= 2497 && !consentChecked)}
+            disabled={loading || !email || (!info.isDigitalProduct && !consentChecked)}
             className="mt-4 w-full rounded-lg bg-amber-500 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? (

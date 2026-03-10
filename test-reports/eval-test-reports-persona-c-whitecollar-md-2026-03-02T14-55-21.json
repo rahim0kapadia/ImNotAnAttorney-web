@@ -1,0 +1,96 @@
+{
+  "evaluated_at": "2026-03-02T14:55:21.471Z",
+  "eval_version": "1.0",
+  "source": "persona-c-whitecollar.md",
+  "charge_type": "White Collar",
+  "gate_passed": false,
+  "teams": {
+    "upl": {
+      "name": "UPL Compliance",
+      "weight": "GATE",
+      "score": "4/10",
+      "passed": 4,
+      "needs_work": 2,
+      "failed": 4,
+      "criteria": [
+        {
+          "id": "U1",
+          "result": "NEEDS_WORK",
+          "justification": "The report largely avoids classic directive language, but several instances come close to or cross the line. The phrase 'Do NOT show this report to your attorney' is a direct imperative/directive, and 'Use the email in Exactly What to Say to ask about this now' and 'Raise this at your next meeting' are directive instructions rather than informational framing.",
+          "problematic_text": "**Do NOT show this report to your attorney.** If your attorney sees this analysis, they may anchor their responses to it rather than giving you their independent assessment."
+        },
+        {
+          "id": "U2",
+          "result": "PASS",
+          "justification": "Every substantive section redirects to the defendant's attorney for case-specific decisions, with questions framed as 'ask your attorney,' attorney meeting preparation, and explicit statements that the attorney's judgment should take priority.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U3",
+          "result": "NEEDS_WORK",
+          "justification": "The report does not explicitly call the attorney incompetent or use band labels, but several framings subtly undermine attorney judgment — e.g., 'the questions to get answers your attorney hasn't volunteered yet,' 'the analysis is for your eyes only,' and scenario framing that implies the attorney may be 'defaulting to efficiency over your stated position.' These collectively create an adversarial framing that edges toward evaluating attorney competence.",
+          "problematic_text": "Questions for Your Attorney gives you the specific questions to get answers your attorney hasn't volunteered yet."
+        },
+        {
+          "id": "U4",
+          "result": "FAIL",
+          "justification": "The report lacks a required disclaimer stating it provides 'legal information' and 'does not provide legal advice.' The methodology note references expert attorneys but never frames the product as legal information only. There is no header or footer disclaimer. The closest language ('This report is built on your intake answers and public legal information') appears deep in the body but does not constitute a proper disclaimer.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U5",
+          "result": "PASS",
+          "justification": "Motions and legal options are consistently presented as things to ask the attorney about or explore, not as recommendations. Phrases like 'whether a motion to sever has been considered,' 'motions to suppress evidence... are standard defense tools,' and 'ask whether this has been explored' maintain informational framing.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U6",
+          "result": "FAIL",
+          "justification": "The immigration consequences section states 'fraud is an aggravated felony that can trigger deportation for non-citizens' without citing Padilla v. Kentucky, without citing any specific statute (e.g., 8 U.S.C. § 1101(a)(43)), and without explicitly directing consultation with an immigration attorney. The question framing is generic ('Are there any immigration consequences I should know about?') and lacks the required immigration lawyer referral.",
+          "problematic_text": "**Immigration** | If applicable — fraud is an aggravated felony that can trigger deportation for non-citizens. | \"Are there any immigration consequences I should know about?\""
+        },
+        {
+          "id": "U7",
+          "result": "PASS",
+          "justification": "Defense theories are consistently framed as things to explore with the attorney. The lack-of-knowledge defense is presented as 'a defensible legal position if supported by evidence' and questions ask the attorney to evaluate it, rather than directing the defendant to pursue it.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U8",
+          "result": "PASS",
+          "justification": "The advocacy steps are appropriately bounded to communication and information-gathering (sending emails, making calls, requesting meetings, seeking a second opinion). Step 8 mentions substituting counsel but frames it as a right with caveats about cost and court approval, and the escalation is gradual with appropriate framing. No steps cross into legal strategy.",
+          "problematic_text": ""
+        },
+        {
+          "id": "U9",
+          "result": "FAIL",
+          "justification": "The report contains a section titled 'Exactly What to Say' which implies scripting attorney interactions. Additionally, the subsection 'When the Conversation Gets Difficult' includes 'What you say:' prompts that script specific responses, which pressures the attorney-client dynamic.",
+          "problematic_text": "## Exactly What to Say"
+        },
+        {
+          "id": "U10",
+          "result": "FAIL",
+          "justification": "Collateral consequences regarding professional licenses, business ownership, financial impact, voting rights, and firearm rights are stated without citation to specific statutes, regulations, or the NICCC database. For example, 'Federal fraud convictions can result in debarment from government contracts' cites no statute, and 'Federal felony conviction affects voting rights (varies by state) and firearm rights' cites no specific law.",
+          "problematic_text": "**Business ownership** | Federal fraud convictions can result in debarment from government contracts and may affect your ability to obtain business loans, bonding, or insurance."
+        }
+      ],
+      "summary": "The report fails on four criteria: missing required legal information disclaimer (U4), unsourced collateral consequences (U10), immigration consequences lacking Padilla citation and immigration attorney referral (U6), and 'Exactly What to Say' section title implying scripted attorney interactions (U9); additionally, two criteria need work regarding directive language and subtle attorney competence evaluation.",
+      "elapsed": "34.5",
+      "cost_usd": 0.24915
+    },
+    "legal": {
+      "name": "Legal Substance",
+      "weight": "MEDIUM",
+      "error": "API Error (529): {\"type\":\"error\",\"error\":{\"type\":\"overloaded_error\",\"message\":\"Overloaded\"},\"request_id\":\"req_011CYeSq8J1ezhchZhAvh556\"}",
+      "elapsed": "12.9"
+    },
+    "conversion": {
+      "name": "Conversion & Value Architecture",
+      "weight": "MEDIUM",
+      "error": "API Error (529): {\"type\":\"error\",\"error\":{\"type\":\"overloaded_error\",\"message\":\"Overloaded\"},\"request_id\":\"req_011CYeSr5dJWNJwfcUnTj9Hs\"}",
+      "elapsed": "14.3"
+    }
+  },
+  "cost_usd": 0.24915,
+  "duration_ms": 61678
+}
