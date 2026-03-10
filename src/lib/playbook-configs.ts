@@ -1033,6 +1033,165 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
 };
 
 // ---------------------------------------------------------------------------
+// Drug Trafficking
+// ---------------------------------------------------------------------------
+
+export const DRUG_TRAFFICKING: PlaybookConfig = {
+  slug: "drug-trafficking",
+  seoTitle:
+    "26 questions your drug trafficking attorney hopes you never ask. Mandatory minimums, informant challenges, quantity disputes, cooperation strategy, red flag checklist. Instant PDF download.",
+  seoDescription:
+    "26 questions your drug trafficking attorney hopes you never ask. Federal mandatory minimums, confidential informant cross-examination, drug quantity challenges, cooperation decisions, red flag checklist, attorney scorecard. Instant PDF download.",
+  hero: {
+    eyebrow: "Drug Trafficking Defense Playbook",
+    headline: "The Informant Has a Deal. Do You Know Yours?",
+    subheadline:
+      "26 questions your attorney hopes you never ask \u2014 plus a 12-stage case roadmap, red flag checklist, and case progress scorecard.",
+  },
+  agitate: {
+    headline:
+      "You shouldn\u2019t have to figure this out from Reddit threads.",
+    paragraphs: [
+      "The day the agents showed up \u2014 or you got the call from jail \u2014 everything changed. The mandatory minimums. The conspiracy charges. The informant who set it all in motion. And your attorney telling you to \u2018trust the process\u2019 while the government calculates your sentence by the gram.",
+      "Now you\u2019re home. Maybe it\u2019s 2 AM. And you\u2019re Googling everything. You want to know: what does the quantity mean for my sentence? Can the informant be challenged? What happens if I cooperate \u2014 and what happens if I don\u2019t?",
+      "Is your attorney telling you the truth when they say they\u2019ll handle it?",
+    ],
+    cards: [
+      {
+        title: "The Quantity Drives Everything",
+        text: "5 grams of pure meth triggers a 5-year mandatory minimum. 50 grams triggers 10 years. The government calculates quantity to maximize your sentence \u2014 your attorney must independently verify every gram.",
+      },
+      {
+        title: "The Informant Has a Deal",
+        text: "The government\u2019s star witness is usually someone cooperating to save themselves. They have criminal records, financial incentives, and a history of saying whatever the government needs to hear. Their credibility is your primary target.",
+      },
+      {
+        title: "\u201CTrust Me\u201D Isn\u2019t a Strategy",
+        text: "If your attorney\u2019s plan is \u2018wait for the plea offer\u2019 \u2014 that\u2019s not a plan. That\u2019s an assembly line. Drug trafficking cases require specialized defense \u2014 not general criminal practice.",
+      },
+    ],
+  },
+  proof: {
+    headline: "Built from elite drug trafficking defense methodology",
+    methods: [
+      {
+        name: "Informant Credibility Analysis",
+        title: "Foundation of the evidence challenge section",
+        insight:
+          "Systematic destruction of confidential informant testimony \u2014 exposing cooperation deals, payment records, criminal history, prior inconsistent statements, and pattern-of-lies evidence across multiple cases.",
+      },
+      {
+        name: "Drug Quantity Verification",
+        title: "Applied to every sentencing calculation",
+        insight:
+          "Independent forensic analysis of drug weight (actual vs. mixture), chain of custody verification, lab result challenges, and relevant conduct scope disputes \u2014 because every gram changes the mandatory minimum.",
+      },
+      {
+        name: "Full Consequence Mapping",
+        title: "Beyond the prison sentence",
+        insight:
+          "Asset forfeiture, immigration deportation, firearms prohibition, employment bars, housing denial, child custody impacts, travel restrictions \u2014 every consequence mapped before any plea or cooperation decision.",
+      },
+    ],
+  },
+  valueStack: {
+    sections: [
+      {
+        title: "Trafficking Charge Reality Report",
+        desc: "How the system actually works \u2014 mandatory minimum quantity tables, conspiracy and Pinkerton liability, enhancement factors, safety valve eligibility, cooperation mechanics. Everything your attorney assumes you already know.",
+        value: "$297",
+      },
+      {
+        title: "26 Questions Your Drug Trafficking Attorney Hopes You Never Ask",
+        desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
+        value: "$197",
+      },
+      {
+        title: "Drug Trafficking Case Stage Roadmap",
+        desc: "Arrest through post-conviction \u2014 12 stages with milestones, attorney benchmarks, and red flags. Includes cooperation decision points and sentencing preparation timeline.",
+        value: "$97",
+      },
+      {
+        title: "Red Flag Checklist",
+        desc: "12 specific issues that could change the outcome \u2014 quantity miscalculations, informant credibility gaps, missed suppression motions, cooperation risks, Pinkerton exposure.",
+        value: "$97",
+      },
+      {
+        title: "Case Progress Scorecard",
+        desc: "Rate your attorney on 10 behaviors before it\u2019s too late to switch. An attorney who independently challenges the drug quantity beats one who accepts the government\u2019s calculation.",
+        value: "$97",
+      },
+    ],
+    totalValue: "$785",
+  },
+  guarantee: {
+    headline:
+      "5 questions you never thought to ask \u2014 or full refund.",
+    body: "If you read this Playbook and cannot find at least 5 questions you have never thought to ask your attorney, send us one email and we will refund every dollar. No explanation required.",
+  },
+  audience: {
+    forYou: [
+      "You\u2019re charged with drug distribution, trafficking, conspiracy, or manufacturing",
+      "You have an attorney but aren\u2019t sure they specialize in drug trafficking defense",
+      "You want to understand the mandatory minimums and how the quantity calculation works",
+      "You\u2019re considering cooperation and want to understand the proffer process and risks",
+      "You want to know what questions to ask before your next meeting",
+    ],
+    notForYou: [
+      "You\u2019re looking for legal advice (we provide information, not advice)",
+      "You want someone to represent you in court",
+      "Your charge is simple drug possession, not trafficking (see our Drug Possession Playbook)",
+      "You\u2019ve already been sentenced and are not pursuing an appeal or post-conviction relief",
+    ],
+  },
+  methodologyText:
+    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common drug trafficking defense patterns. Your attorney remains the final authority on strategy decisions.",
+  urgency: {
+    headline: "Time-sensitive actions in your case",
+    items: [
+      {
+        deadline: "Immediately",
+        what: "Say NOTHING to anyone about your case \u2014 not law enforcement, not cellmates, not friends, not on the phone. Every jail call is recorded. Exercise your Fifth Amendment right.",
+      },
+      {
+        deadline: "Within 72 hours",
+        what: "Write down everything you remember about the arrest, the events leading to it, and anyone involved. Do NOT contact co-defendants or destroy any evidence. Memory and evidence quality degrade fast.",
+      },
+    ],
+  },
+  faq: [
+    {
+      q: "Is this legal advice?",
+      a: "No. We provide legal INFORMATION \u2014 not legal ADVICE. The Playbook compiles documented defense strategies from elite drug trafficking defense attorneys into an information resource. Your attorney gives legal advice. We give you the questions.",
+    },
+    {
+      q: "What if I already have an attorney?",
+      a: "That\u2019s exactly who this is for. The Playbook makes every conversation with your attorney more productive. Most defendants leave attorney meetings without knowing what to ask. This gives you 26 specific questions.",
+    },
+    {
+      q: "I\u2019m charged with simple possession, not trafficking. Is this the right playbook?",
+      a: "If your charge is simple possession (personal use amounts, no distribution allegations), our Drug Possession Defense Playbook is a better fit. This playbook covers distribution, manufacturing, conspiracy, and importation charges.",
+    },
+    {
+      q: "How is this delivered?",
+      a: "Instant PDF download. After payment, you\u2019ll receive an email with a download link within 60 seconds. No intake form, no waiting.",
+    },
+    {
+      q: "What\u2019s your refund policy?",
+      a: "If you read this Playbook and cannot find at least 5 questions you never thought to ask your attorney, send us one email and we\u2019ll refund every dollar. No explanation required.",
+    },
+    {
+      q: "Does this cover federal and state charges?",
+      a: "Yes. The questions apply to both federal and state drug trafficking charges. The mandatory minimum tables, sentencing guidelines, and cooperation mechanics covered are primarily federal, but the defense strategies, evidence challenges, and attorney accountability questions apply across all jurisdictions.",
+    },
+  ],
+  comparisonLine:
+    "A 30-minute drug trafficking attorney consultation costs $300\u2013$750.",
+  summaryLine:
+    "Instant PDF. 26 questions. 12 red flags. 12-stage roadmap. Quantity tables. Attorney scorecard.",
+};
+
+// ---------------------------------------------------------------------------
 // Registry — add new configs here
 // ---------------------------------------------------------------------------
 
@@ -1043,6 +1202,7 @@ const PLAYBOOK_CONFIGS: Record<string, PlaybookConfig> = {
   "white-collar": WHITE_COLLAR,
   "sex-offense": SEX_OFFENSE,
   "federal-criminal": FEDERAL_CRIMINAL,
+  "drug-trafficking": DRUG_TRAFFICKING,
 };
 
 /** Look up a playbook config by slug. Returns undefined if not found. */

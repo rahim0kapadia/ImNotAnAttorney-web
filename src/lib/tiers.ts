@@ -106,6 +106,20 @@ export const TIER_CORE = {
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
   },
+  "drug-trafficking": {
+    name: "Drug Trafficking Defense Playbook",
+    price: 9700, // cents
+    priceDisplay: "$97",
+    delivery: "Instant download",
+    deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
+    requiresDiscovery: false,
+    isAddon: false,
+    isDigitalProduct: true,
+    requiresWarRoom: false,
+    priorityPrice: null,
+    priorityDelivery: null,
+    includesTiers: [] as readonly string[],
+  },
   "case-decoder": {
     name: "Case Decoder",
     price: 19700, // cents
@@ -256,6 +270,7 @@ const UPGRADE_PATH: TierSlug[] = [
   "white-collar",
   "sex-offense",
   "federal-criminal",
+  "drug-trafficking",
   "case-decoder",
   "intelligence-brief",
   "x-ray",
