@@ -149,10 +149,7 @@ export default function Home() {
             serviceType: "Legal Information Research",
             description:
               "Case-specific research and accountability questions for criminal defendants",
-            provider: {
-              "@type": "Organization",
-              name: "ImNotAnAttorney",
-            },
+            provider: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
             areaServed: { "@type": "Country", name: "United States" },
           }),
         }}

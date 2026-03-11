@@ -54,6 +54,8 @@ export interface BlogPost {
   category: string;
   /** FAQ pairs for FAQPage schema (from frontmatter). */
   faqs: Array<{ q: string; a: string }>;
+  /** Last-modified date as YYYY-MM-DD string (falls back to date if not set). */
+  lastModified: string;
   /** Human-readable reading time estimate (e.g., "5 min read"). */
   readingTime: string;
   /** Raw MDX body content (without frontmatter). */
@@ -115,6 +117,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
     author: data.author || "ImNotAnAttorney Team",
     category: data.category || "general-defense",
     faqs: data.faqs || [],
+    lastModified: data.lastModified || data.date || new Date().toISOString().split("T")[0],
     readingTime: stats.text,
     content,
   };

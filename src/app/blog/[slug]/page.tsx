@@ -148,26 +148,14 @@ export default async function BlogPostPage({ params }: PageProps) {
               headline: post.title,
               description: post.excerpt,
               datePublished: post.date,
-              dateModified: post.date,
+              dateModified: post.lastModified || post.date,
               url: `${SITE_URL}/blog/${slug}`,
               mainEntityOfPage: {
                 "@type": "WebPage",
                 "@id": `${SITE_URL}/blog/${slug}`,
               },
-              author: {
-                "@type": "Organization",
-                name: "ImNotAnAttorney",
-                url: SITE_URL,
-              },
-              publisher: {
-                "@type": "Organization",
-                name: "ImNotAnAttorney",
-                url: SITE_URL,
-                logo: {
-                  "@type": "ImageObject",
-                  url: `${SITE_URL}/icon`,
-                },
-              },
+              author: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
+              publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
               image: `${SITE_URL}/blog/${slug}/opengraph-image`,
               keywords: post.tags.join(", "),
               articleSection:

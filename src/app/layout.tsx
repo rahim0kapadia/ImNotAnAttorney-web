@@ -111,6 +111,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
+              "@id": `${SITE_URL}/#organization`,
               name: "ImNotAnAttorney",
               url: SITE_URL,
               description: "Legal research and case analysis for criminal defendants. We provide legal information, not legal advice.",

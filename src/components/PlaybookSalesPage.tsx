@@ -349,7 +349,7 @@ export default function PlaybookSalesPage({ config }: Props) {
             name: tier.name,
             description: config.seoDescription,
             url: `https://imnotanattorney.com/playbook/${config.slug}`,
-            brand: { "@type": "Organization", name: "ImNotAnAttorney" },
+            brand: { "@type": "Organization", "@id": "https://imnotanattorney.com/#organization" },
             offers: {
               "@type": "Offer",
               price: String(tier.price / 100) + ".00",
