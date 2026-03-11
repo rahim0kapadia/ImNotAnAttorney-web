@@ -1192,6 +1192,175 @@ export const DRUG_TRAFFICKING: PlaybookConfig = {
 };
 
 // ---------------------------------------------------------------------------
+// Self-Defense / Justifiable Force
+// ---------------------------------------------------------------------------
+
+export const SELF_DEFENSE: PlaybookConfig = {
+  slug: "self-defense",
+  seoTitle:
+    "Self-Defense Playbook: 26 Questions for Murder, Assault & Justifiable Force Cases",
+  seoDescription:
+    "26 questions your self-defense attorney hopes you never ask. Stand Your Ground checklist, five-element framework, immunity hearing guide, red flag checklist, attorney scorecard. Instant PDF download.",
+  hero: {
+    eyebrow: "Self-Defense / Justifiable Force Defense Playbook",
+    headline: "You Defended Yourself. Now Defend Your Freedom.",
+    subheadline:
+      "26 questions, 12 red flags, 11-stage case roadmap, Stand Your Ground guide, and attorney scorecard — built from the strategies of elite defense attorneys who specialize in self-defense cases.",
+  },
+  agitate: {
+    headline: "You Did What Anyone Would Do. The System Doesn\u2019t Care.",
+    paragraphs: [
+      "You were attacked. You defended yourself or someone you love. And now you\u2019re the one facing charges \u2014 murder, manslaughter, aggravated assault. The charge on the paper doesn\u2019t capture what actually happened.",
+      "Self-defense cases are unlike any other criminal case. You\u2019re not denying what happened \u2014 you\u2019re explaining why it was justified. That requires a completely different legal strategy, and most attorneys handle self-defense cases the same way they handle everything else. They don\u2019t build the five-element defense. They don\u2019t retain use-of-force experts. They don\u2019t pursue immunity hearings.",
+      "Meanwhile, the prosecution is framing you as the aggressor. Your initial statement \u2014 the one you gave in shock, without an attorney \u2014 is being used against you. Surveillance footage that proves your case may be auto-deleting in 30 days. And no one has investigated the other party\u2019s violent history.",
+    ],
+    cards: [
+      {
+        title: "No Theory of Justification",
+        text: "Your attorney says \u201cwe\u2019ll argue self-defense\u201d but can\u2019t articulate how all five elements \u2014 innocence, imminence, proportionality, avoidance, reasonableness \u2014 apply to your specific facts.",
+      },
+      {
+        title: "No Use-of-Force Expert",
+        text: "Juries evaluate your split-second decision from the safety of a well-lit courtroom. Without an expert to explain what a reasonable person would perceive in your exact position, they judge you by their calm, after-the-fact perspective.",
+      },
+      {
+        title: "Evidence Disappearing",
+        text: "Surveillance footage auto-deletes in 30\u201390 days. Your injuries are fading. Witnesses are forgetting. Every day your attorney doesn\u2019t preserve this evidence is a day your self-defense claim gets weaker.",
+      },
+    ],
+  },
+  proof: {
+    headline: "What Makes This Playbook Different",
+    methods: [
+      {
+        name: "Five-Element Analysis",
+        title: "Every Question Targets a Self-Defense Element",
+        insight:
+          "Each question maps to one of the five nationally recognized elements of self-defense: innocence, imminence, proportionality, avoidance, and reasonableness. You\u2019ll know exactly which element your attorney is missing.",
+      },
+      {
+        name: "Use-of-Force Verification",
+        title: "Expert-Level Evidence Standards",
+        insight:
+          "Questions built from how use-of-force experts actually analyze defensive encounters \u2014 action-reaction gaps, proportionality assessment, scene reconstruction, and forensic injury analysis.",
+      },
+      {
+        name: "Full Consequence Mapping",
+        title: "Criminal, Civil, and Collateral",
+        insight:
+          "Self-defense cases don\u2019t end with the verdict. Civil lawsuits, firearms prohibitions, immigration consequences, and employment barriers \u2014 mapped with statutes and case law.",
+      },
+    ],
+  },
+  valueStack: {
+    sections: [
+      {
+        title: "26 Attorney Questions",
+        desc: "5 priority + 21 organized by evidence, case strength, and attorney accountability",
+        value: "$250",
+      },
+      {
+        title: "Five-Element Self-Defense Guide",
+        desc: "Innocence, imminence, proportionality, avoidance, reasonableness \u2014 explained in plain English with Stand Your Ground state-by-state breakdown",
+        value: "$150",
+      },
+      {
+        title: "11-Stage Case Roadmap",
+        desc: "From incident through immunity hearing, trial, sentencing, and appeal \u2014 what your attorney should do at each stage",
+        value: "$125",
+      },
+      {
+        title: "12-Point Red Flag Checklist",
+        desc: "Evidence gaps, missing experts, unexplored immunity hearings, civil exposure blind spots",
+        value: "$100",
+      },
+      {
+        title: "Attorney Scorecard + Meeting Templates",
+        desc: "Rate your representation, email template, phone script \u2014 ready to use today",
+        value: "$75",
+      },
+      {
+        title: "Charge Reality Report",
+        desc: "Perfect vs. imperfect self-defense, sentencing ranges, resolution paths, collateral consequences with statute citations",
+        value: "$85",
+      },
+    ],
+    totalValue: "$785",
+  },
+  guarantee: {
+    headline: "The 5-Question Guarantee",
+    body: "Use the 5 Priority Questions at your next attorney meeting. If you don\u2019t learn something about your case you didn\u2019t know before, we\u2019ll refund every dollar. No questions asked.",
+  },
+  audience: {
+    forYou: [
+      "You\u2019re facing murder, manslaughter, or assault charges after defending yourself",
+      "Your attorney hasn\u2019t discussed the five elements of self-defense or retained a use-of-force expert",
+      "You\u2019re in a Stand Your Ground state and no one has mentioned an immunity hearing",
+      "You gave a statement to police without an attorney and it\u2019s being used against you",
+      "You want to understand your case well enough to have an informed conversation with your attorney",
+    ],
+    notForYou: [
+      "You\u2019re looking for legal advice about whether to take a plea (this is information, not advice)",
+      "You want someone to tell you what to do (this gives you questions to ask, not answers)",
+      "Your case doesn\u2019t involve a self-defense or justifiable force claim",
+    ],
+  },
+  methodologyText:
+    "This Playbook draws on the documented strategies of elite defense attorneys who specialize in self-defense and justifiable force cases \u2014 including the nationally recognized five-element framework, Stand Your Ground litigation strategy, and use-of-force analysis methodology. Every question is designed to surface whether your attorney is building a complete self-defense claim.",
+  urgency: {
+    headline: "Evidence Has Expiration Dates",
+    items: [
+      {
+        deadline: "30\u201390 days",
+        what: "Surveillance footage auto-deletes from most security systems",
+      },
+      {
+        deadline: "Days to weeks",
+        what: "Your injuries fade \u2014 bruises, cuts, and defensive wounds that prove you were attacked",
+      },
+      {
+        deadline: "State-specific deadline",
+        what: "Stand Your Ground immunity hearing must be filed before trial",
+      },
+      {
+        deadline: "Varies by state",
+        what: "Pretrial motion deadlines for suppressing statements and admitting attacker\u2019s prior acts",
+      },
+    ],
+  },
+  faq: [
+    {
+      q: "I haven\u2019t been charged yet \u2014 is this still useful?",
+      a: "Absolutely. If you\u2019ve used force in self-defense and believe charges may be coming, this Playbook helps you prepare for attorney consultations and understand what evidence to preserve right now.",
+    },
+    {
+      q: "I\u2019m charged with assault, not murder. Does this apply?",
+      a: "Yes. Self-defense applies to all levels of force charges \u2014 from simple assault and battery through aggravated assault, manslaughter, and murder. The five elements and attorney accountability questions apply regardless of the specific charge.",
+    },
+    {
+      q: "My case involves a firearm. Is this the right playbook?",
+      a: "Yes. This playbook covers all types of defensive force \u2014 armed and unarmed. The proportionality analysis, use-of-force expert questions, and Stand Your Ground framework apply whether you used a firearm, knife, or physical force.",
+    },
+    {
+      q: "How is this delivered?",
+      a: "Instant PDF download. After payment, you\u2019ll receive an email with a download link within 60 seconds. No intake form, no waiting.",
+    },
+    {
+      q: "What\u2019s your refund policy?",
+      a: "If you read this Playbook and cannot find at least 5 questions you never thought to ask your attorney, send us one email and we\u2019ll refund every dollar. No explanation required.",
+    },
+    {
+      q: "Does this cover Stand Your Ground and Duty to Retreat states?",
+      a: "Yes. The playbook includes a complete state-by-state breakdown of Stand Your Ground (38 states) vs. Duty to Retreat (12 + DC), Castle Doctrine, and immunity hearing procedures.",
+    },
+  ],
+  comparisonLine:
+    "A 30-minute self-defense attorney consultation costs $300\u2013$750.",
+  summaryLine:
+    "Instant PDF. 26 questions. 12 red flags. 11-stage roadmap. Five-element guide. Attorney scorecard.",
+};
+
+// ---------------------------------------------------------------------------
 // Registry — add new configs here
 // ---------------------------------------------------------------------------
 
@@ -1203,6 +1372,7 @@ const PLAYBOOK_CONFIGS: Record<string, PlaybookConfig> = {
   "sex-offense": SEX_OFFENSE,
   "federal-criminal": FEDERAL_CRIMINAL,
   "drug-trafficking": DRUG_TRAFFICKING,
+  "self-defense": SELF_DEFENSE,
 };
 
 /** Look up a playbook config by slug. Returns undefined if not found. */
