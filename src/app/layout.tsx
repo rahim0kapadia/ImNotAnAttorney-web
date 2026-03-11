@@ -31,7 +31,7 @@
  * resolve against this. Required for Next.js metadata API.
  */
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Playfair_Display } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
@@ -42,6 +42,13 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+/** Playfair Display — display/serif font for headlines. Adds premium typographic contrast. */
+const playfairDisplay = Playfair_Display({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["700", "800", "900"],
 });
 
 
@@ -88,7 +95,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} antialiased bg-background text-foreground`}
+        className={`${geistSans.variable} ${playfairDisplay.variable} antialiased bg-background text-foreground`}
       >
         {/* Skip link — accessibility: allows keyboard/screen reader users to bypass nav */}
         <a
@@ -107,7 +114,17 @@ export default function RootLayout({
               name: "ImNotAnAttorney",
               url: SITE_URL,
               description: "Legal research and case analysis for criminal defendants. We provide legal information, not legal advice.",
-              sameAs: ["https://x.com/ImNotAnAttorney"],
+              logo: { "@type": "ImageObject", url: `${SITE_URL}/icon` },
+              founder: { "@type": "Person", name: "Rahim Kapadia" },
+              foundingDate: "2026",
+              knowsAbout: [
+                "Criminal Defense",
+                "DUI Defense",
+                "Drug Trafficking Defense",
+                "Attorney Accountability",
+                "Legal Research",
+              ],
+              areaServed: { "@type": "Country", name: "United States" },
             }),
           }}
         />

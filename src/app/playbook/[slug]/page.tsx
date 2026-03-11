@@ -14,6 +14,7 @@ import {
 } from "@/lib/playbook-configs";
 import { TIER_CORE } from "@/lib/tiers";
 import type { TierSlug } from "@/lib/tiers";
+import { SITE_URL } from "@/lib/site";
 import PlaybookSalesPage from "@/components/PlaybookSalesPage";
 
 interface PageProps {
@@ -57,5 +58,39 @@ export default async function PlaybookPage({ params }: PageProps) {
     notFound();
   }
 
-  return <PlaybookSalesPage config={config} />;
+  const tier = TIER_CORE[config.slug as TierSlug];
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: SITE_URL,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Playbooks",
+                item: `${SITE_URL}/services`,
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: tier.name,
+              },
+            ],
+          }),
+        }}
+      />
+      <PlaybookSalesPage config={config} />
+    </>
+  );
 }

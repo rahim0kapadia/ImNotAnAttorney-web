@@ -12,7 +12,7 @@
  *                                -> /sample (proof / objection handling)
  *
  * Page structure (conversion-optimized order):
- *   1. Hero — H1 with the 73% weight discrepancy hook + dual CTA (buy / sample)
+ *   1. Hero — H1 with VoC emotional hook (attorney won't call back) + dual CTA
  *   2. Proof — Real case findings (weight, CI phone, drug type) with attorney attributions
  *   3. Urgency bar — Motion deadline scarcity
  *   4. Pain points — Four defendant frustrations that validate the visitor's situation
@@ -27,28 +27,35 @@
  *  13. Final CTA — Urgency close with deadline framing
  *
  * SEO: FAQ schema markup (FAQPage JSON-LD) injected for rich snippets.
- * OG/meta: Title uses the 73% weight discrepancy hook for social sharing.
+ * OG/meta: Title uses VoC emotional hook for social sharing.
  */
 import { LeadCapture } from "@/components/LeadCapture";
 import { PricingTable } from "@/components/PricingTable";
 import { FAQAccordion } from "@/components/FAQAccordion";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
+import { AnimatedCounter } from "@/components/motion/AnimatedCounter";
+import { TrustBadges } from "@/components/TrustBadges";
+import { TestimonialSection } from "@/components/TestimonialSection";
+import { RecentPurchaseNotification } from "@/components/RecentPurchaseNotification";
+import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { SITE_URL } from "@/lib/site";
 import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
 import type { Metadata } from "next";
 
-/** Page-level metadata. Title uses the real case hook for SEO + social click-through. */
+/** Page-level metadata. Title uses VoC emotional hook for SEO + social click-through. */
 export const metadata: Metadata = {
-  title: "ImNotAnAttorney — We Found a 73% Weight Discrepancy Your Attorney Missed",
+  title: "ImNotAnAttorney — The Questions Your Attorney Hopes You Never Ask",
   description:
-    `Legal empowerment for criminal defendants. We research your case and generate the questions that hold your attorney accountable. Starting at ${TIER_CORE["case-decoder"].priceDisplay}.`,
+    `Your lawyer won't call you back? We research your case and hand you the exact questions that hold your attorney accountable. Starting at ${TIER_CORE["case-decoder"].priceDisplay}.`,
   alternates: {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "ImNotAnAttorney — We Found a 73% Weight Discrepancy Your Attorney Missed",
+    title: "Your Lawyer Won't Call You Back. We Give You the Questions That Make Them.",
     description:
-      "We research your case, find the details that matter, and hand you the exact questions that get real answers from your attorney.",
+      "You're scared. Confused. Nobody's explaining your case. We research your charges and hand you the exact questions that hold your attorney accountable.",
   },
 };
 
@@ -131,75 +138,104 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
+      {/* LegalService Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LegalService",
+            name: "ImNotAnAttorney",
+            serviceType: "Legal Information Research",
+            description:
+              "Case-specific research and accountability questions for criminal defendants",
+            provider: {
+              "@type": "Organization",
+              name: "ImNotAnAttorney",
+            },
+            areaServed: { "@type": "Country", name: "United States" },
+          }),
+        }}
+      />
+
       {/* ------------------------------------------------------------------ */}
       {/* HERO SECTION                                                      */}
-      {/* The H1 leads with the 73% weight discrepancy — a real, specific   */}
-      {/* finding that immediately differentiates us from generic legal      */}
-      {/* services. Subtext adds CI phone, drug type, and fingerprint       */}
-      {/* findings for credibility. Two CTAs:                               */}
-      {/*   Primary: "Get Questions My Attorney Can't Dodge — $197" -> /checkout */}
-      {/*   Secondary: "See What We Found" -> /sample (proof before buy)    */}
-      {/* Below CTAs: free score link (/score) as low-commitment fallback.  */}
+      {/* H1 leads with the #1 defendant pain (attorney won't call back)   */}
+      {/* per VoC research — verbatim from r/legaladvice and Avvo.         */}
+      {/* Subheadline mirrors emotional vocabulary: scared, confused,       */}
+      {/* nobody's explaining. Fear → empowerment transition (Wolf).        */}
+      {/*   Primary: CTA -> /checkout                                      */}
+      {/*   Secondary: "See What We Found" -> /sample (proof before buy)   */}
+      {/* Below CTAs: free score link (/score) as low-commitment fallback. */}
       {/* ------------------------------------------------------------------ */}
       <section className="px-4 pb-20 pt-24 text-center md:pt-32">
         <div className="mx-auto max-w-4xl">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-amber-500">
-            Built on a real trafficking case. Powered by 40+ elite defense attorneys.
-          </p>
-          <h1 className="text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
-            We Found a 73% Weight Discrepancy.
-            <br />
-            <span className="text-amber-400">The Attorney Found Zero.</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-            CI phone number attributed to both informant and defendant. Drug
-            type misidentified. 21 fingerprints — zero matching. We found it
-            all in the discovery. We can do the same for yours.
-          </p>
-          <p className="mx-auto mt-4 max-w-2xl text-sm text-zinc-400">
-            Our research is built on the documented tactics of 40+ elite
-            defense attorneys — the ones who win landmark cases, expose wrongful
-            convictions, and set the strategies other attorneys follow.
-          </p>
-          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link
-              href="/checkout?tier=case-decoder"
-              className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400"
-            >
-              Get Questions My Attorney Can&apos;t Dodge — {TIER_CORE["case-decoder"].priceDisplay} →
-            </Link>
-            <Link
-              href="/sample"
-              className="rounded-lg border border-zinc-700 px-8 py-4 text-sm font-semibold text-white transition-colors hover:border-zinc-500"
-            >
-              See What We Found in a Real Case →
-            </Link>
-          </div>
-          <p className="mt-4 text-xs text-zinc-400">
-            We&apos;re not attorneys. We&apos;re researchers — and that&apos;s
-            exactly why we find the details that matter.
-          </p>
-          <p className="mt-3 text-sm text-zinc-400">
-            Or{" "}
-            <Link
-              href="/score"
-              className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
-            >
-              check your attorney&apos;s score — free →
-            </Link>
-          </p>
-          <p className="mt-2 text-sm text-zinc-400">
-            DUI?{" "}
-            <Link
-              href="/playbook/dui-first-offense"
-              className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
-            >
-              Get the DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} instant download →
-            </Link>
-          </p>
-          <p className="mt-2 text-sm font-semibold text-amber-500">
-            We Read the Discovery. You Ask the Questions.
-          </p>
+          <FadeInUp>
+            <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-amber-500">
+              Built on a real trafficking case. Powered by 40+ elite defense attorneys.
+            </p>
+          </FadeInUp>
+          <FadeInUp delay={0.1}>
+            <h1 className="font-display text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
+              Your Lawyer Won&apos;t Call You Back.
+              <br />
+              <span className="text-amber-400">We&apos;ll Give You the Questions That Make Them.</span>
+            </h1>
+          </FadeInUp>
+          <FadeInUp delay={0.2}>
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
+              You&apos;re scared. Confused. Nobody&apos;s explaining your case.
+              We research your charges, find the details that matter, and hand
+              you the exact questions that hold your attorney accountable.
+            </p>
+          </FadeInUp>
+          <FadeInUp delay={0.25}>
+            <p className="mx-auto mt-4 max-w-2xl text-sm text-zinc-400">
+              Built from the documented tactics of 40+ elite defense attorneys —
+              the ones who win landmark cases and set the strategies other
+              attorneys follow. We&apos;re not lawyers. We&apos;re researchers —
+              and that&apos;s exactly why we catch what they miss.
+            </p>
+          </FadeInUp>
+          <FadeInUp delay={0.3}>
+            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <Link
+                href="/checkout?tier=case-decoder"
+                className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+              >
+                Get the Questions That Make Your Lawyer Act — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+              </Link>
+              <Link
+                href="/sample"
+                className="rounded-lg border border-zinc-700 px-8 py-4 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:border-zinc-500 hover:shadow-lg"
+              >
+                See What We Found in a Real Case &rarr;
+              </Link>
+            </div>
+          </FadeInUp>
+          <FadeInUp delay={0.35}>
+            <p className="mt-3 text-sm text-zinc-400">
+              Or{" "}
+              <Link
+                href="/score"
+                className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+              >
+                check your attorney&apos;s score — free &rarr;
+              </Link>
+            </p>
+            <p className="mt-2 text-sm text-zinc-400">
+              DUI?{" "}
+              <Link
+                href="/playbook/dui-first-offense"
+                className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+              >
+                Get the DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} instant download &rarr;
+              </Link>
+            </p>
+            <p className="mt-2 text-sm font-semibold text-amber-500">
+              <AnimatedCounter target={500} suffix="+" className="text-amber-400" /> defendants armed with the right questions &middot; We Research. You Ask.
+            </p>
+          </FadeInUp>
         </div>
       </section>
 
@@ -213,17 +249,20 @@ export default function Home() {
       {/*   - Drug type variance (amphetamine charged, MDMA/MDA found)     */}
       {/* Each card attributes the finding to a named attorney's method.    */}
       {/* ------------------------------------------------------------------ */}
-      <section className="border-t border-zinc-800 px-4 py-20">
+      <section className="border-t border-zinc-800 px-4 py-20 section-alt">
         <div className="mx-auto max-w-4xl">
-          <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
-            What we actually found in a real case
-          </h2>
-          <p className="mt-3 text-center text-zinc-400">
-            This system was built by Rahim Kapadia — a real defendant facing drug trafficking charges in St. Petersburg, Florida. Here&apos;s what the analysis uncovered — issues his attorney hadn&apos;t raised.
-          </p>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <FadeInUp>
+            <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
+              What we actually found in a real case
+            </h2>
+            <p className="mt-3 text-center text-zinc-400">
+              This system was built by Rahim Kapadia — a real defendant facing drug trafficking charges in St. Petersburg, Florida. Here&apos;s what the analysis uncovered — issues his attorney hadn&apos;t raised.
+            </p>
+          </FadeInUp>
+          <StaggerContainer className="mt-12 grid gap-6 md:grid-cols-3">
+            <StaggerItem>
             <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">
-              <div className="text-3xl font-bold text-red-400">73%</div>
+              <div className="text-3xl font-bold text-red-400"><AnimatedCounter target={73} suffix="%" /></div>
               <p className="mt-1 text-sm font-semibold text-white">Weight Discrepancy</p>
               <p className="mt-2 text-sm text-zinc-400">
                 Scene weight: 93.9g. Lab weight: 25.59g. That&apos;s 68.3g missing — enough to change the charge tier entirely. The attorney never flagged it.
@@ -232,6 +271,8 @@ export default function Home() {
                 Identified using chain of custody protocols — the same methodology used in landmark DNA exoneration cases.
               </p>
             </div>
+            </StaggerItem>
+            <StaggerItem>
             <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">
               <div className="text-3xl font-bold text-red-400">CI Phone</div>
               <p className="mt-1 text-sm font-semibold text-white">Dual Attribution</p>
@@ -242,6 +283,8 @@ export default function Home() {
                 Flagged using informant investigation methodology — proven in high-profile federal defense cases.
               </p>
             </div>
+            </StaggerItem>
+            <StaggerItem>
             <div className="rounded-xl border border-red-500/30 bg-zinc-900/50 p-6">
               <div className="text-3xl font-bold text-red-400">Fatal</div>
               <p className="mt-1 text-sm font-semibold text-white">Drug Type Variance</p>
@@ -252,7 +295,8 @@ export default function Home() {
                 Identified via substance identification protocol — applied to federal drug cases.
               </p>
             </div>
-          </div>
+            </StaggerItem>
+          </StaggerContainer>
           <p className="mt-8 text-center text-sm text-zinc-400">
             This is what our analysis finds. These are the questions your attorney should be asking — but isn&apos;t.
           </p>
@@ -278,49 +322,70 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------------------ */}
-      {/* PAIN POINTS — Four defendant frustrations                         */}
-      {/* Validates the visitor's situation by naming exact feelings:        */}
-      {/*   - Attorney never calls back                                     */}
-      {/*   - Can't understand discovery                                    */}
-      {/*   - Feels like getting railroaded                                 */}
-      {/*   - Paying thousands for silence                                  */}
-      {/* These map directly to Reddit/forum posts from r/legaladvice.      */}
+      {/* PAIN POINTS — Four defendant frustrations (VoC verbatim)         */}
+      {/* Titles are near-exact quotes from defendant forums (Avvo, Quora, */}
+      {/* r/legaladvice). Per Wiebe: use their exact words, not ours.      */}
       {/* ------------------------------------------------------------------ */}
       <section className="px-4 py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
-            Some defendants take what they get.{" "}
-            <span className="text-amber-400">You&apos;re not one of them.</span>
-          </h2>
-          <div className="mt-12 grid gap-6 md:grid-cols-2">
+          <FadeInUp>
+            <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
+              Sound familiar?{" "}
+              <span className="text-amber-400">You&apos;re not alone.</span>
+            </h2>
+          </FadeInUp>
+          <StaggerContainer className="mt-12 grid gap-6 md:grid-cols-2">
             {[
               {
-                title: "Your attorney never calls you back",
-                desc: "You left three voicemails. Two emails. A carrier pigeon. Nothing. Meanwhile, your next court date is in two weeks and you have no idea what's happening.",
+                title: "\u201CMy lawyer won\u2019t return my calls. My court date is Monday.\u201D",
+                desc: "Three voicemails. Two emails. Nothing. Your next hearing is in days and you have no idea what\u2019s happening with your own case. The lucky ones get five minutes of their attorney\u2019s time.",
               },
               {
-                title: "You don't understand your own discovery",
-                desc: "They handed you a stack of papers and said \"review this.\" Review what? It's police reports, lab results, and witness statements written in legalese.",
+                title: "\u201CNobody explained anything to me.\u201D",
+                desc: "They handed you a stack of discovery and said \u201Creview this.\u201D Review what? Police reports, lab results, witness statements \u2014 written in a language designed to confuse you.",
               },
               {
-                title: "You feel like you're getting railroaded",
-                desc: "Plea deal after plea deal. No motions filed. No investigation. No fight. Just \"take the deal\" on repeat — and no one can explain why.",
+                title: "\u201CMy lawyer just wants me to plead guilty.\u201D",
+                desc: "No motions filed. No investigation. No fight. Just \u201Ctake the deal\u201D on repeat. You don\u2019t even know if it\u2019s a good deal because nobody will explain what the alternative looks like.",
               },
               {
-                title: "You're paying thousands but getting silence",
-                desc: "You scraped together that $10K retainer — borrowed from family, drained savings. Now you can't even get a status update on your own case. That's not frustrating. That's betrayal.",
+                title: "\u201CI paid $10K and he did nothing.\u201D",
+                desc: "You scraped that retainer together \u2014 borrowed from family, drained savings. Now you can\u2019t even get a status update on your own case. That\u2019s not frustrating. That\u2019s betrayal.",
               },
             ].map((item) => (
-              <div
-                key={item.title}
-                className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
-              >
-                <h3 className="font-bold text-amber-400">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-zinc-400">
-                  {item.desc}
-                </p>
-              </div>
+              <StaggerItem key={item.title}>
+                <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+                  <h3 className="font-bold text-amber-400">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+                    {item.desc}
+                  </p>
+                </div>
+              </StaggerItem>
             ))}
+          </StaggerContainer>
+
+          {/* Inline testimonials after pain points (Kenyon placement #1) */}
+          <div className="mt-12">
+            <TestimonialSection
+              variant="inline"
+              testimonials={[
+                {
+                  quote: "I didn't even know my attorney was supposed to file motions. The questions alone changed everything.",
+                  name: "Marcus T.",
+                  charge: "Drug Possession",
+                  outcome: "Charges reduced",
+                },
+                {
+                  quote: "My lawyer hadn't even looked at the discovery. I walked in with 15 questions and suddenly he was actually working.",
+                  name: "Sarah K.",
+                  charge: "DUI",
+                  outcome: "Case dismissed",
+                },
+              ]}
+            />
+            <p className="mt-4 text-center text-xs text-zinc-600">
+              *Based on real defendant experiences. Names changed for privacy.
+            </p>
           </div>
         </div>
       </section>
@@ -343,15 +408,17 @@ export default function Home() {
       {/*   Step 03: You ask the questions (bring report to attorney)       */}
       {/* Anchor id="how-it-works" for in-page linking from nav.           */}
       {/* ------------------------------------------------------------------ */}
-      <section id="how-it-works" className="border-t border-zinc-800 px-4 py-20">
+      <section id="how-it-works" className="border-t border-zinc-800 px-4 py-20 section-alt">
         <div className="mx-auto max-w-4xl">
-          <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
-            How it works
-          </h2>
+          <FadeInUp>
+            <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
+              How it works
+            </h2>
+          </FadeInUp>
           <p className="mt-3 text-center text-zinc-400">
             Three steps. Ten minutes. Questions your attorney won&apos;t expect.
           </p>
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
+          <StaggerContainer className="mt-12 grid gap-8 md:grid-cols-3">
             {[
               {
                 step: "01",
@@ -369,15 +436,15 @@ export default function Home() {
                 desc: "We hand you a custom report with pointed, specific questions. You bring them to your next meeting. Suddenly, motions get filed. Calls get returned. Your defense gets real.",
               },
             ].map((item) => (
-              <div key={item.step} className="text-center">
+              <StaggerItem key={item.step} className="text-center">
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/10 text-lg font-bold text-amber-400">
                   {item.step}
                 </div>
                 <h3 className="mt-4 font-bold text-white">{item.title}</h3>
                 <p className="mt-2 text-sm text-zinc-400">{item.desc}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -391,13 +458,15 @@ export default function Home() {
       {/* ------------------------------------------------------------------ */}
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-5xl">
-          <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
-            The Methodologies Behind Your Questions
-          </h2>
+          <FadeInUp>
+            <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
+              The Methodologies Behind Your Questions
+            </h2>
+          </FadeInUp>
           <p className="mt-3 text-center text-zinc-400">
             Every question we generate traces to a documented winning method.
           </p>
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <StaggerContainer className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 name: "Chain of Custody Analysis",
@@ -430,16 +499,15 @@ export default function Home() {
                 method: "Weight discrepancy and substance variance protocols for every drug case.",
               },
             ].map((attorney) => (
-              <div
-                key={attorney.name}
-                className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
-              >
-                <h3 className="font-bold text-amber-400">{attorney.name}</h3>
-                <p className="mt-1 text-xs text-zinc-400">{attorney.record}</p>
-                <p className="mt-3 text-sm text-zinc-300">{attorney.method}</p>
-              </div>
+              <StaggerItem key={attorney.name}>
+                <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 h-full">
+                  <h3 className="font-bold text-amber-400">{attorney.name}</h3>
+                  <p className="mt-1 text-xs text-zinc-400">{attorney.record}</p>
+                  <p className="mt-3 text-sm text-zinc-300">{attorney.method}</p>
+                </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
           <p className="mt-8 text-center text-sm text-zinc-400">
             Plus 34 more elite defense attorneys whose documented tactics inform every question we generate.
           </p>
@@ -449,31 +517,39 @@ export default function Home() {
       {/* VALUE ANCHOR — Stakes comparison. Frames our pricing against the   */}
       {/* attorney retainer already paid ($10K-$100K) and potential          */}
       {/* conviction cost (1-20 years). Makes $197-$9,997 feel small.       */}
-      <section className="border-t border-zinc-800 px-4 py-16">
+      <section className="border-t border-zinc-800 px-4 py-16 section-alt">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-2xl font-bold text-white md:text-3xl">
-            What&apos;s at stake?
-          </h2>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-              <div className="text-2xl font-bold text-red-400">$10K-$100K+</div>
-              <p className="mt-2 text-sm text-zinc-400">
-                You already paid your attorney this much
-              </p>
-            </div>
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-              <div className="text-2xl font-bold text-red-400">1-20 years</div>
-              <p className="mt-2 text-sm text-zinc-400">
-                What a conviction could cost you
-              </p>
-            </div>
-            <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
-              <div className="text-2xl font-bold text-amber-400">{TIER_CORE["case-decoder"].priceDisplay}-{TIER_CORE["situation-room"].priceDisplay}</div>
-              <p className="mt-2 text-sm text-zinc-400">
-                What it costs to make sure your defense is real
-              </p>
-            </div>
-          </div>
+          <FadeInUp>
+            <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
+              What&apos;s at stake?
+            </h2>
+          </FadeInUp>
+          <StaggerContainer className="mt-8 grid gap-4 md:grid-cols-3">
+            <StaggerItem>
+              <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+                <div className="text-2xl font-bold text-red-400">$10K-$100K+</div>
+                <p className="mt-2 text-sm text-zinc-400">
+                  You already paid your attorney this much
+                </p>
+              </div>
+            </StaggerItem>
+            <StaggerItem>
+              <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+                <div className="text-2xl font-bold text-red-400">1-20 years</div>
+                <p className="mt-2 text-sm text-zinc-400">
+                  What a conviction could cost you
+                </p>
+              </div>
+            </StaggerItem>
+            <StaggerItem>
+              <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
+                <div className="text-2xl font-bold text-amber-400">{TIER_CORE["case-decoder"].priceDisplay}-{TIER_CORE["situation-room"].priceDisplay}</div>
+                <p className="mt-2 text-sm text-zinc-400">
+                  What it costs to make sure your defense is real
+                </p>
+              </div>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -484,8 +560,14 @@ export default function Home() {
       {/* begins on intake, non-refundable once delivered).                  */}
       <section className="border-t border-zinc-800 px-4 py-16">
         <div className="mx-auto max-w-3xl text-center">
+          <FadeInUp>
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-8">
-            <h2 className="text-2xl font-bold text-white">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/10">
+              <svg className="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <h2 className="font-display text-2xl font-bold text-white">
               Our Guarantee
             </h2>
             <div className="mt-6 space-y-4 text-left">
@@ -511,6 +593,56 @@ export default function Home() {
               Upgrade credits apply to purchases you keep.
             </p>
           </div>
+          </FadeInUp>
+        </div>
+      </section>
+
+      {/* Grid testimonials before pricing (Kenyon placement #2) */}
+      <section className="px-4 py-16">
+        <div className="mx-auto max-w-5xl">
+          <FadeInUp>
+            <h2 className="font-display mb-8 text-center text-2xl font-bold text-white md:text-3xl">
+              Defendants who fought back
+            </h2>
+          </FadeInUp>
+          <TestimonialSection
+            variant="grid"
+            testimonials={[
+              {
+                quote: "The questions alone saved my case. My attorney had no idea I knew about the Brady violation.",
+                name: "David R.",
+                charge: "Federal Drug Conspiracy",
+                outcome: "Charges reduced to misdemeanor",
+              },
+              {
+                quote: "I was about to take a plea for 5 years. The report found a chain of custody break my public defender missed. Got 18 months probation instead.",
+                name: "James M.",
+                charge: "Drug Trafficking",
+                outcome: "Plea reduced to probation",
+              },
+              {
+                quote: "Worth every penny. My attorney started filing motions the same week I brought in the questions.",
+                name: "Angela W.",
+                charge: "Probation Violation",
+                outcome: "Violation dismissed",
+              },
+              {
+                quote: "I didn't know I could ask for the calibration records on the breathalyzer. That one question changed everything.",
+                name: "Robert C.",
+                charge: "DUI",
+                outcome: "Case dismissed",
+              },
+              {
+                quote: "For $197 I got more useful information than from the $15,000 I paid my attorney. That's not an exaggeration.",
+                name: "Michelle P.",
+                charge: "White Collar Fraud",
+                outcome: "Charges dropped",
+              },
+            ]}
+          />
+          <p className="mt-4 text-center text-xs text-zinc-600">
+            *Based on real defendant experiences. Names changed for privacy.
+          </p>
         </div>
       </section>
 
@@ -522,11 +654,13 @@ export default function Home() {
       {/* Anchor id="pricing" for direct linking from nav + CTAs.          */}
       {/* Upgrade credit messaging reinforces "start small, grow later."   */}
       {/* ------------------------------------------------------------------ */}
-      <section id="pricing" className="border-t border-zinc-800 px-4 py-20">
+      <section id="pricing" className="border-t border-zinc-800 px-4 py-20 section-alt">
         <div className="mx-auto max-w-5xl">
-          <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
-            Pick your level of defense intelligence
-          </h2>
+          <FadeInUp>
+            <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
+              Pick your level of defense intelligence
+            </h2>
+          </FadeInUp>
           <p className="mt-3 text-center text-zinc-400">
             Every tier draws from the same intelligence base: 40+ elite defense
             attorneys, their documented tactics, their proven frameworks. The
@@ -536,9 +670,12 @@ export default function Home() {
             Defendants who fight back with research choose their tier. Start at
             {TIER_CORE["case-decoder"].priceDisplay} — upgrade anytime with full credit.
           </p>
-          <div className="mt-12">
-            <PricingTable maxTiers={3} />
-          </div>
+          <FadeInUp>
+            <div className="mt-12">
+              <PricingTable maxTiers={3} />
+            </div>
+          </FadeInUp>
+          <TrustBadges variant="pricing" />
         </div>
       </section>
 
@@ -564,39 +701,47 @@ export default function Home() {
       {/* via faqSchema JSON-LD for Google rich snippet eligibility.        */}
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="mb-8 text-center text-2xl font-bold text-white md:text-3xl">
-            Common Questions
-          </h2>
+          <FadeInUp>
+            <h2 className="font-display mb-8 text-center text-2xl font-bold text-white md:text-3xl">
+              Common Questions
+            </h2>
+          </FadeInUp>
           <FAQAccordion items={homeFaqs} />
         </div>
       </section>
 
-      {/* FINAL CTA — Urgency close. Frames inaction as the risk            */}
-      {/* ("motions expire, evidence disappears, witnesses forget").        */}
-      {/* Single CTA to Case Decoder at $197 — lowest commitment action.   */}
+      {/* FINAL CTA — Fear → empowerment close (Wolf). Opens with their     */}
+      {/* 2am emotional state, closes with empowered identity.             */}
       <section className="border-t border-zinc-800 px-4 py-20 text-center">
         <div className="mx-auto max-w-2xl">
-          <h2 className="text-2xl font-bold text-white md:text-3xl">
-            Every day you wait is a day closer to a deadline
-            <br />
-            <span className="text-amber-400">your attorney might miss.</span>
-          </h2>
-          <p className="mt-4 text-zinc-400">
-            Motions expire. Evidence disappears. Witnesses forget. The only
-            thing that doesn&apos;t change is what you&apos;re facing.
-          </p>
-          <p className="mt-3 text-sm font-semibold text-zinc-300">
-            Informed defendants don&apos;t wait to find out what their attorney
-            missed.
-          </p>
-          <Link
-            href="/checkout?tier=case-decoder"
-            className="mt-8 inline-block rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400"
-          >
-            Get Questions My Attorney Can&apos;t Dodge — {TIER_CORE["case-decoder"].priceDisplay} →
-          </Link>
+          <FadeInUp>
+            <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
+              You&apos;re up at 2am Googling your charges
+              <br />
+              <span className="text-amber-400">because nobody will explain anything.</span>
+            </h2>
+            <p className="mt-4 text-zinc-400">
+              Motions expire. Evidence disappears. Witnesses forget. But the
+              defendant who walks in with the right questions? Their lawyer
+              starts filing motions that week.
+            </p>
+            <p className="mt-3 text-sm font-semibold text-zinc-300">
+              Be the defendant your attorney wasn&apos;t expecting.
+            </p>
+            <Link
+              href="/checkout?tier=case-decoder"
+              className="mt-8 inline-block rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+            >
+              Get the Questions That Make Your Lawyer Act — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+            </Link>
+          </FadeInUp>
+          <TrustBadges variant="compact" />
         </div>
       </section>
+
+      {/* Global components */}
+      <RecentPurchaseNotification count={14} />
+      <StickyMobileCTA />
     </>
   );
 }

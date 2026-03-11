@@ -27,11 +27,21 @@ import { LeadCapture } from "@/components/LeadCapture";
 import { BlogCTA } from "@/components/BlogCTA";
 import { BlogCard } from "@/components/BlogCard";
 import { PlaybookCTA } from "@/components/PlaybookCTA";
-import { SourceIntelligence } from "@/components/SourceIntelligence";
+import { SourceIntelligence, ATTORNEYS } from "@/components/SourceIntelligence";
+import { TLDRBox } from "@/components/TLDRBox";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 import { SITE_URL } from "@/lib/site";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+
+const CATEGORY_LABELS: Record<string, string> = {
+  dui: "DUI Defense",
+  "drug-cases": "Drug Defense",
+  "white-collar": "White Collar Defense",
+  "general-defense": "Criminal Defense",
+};
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -82,7 +92,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             <span className="text-sm text-zinc-400">&bull;</span>
             <span className="text-sm text-zinc-400">{post.readingTime}</span>
           </div>
-          <h1 className="text-3xl font-bold leading-tight text-white md:text-4xl">
+          <h1 className="font-display text-3xl font-bold leading-tight text-white md:text-4xl">
             {post.title}
           </h1>
           <p className="mt-4 text-lg text-zinc-400">{post.excerpt}</p>
@@ -97,6 +107,36 @@ export default async function BlogPostPage({ params }: PageProps) {
             ))}
           </div>
         </div>
+
+        {/* BreadcrumbList schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Home",
+                  item: SITE_URL,
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "Blog",
+                  item: `${SITE_URL}/blog`,
+                },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: post.title,
+                },
+              ],
+            }),
+          }}
+        />
 
         {/* Article schema markup */}
         <script
@@ -129,19 +169,47 @@ export default async function BlogPostPage({ params }: PageProps) {
                 },
               },
               image: `${SITE_URL}/blog/${slug}/opengraph-image`,
+              keywords: post.tags.join(", "),
+              articleSection:
+                CATEGORY_LABELS[post.category] || "Criminal Defense",
+              mentions: (
+                ATTORNEYS[post.category] || ATTORNEYS["general-defense"]
+              ).map((a) => ({
+                "@type": "Person",
+                name: a.name,
+              })),
             }),
           }}
         />
+
+        {/* FAQPage schema (if post has FAQs in frontmatter) */}
+        {post.faqs.length > 0 && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                mainEntity: post.faqs.map((faq) => ({
+                  "@type": "Question",
+                  name: faq.q,
+                  acceptedAnswer: { "@type": "Answer", text: faq.a },
+                })),
+              }),
+            }}
+          />
+        )}
 
         {/* Source Intelligence */}
         <SourceIntelligence category={post.category || "general-defense"} />
 
         {/* Content */}
         <div className="prose prose-invert prose-amber max-w-none prose-headings:text-white prose-p:text-zinc-300 prose-a:text-amber-400 prose-strong:text-white prose-li:text-zinc-300">
-          <MDXRemote source={post.content} />
+          <MDXRemote source={post.content} components={{ TLDRBox }} />
         </div>
 
         {/* Share — growth loop */}
+        <FadeInUp>
         <div className="mt-12 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
           <p className="text-sm font-bold text-white">
             Know someone facing charges? Send them this.
@@ -149,7 +217,8 @@ export default async function BlogPostPage({ params }: PageProps) {
           <p className="mt-1 text-xs text-zinc-400">
             Most defendants don&apos;t know they can hold their attorney accountable. Share this with someone who needs it.
           </p>
-          <div className="mt-4 flex flex-wrap gap-3">
+          <StaggerContainer className="mt-4 flex flex-wrap gap-3">
+            <StaggerItem>
             <a
               href={`sms:?body=${encodeURIComponent(`Read this — it might help with your case: ${SITE_URL}/blog/${slug}`)}`}
               className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-white transition-colors hover:bg-zinc-700"
@@ -157,6 +226,8 @@ export default async function BlogPostPage({ params }: PageProps) {
             >
               📱 Text
             </a>
+            </StaggerItem>
+            <StaggerItem>
             <a
               href={`https://wa.me/?text=${encodeURIComponent(`${post.title} ${SITE_URL}/blog/${slug}`)}`}
               target="_blank"
@@ -166,6 +237,8 @@ export default async function BlogPostPage({ params }: PageProps) {
             >
               WhatsApp
             </a>
+            </StaggerItem>
+            <StaggerItem>
             <a
               href={`mailto:?subject=${encodeURIComponent(`This might help — ${post.title}`)}&body=${encodeURIComponent(`I thought this might be useful for your case:\n\n${post.title}\n${SITE_URL}/blog/${slug}\n\nIt covers questions you should be asking your attorney.`)}`}
               className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-white transition-colors hover:bg-zinc-700"
@@ -173,6 +246,8 @@ export default async function BlogPostPage({ params }: PageProps) {
             >
               ✉️ Email
             </a>
+            </StaggerItem>
+            <StaggerItem>
             <a
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${SITE_URL}/blog/${slug}`)}`}
               target="_blank"
@@ -182,6 +257,8 @@ export default async function BlogPostPage({ params }: PageProps) {
             >
               𝕏 Twitter
             </a>
+            </StaggerItem>
+            <StaggerItem>
             <a
               href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${SITE_URL}/blog/${slug}`)}`}
               target="_blank"
@@ -191,8 +268,10 @@ export default async function BlogPostPage({ params }: PageProps) {
             >
               Facebook
             </a>
-          </div>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
+        </FadeInUp>
 
         {/* Playbook CTA — shown above BlogCTA for DUI posts */}
         {post.category === "dui" && (
@@ -213,14 +292,15 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         {/* Related Posts */}
         {related.length > 0 && (
+          <FadeInUp>
           <div className="mt-16">
-            <h2 className="mb-6 text-xl font-bold text-white">
+            <h2 className="font-display mb-6 text-xl font-bold text-white">
               Related Articles
             </h2>
-            <div className="grid gap-6 md:grid-cols-2">
+            <StaggerContainer className="grid gap-6 md:grid-cols-2">
               {related.map((rp) => (
+                <StaggerItem key={rp.slug}>
                 <BlogCard
-                  key={rp.slug}
                   title={rp.title}
                   excerpt={rp.excerpt}
                   slug={rp.slug}
@@ -228,9 +308,11 @@ export default async function BlogPostPage({ params }: PageProps) {
                   tags={rp.tags}
                   readingTime={rp.readingTime}
                 />
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
+          </FadeInUp>
         )}
       </div>
     </article>

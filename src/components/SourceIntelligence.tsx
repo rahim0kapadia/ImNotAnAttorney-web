@@ -22,7 +22,7 @@
  * @param props.category - Blog post category slug (e.g. "drug-cases", "dui").
  */
 
-const ATTORNEYS: Record<
+export const ATTORNEYS: Record<
   string,
   { name: string; credential: string; method: string }[]
 > = {

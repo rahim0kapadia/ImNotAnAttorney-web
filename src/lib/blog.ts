@@ -52,6 +52,8 @@ export interface BlogPost {
   author: string;
   /** Primary category for grouping and related-post matching. */
   category: string;
+  /** FAQ pairs for FAQPage schema (from frontmatter). */
+  faqs: Array<{ q: string; a: string }>;
   /** Human-readable reading time estimate (e.g., "5 min read"). */
   readingTime: string;
   /** Raw MDX body content (without frontmatter). */
@@ -112,6 +114,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
     excerpt: data.excerpt || "",
     author: data.author || "ImNotAnAttorney Team",
     category: data.category || "general-defense",
+    faqs: data.faqs || [],
     readingTime: stats.text,
     content,
   };
