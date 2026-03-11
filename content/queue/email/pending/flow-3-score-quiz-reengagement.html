@@ -1,0 +1,265 @@
+<!--
+==========================================================================
+FLOW 3: SCORE QUIZ RE-ENGAGEMENT (4 emails)
+==========================================================================
+Trigger: User completes the Defense Milestone Score quiz at /score,
+         provides their email (optional capture on score results page),
+         but does NOT purchase.
+
+Matches existing infrastructure:
+  - Score page captures email via POST to /api/subscribe with source="score-page"
+  - Score result includes: score (0-100), band (Critical/Concerning/Average/
+    Adequate/Excellent), observations (array of strings), chargeType answer
+  - Score page CTAs: Playbook ($97 if DUI), Case Decoder ($197)
+  - sendEmail() wraps inner HTML in dark template, adds CAN-SPAM footer
+  - Colors: bg #0C0A09, text #D4D4D8, amber accent #F59E0B
+
+PERSONALIZATION VARIABLES:
+  {{SCORE}} — numeric 0-100
+  {{BAND}} — Critical / Concerning / Average / Adequate / Excellent
+  {{BAND_COLOR}} — #EF4444 (Critical), #F97316 (Concerning), #EAB308 (Average),
+                    #22C55E (Adequate), #10B981 (Excellent)
+  {{CHARGE_TYPE}} — drug / dui / white-collar / other-felony / other-misdemeanor
+  {{CHARGE_LABEL}} — "Drug offense" / "DUI / DWI" / etc. (display-friendly)
+  {{OBSERVATIONS}} — rendered HTML list of score observations
+  {{FIRST_NAME}} — if captured (optional)
+==========================================================================
+-->
+
+
+<!-- ================================================================== -->
+<!-- EMAIL 1 of 4: "Your case scored {{SCORE}}/100"                    -->
+<!-- ================================================================== -->
+<!--
+  Flow: Score Quiz Re-engagement
+  Position: Email 1 of 4
+  Trigger: User completes /score quiz AND provides email, does not purchase
+  Delay: Immediate (within minutes of quiz completion)
+  Segment: score-page subscribers, no purchase in orders table
+
+  Subject line: Your case scored {{SCORE}}/100 — here's what that means
+  Subject line B: {{BAND}}: what your Defense Milestone Score is telling you
+  Preview text: We broke down your score. Here's what to do about it.
+-->
+
+<h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">Your Defense Milestone Score: {{SCORE}}/100</h1>
+
+<div style="text-align: center; margin: 24px 0;">
+  <div style="display: inline-block; width: 120px; height: 120px; border-radius: 50%; border: 4px solid {{BAND_COLOR}}; text-align: center; line-height: 120px;">
+    <span style="font-size: 36px; font-weight: bold; color: {{BAND_COLOR}};">{{SCORE}}</span>
+  </div>
+  <p style="margin: 12px 0 0; font-size: 18px; font-weight: bold; color: {{BAND_COLOR}};">{{BAND}}</p>
+</div>
+
+<p>You took the Defense Milestone Score. Here's your permanent record of what we found.</p>
+
+<div style="margin: 20px 0; padding: 16px; border: 1px solid #27272A; border-radius: 8px; background: #1C1917;">
+  <p style="margin: 0 0 8px; font-size: 13px; color: #F59E0B; font-weight: bold;">YOUR OBSERVATIONS:</p>
+  {{OBSERVATIONS}}
+</div>
+
+<p><strong style="color: white;">What does this score actually mean?</strong></p>
+
+<p>The Defense Milestone Score measures where your defense stands against benchmarks that elite defense attorneys would expect by this stage. It evaluates attorney communication, motion activity, discovery handling, and case strategy transparency.</p>
+
+<!-- Dynamic content based on band -->
+<!-- For Critical/Concerning (score < 50): -->
+<p>A score in the <strong style="color: {{BAND_COLOR}};">{{BAND}}</strong> range means there are gaps between where your defense should be and where it is. These gaps don't fix themselves — and in criminal defense, the clock is always running.</p>
+
+<!-- For Average (50-69): -->
+<!-- A score in the Average range means your defense is moving, but there may be areas your attorney hasn't addressed yet. The question is whether those gaps are strategic choices or oversights. -->
+
+<!-- For Adequate/Excellent (70+): -->
+<!-- A score in this range suggests your attorney is hitting the expected milestones. That's a good sign. But milestones are baseline — there may still be strategic opportunities worth exploring. -->
+
+<p>The Defense Milestone Score tells you <em>where</em> to look. The Case Decoder tells you <em>what to ask</em> when you get there.</p>
+
+<a href="https://imnotanattorney.com/checkout?tier=case-decoder" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Get My Full Case Decoder — $197</a>
+
+<p style="font-size: 13px; color: #A1A1AA;">15 calibrated questions + email templates + 7-day action plan. Delivered within 48 hours.</p>
+
+<p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
+  <strong style="color: white;">P.S.</strong> This email is your permanent score record. Save it. Bring it to your next attorney meeting alongside the observations above. Even without the Case Decoder, these findings are a starting point for a better conversation.
+</p>
+
+
+<!-- ================================================================== -->
+<!-- EMAIL 2 of 4: "The 3 things dragging your score down"             -->
+<!-- ================================================================== -->
+<!--
+  Flow: Score Quiz Re-engagement
+  Position: Email 2 of 4
+  Trigger: Email 1 sent, no purchase
+  Delay: 24 hours after quiz completion
+  Segment: score-page subscribers who completed Email 1 without purchasing
+
+  Subject line: The 3 things dragging your score down
+  Subject line B: Why your defense scored {{SCORE}} (and what to do about it)
+  Preview text: These are fixable. But not if nobody asks about them.
+-->
+
+<h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">Why Your Score Is {{SCORE}}. Not Higher.</h1>
+
+<p>Yesterday we sent you your Defense Milestone Score. Today let's talk about what's dragging it down — because these aren't permanent problems. They're <strong style="color: white;">unanswered questions</strong>.</p>
+
+<p style="margin: 24px 0 8px; font-size: 16px; font-weight: bold; color: white;">The 3 biggest factors behind a low score:</p>
+
+<div style="margin: 16px 0; padding: 16px; border-left: 3px solid #EF4444; background: #1C1917;">
+  <p style="margin: 0 0 4px; font-size: 14px; font-weight: bold; color: white;">1. No motions filed (or you don't know if any were filed)</p>
+  <p style="margin: 0; font-size: 13px; color: #D4D4D8;">Motions are the single biggest lever in criminal defense. Suppression motions, motions to compel discovery, motions to dismiss — these are how cases get reduced or thrown out. If your attorney hasn't filed any, or hasn't told you about them, that's a gap worth asking about.</p>
+  <p style="margin: 8px 0 0; font-size: 13px; color: #F59E0B;"><strong>The question:</strong> <em>"What motions have you considered filing, and what's your reasoning for filing or not filing each one?"</em></p>
+</div>
+
+<div style="margin: 16px 0; padding: 16px; border-left: 3px solid #F97316; background: #1C1917;">
+  <p style="margin: 0 0 4px; font-size: 14px; font-weight: bold; color: white;">2. No discovery review with you</p>
+  <p style="margin: 0; font-size: 13px; color: #D4D4D8;">Your attorney may have received discovery. They may have even read it. But if they haven't sat down with you and walked through what's in it — the police reports, lab results, witness statements — you're flying blind. Discovery is the prosecution's entire case. You should know what's in it.</p>
+  <p style="margin: 8px 0 0; font-size: 13px; color: #F59E0B;"><strong>The question:</strong> <em>"Can we schedule a meeting to review the discovery together? I want to understand what the prosecution has."</em></p>
+</div>
+
+<div style="margin: 16px 0; padding: 16px; border-left: 3px solid #EAB308; background: #1C1917;">
+  <p style="margin: 0 0 4px; font-size: 14px; font-weight: bold; color: white;">3. No strategy conversation</p>
+  <p style="margin: 0; font-size: 13px; color: #D4D4D8;">Has your attorney told you their plan? Not "we'll fight it" — the actual strategy. Are they going for suppression? Challenging witnesses? Negotiating a plea? If you can't answer that question, your attorney hasn't answered it either.</p>
+  <p style="margin: 8px 0 0; font-size: 13px; color: #F59E0B;"><strong>The question:</strong> <em>"What is our defense strategy, and what are the realistic outcomes you see for my case?"</em></p>
+</div>
+
+<p>Those three questions are free. Ask them at your next meeting or send them in an email today.</p>
+
+<p>But if you want <strong style="color: white;">15 questions calibrated to YOUR specific charges, YOUR jurisdiction, and YOUR case stage</strong> — that's the Case Decoder.</p>
+
+<a href="https://imnotanattorney.com/checkout?tier=case-decoder" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Get 15 Questions for My Case — $197</a>
+
+<p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
+  <strong style="color: white;">P.S.</strong> We gave you 3 questions for free in this email. Use them. If they change the conversation with your attorney, imagine what 15 calibrated questions — built from elite defense methodology and tailored to your exact situation — would do. <a href="https://imnotanattorney.com/sample" style="color: #F59E0B; text-decoration: underline;">See a sample report</a>.
+</p>
+
+
+<!-- ================================================================== -->
+<!-- EMAIL 3 of 4: Charge-specific angle                               -->
+<!-- ================================================================== -->
+<!--
+  Flow: Score Quiz Re-engagement
+  Position: Email 3 of 4
+  Trigger: Email 2 sent, no purchase
+  Delay: 3 days after quiz completion
+  Segment: score-page subscribers, segmented by chargeType answer
+  NOTE: This email has 5 variants (one per charge type).
+        Template below shows the DUI variant as primary example,
+        with variant sections for drug, white-collar, other-felony,
+        other-misdemeanor noted in comments.
+
+  Subject line: How {{CHARGE_LABEL}} cases with your score usually play out
+  Subject line B: What a {{SCORE}}/100 means for {{CHARGE_LABEL}} defendants
+  Preview text: We've seen this pattern before. Here's what comes next.
+-->
+
+<!-- ====== DUI VARIANT ====== -->
+<h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">DUI Cases That Score {{SCORE}}: Here's the Pattern.</h1>
+
+<p>You scored {{SCORE}}/100 on the Defense Milestone Score. You're facing DUI charges. Here's what we see in cases like yours.</p>
+
+<p><strong style="color: white;">When DUI defendants score below 50:</strong></p>
+<p>The most common gaps are breathalyzer calibration challenges, field sobriety test procedure questions, and DMV hearing deadlines. These aren't exotic defense strategies — they're standard. If your attorney hasn't raised them, it's worth asking why.</p>
+
+<p><strong style="color: white;">The 10-day DMV deadline is the one most defendants miss.</strong></p>
+<p>In most states, you have 10 days from arrest to request a DMV hearing to fight license suspension. Miss it and you lose the right to challenge. Period. If your attorney didn't file this within the first week, ask them to explain their reasoning.</p>
+
+<p><strong style="color: white;">Three DUI-specific questions your attorney should be able to answer:</strong></p>
+<ol style="padding-left: 20px; margin: 12px 0;">
+  <li style="margin-bottom: 10px; color: #D4D4D8;"><em style="color: #F59E0B;">"When was the breathalyzer last calibrated, and have you requested the calibration records?"</em> — The reading is not the case. The maintenance records are.</li>
+  <li style="margin-bottom: 10px; color: #D4D4D8;"><em style="color: #F59E0B;">"Did the arresting officer follow NHTSA standards for the field sobriety tests?"</em> — Officers deviate from the standardized procedure more than you'd think.</li>
+  <li style="margin-bottom: 10px; color: #D4D4D8;"><em style="color: #F59E0B;">"What suppression motions are available based on the stop and the arrest?"</em> — Every DUI starts with a traffic stop. If the stop was bad, everything after it is fruit of the poisonous tree.</li>
+</ol>
+
+<div style="margin: 20px 0; padding: 16px; border: 1px solid #F59E0B30; border-radius: 8px; background: #F59E0B08;">
+  <p style="margin: 0 0 4px; font-size: 14px; font-weight: bold; color: white;">DUI Defense Playbook — $97, Instant Download</p>
+  <p style="margin: 0 0 12px; font-size: 13px; color: #D4D4D8;">26 DUI-specific questions for your attorney. Breathalyzer calibration checklist. DMV deadline guide. Case stage roadmap. Attorney scorecard.</p>
+  <a href="https://imnotanattorney.com/playbook/dui-first-offense" style="display: inline-block; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 14px;">Get the DUI Playbook — $97</a>
+  <p style="margin: 8px 0 0; font-size: 12px; color: #A1A1AA;">Full credit toward Case Decoder within 30 days.</p>
+</div>
+
+<!-- ====== DRUG VARIANT (swap in for DUI section above) ======
+<h1>Drug Cases That Score {{SCORE}}: Here's the Pattern.</h1>
+Focus on: chain of custody, field test vs lab test discrepancies, CI reliability,
+weight discrepancies (73% case study), constructive vs actual possession.
+CTA: Drug Possession Defense Playbook ($97) or Case Decoder ($197).
+Link to /blog/field-test-vs-lab-test-drug-cases and /blog/trafficking-charges-constructive-possession
+-->
+
+<!-- ====== WHITE-COLLAR VARIANT ======
+Focus on: document preservation, statute of limitations, mens rea requirements,
+forensic accounting challenges, grand jury process.
+CTA: White Collar Defense Playbook ($97) or Case Decoder ($197).
+-->
+
+<!-- ====== OTHER-FELONY / OTHER-MISDEMEANOR VARIANT ======
+Focus on: general discovery rights, motion timelines, attorney communication
+benchmarks, plea deal evaluation. No charge-specific playbook — CTA is
+Case Decoder ($197) directly.
+-->
+
+<p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
+  <strong style="color: white;">P.S.</strong> Want questions tailored to YOUR exact situation — not general DUI questions? The Case Decoder ($197) analyzes your specific charges, jurisdiction, and case stage. 15 calibrated questions + email templates + 7-day action plan. <a href="https://imnotanattorney.com/checkout?tier=case-decoder" style="color: #F59E0B; text-decoration: underline;">Get your Case Decoder</a>.
+</p>
+
+
+<!-- ================================================================== -->
+<!-- EMAIL 4 of 4: "One question that could change everything"         -->
+<!-- ================================================================== -->
+<!--
+  Flow: Score Quiz Re-engagement
+  Position: Email 4 of 4
+  Trigger: Email 3 sent, no purchase
+  Delay: 7 days after quiz completion
+  Segment: score-page subscribers who completed Emails 1-3 without purchasing
+
+  Subject line: One question that could change everything
+  Subject line B: The question that turned a mandatory minimum into a dismissal
+  Preview text: It wasn't a motion. It wasn't a technicality. It was a question.
+-->
+
+<h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">It Wasn't a Motion. It Was a Question.</h1>
+
+<p>A week ago you scored {{SCORE}}/100 on the Defense Milestone Score. We sent you your observations. We broke down the 3 biggest factors dragging your score down. We showed you what {{CHARGE_LABEL}} cases like yours look like from the inside.</p>
+
+<p>Today, one more thing. The thing that actually changes outcomes.</p>
+
+<p><strong style="color: white;">It's not a motion.</strong> (Though motions matter.)<br>
+<strong style="color: white;">It's not a technicality.</strong> (Though technicalities win cases.)<br>
+<strong style="color: white;">It's a question.</strong></p>
+
+<p>The right question, asked at the right time, to the right person.</p>
+
+<div style="margin: 24px 0; padding: 20px; border: 1px solid #F59E0B50; border-radius: 8px; background: #1C1917;">
+  <p style="margin: 0; font-size: 15px; color: white; font-style: italic;">"Can you explain the 73% discrepancy between the field weight and the lab weight of the evidence?"</p>
+  <p style="margin: 12px 0 0; font-size: 13px; color: #A1A1AA;">That's a real question from a real Case Decoder report. The attorney had never raised the weight issue. After the question was asked, the entire plea negotiation changed.</p>
+</div>
+
+<p>One question doesn't sound like much. But the right question does something powerful: it shows your attorney that you're paying attention. That you've done the research. That you're not going to accept "trust me" as a strategy.</p>
+
+<p>The Case Decoder gives you 15 of those questions. Not generic. Not pulled from a template. Built from YOUR charges, YOUR jurisdiction, YOUR case stage. Traced to documented tactics from elite defense attorneys.</p>
+
+<p><strong style="color: white;">Here's what you get:</strong></p>
+<ul style="padding-left: 20px; margin: 12px 0;">
+  <li style="margin-bottom: 8px;">15 calibrated questions in 6-part format (question + context + what to listen for + follow-up probes + red flag response + fallback)</li>
+  <li style="margin-bottom: 8px;">Ready-to-send email template for your attorney</li>
+  <li style="margin-bottom: 8px;">Phone script for your next call</li>
+  <li style="margin-bottom: 8px;">Where Things Stand — 4-area diagnostic of your case</li>
+  <li style="margin-bottom: 8px;">Your Next 7 Days — one action per day</li>
+  <li>Meeting Ready Sheet you can print and bring</li>
+</ul>
+
+<p><strong style="color: white;">$197.</strong> Less than one hour of your attorney's billable rate. Delivered within 48 hours or your money back.</p>
+
+<a href="https://imnotanattorney.com/checkout?tier=case-decoder" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Get My 15 Questions — $197</a>
+
+<p style="font-size: 13px; color: #A1A1AA;">Delivered within 48 hours. 100% credit toward higher tiers within 12 months.</p>
+
+<div style="margin: 24px 0; padding: 16px; border: 1px solid #27272A; border-radius: 8px; background: #1C1917;">
+  <p style="margin: 0 0 8px; font-size: 13px; color: #A1A1AA;">WHAT OTHER DEFENDANTS ARE SAYING:</p>
+  <p style="margin: 0 0 12px; font-style: italic; font-size: 14px; color: #D4D4D8;">"I didn't even know what to ask. The Case Decoder gave me questions I never would have thought of. My attorney's whole attitude changed after our next meeting."</p>
+  <p style="margin: 0; font-style: italic; font-size: 14px; color: #D4D4D8;">"I printed the Meeting Ready Sheet and brought it to my attorney meeting. First time I felt like I was on equal footing."</p>
+</div>
+
+<p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
+  <strong style="color: white;">P.S.</strong> Your Defense Milestone Score was {{SCORE}}/100. That number won't change on its own. The questions you ask — or don't ask — in the next two weeks will determine whether your case gets the defense it deserves. We build the questions. You ask them. That's the deal. <a href="https://imnotanattorney.com/checkout?tier=case-decoder" style="color: #F59E0B; text-decoration: underline;">Get your Case Decoder</a>.
+</p>

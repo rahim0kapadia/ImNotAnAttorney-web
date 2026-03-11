@@ -18,6 +18,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface FAQItem {
   question: string;
@@ -48,21 +49,35 @@ export function FAQAccordion({ items }: FAQAccordionProps) {
             <span className="text-sm font-semibold text-white">
               {item.question}
             </span>
-            <span className="ml-4 text-zinc-400" aria-hidden="true">
-              {openIndex === i ? "−" : "+"}
-            </span>
+            <motion.span
+              className="ml-4 text-zinc-400"
+              aria-hidden="true"
+              animate={{ rotate: openIndex === i ? 45 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              +
+            </motion.span>
           </button>
-          <div
-            id={`faq-answer-${i}`}
-            role="region"
-            aria-labelledby={`faq-question-${i}`}
-            hidden={openIndex !== i}
-            className="border-t border-zinc-800 px-6 py-4"
-          >
-            <p className="text-sm leading-relaxed text-zinc-400">
-              {item.answer}
-            </p>
-          </div>
+          <AnimatePresence initial={false}>
+            {openIndex === i && (
+              <motion.div
+                id={`faq-answer-${i}`}
+                role="region"
+                aria-labelledby={`faq-question-${i}`}
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <div className="border-t border-zinc-800 px-6 py-4">
+                  <p className="text-sm leading-relaxed text-zinc-400">
+                    {item.answer}
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       ))}
     </div>

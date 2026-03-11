@@ -110,6 +110,12 @@ const TEST_INTAKE: IntakeRecord = {
     accident: "no",
     minors_present: "no",
   },
+  criminal_history: "none",
+  employment_status: "employed-full-time",
+  employment_industry: "nursing",
+  case_stage: "arraigned",
+  filled_out_by: "self",
+  mental_health_relevant: "no",
 };
 
 const TEST_PHASE2: Phase2Data = {

@@ -1,0 +1,18 @@
+---
+platform: twitter
+type: single-tweet
+project: inna
+status: pending
+created: 2026-03-10T22:36:56.647Z
+agent: seed-script
+title: "Single Tweet: Timeline Reality"
+suggested_time: "Weekday 9:00 AM EST"
+---
+
+Motion deadlines don't wait.
+
+Some suppression motions must be filed within 30 days.
+
+Once the window closes — it's gone forever.
+
+Your attorney knows this. The question is: are they working within the timeline, or is the timeline working against you?

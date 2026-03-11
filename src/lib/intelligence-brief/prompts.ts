@@ -110,6 +110,17 @@ EXPERT GROUNDING:
 - Robert Shapiro: plea negotiation timing asymmetry — prosecution wants resolution early, defense benefits from investigation time. Timing IS leverage.
 - Gerry Spence: humanization — every defendant is a person first. The roadmap must orient them as a human navigating a process, not a case number moving through a system.
 
+CASE STAGE CALIBRATION (Hagan — Stanford Legal Design):
+If case_stage_raw differs from derived case_stage, note both and explain the discrepancy.
+Stage-specific content: pre-arrest → rights-focused, arraigned → discovery timeline,
+trial-prep → jury selection prep, sentencing → mitigation focus, post-conviction → appeal windows.
+
+CRIMINAL HISTORY (Steinberg + Uptrust):
+If priors: present as prosecution context — "This is what the prosecution will see. Here's
+what your attorney can do with it." Timeline changes: recidivism enhancements, habitual
+offender risk. Pair every negative shift with an attorney question.
+If no priors: note as strategic advantage — first-offender programs, diversion eligibility.
+
 OUTPUT STRUCTURE:
 ## Section 1: Your Case Roadmap
 ### 1a. Where You Are Now (timeline table: arrest → current stage, ~250 words)
@@ -137,6 +148,9 @@ Word budget: ~1,050 total.`,
 - Attorney type: ${v.attorney_type}
 - Discovery status: ${v.discovery_status}
 - Charge-specific context: ${v.charge_specific_data}
+- Case stage (self-reported): ${v.case_stage_raw}
+- Criminal history: ${v.criminal_history_label}
+- Filled out by: ${v.filled_out_by}
 </intake_data>
 
 ${v.prior_section_outputs_xml ? `<prior_case_decoder>\n${v.prior_section_outputs_xml}\n</prior_case_decoder>` : ""}
@@ -191,6 +205,11 @@ EXPERT GROUNDING:
 - Chris Voss: calibrated follow-up questions (question framing)
 - George Lakoff: Conceptual Metaphor Theory — decode the frames attorneys use (what they say vs. what they mean). Framing is cognitive, not just rhetorical.
 
+FAMILY BUYER (Jayadev — Participatory Defense):
+If filled_out_by is "family" or "friend": reader is a support person. Use defendant's first name
+for legal facts. Use "you" for action items (the family member is doing the work). Frame
+Case Progress Score actions as "Here's what you can do to help."
+
 PSYCHOLOGICAL GROUNDING:
 "The fear that your attorney isn't doing enough is the most common feeling among defendants who later won their cases."
 
@@ -219,6 +238,7 @@ Word budget: ~1,550 total.`,
 - What attorney told them: ${v.attorney_statements}
 - Case number: ${v.case_number}
 - Key dates: ${v.key_dates}
+- Filled out by: ${v.filled_out_by}
 </intake_data>
 
 ${v.prior_section_outputs_xml ? `<prior_case_decoder>\n${v.prior_section_outputs_xml}\n</prior_case_decoder>` : ""}
@@ -277,6 +297,15 @@ EXPERT GROUNDING:
 - Robert Shapiro: plea negotiation mastery
 - Chris Voss: naming pressure tactics to defuse them
 
+MENTAL HEALTH DIVERSION (Steinberg):
+If mental_health_relevant = "yes": include treatment court/diversion subsection. Frame as
+STRATEGIC ADVANTAGE: "Courts increasingly view treatment completion as evidence of
+rehabilitation." Include attorney question about mental health court eligibility.
+
+CRIMINAL HISTORY IMPACT ON MOTIONS:
+If priors: add motion in limine to exclude prior bad acts (FRE 404(b) or state equivalent),
+motion to sever prior convictions from current trial. These gain urgency with priors.
+
 OUTPUT STRUCTURE:
 ## Section 4: Legal Options & Deadlines
 ### 4a. Motion Landscape (constitutional, procedural, evidence, charge-specific, ~700 words)
@@ -302,6 +331,9 @@ Word budget: ~2,200 total.`,
 - Discovery status: ${v.discovery_status}
 - Attorney type: ${v.attorney_type}
 - Prior convictions: ${v.prior_convictions}
+- Criminal history: ${v.criminal_history_label}
+- Case stage (raw): ${v.case_stage_raw}
+- Mental health: ${v.mental_health_relevant}
 - Charge-specific context: ${v.charge_specific_data}
 </intake_data>
 
@@ -371,6 +403,17 @@ EXPERT GROUNDING:
 - Raj Jayadev: participatory defense — for each domain in the Life Impact Map, identify community resources in the defendant's jurisdiction.
 - Martin Seligman: temporalizing — "Your case is at month X of what is typically a Y-Z month process. This phase ends." Every section that describes ongoing hardship must include a temporal boundary.
 
+EMPLOYMENT CONSEQUENCE SPECIFICITY (Steinberg):
+If employment_industry provided: research SPECIFIC licensing board for THIS industry. Present
+with REMEDIES: "Working in [industry]: [consequence]. What can be done: [remedy]."
+Common: nursing → board of nursing; trucking → FMCSA/CDL; teaching → dept of education;
+finance → FINRA/SEC; healthcare → state medical board; law enforcement → POST decertification.
+Generate at least one career-specific attorney question.
+
+MENTAL HEALTH IN LIFE IMPACT:
+If mental_health_relevant = "yes": add treatment access as Life Impact Map domain. Frame as
+opening doors: "Treatment-based alternatives can lead to reduced or dismissed charges."
+
 OUTPUT STRUCTURE:
 ## Section 5: Protecting Your Case and Life
 ### 5a. Protecting Your Case Right Now (~400 words)
@@ -394,6 +437,10 @@ Word budget: ~1,750 total.`,
 - Co-defendants: ${v.co_defendants}
 - Prior convictions: ${v.prior_convictions}
 - On probation/parole: ${v.on_probation_parole}
+- Employment detail: ${v.employment_detail}
+- Mental health: ${v.mental_health_relevant}
+- Criminal history: ${v.criminal_history_label}
+- Family buyer: ${v.is_family_buyer}
 - Charge-specific context: ${v.charge_specific_data}
 </intake_data>
 
@@ -440,6 +487,9 @@ EXPERT GROUNDING:
 - Raj Jayadev: participatory defense — preparation reduces power imbalance
 - BJ Fogg: preparation = ability, reduces anxiety = motivation barrier
 
+If is_family_buyer = "yes": include "For Support Persons" subsection — where to sit (gallery),
+courtroom etiquette for observers, how to be helpful without disrupting proceedings.
+
 OUTPUT STRUCTURE:
 ## Appendix B: Next Court Date Prep
 ### What This Hearing Is (~100 words)
@@ -461,6 +511,8 @@ Word budget: ~850 total.`,
 - Attorney type: ${v.attorney_type}
 - Case stage: ${v.case_stage}
 - Judge name: ${v.judge_name}
+- Case stage (raw): ${v.case_stage_raw}
+- Family buyer: ${v.is_family_buyer}
 </intake_data>
 
 CONDITIONAL:
@@ -533,6 +585,11 @@ EXPERT GROUNDING:
 - George Lakoff: Conceptual Metaphor Theory — decode the prosecution's framing strategy
 - Martin Seligman: 3 P's counter — every negative outcome must depersonalize, contain, and temporalize
 
+CRIMINAL HISTORY IN OUTCOME MAPPING:
+Priors change the outcome landscape — sentencing guidelines, habitual offender enhancements,
+diversion eligibility. Adjust outcome map probabilities. Present as data with attorney questions.
+No priors: explicitly note diversion eligibility and first-offender advantages.
+
 OUTPUT STRUCTURE:
 ## Section 3: Your Case Intelligence
 ### 3a. Your Realistic Outcome Map (~500 words)
@@ -560,6 +617,7 @@ Word budget: ~2,400 total.`,
 - On probation/parole: ${v.on_probation_parole}
 - Plea status: ${v.plea_status}
 - Discovery status: ${v.discovery_status}
+- Criminal history: ${v.criminal_history_label}
 - Charge-specific context: ${v.charge_specific_data}
 </intake_data>
 
@@ -630,6 +688,20 @@ EXPERT GROUNDING:
 - Martin Seligman: 3 P's — when the defendant hears bad news in a difficult conversation, the script should model depersonalizing, containing, and temporalizing.
 - Gary Klein: pre-mortem for meeting prep — "Before the meeting, imagine it went badly. What happened? Now prepare to prevent each failure mode."
 
+FAMILY BUYER PLAN (Jayadev + Steinberg):
+If is_family_buyer = "yes": 14-day plan needs DUAL tracks (support person + defendant).
+Email template FROM the defendant. "If Overwhelmed" addresses BOTH people. Add Difficult
+Conversation: "When your family member wants to fire the attorney but you don't."
+Character letter template is especially relevant.
+
+STAGE-AWARE PLAN (Hagan):
+Calibrate 14-day plan to case_stage_raw:
+- pre-arrest/arrested: P1=understand rights, P2=attorney contact
+- arraigned/discovery: P1=send email, P2=review discovery
+- trial-prep: P1=review outcome map, P2=witness list
+- sentencing: P1=character letters, P2=mitigation package
+- post-conviction: P1=appeal deadline check, P2=record preservation
+
 OUTPUT STRUCTURE:
 ## Section 6: Your Plan
 ### 6a. If You're Feeling Overwhelmed, Start Here (~50 words)
@@ -657,6 +729,9 @@ Word budget: ~2,075 total.`,
 - Last communication: ${v.last_communication}
 - Frustration (their words): ${v.frustration}
 - Biggest concern: ${v.biggest_concern}
+- Filled out by: ${v.filled_out_by}
+- Employment: ${v.employment_detail}
+- Case stage (raw): ${v.case_stage_raw}
 </intake_data>
 
 <cross_references>
@@ -724,6 +799,12 @@ EXPERT GROUNDING:
 - Larry Pozner: pointed questions impossible to dodge
 - Terry MacCarthy: question sequencing for maximum information extraction
 
+FIELD-TRIGGERED QUESTIONS:
+- If priors: 1-2 questions about sentencing impact, motion in limine, habitual offender risk.
+- If mental_health_relevant = "yes": 1 question about treatment court/diversion eligibility.
+- If employment_industry: 1 question about professional licensing impact.
+- If is_family_buyer = "yes": 1 question the support person can ask about their role.
+
 6-PART FORMAT (every question):
 1. The question (conversational, client asking for help)
 2. Why it matters (references specific brief finding)
@@ -751,6 +832,10 @@ Word budget: ~1,300-1,900 total.`,
 - Attorney type: ${v.attorney_type}
 - Attorney name: ${v.attorney_name}
 - Case stage: ${v.case_stage}
+- Criminal history: ${v.criminal_history_label}
+- Mental health: ${v.mental_health_relevant}
+- Employment industry: ${v.employment_industry}
+- Family buyer: ${v.is_family_buyer}
 - Charge-specific context: ${v.charge_specific_data}
 </intake_data>
 
@@ -826,7 +911,11 @@ OVERRIDE RULES:
 - Immigration: non-citizen + deportable → Priority 1 = "Ask your attorney: Have you consulted an immigration attorney?"
 - Evidence preservation deadline approaching → elevate to Priority 1 or 2
 - Plea hearing scheduled within 14 days → Priority 2 = "Review Section 4f (Before You Sign) before your [date] hearing"
-- Attorney communication gap > 30 days → Priority 1 = "Send the email AND call. Section 6b + 6c."`,
+- Attorney communication gap > 30 days → Priority 1 = "Send the email AND call. Section 6b + 6c."
+- Family buyer → P1 addresses the support person: "Send this email on behalf of [name]"
+- Mental health = "yes" + no treatment discussion yet → P2 = "Ask about mental health court"
+- case_stage_raw = "sentencing" → P1 = character letters, P2 = mitigation review
+- case_stage_raw = "post-conviction" → P1 = "Confirm appeal deadline with attorney"`,
     userPrompt: `Generate the 48-Hour Priority List by synthesizing all section outputs.
 
 <intake_data>
@@ -836,6 +925,9 @@ OVERRIDE RULES:
 - Next court date: ${v.next_court_date}
 - Immigration status: ${v.immigration_status}
 - Attorney name: ${v.attorney_name}
+- Family buyer: ${v.is_family_buyer}
+- Mental health: ${v.mental_health_relevant}
+- Case stage (raw): ${v.case_stage_raw}
 </intake_data>
 
 <all_section_outputs>

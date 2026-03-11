@@ -42,6 +42,14 @@ export interface IntakeRecord {
   charge_specific_data?: Record<string, string> | null;
   jurisdiction_level?: string | null;
   phase2_data?: Phase2Data | null;
+
+  // Expansion fields (Tasks 1-7)
+  criminal_history?: string | null;
+  employment_status?: string | null;
+  employment_industry?: string | null;
+  case_stage?: string | null;
+  filled_out_by?: string | null;
+  mental_health_relevant?: string | null;
 }
 
 /** Phase 2 intake data (JSONB stored on intakes table) */
@@ -145,6 +153,17 @@ export interface IBVariables {
   legal_options_output: string;
   protection_output: string;
   your_plan_output: string;
+
+  // Expansion fields (from 6 new intake fields)
+  criminal_history: string;
+  criminal_history_label: string;
+  employment_status: string;
+  employment_industry: string;
+  employment_detail: string;
+  case_stage_raw: string;
+  filled_out_by: string;
+  is_family_buyer: string;
+  mental_health_relevant: string;
 }
 
 // ============================================================
@@ -321,6 +340,17 @@ export function extractVariables(
     legal_options_output: so["legal-options"] || "",
     protection_output: so["protection"] || "",
     your_plan_output: so["your-plan"] || "",
+
+    // Expansion fields (from 6 new intake fields)
+    criminal_history: intake.criminal_history || "Not provided",
+    criminal_history_label: deriveCriminalHistoryLabel(intake.criminal_history || ""),
+    employment_status: intake.employment_status || "Not provided",
+    employment_industry: intake.employment_industry || "",
+    employment_detail: buildEmploymentDetail(intake.employment_status || "", intake.employment_industry || ""),
+    case_stage_raw: intake.case_stage || "Not provided",
+    filled_out_by: intake.filled_out_by || "self",
+    is_family_buyer: (intake.filled_out_by === "family" || intake.filled_out_by === "friend") ? "yes" : "no",
+    mental_health_relevant: intake.mental_health_relevant || "Not provided",
   };
 }
 
@@ -390,4 +420,22 @@ function extractMotions(output: string): string {
     }
   }
   return motions.length > 0 ? motions.join("\n") : "See Section 4 for full motion landscape";
+}
+
+/** Derive human-readable criminal history label from intake dropdown */
+function deriveCriminalHistoryLabel(raw: string): string {
+  switch (raw) {
+    case "none": return "No prior criminal history reported";
+    case "misdemeanor-only": return "Has prior misdemeanor(s)";
+    case "felony": return "Has prior felony conviction";
+    case "multiple-felonies": return "Has multiple prior felony convictions";
+    default: return raw || "Not provided";
+  }
+}
+
+/** Combine employment status + industry into a readable detail string */
+function buildEmploymentDetail(status: string, industry: string): string {
+  if (!status || status === "Not provided") return "Not provided";
+  const base = status.replace(/-/g, " ");
+  return industry ? `${base} — ${industry}` : base;
 }

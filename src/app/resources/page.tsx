@@ -31,6 +31,9 @@
  *   - Page naturally funnels: free resources -> "need case-specific?" -> services
  */
 import { LeadCapture } from "@/components/LeadCapture";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
+import { TrustBadges } from "@/components/TrustBadges";
 import { SITE_URL } from "@/lib/site";
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
@@ -104,7 +107,8 @@ export default function ResourcesPage() {
     <div className="px-4 py-16">
       <div className="mx-auto max-w-4xl">
         {/* HEADER — Empowerment framing: "Knowledge is power" */}
-        <h1 className="text-3xl font-bold text-white md:text-4xl">
+        <FadeInUp>
+        <h1 className="font-display text-3xl font-bold text-white md:text-4xl">
           Free Resources
         </h1>
         <p className="mt-3 text-zinc-400">
@@ -112,18 +116,20 @@ export default function ResourcesPage() {
           These resources are free because everyone deserves to understand their
           rights.
         </p>
+        </FadeInUp>
 
         {/* DOWNLOADABLE GUIDES — Email-gated lead magnets */}
+        <FadeInUp>
         <section className="mt-12">
-          <h2 className="text-xl font-bold text-white">
+          <h2 className="font-display text-xl font-bold text-white">
             Guides &amp; Templates
           </h2>
           <p className="mt-1 text-sm text-zinc-400">
             Enter your email to get access. No spam. No selling your data.
           </p>
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <StaggerContainer className="mt-6 grid gap-4 md:grid-cols-2">
             {resources.map((r) => (
-              <div
+              <StaggerItem
                 key={r.title}
                 className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
               >
@@ -132,20 +138,22 @@ export default function ResourcesPage() {
                 </span>
                 <h3 className="mt-3 font-bold text-white">{r.title}</h3>
                 <p className="mt-2 text-sm text-zinc-400">{r.desc}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
 
           {/* LEAD CAPTURE — Email collection for guide downloads */}
           <div className="mt-8">
             <LeadCapture />
           </div>
         </section>
+        </FadeInUp>
 
         {/* KNOW YOUR RIGHTS — Free (no email required) rights guides per     */}
         {/* charge type. Pure educational value for SEO and trust-building.   */}
+        <FadeInUp>
         <section className="mt-20">
-          <h2 className="text-2xl font-bold text-white">
+          <h2 className="font-display text-2xl font-bold text-white">
             Know Your Rights by Charge Type
           </h2>
           <p className="mt-2 text-zinc-400">
@@ -153,9 +161,9 @@ export default function ResourcesPage() {
             email required.
           </p>
 
-          <div className="mt-8 space-y-8">
+          <StaggerContainer className="mt-8 space-y-8">
             {rightsGuides.map((guide) => (
-              <div
+              <StaggerItem
                 key={guide.charge}
                 className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
               >
@@ -173,9 +181,9 @@ export default function ResourcesPage() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
 
           <div className="mt-6 rounded-lg border border-amber-500/30 bg-amber-500/5 p-4">
             <p className="text-sm text-zinc-400">
@@ -186,10 +194,12 @@ export default function ResourcesPage() {
             </p>
           </div>
         </section>
+        </FadeInUp>
 
         {/* DUI DEFENSE PLAYBOOK — Paid product, not email-gated */}
+        <FadeInUp>
         <section className="mt-16">
-          <h2 className="text-2xl font-bold text-white">
+          <h2 className="font-display text-2xl font-bold text-white">
             DUI Defense Playbook
           </h2>
           <p className="mt-2 text-zinc-400">
@@ -240,10 +250,12 @@ export default function ResourcesPage() {
             </Link>
           </div>
         </section>
+        </FadeInUp>
 
         {/* CTA — Bridges from free resources to paid case-specific services */}
+        <FadeInUp>
         <section className="mt-16 text-center">
-          <h2 className="text-xl font-bold text-white">
+          <h2 className="font-display text-xl font-bold text-white">
             Need case-specific analysis?
           </h2>
           <p className="mt-2 text-zinc-400">
@@ -252,11 +264,15 @@ export default function ResourcesPage() {
           </p>
           <Link
             href="/services"
-            className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+            className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
           >
             See Our Services
           </Link>
+          <div className="mt-6">
+            <TrustBadges variant="compact" />
+          </div>
         </section>
+        </FadeInUp>
       </div>
     </div>
   );

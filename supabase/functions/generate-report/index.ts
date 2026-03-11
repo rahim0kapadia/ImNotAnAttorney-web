@@ -419,9 +419,9 @@ The intake identifies whether this is a FEDERAL or STATE case.
 - Unknown: Note importance of determining jurisdiction.
 
 OUTPUT BUDGET — CRITICAL (HARD LIMIT):
-MAXIMUM 6,500 words total. This is a HARD ceiling, not a target.
+MAXIMUM 8,000 words total. This is a HARD ceiling, not a target.
 Previous reports ran 15% over budget. Be CONCISE. Cut ruthlessly.
-7 always-present sections + Letter + Closing + Postscript + 0-2 conditional.
+9 always-present sections + Letter + Closing + Postscript + 0-2 conditional.
 Start with the Letter (NO "## A Letter to You" heading — a letter
 doesn't announce itself; just open with the defendant's first name
 followed by a comma, e.g., "Jennifer,"). The Methodology Note is
@@ -446,6 +446,8 @@ PER-SECTION WORD BUDGETS:
 | What's Working | 100 |
 | Case Progress Score | 200 |
 | Understanding Your Charges | 500 |
+| Cost Categories to Ask About | 400 |
+| Your Next Court Date | 400 |
 | Your Attorney Meeting Toolkit | 1,400 |
 NOTE: The section heading is "Your Attorney Meeting Toolkit" — NOT
 "Exactly What to Say." The old heading implied scripting (UPL risk).
@@ -464,7 +466,7 @@ Use ONLY the human-readable section name as the heading.
 Cross-references use section names ("See Questions for Your Attorney"),
 NEVER codes ("See S4"). Question references (Q1, Q2) are fine.
 
-SECTION STRUCTURE — 9 ALWAYS + 0-2 CONDITIONAL:
+SECTION STRUCTURE — 11 ALWAYS + 0-2 CONDITIONAL:
 
 Always present (in this order):
 1. A Letter to You (Relief)
@@ -473,15 +475,17 @@ Always present (in this order):
 4. Case Progress Score — 0-100 composite, 5 dimensions, anti-hallucination rules (Awareness)
 5. Understanding Your Charges — elements, penalties, rights (Knowledge)
 6. [Time and Deadlines — ONLY IF arrest_date exists AND charge has speedy trial] (Awareness)
-7. Your Attorney Meeting Toolkit — email templates, scripts, advocacy tools (Empowerment)
-8. Questions for Your Attorney — 15 questions (Agency)
-9. Things Worth Asking About — 5-6 prioritized items (Focus)
-10. [What a Plea Really Means — ONLY IF plea offered or attorney pushing plea] (Understanding)
-11. Is There Something We Missed? — open channel (Trust)
-12. What Only Your Attorney Can Tell You — honest limits (Redirect)
-13. How to Share This With Your Attorney — handoff instructions (Preparation)
-14. Your Next 7 Days — 7-day plan + Meeting Ready Sheet (Determination)
-15. What Comes Next — natural next step (upgrade language HERE ONLY)
+7. Cost Categories to Ask About — fee types, statutory fines, hidden costs (Grounding)
+8. Your Next Court Date — stage-keyed hearing walkthrough + practical logistics (Preparation)
+9. Your Attorney Meeting Toolkit — email templates, scripts, advocacy tools, character letters (Empowerment)
+10. Questions for Your Attorney — 15 questions (Agency)
+11. Things Worth Asking About — 5-6 prioritized items (Focus)
+12. [What a Plea Really Means — ONLY IF plea offered or attorney pushing plea] (Understanding)
+13. Is There Something We Missed? — open channel (Trust)
+14. What Only Your Attorney Can Tell You — honest limits (Redirect)
+15. How to Share This With Your Attorney — handoff instructions (Preparation)
+16. Your Next 7 Days — 7-day plan + Meeting Ready Sheet (Determination)
+17. What Comes Next — natural next step (upgrade language HERE ONLY)
 
 REMOVED SECTIONS (do NOT generate these):
 - NO prosecution difficulty ratings (Strong/Moderate/Weak) — we haven't
@@ -591,7 +595,19 @@ profile — it informs EVERY section's tone, validation, and pacing.
    - Feeling singled out: "Why am I the one being charged?"
    Address this directly — it's consuming them even if they don't say so.
 
-8. READING ARC AWARENESS — Each section shifts emotional state:
+8. FILLED-OUT-BY AWARENESS (Jayadev Participatory Defense):
+   If intake.filled_out_by is NOT "" or "self" (family member, friend, other):
+   - Letter opening acknowledges them: "You're doing this for someone you
+     care about — that matters more than you might realize right now."
+   - Adjust language: use "the defendant" or their name for legal facts,
+     but keep "you" for action items (the family member is the one doing work)
+   - Add to Meeting Toolkit: "If you're attending the attorney meeting
+     with [defendant], here's how to be most helpful: take notes, ask
+     clarifying questions, and follow up in writing afterward."
+   - Character letter template is especially relevant for families
+   - Drip emails should reference family role
+
+9. READING ARC AWARENESS — Each section shifts emotional state:
    - Section 2 (penalty ranges) spikes anxiety
    - Section 3 (communication tools) must absorb that spike
    - Section 4 (questions) rebuilds agency
@@ -659,7 +675,8 @@ in this report are designed to help you protect all of it."
 EMOTIONAL ARC:
 Letter (Relief) → Where Things Stand (Clarity) →
 What's Working (Encouragement) → Case Progress Score (Awareness) →
-Understanding Your Charges (Knowledge) → Your Attorney Meeting Toolkit (Empowerment) →
+Understanding Your Charges (Knowledge) → Cost Categories to Ask About (Grounding) →
+Your Next Court Date (Preparation) → Your Attorney Meeting Toolkit (Empowerment) →
 Questions for Your Attorney (Agency) → Things Worth Asking About (Focus) →
 Is There Something We Missed? (Trust) →
 What Only Your Attorney Can Tell You (Honest redirect) →
@@ -945,7 +962,7 @@ Stance-calibrated bridging:
 - DISSOCIATER: Hard fact → action (skip the emotional bridge — go direct)
 
 SELF-VERIFICATION — Before output:
-1. All 9 always-present sections + letter + closing + postscript present (including What's Working, CPS, How to Share This With Your Attorney)
+1. All 11 always-present sections + letter + closing + postscript present (including What's Working, CPS, Cost Categories, Your Next Court Date, character letter template in Toolkit, How to Share This With Your Attorney)
 2. Conditional sections included ONLY when conditions met
 3. Questions for Your Attorney = exactly 15 questions
 4. Things Worth Asking About = 5-6 items max
@@ -997,6 +1014,12 @@ SELF-VERIFICATION — Before output:
 49. Every upgrade seed names the specific tier that resolves it (Intelligence Brief, X-Ray, War Room, or Situation Room) with credit math — not generic "go deeper."
 50. Prosecution strategy preview present in Understanding Your Charges — how THIS charge type is typically built by prosecutors (3-5 sentences, factual, not speculation).
 51. "What to Expect While Your Case Is Pending" block present in Your Next 7 Days — employment, family, daily life, travel, and mental health addressed with practical information.
+52. "Cost Categories to Ask About" section present — lists fee categories applicable to this charge type + state, NOT specific dollar estimates. Ends with attorney cost question → Q ref.
+53. "Your Next Court Date" section present — stage-keyed to intake case_stage. Includes legal procedure (what happens) + practical logistics (what to wear, bring, parking, childcare). If no case_stage, generates a brief charge-type stage roadmap.
+54. Character letter request template present in Your Attorney Meeting Toolkit (subsection 8). Pre-written email template the defendant can send to 3-5 people.
+55. If filled_out_by ≠ "self": Letter acknowledges family/friend, language adjusted for who's doing the work, Toolkit includes family meeting guidance.
+56. If mental_health_relevant = "yes": diversion/treatment court eligibility noted, "If Overwhelmed" section given extra emphasis, relevant Q generated in Questions for Your Attorney.
+57. If employment_status is employed + industry provided: career-identity threat addressed specifically in Letter and Understanding Your Charges (professional licensing, CDL, security clearance — cite source).
 Revise if any check fails.
 
 NATURAL VOICE — ANTI-FORMULAIC RULES:
@@ -1291,6 +1314,8 @@ function resolveChargeSlug(raw: string): string {
   if (ct.includes("theft")) return "theft";
   if (ct.includes("burglary")) return "burglary";
   if (ct.includes("robbery")) return "robbery";
+  if (ct.includes("probation") || ct.includes("violation") || ct.includes("supervised-release")) return "probation-violation";
+  if (ct.includes("self-defense") || ct.includes("self defense") || ct.includes("justifiable")) return "self-defense";
   if (ct.includes("federal")) return "federal";
   return raw.toLowerCase().replace(/[\s\/]+/g, "-");
 }
@@ -1536,6 +1561,26 @@ GOD MODE EXPERTS (triangulated):
 Focus: sentencing guidelines calculation, 5K1.1 cooperation, mandatory minimum overrides, grand jury process, federal discovery (Brady, Giglio, Jencks Act), 70-day speedy trial, pretrial detention.${csBlock}`;
   }
 
+  if (ct.includes("probation") || ct.includes("violation") || ct.includes("supervised release")) {
+    return `\nCHARGE-SPECIFIC CONTEXT — PROBATION/PAROLE/SUPERVISED RELEASE VIOLATION (${jur}):
+GOD MODE EXPERTS (triangulated):
+1. Fiona Doherty — Yale Law School; leading probation reform scholar; "Obey All Laws and Be Good" (Georgetown Law Journal). Methodology: graduated sanctions framework, proportionality analysis.
+2. Vincent Schiraldi — Former NYC Probation Commissioner; Columbia Justice Lab. Methodology: evidence-based supervision, technical violation diversion.
+3. Adam Foss — Former prosecutor; Prosecutor Impact founder; TED Talk on prosecutorial reform. Methodology: compliance-positive defense, constructive probation narrative.
+
+Focus: violation classification (technical vs substantive), graduated sanctions, compliance documentation, PO relationship management, original sentence exposure, hearing preparation, revocation alternatives (modification, extension, community service), good time credit preservation.${csBlock}`;
+  }
+
+  if (ct.includes("self-defense") || ct.includes("self defense") || ct.includes("justifiable force")) {
+    return `\nCHARGE-SPECIFIC CONTEXT — SELF-DEFENSE / JUSTIFIABLE FORCE (${jur}):
+GOD MODE EXPERTS (triangulated):
+1. Andrew F. Branca — The Law of Self Defense (3rd Ed); Five Elements framework (Innocence, Imminence, Proportionality, Avoidance, Reasonableness). Methodology: element-by-element self-defense analysis.
+2. Massad Ayoob — Deadly Force; AOJ Triad (Ability, Opportunity, Jeopardy); 45+ years expert witness. Methodology: use-of-force assessment, threat perception analysis.
+3. Don West — Co-counsel in Zimmerman acquittal; 35+ years Board Certified Criminal Trial. Methodology: self-defense narrative construction, SYG immunity hearing strategy, jury persuasion architecture.
+
+Focus: Stand Your Ground vs Duty to Retreat (state-specific), Castle Doctrine applicability (home/vehicle/workplace), proportionality of force, initial aggressor analysis, SYG immunity hearing eligibility, 911 caller advantage, witness identification, scene evidence preservation, civil liability exposure, expert witness needs (use-of-force, forensic, medical).${csBlock}`;
+  }
+
   // Fallback for "other" or unrecognized charge types
   return csBlock ? `\nCHARGE-SPECIFIC INTAKE DATA:${csBlock}` : "";
 }
@@ -1765,6 +1810,52 @@ type, and how does this compare?' and 'What would our defense look like
 if we don't take this offer?'"`);
   }
 
+  // Mental health relevance signal
+  const mhRelevant = (intake.mental_health_relevant || "").toLowerCase();
+  if (mhRelevant === "yes") {
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — MENTAL HEALTH RELEVANT:
+The defendant indicated mental health or substance treatment is relevant.
+Weave into Understanding Your Charges and Questions: many jurisdictions
+offer mental health courts, drug treatment courts, or diversion programs
+that can result in reduced or dismissed charges upon completion. Generate
+a question about treatment-based alternatives (e.g., "Has your attorney
+discussed whether mental health court or a diversion program might apply
+to your case?"). In the "If Overwhelmed" callout, add extra emphasis —
+this defendant may need additional support. Frame mental health as
+STRATEGIC ADVANTAGE (access to treatment alternatives), not stigma.`);
+  }
+
+  // Employment/career identity signal
+  const empStatus = (intake.employment_status || "").toLowerCase();
+  const empIndustry = (intake.employment_industry || "").toLowerCase();
+  if ((empStatus.includes("employed") || empStatus.includes("self-employed")) && empIndustry) {
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — CAREER IDENTITY AT STAKE:
+The defendant works in: "${intake.employment_industry}". This charge may
+threaten their career identity — licensing boards, security clearances,
+employer background checks. Elevate career consequences in the Letter
+(acknowledge their profession specifically) and in Understanding Your
+Charges (cite specific licensing board or professional consequence where
+known — nursing: state board of nursing; teaching: state department of
+education; trucking/CDL: FMCSA regulations; law enforcement: POST
+decertification; military: UCMJ implications; finance: FINRA/SEC
+disclosure). Generate at least one question specifically about
+professional/licensing consequences.`);
+  }
+
+  // Family member filling out — compound awareness
+  const filledBy = (intake.filled_out_by || "").toLowerCase();
+  if (filledBy === "family" || filledBy === "friend") {
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — FAMILY/SUPPORT PERSON:
+This intake was filled out by a ${intake.filled_out_by}, not the
+defendant. Adjust the Letter opening to acknowledge them: "You're doing
+this for someone you care about — that matters more than you might
+realize right now." Use "you" for action items (they're doing the work)
+but use ${intake.first_name}'s name for legal facts. The character
+letter template in the Toolkit is especially relevant — families are
+typically the ones who gather these. Include meeting guidance for
+support persons.`);
+  }
+
   const systemTruthSection = systemTruthBlocks.length > 0
     ? `\n\n**SYSTEM TRUTH CONTEXT — ACTIVATED BY INTAKE SIGNALS:**\n${systemTruthBlocks.join("\n\n")}\n`
     : "";
@@ -1791,6 +1882,11 @@ if we don't take this offer?'"`);
 - Case Number: ${intake.case_number || "Not provided"}
 - Next Court Date: ${intake.court_date || "Not provided"}
 - Time Since Arrest: ${intake.time_since_arrest || "Not provided"}
+- Criminal History: ${intake.criminal_history || "Not provided"}
+- Employment: ${intake.employment_status || "Not provided"}${intake.employment_industry ? ` — ${intake.employment_industry}` : ""}
+- Case Stage: ${intake.case_stage || "Not provided"}
+- Filled Out By: ${intake.filled_out_by && intake.filled_out_by !== "self" ? intake.filled_out_by : "Self (defendant)"}
+- Mental Health Relevant: ${intake.mental_health_relevant || "Not provided"}
 - Primary Frustration (their words): ${intake.situation || "Not provided"}
 - Specific Question (their words): ${intake.specific_question || "Not provided"}
 ${chargeBlock}${commInstruction}${evidenceBlock}
@@ -1927,6 +2023,88 @@ Use ONLY the section title as the heading — never prefix with internal id.
 Based on arrest date of ${intake.arrest_date} and jurisdiction speedy trial rules. NO "URGENT" red box. Informational + question: "Ask your attorney: What is our current speedy trial status, and have any waivers been filed?" ALWAYS caveat: "This does NOT account for waivers, continuances, or tolling."
 </section>` : "<!-- Time and Deadlines: OMITTED (conditions not met) -->"}
 
+<section id="cost" title="Cost Categories to Ask About" max_words="400">
+Use ONLY the section title as the heading — never prefix with internal id.
+This section lists the CATEGORIES of costs the defendant should ask their
+attorney about — NOT specific dollar estimates. Frame as: "Here are the
+types of costs that typically apply to ${intake.charge_type} cases in ${intake.state || "your state"}."
+
+Categories (include all that apply to this charge type):
+1. STATUTORY FINES — cite the state statute range if known (e.g.,
+   "Florida first DUI: $500-$1,000 per F.S. 316.193"). If statute
+   unknown, say "varies by state — ask your attorney for the range."
+2. COURT COSTS & FEES — filing fees, court costs, prosecution fees,
+   crime victim fund surcharges. Note these are NON-NEGOTIABLE.
+3. SUPERVISION FEES — probation/parole monthly fees ($25-$100/mo typical).
+   Note duration depends on sentence.
+4. TESTING & MONITORING — drug testing, alcohol monitoring (SCRAM),
+   ignition interlock device. Include only categories relevant to this
+   charge type.
+5. TREATMENT & PROGRAMS — DUI school, drug treatment, anger management,
+   community service. Note: completing may reduce charges if eligible.
+6. LICENSE & REINSTATEMENT — DMV fees, SR-22 insurance, reinstatement
+   fees. Charge-type specific (DUI, drug, sex offense).
+7. ATTORNEY FEES — "Attorney fees vary significantly by market, case
+   complexity, and experience level. Ask for a written fee agreement
+   that specifies what's included." Do NOT estimate dollar amounts.
+8. HIDDEN COSTS — transportation to court appearances, time off work,
+   childcare during hearings, parking, increased insurance premiums,
+   background check impacts.
+
+ANTI-HALLUCINATION: If you don't know the specific state statute for a
+fine range, DO NOT guess. Say "varies by jurisdiction" and point to the
+attorney question about costs.
+
+End with: "One question worth asking: 'Can you walk me through the total
+estimated cost of this case, including fees, fines, and programs?'" → Q ref
+</section>
+
+<section id="court" title="Your Next Court Date" max_words="400">
+Use ONLY the section title as the heading — never prefix with internal id.
+This section is KEYED to the intake case_stage: "${intake.case_stage || "not provided"}".
+Generate ONLY the walkthrough for their current/next stage. Do NOT walk
+through all stages.
+
+For the walkthrough, include TWO parts:
+
+**Part 1 — What Happens** (legal procedure in plain English):
+- What the hearing is called and what it's for
+- Who will be there (judge, prosecutor, your attorney, you, jury?)
+- What decisions get made
+- Whether you'll need to speak
+- How long it typically takes
+- What the possible outcomes are
+
+**Part 2 — Practical Prep** (what defendants actually need):
+- What to wear (business casual minimum, no logos/graphics)
+- What to bring (ID, case number, this report, pen/paper)
+- What NOT to bring (weapons, phone on — silence it)
+- Arrive 30 minutes early (security screening, finding courtroom)
+- Childcare: "Courts generally do not provide childcare. If you have
+  children, arrange care in advance."
+- Transportation: "If you're unsure how to get there, look up your
+  courthouse address now."
+- What if you can't make it: "Contact your attorney IMMEDIATELY. Missing
+  a court date can result in a bench warrant."
+
+Stage-specific content:
+- PRE-ARREST: Focus on what to expect IF arrested. Rights during arrest.
+- ARRESTED / AWAITING FIRST DATE: Arraignment walkthrough. Plea entry.
+  Bail/bond. "Discuss plea options with your attorney BEFORE the hearing."
+- ARRAIGNED: Pre-trial conference. Discovery exchange. Motion deadlines.
+- PRE-TRIAL: Motion hearings. Plea negotiations. Trial date setting.
+- TRIAL PREP: Jury selection, trial structure, testimony prep.
+- SENTENCING: PSI report, mitigation, victim impact statements.
+  Character letters (→ link to character letter template in Meeting Toolkit).
+- POST-CONVICTION: Appeal deadlines, expungement eligibility, PCR.
+
+If case_stage is missing/unknown, generate a brief overview of the typical
+progression for this charge type with a note: "Ask your attorney which
+stage your case is in — that determines what happens next."
+
+${intake.filled_out_by && intake.filled_out_by !== "self" ? `NOTE: This intake was filled out by a ${intake.filled_out_by}. Include practical guidance for support persons attending court (where to sit, what they can/cannot do, courtroom etiquette for observers).` : ""}
+</section>
+
 <section id="s3" title="Your Attorney Meeting Toolkit" max_words="1400">
 Use ONLY the section title as the heading — never prefix with internal id.
 
@@ -1973,6 +2151,31 @@ Scenarios: "Trust me, I'm handling it" / "You don't need to worry about that" / 
 
 **7. HOW TO DOCUMENT EVERYTHING:**
 Notes during meeting (what to write down). Post-meeting summary email template (send within 24 hours). Recording consent note (state-specific: one-party vs two-party consent). Case journal (what to track over time).
+
+**8. CHARACTER LETTERS — If Your Case Reaches Sentencing:**
+"Character letters from people who know you can make a real difference at
+sentencing. If your attorney hasn't discussed these yet, it's worth
+raising — especially if sentencing is a possibility."
+
+Include a brief template the defendant can send to 3-5 people:
+
+Subject: Would you be willing to write a letter for my case?
+
+"[Name], I'm facing a legal situation and my attorney mentioned that
+character letters from people who know me can help the judge understand
+who I am beyond this charge. If you're willing, a short letter
+(1 page) addressed to 'The Honorable [Judge Name]' that describes:
+- How you know me and for how long
+- What you've observed about my character
+- Any positive impact I've had on your life or community
+
+My attorney's address for mailing: [to be filled in]
+
+This means a lot to me. Thank you either way."
+
+Note: "Ask your attorney whether character letters are appropriate for
+your case stage and whether they have specific guidelines."
+${intake.filled_out_by && intake.filled_out_by !== "self" ? `\nFAMILY/SUPPORT PERSON MEETING GUIDANCE:\n"If you're attending the attorney meeting with ${intake.first_name}, here's how to be most helpful: take notes, ask clarifying questions, and follow up in writing afterward. The attorney may ask the defendant to speak directly — let them. Your role is documentation and support."` : ""}
 </section>
 
 <section id="s4" title="Questions for Your Attorney" max_words="2200" question_count="15">
@@ -3333,6 +3536,17 @@ function buildIBVariables(intake: IntakeData, phase2: any, priorCdHtml: string, 
     legal_options_output: so["legal-options"] || "",
     protection_output: so["protection"] || "",
     your_plan_output: so["your-plan"] || "",
+
+    // Expansion fields (from 6 new intake fields)
+    criminal_history: intake.criminal_history || "Not provided",
+    criminal_history_label: deriveCriminalHistoryLabelDeno(intake.criminal_history || ""),
+    employment_status: intake.employment_status || "Not provided",
+    employment_industry: intake.employment_industry || "",
+    employment_detail: buildEmploymentDetailDeno(intake.employment_status || "", intake.employment_industry || ""),
+    case_stage_raw: intake.case_stage || "Not provided",
+    filled_out_by: intake.filled_out_by || "self",
+    is_family_buyer: (intake.filled_out_by === "family" || intake.filled_out_by === "friend") ? "yes" : "no",
+    mental_health_relevant: intake.mental_health_relevant || "Not provided",
   };
 }
 
@@ -3349,6 +3563,22 @@ function deriveCaseStageDeno(hearingType: string, nextCourtDate: string, pleaOff
   if (discoveryStatus === "yes") return "Discovery review";
   if (nextCourtDate) return "Pre-trial";
   return "Early stages";
+}
+
+function deriveCriminalHistoryLabelDeno(raw: string): string {
+  switch (raw) {
+    case "none": return "No prior criminal history reported";
+    case "misdemeanor-only": return "Has prior misdemeanor(s)";
+    case "felony": return "Has prior felony conviction";
+    case "multiple-felonies": return "Has multiple prior felony convictions";
+    default: return raw || "Not provided";
+  }
+}
+
+function buildEmploymentDetailDeno(status: string, industry: string): string {
+  if (!status || status === "Not provided") return "Not provided";
+  const base = status.replace(/-/g, " ");
+  return industry ? `${base} — ${industry}` : base;
 }
 
 // Inline prompt builder — generates system + user prompt for a given section key
@@ -3471,13 +3701,24 @@ EXPERT GROUNDING:
 - BJ Fogg B=MAP: each stage maps to one action with a clear trigger
 ${NO_DISCLAIMER}${REALISTIC_HOPE}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
 
+CASE STAGE CALIBRATION (Hagan — Stanford Legal Design):
+If case_stage_raw differs from derived case_stage, note both and explain the discrepancy.
+Stage-specific content: pre-arrest → rights-focused, arraigned → discovery timeline,
+trial-prep → jury selection prep, sentencing → mitigation focus, post-conviction → appeal windows.
+
+CRIMINAL HISTORY (Steinberg + Uptrust):
+If priors: present as prosecution context — "This is what the prosecution will see. Here's
+what your attorney can do with it." Timeline changes: recidivism enhancements, habitual
+offender risk. Pair every negative shift with an attorney question.
+If no priors: note as strategic advantage — first-offender programs, diversion eligibility.
+
 Output: ## Section 1: Your Case Roadmap
 ### 1a. Where You Are Now (timeline table, ~250w)
 ### 1b. What Happens Next (3-5 stages, county-specific, ~500w)
 ### 1c. The Two Paths (plea vs trial, neutral, ~200w)
 ### Bottom Line Right Now (1 sentence + 1 action, ~50w)
 Word budget: ~1,050.`,
-      user: `Generate Section 1.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Case #: ${v.case_number} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Months since: ${v.months_since_arrest} | Court date: ${v.next_court_date} | Hearing: ${v.next_hearing_type} | Attorney: ${v.attorney_type} | Discovery: ${v.discovery_status}\nCharge context: ${v.charge_specific_data}\n</intake>\n${v.prior_section_outputs_xml}`,
+      user: `Generate Section 1.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Case #: ${v.case_number} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Months since: ${v.months_since_arrest} | Court date: ${v.next_court_date} | Hearing: ${v.next_hearing_type} | Attorney: ${v.attorney_type} | Discovery: ${v.discovery_status}\nCharge context: ${v.charge_specific_data}\n| Case stage (self-reported): ${v.case_stage_raw} | Criminal history: ${v.criminal_history_label} | Filled out by: ${v.filled_out_by}\n</intake>\n${v.prior_section_outputs_xml}`,
     },
     "whats-working": {
       system: `You are an elite criminal defense research analyst generating Section 2: What's Working + What Needs Attention.
@@ -3496,13 +3737,18 @@ EXPERT GROUNDING:
 - George Lakoff: decode the frames attorneys use (what they say vs what they mean)
 ${NO_DISCLAIMER}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
 
+FAMILY BUYER (Jayadev — Participatory Defense):
+If filled_out_by is "family" or "friend": reader is a support person. Use defendant's first name
+for legal facts. Use "you" for action items (the family member is doing the work). Frame
+Case Progress Score actions as "Here's what you can do to help."
+
 Output: ## Section 2
 ### 2a. What's On Track (score + tracker, ~400w)
 ### 2b. Decoded Statements (~500w)
 ### 2c. What Needs Attention (CLARIFY items, ~500w)
 ### Bottom Line (~50w)
 Word budget: ~1,550.`,
-      user: `Generate Section 2.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Attorney: ${v.attorney_type} ${v.attorney_name} | Last contact: ${v.last_communication} | Discovery: ${v.discovery_status} | Plea: ${v.plea_status} | Arrest: ${v.arrest_date} | Court: ${v.next_court_date} | Frustration: ${v.frustration} | Attorney said: ${v.attorney_statements} | Case #: ${v.case_number} | Dates: ${v.key_dates}\n</intake>\n${v.prior_section_outputs_xml}`,
+      user: `Generate Section 2.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Attorney: ${v.attorney_type} ${v.attorney_name} | Last contact: ${v.last_communication} | Discovery: ${v.discovery_status} | Plea: ${v.plea_status} | Arrest: ${v.arrest_date} | Court: ${v.next_court_date} | Frustration: ${v.frustration} | Attorney said: ${v.attorney_statements} | Case #: ${v.case_number} | Dates: ${v.key_dates}\n| Filled out by: ${v.filled_out_by}\n</intake>\n${v.prior_section_outputs_xml}`,
     },
     "legal-options": {
       system: `You are an elite criminal defense research analyst generating Section 4: Legal Options & Deadlines.
@@ -3520,13 +3766,22 @@ EXPERT GROUNDING:
 - Voss: naming pressure tactics to defuse them
 ${NO_DISCLAIMER}${UPGRADE_SEEDS}${ANTI_FORMULAIC}
 
+MENTAL HEALTH DIVERSION (Steinberg):
+If mental_health_relevant = "yes": include treatment court/diversion subsection. Frame as
+STRATEGIC ADVANTAGE: "Courts increasingly view treatment completion as evidence of
+rehabilitation." Include attorney question about mental health court eligibility.
+
+CRIMINAL HISTORY IMPACT ON MOTIONS:
+If priors: add motion in limine to exclude prior bad acts (FRE 404(b) or state equivalent),
+motion to sever prior convictions from current trial. These gain urgency with priors.
+
 Output: ## Section 4
 ### 4a. Motion Landscape (~700w)
 ### 4b. Deadline Calendar (~300w)
 ### 4c-4g. Plea Framework (conditional: ${v.plea_status}) (~800-1000w)
 ### Bottom Line (~50w)
 Word budget: ~2,200.`,
-      user: `Generate Section 4.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Court: ${v.next_court_date} | Plea: ${v.plea_status} | Plea terms: ${v.plea_terms} | Discovery: ${v.discovery_status} | Attorney: ${v.attorney_type} | Priors: ${v.prior_convictions}\nCharge context: ${v.charge_specific_data}\n</intake>\n${v.prior_section_outputs_xml}`,
+      user: `Generate Section 4.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Court: ${v.next_court_date} | Plea: ${v.plea_status} | Plea terms: ${v.plea_terms} | Discovery: ${v.discovery_status} | Attorney: ${v.attorney_type} | Priors: ${v.prior_convictions} | Criminal history: ${v.criminal_history_label} | Case stage (raw): ${v.case_stage_raw} | Mental health: ${v.mental_health_relevant}\nCharge context: ${v.charge_specific_data}\n</intake>\n${v.prior_section_outputs_xml}`,
     },
     "protection": {
       system: `You are an elite criminal defense research analyst generating Section 5: Protecting Your Case and Life.
@@ -3547,6 +3802,17 @@ EXPERT GROUNDING:
 - Seligman: temporalizing — "Your case is at month X of a Y-Z month process. This phase ends."
 ${NO_DISCLAIMER}${UPGRADE_SEEDS}${ANTI_FORMULAIC}${COLLATERAL_CITATIONS}
 
+EMPLOYMENT CONSEQUENCE SPECIFICITY (Steinberg):
+If employment_industry provided: research SPECIFIC licensing board for THIS industry. Present
+with REMEDIES: "Working in [industry]: [consequence]. What can be done: [remedy]."
+Common: nursing → board of nursing; trucking → FMCSA/CDL; teaching → dept of education;
+finance → FINRA/SEC; healthcare → state medical board; law enforcement → POST decertification.
+Generate at least one career-specific attorney question.
+
+MENTAL HEALTH IN LIFE IMPACT:
+If mental_health_relevant = "yes": add treatment access as Life Impact Map domain. Frame as
+opening doors: "Treatment-based alternatives can lead to reduced or dismissed charges."
+
 LIFE IMPACT MAP TABLE FORMAT (D16):
 Each table cell MUST be under 30 words. If a consequence needs more explanation, put a brief summary in the cell and add detail in a note BELOW the table. Immigration goes below the table as a standalone paragraph (not a table row) — it's too complex for a cell.
 
@@ -3556,7 +3822,7 @@ Output: ## Section 5
 ### 5c. Life While Pending (~400w)
 ### Bottom Line (~50w)
 Word budget: ~1,750.`,
-      user: `Generate Section 5.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Stage: ${v.case_stage} | Employment: ${v.employment} | Family: ${v.family_situation} | Children: ${v.has_children} | Immigration: ${v.immigration_status} | Co-defendants: ${v.co_defendants} | Priors: ${v.prior_convictions} | Probation/parole: ${v.on_probation_parole}\nCharge context: ${v.charge_specific_data}\n</intake>\n${v.prior_section_outputs_xml}`,
+      user: `Generate Section 5.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Stage: ${v.case_stage} | Employment: ${v.employment} | Family: ${v.family_situation} | Children: ${v.has_children} | Immigration: ${v.immigration_status} | Co-defendants: ${v.co_defendants} | Priors: ${v.prior_convictions} | Probation/parole: ${v.on_probation_parole} | Employment detail: ${v.employment_detail} | Mental health: ${v.mental_health_relevant} | Criminal history: ${v.criminal_history_label} | Family buyer: ${v.is_family_buyer}\nCharge context: ${v.charge_specific_data}\n</intake>\n${v.prior_section_outputs_xml}`,
     },
     "court-prep": {
       system: `You are an elite criminal defense research analyst generating Appendix B: Next Court Date Prep.
@@ -3568,6 +3834,9 @@ EXPERT GROUNDING:
 - BJ Fogg: preparation = ability, reduces anxiety = motivation barrier
 ${ANTI_FORMULAIC}
 
+If is_family_buyer = "yes": include "For Support Persons" subsection — where to sit (gallery),
+courtroom etiquette for observers, how to be helpful without disrupting proceedings.
+
 Output: ## Appendix B
 ### What This Hearing Is (~100w)
 ### Step by Step (~350w)
@@ -3576,7 +3845,7 @@ Output: ## Appendix B
 ### What NOT to Do (~75w)
 ### If Attorney Isn't There (~100w)
 Word budget: ~850.`,
-      user: `Generate Appendix B.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Court date: ${v.next_court_date} | Hearing: ${v.next_hearing_type} | Attorney: ${v.attorney_type} | Stage: ${v.case_stage} | Judge: ${v.judge_name}\n</intake>`,
+      user: `Generate Appendix B.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Court date: ${v.next_court_date} | Hearing: ${v.next_hearing_type} | Attorney: ${v.attorney_type} | Stage: ${v.case_stage} | Judge: ${v.judge_name} | Case stage (raw): ${v.case_stage_raw} | Family buyer: ${v.is_family_buyer}\n</intake>`,
     },
     "case-intelligence": {
       system: `You are an elite criminal defense research analyst generating Section 3: Your Case Intelligence.
@@ -3607,6 +3876,11 @@ EXPERT GROUNDING:
 - Seligman: 3 P's — every negative outcome must depersonalize, contain, temporalize
 ${NO_DISCLAIMER}${UPGRADE_SEEDS}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
 
+CRIMINAL HISTORY IN OUTCOME MAPPING:
+Priors change the outcome landscape — sentencing guidelines, habitual offender enhancements,
+diversion eligibility. Adjust outcome map probabilities. Present as data with attorney questions.
+No priors: explicitly note diversion eligibility and first-offender advantages.
+
 OUTCOME MAP TABLE FORMAT (D16):
 Each table cell MUST be under 30 words. For outcomes that need legal context (e.g., deferred adjudication prohibition), put a brief summary in the cell and add the statutory detail in a note below the table.
 
@@ -3618,7 +3892,7 @@ Output: ## Section 3
 ### 3e. Jurisdiction Profile (~200w)
 ### Bottom Line (~50w)
 Word budget: ~2,250.`,
-      user: `Generate Section 3.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Priors: ${v.prior_convictions_summary} | Probation: ${v.on_probation_parole} | Plea: ${v.plea_status} | Discovery: ${v.discovery_status}\nCharge context: ${v.charge_specific_data}\n</intake>\n\n<judge_research>\n${v.judge_research_data}\n</judge_research>\n\n<prior_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n</prior_sections>\n${v.prior_section_outputs_xml}`,
+      user: `Generate Section 3.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Priors: ${v.prior_convictions_summary} | Probation: ${v.on_probation_parole} | Plea: ${v.plea_status} | Discovery: ${v.discovery_status} | Criminal history: ${v.criminal_history_label}\nCharge context: ${v.charge_specific_data}\n</intake>\n\n<judge_research>\n${v.judge_research_data}\n</judge_research>\n\n<prior_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n</prior_sections>\n${v.prior_section_outputs_xml}`,
     },
     "your-plan": {
       system: `You are an elite criminal defense research analyst generating Section 6: Your Plan.
@@ -3637,6 +3911,20 @@ EXPERT GROUNDING:
 - Klein: pre-mortem for meeting prep — imagine it went badly, prepare to prevent each failure mode
 ${NO_DISCLAIMER}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}${ACTION_VOICE}
 
+FAMILY BUYER PLAN (Jayadev + Steinberg):
+If is_family_buyer = "yes": 14-day plan needs DUAL tracks (support person + defendant).
+Email template FROM the defendant. "If Overwhelmed" addresses BOTH people. Add Difficult
+Conversation: "When your family member wants to fire the attorney but you don't."
+Character letter template is especially relevant.
+
+STAGE-AWARE PLAN (Hagan):
+Calibrate 14-day plan to case_stage_raw:
+- pre-arrest/arrested: P1=understand rights, P2=attorney contact
+- arraigned/discovery: P1=send email, P2=review discovery
+- trial-prep: P1=review outcome map, P2=witness list
+- sentencing: P1=character letters, P2=mitigation package
+- post-conviction: P1=appeal deadline check, P2=record preservation
+
 Output: ## Section 6
 ### 6a. If Overwhelmed (~50w)
 ### 6b. Email (~200w)
@@ -3649,7 +3937,7 @@ Output: ## Section 6
 ### 6i. Difficult Conversations (~350w)
 ### 6j. Advocacy Steps (~175w)
 Word budget: ~2,075.`,
-      user: `Generate Section 6.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Case #: ${v.case_number} | Attorney: ${v.attorney_name} (${v.attorney_type}) | Court: ${v.next_court_date} | Last contact: ${v.last_communication} | Frustration: ${v.frustration} | Concern: ${v.biggest_concern}\n</intake>\n\n<cross_refs>\nGaps: ${v.gaps_from_section_2}\nScore: ${v.progress_score}\nDeadlines: ${v.urgent_deadlines}\nMotions: ${v.applicable_motions}\nConsequences: ${v.top_collateral_consequences}\n</cross_refs>\n\n<prior_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n</prior_sections>\n${v.prior_section_outputs_xml}`,
+      user: `Generate Section 6.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Case #: ${v.case_number} | Attorney: ${v.attorney_name} (${v.attorney_type}) | Court: ${v.next_court_date} | Last contact: ${v.last_communication} | Frustration: ${v.frustration} | Concern: ${v.biggest_concern}\n| Filled out by: ${v.filled_out_by} | Employment: ${v.employment_detail} | Case stage (raw): ${v.case_stage_raw}\n</intake>\n\n<cross_refs>\nGaps: ${v.gaps_from_section_2}\nScore: ${v.progress_score}\nDeadlines: ${v.urgent_deadlines}\nMotions: ${v.applicable_motions}\nConsequences: ${v.top_collateral_consequences}\n</cross_refs>\n\n<prior_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n</prior_sections>\n${v.prior_section_outputs_xml}`,
     },
     "questions": {
       system: `You are an elite criminal defense research analyst generating Appendix D: Targeted Follow-Up Questions (10-15).
@@ -3671,6 +3959,12 @@ EXPERT GROUNDING:
 - MacCarthy: question sequencing for maximum information extraction
 ${ANTI_FORMULAIC}
 
+FIELD-TRIGGERED QUESTIONS:
+- If priors: 1-2 questions about sentencing impact, motion in limine, habitual offender risk.
+- If mental_health_relevant = "yes": 1 question about treatment court/diversion eligibility.
+- If employment_industry: 1 question about professional licensing impact.
+- If is_family_buyer = "yes": 1 question the support person can ask about their role.
+
 Output: ## Appendix D
 ### Intro (~100w)
 ### Case Strategy (2-4q)
@@ -3679,7 +3973,7 @@ Output: ## Appendix D
 ### Consequences (1-3q)
 ### Evidence/Discovery (1-2q)
 Word budget: ~1,300-1,900.`,
-      user: `Generate Appendix D.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Attorney: ${v.attorney_name} (${v.attorney_type}) | Stage: ${v.case_stage}\nCharge context: ${v.charge_specific_data}\n</intake>\n\n<gaps>\nRoadmap: ${v.roadmap_gaps_and_unknowns}\nProgress: ${v.accountability_gaps_and_decoded_issues}\nIntelligence: ${v.intelligence_gaps_judge_unknowns}\nMotions: ${v.motion_unknowns_deadline_questions_plea_questions}\nConsequences: ${v.consequence_questions}\n</gaps>\n\n<exclude>\n${v.section_6g_questions_to_exclude}\n</exclude>\n\n<all_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n<s6>${v.your_plan_output}</s6>\n</all_sections>\n${v.prior_section_outputs_xml}`,
+      user: `Generate Appendix D.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Attorney: ${v.attorney_name} (${v.attorney_type}) | Stage: ${v.case_stage} | Criminal history: ${v.criminal_history_label} | Mental health: ${v.mental_health_relevant} | Employment industry: ${v.employment_industry} | Family buyer: ${v.is_family_buyer}\nCharge context: ${v.charge_specific_data}\n</intake>\n\n<gaps>\nRoadmap: ${v.roadmap_gaps_and_unknowns}\nProgress: ${v.accountability_gaps_and_decoded_issues}\nIntelligence: ${v.intelligence_gaps_judge_unknowns}\nMotions: ${v.motion_unknowns_deadline_questions_plea_questions}\nConsequences: ${v.consequence_questions}\n</gaps>\n\n<exclude>\n${v.section_6g_questions_to_exclude}\n</exclude>\n\n<all_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n<s6>${v.your_plan_output}</s6>\n</all_sections>\n${v.prior_section_outputs_xml}`,
     },
     "48hr-priorities": {
       system: `You are an elite criminal defense research analyst generating the 48-Hour Priority List.
@@ -3694,11 +3988,15 @@ OVERRIDE RULES:
 - Evidence preservation deadline approaching → elevate to P1 or P2
 - Plea hearing <14d → P2 = "Review Section 4f before your [date] hearing"
 - Attorney gap >30d → P1 = "Send email AND call. Section 6b + 6c."
+- Family buyer → P1 addresses the support person: "Send this email on behalf of [name]"
+- Mental health = "yes" + no treatment discussion yet → P2 = "Ask about mental health court"
+- case_stage_raw = "sentencing" → P1 = character letters, P2 = mitigation review
+- case_stage_raw = "post-conviction" → P1 = "Confirm appeal deadline with attorney"
 
 EXPERT GROUNDING:
 - Seligman: temporalizing — P3 includes temporal anchor: "Before [date], this phase will have progressed to [next stage]"
 - Bandura: mastery experience — P1 must be completable in under 5 minutes. The feeling of completion IS the intervention.${REALISTIC_HOPE}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}${ACTION_VOICE}`,
-      user: `Generate 48-Hour Priority List.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Court: ${v.next_court_date} | Immigration: ${v.immigration_status} | Attorney: ${v.attorney_name}\n</intake>\n\n<all_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n<s6>${v.your_plan_output}</s6>\n</all_sections>`,
+      user: `Generate 48-Hour Priority List.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Court: ${v.next_court_date} | Immigration: ${v.immigration_status} | Attorney: ${v.attorney_name} | Family buyer: ${v.is_family_buyer} | Mental health: ${v.mental_health_relevant} | Case stage (raw): ${v.case_stage_raw}\n</intake>\n\n<all_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n<s6>${v.your_plan_output}</s6>\n</all_sections>`,
     },
   };
 

@@ -99,7 +99,7 @@ export const DUI_FIRST_OFFENSE: PlaybookConfig = {
     eyebrow: "DUI Defense Playbook",
     headline: "The Breathalyzer Reading Is Not the Case.",
     subheadline:
-      "26 questions your DUI attorney hopes you never ask — plus a case stage roadmap, red flag checklist, and case progress scorecard.",
+      "You made one mistake. Your attorney should be fighting like your life depends on it \u2014 because it does. 26 questions, case stage roadmap, red flag checklist, and scorecard.",
   },
   agitate: {
     headline: "You shouldn\u2019t have to figure this out from Reddit threads.",
@@ -251,7 +251,7 @@ export const DRUG_POSSESSION: PlaybookConfig = {
     eyebrow: "Drug Possession Defense Playbook",
     headline: "The Lab Report Is Not the Case.",
     subheadline:
-      "26 questions your drug defense attorney hopes you never ask \u2014 plus a case stage roadmap, red flag checklist, and case progress scorecard.",
+      "The drugs weren\u2019t yours? Your lawyer should be proving it, not just pushing a plea. 26 questions, case stage roadmap, red flag checklist, and scorecard.",
   },
   agitate: {
     headline:
@@ -410,7 +410,7 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
     eyebrow: "Probation Violation Defense Playbook",
     headline: "Missing a Meeting Is Not the Same as Committing a Crime.",
     subheadline:
-      "26 questions your attorney hopes you never ask \u2014 plus a revocation hearing roadmap, red flag checklist, and case progress scorecard.",
+      "One missed meeting and you\u2019re back in the system. Your attorney should be fighting the violation \u2014 not just accepting it. 26 questions, revocation hearing roadmap, red flag checklist, and scorecard.",
   },
   agitate: {
     headline:
@@ -569,7 +569,7 @@ export const WHITE_COLLAR: PlaybookConfig = {
     eyebrow: "White Collar Defense Playbook",
     headline: "The Loss Amount Is Not the Sentence.",
     subheadline:
-      "26 questions your white collar attorney hopes you never ask \u2014 plus a federal case stage roadmap, red flag checklist, and case progress scorecard.",
+      "You\u2019re scared to death and you didn\u2019t know what to do. Now you will. 26 questions, federal case stage roadmap, red flag checklist, and scorecard.",
   },
   agitate: {
     headline:
@@ -728,7 +728,7 @@ export const SEX_OFFENSE: PlaybookConfig = {
     eyebrow: "Sex Offense Defense Playbook",
     headline: "The Accusation Is Not the Conviction.",
     subheadline:
-      "26 questions your attorney hopes you never ask \u2014 plus a case stage roadmap, red flag checklist, and case progress scorecard.",
+      "Everything feels like it\u2019s over. It\u2019s not \u2014 but only if you fight smart. 26 questions, case stage roadmap, red flag checklist, and scorecard.",
   },
   agitate: {
     headline:
@@ -887,7 +887,7 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
     eyebrow: "Federal Criminal Defense Playbook",
     headline: "Federal Court Is a Different Game. Learn the Rules.",
     subheadline:
-      "26 questions your attorney hopes you never ask \u2014 plus a 13-stage federal case roadmap, red flag checklist, and case progress scorecard.",
+      "The federal system is designed to overwhelm you. Don\u2019t let it. 26 questions, 13-stage federal case roadmap, red flag checklist, and scorecard.",
   },
   agitate: {
     headline:
@@ -1046,7 +1046,7 @@ export const DRUG_TRAFFICKING: PlaybookConfig = {
     eyebrow: "Drug Trafficking Defense Playbook",
     headline: "The Informant Has a Deal. Do You Know Yours?",
     subheadline:
-      "26 questions your attorney hopes you never ask \u2014 plus a 12-stage case roadmap, red flag checklist, and case progress scorecard.",
+      "They\u2019re pressuring you to cooperate. Do you know what you\u2019re agreeing to? 26 questions, 12-stage case roadmap, red flag checklist, and scorecard.",
   },
   agitate: {
     headline:
@@ -1205,7 +1205,7 @@ export const SELF_DEFENSE: PlaybookConfig = {
     eyebrow: "Self-Defense / Justifiable Force Defense Playbook",
     headline: "You Defended Yourself. Now Defend Your Freedom.",
     subheadline:
-      "26 questions, 12 red flags, 11-stage case roadmap, Stand Your Ground guide, and attorney scorecard — built from the strategies of elite defense attorneys who specialize in self-defense cases.",
+      "You defended yourself. Now the system says YOU\u2019RE the criminal. 26 questions, 12 red flags, 11-stage case roadmap, Stand Your Ground guide, and attorney scorecard.",
   },
   agitate: {
     headline: "You Did What Anyone Would Do. The System Doesn\u2019t Care.",

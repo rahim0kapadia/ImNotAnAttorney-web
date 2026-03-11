@@ -1,0 +1,236 @@
+<!--
+==========================================================================
+FLOW 2: WIN-BACK FOR COLD SUBSCRIBERS (5 emails)
+==========================================================================
+Trigger: Subscriber hasn't opened an email in 30+ days.
+Goal: Re-engage or clean the list. Segment by last engagement date.
+
+Matches existing email infrastructure:
+  - sendEmail() in src/lib/email.ts wraps inner HTML in branded dark template
+  - CAN-SPAM footer (address + unsubscribe) added automatically by sendEmail()
+  - These templates provide the INNER HTML only
+  - Colors: bg #0C0A09, text #D4D4D8, amber accent #F59E0B
+
+NOTE: Win-back flows target subscribers table where
+  last_opened_at < NOW() - INTERVAL '30 days' AND unsubscribed = false.
+  Each email should suppress if the subscriber opens a previous email
+  in the sequence (re-engaged = exit flow).
+==========================================================================
+-->
+
+
+<!-- ================================================================== -->
+<!-- EMAIL 1 of 5: "Did something happen with your case?"               -->
+<!-- ================================================================== -->
+<!--
+  Flow: Win-Back (Cold Subscribers)
+  Position: Email 1 of 5
+  Trigger: No email open in 30+ days
+  Delay: Day 0 (immediate on entering win-back segment)
+  Segment: All subscribers with last_opened_at > 30 days ago
+  Exit condition: Opens this email or any subsequent email = re-engaged, exit flow
+
+  Subject line: Did something happen with your case?
+  Subject line B: We haven't heard from you
+  Preview text: If your case is resolved, great. If it isn't, read this.
+-->
+
+<h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">Hey — just checking in.</h1>
+
+<p>We noticed you haven't opened our emails in a while. That could mean a few things:</p>
+
+<p><strong style="color: white;">1. Your case got resolved.</strong> If so, congratulations. Seriously. We hope the outcome was fair. You can unsubscribe below and we'll leave you alone.</p>
+
+<p><strong style="color: white;">2. You got busy.</strong> Cases drag on. Life doesn't stop. We get it.</p>
+
+<p><strong style="color: white;">3. You stopped believing it mattered.</strong> That's the one that worries us.</p>
+
+<p>Because here's the thing — the prosecution doesn't stop working just because you stopped paying attention. Discovery deadlines pass. Motion windows close. And attorneys who aren't being pushed by their clients tend to stop pushing the case.</p>
+
+<p>If your case is still active, the worst thing you can do right now is go quiet.</p>
+
+<p>We're still here. Still researching. Still giving defendants the questions that hold attorneys accountable.</p>
+
+<a href="https://imnotanattorney.com/score" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Check Your Defense Milestone Score — Free</a>
+
+<p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
+  <strong style="color: white;">P.S.</strong> The Defense Milestone Score takes 60 seconds and doesn't require an email. 7 questions about your attorney's behavior. If you score below 50, something needs attention. <a href="https://imnotanattorney.com/score" style="color: #F59E0B; text-decoration: underline;">Take it now</a>.
+</p>
+
+
+<!-- ================================================================== -->
+<!-- EMAIL 2 of 5: High-value blog post share                          -->
+<!-- ================================================================== -->
+<!--
+  Flow: Win-Back (Cold Subscribers)
+  Position: Email 2 of 5
+  Trigger: Email 1 sent, subscriber still not re-engaged
+  Delay: 3 days after Email 1
+  Segment: Cold subscribers who didn't open Email 1
+
+  Subject line: Is your attorney actually working your case?
+  Subject line B: The question nobody wants to ask
+  Preview text: Here's how to tell in 5 minutes. No attorney required.
+
+  NOTE: Links to the most-read blog post:
+  /blog/is-your-attorney-actually-working-your-case
+-->
+
+<h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">You're Paying Thousands. What Are You Getting?</h1>
+
+<p>You hired a criminal defense attorney. You paid the retainer — probably somewhere between $5,000 and $25,000.</p>
+
+<p>And now... silence.</p>
+
+<p>No updates. No strategy calls. Just a vague "we're working on it" every time you manage to get someone on the phone.</p>
+
+<p>We published a guide that's become the most-read article on our site. It breaks down:</p>
+
+<ul style="padding-left: 20px; margin: 12px 0;">
+  <li style="margin-bottom: 8px;"><strong style="color: white;">What a working attorney actually does</strong> — the specific milestones by week 2, month 1, month 3</li>
+  <li style="margin-bottom: 8px;"><strong style="color: white;">Red flags that your case is on autopilot</strong> — the 6 warning signs</li>
+  <li style="margin-bottom: 8px;"><strong style="color: white;">What to do about it</strong> — specific questions to ask, with exact language</li>
+</ul>
+
+<p>No sign-up required. No paywall. Just information you can use right now.</p>
+
+<a href="https://imnotanattorney.com/blog/is-your-attorney-actually-working-your-case" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Read the Full Guide</a>
+
+<p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
+  <strong style="color: white;">P.S.</strong> If you read the guide and realize your attorney isn't doing their job, we have a <a href="https://imnotanattorney.com/blog/how-to-file-bar-complaint-against-attorney" style="color: #F59E0B; text-decoration: underline;">step-by-step guide on filing a bar complaint</a>. That one's free too.
+</p>
+
+
+<!-- ================================================================== -->
+<!-- EMAIL 3 of 5: New content / update angle                          -->
+<!-- ================================================================== -->
+<!--
+  Flow: Win-Back (Cold Subscribers)
+  Position: Email 3 of 5
+  Trigger: Email 2 sent, subscriber still not re-engaged
+  Delay: 7 days after Email 1
+  Segment: Cold subscribers who didn't open Emails 1 or 2
+
+  Subject line: We built something new since you've been gone
+  Subject line B: 7 questions. 60 seconds. No email required.
+  Preview text: The Defense Milestone Score — free tool that tells you if your attorney is dropping the ball.
+-->
+
+<h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">A Lot Has Changed Since You've Been Gone.</h1>
+
+<p>We've been busy while you were away. Here's what's new:</p>
+
+<div style="margin: 20px 0; padding: 16px; border: 1px solid #27272A; border-radius: 8px; background: #1C1917;">
+  <p style="margin: 0 0 4px; font-size: 13px; color: #F59E0B; font-weight: bold;">NEW: Defense Milestone Score</p>
+  <p style="margin: 0; font-size: 14px; color: #D4D4D8;">Free tool. 7 questions about your attorney. 60 seconds. No email required. Tells you exactly where your defense stands on a 0-100 scale.</p>
+  <a href="https://imnotanattorney.com/score" style="display: inline-block; margin: 12px 0 0; color: #F59E0B; text-decoration: underline; font-size: 13px;">Take the Score &rarr;</a>
+</div>
+
+<div style="margin: 20px 0; padding: 16px; border: 1px solid #27272A; border-radius: 8px; background: #1C1917;">
+  <p style="margin: 0 0 4px; font-size: 13px; color: #F59E0B; font-weight: bold;">NEW: Defense Playbooks — $97, Instant Download</p>
+  <p style="margin: 0; font-size: 14px; color: #D4D4D8;">Charge-specific playbooks for DUI, drug possession, white collar, federal, and more. 20+ questions, case stage roadmap, red flag checklist, attorney scorecard. No intake form. No wait.</p>
+  <a href="https://imnotanattorney.com/services" style="display: inline-block; margin: 12px 0 0; color: #F59E0B; text-decoration: underline; font-size: 13px;">See all Playbooks &rarr;</a>
+</div>
+
+<div style="margin: 20px 0; padding: 16px; border: 1px solid #27272A; border-radius: 8px; background: #1C1917;">
+  <p style="margin: 0 0 4px; font-size: 13px; color: #F59E0B; font-weight: bold;">NEW BLOG: How Your Attorney Makes Money Off Your Case</p>
+  <p style="margin: 0; font-size: 14px; color: #D4D4D8;">Flat fee vs. hourly vs. contingency — and how each billing structure creates different incentives for how hard they work your case.</p>
+  <a href="https://imnotanattorney.com/blog/how-your-attorney-makes-money" style="display: inline-block; margin: 12px 0 0; color: #F59E0B; text-decoration: underline; font-size: 13px;">Read it &rarr;</a>
+</div>
+
+<p>If your case is still active, we're still the best resource you've got for holding your attorney accountable. No legal advice. Just the research and questions that make your attorney do their job.</p>
+
+<a href="https://imnotanattorney.com/" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Visit ImNotAnAttorney</a>
+
+<p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
+  <strong style="color: white;">P.S.</strong> We've added 8 new charge-specific playbooks since you've been away. If you're facing DUI, drug, white collar, or federal charges, the $97 Playbook is the fastest way to arm yourself before your next hearing. <a href="https://imnotanattorney.com/services" style="color: #F59E0B; text-decoration: underline;">See which one fits your case</a>.
+</p>
+
+
+<!-- ================================================================== -->
+<!-- EMAIL 4 of 5: Last chance emotional appeal                        -->
+<!-- ================================================================== -->
+<!--
+  Flow: Win-Back (Cold Subscribers)
+  Position: Email 4 of 5
+  Trigger: Email 3 sent, subscriber still not re-engaged
+  Delay: 14 days after Email 1
+  Segment: Cold subscribers who didn't open Emails 1-3
+
+  Subject line: The defendants who stay quiet lose
+  Subject line B: This isn't something you can ignore into going away
+  Preview text: Your case is still moving. With or without you.
+-->
+
+<h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">Your Case Is Still Moving. With or Without You.</h1>
+
+<p>Here's what happens when a defendant goes quiet:</p>
+
+<p>The attorney stops pushing. Not because they're bad — because they're busy. The squeaky wheel gets the grease. And if you're not asking questions, you're not the squeaky wheel.</p>
+
+<p>The prosecution doesn't stop. They're still building their case. Still preparing witnesses. Still putting together the narrative that ends with you taking a plea or sitting at trial unprepared.</p>
+
+<p>And the court doesn't wait. Deadlines pass. Motion windows close. Evidence that could have been challenged gets admitted without a fight.</p>
+
+<p><strong style="color: white;">We built ImNotAnAttorney for exactly this moment.</strong></p>
+
+<p>The moment when you're tired. When you feel like nothing is happening. When you want to just trust the process and hope it works out.</p>
+
+<p>Hope is not a defense strategy.</p>
+
+<p>Questions are.</p>
+
+<p>We've given hundreds of defendants the specific, case-relevant questions that made their attorneys actually explain what was happening. Not legal advice — just the research that turns "I don't know what's going on" into "I need you to explain this discrepancy on page 47."</p>
+
+<a href="https://imnotanattorney.com/checkout?tier=case-decoder" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Get My Case Decoder — $197</a>
+
+<p style="font-size: 14px; color: #A1A1AA;">Or start free: <a href="https://imnotanattorney.com/score" style="color: #F59E0B; text-decoration: underline;">Take the Defense Milestone Score</a></p>
+
+<p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
+  <strong style="color: white;">P.S.</strong> The Case Decoder is $197. That's less than one hour of your attorney's billable rate. It comes with 15 calibrated questions, email templates, phone scripts, and a 7-day action plan. Delivered within 48 hours or your money back. <a href="https://imnotanattorney.com/sample" style="color: #F59E0B; text-decoration: underline;">See a real sample report</a>.
+</p>
+
+
+<!-- ================================================================== -->
+<!-- EMAIL 5 of 5: "We're cleaning our list"                           -->
+<!-- ================================================================== -->
+<!--
+  Flow: Win-Back (Cold Subscribers)
+  Position: Email 5 of 5
+  Trigger: Email 4 sent, subscriber still not re-engaged
+  Delay: 21 days after Email 1
+  Segment: Cold subscribers who didn't open Emails 1-4
+  Action on non-open: Mark subscriber as inactive / suppress from future sends
+
+  Subject line: We're removing you from our list
+  Subject line B: This is goodbye (unless you say otherwise)
+  Preview text: Click one button to stay. Otherwise, this is the last email you'll get from us.
+-->
+
+<h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">This Is the Last Email You'll Get From Us.</h1>
+
+<p>We don't send emails to people who don't want them. That's not who we are.</p>
+
+<p>You haven't opened an email from us in over a month. So we're going to remove you from our list unless you tell us otherwise.</p>
+
+<p><strong style="color: white;">If you want to keep getting our emails</strong> — free guides, case research tips, the questions your attorney hopes you never ask — click the button below. That's it. One click. You stay on the list.</p>
+
+<a href="https://imnotanattorney.com/api/resubscribe?email={{EMAIL_BASE64}}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Keep Me on the List</a>
+
+<p><strong style="color: white;">If you don't click</strong>, we'll remove you within 48 hours. No hard feelings. No guilt trip.</p>
+
+<p>But if your case is still active and you're still wondering whether your attorney is actually fighting for you — you know where to find us.</p>
+
+<div style="margin: 24px 0; padding: 16px; border: 1px solid #27272A; border-radius: 8px; background: #1C1917;">
+  <p style="margin: 0 0 8px; font-size: 14px; color: white; font-weight: bold;">What you'll miss:</p>
+  <ul style="padding-left: 20px; margin: 8px 0 0; font-size: 13px; color: #D4D4D8;">
+    <li style="margin-bottom: 6px;">Free guides on discovery rights, motion deadlines, and attorney red flags</li>
+    <li style="margin-bottom: 6px;">Case research tips that other defendants are using right now</li>
+    <li style="margin-bottom: 6px;">Early access to new tools and playbooks</li>
+    <li>The blunt, honest take on criminal defense that nobody else gives you</li>
+  </ul>
+</div>
+
+<p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
+  <strong style="color: white;">P.S.</strong> If your case is resolved and you don't need us anymore — we're genuinely glad. That's the whole point. But if you know someone who's going through it right now, send them to <a href="https://imnotanattorney.com" style="color: #F59E0B; text-decoration: underline;">imnotanattorney.com</a>. The free resources alone could change their next attorney meeting.
+</p>

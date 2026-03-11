@@ -2,7 +2,7 @@
  * @fileoverview Defense Milestone Score Calculator
  *
  * Free lead magnet that scores defense milestones based on a defendant's
- * based on 7 self-reported questions. Lives at /score on the frontend.
+ * 10 self-reported questions. Lives at /score on the frontend.
  *
  * Funnel position:
  *   Blog / Social / Score Page --> POST /api/score --> Score + Observations
@@ -36,7 +36,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 
-/** Input shape for the score calculator -- all 7 fields are required */
+/** Input shape for the score calculator -- all 10 fields are required */
 type ScoreInput = {
   chargeType: string;
   timeSinceArrest: string;
@@ -45,6 +45,9 @@ type ScoreInput = {
   hasDiscovery: string;
   communicationFrequency: string;
   strategyDiscussed: string;
+  criminalHistory: string;
+  caseStage: string;
+  licensedProfession: string;
 };
 
 /** Output shape: numeric score (0-100), descriptive band, and 3-5 observations */
@@ -225,6 +228,51 @@ function calculateScore(input: ScoreInput): ScoreResult {
     );
   }
 
+  // =========================================================================
+  // CRIMINAL HISTORY (sentencing exposure context)
+  // Prior convictions affect sentencing guidelines, mandatory minimums, and
+  // diversion eligibility. Felony/multiple priors = higher stakes.
+  // =========================================================================
+  if (input.criminalHistory === "none") {
+    score += 3;
+  } else if (input.criminalHistory === "felony" || input.criminalHistory === "multiple") {
+    score -= 5;
+    observations.push(
+      "Prior convictions can affect sentencing exposure, mandatory minimums, and diversion eligibility. Make sure your attorney has factored your full record into their strategy."
+    );
+  }
+
+  // =========================================================================
+  // CASE STAGE (milestone relevance calibration)
+  // Post-conviction cases need different milestones than pre-trial. Sentencing
+  // stage adds urgency for mitigation preparation.
+  // =========================================================================
+  if (input.caseStage === "sentencing") {
+    observations.push(
+      "At the sentencing stage, mitigation preparation is critical — character letters, treatment documentation, and a sentencing memorandum. Ask your attorney what they're preparing."
+    );
+  } else if (input.caseStage === "post-conviction") {
+    observations.push(
+      "Post-conviction cases have strict appeal deadlines. Make sure your attorney has identified all available remedies (direct appeal, PCR, habeas) and their filing deadlines."
+    );
+  } else if (input.caseStage === "pre-arrest") {
+    score += 3;
+    observations.push(
+      "Being proactive before an arrest gives you a strategic advantage. If you expect charges, consider retaining an attorney now — pre-arrest intervention can sometimes prevent charges entirely."
+    );
+  }
+
+  // =========================================================================
+  // LICENSED PROFESSION (collateral career risk)
+  // Licensed professionals face career-ending collateral consequences that
+  // require specific attention in defense strategy.
+  // =========================================================================
+  if (input.licensedProfession === "yes-licensed") {
+    observations.push(
+      "As a licensed professional, a conviction could trigger licensing board action, suspension, or revocation — separate from the criminal case itself. Make sure your attorney is addressing professional licensing consequences, not just the criminal charges."
+    );
+  }
+
   // Clamp score to valid 0-100 range
   score = Math.max(0, Math.min(100, score));
 
@@ -314,14 +362,17 @@ const ALLOWED_VALUES: Record<string, string[]> = {
   hasDiscovery: ["yes", "no", "dont-know"],
   communicationFrequency: ["weekly", "monthly", "rarely", "never"],
   strategyDiscussed: ["yes-detail", "briefly", "no"],
+  criminalHistory: ["none", "misdemeanor", "felony", "multiple"],
+  caseStage: ["pre-arrest", "arrested", "arraigned", "pre-trial", "trial-prep", "sentencing", "post-conviction"],
+  licensedProfession: ["yes-licensed", "yes-other", "no", "student"],
 };
 
 /**
- * Validates all 7 required inputs against the allowlist, then computes and
+ * Validates all 10 required inputs against the allowlist, then computes and
  * returns the Defense Milestone Score. No data is persisted to any
  * database -- the score is computed and returned in the response only.
  *
- * @param req - JSON body with all 7 ScoreInput fields
+ * @param req - JSON body with all 10 ScoreInput fields
  * @returns JSON with score (number 0-100), band (string), and observations (array of strings)
  */
 export async function POST(req: NextRequest) {
@@ -348,6 +399,9 @@ export async function POST(req: NextRequest) {
       "hasDiscovery",
       "communicationFrequency",
       "strategyDiscussed",
+      "criminalHistory",
+      "caseStage",
+      "licensedProfession",
     ];
 
     for (const field of required) {

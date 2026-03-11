@@ -1,0 +1,167 @@
+<!--
+==========================================================================
+FLOW 1: ABANDONED CART (3 emails)
+==========================================================================
+Trigger: User visits /checkout but doesn't complete Stripe payment.
+Email is already captured on the checkout page (required field before
+Stripe redirect), so we have the address for follow-up.
+
+Matches existing email infrastructure:
+  - sendEmail() in src/lib/email.ts wraps inner HTML in branded dark template
+  - CAN-SPAM footer (address + unsubscribe) is added automatically by sendEmail()
+  - These templates provide the INNER HTML only (same pattern as drip-emails.ts)
+  - Colors: bg #0C0A09, text #D4D4D8, amber accent #F59E0B
+  - CTA button style matches cta() helper in drip-emails.ts
+
+NOTE: The sendEmail() wrapper adds the outer <div> with bg/font/footer.
+These templates are the INNER content only.
+==========================================================================
+-->
+
+
+<!-- ================================================================== -->
+<!-- EMAIL 1 of 3: "Your case isn't going to wait"                      -->
+<!-- ================================================================== -->
+<!--
+  Flow: Abandoned Cart
+  Position: Email 1 of 3
+  Trigger: User entered email on /checkout but did not complete Stripe payment
+  Delay: 1 hour after checkout page visit
+  Segment: All checkout abandoners (all tiers)
+
+  Subject line: Your case isn't going to wait
+  Subject line B: You left something behind (and it wasn't your freedom)
+  Preview text: Your cart is still here. Your next court date is still coming.
+-->
+
+<h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">You were about to do something smart.</h1>
+
+<p>You made it to checkout. You were looking at {{TIER_NAME}} — which means you already know something isn't right with your case.</p>
+
+<p>Maybe you got interrupted. Maybe you wanted to think about it. That's fine.</p>
+
+<p>But here's what won't wait: <strong style="color: white;">your next court date</strong>. The motions that should have been filed. The discovery your attorney may or may not have reviewed line by line.</p>
+
+<p>Every day that passes without the right questions being asked is a day the prosecution gets stronger.</p>
+
+<p style="margin-top: 24px;"><strong style="color: white;">What you were about to get:</strong></p>
+<ul style="padding-left: 20px; margin: 12px 0;">
+  <li>Your charges broken down in plain English</li>
+  <li>Calibrated questions built from YOUR case details</li>
+  <li>Ready-to-send email templates for your attorney</li>
+  <li>A 7-day action plan with specific next steps</li>
+</ul>
+
+<p>Your cart is still here. Your {{TIER_PRICE}} gets you the questions your attorney hopes you never ask.</p>
+
+<a href="https://imnotanattorney.com/checkout?tier={{TIER_SLUG}}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Complete My Order — {{TIER_PRICE}}</a>
+
+<p style="margin-top: 16px; font-size: 13px; color: #A1A1AA;">Secure checkout powered by Stripe. Visa, Mastercard, and Amex accepted.</p>
+
+<p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
+  <strong style="color: white;">P.S.</strong> Not sure if this is worth it? <a href="https://imnotanattorney.com/sample" style="color: #F59E0B; text-decoration: underline;">Read the sample report</a> from a real drug trafficking case. We found a 73% weight discrepancy the attorney never mentioned. That's what informed questions look like.
+</p>
+
+
+<!-- ================================================================== -->
+<!-- EMAIL 2 of 3: "The question your attorney hopes you never ask"     -->
+<!-- ================================================================== -->
+<!--
+  Flow: Abandoned Cart
+  Position: Email 2 of 3
+  Trigger: Email 1 sent, no purchase completed
+  Delay: 24 hours after checkout page visit
+  Segment: Cart abandoners who did not convert after Email 1
+
+  Subject line: The question your attorney hopes you never ask
+  Subject line B: What happened to the other 68 grams?
+  Preview text: One question changed the entire trajectory of this case.
+-->
+
+<h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">One Question. That's All It Took.</h1>
+
+<p>A defendant facing trafficking charges — mandatory minimum of 3 years. His attorney hadn't raised a single issue.</p>
+
+<p>Then we looked at the discovery.</p>
+
+<p>The police inventory listed <strong style="color: white;">93.9 grams</strong>. The lab report said <strong style="color: white;">25.59 grams</strong>.</p>
+
+<p>That's <strong style="color: #EF4444;">68.3 grams missing — 73% of the evidence weight.</strong></p>
+
+<p>The charging document said "amphetamine." The lab confirmed MDMA/MDA — a completely different substance.</p>
+
+<p>21 latent fingerprints on the evidence. Zero matched the defendant.</p>
+
+<p><strong style="color: white;">His attorney had raised none of these issues.</strong></p>
+
+<p>We generated one question: <em style="color: #F59E0B;">"Can you explain the 73% discrepancy between the field weight and the lab weight?"</em></p>
+
+<p>That question changed the entire conversation.</p>
+
+<div style="margin: 24px 0; padding: 16px; border: 1px solid #27272A; border-radius: 8px; background: #1C1917;">
+  <p style="margin: 0 0 8px; font-size: 13px; color: #A1A1AA;">WHAT OTHER DEFENDANTS ARE SAYING:</p>
+  <p style="margin: 0; font-style: italic; color: #D4D4D8;">"I walked into my attorney's office with the questions from my Case Decoder. He looked at me different. For the first time, he actually explained what was happening with my case."</p>
+</div>
+
+<p>Your {{TIER_NAME}} is still waiting. {{TIER_PRICE}}. Questions your attorney should already be asking.</p>
+
+<a href="https://imnotanattorney.com/checkout?tier={{TIER_SLUG}}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Get My Questions — {{TIER_PRICE}}</a>
+
+<p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
+  <strong style="color: white;">P.S.</strong> Every dollar you spend is credited toward higher tiers. Buy the Case Decoder for $197 now, upgrade to the Intelligence Brief later for just $800. No money wasted. <a href="https://imnotanattorney.com/services" style="color: #F59E0B; text-decoration: underline;">See all tiers</a>.
+</p>
+
+
+<!-- ================================================================== -->
+<!-- EMAIL 3 of 3: "Last call — your cart expires tonight"              -->
+<!-- ================================================================== -->
+<!--
+  Flow: Abandoned Cart
+  Position: Email 3 of 3
+  Trigger: Email 2 sent, no purchase completed
+  Delay: 48 hours after checkout page visit
+  Segment: Cart abandoners who did not convert after Emails 1 and 2
+
+  Subject line: Your cart expires at midnight
+  Subject line B: Still thinking about it?
+  Preview text: After tonight, you'll need to start over. Your case won't start over.
+-->
+
+<h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">This Is the Last Time We'll Ask.</h1>
+
+<p>Your {{TIER_NAME}} cart expires tonight at midnight.</p>
+
+<p>After that, this link goes dead and you'll need to start fresh.</p>
+
+<p>Here's what I know about you: you found us, you read enough to understand what we do, and you got all the way to checkout. That's not casual browsing. That's someone who knows their case needs attention.</p>
+
+<p><strong style="color: white;">What's waiting for you:</strong></p>
+
+<table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+  <tr>
+    <td style="padding: 10px 12px; border-bottom: 1px solid #27272A; color: #F59E0B; font-size: 13px; width: 24px; vertical-align: top;">&#10003;</td>
+    <td style="padding: 10px 12px; border-bottom: 1px solid #27272A; color: #D4D4D8; font-size: 14px;">Charges explained in plain English — what the prosecution must prove</td>
+  </tr>
+  <tr>
+    <td style="padding: 10px 12px; border-bottom: 1px solid #27272A; color: #F59E0B; font-size: 13px; vertical-align: top;">&#10003;</td>
+    <td style="padding: 10px 12px; border-bottom: 1px solid #27272A; color: #D4D4D8; font-size: 14px;">Calibrated questions traced to elite defense methodology</td>
+  </tr>
+  <tr>
+    <td style="padding: 10px 12px; border-bottom: 1px solid #27272A; color: #F59E0B; font-size: 13px; vertical-align: top;">&#10003;</td>
+    <td style="padding: 10px 12px; border-bottom: 1px solid #27272A; color: #D4D4D8; font-size: 14px;">Email templates + phone scripts for your attorney</td>
+  </tr>
+  <tr>
+    <td style="padding: 10px 12px; color: #F59E0B; font-size: 13px; vertical-align: top;">&#10003;</td>
+    <td style="padding: 10px 12px; color: #D4D4D8; font-size: 14px;">7-day action plan with Meeting Ready Sheet</td>
+  </tr>
+</table>
+
+<p>{{TIER_PRICE}}. Less than one hour of your attorney's time. Delivered within {{TIER_DELIVERY}}.</p>
+
+<p>Your attorney has your case file. The prosecution is building theirs. The question is whether you'll walk into your next meeting with the right questions — or keep hoping someone else is asking them for you.</p>
+
+<a href="https://imnotanattorney.com/checkout?tier={{TIER_SLUG}}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Complete My Order Before Midnight</a>
+
+<p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
+  <strong style="color: white;">P.S.</strong> Our delivery guarantee is real: {{TIER_NAME}} delivered within {{TIER_DELIVERY}} or your money back. No questions asked. <a href="https://imnotanattorney.com/score" style="color: #F59E0B; text-decoration: underline;">Not ready to buy? Take the free Defense Milestone Score</a> — 7 questions, 60 seconds, no email required.
+</p>

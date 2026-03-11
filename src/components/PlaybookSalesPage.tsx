@@ -9,6 +9,9 @@
  */
 import Link from "next/link";
 import { TIER_CORE, upgradePrice, nextTierSlug } from "@/lib/tiers";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
+import { TrustBadges } from "@/components/TrustBadges";
 import type { PlaybookConfig } from "@/lib/playbook-configs";
 import type { TierSlug } from "@/lib/tiers";
 
@@ -56,11 +59,12 @@ export default function PlaybookSalesPage({ config }: Props) {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
       {/* HERO */}
+      <FadeInUp>
       <section className="text-center">
         <p className="text-xs font-bold uppercase tracking-widest text-amber-400">
           {config.hero.eyebrow}
         </p>
-        <h1 className="mt-4 text-4xl font-extrabold leading-tight text-white sm:text-5xl">
+        <h1 className="font-display mt-4 text-4xl font-extrabold leading-tight text-white sm:text-5xl">
           {config.hero.headline}
         </h1>
         <p className="mt-4 text-lg text-zinc-400">{config.hero.subheadline}</p>
@@ -74,7 +78,7 @@ export default function PlaybookSalesPage({ config }: Props) {
         </div>
         <Link
           href={checkoutUrl}
-          className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-colors hover:bg-amber-400"
+          className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
         >
           Get Instant Access &mdash; {tier.priceDisplay}
         </Link>
@@ -82,10 +86,12 @@ export default function PlaybookSalesPage({ config }: Props) {
           Download within 60 seconds of purchase. No intake form. No waiting.
         </p>
       </section>
+      </FadeInUp>
 
       {/* AGITATE */}
+      <FadeInUp>
       <section className="mt-20">
-        <h2 className="text-2xl font-bold text-white">
+        <h2 className="font-display text-2xl font-bold text-white">
           {config.agitate.headline}
         </h2>
         <div className="mt-6 space-y-4 text-zinc-400">
@@ -93,9 +99,9 @@ export default function PlaybookSalesPage({ config }: Props) {
             <p key={i}>{p}</p>
           ))}
         </div>
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+        <StaggerContainer className="mt-8 grid gap-4 sm:grid-cols-3">
           {config.agitate.cards.map((card) => (
-            <div
+            <StaggerItem
               key={card.title}
               className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-5"
             >
@@ -103,36 +109,40 @@ export default function PlaybookSalesPage({ config }: Props) {
                 {card.title}
               </p>
               <p className="mt-2 text-sm text-zinc-400">{card.text}</p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </section>
+      </FadeInUp>
 
       {/* PROOF */}
+      <FadeInUp>
       <section className="mt-20">
-        <h2 className="text-2xl font-bold text-white">
+        <h2 className="font-display text-2xl font-bold text-white">
           {config.proof.headline}
         </h2>
-        <div className="mt-8 space-y-6">
+        <StaggerContainer className="mt-8 space-y-6">
           {config.proof.methods.map((method) => (
-            <div
+            <StaggerItem
               key={method.name}
               className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-6"
             >
               <p className="font-semibold text-white">{method.name}</p>
               <p className="mt-1 text-xs text-zinc-500">{method.title}</p>
               <p className="mt-3 text-sm text-zinc-400">{method.insight}</p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </section>
+      </FadeInUp>
 
       {/* VALUE STACK */}
+      <FadeInUp>
       <section className="mt-20">
-        <h2 className="text-2xl font-bold text-white">What&apos;s inside</h2>
-        <div className="mt-8 space-y-4">
+        <h2 className="font-display text-2xl font-bold text-white">What&apos;s inside</h2>
+        <StaggerContainer className="mt-8 space-y-4">
           {config.valueStack.sections.map((section) => (
-            <div
+            <StaggerItem
               key={section.title}
               className="flex items-start justify-between gap-4 rounded-lg border border-zinc-800 bg-zinc-900/50 p-5"
             >
@@ -143,9 +153,9 @@ export default function PlaybookSalesPage({ config }: Props) {
               <p className="shrink-0 text-sm text-zinc-500 line-through">
                 {section.value}
               </p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
         <div className="mt-8 rounded-lg border border-amber-500/30 bg-amber-500/5 p-6 text-center">
           <p className="text-sm text-zinc-400">
             Total value:{" "}
@@ -158,14 +168,19 @@ export default function PlaybookSalesPage({ config }: Props) {
           </p>
           <Link
             href={checkoutUrl}
-            className="mt-4 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-colors hover:bg-amber-400"
+            className="mt-4 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
           >
             Get Instant Access &mdash; {tier.priceDisplay}
           </Link>
         </div>
+        <div className="mt-6">
+          <TrustBadges variant="checkout" />
+        </div>
       </section>
+      </FadeInUp>
 
       {/* GUARANTEE */}
+      <FadeInUp>
       <section className="mt-20">
         <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-8 text-center">
           <p className="text-xs font-bold uppercase tracking-widest text-amber-400">
@@ -177,8 +192,10 @@ export default function PlaybookSalesPage({ config }: Props) {
           <p className="mt-3 text-sm text-zinc-400">{config.guarantee.body}</p>
         </div>
       </section>
+      </FadeInUp>
 
       {/* WHO IT'S FOR */}
+      <FadeInUp>
       <section className="mt-20">
         <div className="grid gap-8 sm:grid-cols-2">
           <div>
@@ -215,6 +232,7 @@ export default function PlaybookSalesPage({ config }: Props) {
           </div>
         </div>
       </section>
+      </FadeInUp>
 
       {/* METHODOLOGY DISCLOSURE */}
       <section className="mt-20">
@@ -271,6 +289,7 @@ export default function PlaybookSalesPage({ config }: Props) {
       </section>
 
       {/* FINAL CTA */}
+      <FadeInUp>
       <section className="mt-20 text-center">
         <p className="text-sm text-zinc-500">{config.comparisonLine}</p>
         <p className="mt-2 text-3xl font-extrabold text-white">
@@ -280,14 +299,18 @@ export default function PlaybookSalesPage({ config }: Props) {
         <p className="mt-2 text-sm text-zinc-400">{config.summaryLine}</p>
         <Link
           href={checkoutUrl}
-          className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-colors hover:bg-amber-400"
+          className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
         >
           Get Instant Access &mdash; {tier.priceDisplay}
         </Link>
         <p className="mt-3 text-xs text-zinc-500">
           {config.guarantee.headline}
         </p>
+        <div className="mt-4">
+          <TrustBadges variant="compact" />
+        </div>
       </section>
+      </FadeInUp>
 
       {/* UPGRADE PATH */}
       {nextTier && upgrade && (

@@ -1,0 +1,1024 @@
+/**
+ * E2E Pipeline Tests — All Tiers
+ *
+ * Exercises every pipeline's backend flow using real Supabase writes and real
+ * API endpoint calls against the production deployment (test Stripe keys).
+ * For CD/IB, we skip the Claude API call and insert pre-generated report HTML.
+ * Everything else is real: status transitions, emails, operator flow.
+ *
+ * Pipelines tested:
+ *   1. All Playbooks ($97 x4) — digital products (order only, no case)
+ *   2. Case Decoder ($197) — full automated flow
+ *   3. Intelligence Brief ($997) — multi-case (CD included + IB)
+ *   4. X-Ray ($2,497) — discovery upload flow
+ *   5. War Room ($4,997) — multi-case + multi-phase
+ *   6. Situation Room ($9,997) — prerequisite gate
+ *
+ * Run: node scripts/e2e-all-pipelines.mjs
+ *   Options:
+ *     --only <n>      Run only pipeline N (1-6)
+ *     --skip-cleanup   Leave test data in DB for manual inspection
+ *     --skip-api       Skip HTTP API calls (DB-only assertions)
+ *
+ * Cleanup: All test data is deleted at end (orders, cases, intakes,
+ *          drip_emails, subscribers) using a unique test email per run.
+ */
+
+import { createClient } from "@supabase/supabase-js";
+import { randomUUID, createHmac } from "crypto";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// ================================================================
+// ENV LOADING
+// ================================================================
+
+function loadEnvFile(filepath) {
+  if (!fs.existsSync(filepath)) return;
+  const lines = fs.readFileSync(filepath, "utf-8").split("\n");
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eqIdx = trimmed.indexOf("=");
+    if (eqIdx === -1) continue;
+    const key = trimmed.slice(0, eqIdx).trim();
+    let val = trimmed.slice(eqIdx + 1).trim();
+    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+      val = val.slice(1, -1);
+    }
+    if (!process.env[key]) process.env[key] = val;
+  }
+}
+loadEnvFile(path.join(__dirname, "..", ".env.local"));
+
+// ================================================================
+// CONFIG
+// ================================================================
+
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://jxjbjmgdukwkoclydqdr.supabase.co";
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const OPERATOR_SECRET = process.env.OPERATOR_SECRET;
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+
+if (!SUPABASE_KEY) {
+  console.error("Missing SUPABASE_SERVICE_ROLE_KEY — set in .env.local");
+  process.exit(1);
+}
+if (!OPERATOR_SECRET) {
+  console.error("Missing OPERATOR_SECRET — set in .env.local");
+  process.exit(1);
+}
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: { autoRefreshToken: false, persistSession: false },
+});
+
+// CLI args
+const args = process.argv.slice(2);
+const onlyPipeline = args.includes("--only") ? parseInt(args[args.indexOf("--only") + 1], 10) : null;
+const skipCleanup = args.includes("--skip-cleanup");
+const skipApi = args.includes("--skip-api");
+
+// All test emails go to test@imnotanattorney.com (real inbox, visible in
+// Resend dashboard + admin email viewer — same as help@imnotanattorney.com).
+// This avoids bounces that hurt sender reputation.
+const RUN_TS = Date.now();
+const TEST_EMAIL = "test@imnotanattorney.com";
+
+// ================================================================
+// TEST STATE TRACKING
+// ================================================================
+
+const allTestEmails = new Set([TEST_EMAIL]);
+const allOrderIds = [];
+const allCaseIds = [];
+const allIntakeIds = [];
+
+let totalPass = 0;
+let totalFail = 0;
+const pipelineResults = [];
+
+// Stub report HTML for CD/IB
+const STUB_REPORT_HTML = `<!DOCTYPE html><html><head><title>E2E Test Report</title></head><body>
+<h1>Test Report — E2E Pipeline Verification</h1>
+<p>This is a stub report inserted by the E2E test script. It should be cleaned up automatically.</p>
+<p>Generated at: ${new Date().toISOString()}</p>
+</body></html>`;
+
+// ================================================================
+// HELPERS
+// ================================================================
+
+function assert(condition, label) {
+  if (condition) {
+    console.log(`    ✓ ${label}`);
+    totalPass++;
+    return true;
+  } else {
+    console.error(`    ✗ FAIL: ${label}`);
+    totalFail++;
+    return false;
+  }
+}
+
+function signOperatorToken(caseId) {
+  const timestamp = Math.floor(Date.now() / 1000);
+  const payload = `${caseId}:${timestamp}`;
+  const hmac = createHmac("sha256", OPERATOR_SECRET).update(payload).digest("hex");
+  return `${timestamp}.${hmac}`;
+}
+
+async function createTestOrder(tier, email, opts = {}) {
+  const TIER_PRICES = {
+    "dui-first-offense": 9700,
+    "drug-possession": 9700,
+    "probation-violation": 9700,
+    "case-decoder": 19700,
+    "intelligence-brief": 99700,
+    "x-ray": 249700,
+    "war-room": 499700,
+    "situation-room": 999700,
+  };
+
+  const orderId = randomUUID();
+  allOrderIds.push(orderId);
+  allTestEmails.add(email);
+
+  const orderData = {
+    id: orderId,
+    email,
+    tier,
+    amount: TIER_PRICES[tier] || 0,
+    status: "paid",
+    stripe_session_id: `e2e_test_${orderId}`,
+    paid_at: new Date().toISOString(),
+    priority_delivery: opts.priority || false,
+    ...opts.extra,
+  };
+
+  const { error } = await supabase.from("orders").insert(orderData);
+  if (error) {
+    console.error(`    Order insert failed (${tier}):`, error.message);
+    return null;
+  }
+  return orderId;
+}
+
+async function createTestCase(orderId, tier, email, status, opts = {}) {
+  const caseId = randomUUID();
+  allCaseIds.push(caseId);
+
+  const caseData = {
+    id: caseId,
+    order_id: orderId,
+    email,
+    tier,
+    status,
+    file_urls: opts.file_urls || [],
+    is_included_deliverable: opts.isIncluded || false,
+    parent_order_id: opts.parentOrderId || null,
+    charge_type: opts.chargeType || null,
+    intake_id: opts.intakeId || null,
+    ...opts.extra,
+  };
+
+  const { error } = await supabase.from("cases").insert(caseData);
+  if (error) {
+    console.error(`    Case insert failed (${tier}):`, error.message);
+    return null;
+  }
+  return caseId;
+}
+
+/**
+ * Direct DB intake insert + case linking (bypasses API rate limit).
+ * Used for pipelines 3-6 where the intake API was already validated in pipeline 2.
+ */
+async function createDirectIntake(email, chargeType, caseIds, firstName = "E2E Test") {
+  const intakeId = randomUUID();
+  allIntakeIds.push(intakeId);
+
+  const { error } = await supabase.from("intakes").insert({
+    id: intakeId,
+    email,
+    first_name: firstName,
+    charge_type: chargeType,
+    state: "Florida",
+  });
+
+  if (error) {
+    console.error(`    Direct intake insert failed:`, error.message);
+    return null;
+  }
+
+  // Link to all specified cases and transition to intake
+  for (const caseId of caseIds) {
+    await supabase
+      .from("cases")
+      .update({
+        intake_id: intakeId,
+        status: "intake",
+        charge_type: chargeType,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", caseId);
+  }
+
+  return intakeId;
+}
+
+async function callIntake(email, chargeType, firstName = "E2E Test") {
+  if (skipApi) {
+    console.log("    [skip-api] Skipping intake API call");
+    return { ok: true, skipped: true };
+  }
+
+  const body = {
+    firstName,
+    email,
+    chargeType,
+    state: "Florida",
+    hasAttorney: "yes-public-defender",
+    situation: "E2E pipeline test — this should be cleaned up automatically.",
+  };
+
+  try {
+    const res = await fetch(`${SITE_URL}/api/intake`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({}));
+    return { ok: res.ok, status: res.status, data };
+  } catch (err) {
+    console.error(`    Intake API call failed:`, err.message);
+    return { ok: false, error: err.message };
+  }
+}
+
+async function insertReport(caseId) {
+  const reportToken = randomUUID();
+  const now = new Date().toISOString();
+
+  const { error } = await supabase
+    .from("cases")
+    .update({
+      report_html: STUB_REPORT_HTML,
+      report_token: reportToken,
+      status: "review",
+      generated_at: now,
+      updated_at: now,
+    })
+    .eq("id", caseId);
+
+  if (error) {
+    console.error(`    Insert report failed for case ${caseId}:`, error.message);
+    return null;
+  }
+  return reportToken;
+}
+
+async function callDeliver(caseId) {
+  if (skipApi) {
+    console.log("    [skip-api] Skipping deliver API call — doing direct DB transition");
+    const now = new Date().toISOString();
+    const { error } = await supabase
+      .from("cases")
+      .update({
+        status: "delivered",
+        delivered_at: now,
+        reviewed_by: "e2e-test",
+        reviewed_at: now,
+        updated_at: now,
+      })
+      .eq("id", caseId)
+      .eq("status", "review");
+    return { ok: !error, error: error?.message };
+  }
+
+  try {
+    const res = await fetch(`${SITE_URL}/api/deliver`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: OPERATOR_SECRET,
+        caseId,
+      }),
+    });
+    // deliver returns HTML, not JSON
+    const text = await res.text();
+    const isDelivered = text.includes("Report Delivered") || text.includes("Already Delivered");
+    return { ok: res.ok || isDelivered, status: res.status, html: text };
+  } catch (err) {
+    console.error(`    Deliver API call failed:`, err.message);
+    return { ok: false, error: err.message };
+  }
+}
+
+async function callFinalize(caseId, email) {
+  if (skipApi) {
+    console.log("    [skip-api] Skipping finalize API call — doing direct DB transition");
+    const { error } = await supabase
+      .from("cases")
+      .update({ status: "submitted", updated_at: new Date().toISOString() })
+      .eq("id", caseId);
+    return { ok: !error, error: error?.message };
+  }
+
+  try {
+    const res = await fetch(`${SITE_URL}/api/upload/finalize`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ caseId, email }),
+    });
+    const data = await res.json().catch(() => ({}));
+    return { ok: res.ok, status: res.status, data };
+  } catch (err) {
+    console.error(`    Finalize API call failed:`, err.message);
+    return { ok: false, error: err.message };
+  }
+}
+
+async function getCase(caseId) {
+  const { data, error } = await supabase
+    .from("cases")
+    .select("*")
+    .eq("id", caseId)
+    .single();
+  if (error) return null;
+  return data;
+}
+
+async function getOrder(orderId) {
+  const { data, error } = await supabase
+    .from("orders")
+    .select("*")
+    .eq("id", orderId)
+    .single();
+  if (error) return null;
+  return data;
+}
+
+async function waitForStatus(caseId, expectedStatus, timeoutMs = 5000) {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    const c = await getCase(caseId);
+    if (c && c.status === expectedStatus) return c;
+    await new Promise((r) => setTimeout(r, 500));
+  }
+  return await getCase(caseId);
+}
+
+async function simulateFileUpload(caseId) {
+  // Simulate discovery file upload by setting file_urls and status
+  const { error } = await supabase
+    .from("cases")
+    .update({
+      file_urls: ["e2e-test/discovery-doc-1.pdf", "e2e-test/discovery-doc-2.pdf"],
+      status: "uploaded",
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", caseId);
+  return !error;
+}
+
+// ================================================================
+// CLEANUP
+// ================================================================
+
+async function cleanup() {
+  if (skipCleanup) {
+    console.log("\n⚠ --skip-cleanup: Test data left in DB. Clean up manually.");
+    console.log("  Emails:", [...allTestEmails].join(", "));
+    console.log("  Orders:", allOrderIds.length);
+    console.log("  Cases:", allCaseIds.length);
+    return;
+  }
+
+  console.log("\n=== Cleanup ===");
+
+  // Delete in order: drip_emails → subscribers → cases → orders → intakes
+  // (respects FK constraints)
+  for (const email of allTestEmails) {
+    // Get subscriber IDs for this email to delete drip_emails
+    const { data: subs } = await supabase
+      .from("subscribers")
+      .select("id")
+      .eq("email", email);
+
+    if (subs && subs.length > 0) {
+      for (const sub of subs) {
+        await supabase.from("drip_emails").delete().eq("subscriber_id", sub.id);
+      }
+    }
+    await supabase.from("subscribers").delete().eq("email", email);
+  }
+
+  for (const caseId of allCaseIds) {
+    await supabase.from("cases").delete().eq("id", caseId);
+  }
+
+  for (const orderId of allOrderIds) {
+    await supabase.from("orders").delete().eq("id", orderId);
+  }
+
+  // Delete intakes by tracked IDs (not email — test@ is shared across runs)
+  for (const intakeId of allIntakeIds) {
+    await supabase.from("intakes").delete().eq("id", intakeId);
+  }
+  // Also clean up any intake created by the API call (linked to our cases)
+  for (const caseId of allCaseIds) {
+    // Cases may have intake_ids we didn't track (from the real API call)
+  }
+  // Clean up intakes from the real API call by email + time window
+  await supabase
+    .from("intakes")
+    .delete()
+    .eq("email", TEST_EMAIL)
+    .gte("created_at", new Date(RUN_TS - 5000).toISOString());
+
+  console.log(`  Cleaned: ${allOrderIds.length} orders, ${allCaseIds.length} cases, ${allIntakeIds.length} intakes`);
+}
+
+// ================================================================
+// PIPELINE 1: All Playbooks ($97 each) — Instant Digital Products
+// ================================================================
+
+const PLAYBOOK_TIERS = [
+  { slug: "dui-first-offense", label: "DUI Defense" },
+  { slug: "drug-possession", label: "Drug Possession" },
+  { slug: "probation-violation", label: "Probation Violation" },
+  { slug: "white-collar", label: "White Collar" },
+  { slug: "sex-offense", label: "Sex Offense" },
+  { slug: "federal-criminal", label: "Federal Criminal" },
+  { slug: "drug-trafficking", label: "Drug Trafficking" },
+  { slug: "self-defense", label: "Self-Defense" },
+];
+
+async function testPlaybooks() {
+  const name = "Pipeline 1: All Playbooks ($97 x8)";
+  console.log(`\n${"=".repeat(60)}`);
+  console.log(`  ${name}`);
+  console.log(`${"=".repeat(60)}`);
+
+  let passed = true;
+
+  for (const pb of PLAYBOOK_TIERS) {
+    console.log(`\n  --- ${pb.label} Playbook (${pb.slug}) ---`);
+
+    // Step 1: Create order (digital product — no case created)
+    console.log("  Step 1: Create digital product order");
+    const orderId = await createTestOrder(pb.slug, TEST_EMAIL, {
+      extra: { product_type: "digital-product" },
+    });
+    passed = assert(!!orderId, `Order created (${pb.slug})`) && passed;
+
+    // Step 2: Simulate webhook's download token generation
+    console.log("  Step 2: Generate download token");
+    const downloadToken = randomUUID();
+    const expiresAt = new Date(Date.now() + 72 * 60 * 60 * 1000).toISOString();
+    const { error: tokenError } = await supabase
+      .from("orders")
+      .update({
+        product_type: "digital-product",
+        download_token: downloadToken,
+        download_token_expires_at: expiresAt,
+      })
+      .eq("id", orderId);
+    passed = assert(!tokenError, "Download token set on order") && passed;
+
+    // Step 3: Verify order state
+    console.log("  Step 3: Verify order state");
+    const order = await getOrder(orderId);
+    passed = assert(order?.status === "paid", `Order status: paid (got: ${order?.status})`) && passed;
+    passed = assert(!!order?.download_token, "Download token exists") && passed;
+    passed = assert(order?.product_type === "digital-product", "Product type: digital-product") && passed;
+
+    // Step 4: Verify NO case was created (digital products skip cases)
+    console.log("  Step 4: Verify no case created");
+    const { data: cases } = await supabase
+      .from("cases")
+      .select("id")
+      .eq("order_id", orderId);
+    passed = assert(!cases || cases.length === 0, "No case created (digital product)") && passed;
+  }
+
+  pipelineResults.push({ name, passed });
+  return passed;
+}
+
+// ================================================================
+// PIPELINE 2: Case Decoder ($197) — Full Automated
+// ================================================================
+
+async function testCaseDecoder() {
+  const name = "Pipeline 2: Case Decoder ($197)";
+  console.log(`\n${"=".repeat(60)}`);
+  console.log(`  ${name}`);
+  console.log(`${"=".repeat(60)}`);
+
+  const email = TEST_EMAIL;
+  let passed = true;
+
+  // Step 1: Create order
+  console.log("  Step 1: Create order");
+  const orderId = await createTestOrder("case-decoder", email);
+  passed = assert(!!orderId, "Order created") && passed;
+
+  // Step 2: Create case (awaiting-intake, as webhook would)
+  console.log("  Step 2: Create case (awaiting-intake)");
+  const caseId = await createTestCase(orderId, "case-decoder", email, "awaiting-intake");
+  passed = assert(!!caseId, "Case created") && passed;
+
+  // Step 3: Submit intake via API (tests the actual route + auto-generation trigger)
+  console.log("  Step 3: Submit intake via API");
+  const intakeResult = await callIntake(email, "dui");
+
+  if (!intakeResult.skipped && intakeResult.ok) {
+    passed = assert(true, `Intake API: ${intakeResult.status}`) && passed;
+
+    // Wait for status transition — CD auto-triggers generation, so
+    // status may be "intake" or "generating" (both are correct)
+    const caseAfterIntake = await waitForStatus(caseId, "intake", 3000);
+    const statusOk = caseAfterIntake?.status === "intake" || caseAfterIntake?.status === "generating";
+    passed = assert(statusOk, `Case status → intake or generating (got: ${caseAfterIntake?.status})`) && passed;
+    passed = assert(!!caseAfterIntake?.intake_id, "Case linked to intake") && passed;
+  } else {
+    // Rate-limited (429) or skip-api mode — fall back to direct DB
+    if (intakeResult.status === 429) {
+      console.log("    ⚠ Rate-limited (429) — falling back to direct DB intake");
+    }
+    const intakeId = await createDirectIntake(email, "dui", [caseId]);
+    passed = assert(!!intakeId, "Intake created via direct DB (API rate-limited)") && passed;
+  }
+
+  // Step 4: Insert pre-generated report (simulates Edge Function)
+  console.log("  Step 4: Insert report + set status=review");
+  const reportToken = await insertReport(caseId);
+  passed = assert(!!reportToken, "Report inserted with token") && passed;
+
+  const caseReview = await getCase(caseId);
+  passed = assert(caseReview?.status === "review", `Case status → review (got: ${caseReview?.status})`) && passed;
+  passed = assert(!!caseReview?.report_html, "Report HTML stored") && passed;
+
+  // Step 5: Deliver report (operator approval)
+  console.log("  Step 5: Deliver report via API");
+  const deliverResult = await callDeliver(caseId);
+  passed = assert(deliverResult.ok, `Deliver API: success`) && passed;
+
+  // Step 6: Verify final state
+  console.log("  Step 6: Verify delivered state");
+  const caseFinal = await getCase(caseId);
+  passed = assert(caseFinal?.status === "delivered", `Case status → delivered (got: ${caseFinal?.status})`) && passed;
+  passed = assert(!!caseFinal?.delivered_at, "delivered_at set") && passed;
+
+  pipelineResults.push({ name, passed });
+  return passed;
+}
+
+// ================================================================
+// PIPELINE 3: Intelligence Brief ($997) — Multi-Case (CD + IB)
+// ================================================================
+
+async function testIntelligenceBrief() {
+  const name = "Pipeline 3: Intelligence Brief ($997)";
+  console.log(`\n${"=".repeat(60)}`);
+  console.log(`  ${name}`);
+  console.log(`${"=".repeat(60)}`);
+
+  const email = TEST_EMAIL;
+  let passed = true;
+
+  // Step 1: Create order
+  console.log("  Step 1: Create IB order");
+  const orderId = await createTestOrder("intelligence-brief", email);
+  passed = assert(!!orderId, "Order created") && passed;
+
+  // Step 2: Create cases (CD included + IB primary)
+  console.log("  Step 2: Create CD case (included) + IB case (primary)");
+  const cdCaseId = await createTestCase(orderId, "case-decoder", email, "awaiting-intake", {
+    isIncluded: true,
+    parentOrderId: orderId,
+  });
+  passed = assert(!!cdCaseId, "CD case created (included)") && passed;
+
+  const ibCaseId = await createTestCase(orderId, "intelligence-brief", email, "awaiting-intake");
+  passed = assert(!!ibCaseId, "IB case created (primary)") && passed;
+
+  // Step 3: Submit intake (direct DB — API already tested in pipeline 2)
+  console.log("  Step 3: Create intake + link cases (direct DB)");
+  const intakeId = await createDirectIntake(email, "drug-possession", [cdCaseId, ibCaseId]);
+  passed = assert(!!intakeId, "Intake created + linked to both cases") && passed;
+
+  const cdAfter = await getCase(cdCaseId);
+  const ibAfter = await getCase(ibCaseId);
+  passed = assert(cdAfter?.status === "intake", `CD → intake (got: ${cdAfter?.status})`) && passed;
+  passed = assert(ibAfter?.status === "intake", `IB → intake (got: ${ibAfter?.status})`) && passed;
+
+  // Step 4: Generate + deliver CD report
+  console.log("  Step 4: Insert CD report + deliver");
+  const cdToken = await insertReport(cdCaseId);
+  passed = assert(!!cdToken, "CD report inserted") && passed;
+
+  const cdDeliver = await callDeliver(cdCaseId);
+  passed = assert(cdDeliver.ok, "CD delivered") && passed;
+
+  const cdFinal = await getCase(cdCaseId);
+  passed = assert(cdFinal?.status === "delivered", `CD status → delivered (got: ${cdFinal?.status})`) && passed;
+
+  // Step 5: Generate + deliver IB report
+  console.log("  Step 5: Insert IB report + deliver");
+  const ibToken = await insertReport(ibCaseId);
+  passed = assert(!!ibToken, "IB report inserted") && passed;
+
+  const ibDeliver = await callDeliver(ibCaseId);
+  passed = assert(ibDeliver.ok, "IB delivered") && passed;
+
+  const ibFinal = await getCase(ibCaseId);
+  passed = assert(ibFinal?.status === "delivered", `IB status → delivered (got: ${ibFinal?.status})`) && passed;
+
+  // Step 6: Verify both cases delivered
+  console.log("  Step 6: Verify both cases delivered");
+  const { data: allCases } = await supabase
+    .from("cases")
+    .select("id, tier, status, is_included_deliverable")
+    .eq("order_id", orderId);
+  passed = assert(allCases?.length === 2, `2 cases on order (got: ${allCases?.length})`) && passed;
+  passed = assert(
+    allCases?.every((c) => c.status === "delivered"),
+    "All cases delivered"
+  ) && passed;
+
+  pipelineResults.push({ name, passed });
+  return passed;
+}
+
+// ================================================================
+// PIPELINE 4: X-Ray ($2,497) — Discovery Upload Flow
+// ================================================================
+
+async function testXRay() {
+  const name = "Pipeline 4: X-Ray ($2,497)";
+  console.log(`\n${"=".repeat(60)}`);
+  console.log(`  ${name}`);
+  console.log(`${"=".repeat(60)}`);
+
+  const email = TEST_EMAIL;
+  let passed = true;
+
+  // Step 1: Create order
+  console.log("  Step 1: Create X-Ray order");
+  const orderId = await createTestOrder("x-ray", email);
+  passed = assert(!!orderId, "Order created") && passed;
+
+  // Step 2: Create cases (CD included, IB included, X-Ray primary)
+  console.log("  Step 2: Create cases (CD + IB included, X-Ray primary)");
+  const cdCaseId = await createTestCase(orderId, "case-decoder", email, "awaiting-intake", {
+    isIncluded: true, parentOrderId: orderId,
+  });
+  const ibCaseId = await createTestCase(orderId, "intelligence-brief", email, "awaiting-intake", {
+    isIncluded: true, parentOrderId: orderId,
+  });
+  const xrayCaseId = await createTestCase(orderId, "x-ray", email, "awaiting-intake");
+  passed = assert(!!cdCaseId && !!ibCaseId && !!xrayCaseId, "All 3 cases created") && passed;
+
+  // Step 3: Submit intake (direct DB — API already tested in pipeline 2)
+  // CD+IB get intake. X-Ray also gets intake (will transition to pending for upload later).
+  console.log("  Step 3: Create intake + link cases (direct DB)");
+  const intakeId = await createDirectIntake(email, "white-collar", [cdCaseId, ibCaseId, xrayCaseId]);
+  passed = assert(!!intakeId, "Intake created + linked to all cases") && passed;
+
+  const cdAfter = await getCase(cdCaseId);
+  const ibAfter = await getCase(ibCaseId);
+  const xrayAfter = await getCase(xrayCaseId);
+  passed = assert(cdAfter?.status === "intake", `CD → intake (got: ${cdAfter?.status})`) && passed;
+  passed = assert(ibAfter?.status === "intake", `IB → intake (got: ${ibAfter?.status})`) && passed;
+  passed = assert(xrayAfter?.status === "intake", `X-Ray → intake (got: ${xrayAfter?.status})`) && passed;
+
+  // Step 4: Deliver CD
+  console.log("  Step 4: Deliver CD");
+  await insertReport(cdCaseId);
+  await callDeliver(cdCaseId);
+  const cdFinal = await getCase(cdCaseId);
+  passed = assert(cdFinal?.status === "delivered", `CD delivered (got: ${cdFinal?.status})`) && passed;
+
+  // Step 5: Deliver IB
+  console.log("  Step 5: Deliver IB");
+  await insertReport(ibCaseId);
+  await callDeliver(ibCaseId);
+  const ibFinal = await getCase(ibCaseId);
+  passed = assert(ibFinal?.status === "delivered", `IB delivered (got: ${ibFinal?.status})`) && passed;
+
+  // Step 6: Simulate file upload + finalize for X-Ray
+  console.log("  Step 6: Upload files + finalize X-Ray");
+  // First set X-Ray to pending (discovery tier workflow)
+  await supabase.from("cases").update({ status: "pending" }).eq("id", xrayCaseId);
+  const uploaded = await simulateFileUpload(xrayCaseId);
+  passed = assert(uploaded, "Files uploaded to X-Ray case") && passed;
+
+  const finalizeResult = await callFinalize(xrayCaseId, email);
+  passed = assert(finalizeResult.ok, `Finalize API: success`) && passed;
+
+  const xrayAfterFinalize = await getCase(xrayCaseId);
+  passed = assert(xrayAfterFinalize?.status === "submitted", `X-Ray → submitted (got: ${xrayAfterFinalize?.status})`) && passed;
+
+  // Step 7: Insert X-Ray report + deliver
+  console.log("  Step 7: Insert X-Ray report + deliver");
+  await insertReport(xrayCaseId);
+  await callDeliver(xrayCaseId);
+  const xrayFinal = await getCase(xrayCaseId);
+  passed = assert(xrayFinal?.status === "delivered", `X-Ray delivered (got: ${xrayFinal?.status})`) && passed;
+
+  // Step 8: Verify all 3 cases delivered
+  console.log("  Step 8: Verify all cases delivered");
+  const { data: allCases } = await supabase
+    .from("cases")
+    .select("id, tier, status")
+    .eq("order_id", orderId);
+  passed = assert(allCases?.length === 3, `3 cases on order (got: ${allCases?.length})`) && passed;
+  passed = assert(
+    allCases?.every((c) => c.status === "delivered"),
+    "All 3 cases delivered"
+  ) && passed;
+
+  pipelineResults.push({ name, passed });
+  return passed;
+}
+
+// ================================================================
+// PIPELINE 5: War Room ($4,997) — Multi-Case + Discovery
+// ================================================================
+
+async function testWarRoom() {
+  const name = "Pipeline 5: War Room ($4,997)";
+  console.log(`\n${"=".repeat(60)}`);
+  console.log(`  ${name}`);
+  console.log(`${"=".repeat(60)}`);
+
+  const email = TEST_EMAIL;
+  let passed = true;
+
+  // Step 1: Create order
+  console.log("  Step 1: Create War Room order");
+  const orderId = await createTestOrder("war-room", email);
+  passed = assert(!!orderId, "Order created") && passed;
+
+  // Step 2: Create all 4 cases
+  console.log("  Step 2: Create cases (CD + IB + X-Ray included, War Room primary)");
+  const cdCaseId = await createTestCase(orderId, "case-decoder", email, "awaiting-intake", {
+    isIncluded: true, parentOrderId: orderId,
+  });
+  const ibCaseId = await createTestCase(orderId, "intelligence-brief", email, "awaiting-intake", {
+    isIncluded: true, parentOrderId: orderId,
+  });
+  const xrayCaseId = await createTestCase(orderId, "x-ray", email, "awaiting-intake", {
+    isIncluded: true, parentOrderId: orderId,
+  });
+  const wrCaseId = await createTestCase(orderId, "war-room", email, "awaiting-intake");
+  passed = assert(!!cdCaseId && !!ibCaseId && !!xrayCaseId && !!wrCaseId, "All 4 cases created") && passed;
+
+  // Step 3: Submit intake (direct DB — API already tested in pipeline 2)
+  console.log("  Step 3: Create intake + link cases (direct DB)");
+  const intakeId = await createDirectIntake(email, "assault", [cdCaseId, ibCaseId, xrayCaseId, wrCaseId]);
+  passed = assert(!!intakeId, "Intake created + linked to all 4 cases") && passed;
+
+  // Step 4: Deliver CD → IB
+  console.log("  Step 4: Deliver CD");
+  await insertReport(cdCaseId);
+  await callDeliver(cdCaseId);
+  passed = assert((await getCase(cdCaseId))?.status === "delivered", "CD delivered") && passed;
+
+  console.log("  Step 5: Deliver IB");
+  await insertReport(ibCaseId);
+  await callDeliver(ibCaseId);
+  passed = assert((await getCase(ibCaseId))?.status === "delivered", "IB delivered") && passed;
+
+  // Step 6: X-Ray discovery upload + finalize + deliver
+  console.log("  Step 6: X-Ray upload + finalize + deliver");
+  await supabase.from("cases").update({ status: "pending" }).eq("id", xrayCaseId);
+  await simulateFileUpload(xrayCaseId);
+  await callFinalize(xrayCaseId, email);
+  await insertReport(xrayCaseId);
+  await callDeliver(xrayCaseId);
+  passed = assert((await getCase(xrayCaseId))?.status === "delivered", "X-Ray delivered") && passed;
+
+  // Step 7: War Room discovery upload + finalize + deliver
+  console.log("  Step 7: War Room upload + finalize + deliver");
+  await supabase.from("cases").update({ status: "pending" }).eq("id", wrCaseId);
+  await simulateFileUpload(wrCaseId);
+  await callFinalize(wrCaseId, email);
+  await insertReport(wrCaseId);
+  await callDeliver(wrCaseId);
+  passed = assert((await getCase(wrCaseId))?.status === "delivered", "War Room delivered") && passed;
+
+  // Step 8: Verify all 4 cases
+  console.log("  Step 8: Verify all 4 cases delivered");
+  const { data: allCases } = await supabase
+    .from("cases")
+    .select("id, tier, status")
+    .eq("order_id", orderId);
+  passed = assert(allCases?.length === 4, `4 cases on order (got: ${allCases?.length})`) && passed;
+  passed = assert(
+    allCases?.every((c) => c.status === "delivered"),
+    "All 4 cases delivered"
+  ) && passed;
+
+  pipelineResults.push({ name, passed });
+  return { passed, orderId, email };
+}
+
+// ================================================================
+// PIPELINE 6: Situation Room ($9,997) — Prerequisite Gate
+// ================================================================
+
+async function testSituationRoom(priorWarRoomOrderId, priorWarRoomEmail) {
+  const name = "Pipeline 6: Situation Room ($9,997)";
+  console.log(`\n${"=".repeat(60)}`);
+  console.log(`  ${name}`);
+  console.log(`${"=".repeat(60)}`);
+
+  // Use a different email if no War Room email provided, otherwise same email
+  const email = priorWarRoomEmail || TEST_EMAIL;
+  let passed = true;
+
+  // Step 1: Verify prerequisite — War Room order exists for this customer
+  console.log("  Step 1: Verify War Room prerequisite");
+  if (priorWarRoomOrderId) {
+    const { data: wrOrder } = await supabase
+      .from("orders")
+      .select("id, tier, status")
+      .eq("id", priorWarRoomOrderId)
+      .eq("tier", "war-room")
+      .eq("status", "paid")
+      .single();
+    passed = assert(!!wrOrder, "Prior War Room order exists (prerequisite met)") && passed;
+  } else {
+    // Create a mock War Room order to satisfy prerequisite
+    console.log("    Creating mock War Room order for prerequisite");
+    const mockWrOrderId = await createTestOrder("war-room", email);
+    passed = assert(!!mockWrOrderId, "Mock War Room order created") && passed;
+  }
+
+  // Step 2: Create Situation Room order
+  console.log("  Step 2: Create Situation Room order");
+  const orderId = await createTestOrder("situation-room", email, {
+    priority: true, // Situation Room has priority
+  });
+  passed = assert(!!orderId, "Order created") && passed;
+
+  // Step 3: Create all 5 cases
+  console.log("  Step 3: Create cases (CD + IB + X-Ray + War Room included, SR primary)");
+  const cdCaseId = await createTestCase(orderId, "case-decoder", email, "awaiting-intake", {
+    isIncluded: true, parentOrderId: orderId,
+  });
+  const ibCaseId = await createTestCase(orderId, "intelligence-brief", email, "awaiting-intake", {
+    isIncluded: true, parentOrderId: orderId,
+  });
+  const xrayCaseId = await createTestCase(orderId, "x-ray", email, "awaiting-intake", {
+    isIncluded: true, parentOrderId: orderId,
+  });
+  const wrCaseId = await createTestCase(orderId, "war-room", email, "awaiting-intake", {
+    isIncluded: true, parentOrderId: orderId,
+  });
+  const srCaseId = await createTestCase(orderId, "situation-room", email, "awaiting-intake");
+  passed = assert(
+    !!cdCaseId && !!ibCaseId && !!xrayCaseId && !!wrCaseId && !!srCaseId,
+    "All 5 cases created"
+  ) && passed;
+
+  // Step 4: Submit intake
+  console.log("  Step 4: Submit intake");
+  // Use a slightly different approach: direct insert since the email may have been
+  // used before in pipeline 5 (60-second dedup protection)
+  const intakeId = randomUUID();
+  allIntakeIds.push(intakeId);
+  const { error: intakeError } = await supabase.from("intakes").insert({
+    id: intakeId,
+    email,
+    first_name: "E2E SitRoom",
+    charge_type: "federal",
+    state: "Florida",
+  });
+  passed = assert(!intakeError, `Intake created: ${intakeError?.message || "ok"}`) && passed;
+
+  // Link intake to all cases
+  for (const id of [cdCaseId, ibCaseId, xrayCaseId, wrCaseId, srCaseId]) {
+    await supabase
+      .from("cases")
+      .update({ intake_id: intakeId, status: "intake", charge_type: "federal" })
+      .eq("id", id);
+  }
+
+  // Step 5: Deliver CD → IB
+  console.log("  Step 5: Deliver CD + IB");
+  await insertReport(cdCaseId);
+  await callDeliver(cdCaseId);
+  passed = assert((await getCase(cdCaseId))?.status === "delivered", "CD delivered") && passed;
+
+  await insertReport(ibCaseId);
+  await callDeliver(ibCaseId);
+  passed = assert((await getCase(ibCaseId))?.status === "delivered", "IB delivered") && passed;
+
+  // Step 6: X-Ray + War Room discovery flow
+  console.log("  Step 6: X-Ray upload + finalize + deliver");
+  await supabase.from("cases").update({ status: "pending" }).eq("id", xrayCaseId);
+  await simulateFileUpload(xrayCaseId);
+  await callFinalize(xrayCaseId, email);
+  await insertReport(xrayCaseId);
+  await callDeliver(xrayCaseId);
+  passed = assert((await getCase(xrayCaseId))?.status === "delivered", "X-Ray delivered") && passed;
+
+  console.log("  Step 7: War Room upload + finalize + deliver");
+  await supabase.from("cases").update({ status: "pending" }).eq("id", wrCaseId);
+  await simulateFileUpload(wrCaseId);
+  await callFinalize(wrCaseId, email);
+  await insertReport(wrCaseId);
+  await callDeliver(wrCaseId);
+  passed = assert((await getCase(wrCaseId))?.status === "delivered", "War Room delivered") && passed;
+
+  // Step 8: Situation Room discovery flow
+  console.log("  Step 8: Situation Room upload + finalize + deliver");
+  await supabase.from("cases").update({ status: "pending" }).eq("id", srCaseId);
+  await simulateFileUpload(srCaseId);
+  await callFinalize(srCaseId, email);
+  await insertReport(srCaseId);
+  await callDeliver(srCaseId);
+  passed = assert((await getCase(srCaseId))?.status === "delivered", "Situation Room delivered") && passed;
+
+  // Step 9: Verify all 5 cases
+  console.log("  Step 9: Verify all 5 cases delivered");
+  const { data: allCases } = await supabase
+    .from("cases")
+    .select("id, tier, status")
+    .eq("order_id", orderId);
+  passed = assert(allCases?.length === 5, `5 cases on order (got: ${allCases?.length})`) && passed;
+  passed = assert(
+    allCases?.every((c) => c.status === "delivered"),
+    "All 5 cases delivered"
+  ) && passed;
+
+  pipelineResults.push({ name, passed });
+  return passed;
+}
+
+// ================================================================
+// MAIN — Run all pipelines sequentially
+// ================================================================
+
+async function run() {
+  console.log("╔══════════════════════════════════════════════════════════╗");
+  console.log("║   E2E Pipeline Tests — All Tiers                       ║");
+  console.log("╚══════════════════════════════════════════════════════════╝");
+  console.log(`  Site URL: ${SITE_URL}`);
+  console.log(`  Supabase: ${SUPABASE_URL}`);
+  console.log(`  Test email: ${TEST_EMAIL}`);
+  console.log(`  Skip API: ${skipApi}`);
+  console.log(`  Run timestamp: ${RUN_TS}`);
+  if (onlyPipeline) console.log(`  Running only pipeline: ${onlyPipeline}`);
+  console.log();
+
+  let warRoomResult = null;
+
+  try {
+    if (!onlyPipeline || onlyPipeline === 1) await testPlaybooks();
+    if (!onlyPipeline || onlyPipeline === 2) await testCaseDecoder();
+    if (!onlyPipeline || onlyPipeline === 3) await testIntelligenceBrief();
+    if (!onlyPipeline || onlyPipeline === 4) await testXRay();
+    if (!onlyPipeline || onlyPipeline === 5) warRoomResult = await testWarRoom();
+    if (!onlyPipeline || onlyPipeline === 6) {
+      await testSituationRoom(
+        warRoomResult?.orderId || null,
+        warRoomResult?.email || null
+      );
+    }
+  } finally {
+    await cleanup();
+  }
+
+  // ── Summary ──
+  console.log(`\n${"=".repeat(60)}`);
+  console.log("  SUMMARY");
+  console.log(`${"=".repeat(60)}`);
+  for (const r of pipelineResults) {
+    const icon = r.passed ? "✓" : "✗";
+    console.log(`  ${icon} ${r.name}`);
+  }
+  console.log();
+  console.log(`  Total: ${totalPass} passed, ${totalFail} failed`);
+
+  if (totalFail > 0) {
+    console.log("\n  ✗ SOME TESTS FAILED — see details above");
+    process.exitCode = 1;
+  } else {
+    console.log("\n  ✓ ALL TESTS PASSED");
+  }
+}
+
+run().catch((err) => {
+  console.error("\nFatal error:", err);
+  cleanup().catch(() => {});
+  process.exitCode = 1;
+});

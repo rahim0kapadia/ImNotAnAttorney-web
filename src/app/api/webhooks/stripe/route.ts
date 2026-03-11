@@ -237,6 +237,11 @@ export async function POST(req: NextRequest) {
         "dui-first-offense": "Check your state's DMV hearing deadline NOW (page 2). In most states, you have 10 days or fewer — miss it and your license is automatically suspended.",
         "drug-possession": "Read the \"What Makes Your Case Unique\" section. Drug cases turn on specific facts — substance type, weight, how it was found. Know YOUR facts before your next conversation.",
         "probation-violation": "Read the \"Two Types of Violations\" section. Whether yours is technical or substantive changes your entire defense strategy. Gather every document that proves compliance — that's your strongest defense.",
+        "white-collar": "Read the \"Document Preservation\" section immediately. White collar cases live and die on documentation — know what to preserve and what your attorney should be requesting before your next meeting.",
+        "sex-offense": "Read the \"Collateral Consequences\" section. Sex offense cases carry registration requirements and restrictions that go far beyond sentencing — know the full picture before making any decisions.",
+        "federal-criminal": "Read the \"Federal vs. State\" differences section. Federal cases operate on a completely different timeline with different rules — mandatory minimums, sentencing guidelines, and cooperation agreements all work differently.",
+        "drug-trafficking": "Read the \"Conspiracy Exposure\" section. Trafficking cases often involve conspiracy charges that can make you responsible for others' conduct — understand your exposure before your next attorney conversation.",
+        "self-defense": "Read the \"Force Proportionality\" section. Self-defense cases hinge on whether your response was proportional to the threat — know what standard your state uses before discussing strategy with your attorney.",
       };
       const step2 = playbookStep2[tier] || "Review the charge-specific details section. Every case has facts that matter more than others — know yours.";
 

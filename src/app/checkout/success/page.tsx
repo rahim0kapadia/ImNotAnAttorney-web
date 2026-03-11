@@ -41,6 +41,8 @@ import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 import { CONTACT_EMAIL } from "@/lib/site";
 import { TIER_CORE, upgradePrice, type TierSlug } from "@/lib/tiers";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { TrustBadges } from "@/components/TrustBadges";
 
 
 /**
@@ -78,6 +80,46 @@ const TIER_NEXT_STEPS: Record<
     delivery: TIER_CORE["probation-violation"].delivery,
     action:
       "Your Probation Violation Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+    showUpload: false,
+    isDigitalProduct: true,
+  },
+  "white-collar": {
+    name: TIER_CORE["white-collar"].name,
+    delivery: TIER_CORE["white-collar"].delivery,
+    action:
+      "Your White Collar Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+    showUpload: false,
+    isDigitalProduct: true,
+  },
+  "sex-offense": {
+    name: TIER_CORE["sex-offense"].name,
+    delivery: TIER_CORE["sex-offense"].delivery,
+    action:
+      "Your Sex Offense Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+    showUpload: false,
+    isDigitalProduct: true,
+  },
+  "federal-criminal": {
+    name: TIER_CORE["federal-criminal"].name,
+    delivery: TIER_CORE["federal-criminal"].delivery,
+    action:
+      "Your Federal Criminal Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+    showUpload: false,
+    isDigitalProduct: true,
+  },
+  "drug-trafficking": {
+    name: TIER_CORE["drug-trafficking"].name,
+    delivery: TIER_CORE["drug-trafficking"].delivery,
+    action:
+      "Your Drug Trafficking Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+    showUpload: false,
+    isDigitalProduct: true,
+  },
+  "self-defense": {
+    name: TIER_CORE["self-defense"].name,
+    delivery: TIER_CORE["self-defense"].delivery,
+    action:
+      "Your Self-Defense / Justifiable Force Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
     showUpload: false,
     isDigitalProduct: true,
   },
@@ -268,6 +310,7 @@ function SuccessContent() {
 
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-4">
+      <FadeInUp>
       <div className="max-w-lg text-center">
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-amber-500/10 text-3xl text-amber-400" aria-label="Success">
           &#10003;
@@ -336,10 +379,10 @@ function SuccessContent() {
             {/* adds, and the upgrade cost (current purchase credited).     */}
             {/* Only visible while timeLeft is active (24h window).         */}
             {/* ------------------------------------------------------------ */}
-            {timeLeft && timeLeft !== "Expired" && (tier === "dui-first-offense" || tier === "drug-possession" || tier === "probation-violation") && (
+            {timeLeft && timeLeft !== "Expired" && (tier === "dui-first-offense" || tier === "drug-possession" || tier === "probation-violation" || tier === "white-collar" || tier === "sex-offense" || tier === "federal-criminal" || tier === "drug-trafficking" || tier === "self-defense") && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
-                  Upgrade offer — {timeLeft} remaining
+                  Upgrade offer — <span className="animate-pulse">{timeLeft}</span> remaining
                 </p>
                 <p className="text-sm font-semibold text-amber-400">
                   Get Case-Specific Questions — Case Decoder
@@ -361,7 +404,7 @@ function SuccessContent() {
             {timeLeft && timeLeft !== "Expired" && tier === "case-decoder" && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
-                  Upgrade offer — {timeLeft} remaining
+                  Upgrade offer — <span className="animate-pulse">{timeLeft}</span> remaining
                 </p>
                 <p className="text-sm font-semibold text-amber-400">
                   Upgrade to Intelligence Brief
@@ -383,7 +426,7 @@ function SuccessContent() {
             {timeLeft && timeLeft !== "Expired" && tier === "intelligence-brief" && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
-                  Upgrade offer — {timeLeft} remaining
+                  Upgrade offer — <span className="animate-pulse">{timeLeft}</span> remaining
                 </p>
                 <p className="text-sm font-semibold text-amber-400">
                   Upgrade to The X-Ray
@@ -405,7 +448,7 @@ function SuccessContent() {
             {timeLeft && timeLeft !== "Expired" && tier === "x-ray" && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
-                  Upgrade offer — {timeLeft} remaining
+                  Upgrade offer — <span className="animate-pulse">{timeLeft}</span> remaining
                 </p>
                 <p className="text-sm font-semibold text-amber-400">
                   Upgrade to The War Room
@@ -427,7 +470,7 @@ function SuccessContent() {
             {timeLeft && timeLeft !== "Expired" && tier === "war-room" && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
-                  Upgrade offer — {timeLeft} remaining
+                  Upgrade offer — <span className="animate-pulse">{timeLeft}</span> remaining
                 </p>
                 <p className="text-sm font-semibold text-amber-400">
                   Upgrade to The Situation Room
@@ -475,6 +518,10 @@ function SuccessContent() {
           </Link>
         </div>
 
+        <div className="mt-8">
+          <TrustBadges variant="checkout" />
+        </div>
+
         <p className="mt-8 text-xs text-zinc-400">
           ImNotAnAttorney provides legal information and research — not legal advice. No attorney-client relationship is created.
         </p>
@@ -488,6 +535,7 @@ function SuccessContent() {
           </a>
         </p>
       </div>
+      </FadeInUp>
     </div>
   );
 }

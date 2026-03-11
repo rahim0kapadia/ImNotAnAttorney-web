@@ -71,8 +71,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, sendEmailWithRetry, escapeHtml } from "@/lib/email";
-import { getNextNurtureEmail, getPostPurchaseEmails } from "@/lib/drip-emails";
-import type { DripEmail } from "@/lib/drip-emails";
+import { getNextNurtureEmail, getPostPurchaseEmails, personalizeEmailHtml } from "@/lib/drip-emails";
+import type { DripEmail, DripPersonalizationData } from "@/lib/drip-emails";
 import { signOperatorToken, signPhase2Token, SITE_URL, caseThreadId } from "@/lib/site";
 import { stripe } from "@/lib/stripe";
 import { TIER_CORE } from "@/lib/tiers";
@@ -400,12 +400,23 @@ export async function GET(req: NextRequest) {
           // ── LINKED CASE (for threading + placeholder resolution) ──
           const { data: linkedCase } = await supabase
             .from("cases")
-            .select("id, report_token, status")
+            .select("id, intake_id, report_token, status")
             .eq("email", order.email.toLowerCase())
             .eq("tier", order.tier)
             .order("created_at", { ascending: false })
             .limit(1)
             .maybeSingle();
+
+          // ── INTAKE DATA (for email personalization) ──
+          let intakeData: DripPersonalizationData | null = null;
+          if (linkedCase?.intake_id) {
+            const { data } = await supabase
+              .from("intakes")
+              .select("filled_out_by, case_stage, employment_industry, first_name")
+              .eq("id", linkedCase.intake_id)
+              .single();
+            intakeData = data;
+          }
 
           // ── GUARD: Intake reminders only send if intake hasn't been submitted ──
           // Applies to all tier intake reminders (CD, X-Ray, War Room, Situation Room).
@@ -460,6 +471,11 @@ export async function GET(req: NextRequest) {
               .replace(/\{\{CASE_ID\}\}/g, linkedCase?.id || "")
               .replace(/\{\{EMAIL\}\}/g, encodeURIComponent(order.email))
               .replace(/\{\{REPORT_URL\}\}/g, reportUrl);
+          }
+
+          // ── PERSONALIZE (family buyer, stage-aware, career-aware blocks) ──
+          if (intakeData) {
+            emailHtml = personalizeEmailHtml(emailHtml, nextEmail.key, intakeData);
           }
 
           // ── SEND + RECORD (with retry for transient failures) ──

@@ -1,0 +1,16 @@
+---
+platform: twitter
+type: single-tweet
+project: inna
+status: pending
+created: 2026-03-10T22:36:56.647Z
+agent: seed-script
+title: "Single Tweet: Public Defender Note"
+suggested_time: "Weekday 9:00 AM EST"
+---
+
+Public defenders are overwhelmed. 200+ cases at a time. Not enough time for yours.
+
+But you still have rights. You still have options.
+
+Document everything. Ask for specifics. And if you're eligible for a public defender but want more attention — consider supplementing with services like ours.

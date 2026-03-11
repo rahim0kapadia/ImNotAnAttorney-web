@@ -32,6 +32,9 @@
  */
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { LeadCapture } from "@/components/LeadCapture";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
+import { TrustBadges } from "@/components/TrustBadges";
 import { SITE_URL } from "@/lib/site";
 import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
@@ -276,8 +279,9 @@ export default function ServicesPage() {
       />
       <div className="mx-auto max-w-5xl">
         {/* HEADER — Page title + value proposition */}
+        <FadeInUp>
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-white md:text-5xl">
+          <h1 className="font-display text-3xl font-bold text-white md:text-5xl">
             Services built for <span className="text-amber-400">your</span>{" "}
             case
           </h1>
@@ -289,12 +293,14 @@ export default function ServicesPage() {
             intelligence. Start at {TIER_CORE["case-decoder"].priceDisplay} — upgrade anytime with full credit.
           </p>
         </div>
+        </FadeInUp>
 
         {/* PRICING COMPARISON — Value framing: attorney retainer vs our cost. */}
         {/* Shows 3 price tiers ($10K, $30K, $100K attorney) with our price  */}
         {/* as a percentage. Makes even the $9,997 tier feel like 1-10%.     */}
+        <FadeInUp>
         <div className="mt-16 rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 text-center">
-          <h2 className="text-lg font-bold text-white">
+          <h2 className="font-display text-lg font-bold text-white">
             Smart defendants don&apos;t just hire an attorney.{" "}
             <span className="text-amber-400">
               They make sure the attorney is working.
@@ -304,13 +310,13 @@ export default function ServicesPage() {
             You paid $10K-$100K+ for an attorney. Our services cost a fraction
             of that — to make sure they&apos;re actually earning it.
           </p>
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
+          <StaggerContainer className="mt-6 grid gap-4 md:grid-cols-3">
             {[
               { attorney: "$10K", ours: "$197-$2,497", pct: "2-25%" },
               { attorney: "$30K", ours: "$997-$4,997", pct: "3-17%" },
               { attorney: "$100K", ours: "$2,497-$9,997", pct: "2-10%" },
             ].map((row) => (
-              <div key={row.attorney} className="rounded-lg bg-zinc-800/50 p-4">
+              <StaggerItem key={row.attorney} className="rounded-lg bg-zinc-800/50 p-4">
                 <div className="text-xs text-zinc-400">You paid attorney</div>
                 <div className="text-lg font-bold text-white">
                   {row.attorney}
@@ -322,10 +328,11 @@ export default function ServicesPage() {
                 <div className="mt-1 text-xs text-zinc-400">
                   {row.pct} of your investment
                 </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
+        </FadeInUp>
 
         {/* UPGRADE CREDITS — Reduces commitment anxiety. 100% of payment     */}
         {/* applies toward next tier. 12-month expiration. This is key for   */}
@@ -382,9 +389,10 @@ export default function ServicesPage() {
         {/* INSTANT PRODUCTS — Charge-specific Playbooks for immediate help.  */}
         {/* Pre-built PDFs, no intake form, instant delivery. Fills the gap */}
         {/* between free content and the $197 Case Decoder.                 */}
+        <FadeInUp>
         <section className="mt-20">
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-white md:text-3xl">
+            <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
               Instant Products
             </h2>
             <p className="text-sm text-amber-400">
@@ -396,7 +404,8 @@ export default function ServicesPage() {
               service with full credit.
             </p>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
+          <StaggerContainer className="grid gap-4 md:grid-cols-3">
+            <StaggerItem>
             <Link
               href="/checkout?tier=dui-first-offense"
               className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
@@ -419,6 +428,8 @@ export default function ServicesPage() {
                 {TIER_CORE["dui-first-offense"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
+            </StaggerItem>
+            <StaggerItem>
             <Link
               href="/checkout?tier=drug-possession"
               className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
@@ -441,6 +452,8 @@ export default function ServicesPage() {
                 {TIER_CORE["drug-possession"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
+            </StaggerItem>
+            <StaggerItem>
             <Link
               href="/checkout?tier=probation-violation"
               className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
@@ -463,17 +476,20 @@ export default function ServicesPage() {
                 {TIER_CORE["probation-violation"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
-          </div>
+            </StaggerItem>
+          </StaggerContainer>
         </section>
+        </FadeInUp>
 
         {/* CASE TYPE SECTIONS — One section per case type (Drug, DUI, WC).   */}
         {/* Each renders all 5 tiers with case-type-specific descriptions.   */}
         {/* First 3 tiers in 3-col grid, last 2 (War Room, Situation Room)  */}
         {/* in a 2-col grid below — visual hierarchy emphasizes entry tiers. */}
         {caseTypes.map((ct) => (
-          <section key={ct.title} className="mt-20">
+          <FadeInUp key={ct.title}>
+          <section className="mt-20">
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-white md:text-3xl">
+              <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
                 {ct.title}
               </h2>
               <p className="text-sm text-amber-400">{ct.subtitle}</p>
@@ -569,12 +585,14 @@ export default function ServicesPage() {
               ))}
             </div>
           </section>
+          </FadeInUp>
         ))}
 
         {/* GUARANTEE — Per-tier delivery commitments with deadlines.          */}
         {/* Reinforces risk reversal at the point of maximum hesitation.      */}
+        <FadeInUp>
         <section className="mt-20 rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 text-center">
-          <h2 className="text-2xl font-bold text-white">
+          <h2 className="font-display text-2xl font-bold text-white">
             Our Guarantee
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-zinc-300">
@@ -617,14 +635,21 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
+        </FadeInUp>
 
         {/* FAQ — Service-specific questions rendered via FAQAccordion.        */}
+        <FadeInUp>
         <section className="mt-20">
-          <h2 className="mb-8 text-center text-2xl font-bold text-white">
+          <h2 className="font-display mb-8 text-center text-2xl font-bold text-white">
             Frequently Asked Questions
           </h2>
           <FAQAccordion items={faqs} />
         </section>
+        </FadeInUp>
+
+        <div className="mt-8">
+          <TrustBadges variant="pricing" />
+        </div>
 
         {/* LEAD CAPTURE — Fallback email opt-in for visitors not ready to buy. */}
         <div className="mt-16">

@@ -71,6 +71,8 @@ const ALLOWED_CHARGE_TYPES = [
   "weapons",
   "white-collar",
   "federal",
+  "probation-violation",
+  "self-defense",
   "other",
   // Legacy values from older intake forms (backward compatibility)
   "dui-first", "dui-repeat", "other-felony", "other-misdemeanor",
@@ -79,6 +81,15 @@ const ALLOWED_CHARGE_TYPES = [
 
 /** Valid jurisdiction levels for the intake form. */
 const ALLOWED_JURISDICTION_LEVELS = ["federal", "state", "unknown"];
+
+/** Valid case stages for the intake form (Bergman stage-keyed walkthrough). */
+const ALLOWED_CASE_STAGES = [
+  "pre-arrest", "arrested", "arraigned", "pre-trial",
+  "trial-prep", "sentencing", "post-conviction",
+];
+
+/** Valid values for who is filling out the form (Jayadev participatory defense). */
+const ALLOWED_FILLED_OUT_BY = ["self", "family", "friend", "other"];
 
 export async function POST(req: NextRequest) {
   try {
@@ -209,6 +220,14 @@ export async function POST(req: NextRequest) {
       // New fields: charge-specific intake data + jurisdiction level
       charge_specific_data: chargeSpecificData,
       jurisdiction_level: jurisdictionLevel,
+      // Expansion fields (Mar 2026): powers personalized cost, court walkthrough,
+      // collateral consequences, and family-aware framing across all tiers
+      criminal_history: cap(body.criminalHistory, 50),
+      employment_status: cap(body.employmentStatus, 50),
+      employment_industry: cap(body.employmentIndustry, 100),
+      case_stage: ALLOWED_CASE_STAGES.includes(body.caseStage) ? body.caseStage : null,
+      filled_out_by: ALLOWED_FILLED_OUT_BY.includes(body.filledOutBy) ? body.filledOutBy : null,
+      mental_health_relevant: cap(body.mentalHealthRelevant, 30),
     }).select("id").single();
 
     if (error) {
@@ -370,6 +389,11 @@ export async function POST(req: NextRequest) {
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Arrest Date:</strong> ${escapeHtml(body.arrestDate || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Evidence Types:</strong> ${(body.evidenceType || []).map((s: string) => escapeHtml(s)).join(", ") || "Not specified"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Services:</strong> ${(body.services || []).join(", ") || "None selected"}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Criminal History:</strong> ${escapeHtml(body.criminalHistory || "Not provided")}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Employment:</strong> ${escapeHtml(body.employmentStatus || "Not provided")}${body.employmentIndustry ? ` — ${escapeHtml(body.employmentIndustry)}` : ""}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case Stage:</strong> ${escapeHtml(body.caseStage || "Not provided")}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Filled Out By:</strong> ${escapeHtml(body.filledOutBy || "Self")}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Mental Health Relevant:</strong> ${escapeHtml(body.mentalHealthRelevant || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Time:</strong> ${new Date().toISOString()}</p>
         </div>
         ${body.specificQuestion ? `<div style="margin-top: 16px;"><p style="color: #F59E0B; font-weight: bold;">Their #1 Question:</p><p style="color: #D4D4D8;">${escapeHtml(body.specificQuestion)}</p></div>` : ""}

@@ -17,6 +17,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -80,7 +81,7 @@ export function Header() {
           </Link>
           <Link
             href="/checkout?tier=case-decoder"
-            className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
+            className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-black transition-all hover:bg-amber-400 hover:shadow-md hover:shadow-amber-500/30"
           >
             Get Started
           </Link>
@@ -119,9 +120,17 @@ export function Header() {
       </div>
 
       {/* Mobile nav */}
+      <AnimatePresence>
       {mobileOpen && (
-        <nav aria-label="Mobile navigation" className="border-t border-zinc-800 px-4 py-4 md:hidden">
-          <div className="flex flex-col gap-4">
+        <motion.nav
+          aria-label="Mobile navigation"
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ type: "spring" as const, stiffness: 300, damping: 30 }}
+          className="overflow-hidden border-t border-zinc-800 md:hidden"
+        >
+          <div className="flex flex-col gap-4 px-4 py-4">
             <Link
               href="/blog"
               onClick={() => setMobileOpen(false)}
@@ -165,8 +174,9 @@ export function Header() {
               Get Started
             </Link>
           </div>
-        </nav>
+        </motion.nav>
       )}
+      </AnimatePresence>
     </header>
   );
 }

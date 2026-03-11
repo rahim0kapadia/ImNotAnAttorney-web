@@ -33,6 +33,8 @@
  * target audience (defendants who feel their attorney is failing them).
  */
 import { LeadCapture } from "@/components/LeadCapture";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 import { SITE_URL } from "@/lib/site";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -51,11 +53,14 @@ export default function AboutPage() {
     <div className="px-4 py-16">
       <div className="mx-auto max-w-3xl">
         {/* HERO — Identity statement that immediately establishes credibility */}
-        <h1 className="text-3xl font-bold text-white md:text-5xl">
+        <FadeInUp>
+        <h1 className="font-display text-3xl font-bold text-white md:text-5xl">
           Built by a defendant.
           <br />
           <span className="text-amber-400">For defendants.</span>
         </h1>
+        </FadeInUp>
+        <FadeInUp delay={0.1}>
         <p className="mt-6 text-lg leading-relaxed text-zinc-400">
           I&apos;m Rahim Kapadia. In 2023, I was facing drug trafficking
           charges in St. Petersburg, Florida. Mandatory minimum: 3 years.
@@ -65,12 +70,14 @@ export default function AboutPage() {
           So I trusted. For months. No motions filed. No calls returned. No
           explanation of what was in my own discovery.
         </p>
+        </FadeInUp>
 
         {/* THE STORY — Epiphany bridge: the night Rahim opened his own      */}
         {/* discovery and found four issues the attorney had never raised.   */}
         {/* This is the emotional core of the brand narrative.               */}
+        <FadeInUp>
         <section className="mt-16">
-          <h2 className="text-2xl font-bold text-white">The day everything changed</h2>
+          <h2 className="font-display text-2xl font-bold text-white">The day everything changed</h2>
           <div className="mt-4 space-y-4 text-zinc-400 leading-relaxed">
             <p>
               One night I opened the discovery myself. 500 pages of police
@@ -90,11 +97,13 @@ export default function AboutPage() {
             </p>
           </div>
         </section>
+        </FadeInUp>
 
         {/* WHAT WE BUILT — Transition from personal story to product.       */}
         {/* Shows how the personal epiphany became a service for others.     */}
+        <FadeInUp>
         <section className="mt-16">
-          <h2 className="text-2xl font-bold text-white">What I built after that day</h2>
+          <h2 className="font-display text-2xl font-bold text-white">What I built after that day</h2>
           <div className="mt-4 space-y-4 text-zinc-400 leading-relaxed">
             <p>
               I started reading everything the best defense attorneys ever
@@ -113,13 +122,15 @@ export default function AboutPage() {
             </p>
           </div>
         </section>
+        </FadeInUp>
 
         {/* HOW WE DO IT — Three differentiators: deep research, real case   */}
         {/* experience, and plain English. AI-powered positioning without    */}
         {/* over-promising.                                                  */}
+        <FadeInUp>
         <section className="mt-16">
-          <h2 className="text-2xl font-bold text-white">How we do it</h2>
-          <div className="mt-6 space-y-6">
+          <h2 className="font-display text-2xl font-bold text-white">How we do it</h2>
+          <StaggerContainer className="mt-6 space-y-6">
             {[
               {
                 title: "Deep Case Research",
@@ -134,23 +145,25 @@ export default function AboutPage() {
                 desc: "Legal jargon is a weapon used to keep you confused. We translate everything into language you can actually understand — and act on.",
               },
             ].map((item) => (
-              <div
+              <StaggerItem
                 key={item.title}
                 className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
               >
                 <h3 className="font-bold text-amber-400">{item.title}</h3>
                 <p className="mt-2 text-sm text-zinc-400">{item.desc}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </section>
+        </FadeInUp>
 
         {/* WHAT WE'RE NOT — UPL (Unauthorized Practice of Law) compliance.  */}
         {/* Five explicit disclaimers plus the "We Research. You Ask."       */}
         {/* tagline that defines the legal boundary of our services.         */}
         {/* This section is legally important — do not remove or soften.     */}
+        <FadeInUp>
         <section className="mt-16">
-          <h2 className="text-2xl font-bold text-white">
+          <h2 className="font-display text-2xl font-bold text-white">
             What we are <span className="text-amber-400">not</span>
           </h2>
           <ul className="mt-4 space-y-3 text-zinc-400">
@@ -176,28 +189,31 @@ export default function AboutPage() {
             </p>
           </div>
         </section>
+        </FadeInUp>
 
         {/* CTA — Routes to services (primary) and blog (secondary) */}
+        <FadeInUp>
         <section className="mt-16 text-center">
-          <h2 className="text-2xl font-bold text-white">
+          <h2 className="font-display text-2xl font-bold text-white">
             Defendants who fight back{" "}
             <span className="text-amber-400">start here.</span>
           </h2>
           <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/services"
-              className="rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+              className="rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
             >
               See Our Services
             </Link>
             <Link
               href="/blog"
-              className="rounded-lg border border-zinc-700 px-8 py-3 text-sm font-semibold text-white transition-colors hover:border-zinc-500"
+              className="rounded-lg border border-zinc-700 px-8 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:border-zinc-500"
             >
               Read the Blog
             </Link>
           </div>
         </section>
+        </FadeInUp>
 
         {/* LEAD CAPTURE — Email opt-in fallback for visitors not ready to buy */}
         <div className="mt-16">

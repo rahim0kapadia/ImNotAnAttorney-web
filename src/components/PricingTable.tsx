@@ -20,6 +20,7 @@
  */
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
+import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 
 const tiers = [
   {
@@ -38,7 +39,7 @@ const tiers = [
       "Included: Difficult Conversation scripts for 4 common scenarios",
     ],
     cta: "Get Your Case Decoder",
-    featured: false,
+    featured: true,
     tier: "case-decoder",
     bestFor: "Just arrested, need clarity",
   },
@@ -175,13 +176,13 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
       </div>
 
       {/* Main tiers - first 3 (or maxTiers) */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <StaggerContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {visibleTiers.slice(0, 3).map((tier) => (
+          <StaggerItem key={tier.name}>
           <div
-            key={tier.name}
-            className={`flex flex-col rounded-xl border p-8 ${
+            className={`flex flex-col rounded-xl border p-8 h-full ${
               tier.featured
-                ? "border-amber-500 bg-zinc-900 relative"
+                ? "border-amber-500 bg-zinc-900 relative ring-2 ring-amber-500/50 shadow-lg shadow-amber-500/10 scale-[1.02]"
                 : "border-zinc-800 bg-zinc-900/50"
             }`}
           >
@@ -221,17 +222,18 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
             )}
             <Link
               href={`/checkout?tier=${tier.tier}`}
-              className={`mt-8 block rounded-lg py-3 text-center text-sm font-semibold transition-colors ${
+              className={`mt-8 block rounded-lg py-3 text-center text-sm font-semibold transition-all ${
                 tier.featured
-                  ? "bg-amber-500 text-black hover:bg-amber-400"
-                  : "border border-zinc-700 text-white hover:border-zinc-500"
+                  ? "bg-amber-500 text-black hover:bg-amber-400 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/20"
+                  : "border border-zinc-700 text-white hover:border-zinc-500 hover:scale-[1.02]"
               }`}
             >
               {tier.cta}
             </Link>
           </div>
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerContainer>
 
       {/* "See premium tiers" link when truncated */}
       {hasHiddenTiers && (

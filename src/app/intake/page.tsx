@@ -73,6 +73,7 @@ const federalChargeTypes = [
   { value: "white-collar", label: "Fraud or Financial Crime" },
   { value: "weapons", label: "Firearms Charge" },
   { value: "sex-offense-digital", label: "Sex Offense (Internet/Digital)" },
+  { value: "probation-violation", label: "Supervised Release Violation" },
   { value: "federal", label: "Other Federal Charge" },
 ];
 
@@ -86,6 +87,8 @@ const stateChargeTypes = [
   { value: "theft", label: "Theft / Burglary / Robbery" },
   { value: "sex-offense", label: "Sex Offense" },
   { value: "weapons", label: "Weapons Charge" },
+  { value: "probation-violation", label: "Probation or Parole Violation" },
+  { value: "self-defense", label: "Self-Defense / Justifiable Force" },
   { value: "other", label: "Other" },
 ];
 
@@ -101,6 +104,8 @@ const allChargeTypes = [
   { value: "weapons", label: "Weapons Charge" },
   { value: "white-collar", label: "White Collar / Fraud" },
   { value: "federal", label: "Federal Charges" },
+  { value: "probation-violation", label: "Probation or Parole Violation" },
+  { value: "self-defense", label: "Self-Defense / Justifiable Force" },
   { value: "other", label: "Other" },
 ];
 
@@ -365,6 +370,55 @@ const chargeSpecificQuestions: Record<string, ChargeQuestion[]> = {
       options: ["Yes", "I think so", "No", "Don\u2019t know"],
     },
   ],
+  "probation-violation": [
+    {
+      id: "violationType",
+      label: "Type of violation",
+      options: ["Technical (missed appointment, failed test, curfew)", "Substantive (new arrest or charge)", "Both technical and substantive", "Don\u2019t know"],
+    },
+    {
+      id: "originalCharge",
+      label: "What was the original charge you were on probation for?",
+      options: ["Drug offense", "DUI", "Assault / battery", "Theft / property crime", "Domestic violence", "Sex offense", "Other felony", "Other misdemeanor", "Don\u2019t know"],
+    },
+    {
+      id: "poRelationship",
+      label: "Relationship with your probation officer",
+      options: ["Good \u2014 communicates well", "Limited contact", "No contact or unresponsive", "Hostile or adversarial", "Don\u2019t know"],
+    },
+    {
+      id: "complianceStatus",
+      label: "Compliance status before this violation",
+      options: ["Fully compliant except for this", "Some missed appointments or tests", "Multiple prior issues", "Just started probation", "Don\u2019t know"],
+    },
+  ],
+  "self-defense": [
+    {
+      id: "incidentLocation",
+      label: "Where did the incident happen?",
+      options: ["My home", "My vehicle", "My workplace", "Public place", "Someone else\u2019s home", "Other"],
+    },
+    {
+      id: "weaponUsed",
+      label: "What was used?",
+      options: ["Firearm", "Knife or blade", "Blunt object", "Hands/body only", "Other", "Nothing \u2014 verbal confrontation only"],
+    },
+    {
+      id: "otherPartyOutcome",
+      label: "Other party\u2019s outcome",
+      options: ["Uninjured", "Minor injuries", "Hospitalized", "Deceased", "Don\u2019t know"],
+    },
+    {
+      id: "relationship",
+      label: "Relationship to the other party",
+      options: ["Stranger", "Acquaintance", "Domestic partner or ex", "Family member", "Coworker", "Neighbor", "Don\u2019t know"],
+    },
+    {
+      id: "whoCalled911",
+      label: "Who called 911?",
+      options: ["I did", "The other party", "A witness", "No one called", "Don\u2019t know"],
+    },
+  ],
 };
 
 // ============================================================
@@ -547,6 +601,13 @@ function IntakeForm() {
     lastAttorneyContact: "",
     arrestDate: "",
     evidenceType: [] as string[],
+    // Expansion fields (Mar 2026): power personalized cost, court walkthrough, collateral consequences
+    filledOutBy: "",
+    criminalHistory: "",
+    caseStage: "",
+    employmentStatus: "",
+    employmentIndustry: "",
+    mentalHealthRelevant: "",
   });
 
   // Charge-specific answers stored separately to avoid polluting the flat form
@@ -673,6 +734,31 @@ function IntakeForm() {
           {/* STEP 1 — Contact info, jurisdiction, charge details, charge-specific Qs */}
           {step === 1 && (
             <>
+              {/* Who is filling this out? (Jayadev participatory defense — families navigate for loved ones) */}
+              <fieldset>
+                <legend className="text-sm font-semibold text-zinc-300">
+                  Before We Start
+                </legend>
+                <div className="mt-4">
+                  <label htmlFor="filledOutBy" className={labelClass}>Who is filling this out?</label>
+                  <select id="filledOutBy" value={form.filledOutBy as string}
+                    onChange={(e) => setField("filledOutBy", e.target.value)}
+                    className={selectClass}>
+                    <option value="">I&apos;m the defendant</option>
+                    <option value="family">I&apos;m a family member</option>
+                    <option value="friend">I&apos;m a friend</option>
+                    <option value="other">Other (attorney, advocate, etc.)</option>
+                  </select>
+                  {(form.filledOutBy === "family" || form.filledOutBy === "friend") && (
+                    <p className="mt-2 text-xs text-zinc-500">
+                      Thank you for supporting them through this. The questions below are about
+                      the person facing charges &mdash; answer what you know, and it&apos;s okay
+                      to select &ldquo;Don&apos;t know&rdquo; for anything you&apos;re unsure about.
+                    </p>
+                  )}
+                </div>
+              </fieldset>
+
               <fieldset>
                 <legend className="text-sm font-semibold text-zinc-300">
                   Contact &amp; Charges
@@ -828,6 +914,41 @@ function IntakeForm() {
                     max={new Date().toISOString().slice(0, 7)}
                     onChange={(e) => setField("timeSinceArrest", e.target.value)}
                     className={inputClass} />
+                </div>
+                <div className="mt-4">
+                  <label htmlFor="caseStage" className={labelClass}>
+                    What stage is the case at?
+                  </label>
+                  <select id="caseStage" value={form.caseStage as string}
+                    onChange={(e) => setField("caseStage", e.target.value)}
+                    className={selectClass}>
+                    <option value="">Select stage</option>
+                    <option value="pre-arrest">Haven&apos;t been arrested yet (investigation stage)</option>
+                    <option value="arrested">Arrested &mdash; awaiting first court date</option>
+                    <option value="arraigned">Had arraignment &mdash; awaiting next hearing</option>
+                    <option value="pre-trial">Pre-trial (discovery / motions phase)</option>
+                    <option value="trial-prep">Preparing for trial</option>
+                    <option value="sentencing">Sentencing</option>
+                    <option value="post-conviction">Post-conviction (appeal / expungement)</option>
+                  </select>
+                  <p className="mt-1 text-xs text-zinc-500">
+                    This helps us focus on what matters at your current stage &mdash; an arraignment
+                    needs different preparation than a trial.
+                  </p>
+                </div>
+                <div className="mt-4">
+                  <label htmlFor="criminalHistory" className={labelClass}>
+                    Criminal history
+                  </label>
+                  <select id="criminalHistory" value={form.criminalHistory as string}
+                    onChange={(e) => setField("criminalHistory", e.target.value)}
+                    className={selectClass}>
+                    <option value="">Select</option>
+                    <option value="first-offense">This is {form.filledOutBy === "family" || form.filledOutBy === "friend" ? "their" : "my"} first criminal charge</option>
+                    <option value="prior-misdemeanor">Prior misdemeanor conviction(s)</option>
+                    <option value="prior-felony">Prior felony conviction(s)</option>
+                    <option value="unknown">Not sure</option>
+                  </select>
                 </div>
                 <div className="mt-4">
                   <label htmlFor="incidentLocation" className={labelClass}>
@@ -1002,6 +1123,71 @@ function IntakeForm() {
                     onChange={(e) => setField("courtDate", e.target.value)}
                     min={new Date().toISOString().split("T")[0]}
                     className={inputClass} />
+                </div>
+              </fieldset>
+
+              {/* Employment & Mental Health — powers collateral consequence analysis */}
+              <fieldset>
+                <legend className="text-sm font-semibold text-zinc-300">
+                  Background <span className="text-zinc-500 font-normal">(helps us identify hidden consequences)</span>
+                </legend>
+                <div className="mt-4">
+                  <label htmlFor="employmentStatus" className={labelClass}>
+                    {form.filledOutBy === "family" || form.filledOutBy === "friend"
+                      ? "Their current employment status"
+                      : "Current employment status"}
+                    {" "}<span className="text-zinc-500">(optional)</span>
+                  </label>
+                  <select id="employmentStatus" value={form.employmentStatus as string}
+                    onChange={(e) => setField("employmentStatus", e.target.value)}
+                    className={selectClass}>
+                    <option value="">Select</option>
+                    <option value="employed-full-time">Employed full-time</option>
+                    <option value="employed-part-time">Employed part-time</option>
+                    <option value="self-employed">Self-employed</option>
+                    <option value="unemployed">Unemployed</option>
+                    <option value="student">Student</option>
+                    <option value="retired">Retired</option>
+                    <option value="disabled">Disabled</option>
+                    <option value="prefer-not-to-say">Prefer not to say</option>
+                  </select>
+                </div>
+                {(form.employmentStatus === "employed-full-time" || form.employmentStatus === "employed-part-time" || form.employmentStatus === "self-employed") && (
+                  <div className="mt-4">
+                    <label htmlFor="employmentIndustry" className={labelClass}>
+                      Industry or field <span className="text-zinc-500">(optional)</span>
+                    </label>
+                    <input id="employmentIndustry" type="text" value={form.employmentIndustry as string}
+                      onChange={(e) => setField("employmentIndustry", e.target.value)}
+                      className={inputClass}
+                      placeholder="e.g. nursing, teaching, trucking, law enforcement, military, finance"
+                      maxLength={100} />
+                    <p className="mt-1 text-xs text-zinc-500">
+                      Some industries have licensing or career consequences that{" "}
+                      {form.filledOutBy === "family" || form.filledOutBy === "friend"
+                        ? "their attorney should address"
+                        : "your attorney should address"}.
+                    </p>
+                  </div>
+                )}
+                <div className="mt-4">
+                  <label htmlFor="mentalHealthRelevant" className={labelClass}>
+                    {form.filledOutBy === "family" || form.filledOutBy === "friend"
+                      ? "Is mental health or substance treatment relevant to their case?"
+                      : "Is mental health or substance treatment relevant to your case?"}
+                    {" "}<span className="text-zinc-500">(optional)</span>
+                  </label>
+                  <select id="mentalHealthRelevant" value={form.mentalHealthRelevant as string}
+                    onChange={(e) => setField("mentalHealthRelevant", e.target.value)}
+                    className={selectClass}>
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                    <option value="prefer-not-to-say">Prefer not to say</option>
+                  </select>
+                  <p className="mt-1 text-xs text-zinc-500">
+                    Many courts offer treatment-based alternatives. This helps us flag those options.
+                  </p>
                 </div>
               </fieldset>
 

@@ -2,8 +2,8 @@
  * Defense Milestone Score Page (/score)
  *
  * Free lead magnet — no email required, no login, no paywall. Users answer
- * 7 multiple-choice questions about their attorney's behavior and receive a
- * 0-100 score with band classification and observations.
+ * 10 multiple-choice questions about their case and attorney behavior and
+ * receive a 0-100 score with band classification and observations.
  *
  * User journey position:
  *   Landing page (free CTA) -> THIS PAGE -> /checkout?tier=case-decoder (paid CTA)
@@ -11,12 +11,12 @@
  *   Direct traffic (SEO) -> THIS PAGE
  *
  * Conversion funnel:
- *   1. Answer 7 questions (zero friction — no email, no account)
+ *   1. Answer 10 questions (zero friction — no email, no account)
  *   2. See score + observations (immediate value)
  *   3. Optional email capture — "Get our free Discovery Checklist" (soft ask)
  *   4. CTA to Case Decoder ($197) — "Want the full breakdown + 15 questions?"
  *
- * The 7 questions map to key case progress indicators:
+ * The 10 questions map to key case progress indicators:
  *   1. chargeType — What charge (drug, DUI, white collar, etc.)
  *   2. timeSinceArrest — How long since arrest (speed matters for motions)
  *   3. hasAttorney — Private, public defender, or none
@@ -24,6 +24,9 @@
  *   5. hasDiscovery — Has client received discovery documents?
  *   6. communicationFrequency — How often attorney communicates
  *   7. strategyDiscussed — Has attorney discussed case strategy?
+ *   8. criminalHistory — Prior convictions (affects sentencing exposure)
+ *   9. caseStage — Current case stage (determines milestone relevance)
+ *  10. licensedProfession — Licensed profession (flags collateral career risk)
  *
  * Score computation: /api/score endpoint (server-side) evaluates answers
  * against defense milestone benchmarks and returns:
@@ -45,12 +48,15 @@
 import { useState } from "react";
 import { TIER_CORE } from "@/lib/tiers";
 import Link from "next/link";
+import { AnimatedScoreArc } from "@/components/motion/AnimatedScoreArc";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { TrustBadges } from "@/components/TrustBadges";
 
 /**
- * The 7 scoring questions. Each has a unique id (used as the key in the
+ * The 10 scoring questions. Each has a unique id (used as the key in the
  * answers object sent to /api/score) and radio-button options.
  * Question order is deliberate: starts with charge type (context),
- * then progressively probes defense milestones.
+ * then probes defense milestones, and finally collateral risk factors.
  */
 const questions = [
   {
@@ -122,6 +128,39 @@ const questions = [
       { value: "no", label: "No" },
     ],
   },
+  {
+    id: "criminalHistory",
+    label: "Do you have prior convictions?",
+    options: [
+      { value: "none", label: "No prior convictions" },
+      { value: "misdemeanor", label: "Prior misdemeanor(s)" },
+      { value: "felony", label: "Prior felony conviction" },
+      { value: "multiple", label: "Multiple prior convictions" },
+    ],
+  },
+  {
+    id: "caseStage",
+    label: "What stage is your case at?",
+    options: [
+      { value: "pre-arrest", label: "Under investigation (not arrested yet)" },
+      { value: "arrested", label: "Arrested — awaiting first court date" },
+      { value: "arraigned", label: "Had arraignment — awaiting next hearing" },
+      { value: "pre-trial", label: "Pre-trial (discovery/motions phase)" },
+      { value: "trial-prep", label: "Preparing for trial" },
+      { value: "sentencing", label: "Sentencing" },
+      { value: "post-conviction", label: "Post-conviction (appeal/expungement)" },
+    ],
+  },
+  {
+    id: "licensedProfession",
+    label: "Are you employed in a licensed profession?",
+    options: [
+      { value: "yes-licensed", label: "Yes — licensed profession (nurse, teacher, CDL, etc.)" },
+      { value: "yes-other", label: "Yes — other employment" },
+      { value: "no", label: "Not currently employed" },
+      { value: "student", label: "Student" },
+    ],
+  },
 ];
 
 /** Shape of the response from /api/score. */
@@ -154,17 +193,10 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
 
   return (
     <div className="mt-8 space-y-6">
-      {/* SCORE CIRCLE — Large visual display of the 0-100 score with band color */}
+      {/* SCORE ARC — Animated SVG arc with color transition by band */}
       <div className="text-center">
-        <div
-          className={`mx-auto flex h-32 w-32 items-center justify-center rounded-full border-4 ${borderClass}`}
-        >
-          <div>
-            <div className={`text-4xl font-bold ${textClass}`}>
-              {result.score}
-            </div>
-            <div className="text-xs text-zinc-400">out of 100</div>
-          </div>
+        <div className="mx-auto">
+          <AnimatedScoreArc score={result.score} />
         </div>
         <p className={`mt-4 text-lg font-bold ${textClass}`}>{result.band}</p>
       </div>
@@ -175,12 +207,11 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
           What we found:
         </h3>
         {result.observations.map((obs, i) => (
-          <div
-            key={i}
-            className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4"
-          >
-            <p className="text-sm leading-relaxed text-zinc-300">{obs}</p>
-          </div>
+          <FadeInUp key={i} delay={i * 0.1}>
+            <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+              <p className="text-sm leading-relaxed text-zinc-300">{obs}</p>
+            </div>
+          </FadeInUp>
         ))}
       </div>
 
@@ -279,6 +310,8 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
           </Link>
         </div>
       </div>
+
+      <TrustBadges variant="compact" />
 
       {/* RESET — Full page reload to retake the score */}
       <p className="text-center text-sm text-zinc-400">

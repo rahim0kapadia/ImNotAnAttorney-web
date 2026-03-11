@@ -204,6 +204,8 @@ function resolveChargeSlug(raw) {
   if (ct.includes("theft")) return "theft";
   if (ct.includes("burglary")) return "burglary";
   if (ct.includes("robbery")) return "robbery";
+  if (ct.includes("probation") || ct.includes("violation") || ct.includes("supervised-release")) return "probation-violation";
+  if (ct.includes("self-defense") || ct.includes("self defense") || ct.includes("justifiable")) return "self-defense";
   if (ct.includes("federal")) return "federal";
   return raw.toLowerCase().replace(/[\s\/]+/g, "-");
 }
@@ -293,6 +295,14 @@ function getChargeContextFallback(chargeType, jurisdictionLevel, chargeSpecificD
 
   if (ct.includes("white") || ct.includes("fraud")) {
     return `\nCHARGE-SPECIFIC CONTEXT — WHITE COLLAR/FRAUD (${jur}):\nGOD MODE EXPERTS (triangulated — use their methodology):\n1. Martin G. Weinberg — NACDL 2022 Lifetime Achievement; Varsity Blues acquittals. Methodology: good faith reliance on counsel as intent defense, constitutional rights challenges.\n2. Cristina C. Arguedas — Trial Lawyers Hall of Fame; U.S. v. FedEx "factually innocent." Methodology: pre-indictment intervention, professional advice documentation.\n3. David B. Smith — Prosecution and Defense of Forfeiture Cases (Matthew Bender). Methodology: early asset restraint challenge, right to counsel preservation.\n\nFocus: document privilege, cooperation strategy, parallel proceedings, loss calculation, asset forfeiture, professional reliance defense.${csBlock}`;
+  }
+
+  if (ct.includes("probation") || ct.includes("violation") || ct.includes("supervised release")) {
+    return `\nCHARGE-SPECIFIC CONTEXT — PROBATION/PAROLE/SUPERVISED RELEASE VIOLATION (${jur}):\nGOD MODE EXPERTS (triangulated):\n1. Fiona Doherty — Yale Law School; leading probation reform scholar; "Obey All Laws and Be Good" (Georgetown Law Journal). Methodology: graduated sanctions framework, proportionality analysis.\n2. Vincent Schiraldi — Former NYC Probation Commissioner; Columbia Justice Lab. Methodology: evidence-based supervision, technical violation diversion.\n3. Adam Foss — Former prosecutor; Prosecutor Impact founder; TED Talk on prosecutorial reform. Methodology: compliance-positive defense, constructive probation narrative.\n\nFocus: violation classification (technical vs substantive), graduated sanctions, compliance documentation, PO relationship management, original sentence exposure, hearing preparation, revocation alternatives.${csBlock}`;
+  }
+
+  if (ct.includes("self-defense") || ct.includes("self defense") || ct.includes("justifiable")) {
+    return `\nCHARGE-SPECIFIC CONTEXT — SELF-DEFENSE / JUSTIFIABLE FORCE (${jur}):\nGOD MODE EXPERTS (triangulated):\n1. Andrew F. Branca — The Law of Self Defense (3rd Ed); Five Elements framework. Methodology: element-by-element self-defense analysis.\n2. Massad Ayoob — Deadly Force; AOJ Triad; 45+ years expert witness. Methodology: use-of-force assessment, threat perception analysis.\n3. Don West — Co-counsel in Zimmerman acquittal; 35+ years Board Certified. Methodology: self-defense narrative construction, SYG immunity hearing strategy.\n\nFocus: Stand Your Ground vs Duty to Retreat, Castle Doctrine, proportionality, initial aggressor analysis, SYG immunity hearing, 911 caller advantage, civil liability exposure.${csBlock}`;
   }
 
   // Fallback for unknown charge types
@@ -391,6 +401,11 @@ async function buildUserPrompt(intake) {
 - Case Number: ${intake.case_number || "Not provided"}
 - Next Court Date: ${intake.court_date || "Not provided"}
 - Time Since Arrest: ${intake.time_since_arrest || "Not provided"}
+- Criminal History: ${intake.criminal_history || "Not provided"}
+- Employment: ${intake.employment_status || "Not provided"}${intake.employment_industry ? ` — ${intake.employment_industry}` : ""}
+- Case Stage: ${intake.case_stage || "Not provided"}
+- Filled Out By: ${intake.filled_out_by && intake.filled_out_by !== "self" ? intake.filled_out_by : "Self (defendant)"}
+- Mental Health Relevant: ${intake.mental_health_relevant || "Not provided"}
 - Primary Frustration (their words): ${intake.situation || "Not provided"}
 - Specific Question (their words): ${intake.specific_question || "Not provided"}
 ${chargeBlock}${commInstruction}${evidenceBlock}

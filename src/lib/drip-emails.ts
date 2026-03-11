@@ -44,6 +44,7 @@
  */
 
 import { TIER_CORE, upgradePrice, upgradeCostBetween } from "@/lib/tiers";
+import { escapeHtml } from "@/lib/email";
 
 // ============================================================
 // TYPES
@@ -1058,4 +1059,166 @@ export function getNextNurtureEmail(
     }
   }
   return null;
+}
+
+// ============================================================
+// PERSONALIZATION (Chaperon — conditional blocks at gating decisions only)
+// ============================================================
+
+/** Intake fields used for drip email personalization */
+export interface DripPersonalizationData {
+  filled_out_by?: string | null;
+  case_stage?: string | null;
+  employment_industry?: string | null;
+  first_name?: string | null;
+}
+
+/**
+ * Styled callout box matching existing email design (amber border, dark bg).
+ * Used to append personalized content blocks without touching base templates.
+ */
+function calloutBox(html: string): string {
+  return `<div style="margin: 20px 0; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; border-radius: 4px;">${html}</div>`;
+}
+
+/**
+ * Append personalized content blocks to post-purchase drip emails based on
+ * intake data. Only 10 emails get personalization (Chaperon: gating decision
+ * points only). Base templates stay untouched — blocks are appended.
+ *
+ * @param html - The base email HTML
+ * @param emailKey - The drip email key (e.g. "post_case_decoder_delivery")
+ * @param intake - Subset of intake fields needed for personalization
+ * @returns The email HTML with personalized blocks appended (or unchanged)
+ */
+export function personalizeEmailHtml(
+  html: string,
+  emailKey: string,
+  intake: DripPersonalizationData
+): string {
+  const isFamilyBuyer = intake.filled_out_by === "family" || intake.filled_out_by === "friend";
+  const name = intake.first_name ? escapeHtml(intake.first_name) : "the defendant";
+  const stage = intake.case_stage || "";
+  const industry = intake.employment_industry || "";
+
+  // Only personalize known email keys — return unchanged for all others
+  switch (emailKey) {
+    // ── Case Decoder emails ──
+
+    case "post_case_decoder_delivery":
+      if (isFamilyBuyer) {
+        return html + calloutBox(`
+          <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">For Support Persons</p>
+          <p style="color: #D4D4D8; margin: 0;">You ordered this for ${name} — here's how to help them use it:
+          Start with the "Questions for Your Attorney" section and pick the top 5 together.
+          The email template in "Exactly What to Say" is written for ${name} to send — help them copy and customize it.</p>
+        `);
+      }
+      return html;
+
+    case "post_case_decoder_meeting_prep":
+      if (isFamilyBuyer) {
+        let block = `<p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">For Support Persons</p>
+          <p style="color: #D4D4D8; margin: 0;">You can prepare alongside ${name}: review the Meeting Ready Sheet together and rehearse the questions out loud. Two people remembering the answers is better than one.</p>`;
+        if (stage === "sentencing") {
+          block += `<p style="color: #D4D4D8; margin: 8px 0 0;">At the sentencing stage, character letters matter. Start gathering letters from people who can speak to ${name}'s character — employers, community members, family.</p>`;
+        } else if (stage === "post-conviction") {
+          block += `<p style="color: #D4D4D8; margin: 8px 0 0;">Post-conviction cases have strict appeal deadlines. Confirm the appeal filing deadline with the attorney before this meeting.</p>`;
+        }
+        return html + calloutBox(block);
+      }
+      if (stage === "sentencing") {
+        return html + calloutBox(`<p style="color: #D4D4D8; margin: 0;">At the sentencing stage, character letters can make a real difference. Start gathering letters from employers, community members, and family before your meeting.</p>`);
+      }
+      if (stage === "post-conviction") {
+        return html + calloutBox(`<p style="color: #D4D4D8; margin: 0;">Post-conviction cases have strict appeal deadlines. Confirm the appeal filing deadline with your attorney before this meeting.</p>`);
+      }
+      return html;
+
+    case "post_case_decoder_upsell":
+      if (isFamilyBuyer && industry) {
+        return html + calloutBox(`
+          <p style="color: #D4D4D8; margin: 0;">You did the research for ${name}. The Intelligence Brief ($997) goes deeper — including how these charges could affect ${escapeHtml(industry)} licensing and what protective steps to take now. Your $197 is fully credited.</p>
+        `);
+      }
+      if (isFamilyBuyer) {
+        return html + calloutBox(`
+          <p style="color: #D4D4D8; margin: 0;">You did the research for ${name}. The Intelligence Brief ($997) builds on everything in the Case Decoder with a full outcome map, defense theories, and a 14-day action plan. Your $197 is fully credited.</p>
+        `);
+      }
+      if (industry) {
+        return html + calloutBox(`
+          <p style="color: #D4D4D8; margin: 0;">The Intelligence Brief ($997) includes career-specific analysis — how these charges could affect ${escapeHtml(industry)} licensing and what protective steps to consider now. Your $197 is fully credited.</p>
+        `);
+      }
+      return html;
+
+    case "post_case_decoder_story_harvest":
+      if (isFamilyBuyer) {
+        return html + calloutBox(`
+          <p style="color: #D4D4D8; margin: 0;">Which part of the report helped YOUR role as a support person the most? Did it change how you're thinking about the next steps for ${name}?</p>
+        `);
+      }
+      return html;
+
+    case "post_case_decoder_referral":
+      if (isFamilyBuyer) {
+        return html + calloutBox(`
+          <p style="color: #D4D4D8; margin: 0;">You showed up for ${name} when it mattered. If you know someone else going through this — another family member, a friend — they deserve the same clarity you got.</p>
+        `);
+      }
+      return html;
+
+    // ── Intelligence Brief emails ──
+
+    case "post_intelligence_brief_delivery":
+      if (isFamilyBuyer) {
+        return html + calloutBox(`
+          <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">For Support Persons</p>
+          <p style="color: #D4D4D8; margin: 0;">Priority 1 in the 48-Hour Priority List is something you can do today — it takes under 5 minutes. Start there. Then review the 14-day plan together with ${name}.</p>
+        `);
+      }
+      return html;
+
+    case "post_intelligence_brief_phase2_reminder":
+      if (isFamilyBuyer) {
+        return html + calloutBox(`
+          <p style="color: #D4D4D8; margin: 0;">You can fill out the second form for ${name} too — it asks about the judge, attorney details, and case specifics. If ${name} has the case paperwork, you can pull most of it from there.</p>
+        `);
+      }
+      return html;
+
+    case "post_intelligence_brief_meeting_prep":
+      if (isFamilyBuyer) {
+        let block = `<p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">For Support Persons</p>
+          <p style="color: #D4D4D8; margin: 0;">Review the Meeting Ready Sheet with ${name} and rehearse the 5 questions out loud. If you're going to the meeting, bring a notebook — write down every answer.</p>`;
+        if (stage === "sentencing") {
+          block += `<p style="color: #D4D4D8; margin: 8px 0 0;">At the sentencing stage, the mitigation package is critical. Review Section 6's character letter guidance together.</p>`;
+        }
+        return html + calloutBox(block);
+      }
+      if (stage === "sentencing") {
+        return html + calloutBox(`<p style="color: #D4D4D8; margin: 0;">At the sentencing stage, the mitigation package is critical. Review Section 6's character letter guidance before your meeting.</p>`);
+      }
+      return html;
+
+    case "post_intelligence_brief_upsell":
+      if (stage === "discovery" || stage === "Discovery review") {
+        return html + calloutBox(`
+          <p style="color: #D4D4D8; margin: 0;">You're in the discovery phase — this is exactly when The X-Ray ($2,497) delivers the most value. It analyzes your actual discovery evidence, not just what you've told us. Your $997 is fully credited, so it's $1,500.</p>
+        `);
+      }
+      return html;
+
+    case "post_intelligence_brief_referral":
+      if (isFamilyBuyer) {
+        return html + calloutBox(`
+          <p style="color: #D4D4D8; margin: 0;">You showed up for ${name} when it mattered. If you know someone else going through this — another family member, a friend — they deserve the same clarity you got.</p>
+        `);
+      }
+      return html;
+
+    default:
+      return html;
+  }
 }

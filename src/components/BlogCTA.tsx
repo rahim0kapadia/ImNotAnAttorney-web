@@ -15,42 +15,49 @@
  */
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { TrustBadges } from "@/components/TrustBadges";
 
 export function BlogCTA() {
   return (
-    <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
-      <h3 className="text-lg font-bold text-white">
-        The defendants who walk in prepared{" "}
-        <span className="text-amber-400">don&apos;t use general information.</span>
-      </h3>
-      <p className="mt-2 text-sm text-zinc-400">
-        They use case-specific research — questions built from their
-        actual charges, their actual discovery, their actual judge. Our
-        Case Decoder gives you 15 targeted questions your attorney
-        isn&apos;t expecting. Starting at {TIER_CORE["case-decoder"].priceDisplay}.
-      </p>
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-        <Link
-          href="/checkout?tier=case-decoder"
-          className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-colors hover:bg-amber-400"
-        >
-          Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} →
-        </Link>
-        <Link
-          href="/sample"
-          className="rounded-lg border border-zinc-700 px-6 py-3 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
-        >
-          See a Sample Report
-        </Link>
+    <FadeInUp>
+      <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
+        <h3 className="text-lg font-bold text-white">
+          You don&apos;t need another lawyer.{" "}
+          <span className="text-amber-400">You need the right questions.</span>
+        </h3>
+        <p className="mt-2 text-sm text-zinc-400">
+          Questions built from YOUR charges, YOUR discovery, YOUR judge —
+          not generic legal info you can Google. Our Case Decoder gives
+          you 15 targeted questions your attorney isn&apos;t expecting.
+          Starting at {TIER_CORE["case-decoder"].priceDisplay}.
+        </p>
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+          <Link
+            href="/checkout?tier=case-decoder"
+            className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+          >
+            Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+          </Link>
+          <Link
+            href="/sample"
+            className="rounded-lg border border-zinc-700 px-6 py-3 text-center text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:border-zinc-500"
+          >
+            See a Sample Report
+          </Link>
+        </div>
+        <div className="mt-4">
+          <TrustBadges variant="compact" />
+        </div>
+        <p className="mt-3 text-sm text-zinc-400">
+          <Link
+            href="/score"
+            className="text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+          >
+            Check your Defense Milestone Score — free &rarr;
+          </Link>
+        </p>
       </div>
-      <p className="mt-3 text-sm text-zinc-400">
-        <Link
-          href="/score"
-          className="text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
-        >
-          Check your Defense Milestone Score — free →
-        </Link>
-      </p>
-    </div>
+    </FadeInUp>
   );
 }

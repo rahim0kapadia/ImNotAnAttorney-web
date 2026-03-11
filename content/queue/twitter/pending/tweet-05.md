@@ -1,0 +1,20 @@
+---
+platform: twitter
+type: single-tweet
+project: inna
+status: pending
+created: 2026-03-10T22:36:56.647Z
+agent: seed-script
+title: "Single Tweet: The Other Investigation"
+suggested_time: "Weekday 9:00 AM EST"
+---
+
+The police investigated you. The prosecution investigated you.
+
+Who's investigating FOR you?
+
+If your attorney's investigation consists of reading what the police wrote — you don't have a defense.
+
+You have a processing.
+
+Ask: "What independent work have you done on my case?"
