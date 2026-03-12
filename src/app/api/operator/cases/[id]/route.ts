@@ -159,7 +159,7 @@ export async function GET(req: NextRequest, { params }: RouteContext) {
   if (caseResult.error) {
     console.error("[Operator/Case] Fetch failed:", caseResult.error.message);
     return NextResponse.json(
-      { error: caseResult.error.message },
+      { error: caseResult.error.code === "PGRST116" ? "Case not found" : "Internal server error" },
       { status: caseResult.error.code === "PGRST116" ? 404 : 500 }
     );
   }

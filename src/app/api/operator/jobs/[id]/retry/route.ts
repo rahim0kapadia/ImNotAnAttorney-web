@@ -36,7 +36,7 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
   if (fetchError) {
     console.error("[Operator/JobRetry] Fetch failed:", fetchError.message);
     return NextResponse.json(
-      { error: fetchError.code === "PGRST116" ? "Job not found" : fetchError.message },
+      { error: fetchError.code === "PGRST116" ? "Job not found" : "Internal server error" },
       { status: fetchError.code === "PGRST116" ? 404 : 500 }
     );
   }
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
 
   if (updateError) {
     console.error("[Operator/JobRetry] Update failed:", updateError.message);
-    return NextResponse.json({ error: updateError.message }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true });

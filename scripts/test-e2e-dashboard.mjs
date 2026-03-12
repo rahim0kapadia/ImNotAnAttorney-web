@@ -43,6 +43,12 @@ let testCaseId = null;
 let testOrderId = null;
 let testJobId = null;
 let testTaskId = null;
+let testFailedJobId = null;
+// Multi-tier portal test data
+let warRoomOrderId = null;
+let warRoomCaseId = null;
+let sitRoomOrderId = null;
+let sitRoomCaseId = null;
 let passed = 0;
 let failed = 0;
 
@@ -147,6 +153,96 @@ async function setup() {
   ]);
   if (findingErr) throw new Error(`Finding insert failed: ${findingErr.message}`);
   console.log("  Created 2 test findings");
+
+  // Create a FAILED job for retry testing
+  const { data: failedJob, error: failedJobErr } = await supabase
+    .from("processing_jobs")
+    .insert({
+      case_id: testCaseId,
+      job_type: "ocr",
+      status: "failed",
+      progress: 50,
+      error_message: "E2E test failure",
+      retry_count: 0,
+      max_retries: 3,
+    })
+    .select()
+    .single();
+  if (failedJobErr) throw new Error(`Failed job insert failed: ${failedJobErr.message}`);
+  testFailedJobId = failedJob.id;
+  console.log(`  Created failed job: ${testFailedJobId}`);
+
+  // ── Multi-tier portal test data ──
+
+  // War Room order + case
+  const { data: wrOrder, error: wrOrderErr } = await supabase
+    .from("orders")
+    .insert({
+      email: "e2e-warroom@example.com",
+      tier: "war-room",
+      amount_cents: 499700,
+      status: "paid",
+      paid_at: new Date().toISOString(),
+      stripe_session_id: "test_sess_e2e_warroom",
+    })
+    .select()
+    .single();
+  if (wrOrderErr) throw new Error(`War Room order insert failed: ${wrOrderErr.message}`);
+  warRoomOrderId = wrOrder.id;
+
+  const { data: wrCase, error: wrCaseErr } = await supabase
+    .from("cases")
+    .insert({
+      order_id: warRoomOrderId,
+      email: "e2e-warroom@example.com",
+      tier: "war-room",
+      charge_type: "drug-possession",
+      status: "processing",
+      phase: "witness_identification",
+      report_token: "e2e-warroom-token-" + Date.now(),
+      delivery_due_at: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString(),
+      witness_count: 3,
+    })
+    .select()
+    .single();
+  if (wrCaseErr) throw new Error(`War Room case insert failed: ${wrCaseErr.message}`);
+  warRoomCaseId = wrCase.id;
+  console.log(`  Created War Room case: ${warRoomCaseId}`);
+
+  // Situation Room order + case
+  const { data: srOrder, error: srOrderErr } = await supabase
+    .from("orders")
+    .insert({
+      email: "e2e-sitroom@example.com",
+      tier: "situation-room",
+      amount_cents: 999700,
+      status: "paid",
+      paid_at: new Date().toISOString(),
+      stripe_session_id: "test_sess_e2e_sitroom",
+    })
+    .select()
+    .single();
+  if (srOrderErr) throw new Error(`Sit Room order insert failed: ${srOrderErr.message}`);
+  sitRoomOrderId = srOrder.id;
+
+  const { data: srCase, error: srCaseErr } = await supabase
+    .from("cases")
+    .insert({
+      order_id: sitRoomOrderId,
+      email: "e2e-sitroom@example.com",
+      tier: "situation-room",
+      charge_type: "drug-possession",
+      status: "processing",
+      phase: "attack_intelligence",
+      report_token: "e2e-sitroom-token-" + Date.now(),
+      delivery_due_at: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString(),
+      witness_count: 5,
+    })
+    .select()
+    .single();
+  if (srCaseErr) throw new Error(`Sit Room case insert failed: ${srCaseErr.message}`);
+  sitRoomCaseId = srCase.id;
+  console.log(`  Created Situation Room case: ${sitRoomCaseId}`);
 }
 
 // ============================================================
@@ -250,6 +346,183 @@ async function runTests() {
     if (res.status !== 200) throw new Error(`Status ${res.status}: ${await res.text()}`);
   });
 
+  // ── Gap Fix 1: Retry endpoint tests ──
+
+  await assert("POST /api/operator/jobs/[id]/retry resets failed job to queued", async () => {
+    const res = await fetch(`${BASE_URL}/api/operator/jobs/${testFailedJobId}/retry`, {
+      method: "POST",
+      headers: headers(),
+    });
+    if (res.status !== 200) throw new Error(`Status ${res.status}: ${await res.text()}`);
+    // Verify the job is now queued
+    const { data: job } = await supabase
+      .from("processing_jobs")
+      .select("status, retry_count, error_message, progress")
+      .eq("id", testFailedJobId)
+      .single();
+    if (job.status !== "queued") throw new Error(`Expected queued, got ${job.status}`);
+    if (job.retry_count !== 1) throw new Error(`Expected retry_count 1, got ${job.retry_count}`);
+    if (job.error_message !== null) throw new Error("error_message should be cleared");
+    if (job.progress !== 0) throw new Error("progress should be reset to 0");
+  });
+
+  await assert("POST /api/operator/jobs/[id]/retry rejects non-failed job", async () => {
+    // testJobId is "completed" — should be rejected
+    const res = await fetch(`${BASE_URL}/api/operator/jobs/${testJobId}/retry`, {
+      method: "POST",
+      headers: headers(),
+    });
+    if (res.status !== 400) throw new Error(`Expected 400, got ${res.status}`);
+    const data = await res.json();
+    if (!data.error.includes("not \"failed\"")) throw new Error(`Unexpected error: ${data.error}`);
+  });
+
+  await assert("POST /api/operator/jobs/[id]/retry rejects when max retries exceeded", async () => {
+    // Set retry_count to max_retries so next retry is blocked
+    await supabase
+      .from("processing_jobs")
+      .update({ status: "failed", retry_count: 3 })
+      .eq("id", testFailedJobId);
+    const res = await fetch(`${BASE_URL}/api/operator/jobs/${testFailedJobId}/retry`, {
+      method: "POST",
+      headers: headers(),
+    });
+    if (res.status !== 400) throw new Error(`Expected 400, got ${res.status}`);
+    const data = await res.json();
+    if (data.error !== "Max retries exceeded") throw new Error(`Unexpected error: ${data.error}`);
+  });
+
+  await assert("POST /api/operator/jobs/nonexistent-id/retry returns 404", async () => {
+    const res = await fetch(`${BASE_URL}/api/operator/jobs/00000000-0000-0000-0000-000000000000/retry`, {
+      method: "POST",
+      headers: headers(),
+    });
+    if (res.status !== 404) throw new Error(`Expected 404, got ${res.status}`);
+  });
+
+  // ── Gap Fix 2: Task status validation (security allowlist) ──
+
+  await assert("PATCH /api/operator/tasks rejects invalid status", async () => {
+    // Re-create a task since earlier test completed the original
+    const { data: newTask } = await supabase
+      .from("operator_tasks")
+      .insert({
+        case_id: testCaseId,
+        task_type: "review_needed",
+        title: "E2E Validation Test Task",
+        priority: "MEDIUM",
+        priority_rank: 5,
+        status: "open",
+      })
+      .select()
+      .single();
+    const res = await fetch(`${BASE_URL}/api/operator/tasks`, {
+      method: "PATCH",
+      headers: headers(),
+      body: JSON.stringify({ id: newTask.id, status: "hacked_status" }),
+    });
+    if (res.status !== 422) throw new Error(`Expected 422, got ${res.status}`);
+    // Cleanup
+    await supabase.from("operator_tasks").delete().eq("id", newTask.id);
+  });
+
+  // ── Gap Fix 3: Pagination verification ──
+
+  await assert("GET /api/operator/cases pagination returns correct page metadata", async () => {
+    // We have 3 test cases (x-ray, war-room, situation-room), request limit=1
+    const res = await fetch(`${BASE_URL}/api/operator/cases?page=1&limit=1`, { headers: headers() });
+    if (res.status !== 200) throw new Error(`Status ${res.status}`);
+    const data = await res.json();
+    if (data.limit !== 1) throw new Error(`Expected limit 1, got ${data.limit}`);
+    if (data.page !== 1) throw new Error(`Expected page 1, got ${data.page}`);
+    if (data.cases.length > 1) throw new Error(`Expected at most 1 case, got ${data.cases.length}`);
+    if (data.total < 3) throw new Error(`Expected total >= 3 (3 test cases), got ${data.total}`);
+  });
+
+  await assert("GET /api/operator/cases page 2 returns different results", async () => {
+    const res1 = await fetch(`${BASE_URL}/api/operator/cases?page=1&limit=1`, { headers: headers() });
+    const data1 = await res1.json();
+    const res2 = await fetch(`${BASE_URL}/api/operator/cases?page=2&limit=1`, { headers: headers() });
+    const data2 = await res2.json();
+    if (data2.page !== 2) throw new Error(`Expected page 2, got ${data2.page}`);
+    if (data1.cases.length > 0 && data2.cases.length > 0) {
+      if (data1.cases[0].id === data2.cases[0].id) throw new Error("Page 1 and 2 returned same case");
+    }
+  });
+
+  await assert("GET /api/operator/jobs filters by case_id", async () => {
+    const res = await fetch(`${BASE_URL}/api/operator/jobs?case_id=${testCaseId}`, { headers: headers() });
+    if (res.status !== 200) throw new Error(`Status ${res.status}`);
+    const data = await res.json();
+    for (const j of data.jobs) {
+      if (j.case_id !== testCaseId) throw new Error(`Expected case_id ${testCaseId}, got ${j.case_id}`);
+    }
+  });
+
+  await assert("GET /api/operator/tasks filters by status=open", async () => {
+    const res = await fetch(`${BASE_URL}/api/operator/tasks?status=completed`, { headers: headers() });
+    if (res.status !== 200) throw new Error(`Status ${res.status}`);
+    const data = await res.json();
+    for (const t of data.tasks) {
+      if (t.status !== "completed") throw new Error(`Expected status completed, got ${t.status}`);
+    }
+  });
+
+  // ── Gap Fix 4: Multi-tier portal tests ──
+
+  await assert("GET /my-case/[token] War Room portal shows witness section", async () => {
+    const { data: wrCase } = await supabase
+      .from("cases")
+      .select("report_token")
+      .eq("id", warRoomCaseId)
+      .single();
+    const res = await fetch(`${BASE_URL}/my-case/${wrCase.report_token}`);
+    if (res.status !== 200) throw new Error(`Status ${res.status}`);
+    const html = await res.text();
+    if (!html.includes("War Room")) throw new Error("Missing tier name 'War Room'");
+    if (!html.includes("Witnesses")) throw new Error("Missing Witnesses section (War Room+ only)");
+    if (!html.includes("Case Law Citations")) throw new Error("Missing Citations section (War Room+ only)");
+    if (!html.includes("Motion Recommendations")) throw new Error("Missing Motions section (War Room+ only)");
+    // Situation Room sections should NOT appear
+    if (html.includes("Attack Intelligence")) throw new Error("Attack Intelligence should NOT show for War Room");
+    if (html.includes("Trial Preparation")) throw new Error("Trial Preparation should NOT show for War Room");
+  });
+
+  await assert("GET /my-case/[token] Situation Room portal shows all sections", async () => {
+    const { data: srCase } = await supabase
+      .from("cases")
+      .select("report_token")
+      .eq("id", sitRoomCaseId)
+      .single();
+    const res = await fetch(`${BASE_URL}/my-case/${srCase.report_token}`);
+    if (res.status !== 200) throw new Error(`Status ${res.status}`);
+    const html = await res.text();
+    if (!html.includes("Situation Room")) throw new Error("Missing tier name 'Situation Room'");
+    // Should have War Room+ sections
+    if (!html.includes("Witnesses")) throw new Error("Missing Witnesses section");
+    if (!html.includes("Case Law Citations")) throw new Error("Missing Citations section");
+    if (!html.includes("Motion Recommendations")) throw new Error("Missing Motions section");
+    // Should have Situation Room-only sections
+    if (!html.includes("Attack Intelligence")) throw new Error("Missing Attack Intelligence section (Sit Room only)");
+    if (!html.includes("Trial Preparation")) throw new Error("Missing Trial Preparation section (Sit Room only)");
+  });
+
+  await assert("GET /my-case/[token] X-Ray portal does NOT show War Room sections", async () => {
+    const { data: xrCase } = await supabase
+      .from("cases")
+      .select("report_token")
+      .eq("id", testCaseId)
+      .single();
+    const res = await fetch(`${BASE_URL}/my-case/${xrCase.report_token}`);
+    if (res.status !== 200) throw new Error(`Status ${res.status}`);
+    const html = await res.text();
+    // X-Ray should NOT have War Room+ sections
+    if (html.includes("Witnesses")) throw new Error("Witnesses section should NOT show for X-Ray");
+    if (html.includes("Attack Intelligence")) throw new Error("Attack Intelligence should NOT show for X-Ray");
+  });
+
+  // ── Original portal tests ──
+
   await assert("GET /my-case/[token] returns HTML portal", async () => {
     const { data: caseRow } = await supabase
       .from("cases")
@@ -278,17 +551,29 @@ async function runTests() {
 // ============================================================
 async function cleanup() {
   console.log("\n=== CLEANUP ===\n");
-  if (testCaseId) {
-    await supabase.from("case_findings").delete().eq("case_id", testCaseId);
-    await supabase.from("operator_tasks").delete().eq("case_id", testCaseId);
-    await supabase.from("processing_jobs").delete().eq("case_id", testCaseId);
-    await supabase.from("cases").delete().eq("id", testCaseId);
-    console.log(`  Deleted case ${testCaseId} + related data`);
+
+  // Helper: delete a case and all related data
+  async function deleteCase(caseId, label) {
+    if (!caseId) return;
+    await supabase.from("case_findings").delete().eq("case_id", caseId);
+    await supabase.from("operator_tasks").delete().eq("case_id", caseId);
+    await supabase.from("processing_jobs").delete().eq("case_id", caseId);
+    await supabase.from("cases").delete().eq("id", caseId);
+    console.log(`  Deleted ${label} case ${caseId} + related data`);
   }
-  if (testOrderId) {
-    await supabase.from("orders").delete().eq("id", testOrderId);
-    console.log(`  Deleted order ${testOrderId}`);
+
+  async function deleteOrder(orderId, label) {
+    if (!orderId) return;
+    await supabase.from("orders").delete().eq("id", orderId);
+    console.log(`  Deleted ${label} order ${orderId}`);
   }
+
+  await deleteCase(testCaseId, "X-Ray");
+  await deleteCase(warRoomCaseId, "War Room");
+  await deleteCase(sitRoomCaseId, "Situation Room");
+  await deleteOrder(testOrderId, "X-Ray");
+  await deleteOrder(warRoomOrderId, "War Room");
+  await deleteOrder(sitRoomOrderId, "Situation Room");
 }
 
 // ============================================================
