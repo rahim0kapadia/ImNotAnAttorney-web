@@ -39,12 +39,12 @@ export async function generateMetadata({
     title,
     description: config.seoDescription,
     alternates: {
-      canonical: `https://imnotanattorney.com/playbook/${slug}`,
+      canonical: `${SITE_URL}/playbook/${slug}`,
     },
     openGraph: {
       title: `${tier.name} — ${tier.priceDisplay} Instant Download`,
       description: config.seoDescription,
-      url: `https://imnotanattorney.com/playbook/${slug}`,
+      url: `${SITE_URL}/playbook/${slug}`,
       type: "website",
     },
   };

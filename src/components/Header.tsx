@@ -16,15 +16,23 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { TIER_CORE } from "@/lib/tiers";
 
 export function Header() {
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileNavRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && mobileOpen) setMobileOpen(false);
+      if (e.key === "Escape" && mobileOpen) {
+        setMobileOpen(false);
+        toggleRef.current?.focus();
+      }
     };
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
@@ -40,6 +48,27 @@ export function Header() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
+  // Focus trap for mobile menu
+  const handleMobileKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key !== "Tab" || !mobileNavRef.current) return;
+    const focusable = mobileNavRef.current.querySelectorAll<HTMLElement>(
+      'a[href], button, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }, []);
+
+  // Landing page has no navigation — reduces CTA competition
+  if (pathname === "/") return null;
+
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
@@ -49,46 +78,37 @@ export function Header() {
 
         {/* Desktop nav */}
         <nav aria-label="Main navigation" className="hidden items-center gap-8 md:flex">
-          <Link
-            href="/blog"
-            className="text-sm text-zinc-400 transition-colors hover:text-white"
-          >
-            Blog
-          </Link>
-          <Link
-            href="/services"
-            className="text-sm text-zinc-400 transition-colors hover:text-white"
-          >
-            Services
-          </Link>
-          <Link
-            href="/resources"
-            className="text-sm text-zinc-400 transition-colors hover:text-white"
-          >
-            Resources
-          </Link>
-          <Link
-            href="/about"
-            className="text-sm text-zinc-400 transition-colors hover:text-white"
-          >
-            About
-          </Link>
-          <Link
-            href="/sample"
-            className="text-sm text-zinc-400 transition-colors hover:text-white"
-          >
-            Sample Report
-          </Link>
+          {[
+            { href: "/blog", label: "Blog" },
+            { href: "/services", label: "Services" },
+            { href: "/resources", label: "Resources" },
+            { href: "/about", label: "About" },
+            { href: "/sample", label: "Sample Report" },
+          ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              aria-current={pathname === link.href || pathname?.startsWith(link.href + "/") ? "page" : undefined}
+              className={`text-sm transition-colors ${
+                pathname === link.href || pathname?.startsWith(link.href + "/")
+                  ? "text-white font-medium"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
           <Link
             href="/checkout?tier=case-decoder"
             className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-black transition-all hover:bg-amber-400 hover:shadow-md hover:shadow-amber-500/30"
           >
-            Get Started
+            Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay}
           </Link>
         </nav>
 
         {/* Mobile toggle */}
         <button
+          ref={toggleRef}
           onClick={() => setMobileOpen(!mobileOpen)}
           className="text-zinc-400 md:hidden"
           aria-label="Toggle menu"
@@ -123,55 +143,43 @@ export function Header() {
       <AnimatePresence>
       {mobileOpen && (
         <motion.nav
+          ref={mobileNavRef}
           aria-label="Mobile navigation"
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ type: "spring" as const, stiffness: 300, damping: 30 }}
           className="overflow-hidden border-t border-zinc-800 md:hidden"
+          onKeyDown={handleMobileKeyDown}
         >
           <div className="flex flex-col gap-4 px-4 py-4">
-            <Link
-              href="/blog"
-              onClick={() => setMobileOpen(false)}
-              className="text-sm text-zinc-400 transition-colors hover:text-white"
-            >
-              Blog
-            </Link>
-            <Link
-              href="/services"
-              onClick={() => setMobileOpen(false)}
-              className="text-sm text-zinc-400 transition-colors hover:text-white"
-            >
-              Services
-            </Link>
-            <Link
-              href="/resources"
-              onClick={() => setMobileOpen(false)}
-              className="text-sm text-zinc-400 transition-colors hover:text-white"
-            >
-              Resources
-            </Link>
-            <Link
-              href="/about"
-              onClick={() => setMobileOpen(false)}
-              className="text-sm text-zinc-400 transition-colors hover:text-white"
-            >
-              About
-            </Link>
-            <Link
-              href="/sample"
-              onClick={() => setMobileOpen(false)}
-              className="text-sm text-zinc-400 transition-colors hover:text-white"
-            >
-              Sample Report
-            </Link>
+            {[
+              { href: "/blog", label: "Blog" },
+              { href: "/services", label: "Services" },
+              { href: "/resources", label: "Resources" },
+              { href: "/about", label: "About" },
+              { href: "/sample", label: "Sample Report" },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                aria-current={pathname === link.href || pathname?.startsWith(link.href + "/") ? "page" : undefined}
+                className={`text-sm transition-colors ${
+                  pathname === link.href || pathname?.startsWith(link.href + "/")
+                    ? "text-white font-medium"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
             <Link
               href="/checkout?tier=case-decoder"
               onClick={() => setMobileOpen(false)}
               className="rounded-lg bg-amber-500 px-4 py-2 text-center text-sm font-semibold text-black transition-colors hover:bg-amber-400"
             >
-              Get Started
+              Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay}
             </Link>
           </div>
         </motion.nav>

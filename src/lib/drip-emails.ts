@@ -791,7 +791,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
         <strong style="color: white;">Want case-specific research?</strong> Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}). We'll research YOUR judge, YOUR jurisdiction, and generate 15 questions specific to your case.
       </p>
-      ${cta(`Upgrade to ${TIER_CORE["case-decoder"].name} — ${upgradePrice("dui-first-offense")} →`, "/checkout?tier=case-decoder")}
+      ${cta(`Upgrade to ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween("dui-first-offense", "case-decoder")} →`, "/checkout?tier=case-decoder")}
     `,
   },
   {
@@ -818,9 +818,9 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>The difference: when your attorney hears a question from the Playbook, they know the answer. When they hear a question from your Case Decoder, they have to actually check the file.</p>
       <p><strong style="color: white;">That's the meeting that changes everything.</strong></p>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited. Upgrade for ${upgradePrice("dui-first-offense")}. ${TIER_CORE["case-decoder"].delivery} delivery.
+        Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited. Upgrade for ${upgradeCostBetween("dui-first-offense", "case-decoder")}. ${TIER_CORE["case-decoder"].delivery} delivery.
       </p>
-      ${cta(`Get Your ${TIER_CORE["case-decoder"].name} — ${upgradePrice("dui-first-offense")} →`, "/checkout?tier=case-decoder")}
+      ${cta(`Get Your ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween("dui-first-offense", "case-decoder")} →`, "/checkout?tier=case-decoder")}
     `,
   },
   {

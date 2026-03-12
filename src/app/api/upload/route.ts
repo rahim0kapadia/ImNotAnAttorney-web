@@ -30,6 +30,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 /** Maximum allowed file size: 50MB in bytes */
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
@@ -55,6 +56,35 @@ const ACCEPTED_MIME_TYPES = new Set([
 ]);
 
 /**
+ * Magic byte signatures for file type validation.
+ * Validates actual file content, not just the client-provided MIME type
+ * which can be spoofed. text/plain is validated by checking for non-binary content.
+ */
+const MAGIC_BYTES: { mime: string; bytes: number[] }[] = [
+  { mime: "application/pdf", bytes: [0x25, 0x50, 0x44, 0x46] },           // %PDF
+  { mime: "image/jpeg", bytes: [0xFF, 0xD8, 0xFF] },                       // JFIF
+  { mime: "image/png", bytes: [0x89, 0x50, 0x4E, 0x47] },                 // .PNG
+  { mime: "image/gif", bytes: [0x47, 0x49, 0x46, 0x38] },                 // GIF8
+  { mime: "image/webp", bytes: [0x52, 0x49, 0x46, 0x46] },                // RIFF (WebP)
+  { mime: "application/msword", bytes: [0xD0, 0xCF, 0x11, 0xE0] },        // OLE2
+  { mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", bytes: [0x50, 0x4B, 0x03, 0x04] }, // PK (ZIP/OOXML)
+];
+
+function validateMagicBytes(buffer: Buffer, claimedMime: string): boolean {
+  // text/plain: verify no null bytes in first 8KB (binary indicator)
+  if (claimedMime === "text/plain") {
+    const check = buffer.subarray(0, Math.min(8192, buffer.length));
+    return !check.includes(0x00);
+  }
+
+  const sig = MAGIC_BYTES.find((s) => s.mime === claimedMime);
+  if (!sig) return false;
+
+  if (buffer.length < sig.bytes.length) return false;
+  return sig.bytes.every((byte, i) => buffer[i] === byte);
+}
+
+/**
  * Uploads a single discovery document to Supabase Storage and appends its
  * path to the case record's file_urls array.
  *
@@ -63,6 +93,13 @@ const ACCEPTED_MIME_TYPES = new Set([
  */
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit: 10 uploads per 5 minutes per IP
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const { limited } = await checkRateLimit(createAdminClient(), `upload:${ip}`, 10, 300);
+    if (limited) {
+      return NextResponse.json({ error: "Too many uploads. Please wait a few minutes." }, { status: 429 });
+    }
+
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
     const caseId = formData.get("caseId") as string | null;
@@ -122,15 +159,17 @@ export async function POST(req: NextRequest) {
 
     if (caseError || !caseRecord) {
       return NextResponse.json(
-        { error: "Invalid case ID" },
+        { error: "Invalid case ID or email" },
         { status: 403 }
       );
     }
 
-    // Case-insensitive email comparison for ownership verification
+    // Case-insensitive email comparison for ownership verification.
+    // Returns the same generic error as "case not found" to prevent
+    // attackers from confirming whether a UUID corresponds to a real case.
     if (caseRecord.email.toLowerCase() !== email.toLowerCase().trim()) {
       return NextResponse.json(
-        { error: "Email does not match this case" },
+        { error: "Invalid case ID or email" },
         { status: 403 }
       );
     }
@@ -163,6 +202,18 @@ export async function POST(req: NextRequest) {
     const path = `${caseId}/${Date.now()}-${safeName}`;
 
     const buffer = Buffer.from(await file.arrayBuffer());
+
+    // =========================================================================
+    // 5a. MAGIC BYTE VALIDATION
+    // Validates actual file content matches the claimed MIME type. Client MIME
+    // types can be spoofed — this checks the real file signature bytes.
+    // =========================================================================
+    if (!validateMagicBytes(buffer, file.type)) {
+      return NextResponse.json(
+        { error: "File content does not match its declared type. Please upload an unmodified file." },
+        { status: 400 }
+      );
+    }
 
     const { error: uploadError } = await supabase.storage
       .from("discovery-files")

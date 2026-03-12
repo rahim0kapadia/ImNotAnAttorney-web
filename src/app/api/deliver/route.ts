@@ -36,7 +36,8 @@
  *   This prevents the cron (/api/cron/drip Part 2) from re-sending the delivery
  *   notification as a post-purchase drip email.
  *
- * Security: OPERATOR_SECRET token required (same undefined-guard pattern as /api/generate).
+ * Security: GET requires HMAC-signed token (no raw secret in URLs).
+ *           POST accepts raw OPERATOR_SECRET in body or HMAC-signed token.
  * Status flow: review → delivered
  */
 
@@ -45,20 +46,11 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
 import { verifyOperatorToken, signPhase2Token, caseThreadId } from "@/lib/site";
-import { TIER_CORE, upgradePrice } from "@/lib/tiers";
+import { TIER_CORE, upgradePrice, tierDisplayName } from "@/lib/tiers";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
-
-/** Maps tier slugs to display names for delivery emails. */
-const TIER_NAMES: Record<string, string> = {
-  "case-decoder": "Case Decoder",
-  "intelligence-brief": "Intelligence Brief",
-  "x-ray": "X-Ray",
-  "war-room": "War Room",
-  "situation-room": "Situation Room",
-};
 
 /**
  * Returns the site origin URL for constructing absolute links.
@@ -169,16 +161,15 @@ export async function GET(req: NextRequest) {
   const caseId = searchParams.get("case");
 
   // ──────────────────────────────────────────────────────────────
-  // AUTH: Operator token validation
+  // AUTH: Operator token validation (signed tokens only for GET)
   // ──────────────────────────────────────────────────────────────
-  // Accepts two token formats:
-  //   1. Raw OPERATOR_SECRET (for curl/manual access by operator)
-  //   2. HMAC-signed token (from email links — scoped to caseId, 24h expiry)
+  // GET only accepts HMAC-signed tokens (from email links — scoped to
+  // caseId, 24h expiry). Raw OPERATOR_SECRET is NOT accepted in GET
+  // because query strings are logged in browser history, server access
+  // logs, and email link prefetch services.
   //
-  // Signed tokens are preferred because they:
-  //   - Don't expose the raw secret in browser history or email logs
-  //   - Are scoped to a specific case (can't be reused for other cases)
-  //   - Expire after 24 hours (limits damage if an email is compromised)
+  // POST still accepts raw OPERATOR_SECRET (in form body or JSON) for
+  // programmatic/curl access where the secret stays in the request body.
   if (!process.env.OPERATOR_SECRET || !token) {
     return new NextResponse(
       "<h1>Unauthorized</h1><p>Invalid operator token.</p>",
@@ -193,10 +184,11 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  // Check raw secret first (operator curl), then signed token (email link)
-  const isRawSecret = token === process.env.OPERATOR_SECRET;
-  const isSignedToken = !isRawSecret && verifyOperatorToken(token, caseId);
-  if (!isRawSecret && !isSignedToken) {
+  // GET handler only accepts HMAC-signed tokens (not raw OPERATOR_SECRET).
+  // Raw secrets in query strings are visible in browser history, server logs,
+  // and email link preview services. Signed tokens are scoped to a specific
+  // case and expire after 24 hours.
+  if (!verifyOperatorToken(token, caseId)) {
     return new NextResponse(
       "<h1>Unauthorized</h1><p>Invalid or expired operator token.</p>",
       { status: 401, headers: { "Content-Type": "text/html" } }
@@ -477,7 +469,7 @@ export async function POST(req: NextRequest) {
   //   - Report view link (primary CTA)
   //   - Usage instructions (print, priority questions, document answers)
   //   - Upgrade upsell (100% credit toward higher tiers within 12 months)
-  const tierName = TIER_NAMES[caseData.tier] || "Case Decoder";
+  const tierName = tierDisplayName(caseData.tier);
   const isIncluded = caseData.is_included_deliverable === true;
 
   // Look up parent tier for included deliverables (e.g., CD included with IB)
@@ -490,7 +482,7 @@ export async function POST(req: NextRequest) {
       .eq("id", caseData.parent_order_id)
       .single();
     if (parentOrder) {
-      parentTierName = TIER_NAMES[parentOrder.tier] || parentOrder.tier;
+      parentTierName = tierDisplayName(parentOrder.tier);
     }
   }
 
@@ -620,7 +612,7 @@ export async function POST(req: NextRequest) {
 
     if (siblingCases && siblingCases.length > 0) {
       for (const sibling of siblingCases) {
-        const siblingTierName = TIER_NAMES[sibling.tier] || sibling.tier;
+        const siblingTierName = tierDisplayName(sibling.tier);
         // Send Phase 2 intake email for IB+ tiers
         // Both awaiting-intake (hasn't filled standard intake yet) and intake
         // (filled standard intake before payment) need Phase 2 details.

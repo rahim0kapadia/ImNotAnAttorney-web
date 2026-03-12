@@ -43,8 +43,12 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // ── Generate routes (/api/generate/*) ────────────────────────
-  if (pathname.startsWith("/api/generate")) {
+  // ── Generate + Evaluate + Deliver routes (/api/generate/*, /api/evaluate/*, /api/deliver) ──
+  if (
+    pathname.startsWith("/api/generate") ||
+    pathname.startsWith("/api/evaluate") ||
+    pathname === "/api/deliver"
+  ) {
     const secret = process.env.OPERATOR_SECRET;
     if (!secret) {
       return NextResponse.json(
@@ -60,8 +64,28 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // ── Cron routes (/api/cron/*) ──────────────────────────────
+  if (pathname.startsWith("/api/cron")) {
+    const cronSecret = process.env.CRON_SECRET;
+    if (!cronSecret) {
+      return NextResponse.json(
+        { error: "Server misconfigured" },
+        { status: 500 }
+      );
+    }
+    const auth = req.headers.get("authorization");
+    const token = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
+    if (!token || !timingSafeCompare(cronSecret, token)) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    return NextResponse.next();
+  }
+
   // ── Nonce-based CSP for page routes ──────────────────────────
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+
+  // Scope Supabase connect-src to the specific project URL when available
+  const supabaseConnectSrc = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://*.supabase.co";
 
   const cspHeader = [
     "default-src 'self'",
@@ -69,7 +93,7 @@ export function middleware(req: NextRequest) {
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: https:",
     "font-src 'self'",
-    "connect-src 'self' https://api.stripe.com https://vercel.live https://*.supabase.co",
+    `connect-src 'self' https://api.stripe.com https://vercel.live ${supabaseConnectSrc}`,
     "frame-src https://js.stripe.com https://hooks.stripe.com",
     "frame-ancestors 'none'",
     "base-uri 'self'",
@@ -95,9 +119,12 @@ export const config = {
         { type: "header", key: "purpose", value: "prefetch" },
       ],
     },
-    // Always match admin, operator, and generate API routes
+    // Always match admin, operator, generate, cron, evaluate, and deliver API routes
     "/api/admin/:path*",
     "/api/operator/:path*",
     "/api/generate/:path*",
+    "/api/cron/:path*",
+    "/api/evaluate/:path*",
+    "/api/deliver",
   ],
 };

@@ -253,6 +253,15 @@ export function isValidTier(slug: string): slug is TierSlug {
 // HELPERS
 // ============================================================
 
+/** Returns the human-readable display name for a tier slug. */
+export function tierDisplayName(slug: string): string {
+  if (slug in TIER_CORE) {
+    return TIER_CORE[slug as TierSlug].name;
+  }
+  // Fallback: capitalize and replace hyphens
+  return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 /** Returns the price in whole dollars (e.g., 19700 -> 197). */
 export function tierPriceNum(slug: TierSlug): number {
   return TIER_CORE[slug].price / 100;

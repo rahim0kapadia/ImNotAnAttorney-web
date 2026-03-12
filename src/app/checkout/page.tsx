@@ -42,7 +42,7 @@
  */
 "use client";
 
-import { TIER_CORE, tierPriceNum, upgradePrice, type TierSlug } from "@/lib/tiers";
+import { TIER_CORE, tierPriceNum, upgradePrice, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
 import { useSearchParams } from "next/navigation";
 import { useState, Suspense } from "react";
 import Link from "next/link";
@@ -129,17 +129,234 @@ const TIER_INFO: Record<string, TierInfo> = {
     pullquote: {
       quote:
         "The breathalyzer reading is not the case. The maintenance records are.",
-      author: "Elite DUI Defense",
+      author: "DUI Forensic Defense Methodology",
     },
     nudge: {
       nextTierSlug: "case-decoder",
       nextTierName: TIER_CORE["case-decoder"].name,
       nextTierPrice: TIER_CORE["case-decoder"].priceDisplay,
-      upgradeCost: upgradePrice("dui-first-offense")!,
+      upgradeCost: upgradeCostBetween("dui-first-offense", "case-decoder"),
       unlocks:
         "15 case-specific questions built from YOUR charges, YOUR state, YOUR stage. Plus email templates, phone scripts, and a 7-day action plan.",
       bestFor:
         "Worth it when you want questions tailored to your exact situation — not generic DUI questions.",
+    },
+  },
+  "drug-possession": {
+    ...coreTier("drug-possession"),
+    features: [
+      "Charge Reality Report — drug possession explained in plain English",
+      "26 Questions Your Drug Defense Attorney Hopes You Never Ask (6-part format)",
+      "Drug Case Stage Roadmap — arrest through resolution timeline",
+      "Red Flag Checklist — 12 evidence and procedural red flags",
+      "Case Progress Scorecard — rate your attorney on 10 behaviors",
+    ],
+    guarantee:
+      "5 questions you never thought to ask, or full refund. No explanation required.",
+    validation:
+      "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
+    whyThisWorks:
+      "Built from documented defense strategies used by elite drug defense attorneys, lab analysis challenge methodology, and search & seizure protocols. 26 specific questions derived from 40+ elite defense attorneys' techniques.",
+    pullquote: {
+      quote:
+        "The lab report is only as reliable as the chain of custody that produced it.",
+      author: "Drug Defense Research Methodology",
+    },
+    nudge: {
+      nextTierSlug: "case-decoder",
+      nextTierName: TIER_CORE["case-decoder"].name,
+      nextTierPrice: TIER_CORE["case-decoder"].priceDisplay,
+      upgradeCost: upgradeCostBetween("drug-possession", "case-decoder"),
+      unlocks:
+        "15 case-specific questions built from YOUR charges, YOUR state, YOUR stage. Plus email templates, phone scripts, and a 7-day action plan.",
+      bestFor:
+        "Worth it when you want questions tailored to your exact situation — not generic drug possession questions.",
+    },
+  },
+  "probation-violation": {
+    ...coreTier("probation-violation"),
+    features: [
+      "Probation Violation Reality Report — technical vs. substantive violations explained in plain English",
+      "26 Questions Your Probation Violation Attorney Hopes You Never Ask (6-part format)",
+      "Revocation Hearing Roadmap — alleged violation through disposition timeline",
+      "Red Flag Checklist — 12 procedural and evidence red flags",
+      "Case Progress Scorecard — rate your attorney on 10 behaviors",
+    ],
+    guarantee:
+      "5 questions you never thought to ask, or full refund. No explanation required.",
+    validation:
+      "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
+    whyThisWorks:
+      "Built from landmark case law (Bearden v. Georgia, Gagnon v. Scarpelli) and elite defense methodology. 26 specific questions covering willfulness defenses, alternatives to revocation, and due process rights.",
+    pullquote: {
+      quote:
+        "You cannot be revoked for inability to comply. That's the law.",
+      author: "Probation Violation Defense Methodology",
+    },
+    nudge: {
+      nextTierSlug: "case-decoder",
+      nextTierName: TIER_CORE["case-decoder"].name,
+      nextTierPrice: TIER_CORE["case-decoder"].priceDisplay,
+      upgradeCost: upgradeCostBetween("probation-violation", "case-decoder"),
+      unlocks:
+        "15 case-specific questions built from YOUR charges, YOUR state, YOUR stage. Plus email templates, phone scripts, and a 7-day action plan.",
+      bestFor:
+        "Worth it when you want questions tailored to your exact violation and hearing — not generic questions.",
+    },
+  },
+  "white-collar": {
+    ...coreTier("white-collar"),
+    features: [
+      "Charge Reality Report — white collar offenses explained in plain English",
+      "26 Questions Your White Collar Attorney Hopes You Never Ask (6-part format)",
+      "Federal Case Stage Roadmap — pre-indictment through post-conviction timeline",
+      "Red Flag Checklist — 12 evidence and procedural red flags",
+      "Case Progress Scorecard — rate your attorney on 10 behaviors",
+    ],
+    guarantee:
+      "5 questions you never thought to ask, or full refund. No explanation required.",
+    validation:
+      "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
+    whyThisWorks:
+      "Built from documented defense strategies used by elite white collar defense attorneys, including loss calculation challenge methodology, asset forfeiture defense, and federal sentencing guidelines analysis. 26 specific questions derived from 40+ elite defense attorneys' techniques.",
+    pullquote: {
+      quote:
+        "The loss amount is not the sentence. Challenge the math.",
+      author: "White Collar Defense Methodology",
+    },
+    nudge: {
+      nextTierSlug: "case-decoder",
+      nextTierName: TIER_CORE["case-decoder"].name,
+      nextTierPrice: TIER_CORE["case-decoder"].priceDisplay,
+      upgradeCost: upgradeCostBetween("white-collar", "case-decoder"),
+      unlocks:
+        "15 case-specific questions built from YOUR charges, YOUR state, YOUR stage. Plus email templates, phone scripts, and a 7-day action plan.",
+      bestFor:
+        "Worth it when you want questions tailored to your exact situation — not generic white collar questions.",
+    },
+  },
+  "sex-offense": {
+    ...coreTier("sex-offense"),
+    features: [
+      "Charge Reality Report — sex offense elements explained in plain English",
+      "26 Questions Your Sex Offense Attorney Hopes You Never Ask (6-part format)",
+      "Sex Offense Case Stage Roadmap — accusation through post-conviction timeline",
+      "Red Flag Checklist — 12 forensic and procedural red flags",
+      "Case Progress Scorecard — rate your attorney on 10 behaviors",
+    ],
+    guarantee:
+      "5 questions you never thought to ask, or full refund. No explanation required.",
+    validation:
+      "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
+    whyThisWorks:
+      "Built from documented defense strategies used by elite sex offense defense attorneys, including forensic interview analysis, DNA and digital evidence challenge methodology, and full consequence mapping (registration tiers, residency restrictions, collateral consequences). 26 specific questions derived from 40+ elite defense attorneys' techniques.",
+    pullquote: {
+      quote:
+        "The accusation is not the conviction. Challenge the evidence.",
+      author: "Sex Offense Defense Methodology",
+    },
+    nudge: {
+      nextTierSlug: "case-decoder",
+      nextTierName: TIER_CORE["case-decoder"].name,
+      nextTierPrice: TIER_CORE["case-decoder"].priceDisplay,
+      upgradeCost: upgradeCostBetween("sex-offense", "case-decoder"),
+      unlocks:
+        "15 case-specific questions built from YOUR charges, YOUR state, YOUR stage. Plus email templates, phone scripts, and a 7-day action plan.",
+      bestFor:
+        "Worth it when you want questions tailored to your exact situation — not generic questions.",
+    },
+  },
+  "federal-criminal": {
+    ...coreTier("federal-criminal"),
+    features: [
+      "Federal System Reality Report — how federal court actually works, explained in plain English",
+      "26 Questions Your Federal Attorney Hopes You Never Ask (6-part format)",
+      "Federal Case Stage Roadmap — target letter through post-conviction, 13 stages",
+      "Red Flag Checklist — 12 guideline and procedural red flags",
+      "Case Progress Scorecard — rate your attorney on 10 behaviors",
+    ],
+    guarantee:
+      "5 questions you never thought to ask, or full refund. No explanation required.",
+    validation:
+      "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
+    whyThisWorks:
+      "Built from documented defense strategies used by elite federal criminal defense attorneys, including sentencing guidelines analysis, government evidence verification, and federal consequence mapping (BOP designation, RDAP eligibility, First Step Act credits). 26 specific questions derived from 40+ elite defense attorneys' techniques.",
+    pullquote: {
+      quote:
+        "The sentencing guidelines are a formula. Challenge every variable.",
+      author: "Federal Criminal Defense Methodology",
+    },
+    nudge: {
+      nextTierSlug: "case-decoder",
+      nextTierName: TIER_CORE["case-decoder"].name,
+      nextTierPrice: TIER_CORE["case-decoder"].priceDisplay,
+      upgradeCost: upgradeCostBetween("federal-criminal", "case-decoder"),
+      unlocks:
+        "15 case-specific questions built from YOUR charges, YOUR state, YOUR stage. Plus email templates, phone scripts, and a 7-day action plan.",
+      bestFor:
+        "Worth it when you want questions tailored to your exact federal case — not generic questions.",
+    },
+  },
+  "drug-trafficking": {
+    ...coreTier("drug-trafficking"),
+    features: [
+      "Trafficking Charge Reality Report — mandatory minimums, conspiracy liability, and quantity tables explained in plain English",
+      "26 Questions Your Drug Trafficking Attorney Hopes You Never Ask (6-part format)",
+      "Drug Trafficking Case Stage Roadmap — arrest through post-conviction, 12 stages",
+      "Red Flag Checklist — 12 quantity, informant, and procedural red flags",
+      "Case Progress Scorecard — rate your attorney on 10 behaviors",
+    ],
+    guarantee:
+      "5 questions you never thought to ask, or full refund. No explanation required.",
+    validation:
+      "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
+    whyThisWorks:
+      "Built from documented defense strategies used by elite drug trafficking defense attorneys, including informant credibility analysis, drug quantity verification methodology, and conspiracy exposure mapping. 26 specific questions derived from 40+ elite defense attorneys' techniques.",
+    pullquote: {
+      quote:
+        "The informant has a deal. Do you know yours?",
+      author: "Drug Trafficking Defense Methodology",
+    },
+    nudge: {
+      nextTierSlug: "case-decoder",
+      nextTierName: TIER_CORE["case-decoder"].name,
+      nextTierPrice: TIER_CORE["case-decoder"].priceDisplay,
+      upgradeCost: upgradeCostBetween("drug-trafficking", "case-decoder"),
+      unlocks:
+        "15 case-specific questions built from YOUR charges, YOUR state, YOUR stage. Plus email templates, phone scripts, and a 7-day action plan.",
+      bestFor:
+        "Worth it when you want questions tailored to your exact trafficking case — not generic questions.",
+    },
+  },
+  "self-defense": {
+    ...coreTier("self-defense"),
+    features: [
+      "Charge Reality Report — self-defense elements and justifiable force explained in plain English",
+      "26 Questions Your Self-Defense Attorney Hopes You Never Ask (6-part format)",
+      "11-Stage Case Roadmap — incident through immunity hearing, trial, and appeal",
+      "Red Flag Checklist — 12 evidence, expert, and procedural red flags",
+      "Case Progress Scorecard — rate your attorney on 10 behaviors",
+    ],
+    guarantee:
+      "5 questions you never thought to ask, or full refund. No explanation required.",
+    validation:
+      "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
+    whyThisWorks:
+      "Built from the nationally recognized five-element self-defense framework, use-of-force analysis methodology, and Stand Your Ground litigation strategy. 26 specific questions covering innocence, imminence, proportionality, avoidance, and reasonableness.",
+    pullquote: {
+      quote:
+        "You defended yourself. Now defend your freedom.",
+      author: "Self-Defense / Justifiable Force Methodology",
+    },
+    nudge: {
+      nextTierSlug: "case-decoder",
+      nextTierName: TIER_CORE["case-decoder"].name,
+      nextTierPrice: TIER_CORE["case-decoder"].priceDisplay,
+      upgradeCost: upgradeCostBetween("self-defense", "case-decoder"),
+      unlocks:
+        "15 case-specific questions built from YOUR charges, YOUR state, YOUR stage. Plus email templates, phone scripts, and a 7-day action plan.",
+      bestFor:
+        "Worth it when you want questions tailored to your exact self-defense case — not generic questions.",
     },
   },
   "case-decoder": {
@@ -163,7 +380,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     pullquote: {
       quote:
         "Forensic evidence is only as reliable as the humans who handle it.",
-      author: "Elite Defense",
+      author: "Defense Research Methodology",
     },
     nudge: {
       nextTierSlug: "intelligence-brief",
@@ -202,7 +419,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     pullquote: {
       quote:
         "If you're not filing suppression motions, you're not defending.",
-      author: "Elite Defense",
+      author: "Defense Research Methodology",
     },
     nudge: {
       nextTierSlug: "x-ray",
@@ -237,7 +454,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     pullquote: {
       quote:
         "The absence of physical evidence is itself evidence.",
-      author: "Elite Defense",
+      author: "Defense Research Methodology",
     },
     nudge: {
       nextTierSlug: "war-room",
@@ -274,7 +491,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     pullquote: {
       quote:
         "The cooperator is only as good as their handler lets them be.",
-      author: "Elite Defense",
+      author: "Defense Research Methodology",
     },
     nudge: {
       nextTierSlug: "situation-room",
@@ -312,7 +529,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     pullquote: {
       quote:
         "Preparation is the be-all of good trial work.",
-      author: "Elite Defense",
+      author: "Defense Research Methodology",
     },
   },
   "extra-witness": {
@@ -348,6 +565,7 @@ function CheckoutContent() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState<string | null>(null);
   const [consentChecked, setConsentChecked] = useState(false);
+  const [consentError, setConsentError] = useState(false);
   const [courtDate, setCourtDate] = useState("");
   const [priorityDelivery, setPriorityDelivery] = useState(false);
   const [returningCustomer, setReturningCustomer] = useState(false);
@@ -392,6 +610,12 @@ function CheckoutContent() {
 
     if (tier === "situation-room") {
       window.location.href = "/intake?interest=situation-room";
+      return;
+    }
+
+    // Show feedback if email entered but consent not checked
+    if (email && !info.isDigitalProduct && !consentChecked) {
+      setConsentError(true);
       return;
     }
 
@@ -709,18 +933,27 @@ function CheckoutContent() {
 
           {/* INFO CONSENT — Required for all non-digital tiers. UPL defense. */}
           {!info.isDigitalProduct && (
-            <label className="mt-4 flex items-start gap-3 rounded-lg border border-zinc-700 bg-zinc-800/50 p-4 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={consentChecked}
-                onChange={(e) => setConsentChecked(e.target.checked)}
-                className="mt-0.5 h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
-              />
-              <span className="text-xs text-zinc-400">
-                I understand this product provides legal information and research — not legal advice. No attorney-client relationship is created.
-                {info.priceNum >= 2497 && " This service involves custom research specific to my case. Work begins upon intake submission and is non-refundable once delivered. If we miss the stated delivery deadline, I receive a full refund."}
-              </span>
-            </label>
+            <>
+              <label className={`mt-4 flex items-start gap-3 rounded-lg border p-4 cursor-pointer transition-colors ${
+                consentError && !consentChecked
+                  ? "border-red-500 bg-red-500/5"
+                  : "border-zinc-700 bg-zinc-800/50"
+              }`}>
+                <input
+                  type="checkbox"
+                  checked={consentChecked}
+                  onChange={(e) => { setConsentChecked(e.target.checked); if (e.target.checked) setConsentError(false); }}
+                  className="mt-0.5 h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
+                />
+                <span className="text-xs text-zinc-400">
+                  I understand this product provides legal information and research — not legal advice. No attorney-client relationship is created.
+                  {info.priceNum >= 2497 && " This service involves custom research specific to my case. Work begins upon intake submission and is non-refundable once delivered. If we miss the stated delivery deadline, I receive a full refund."}
+                </span>
+              </label>
+              {consentError && !consentChecked && (
+                <p className="mt-1 text-xs text-red-400">Please check the box above to continue.</p>
+              )}
+            </>
           )}
 
           {/* Disclaimer (C7) */}

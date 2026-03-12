@@ -5,8 +5,8 @@
  * with optional filtering by category via the `?category=` query parameter.
  *
  * Categories: DUI, Drug Cases, White Collar, General Defense, or All (no filter).
- * Category filter pills are rendered as plain `<a>` tags (not Links) to allow
- * server-side re-rendering with the new searchParams on each click.
+ * Category filter pills are rendered via a client component (BlogCategoryFilter)
+ * that uses useRouter for instant client-side navigation without full page reload.
  *
  * Data source: `getAllPosts()` from `src/lib/blog.ts` reads MDX frontmatter from
  * the `content/blog/` directory at build time. Posts are sorted by date (newest first).
@@ -21,8 +21,10 @@
  */
 import { getAllPosts } from "@/lib/blog";
 import { BlogCard } from "@/components/BlogCard";
+import { BlogCategoryFilter } from "@/components/BlogCategoryFilter";
 import { LeadCapture } from "@/components/LeadCapture";
 import { SITE_URL } from "@/lib/site";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -33,14 +35,6 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/blog`,
   },
 };
-
-const CATEGORIES = [
-  { label: "All", value: "" },
-  { label: "DUI", value: "dui" },
-  { label: "Drug Cases", value: "drug-cases" },
-  { label: "White Collar", value: "white-collar" },
-  { label: "General Defense", value: "general-defense" },
-];
 
 export default async function BlogPage({
   searchParams,
@@ -57,28 +51,29 @@ export default async function BlogPage({
 
   return (
     <div className="px-4 py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+              { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+            ],
+          }),
+        }}
+      />
       <div className="mx-auto max-w-4xl">
         <h1 className="text-3xl font-bold text-white md:text-4xl">Criminal Defense Blog — Questions Your Attorney Should Answer</h1>
         <p className="mt-3 text-zinc-400">
           Legal information that actually helps. No jargon, no fluff.
         </p>
 
-        {/* Category filters */}
-        <div className="mt-8 flex flex-wrap gap-2">
-          {CATEGORIES.map((cat) => (
-            <a
-              key={cat.value}
-              href={cat.value ? `/blog?category=${cat.value}` : "/blog"}
-              className={`rounded-full px-4 py-1.5 text-xs font-medium transition-colors ${
-                (category || "") === cat.value
-                  ? "bg-amber-500 text-black"
-                  : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
-              }`}
-            >
-              {cat.label}
-            </a>
-          ))}
-        </div>
+        {/* Category filters — client component for instant filtering */}
+        <Suspense fallback={<div className="mt-8 h-8" />}>
+          <BlogCategoryFilter />
+        </Suspense>
 
         {/* Posts */}
         <div className="mt-8 grid gap-6 md:grid-cols-2">

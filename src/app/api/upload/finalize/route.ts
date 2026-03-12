@@ -7,7 +7,11 @@
  *
  *   Upload Page (per-file uploads) --> POST /api/upload/finalize
  *     --> Case status: "uploaded" --> "submitted"
- *     --> Operator notification email (triggers manual analysis workflow)
+ *     --> Creates discovery_documents rows from file_urls
+ *     --> Queues processing_jobs (one OCR job per document)
+ *     --> Sets delivery_due_at based on tier
+ *     --> Creates operator_tasks row
+ *     --> Operator notification email
  *     --> Customer confirmation email
  *
  * This separation exists because:
@@ -16,7 +20,7 @@
  * 3. The customer explicitly signals "I'm done uploading" by clicking submit
  *
  * Status flow for a case: created --> uploaded (files arriving) --> submitted
- * (finalize called) --> analysis_in_progress --> delivered (manual)
+ * (finalize called) --> processing (engine picks up jobs) --> review --> delivered
  *
  * The finalize endpoint is idempotent: calling it on an already-submitted case
  * returns success without re-sending emails or re-updating the status.
@@ -98,13 +102,21 @@ export async function POST(req: NextRequest) {
     }
 
     // =========================================================================
-    // 3. IDEMPOTENCY CHECK
-    // If the case is already submitted, return success without re-processing.
-    // This handles: double-clicks, page refreshes, retry logic, and network
-    // retries. No emails are re-sent, no status is re-written.
+    // 3. STATUS GUARD
+    // Only allow finalization from early-stage statuses. Once a case moves
+    // beyond "submitted" (e.g., into processing, review, delivered), re-finalization
+    // would regress the status and break the pipeline.
     // =========================================================================
+    const FINALIZABLE_STATUSES = ["uploaded", "pending", "awaiting-intake"];
     if (caseRecord.status === "submitted") {
+      // Idempotent: already submitted, return success without re-processing.
+      // Handles double-clicks, page refreshes, retry logic, and network retries.
       return NextResponse.json({ success: true, message: "Already submitted" });
+    }
+    if (!FINALIZABLE_STATUSES.includes(caseRecord.status)) {
+      return NextResponse.json(
+        { success: true, message: "Case is already being processed" },
+      );
     }
 
     // =========================================================================
@@ -126,11 +138,24 @@ export async function POST(req: NextRequest) {
     // This is the point of no return. After this update, the operator is
     // notified and analysis begins. The updated_at timestamp records when
     // the customer signaled they're done uploading.
+    //
+    // Also sets delivery_due_at based on tier:
+    //   x-ray: 10 business days, war-room: 28 days, situation-room: 2 days
     // =========================================================================
+    const deliveryDays: Record<string, number> = {
+      "x-ray": 14, // 10 business days ≈ 14 calendar days
+      "war-room": 28,
+      "situation-room": 2, // 24-48 hour priority
+    };
+    const daysToAdd = deliveryDays[caseRecord.tier] || 14;
+    const deliveryDue = new Date();
+    deliveryDue.setDate(deliveryDue.getDate() + daysToAdd);
+
     const { error: updateError } = await supabase
       .from("cases")
       .update({
         status: "submitted",
+        delivery_due_at: deliveryDue.toISOString(),
         updated_at: new Date().toISOString(),
       })
       .eq("id", caseId);
@@ -141,6 +166,114 @@ export async function POST(req: NextRequest) {
         { error: "Failed to update case status" },
         { status: 500 }
       );
+    }
+
+    // =========================================================================
+    // 5a. CREATE DISCOVERY_DOCUMENTS ROWS
+    // One row per file in file_urls. We extract the original filename from the
+    // storage path (format: {caseId}/{timestamp}-{filename}). File metadata
+    // (size, type) is fetched from Supabase Storage.
+    // =========================================================================
+    const fileUrls: string[] = caseRecord.file_urls || [];
+    const docRows = [];
+
+    for (const storagePath of fileUrls) {
+      // Extract original name: path format is "{caseId}/{timestamp}-{safeName}"
+      const pathParts = storagePath.split("/");
+      const fileName = pathParts.length > 1
+        ? pathParts.slice(1).join("/").replace(/^\d+-/, "") // strip timestamp prefix
+        : storagePath;
+
+      // Infer file type from extension
+      const ext = fileName.split(".").pop()?.toLowerCase() || "";
+      const mimeMap: Record<string, string> = {
+        pdf: "application/pdf",
+        jpg: "image/jpeg",
+        jpeg: "image/jpeg",
+        png: "image/png",
+        tiff: "image/tiff",
+        tif: "image/tiff",
+        doc: "application/msword",
+        docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        txt: "text/plain",
+      };
+      const mimeType = mimeMap[ext] || "application/octet-stream";
+      const fileType = ext === "pdf" ? "pdf" : ["jpg", "jpeg", "png", "tiff", "tif"].includes(ext) ? "image" : "document";
+
+      docRows.push({
+        case_id: caseId,
+        storage_path: storagePath,
+        original_name: fileName,
+        file_type: fileType,
+        mime_type: mimeType,
+        file_size_bytes: 0, // Updated by OCR worker when it downloads the file
+        status: "uploaded",
+      });
+    }
+
+    let docIds: string[] = [];
+    if (docRows.length > 0) {
+      const { data: insertedDocs, error: docError } = await supabase
+        .from("discovery_documents")
+        .insert(docRows)
+        .select("id");
+
+      if (docError) {
+        console.error("[Upload Finalize] discovery_documents insert error:", docError);
+        // Non-fatal: status already updated, operator can still process manually
+      } else {
+        docIds = (insertedDocs || []).map((d: { id: string }) => d.id);
+      }
+    }
+
+    // =========================================================================
+    // 5b. QUEUE PROCESSING JOBS (Phase 1: one OCR job per document)
+    // Each OCR job targets a specific discovery_document. After OCR completes,
+    // the worker creates classification and entity extraction jobs automatically.
+    // Priority 1 = highest (process immediately when worker picks up).
+    // =========================================================================
+    if (docIds.length > 0) {
+      const batchId = crypto.randomUUID();
+      const ocrJobs = docIds.map((docId) => ({
+        case_id: caseId,
+        job_type: "ocr",
+        target_id: docId,
+        target_type: "discovery_document",
+        priority: 1,
+        batch_id: batchId,
+        status: "queued",
+      }));
+
+      const { error: jobError } = await supabase
+        .from("processing_jobs")
+        .insert(ocrJobs);
+
+      if (jobError) {
+        console.error("[Upload Finalize] processing_jobs insert error:", jobError);
+        // Non-fatal: operator task created below, can manually trigger
+      }
+    }
+
+    // =========================================================================
+    // 5c. CREATE OPERATOR TASK
+    // Creates a trackable task for the operator to monitor pipeline progress.
+    // The operator can view this in the dashboard and intervene if needed.
+    // =========================================================================
+    const { error: taskError } = await supabase
+      .from("operator_tasks")
+      .insert({
+        case_id: caseId,
+        task_type: "pipeline_monitoring",
+        title: `${caseRecord.tier.toUpperCase()} pipeline: ${fileCount} documents submitted`,
+        description: `Customer ${caseRecord.email} submitted ${fileCount} discovery documents for ${caseRecord.tier} analysis. ${docIds.length} OCR jobs queued. Monitor pipeline progress and review final report.`,
+        priority: caseRecord.tier === "situation-room" ? "URGENT" : "HIGH",
+        priority_rank: caseRecord.tier === "situation-room" ? 1 : 2,
+        due_at: deliveryDue.toISOString(),
+      });
+
+    if (taskError) {
+      console.error("[Upload Finalize] operator_tasks insert error:", taskError);
+      // Non-fatal: operator email sent below regardless
     }
 
     // =========================================================================
@@ -164,8 +297,10 @@ export async function POST(req: NextRequest) {
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Files Uploaded:</strong> ${fileCount}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${escapeHtml(caseId)}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Time:</strong> ${new Date().toISOString()}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Pipeline:</strong> ${docIds.length} OCR jobs queued${docIds.length > 0 ? " — processing will begin automatically" : " — manual processing required"}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Due:</strong> ${deliveryDue.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</p>
         </div>
-        <p style="color: #A1A1AA;">Log into Supabase to access the uploaded files and begin analysis.</p>
+        <p style="color: #A1A1AA;">${docIds.length > 0 ? "The engine pipeline is processing these documents automatically. You'll receive a review notification when the report is ready." : "Log into Supabase to access the uploaded files and begin analysis."}</p>
       `,
     }, { category: "operator-upload-ready", case_id: caseId, metadata: { tier: caseRecord.tier, fileCount } });
 

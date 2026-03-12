@@ -301,7 +301,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
             href="/checkout?tier=case-decoder"
             className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-bold text-black transition-colors hover:bg-amber-400"
           >
-            Get Your Full Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} →
+            Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} →
           </Link>
           <Link
             href="/resources"

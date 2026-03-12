@@ -9,24 +9,13 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { timingSafeEqual } from "crypto";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { isOperatorAuthorized } from "@/lib/operator-auth";
 
 const RESEND_API = "https://api.resend.com";
 
-function isAuthorized(req: NextRequest): boolean {
-  const password = process.env.ADMIN_PASSWORD;
-  if (!password) return false;
-  const fromHeader = req.headers.get("x-admin-password");
-  if (!fromHeader) return false;
-  // Constant-time comparison to prevent timing attacks
-  const a = Buffer.from(password);
-  const b = Buffer.from(fromHeader);
-  if (a.length !== b.length) return false;
-  return timingSafeEqual(a, b);
-}
-
 export async function POST(req: NextRequest) {
-  if (!isAuthorized(req)) {
+  if (!isOperatorAuthorized(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -37,6 +26,35 @@ export async function POST(req: NextRequest) {
       { error: "to and text are required" },
       { status: 400 }
     );
+  }
+
+  // Restrict replies to known recipients only. Without this check, a
+  // compromised admin password turns this endpoint into an open email relay.
+  // The "to" email must exist as a from_email in inbound_emails (i.e., someone
+  // who has previously emailed us) OR as an email in the cases table (a customer).
+  const supabase = createAdminClient();
+  const { data: knownInbound } = await supabase
+    .from("inbound_emails")
+    .select("from_email")
+    .eq("from_email", to)
+    .limit(1)
+    .maybeSingle();
+
+  if (!knownInbound) {
+    // Fallback: also check the cases table for customer emails
+    const { data: knownCase } = await supabase
+      .from("cases")
+      .select("email")
+      .eq("email", to)
+      .limit(1)
+      .maybeSingle();
+
+    if (!knownCase) {
+      return NextResponse.json(
+        { error: "Can only reply to known email addresses" },
+        { status: 400 }
+      );
+    }
   }
 
   const resendApiKey = process.env.RESEND_API_KEY;

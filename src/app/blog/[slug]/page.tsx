@@ -29,6 +29,8 @@ import { BlogCard } from "@/components/BlogCard";
 import { PlaybookCTA } from "@/components/PlaybookCTA";
 import { SourceIntelligence, ATTORNEYS } from "@/components/SourceIntelligence";
 import { TLDRBox } from "@/components/TLDRBox";
+import { BlogInlineCapture } from "@/components/BlogInlineCapture";
+import { MDXErrorBoundary } from "@/components/MDXErrorBoundary";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 import { SITE_URL } from "@/lib/site";
@@ -88,7 +90,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* Header */}
         <div className="mb-8">
           <div className="mb-4 flex items-center gap-3">
-            <time className="text-sm text-zinc-400">{post.date}</time>
+            <time dateTime={new Date(post.date).toISOString()} className="text-sm text-zinc-400">{post.date}</time>
             <span className="text-sm text-zinc-400">&bull;</span>
             <span className="text-sm text-zinc-400">{post.readingTime}</span>
           </div>
@@ -192,9 +194,14 @@ export default async function BlogPostPage({ params }: PageProps) {
         <SourceIntelligence category={post.category || "general-defense"} />
 
         {/* Content */}
+        <MDXErrorBoundary>
         <div className="prose prose-invert prose-amber max-w-none prose-headings:text-white prose-p:text-zinc-300 prose-a:text-amber-400 prose-strong:text-white prose-li:text-zinc-300">
           <MDXRemote source={post.content} components={{ TLDRBox }} />
         </div>
+        </MDXErrorBoundary>
+
+        {/* Mid-article lead capture — category-specific checklist */}
+        <BlogInlineCapture category={post.category || "general-defense"} />
 
         {/* Share — growth loop */}
         <FadeInUp>
@@ -270,7 +277,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         {/* Service CTA */}
         <div className="mt-12">
-          <BlogCTA />
+          <BlogCTA category={post.category} />
         </div>
 
         {/* Lead Capture */}

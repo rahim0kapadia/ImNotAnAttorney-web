@@ -36,6 +36,7 @@ import { LeadCapture } from "@/components/LeadCapture";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 import { SITE_URL } from "@/lib/site";
+import { TIER_CORE } from "@/lib/tiers";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -51,6 +52,19 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="px-4 py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+              { "@type": "ListItem", position: 2, name: "About" },
+            ],
+          }),
+        }}
+      />
       <div className="mx-auto max-w-3xl">
         {/* HERO — Identity statement that immediately establishes credibility */}
         <FadeInUp>
@@ -198,12 +212,15 @@ export default function AboutPage() {
             Defendants who fight back{" "}
             <span className="text-amber-400">start here.</span>
           </h2>
+          <p className="mt-3 text-sm text-zinc-400">
+            We found 4 issues in one case. Let us look at yours.
+          </p>
           <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
-              href="/services"
+              href="/checkout?tier=case-decoder"
               className="rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
             >
-              See Our Services
+              Get Your Questions — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
             </Link>
             <Link
               href="/blog"
@@ -214,6 +231,25 @@ export default function AboutPage() {
           </div>
         </section>
         </FadeInUp>
+
+        {/* RELATED READING — Specific blog posts that reinforce the About page narrative */}
+        <section className="mt-16">
+          <h2 className="font-display text-xl font-bold text-white mb-4">Recommended Reading</h2>
+          <div className="space-y-3">
+            <Link href="/blog/trafficking-charges-constructive-possession" className="block rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
+              <p className="text-sm font-semibold text-amber-400">Drug Trafficking & Constructive Possession</p>
+              <p className="mt-1 text-xs text-zinc-400">The defense strategy that applies to the founder&apos;s case — and might apply to yours.</p>
+            </Link>
+            <Link href="/blog/how-your-attorney-makes-money" className="block rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
+              <p className="text-sm font-semibold text-amber-400">How Your Attorney Makes Money</p>
+              <p className="mt-1 text-xs text-zinc-400">Understanding the business model explains why some attorneys push pleas over motions.</p>
+            </Link>
+            <Link href="/blog/attorney-not-returning-calls" className="block rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
+              <p className="text-sm font-semibold text-amber-400">Your Attorney Won&apos;t Return Your Calls</p>
+              <p className="mt-1 text-xs text-zinc-400">The exact problem that started all of this — and what you can do about it.</p>
+            </Link>
+          </div>
+        </section>
 
         {/* LEAD CAPTURE — Email opt-in fallback for visitors not ready to buy */}
         <div className="mt-16">

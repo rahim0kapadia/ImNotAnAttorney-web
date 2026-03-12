@@ -18,7 +18,21 @@ import { TIER_CORE } from "@/lib/tiers";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { TrustBadges } from "@/components/TrustBadges";
 
-export function BlogCTA() {
+const CATEGORY_PLAYBOOK: Record<string, string> = {
+  dui: "dui-first-offense",
+  drug: "drug-possession",
+  "drug-cases": "drug-possession",
+  "white-collar": "white-collar",
+  federal: "federal-criminal",
+  trafficking: "drug-trafficking",
+  "sex-offense": "sex-offense",
+  "self-defense": "self-defense",
+  probation: "probation-violation",
+  "general-defense": "dui-first-offense",
+};
+
+export function BlogCTA({ category }: { category?: string }) {
+  const playbookSlug = category ? CATEGORY_PLAYBOOK[category] || "dui-first-offense" : "dui-first-offense";
   return (
     <FadeInUp>
       <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
@@ -40,10 +54,10 @@ export function BlogCTA() {
             Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
           </Link>
           <Link
-            href="/sample"
-            className="rounded-lg border border-zinc-700 px-6 py-3 text-center text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:border-zinc-500"
+            href={`/checkout?tier=${playbookSlug}`}
+            className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] hover:border-amber-500"
           >
-            See a Sample Report
+            Start with a Playbook — {TIER_CORE[playbookSlug as keyof typeof TIER_CORE].priceDisplay}
           </Link>
         </div>
         <div className="mt-4">

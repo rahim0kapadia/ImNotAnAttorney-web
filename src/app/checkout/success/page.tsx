@@ -39,8 +39,8 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
-import { CONTACT_EMAIL } from "@/lib/site";
-import { TIER_CORE, upgradePrice, type TierSlug } from "@/lib/tiers";
+import { CONTACT_EMAIL, SITE_URL } from "@/lib/site";
+import { TIER_CORE, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { TrustBadges } from "@/components/TrustBadges";
 
@@ -342,7 +342,7 @@ function SuccessContent() {
             {info.noIntakeAction && info.intakeUrl && (
               <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
                 <p className="text-sm font-semibold text-amber-400">
-                  Haven&apos;t submitted your case details yet?
+                  Your 48-hour clock starts when you submit
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
                   {info.noIntakeAction}
@@ -351,7 +351,7 @@ function SuccessContent() {
                   href={customerEmail ? `${info.intakeUrl}&email=${encodeURIComponent(customerEmail)}` : info.intakeUrl}
                   className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
                 >
-                  Complete Your Case Details &rarr;
+                  Submit Case Details — Start the Clock &rarr;
                 </Link>
               </div>
             )}
@@ -362,7 +362,7 @@ function SuccessContent() {
                   When you&apos;re ready, upload your discovery documents:
                 </p>
                 <Link
-                  href="/upload"
+                  href={customerEmail ? `/upload?email=${encodeURIComponent(customerEmail)}` : "/upload"}
                   className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
                 >
                   Upload Discovery Documents &rarr;
@@ -397,7 +397,7 @@ function SuccessContent() {
                   href="/checkout?tier=case-decoder"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Upgrade to {TIER_CORE["case-decoder"].name} — {upgradePrice(tier as TierSlug)} &rarr;
+                  Upgrade to {TIER_CORE["case-decoder"].name} — {upgradeCostBetween(tier as TierSlug, "case-decoder")} &rarr;
                 </Link>
               </div>
             )}
@@ -419,7 +419,7 @@ function SuccessContent() {
                   href="/checkout?tier=intelligence-brief"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Claim Your Upgrade Credit — {upgradePrice("case-decoder")} &rarr;
+                  Claim Your Upgrade Credit — {upgradeCostBetween("case-decoder", "intelligence-brief")} &rarr;
                 </Link>
               </div>
             )}
@@ -441,7 +441,7 @@ function SuccessContent() {
                   href="/checkout?tier=x-ray"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Claim Your Upgrade Credit — {upgradePrice("intelligence-brief")} &rarr;
+                  Claim Your Upgrade Credit — {upgradeCostBetween("intelligence-brief", "x-ray")} &rarr;
                 </Link>
               </div>
             )}
@@ -463,7 +463,7 @@ function SuccessContent() {
                   href="/checkout?tier=war-room"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Claim Your Upgrade Credit — {upgradePrice("x-ray")} &rarr;
+                  Claim Your Upgrade Credit — {upgradeCostBetween("x-ray", "war-room")} &rarr;
                 </Link>
               </div>
             )}
@@ -485,7 +485,7 @@ function SuccessContent() {
                   href="/checkout?tier=situation-room"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Claim Your Upgrade Credit — {upgradePrice("war-room")} &rarr;
+                  Claim Your Upgrade Credit — {upgradeCostBetween("war-room", "situation-room")} &rarr;
                 </Link>
               </div>
             )}
@@ -502,6 +502,28 @@ function SuccessContent() {
             Confirmation #{sessionId.slice(3, 11).toUpperCase()}
           </p>
         )}
+
+        {/* REFERRAL CTA — Growth loop: share with someone facing charges */}
+        <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
+          <p className="text-sm font-semibold text-amber-400">Know someone facing charges?</p>
+          <p className="mt-1 text-xs text-zinc-400">Forward them this link. Most defendants don&apos;t know they can hold their attorney accountable.</p>
+          <div className="mt-3 flex flex-wrap gap-2 justify-center">
+            <a
+              href={`sms:?body=${encodeURIComponent(`This helped me with my case — they research your charges and give you the exact questions to ask your attorney: ${SITE_URL}`)}`}
+              className="rounded-lg bg-zinc-800 px-4 py-2 text-xs text-white transition-colors hover:bg-zinc-700"
+            >
+              Text a Friend
+            </a>
+            <a
+              href={`https://wa.me/?text=${encodeURIComponent(`This helped me with my case — they research your charges and give you the exact questions to ask your attorney: ${SITE_URL}`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-lg bg-zinc-800 px-4 py-2 text-xs text-white transition-colors hover:bg-zinc-700"
+            >
+              WhatsApp
+            </a>
+          </div>
+        </div>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Link

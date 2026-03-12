@@ -20,6 +20,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { CONTACT_EMAIL } from "@/lib/site";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export async function GET(
   _req: NextRequest,
@@ -32,6 +33,13 @@ export async function GET(
   }
 
   const supabase = createAdminClient();
+
+  // Rate limit by IP to prevent token enumeration
+  const ip = _req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const { limited } = await checkRateLimit(supabase, `download:${ip}`, 20, 60);
+  if (limited) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
 
   // Look up order by download token
   const { data: order, error: orderError } = await supabase
@@ -96,11 +104,16 @@ export async function GET(
     );
   }
 
-  // Increment download count (fire-and-forget — don't block the redirect)
+  // Increment download count atomically (fire-and-forget — don't block the redirect).
+  // Uses optimistic locking: the WHERE clause includes the current download_count,
+  // so concurrent requests won't silently overwrite each other. If another request
+  // incremented between our SELECT and this UPDATE, the WHERE won't match (0 rows
+  // updated) — acceptable for an audit counter where occasional misses are fine.
   void supabase
     .from("orders")
     .update({ download_count: (order.download_count || 0) + 1 })
     .eq("id", order.id)
+    .eq("download_count", order.download_count || 0)
     .then(() => {}, (err: unknown) => console.error("[Download] Count increment failed:", err));
 
   // Redirect to the signed URL

@@ -105,6 +105,19 @@ const rightsGuides = [
 export default function ResourcesPage() {
   return (
     <div className="px-4 py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+              { "@type": "ListItem", position: 2, name: "Resources" },
+            ],
+          }),
+        }}
+      />
       <div className="mx-auto max-w-4xl">
         {/* HEADER — Empowerment framing: "Knowledge is power" */}
         <FadeInUp>
@@ -263,10 +276,10 @@ export default function ResourcesPage() {
             actual case.
           </p>
           <Link
-            href="/services"
+            href="/checkout?tier=case-decoder"
             className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
           >
-            See Our Services
+            Get Case-Specific Questions — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
           </Link>
           <div className="mt-6">
             <TrustBadges variant="compact" />

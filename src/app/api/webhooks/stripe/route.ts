@@ -22,16 +22,16 @@
  * Key patterns:
  *   - Duplicate webhook handling via Postgres unique constraint (error code 23505)
  *   - Email normalization: all emails lowercased + trimmed before storage/lookup
- *   - Fire-and-forget generation trigger (doesn't block webhook response)
+ *   - Generation trigger via after() (runs post-response, GC-safe on Vercel)
  *   - Operator alerts on every failure path (order insert, case insert, email delivery)
  *
  * Security: Stripe signature verification using STRIPE_WEBHOOK_SECRET.
  * Stripe retries webhooks up to 3 times over 72 hours on non-2xx responses.
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { stripe, TIERS, isValidTier } from "@/lib/stripe";
-import { TIER_CORE, upgradePrice, type TierSlug } from "@/lib/tiers";
+import { TIER_CORE, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
@@ -133,6 +133,17 @@ export async function POST(req: NextRequest) {
 
     if (!tier || !email || amount == null) {
       console.error("[Stripe Webhook] Missing metadata:", { tier, email, amount });
+      await sendEmail({
+        to: OPERATOR_EMAIL,
+        subject: `ALERT: Missing metadata in Stripe webhook — ${session.id}`,
+        html: `<h1 style="color: #EF4444;">Missing Metadata in Stripe Webhook</h1>
+          <p>A checkout.session.completed event arrived with missing metadata. The order was NOT created.</p>
+          <p><strong>Session ID:</strong> ${escapeHtml(session.id)}</p>
+          <p><strong>Tier:</strong> ${tier ? escapeHtml(tier) : "MISSING"}</p>
+          <p><strong>Email:</strong> ${email ? escapeHtml(email) : "MISSING"}</p>
+          <p><strong>Amount:</strong> ${amount != null ? String(amount) : "MISSING"}</p>
+          <p><strong>Action:</strong> Check Stripe dashboard for session ${escapeHtml(session.id)} and manually create the order if payment was collected.</p>`,
+      });
       return NextResponse.json({ received: true });
     }
 
@@ -246,7 +257,7 @@ export async function POST(req: NextRequest) {
       const step2 = playbookStep2[tier] || "Review the charge-specific details section. Every case has facts that matter more than others — know yours.";
 
       const upgradeTierSlug = tier as TierSlug;
-      const upgradeCost = upgradePrice(upgradeTierSlug);
+      const upgradeCost = upgradeCostBetween(upgradeTierSlug, "case-decoder");
 
       await sendEmailWithRetry({
         to: email,
@@ -408,18 +419,20 @@ export async function POST(req: NextRequest) {
       // intake email immediately (no CD delivery to trigger it later).
       if (caseId && tierConfig?.includesTiers && tierConfig.includesTiers.length > 0) {
         for (const includedTier of tierConfig.includesTiers) {
-          // Check if customer already has a delivered case for this tier (by email)
+          // Check if customer already has an active case for this tier (by email).
+          // Checks all non-terminal statuses — not just "delivered" — to prevent
+          // duplicates when a prior case is still in-progress (review, processing, etc.).
           const { data: existingCase } = await supabase
             .from("cases")
             .select("id")
             .eq("email", email)
             .eq("tier", includedTier)
-            .eq("status", "delivered")
+            .not("status", "in", '("cancelled","refunded")')
             .limit(1)
             .maybeSingle();
 
           if (existingCase) {
-            console.log(`[Webhook] Skipping included ${includedTier} — customer already has delivered case ${existingCase.id} (email match)`);
+            console.log(`[Webhook] Skipping included ${includedTier} — customer already has active case ${existingCase.id} (email match)`);
             if (includedTier === "case-decoder") cdSkippedDueToDedup = true;
             continue;
           }
@@ -432,12 +445,12 @@ export async function POST(req: NextRequest) {
               .eq("court_case_number", existingCaseNumber)
               .eq("court_state", existingCaseState)
               .eq("tier", includedTier)
-              .eq("status", "delivered")
+              .not("status", "in", '("cancelled","refunded")')
               .limit(1)
               .maybeSingle();
 
             if (caseNumberMatch) {
-              console.log(`[Webhook] Skipping included ${includedTier} — customer already has delivered case ${caseNumberMatch.id} (case number match)`);
+              console.log(`[Webhook] Skipping included ${includedTier} — customer already has active case ${caseNumberMatch.id} (case number match)`);
               if (includedTier === "case-decoder") cdSkippedDueToDedup = true;
               continue;
             }
@@ -469,18 +482,25 @@ export async function POST(req: NextRequest) {
             continue;
           }
 
-          // Auto-trigger CD generation for included case-decoder
+          // Auto-trigger CD generation for included case-decoder.
+          // Uses after() so the fetch runs after the response is sent to Stripe,
+          // avoiding GC on Vercel (fire-and-forget fetch may be killed post-response).
           if (includedTier === "case-decoder" && hasIntake) {
-            fetch(`${origin}/api/generate/case-decoder`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
-              },
-              body: JSON.stringify({ caseId: includedCaseId }),
-            }).catch((err) =>
-              console.error("[Webhook] Auto-trigger included CD generation failed:", err)
-            );
+            const capturedIncludedCaseId = includedCaseId;
+            after(async () => {
+              try {
+                await fetch(`${origin}/api/generate/case-decoder`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
+                  },
+                  body: JSON.stringify({ caseId: capturedIncludedCaseId }),
+                });
+              } catch (err) {
+                console.error("[Webhook] Auto-trigger included CD generation failed:", err);
+              }
+            });
           }
         }
       }
@@ -537,20 +557,25 @@ export async function POST(req: NextRequest) {
       // Included CDs are triggered in the inclusion loop above.
       //
       // Two paths:
-      //   A. Intake exists → Fire-and-forget to /api/generate/case-decoder
+      //   A. Intake exists → Trigger generation via after() (runs post-response)
       //   B. No intake → Email customer with a link to the intake form.
       if (caseId && tier === "case-decoder") {
         if (hasIntake) {
-          fetch(`${origin}/api/generate/case-decoder`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
-            },
-            body: JSON.stringify({ caseId }),
-          }).catch((err) =>
-            console.error("[Webhook] Auto-trigger report generation failed:", err)
-          );
+          const capturedCaseId = caseId;
+          after(async () => {
+            try {
+              await fetch(`${origin}/api/generate/case-decoder`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
+                },
+                body: JSON.stringify({ caseId: capturedCaseId }),
+              });
+            } catch (err) {
+              console.error("[Webhook] Auto-trigger report generation failed:", err);
+            }
+          });
         } else {
           await sendEmailWithRetry({
             to: email,
@@ -700,12 +725,14 @@ export async function POST(req: NextRequest) {
       const isFullRefund = charge.amount_refunded === charge.amount;
 
       if (isFullRefund) {
-        // ── FULL REFUND: Mark order as refunded, revoke report access ──
+        // ── FULL REFUND: Mark order as refunded, revoke report + download access ──
         const { error: refundError } = await supabase
           .from("orders")
           .update({
             status: "refunded",
             refunded_at: new Date().toISOString(),
+            download_token: null,
+            download_token_expires_at: null,
           })
           .eq("stripe_payment_intent_id", paymentIntentId);
 

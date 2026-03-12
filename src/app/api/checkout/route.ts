@@ -203,6 +203,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Enhanced consent for high-value tiers ($2,497+): the frontend shows
+    // additional non-refundable terms ("Work begins upon intake submission
+    // and is non-refundable once delivered"). Require consent to be strictly
+    // boolean true (not just truthy) to ensure the caller acknowledged these
+    // terms and didn't accidentally pass a truthy string or number.
+    if (tierConfig.price >= 249700 && consent !== true) {
+      return NextResponse.json(
+        { error: "Explicit consent required for tiers $2,497 and above" },
+        { status: 400 }
+      );
+    }
+
     // =========================================================================
     // 6b. RETURNING CUSTOMER: CASE NUMBER LOOKUP
     // If the customer provided a court case number + state (indicating they
@@ -313,7 +325,7 @@ export async function POST(req: NextRequest) {
           "situation-room",
         ];
         const currentTierIndex = tierOrder.indexOf(tier);
-        upgradeCreditCents = priorOrders
+        upgradeCreditCents += priorOrders
           .filter(
             (o: { amount: number; tier: string }) =>
               tierOrder.indexOf(o.tier) < currentTierIndex

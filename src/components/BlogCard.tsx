@@ -42,7 +42,7 @@ export function BlogCard({
   return (
     <article className="group rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 transition-colors hover:border-zinc-700">
       <div className="mb-3 flex items-center gap-3">
-        <time className="text-xs text-zinc-400">{date}</time>
+        <time dateTime={new Date(date).toISOString()} className="text-xs text-zinc-400">{date}</time>
         <span className="text-xs text-zinc-400">&bull;</span>
         <span className="text-xs text-zinc-400">{readingTime}</span>
       </div>

@@ -95,19 +95,7 @@ import type { DripEmail, DripPersonalizationData } from "@/lib/drip-emails";
 import { timingSafeEqual } from "crypto";
 import { signOperatorToken, signPhase2Token, SITE_URL, caseThreadId } from "@/lib/site";
 import { stripe } from "@/lib/stripe";
-import { TIER_CORE } from "@/lib/tiers";
-
-/** Maps tier slugs to display names for alert emails. */
-const TIER_NAMES: Record<string, string> = {
-  "dui-first-offense": "DUI Defense Playbook",
-  "drug-possession": "Drug Possession Defense Playbook",
-  "probation-violation": "Probation Violation Defense Playbook",
-  "case-decoder": "Case Decoder",
-  "intelligence-brief": "Intelligence Brief",
-  "x-ray": "X-Ray",
-  "war-room": "War Room",
-  "situation-room": "Situation Room",
-};
+import { TIER_CORE, tierDisplayName } from "@/lib/tiers";
 
 /**
  * Vercel Cron handler — runs daily at 9AM EST (14:00 UTC).
@@ -599,9 +587,9 @@ export async function GET(req: NextRequest) {
 
         await sendEmail({
           to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
-          subject: `REMINDER: ${TIER_NAMES[staleCase.tier] || 'Report'} awaiting review (${hoursAgo}+ hours)`,
+          subject: `REMINDER: ${tierDisplayName(staleCase.tier)} awaiting review (${hoursAgo}+ hours)`,
           html: `<h1 style="color: #F59E0B;">Report Awaiting Review</h1>
-            <p>A ${escapeHtml(TIER_NAMES[staleCase.tier] || 'report')} has been in review for <strong style="color: #EF4444;">${hoursAgo} hours</strong>. The delivery guarantee is at risk.</p>
+            <p>A ${escapeHtml(tierDisplayName(staleCase.tier))} has been in review for <strong style="color: #EF4444;">${hoursAgo} hours</strong>. The delivery guarantee is at risk.</p>
             <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
               <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(staleCase.email)}</p>
               <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(staleCase.charge_type || "Unknown")}</p>
@@ -1657,7 +1645,7 @@ export async function GET(req: NextRequest) {
             .eq("id", pc.id)
             .eq("status", "processing"); // Atomic guard
 
-          const tierLabel = TIER_NAMES[pc.tier] || pc.tier;
+          const tierLabel = tierDisplayName(pc.tier);
           await sendEmail({
             to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
             subject: `${tierLabel} ready for review — ${completedJobs}/${totalJobs} jobs completed${failedJobs > 0 ? ` (${failedJobs} failed)` : ""}`,
@@ -1706,7 +1694,7 @@ export async function GET(req: NextRequest) {
         const hoursOverdue = Math.round(
           (Date.now() - new Date(slaCase.delivery_due_at!).getTime()) / (1000 * 60 * 60)
         );
-        const tierLabel = TIER_NAMES[slaCase.tier] || slaCase.tier;
+        const tierLabel = tierDisplayName(slaCase.tier);
 
         await supabase.from("operator_tasks").insert({
           case_id: slaCase.id,
@@ -1796,7 +1784,7 @@ export async function GET(req: NextRequest) {
           continue;
         }
 
-        const tierLabel = TIER_NAMES[wCase.tier] || wCase.tier;
+        const tierLabel = tierDisplayName(wCase.tier);
         const portalUrl = wCase.report_token
           ? `${process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com"}/my-case/${wCase.report_token}`
           : null;

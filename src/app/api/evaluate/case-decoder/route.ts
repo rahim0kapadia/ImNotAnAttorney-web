@@ -20,6 +20,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { timingSafeEqual } from "crypto";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -29,9 +30,13 @@ export async function POST(req: NextRequest) {
   // AUTH
   // ──────────────────────────────────────────────────────────────
   const authHeader = req.headers.get("authorization");
+  const operatorSecret = process.env.OPERATOR_SECRET;
+  const expected = `Bearer ${operatorSecret}`;
   if (
-    !process.env.OPERATOR_SECRET ||
-    authHeader !== `Bearer ${process.env.OPERATOR_SECRET}`
+    !operatorSecret ||
+    !authHeader ||
+    authHeader.length !== expected.length ||
+    !timingSafeEqual(Buffer.from(authHeader), Buffer.from(expected))
   ) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

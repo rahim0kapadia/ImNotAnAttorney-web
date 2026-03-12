@@ -349,8 +349,8 @@ export async function POST(req: NextRequest) {
     await sendEmail({
       to: email.toLowerCase().trim(),
       subject: hasPendingCase
-        ? `We're analyzing your case now, ${escapeHtml(firstName)}`
-        : `We Received Your Case Details, ${escapeHtml(firstName)}`,
+        ? `We're analyzing your case now, ${firstName}`
+        : `We Received Your Case Details, ${firstName}`,
       unsubscribeEmail: email.toLowerCase().trim(),
       html: confirmationHtml,
     }, { category: "intake-confirmation", metadata: { charge_type: chargeType } });
@@ -364,7 +364,7 @@ export async function POST(req: NextRequest) {
     // customer's #1 specific question and situation narrative if provided.
     await sendEmail({
       to: OPERATOR_EMAIL,
-      subject: `New Intake: ${escapeHtml(chargeType)} — ${escapeHtml(firstName)}`,
+      subject: `New Intake: ${chargeType} — ${firstName}`,
       html: `
         <h1 style="color: #F59E0B;">New Intake Submission</h1>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">

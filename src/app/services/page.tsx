@@ -205,19 +205,14 @@ const caseTypes = [
 /** Service-specific FAQ items for objection handling. Also used for FAQPage schema. */
 const faqs = [
   {
-    question: "Is this legal advice?",
-    answer:
-      "No. We provide legal research, case analysis, and questions. Your attorney provides legal advice. We research. You ask.",
-  },
-  {
     question: "Will this replace my attorney?",
     answer:
-      "No. You need an attorney. We help you make sure they're doing their job. Think of us as insurance on your attorney investment.",
+      "No. You need an attorney. We provide legal research and questions — not legal advice. Think of us as insurance on your attorney investment. We research. You ask.",
   },
   {
-    question: "What if my attorney gets mad at my questions?",
+    question: "What exactly do I get in my report?",
     answer:
-      "Good attorneys welcome informed clients. If yours gets angry when you ask educated questions, that tells you something important.",
+      "Every report includes a plain-English charge breakdown, calibrated questions in 6-part format (context, question, why it matters, good answer, bad answer, follow-up), and a communication toolkit. Higher tiers add judge intelligence, discovery analysis, witness research, and weekly updates.",
   },
   {
     question: "Can you guarantee my charges get dropped?",
@@ -271,6 +266,19 @@ export default function ServicesPage() {
     <div className="px-4 py-16">
       <script
         type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+              { "@type": "ListItem", position: 2, name: "Services" },
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <script
@@ -282,8 +290,8 @@ export default function ServicesPage() {
         <FadeInUp>
         <div className="text-center">
           <h1 className="font-display text-3xl font-bold text-white md:text-5xl">
-            Services built for <span className="text-amber-400">your</span>{" "}
-            case
+            Walk into your next hearing{" "}
+            <span className="text-amber-400">with the right questions</span>
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-lg text-zinc-300">
             The defense team your attorney should have built.
@@ -474,6 +482,116 @@ export default function ServicesPage() {
               </p>
               <p className="mt-2 text-xs text-zinc-500">
                 {TIER_CORE["probation-violation"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
+              </p>
+            </Link>
+            </StaggerItem>
+            <StaggerItem>
+            <Link
+              href="/checkout?tier=white-collar"
+              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+            >
+              <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                Available Now
+              </span>
+              <div className="flex items-baseline justify-between">
+                <h3 className="font-semibold text-white">
+                  White Collar Defense Playbook
+                </h3>
+                <span className="text-lg font-bold text-amber-400">{TIER_CORE["white-collar"].priceDisplay}</span>
+              </div>
+              <p className="mt-2 text-sm text-zinc-400">
+                26 questions for fraud, embezzlement, and federal charges. Wire fraud elements, cooperation decisions, sentencing guidelines, AUSA profiling. Instant PDF.
+              </p>
+              <p className="mt-2 text-xs text-zinc-500">
+                {TIER_CORE["white-collar"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
+              </p>
+            </Link>
+            </StaggerItem>
+            <StaggerItem>
+            <Link
+              href="/checkout?tier=sex-offense"
+              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+            >
+              <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                Available Now
+              </span>
+              <div className="flex items-baseline justify-between">
+                <h3 className="font-semibold text-white">
+                  Sex Offense Defense Playbook
+                </h3>
+                <span className="text-lg font-bold text-amber-400">{TIER_CORE["sex-offense"].priceDisplay}</span>
+              </div>
+              <p className="mt-2 text-sm text-zinc-400">
+                26 questions covering registry implications, evidence preservation, accusation analysis, and constitutional protections. Instant PDF.
+              </p>
+              <p className="mt-2 text-xs text-zinc-500">
+                {TIER_CORE["sex-offense"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
+              </p>
+            </Link>
+            </StaggerItem>
+            <StaggerItem>
+            <Link
+              href="/checkout?tier=federal-criminal"
+              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+            >
+              <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                Available Now
+              </span>
+              <div className="flex items-baseline justify-between">
+                <h3 className="font-semibold text-white">
+                  Federal Criminal Defense Playbook
+                </h3>
+                <span className="text-lg font-bold text-amber-400">{TIER_CORE["federal-criminal"].priceDisplay}</span>
+              </div>
+              <p className="mt-2 text-sm text-zinc-400">
+                26 questions on federal procedure, sentencing guidelines, cooperation agreements, and AUSA tactics. Instant PDF.
+              </p>
+              <p className="mt-2 text-xs text-zinc-500">
+                {TIER_CORE["federal-criminal"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
+              </p>
+            </Link>
+            </StaggerItem>
+            <StaggerItem>
+            <Link
+              href="/checkout?tier=drug-trafficking"
+              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+            >
+              <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                Available Now
+              </span>
+              <div className="flex items-baseline justify-between">
+                <h3 className="font-semibold text-white">
+                  Drug Trafficking Defense Playbook
+                </h3>
+                <span className="text-lg font-bold text-amber-400">{TIER_CORE["drug-trafficking"].priceDisplay}</span>
+              </div>
+              <p className="mt-2 text-sm text-zinc-400">
+                26 questions on conspiracy charges, mandatory minimums, informant reliability, and wiretap challenges. Instant PDF.
+              </p>
+              <p className="mt-2 text-xs text-zinc-500">
+                {TIER_CORE["drug-trafficking"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
+              </p>
+            </Link>
+            </StaggerItem>
+            <StaggerItem>
+            <Link
+              href="/checkout?tier=self-defense"
+              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+            >
+              <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                Available Now
+              </span>
+              <div className="flex items-baseline justify-between">
+                <h3 className="font-semibold text-white">
+                  Self-Defense Playbook
+                </h3>
+                <span className="text-lg font-bold text-amber-400">{TIER_CORE["self-defense"].priceDisplay}</span>
+              </div>
+              <p className="mt-2 text-sm text-zinc-400">
+                26 questions on use of force standards, stand your ground, castle doctrine, and witness credibility. Instant PDF.
+              </p>
+              <p className="mt-2 text-xs text-zinc-500">
+                {TIER_CORE["self-defense"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
             </StaggerItem>

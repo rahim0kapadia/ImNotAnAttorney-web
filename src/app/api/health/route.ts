@@ -46,7 +46,6 @@ export async function GET() {
     {
       status: healthy ? "ok" : "degraded",
       db: dbOk ? "connected" : "unreachable",
-      missingEnvCount: missingEnv.length > 0 ? missingEnv.length : undefined,
       timestamp: new Date().toISOString(),
     },
     { status: healthy ? 200 : 503 }
