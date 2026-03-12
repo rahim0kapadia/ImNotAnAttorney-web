@@ -4,7 +4,7 @@
  * Schedule: Runs daily at 9 AM EST (14:00 UTC) via Vercel Cron.
  * Protected by CRON_SECRET bearer token (Vercel sets this automatically).
  *
- * This cron does 16 things, in order:
+ * This cron does 21 things, in order:
  *
  * PART 1 — Nurture emails (subscribers who haven't bought yet)
  *   Sends the next unsent email in the nurture sequence based on days since signup.
@@ -53,6 +53,25 @@
  *   Deletes discovery files from Supabase Storage 90 days after report delivery.
  *   Clears file_urls on the case record after successful deletion.
  *
+ * PART 15 — Stuck job detection (processing_jobs > 30 min)
+ *   Marks stuck processing jobs as 'failed' and creates operator tasks.
+ *
+ * PART 16 — Pipeline completion check (all jobs done -> review)
+ *   Transitions discovery cases to 'review' when all processing jobs finish.
+ *   Emails operator with job completion summary.
+ *
+ * PART 17 — SLA breach detection (delivery_due_at passed)
+ *   Creates operator tasks for cases that have exceeded their delivery deadline.
+ *   Deduplicates: skips if an open sla_breach task already exists for the case.
+ *
+ * PART 18 — Weekly progress email (War Room + Situation Room)
+ *   Sends weekly case stats + portal link to active discovery-tier customers.
+ *   CAN-SPAM compliant with unsubscribe. Dedup via drip_emails week number.
+ *
+ * PART 19 — Engine heartbeat (stale queued jobs -> operator alert)
+ *   If queued jobs are older than 1 hour, the engine worker may be down.
+ *   Creates one operator task per day and emails the operator.
+ *
  * CAN-SPAM compliance:
  *   - All emails include unsubscribe links (via unsubscribeEmail param)
  *   - Unsubscribed subscribers (unsubscribed_at IS NOT NULL) are filtered out in Part 1
@@ -73,6 +92,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, sendEmailWithRetry, escapeHtml } from "@/lib/email";
 import { getNextNurtureEmail, getPostPurchaseEmails, personalizeEmailHtml } from "@/lib/drip-emails";
 import type { DripEmail, DripPersonalizationData } from "@/lib/drip-emails";
+import { timingSafeEqual } from "crypto";
 import { signOperatorToken, signPhase2Token, SITE_URL, caseThreadId } from "@/lib/site";
 import { stripe } from "@/lib/stripe";
 import { TIER_CORE } from "@/lib/tiers";
@@ -103,7 +123,13 @@ export async function GET(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
   const cronSecret = process.env.CRON_SECRET;
 
-  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
+  const expected = `Bearer ${cronSecret}`;
+  if (
+    !cronSecret ||
+    !authHeader ||
+    authHeader.length !== expected.length ||
+    !timingSafeEqual(Buffer.from(authHeader), Buffer.from(expected))
+  ) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -1546,6 +1572,350 @@ export async function GET(req: NextRequest) {
         cleaned += c.file_urls.length;
         console.log(`[Drip Cron] Part 14: Deleted ${c.file_urls.length} discovery files for case ${c.id}`);
       }
+    }
+
+    // ============================================================
+    // PART 15: STUCK JOB DETECTION (processing_jobs > 30 min)
+    // ============================================================
+    // Processing jobs should complete within their timeout window.
+    // If a job has been in 'processing' status for >30 minutes, it
+    // likely crashed or the worker died. Mark as 'failed' and create
+    // an operator task so it can be manually retried or investigated.
+    const thirtyMinutesAgo = new Date();
+    thirtyMinutesAgo.setMinutes(thirtyMinutesAgo.getMinutes() - 30);
+
+    const { data: stuckJobs } = await supabase
+      .from("processing_jobs")
+      .select("id, case_id, job_type, job_subtype, started_at, worker_id")
+      .eq("status", "processing")
+      .lt("started_at", thirtyMinutesAgo.toISOString());
+
+    if (stuckJobs && stuckJobs.length > 0) {
+      for (const job of stuckJobs) {
+        const minutesStuck = Math.round(
+          (Date.now() - new Date(job.started_at!).getTime()) / (1000 * 60)
+        );
+
+        // Mark job as failed
+        await supabase
+          .from("processing_jobs")
+          .update({
+            status: "failed",
+            error_message: `Auto-detected: stuck in processing for ${minutesStuck} minutes`,
+          })
+          .eq("id", job.id);
+
+        // Create operator task
+        await supabase.from("operator_tasks").insert({
+          case_id: job.case_id,
+          task_type: "stuck_job",
+          title: `Stuck job: ${job.job_type}${job.job_subtype ? ` (${job.job_subtype})` : ""} — ${minutesStuck}min`,
+          description: `Processing job ${job.id} has been stuck for ${minutesStuck} minutes. Worker: ${job.worker_id || "unknown"}. Automatically marked as failed.`,
+          priority: "HIGH",
+          priority_rank: 2,
+        });
+
+        errors++;
+      }
+      console.log(`[Drip Cron] Part 15: Marked ${stuckJobs.length} stuck jobs as failed`);
+    }
+
+    // ============================================================
+    // PART 16: PIPELINE COMPLETION CHECK (all jobs done -> review)
+    // ============================================================
+    // For discovery tier cases in 'processing' status, check if all
+    // processing jobs have completed (or failed). If so, transition
+    // the case to 'review' status and notify the operator.
+    // This catches cases where the final job completed but the
+    // status transition callback was silently dropped.
+    const discoveryTiers = ["x-ray", "war-room", "situation-room"];
+    const { data: processingCases } = await supabase
+      .from("cases")
+      .select("id, email, tier")
+      .eq("status", "processing")
+      .in("tier", discoveryTiers);
+
+    if (processingCases && processingCases.length > 0) {
+      for (const pc of processingCases) {
+        const { data: allJobs } = await supabase
+          .from("processing_jobs")
+          .select("id, status")
+          .eq("case_id", pc.id);
+
+        if (!allJobs || allJobs.length === 0) continue;
+
+        const totalJobs = allJobs.length;
+        const completedJobs = allJobs.filter((j) => j.status === "completed").length;
+        const failedJobs = allJobs.filter((j) => j.status === "failed").length;
+        const doneJobs = completedJobs + failedJobs;
+
+        if (doneJobs >= totalJobs) {
+          // All jobs are done — transition to review
+          await supabase
+            .from("cases")
+            .update({ status: "review", updated_at: new Date().toISOString() })
+            .eq("id", pc.id)
+            .eq("status", "processing"); // Atomic guard
+
+          const tierLabel = TIER_NAMES[pc.tier] || pc.tier;
+          await sendEmail({
+            to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+            subject: `${tierLabel} ready for review — ${completedJobs}/${totalJobs} jobs completed${failedJobs > 0 ? ` (${failedJobs} failed)` : ""}`,
+            html: `<h1 style="color: #22C55E;">Pipeline Complete — Ready for Review</h1>
+              <p>All processing jobs for this ${escapeHtml(tierLabel)} case have finished.</p>
+              <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #22C55E;">
+                <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(pc.email)}</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(tierLabel)}</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Jobs:</strong> ${completedJobs} completed, ${failedJobs} failed, ${totalJobs} total</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${pc.id}</p>
+              </div>
+              ${failedJobs > 0 ? `<p style="color: #F59E0B;"><strong>Warning:</strong> ${failedJobs} job(s) failed. Review failed jobs before delivering the report.</p>` : ""}
+              <p><strong>Action:</strong> Review the case and approve delivery when ready.</p>`,
+          }, { category: "operator-alert", case_id: pc.id, metadata: { reason: "pipeline-complete", completed: completedJobs, failed: failedJobs, total: totalJobs } });
+
+          console.log(`[Drip Cron] Part 16: Case ${pc.id} transitioned to review (${completedJobs}/${totalJobs} jobs, ${failedJobs} failed)`);
+        }
+      }
+    }
+
+    // ============================================================
+    // PART 17: SLA BREACH DETECTION (delivery_due_at passed)
+    // ============================================================
+    // Discovery tier cases have a delivery_due_at deadline. If that
+    // deadline has passed and the case isn't delivered or refunded,
+    // create an operator task (with dedup) and email the operator.
+    const { data: slaCases } = await supabase
+      .from("cases")
+      .select("id, email, tier, delivery_due_at")
+      .lt("delivery_due_at", new Date().toISOString())
+      .not("status", "in", '("delivered","refunded")');
+
+    if (slaCases && slaCases.length > 0) {
+      for (const slaCase of slaCases) {
+        // Dedup: check if an open sla_breach task already exists for this case
+        const { data: existingTask } = await supabase
+          .from("operator_tasks")
+          .select("id")
+          .eq("case_id", slaCase.id)
+          .eq("task_type", "sla_breach")
+          .in("status", ["open", "in_progress"])
+          .maybeSingle();
+
+        if (existingTask) continue;
+
+        const hoursOverdue = Math.round(
+          (Date.now() - new Date(slaCase.delivery_due_at!).getTime()) / (1000 * 60 * 60)
+        );
+        const tierLabel = TIER_NAMES[slaCase.tier] || slaCase.tier;
+
+        await supabase.from("operator_tasks").insert({
+          case_id: slaCase.id,
+          task_type: "sla_breach",
+          title: `SLA BREACH: ${tierLabel} overdue by ${hoursOverdue}h — ${slaCase.email}`,
+          description: `Delivery was due ${new Date(slaCase.delivery_due_at!).toISOString()} (${hoursOverdue} hours ago). Customer: ${slaCase.email}`,
+          priority: "URGENT",
+          priority_rank: 1,
+          sla_breach: true,
+          due_at: new Date().toISOString(),
+        });
+
+        await sendEmail({
+          to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+          subject: `SLA BREACH: ${tierLabel} overdue by ${hoursOverdue} hours — ${escapeHtml(slaCase.email)}`,
+          html: `<h1 style="color: #EF4444;">SLA Breach — Delivery Overdue</h1>
+            <p>This case has exceeded its delivery deadline by <strong style="color: #EF4444;">${hoursOverdue} hours</strong>.</p>
+            <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
+              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(slaCase.email)}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(tierLabel)}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Due:</strong> ${new Date(slaCase.delivery_due_at!).toISOString()}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Overdue:</strong> ${hoursOverdue} hours</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${slaCase.id}</p>
+            </div>
+            <p><strong>Action:</strong> Prioritize this case immediately. Contact the customer if delivery will be further delayed.</p>`,
+        }, { category: "operator-alert", case_id: slaCase.id, metadata: { reason: "sla-breach", hours_overdue: hoursOverdue } });
+
+        errors++;
+      }
+      console.log(`[Drip Cron] Part 17: Detected ${slaCases.length} SLA breach(es)`);
+    }
+
+    // ============================================================
+    // PART 18: WEEKLY PROGRESS EMAIL (War Room + Situation Room)
+    // ============================================================
+    // War Room ($4,997) and Situation Room ($9,997) customers get
+    // weekly progress emails while their case is being processed.
+    // Includes aggregate stats and a link to the portal.
+    // Dedup: drip_emails with key "weekly-progress-{caseId}-{weekNumber}"
+    // CAN-SPAM: includes unsubscribeEmail for one-click unsubscribe.
+    const weeklyTiers = ["war-room", "situation-room"];
+    const weeklyStatuses = ["submitted", "processing", "review"];
+    const { data: weeklyCases } = await supabase
+      .from("cases")
+      .select("id, email, tier, report_token, document_count, finding_count, witness_count, discovery_health_score")
+      .in("tier", weeklyTiers)
+      .in("status", weeklyStatuses);
+
+    if (weeklyCases && weeklyCases.length > 0) {
+      // Compute week number (ISO week of year) for dedup key
+      const now = new Date();
+      const startOfYear = new Date(now.getFullYear(), 0, 1);
+      const weekNumber = Math.ceil(
+        ((now.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24) + startOfYear.getDay() + 1) / 7
+      );
+
+      for (const wCase of weeklyCases) {
+        const emailKey = `weekly-progress-${wCase.id}-w${weekNumber}`;
+
+        // Need subscriber for dedup
+        const { data: wSub } = await supabase
+          .from("subscribers")
+          .select("id")
+          .eq("email", wCase.email.toLowerCase())
+          .maybeSingle();
+
+        if (wSub?.id) {
+          const { data: alreadySent } = await supabase
+            .from("drip_emails")
+            .select("id")
+            .eq("subscriber_id", wSub.id)
+            .eq("email_key", emailKey)
+            .maybeSingle();
+
+          if (alreadySent) continue;
+        }
+
+        // Check unsubscribe status
+        const { data: unsubCheck } = await supabase
+          .from("subscribers")
+          .select("unsubscribed_at")
+          .eq("email", wCase.email.toLowerCase())
+          .maybeSingle();
+
+        if (unsubCheck?.unsubscribed_at) {
+          skipped++;
+          continue;
+        }
+
+        const tierLabel = TIER_NAMES[wCase.tier] || wCase.tier;
+        const portalUrl = wCase.report_token
+          ? `${process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com"}/my-case/${wCase.report_token}`
+          : null;
+
+        const result = await sendEmailWithRetry({
+          to: wCase.email,
+          subject: `Weekly Update: Your ${tierLabel} Analysis`,
+          unsubscribeEmail: wCase.email,
+          html: `
+            <h1 style="color: #F59E0B;">Your Weekly Case Update</h1>
+            <p>Here's a summary of progress on your ${escapeHtml(tierLabel)} analysis this week:</p>
+            <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
+              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Documents Analyzed:</strong> ${wCase.document_count}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Findings Identified:</strong> ${wCase.finding_count}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Witnesses Identified:</strong> ${wCase.witness_count}</p>
+              ${wCase.discovery_health_score !== null ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Discovery Health Score:</strong> ${wCase.discovery_health_score}/100</p>` : ""}
+            </div>
+            ${portalUrl ? `<a href="${portalUrl}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">View Full Progress</a>` : ""}
+            <p style="color: #A1A1AA; font-size: 13px;">Our team is actively working on your case. You'll receive another update next week.</p>
+          `,
+          threadingHeaders: {
+            references: caseThreadId(wCase.id),
+          },
+        }, { category: "weekly-progress", case_id: wCase.id, metadata: { tier: wCase.tier, week: weekNumber } });
+
+        if (result.success) {
+          if (wSub?.id) {
+            await supabase.from("drip_emails").insert({
+              subscriber_id: wSub.id,
+              email_key: emailKey,
+            });
+          } else {
+            // Create subscriber for tracking
+            const { data: newSub } = await supabase
+              .from("subscribers")
+              .upsert(
+                { email: wCase.email.toLowerCase(), source: `purchase-${wCase.tier}` },
+                { onConflict: "email" }
+              )
+              .select("id")
+              .single();
+
+            if (newSub?.id) {
+              await supabase.from("drip_emails").insert({
+                subscriber_id: newSub.id,
+                email_key: emailKey,
+              });
+            }
+          }
+          sent++;
+        } else {
+          errors++;
+        }
+      }
+      console.log(`[Drip Cron] Part 18: Processed ${weeklyCases.length} weekly progress emails`);
+    }
+
+    // ============================================================
+    // PART 19: ENGINE HEARTBEAT (stale queued jobs -> operator alert)
+    // ============================================================
+    // If jobs have been sitting in 'queued' status for >1 hour,
+    // the engine may be down. Create an operator task (dedup: one
+    // per day) and email the operator.
+    const oneHourAgo = new Date();
+    oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+
+    const { data: staleQueued } = await supabase
+      .from("processing_jobs")
+      .select("id, case_id, job_type, created_at")
+      .eq("status", "queued")
+      .lt("created_at", oneHourAgo.toISOString())
+      .order("created_at", { ascending: true })
+      .limit(50);
+
+    if (staleQueued && staleQueued.length > 0) {
+      // Dedup: check if we already created an engine_down task today
+      const todayStart = new Date();
+      todayStart.setHours(0, 0, 0, 0);
+
+      const { data: existingEngineTask } = await supabase
+        .from("operator_tasks")
+        .select("id")
+        .eq("task_type", "engine_down")
+        .gte("created_at", todayStart.toISOString())
+        .maybeSingle();
+
+      if (!existingEngineTask) {
+        // Use case_id from the first stale job (FK is NOT NULL)
+        const firstJob = staleQueued[0];
+        const oldestMinutes = Math.round(
+          (Date.now() - new Date(firstJob.created_at).getTime()) / (1000 * 60)
+        );
+
+        await supabase.from("operator_tasks").insert({
+          case_id: firstJob.case_id,
+          task_type: "engine_down",
+          title: `ENGINE DOWN: ${staleQueued.length} jobs queued for ${oldestMinutes}+ minutes`,
+          description: `${staleQueued.length} processing jobs have been queued for over an hour. Oldest: ${firstJob.job_type} (${firstJob.id}). The engine worker may be stopped or crashed.`,
+          priority: "URGENT",
+          priority_rank: 1,
+        });
+
+        await sendEmail({
+          to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+          subject: `ENGINE DOWN: ${staleQueued.length} queued jobs waiting ${oldestMinutes}+ minutes`,
+          html: `<h1 style="color: #EF4444;">Engine May Be Down</h1>
+            <p><strong style="color: #EF4444;">${staleQueued.length} processing jobs</strong> have been queued for over an hour without being picked up.</p>
+            <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
+              <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Stale Jobs:</strong> ${staleQueued.length}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Oldest Job:</strong> ${firstJob.job_type} — queued ${oldestMinutes} minutes ago</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Job ID:</strong> ${firstJob.id}</p>
+              <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${firstJob.case_id}</p>
+            </div>
+            <p><strong>Action:</strong> Check the engine worker process. If it crashed, restart it.</p>`,
+        }, { category: "operator-alert", case_id: firstJob.case_id, metadata: { reason: "engine-down", stale_count: staleQueued.length, oldest_minutes: oldestMinutes } });
+
+        errors++;
+      }
+      console.log(`[Drip Cron] Part 19: ${staleQueued.length} stale queued jobs detected`);
     }
 
     // ============================================================
