@@ -87,7 +87,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 ## Important Notes
 - All commits pushed to GitHub: github.com/rahim0kapadia/ImNotAnAttorney-web
 - Vercel deploy LIVE (auto-deploys on push to master)
-- Domain imnotanattorney.com not yet pointed
+- Domain imnotanattorney.com pointed via Cloudflare DNS to Vercel
 - Twitter account @ImNotAnAttorney not yet created
 
 
