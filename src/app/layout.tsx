@@ -31,6 +31,7 @@
  * resolve against this. Required for Next.js metadata API.
  */
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { Geist, Playfair_Display } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -93,11 +94,14 @@ export const metadata: Metadata = {
  * RootLayout — wraps all pages with consistent chrome and global scripts.
  * The body applies Geist Sans font + antialiasing + dark mode color scheme.
  */
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Reading headers forces dynamic rendering — required for CSP nonce propagation
+  const nonce = (await headers()).get("x-nonce") ?? "";
+
   return (
     <html lang="en" className="dark">
       <body
@@ -112,6 +116,7 @@ export default function RootLayout({
         </a>
         {/* Organization JSON-LD schema — appears on every page for Google Knowledge Panel */}
         <script
+          nonce={nonce}
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
