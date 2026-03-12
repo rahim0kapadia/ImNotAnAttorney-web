@@ -1619,7 +1619,7 @@ export async function GET(req: NextRequest) {
     const discoveryTiers = ["x-ray", "war-room", "situation-room"];
     const { data: processingCases } = await supabase
       .from("cases")
-      .select("id, email, tier")
+      .select("id, email, tier, charge_type, document_count, finding_count, witness_count, discovery_health_score, defense_opportunity_index")
       .eq("status", "processing")
       .in("tier", discoveryTiers);
 
@@ -1646,17 +1646,44 @@ export async function GET(req: NextRequest) {
             .eq("status", "processing"); // Atomic guard
 
           const tierLabel = tierDisplayName(pc.tier);
+          const doiScore = pc.defense_opportunity_index &&
+            typeof pc.defense_opportunity_index === "object" &&
+            "overall" in pc.defense_opportunity_index
+              ? (pc.defense_opportunity_index as Record<string, number>).overall
+              : null;
+          const healthScore = typeof pc.discovery_health_score === "number" ? pc.discovery_health_score : null;
+
+          // Priority assessment
+          let priorityLine = "";
+          if (healthScore !== null && healthScore < 40) {
+            priorityLine = `<p style="color: #EF4444; margin: 16px 0 0;"><strong>Low discovery health — potential gaps. Prioritize review.</strong></p>`;
+          } else if (doiScore !== null && doiScore > 70) {
+            priorityLine = `<p style="color: #F59E0B; margin: 16px 0 0;"><strong>High defense opportunity — strong defense angles identified.</strong></p>`;
+          } else if (healthScore === null && doiScore === null) {
+            priorityLine = `<p style="color: #A1A1AA; margin: 16px 0 0;">Scores not yet calculated.</p>`;
+          }
+
           await sendEmail({
             to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
-            subject: `${tierLabel} ready for review — ${completedJobs}/${totalJobs} jobs completed${failedJobs > 0 ? ` (${failedJobs} failed)` : ""}`,
+            subject: `${tierLabel} ready for review — ${pc.finding_count || 0} findings, ${completedJobs}/${totalJobs} jobs${failedJobs > 0 ? ` (${failedJobs} failed)` : ""}`,
             html: `<h1 style="color: #22C55E;">Pipeline Complete — Ready for Review</h1>
               <p>All processing jobs for this ${escapeHtml(tierLabel)} case have finished.</p>
               <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #22C55E;">
                 <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(pc.email)}</p>
                 <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(tierLabel)}</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(pc.charge_type || "Unknown")}</p>
                 <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Jobs:</strong> ${completedJobs} completed, ${failedJobs} failed, ${totalJobs} total</p>
                 <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${pc.id}</p>
               </div>
+              <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
+                <p style="margin: 0; color: #D4D4D8; font-weight: bold; color: white;">Pipeline Results</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Documents Analyzed:</strong> ${pc.document_count || 0}</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Findings Identified:</strong> ${pc.finding_count || 0}</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Witnesses Identified:</strong> ${pc.witness_count || 0}</p>
+                ${healthScore !== null ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Discovery Health Score:</strong> ${healthScore}/100</p>` : ""}
+                ${doiScore !== null ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Defense Opportunity Index:</strong> ${doiScore}</p>` : ""}
+              </div>
+              ${priorityLine}
               ${failedJobs > 0 ? `<p style="color: #F59E0B;"><strong>Warning:</strong> ${failedJobs} job(s) failed. Review failed jobs before delivering the report.</p>` : ""}
               <p><strong>Action:</strong> Review the case and approve delivery when ready.</p>`,
           }, { category: "operator-alert", case_id: pc.id, metadata: { reason: "pipeline-complete", completed: completedJobs, failed: failedJobs, total: totalJobs } });

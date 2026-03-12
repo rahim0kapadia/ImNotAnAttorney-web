@@ -3,8 +3,8 @@
  * /admin/inbox — Operator email inbox viewer
  *
  * Displays inbound emails sent to help@imnotanattorney.com.
- * Auth: OPERATOR_SECRET entered via login form, stored in sessionStorage.
- * Secret is sent via X-Operator-Secret header (never in URL).
+ * Auth: ADMIN_PASSWORD entered via login form, stored in sessionStorage.
+ * Secret is sent via X-Admin-Password header (never in URL).
  */
 
 import { useEffect, useState, useCallback, useMemo, Suspense } from "react";
@@ -41,7 +41,7 @@ function InboxContent() {
 
   // Restore session on mount
   useEffect(() => {
-    const stored = sessionStorage.getItem("operator-secret");
+    const stored = sessionStorage.getItem("admin-password");
     if (stored) {
       setSecret(stored);
       setAuthenticated(true);
@@ -61,7 +61,7 @@ function InboxContent() {
       if (res.status === 401) {
         setAuthenticated(false);
         setSecret("");
-        sessionStorage.removeItem("operator-secret");
+        sessionStorage.removeItem("admin-password");
         throw new Error("Invalid secret");
       }
       if (!res.ok) {
@@ -94,7 +94,7 @@ function InboxContent() {
       return;
     }
     setSecret(secretInput.trim());
-    sessionStorage.setItem("operator-secret", secretInput.trim());
+    sessionStorage.setItem("admin-password", secretInput.trim());
     setAuthenticated(true);
     setError(null);
     const data = await res.json();
@@ -107,7 +107,7 @@ function InboxContent() {
     setAuthenticated(false);
     setEmails([]);
     setSelected(null);
-    sessionStorage.removeItem("operator-secret");
+    sessionStorage.removeItem("admin-password");
   }
 
   async function toggleRead(email: Email) {

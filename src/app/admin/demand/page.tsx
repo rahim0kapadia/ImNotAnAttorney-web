@@ -84,8 +84,8 @@ const QUADRANT_COLORS: Record<string, string> = {
   GOLD_MINE: "bg-amber-100 text-amber-800 border-amber-300",
   RED_OCEAN: "bg-red-100 text-red-800 border-red-300",
   RISKY_BET: "bg-blue-100 text-blue-800 border-blue-300",
-  DEAD_ZONE: "bg-gray-100 text-gray-600 border-gray-300",
-  UNKNOWN: "bg-gray-50 text-gray-400 border-gray-200",
+  DEAD_ZONE: "bg-zinc-100 text-zinc-600 border-zinc-300",
+  UNKNOWN: "bg-zinc-50 text-zinc-400 border-zinc-200",
 };
 
 const QUADRANT_LABELS: Record<string, string> = {
@@ -104,7 +104,7 @@ function trendIcon(dir: string | null) {
 function trendColor(dir: string | null) {
   if (dir === "rising") return "text-green-600";
   if (dir === "falling") return "text-red-500";
-  return "text-gray-400";
+  return "text-zinc-400";
 }
 
 // ── Component ──────────────────────────────────────────────
@@ -237,9 +237,9 @@ export default function DemandDashboard() {
   // ── Login screen ─────────────────────────────────────────
   if (!authed) {
     return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
         <form
-          className="bg-gray-900 p-8 rounded-lg border border-gray-800 w-full max-w-sm"
+          className="bg-zinc-900 p-8 rounded-lg border border-zinc-800 w-full max-w-sm"
           onSubmit={async (e) => {
             e.preventDefault();
             // Test auth
@@ -261,7 +261,7 @@ export default function DemandDashboard() {
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
             placeholder="Admin password"
-            className="w-full p-3 rounded bg-gray-800 border border-gray-700 text-white mb-4"
+            className="w-full p-3 rounded bg-zinc-800 border border-zinc-700 text-white mb-4"
             autoFocus
           />
           {error && <p className="text-red-400 text-sm mb-3">{error}</p>}
@@ -286,7 +286,7 @@ export default function DemandDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-200 p-6">
+    <div className="min-h-screen bg-zinc-950 text-zinc-200 p-6">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -295,7 +295,7 @@ export default function DemandDashboard() {
             <button
               onClick={() => fetchAll()}
               disabled={loading}
-              className="px-4 py-2 rounded bg-gray-800 hover:bg-gray-700 text-sm border border-gray-700 disabled:opacity-50"
+              className="px-4 py-2 rounded bg-zinc-800 hover:bg-zinc-700 text-sm border border-zinc-700 disabled:opacity-50"
             >
               {loading ? "Loading..." : "Refresh"}
             </button>
@@ -337,7 +337,7 @@ export default function DemandDashboard() {
           <select
             value={window}
             onChange={(e) => setWindow(e.target.value)}
-            className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm"
+            className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2 text-sm"
           >
             <option value="7d">7 days</option>
             <option value="30d">30 days</option>
@@ -346,7 +346,7 @@ export default function DemandDashboard() {
           <select
             value={dimension}
             onChange={(e) => setDimension(e.target.value)}
-            className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm"
+            className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2 text-sm"
           >
             <option value="charge_type">Charge Types</option>
             <option value="pain_point">Pain Points</option>
@@ -359,7 +359,7 @@ export default function DemandDashboard() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-800 text-left text-gray-400">
+                <tr className="border-b border-zinc-800 text-left text-zinc-400">
                   <th className="pb-2 pr-4">{dimension === "charge_type" ? "Charge Type" : "Pain Point"}</th>
                   <th className="pb-2 pr-4 text-right">Posts</th>
                   <th className="pb-2 pr-4 text-right">Questions</th>
@@ -372,7 +372,7 @@ export default function DemandDashboard() {
               </thead>
               <tbody>
                 {scores.map(s => (
-                  <tr key={s.id} className="border-b border-gray-800/50 hover:bg-gray-900/50">
+                  <tr key={s.id} className="border-b border-zinc-800/50 hover:bg-zinc-900/50">
                     <td className="py-2 pr-4 font-medium text-white">{s.dimension_label}</td>
                     <td className="py-2 pr-4 text-right font-mono">{s.post_count}</td>
                     <td className="py-2 pr-4 text-right font-mono">{s.question_count}</td>
@@ -390,7 +390,7 @@ export default function DemandDashboard() {
                   </tr>
                 ))}
                 {scores.length === 0 && (
-                  <tr><td colSpan={8} className="py-8 text-center text-gray-500">No scores yet. Run the demand pipeline first.</td></tr>
+                  <tr><td colSpan={8} className="py-8 text-center text-zinc-500">No scores yet. Run the demand pipeline first.</td></tr>
                 )}
               </tbody>
             </table>
@@ -402,11 +402,11 @@ export default function DemandDashboard() {
           <h2 className="text-lg font-semibold text-white mb-3">Content Gaps ({gaps.length})</h2>
           <div className="space-y-2">
             {gaps.map(g => (
-              <div key={g.id} className="flex items-center justify-between bg-gray-900 rounded-lg p-3 border border-gray-800">
+              <div key={g.id} className="flex items-center justify-between bg-zinc-900 rounded-lg p-3 border border-zinc-800">
                 <div>
                   <div className="font-medium text-white">{g.charge_type_slug}{g.pain_point_slug ? ` / ${g.pain_point_slug}` : ""}</div>
-                  {g.suggested_title && <div className="text-sm text-gray-400 mt-0.5">{g.suggested_title}</div>}
-                  <div className="flex gap-3 mt-1 text-xs text-gray-500">
+                  {g.suggested_title && <div className="text-sm text-zinc-400 mt-0.5">{g.suggested_title}</div>}
+                  <div className="flex gap-3 mt-1 text-xs text-zinc-500">
                     <span>Demand: {g.demand_score.toFixed(1)}</span>
                     <span>Gap: {g.gap_score.toFixed(0)}</span>
                     <span className={`px-1.5 rounded ${QUADRANT_COLORS[g.demand_quadrant] || ""}`}>
@@ -423,7 +423,7 @@ export default function DemandDashboard() {
                 </button>
               </div>
             ))}
-            {gaps.length === 0 && <p className="text-gray-500 text-sm">No content gaps identified yet.</p>}
+            {gaps.length === 0 && <p className="text-zinc-500 text-sm">No content gaps identified yet.</p>}
           </div>
         </section>
 
@@ -432,11 +432,11 @@ export default function DemandDashboard() {
           <h2 className="text-lg font-semibold text-white mb-3">Emerging Topics ({emerging.length})</h2>
           <div className="space-y-2">
             {emerging.map(t => (
-              <div key={t.id} className="flex items-center justify-between bg-gray-900 rounded-lg p-3 border border-gray-800">
+              <div key={t.id} className="flex items-center justify-between bg-zinc-900 rounded-lg p-3 border border-zinc-800">
                 <div>
                   <div className="font-medium text-white">{t.topic_phrases.join(" + ")}</div>
-                  {t.representative_title && <div className="text-sm text-gray-400 mt-0.5 truncate max-w-lg">{t.representative_title}</div>}
-                  <div className="flex gap-3 mt-1 text-xs text-gray-500">
+                  {t.representative_title && <div className="text-sm text-zinc-400 mt-0.5 truncate max-w-lg">{t.representative_title}</div>}
+                  <div className="flex gap-3 mt-1 text-xs text-zinc-500">
                     <span>{t.post_count} posts</span>
                     <span>Urgency: {t.avg_urgency.toFixed(1)}</span>
                     <span>Engagement: {t.avg_engagement.toFixed(0)}</span>
@@ -445,13 +445,13 @@ export default function DemandDashboard() {
                 </div>
                 <button
                   onClick={() => dismissTopic(t.id)}
-                  className="px-3 py-1.5 rounded text-sm bg-gray-700 hover:bg-gray-600 text-gray-300"
+                  className="px-3 py-1.5 rounded text-sm bg-zinc-700 hover:bg-zinc-600 text-zinc-300"
                 >
                   Dismiss
                 </button>
               </div>
             ))}
-            {emerging.length === 0 && <p className="text-gray-500 text-sm">No emerging topics detected yet.</p>}
+            {emerging.length === 0 && <p className="text-zinc-500 text-sm">No emerging topics detected yet.</p>}
           </div>
         </section>
 
@@ -461,7 +461,7 @@ export default function DemandDashboard() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-800 text-left text-gray-400">
+                <tr className="border-b border-zinc-800 text-left text-zinc-400">
                   <th className="pb-2 pr-4">Blog Post</th>
                   <th className="pb-2 pr-4 text-right">Subscribers</th>
                   <th className="pb-2 pr-4 text-right">Orders</th>
@@ -471,7 +471,7 @@ export default function DemandDashboard() {
               </thead>
               <tbody>
                 {performance.slice(0, 15).map(p => (
-                  <tr key={p.id} className="border-b border-gray-800/50 hover:bg-gray-900/50">
+                  <tr key={p.id} className="border-b border-zinc-800/50 hover:bg-zinc-900/50">
                     <td className="py-2 pr-4 font-medium text-white truncate max-w-xs">{p.blog_slug}</td>
                     <td className="py-2 pr-4 text-right font-mono">{p.subscriber_signups}</td>
                     <td className="py-2 pr-4 text-right font-mono">{p.orders_attributed}</td>
@@ -480,7 +480,7 @@ export default function DemandDashboard() {
                   </tr>
                 ))}
                 {performance.length === 0 && (
-                  <tr><td colSpan={5} className="py-8 text-center text-gray-500">No performance data yet.</td></tr>
+                  <tr><td colSpan={5} className="py-8 text-center text-zinc-500">No performance data yet.</td></tr>
                 )}
               </tbody>
             </table>
@@ -492,15 +492,15 @@ export default function DemandDashboard() {
           <h2 className="text-lg font-semibold text-white mb-3">Discovered Subreddits ({subreddits.length})</h2>
           <div className="space-y-2">
             {subreddits.map(s => (
-              <div key={s.id} className="flex items-center justify-between bg-gray-900 rounded-lg p-3 border border-gray-800">
+              <div key={s.id} className="flex items-center justify-between bg-zinc-900 rounded-lg p-3 border border-zinc-800">
                 <div>
                   <div className="font-medium text-white">r/{s.display_name || s.subreddit}</div>
-                  <div className="flex gap-3 mt-1 text-xs text-gray-500">
+                  <div className="flex gap-3 mt-1 text-xs text-zinc-500">
                     <span>{s.subscribers.toLocaleString()} members</span>
                     <span>Via: {s.discovered_via_charge_type}</span>
                     <span>Relevance: {s.relevance_score.toFixed(0)}</span>
                   </div>
-                  {s.description && <div className="text-xs text-gray-500 mt-1 truncate max-w-lg">{s.description}</div>}
+                  {s.description && <div className="text-xs text-zinc-500 mt-1 truncate max-w-lg">{s.description}</div>}
                 </div>
                 <div className="flex gap-2">
                   <button
@@ -511,14 +511,14 @@ export default function DemandDashboard() {
                   </button>
                   <button
                     onClick={() => rejectSubreddit(s.id)}
-                    className="px-3 py-1.5 rounded text-sm bg-gray-700 hover:bg-gray-600 text-gray-300"
+                    className="px-3 py-1.5 rounded text-sm bg-zinc-700 hover:bg-zinc-600 text-zinc-300"
                   >
                     Reject
                   </button>
                 </div>
               </div>
             ))}
-            {subreddits.length === 0 && <p className="text-gray-500 text-sm">No subreddit candidates yet.</p>}
+            {subreddits.length === 0 && <p className="text-zinc-500 text-sm">No subreddit candidates yet.</p>}
           </div>
         </section>
       </div>
