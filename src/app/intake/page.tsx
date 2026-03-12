@@ -730,7 +730,7 @@ function IntakeForm() {
           <span className="ml-2 text-xs text-zinc-400">Step {step} of 3</span>
         </div>
 
-        <div className="mt-10 space-y-8">
+        <form className="mt-10 space-y-8" onSubmit={(e) => { e.preventDefault(); if (step === 3) handleSubmit(); }}>
           {/* STEP 1 — Contact info, jurisdiction, charge details, charge-specific Qs */}
           {step === 1 && (
             <>
@@ -1286,7 +1286,7 @@ function IntakeForm() {
                   className="flex-1 rounded-lg border border-zinc-700 py-4 text-sm font-semibold text-white transition-colors hover:border-zinc-500">
                   Back
                 </button>
-                <button type="button" onClick={handleSubmit}
+                <button type="submit"
                   disabled={submitting}
                   className="flex-1 rounded-lg bg-amber-500 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50">
                   {submitting ? "Submitting..." : "Submit \u2014 Get Your Case Reviewed"}
@@ -1300,7 +1300,7 @@ function IntakeForm() {
               </div>
             </>
           )}
-        </div>
+        </form>
       </div>
     </div>
   );

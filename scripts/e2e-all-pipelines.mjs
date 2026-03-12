@@ -29,6 +29,7 @@ import { randomUUID, createHmac } from "crypto";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import Stripe from "stripe";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -76,11 +77,17 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
 
+// Stripe config
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
+const stripe = STRIPE_SECRET_KEY ? new Stripe(STRIPE_SECRET_KEY) : null;
+
 // CLI args
 const args = process.argv.slice(2);
 const onlyPipeline = args.includes("--only") ? parseInt(args[args.indexOf("--only") + 1], 10) : null;
 const skipCleanup = args.includes("--skip-cleanup");
 const skipApi = args.includes("--skip-api");
+const skipStripe = args.includes("--skip-stripe");
 
 // All test emails go to test@imnotanattorney.com (real inbox, visible in
 // Resend dashboard + admin email viewer — same as help@imnotanattorney.com).
@@ -131,11 +138,166 @@ function signOperatorToken(caseId) {
   return `${timestamp}.${hmac}`;
 }
 
+// ================================================================
+// E2E HELPERS — Real HTTP flow
+// ================================================================
+
+/**
+ * Sign a webhook payload using Stripe SDK's own test helper.
+ * This uses the exact same algorithm as constructEvent expects.
+ */
+function signWebhookPayload(payload) {
+  const header = Stripe.webhooks.generateTestHeaderString({
+    payload,
+    secret: STRIPE_WEBHOOK_SECRET,
+  });
+  return { header };
+}
+
+/**
+ * POST /api/checkout → get Stripe session URL + session ID.
+ * This tests our checkout route's validation, email capture,
+ * tier lookup, consent checks, and Stripe session creation.
+ */
+async function callCheckout(tier, email, opts = {}) {
+  const body = {
+    tier,
+    email,
+    consent: opts.consent ?? false,
+    chargeType: opts.chargeType || null,
+    productType: opts.productType || undefined,
+  };
+
+  const res = await fetch(`${SITE_URL}/api/checkout`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) return { ok: false, status: res.status, error: data.error };
+
+  // Extract session ID from the Stripe checkout URL
+  const sessionId = data.url?.match(/cs_test_[a-zA-Z0-9]+/)?.[0] || null;
+  return { ok: true, url: data.url, sessionId };
+}
+
+/**
+ * Construct a checkout.session.completed event and POST it to our
+ * webhook endpoint with a valid Stripe signature. This tests the
+ * exact code path that handles real Stripe webhooks.
+ */
+async function fireWebhook(tier, email, sessionId, opts = {}) {
+  const TIER_PRICES_MAP = {
+    "dui-first-offense": 9700, "drug-possession": 9700,
+    "probation-violation": 9700, "white-collar": 9700,
+    "sex-offense": 9700, "federal-criminal": 9700,
+    "drug-trafficking": 9700, "self-defense": 9700,
+    "case-decoder": 19700, "intelligence-brief": 99700,
+    "x-ray": 249700, "war-room": 499700, "situation-room": 999700,
+  };
+
+  const event = {
+    id: `evt_test_${randomUUID().replace(/-/g, "").slice(0, 24)}`,
+    object: "event",
+    type: "checkout.session.completed",
+    data: {
+      object: {
+        id: sessionId,
+        object: "checkout.session",
+        customer_email: email,
+        amount_total: TIER_PRICES_MAP[tier] || 0,
+        payment_intent: `pi_test_${randomUUID().replace(/-/g, "").slice(0, 24)}`,
+        metadata: {
+          tier,
+          product_name: opts.productName || tier,
+          ...(opts.productType && { product_type: opts.productType }),
+          ...(opts.consent && { consent_timestamp: new Date().toISOString() }),
+        },
+      },
+    },
+  };
+
+  const payload = JSON.stringify(event);
+  const { header } = signWebhookPayload(payload);
+
+  const res = await fetch(`${SITE_URL}/api/webhooks/stripe`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "stripe-signature": header,
+    },
+    body: payload,
+  });
+
+  return { ok: res.ok, status: res.status };
+}
+
+/**
+ * Poll Supabase for an order matching the given stripe_session_id.
+ * Returns the order when found, null on timeout.
+ */
+async function waitForOrder(sessionId, timeoutMs = 15000) {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    const { data } = await supabase
+      .from("orders")
+      .select("*")
+      .eq("stripe_session_id", sessionId)
+      .maybeSingle();
+    if (data) return data;
+    await new Promise((r) => setTimeout(r, 1000));
+  }
+  return null;
+}
+
+/**
+ * GET /api/download/[token] — follow redirects to verify the PDF
+ * is actually downloadable. Returns status + content-type.
+ */
+async function verifyDownload(downloadToken) {
+  try {
+    // First call: should redirect (302) to signed Supabase URL
+    const res = await fetch(`${SITE_URL}/api/download/${downloadToken}`, {
+      redirect: "manual",
+    });
+
+    if (res.status === 307 || res.status === 302 || res.status === 301) {
+      const location = res.headers.get("location");
+      if (!location) return { ok: false, error: "Redirect but no Location header" };
+
+      // Follow the redirect to the signed Supabase Storage URL
+      const pdfRes = await fetch(location);
+      const contentType = pdfRes.headers.get("content-type") || "";
+      const contentLength = parseInt(pdfRes.headers.get("content-length") || "0", 10);
+
+      return {
+        ok: pdfRes.ok,
+        status: pdfRes.status,
+        contentType,
+        contentLength,
+        isPdf: contentType.includes("pdf") || contentType.includes("octet-stream"),
+      };
+    }
+
+    // Non-redirect response (error)
+    const body = await res.json().catch(() => ({}));
+    return { ok: false, status: res.status, error: body.error || "Not a redirect" };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+}
+
 async function createTestOrder(tier, email, opts = {}) {
   const TIER_PRICES = {
     "dui-first-offense": 9700,
     "drug-possession": 9700,
     "probation-violation": 9700,
+    "white-collar": 9700,
+    "sex-offense": 9700,
+    "federal-criminal": 9700,
+    "drug-trafficking": 9700,
+    "self-defense": 9700,
     "case-decoder": 19700,
     "intelligence-brief": 99700,
     "x-ray": 249700,
@@ -464,46 +626,143 @@ async function testPlaybooks() {
   console.log(`  ${name}`);
   console.log(`${"=".repeat(60)}`);
 
+  const useStripe = !skipStripe && !!stripe && !!STRIPE_WEBHOOK_SECRET;
+  if (!useStripe) {
+    console.log("  [skip-stripe] Using DB-only simulation (pass --skip-stripe to force this)");
+  }
+
   let passed = true;
 
   for (const pb of PLAYBOOK_TIERS) {
     console.log(`\n  --- ${pb.label} Playbook (${pb.slug}) ---`);
 
-    // Step 1: Create order (digital product — no case created)
-    console.log("  Step 1: Create digital product order");
-    const orderId = await createTestOrder(pb.slug, TEST_EMAIL, {
-      extra: { product_type: "digital-product" },
-    });
-    passed = assert(!!orderId, `Order created (${pb.slug})`) && passed;
+    // Use a unique email per playbook per run to avoid collisions
+    const email = `test+pb-${pb.slug}-${RUN_TS}@imnotanattorney.com`;
+    allTestEmails.add(email);
 
-    // Step 2: Simulate webhook's download token generation
-    console.log("  Step 2: Generate download token");
-    const downloadToken = randomUUID();
-    const expiresAt = new Date(Date.now() + 72 * 60 * 60 * 1000).toISOString();
-    const { error: tokenError } = await supabase
-      .from("orders")
-      .update({
-        product_type: "digital-product",
-        download_token: downloadToken,
-        download_token_expires_at: expiresAt,
-      })
-      .eq("id", orderId);
-    passed = assert(!tokenError, "Download token set on order") && passed;
+    let orderId;
+    let downloadToken;
 
-    // Step 3: Verify order state
-    console.log("  Step 3: Verify order state");
-    const order = await getOrder(orderId);
-    passed = assert(order?.status === "paid", `Order status: paid (got: ${order?.status})`) && passed;
-    passed = assert(!!order?.download_token, "Download token exists") && passed;
-    passed = assert(order?.product_type === "digital-product", "Product type: digital-product") && passed;
+    if (useStripe) {
+      // ── REAL E2E: Checkout API → Webhook → Order ──
 
-    // Step 4: Verify NO case was created (digital products skip cases)
-    console.log("  Step 4: Verify no case created");
-    const { data: cases } = await supabase
-      .from("cases")
-      .select("id")
-      .eq("order_id", orderId);
-    passed = assert(!cases || cases.length === 0, "No case created (digital product)") && passed;
+      // Step 1: POST /api/checkout — creates Stripe session
+      console.log("  Step 1: POST /api/checkout");
+      const checkout = await callCheckout(pb.slug, email, {
+        productType: "digital-product",
+      });
+      passed = assert(checkout.ok, `Checkout API returned session URL`) && passed;
+      passed = assert(!!checkout.sessionId, `Session ID extracted (${checkout.sessionId?.slice(0, 20)}...)`) && passed;
+
+      if (!checkout.ok || !checkout.sessionId) {
+        console.error(`    Checkout failed: ${checkout.error || checkout.status}`);
+        continue;
+      }
+
+      // Step 2: Fire signed webhook (simulates Stripe calling our endpoint)
+      console.log("  Step 2: Fire checkout.session.completed webhook");
+      const webhookResult = await fireWebhook(pb.slug, email, checkout.sessionId, {
+        productType: "digital-product",
+        productName: pb.label + " Defense Playbook",
+      });
+      passed = assert(webhookResult.ok, `Webhook accepted (${webhookResult.status})`) && passed;
+
+      // Step 3: Poll for order creation
+      console.log("  Step 3: Wait for order + download token");
+      const order = await waitForOrder(checkout.sessionId, 10000);
+      passed = assert(!!order, "Order created by webhook") && passed;
+
+      if (order) {
+        allOrderIds.push(order.id);
+        orderId = order.id;
+        downloadToken = order.download_token;
+
+        passed = assert(order.status === "paid", `Order status: paid (got: ${order.status})`) && passed;
+        passed = assert(!!order.download_token, "Download token generated by webhook") && passed;
+        passed = assert(order.product_type === "digital-product", "Product type: digital-product") && passed;
+        passed = assert(!!order.download_token_expires_at, "Download token expiry set") && passed;
+      }
+
+      // Step 4: Verify no case created
+      console.log("  Step 4: Verify no case created");
+      if (orderId) {
+        const { data: cases } = await supabase
+          .from("cases")
+          .select("id")
+          .eq("order_id", orderId);
+        passed = assert(!cases || cases.length === 0, "No case created (digital product)") && passed;
+      }
+
+      // Step 5: GET /api/download/[token] → verify PDF downloads
+      console.log("  Step 5: GET /api/download/[token] → verify PDF");
+      if (downloadToken) {
+        const dl = await verifyDownload(downloadToken);
+        passed = assert(dl.ok, `Download endpoint returned PDF (status: ${dl.status})`) && passed;
+        passed = assert(dl.isPdf, `Content-Type is PDF (got: ${dl.contentType})`) && passed;
+        passed = assert(dl.contentLength > 10000, `PDF has content (${Math.round(dl.contentLength / 1024)}KB)`) && passed;
+      } else {
+        passed = assert(false, "Download token missing — cannot verify PDF") && passed;
+      }
+
+    } else {
+      // ── DB-ONLY FALLBACK (--skip-stripe) ──
+
+      // Step 1: Create order directly
+      console.log("  Step 1: Create digital product order (DB)");
+      orderId = await createTestOrder(pb.slug, email, {
+        extra: { product_type: "digital-product" },
+      });
+      passed = assert(!!orderId, `Order created (${pb.slug})`) && passed;
+
+      // Step 2: Set download token
+      console.log("  Step 2: Generate download token (DB)");
+      downloadToken = randomUUID();
+      const expiresAt = new Date(Date.now() + 72 * 60 * 60 * 1000).toISOString();
+      const { error: tokenError } = await supabase
+        .from("orders")
+        .update({
+          product_type: "digital-product",
+          download_token: downloadToken,
+          download_token_expires_at: expiresAt,
+        })
+        .eq("id", orderId);
+      passed = assert(!tokenError, "Download token set on order") && passed;
+
+      // Step 3: Verify order state
+      console.log("  Step 3: Verify order state");
+      const order = await getOrder(orderId);
+      passed = assert(order?.status === "paid", `Order status: paid (got: ${order?.status})`) && passed;
+      passed = assert(!!order?.download_token, "Download token exists") && passed;
+      passed = assert(order?.product_type === "digital-product", "Product type: digital-product") && passed;
+
+      // Step 4: Verify no case
+      console.log("  Step 4: Verify no case created");
+      const { data: cases } = await supabase
+        .from("cases")
+        .select("id")
+        .eq("order_id", orderId);
+      passed = assert(!cases || cases.length === 0, "No case created (digital product)") && passed;
+    }
+
+    // Step 6 (always): Verify charge_packs row + PDF exists in Storage
+    console.log("  Step 6: Verify charge_packs + Storage PDF");
+    const { data: pack, error: packError } = await supabase
+      .from("charge_packs")
+      .select("slug, pdf_storage_path")
+      .eq("slug", pb.slug)
+      .single();
+    passed = assert(!packError && !!pack, `charge_packs row exists (${pb.slug})`) && passed;
+
+    if (pack?.pdf_storage_path) {
+      const storagePath = pack.pdf_storage_path.replace("charge-packs/", "");
+      const { data: signedData, error: signedError } = await supabase
+        .storage
+        .from("charge-packs")
+        .createSignedUrl(storagePath, 60);
+      passed = assert(!signedError && !!signedData?.signedUrl, `PDF downloadable via signed URL (${storagePath})`) && passed;
+    } else {
+      passed = assert(false, `pdf_storage_path is set (got: ${pack?.pdf_storage_path})`) && passed;
+    }
   }
 
   pipelineResults.push({ name, passed });

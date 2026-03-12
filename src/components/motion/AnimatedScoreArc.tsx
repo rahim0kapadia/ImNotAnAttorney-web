@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion, useInView, useMotionValue, animate } from "framer-motion";
+import { motion, useInView, useMotionValue, useReducedMotion, animate } from "framer-motion";
 import { AnimatedCounter } from "./AnimatedCounter";
 
 interface AnimatedScoreArcProps {
@@ -28,14 +28,16 @@ export function AnimatedScoreArc({ score, maxScore = 100, size = 200 }: Animated
   const circumference = 2 * Math.PI * radius;
   const normalizedScore = Math.min(score / maxScore, 1);
 
+  const shouldReduce = useReducedMotion();
+
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || shouldReduce) return;
     const controls = animate(progress, normalizedScore, {
       duration: 1.8,
       ease: "easeOut",
     });
     return () => controls.stop();
-  }, [isInView, normalizedScore, progress]);
+  }, [isInView, normalizedScore, progress, shouldReduce]);
 
   const color = getScoreColor(score);
 
@@ -58,24 +60,38 @@ export function AnimatedScoreArc({ score, maxScore = 100, size = 200 }: Animated
           strokeWidth={strokeWidth}
         />
         {/* Animated progress circle */}
-        <motion.circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke={color}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          style={{
-            strokeDashoffset: progress.get() === 0
-              ? circumference
-              : undefined,
-          }}
-          initial={{ strokeDashoffset: circumference }}
-          animate={isInView ? { strokeDashoffset: circumference * (1 - normalizedScore) } : {}}
-          transition={{ duration: 1.8, ease: "easeOut" }}
-        />
+        {shouldReduce ? (
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke={color}
+            strokeWidth={strokeWidth}
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference * (1 - normalizedScore)}
+          />
+        ) : (
+          <motion.circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke={color}
+            strokeWidth={strokeWidth}
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            style={{
+              strokeDashoffset: progress.get() === 0
+                ? circumference
+                : undefined,
+            }}
+            initial={{ strokeDashoffset: circumference }}
+            animate={isInView ? { strokeDashoffset: circumference * (1 - normalizedScore) } : {}}
+            transition={{ duration: 1.8, ease: "easeOut" }}
+          />
+        )}
       </svg>
       {/* Center score */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">

@@ -3,11 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface RecentPurchaseNotificationProps {
-  count?: number;
-}
-
-export function RecentPurchaseNotification({ count = 14 }: RecentPurchaseNotificationProps) {
+export function RecentPurchaseNotification() {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
@@ -45,7 +41,7 @@ export function RecentPurchaseNotification({ count = 14 }: RecentPurchaseNotific
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-amber-400" />
             </span>
             <p className="text-sm text-zinc-300">
-              <span className="font-semibold text-white">{count} people</span> purchased this week
+              Others are <span className="font-semibold text-white">getting their questions</span> right now
             </p>
             <button
               onClick={() => setDismissed(true)}

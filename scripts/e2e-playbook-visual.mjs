@@ -167,10 +167,14 @@ async function testPlaybookCheckoutPages(page) {
     if (!(await safeGoto(page, url))) continue;
 
     // Wait for client-side rendering (checkout is a "use client" component
-    // wrapped in Suspense — content appears after hydration)
+    // wrapped in Suspense — content appears after hydration).
+    // Wait for actual content to appear, not just "Loading..." to disappear.
     await page.waitForFunction(
-      () => !document.body.innerText.includes("Loading..."),
-      { timeout: SELECTOR_TIMEOUT }
+      () => {
+        const text = document.body.innerText || "";
+        return text.includes("$") || text.includes("Invalid tier");
+      },
+      { timeout: 15000 }
     ).catch(() => {});
 
     const pageText = await getPageText(page);
@@ -212,10 +216,13 @@ async function testUpgradeCostNotZero(page) {
 
   if (!(await safeGoto(page, url))) return;
 
-  // Wait for hydration
+  // Wait for hydration — wait for price content to appear
   await page.waitForFunction(
-    () => !document.body.innerText.includes("Loading..."),
-    { timeout: SELECTOR_TIMEOUT }
+    () => {
+      const text = document.body.innerText || "";
+      return text.includes("$") || text.includes("Invalid tier");
+    },
+    { timeout: 15000 }
   ).catch(() => {});
 
   const pageText = await getPageText(page);
@@ -290,10 +297,13 @@ async function testMainTiersCheckout(page) {
 
     if (!(await safeGoto(page, url))) continue;
 
-    // Wait for hydration
+    // Wait for hydration — wait for price content to appear
     await page.waitForFunction(
-      () => !document.body.innerText.includes("Loading..."),
-      { timeout: SELECTOR_TIMEOUT }
+      () => {
+        const text = document.body.innerText || "";
+        return text.includes("$") || text.includes("Invalid tier");
+      },
+      { timeout: 15000 }
     ).catch(() => {});
 
     const pageText = await getPageText(page);

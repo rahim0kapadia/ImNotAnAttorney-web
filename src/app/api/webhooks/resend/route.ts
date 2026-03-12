@@ -55,7 +55,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
   } else {
-    console.warn("[Resend Webhook] RESEND_WEBHOOK_SECRET not set — running unverified");
+    console.error("[Resend Webhook] RESEND_WEBHOOK_SECRET not set — rejecting request");
+    return NextResponse.json({ error: "Webhook secret not configured" }, { status: 500 });
   }
 
   let event;

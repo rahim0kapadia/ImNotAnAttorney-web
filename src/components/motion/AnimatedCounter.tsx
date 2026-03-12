@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useInView, useMotionValue, animate } from "framer-motion";
+import { useInView, useMotionValue, useReducedMotion, animate } from "framer-motion";
 
 interface AnimatedCounterProps {
   target: number;
@@ -23,12 +23,14 @@ export function AnimatedCounter({
 }: AnimatedCounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const shouldReduce = useReducedMotion();
   const motionValue = useMotionValue(0);
-  const [displayValue, setDisplayValue] = useState(0);
+  const [displayValue, setDisplayValue] = useState(target);
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || shouldReduce) return;
 
+    setDisplayValue(0);
     const controls = animate(motionValue, target, {
       duration,
       ease: "easeOut",
@@ -36,12 +38,12 @@ export function AnimatedCounter({
     });
 
     return () => controls.stop();
-  }, [isInView, target, duration, motionValue]);
+  }, [isInView, target, duration, motionValue, shouldReduce]);
 
   return (
     <span ref={ref} className={className}>
       {prefix}
-      {isInView ? displayValue.toLocaleString() : "0"}
+      {displayValue.toLocaleString()}
       {suffix}
     </span>
   );

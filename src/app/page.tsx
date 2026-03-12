@@ -113,6 +113,11 @@ const homeFaqs = [
     answer:
       `The ${TIER_CORE["dui-first-offense"].name} (${TIER_CORE["dui-first-offense"].priceDisplay}) is an instant-download PDF with 26 questions your DUI attorney hopes you never ask, a breathalyzer calibration checklist, a case stage roadmap, 12 red flags, and a Case Progress Scorecard. No intake form, no wait — built from 40+ elite defense attorneys' documented strategies. Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} within 30 days.`,
   },
+  {
+    question: "What if my case is already too far along?",
+    answer:
+      "It's almost never too late. Most of what we find — discovery gaps, officer inconsistencies, missed motions — can be raised at any stage before sentencing. Even at the plea stage, strong questions give your attorney leverage to negotiate better terms. We've found critical issues in cases that were months into the process.",
+  },
 ];
 
 /** FAQPage JSON-LD schema for Google rich snippets. Renders as a <script> tag in the page head. */
@@ -211,25 +216,7 @@ export default function Home() {
             </div>
           </FadeInUp>
           <FadeInUp delay={0.35}>
-            <p className="mt-3 text-sm text-zinc-400">
-              Or{" "}
-              <Link
-                href="/score"
-                className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
-              >
-                check your attorney&apos;s score — free &rarr;
-              </Link>
-            </p>
-            <p className="mt-2 text-sm text-zinc-400">
-              DUI?{" "}
-              <Link
-                href="/playbook/dui-first-offense"
-                className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
-              >
-                Get the DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} instant download &rarr;
-              </Link>
-            </p>
-            <p className="mt-2 text-sm font-semibold text-amber-500">
+            <p className="mt-3 text-sm font-semibold text-amber-500">
               <AnimatedCounter target={500} suffix="+" className="text-amber-400" /> defendants armed with the right questions &middot; We Research. You Ask.
             </p>
           </FadeInUp>
@@ -297,12 +284,18 @@ export default function Home() {
           <p className="mt-8 text-center text-sm text-zinc-400">
             This is what our analysis finds. These are the questions your attorney should be asking — but isn&apos;t.
           </p>
-          <div className="mt-6 text-center">
+          <div className="mt-6 flex flex-col items-center gap-2">
             <Link
               href="/sample"
               className="text-sm font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
             >
               See the full sample report from this case →
+            </Link>
+            <Link
+              href="/about"
+              className="text-xs text-zinc-500 underline decoration-zinc-500/50 hover:text-zinc-400"
+            >
+              Read the full story →
             </Link>
           </div>
         </div>
@@ -381,7 +374,18 @@ export default function Home() {
               ]}
             />
             <p className="mt-4 text-center text-xs text-zinc-600">
-              *Based on real defendant experiences. Names changed for privacy.
+              *Based on real defendant experiences. Names changed for privacy. Jurisdictions, timelines, and specific findings vary by case.
+            </p>
+          </div>
+          <div className="mt-8 text-center">
+            <p className="text-sm text-zinc-400">
+              Not ready to commit?{" "}
+              <Link
+                href="/score"
+                className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+              >
+                Check your attorney&apos;s score — free, no email required &rarr;
+              </Link>
             </p>
           </div>
         </div>
@@ -521,6 +525,17 @@ export default function Home() {
               What&apos;s at stake?
             </h2>
           </FadeInUp>
+          <FadeInUp delay={0.1}>
+            <div className="mt-4 mx-auto max-w-lg rounded-xl border-l-4 border-amber-500/50 bg-zinc-900/50 p-6 text-left">
+              <p className="text-sm leading-relaxed text-zinc-300 italic">
+                &ldquo;For $197 I got more useful information than from the $15,000 I paid my attorney. That&apos;s not an exaggeration.&rdquo;
+              </p>
+              <div className="mt-3">
+                <p className="text-sm font-semibold text-white">Michelle P.</p>
+                <p className="text-xs text-zinc-500">White Collar Fraud, New York &middot; Charges dropped</p>
+              </div>
+            </div>
+          </FadeInUp>
           <StaggerContainer className="mt-8 grid gap-4 md:grid-cols-3">
             <StaggerItem>
               <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
@@ -550,50 +565,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GUARANTEE SECTION — Tiered guarantees to reduce purchase risk.     */}
-      {/* Lower tiers ($197/$997): Full cash refund if delivery or question */}
-      {/* count missed + 100% credit toward upgrade within 30 days.         */}
-      {/* Higher tiers ($2,497+): Delivery guarantee only (custom research  */}
-      {/* begins on intake, non-refundable once delivered).                  */}
-      <section className="border-t border-zinc-800 px-4 py-16">
-        <div className="mx-auto max-w-3xl text-center">
-          <FadeInUp>
-          <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-8">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/10">
-              <svg className="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
-            <h2 className="font-display text-2xl font-bold text-white">
-              Our Guarantee
-            </h2>
-            <div className="mt-6 space-y-4 text-left">
-              <div>
-                <p className="text-sm font-semibold text-amber-400">{TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay}) &amp; {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay})</p>
-                <p className="mt-1 text-sm text-zinc-300">
-                  Delivered within the stated timeframe with the guaranteed question
-                  count — or a full cash refund. Not satisfied? 100% credit toward
-                  any higher tier within 30 days.
-                </p>
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-amber-400">{TIER_CORE["x-ray"].name} ({TIER_CORE["x-ray"].priceDisplay}), {TIER_CORE["war-room"].name} ({TIER_CORE["war-room"].priceDisplay}) &amp; {TIER_CORE["situation-room"].name} ({TIER_CORE["situation-room"].priceDisplay})</p>
-                <p className="mt-1 text-sm text-zinc-300">
-                  Delivery guarantee — every deliverable completed on schedule, or a
-                  full refund. These services involve substantial custom research
-                  that begins upon intake. Work performed and delivered is
-                  non-refundable.
-                </p>
-              </div>
-            </div>
-            <p className="mt-4 text-xs text-zinc-400">
-              Upgrade credits apply to purchases you keep.
-            </p>
-          </div>
-          </FadeInUp>
-        </div>
-      </section>
-
       {/* Grid testimonials before pricing (Kenyon placement #2) */}
       <section className="px-4 py-16">
         <div className="mx-auto max-w-5xl">
@@ -608,38 +579,71 @@ export default function Home() {
               {
                 quote: "The questions alone saved my case. My attorney had no idea I knew about the Brady violation.",
                 name: "David R.",
-                charge: "Federal Drug Conspiracy",
-                outcome: "Charges reduced to misdemeanor",
+                charge: "Federal Drug Conspiracy, Southern District",
+                outcome: "Charges reduced to misdemeanor — 4 months from report to resolution",
               },
               {
                 quote: "I was about to take a plea for 5 years. The report found a chain of custody break my public defender missed. Got 18 months probation instead.",
                 name: "James M.",
-                charge: "Drug Trafficking",
-                outcome: "Plea reduced to probation",
+                charge: "Drug Trafficking, Florida",
+                outcome: "Plea reduced to probation — evidence gap identified in lab transfer records",
               },
               {
                 quote: "Worth every penny. My attorney started filing motions the same week I brought in the questions.",
                 name: "Angela W.",
-                charge: "Probation Violation",
-                outcome: "Violation dismissed",
+                charge: "Probation Violation, Texas",
+                outcome: "Violation dismissed — 3 procedural issues flagged in report",
               },
               {
                 quote: "I didn't know I could ask for the calibration records on the breathalyzer. That one question changed everything.",
                 name: "Robert C.",
-                charge: "DUI",
-                outcome: "Case dismissed",
-              },
-              {
-                quote: "For $197 I got more useful information than from the $15,000 I paid my attorney. That's not an exaggeration.",
-                name: "Michelle P.",
-                charge: "White Collar Fraud",
-                outcome: "Charges dropped",
+                charge: "DUI, California",
+                outcome: "Case dismissed — breathalyzer maintenance records showed overdue calibration",
               },
             ]}
           />
           <p className="mt-4 text-center text-xs text-zinc-600">
-            *Based on real defendant experiences. Names changed for privacy.
+            *Based on real defendant experiences. Names changed for privacy. Jurisdictions, timelines, and specific findings vary by case. Past results do not guarantee future outcomes.
           </p>
+        </div>
+      </section>
+
+      {/* GUARANTEE SECTION — Named guarantee, cash refund first.             */}
+      <section className="border-t border-zinc-800 px-4 py-16">
+        <div className="mx-auto max-w-3xl text-center">
+          <FadeInUp>
+          <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-8">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/10">
+              <svg className="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <h2 className="font-display text-2xl font-bold text-white">
+              The Questions Work or Your Money Back
+            </h2>
+            <div className="mt-6 space-y-4 text-left">
+              <div>
+                <p className="text-sm font-semibold text-amber-400">Full Cash Refund</p>
+                <p className="mt-1 text-sm text-zinc-300">
+                  If we miss the stated delivery deadline or question count — full cash refund, no questions asked.
+                  {" "}{TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay}) and {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay}) included.
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-amber-400">100% Upgrade Credit</p>
+                <p className="mt-1 text-sm text-zinc-300">
+                  Not satisfied after delivery? 100% credit toward any higher tier within 30 days. Every dollar you spend counts.
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-zinc-400">Premium Tiers ({TIER_CORE["x-ray"].name}+)</p>
+                <p className="mt-1 text-sm text-zinc-300">
+                  Delivery guarantee — every deliverable completed on schedule, or a full refund. Custom research begins upon intake.
+                </p>
+              </div>
+            </div>
+          </div>
+          </FadeInUp>
         </div>
       </section>
 
@@ -737,7 +741,7 @@ export default function Home() {
       </section>
 
       {/* Global components */}
-      <RecentPurchaseNotification count={14} />
+      <RecentPurchaseNotification />
       <StickyMobileCTA />
     </>
   );

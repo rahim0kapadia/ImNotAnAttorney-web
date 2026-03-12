@@ -30,7 +30,7 @@
  * metadataBase: https://imnotanattorney.com — all relative OG/canonical URLs
  * resolve against this. Required for Next.js metadata API.
  */
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Playfair_Display } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -51,6 +51,12 @@ const playfairDisplay = Playfair_Display({
   weight: ["700", "800", "900"],
 });
 
+
+/** Viewport configuration — exported separately per Next.js 15 requirements. */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 /**
  * Site-wide metadata defaults.
@@ -124,6 +130,9 @@ export default function RootLayout({
                 "Drug Trafficking Defense",
                 "Attorney Accountability",
                 "Legal Research",
+              ],
+              sameAs: [
+                "https://twitter.com/ImNotAnAttorney",
               ],
               areaServed: { "@type": "Country", name: "United States" },
             }),

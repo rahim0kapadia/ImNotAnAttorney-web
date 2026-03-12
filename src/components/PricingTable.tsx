@@ -26,7 +26,7 @@ const tiers = [
   {
     name: TIER_CORE["case-decoder"].name,
     price: TIER_CORE["case-decoder"].priceDisplay,
-    anchor: null,
+    anchor: "vs. $500+ for a 1-hour consultation",
     description: "48-hour turnaround. No discovery needed.",
     features: [
       "Plain-English charge breakdown with elements the prosecution must prove",
@@ -41,7 +41,8 @@ const tiers = [
     cta: "Get Your Case Decoder",
     featured: true,
     tier: "case-decoder",
-    bestFor: "Just arrested, need clarity",
+    bestFor: "Just arrested, need clarity fast",
+    priorityAvailable: `Priority: ${TIER_CORE["case-decoder"].priorityDelivery} (+$${TIER_CORE["case-decoder"].priorityPrice! / 100})`,
   },
   {
     name: TIER_CORE["intelligence-brief"].name,
@@ -66,11 +67,12 @@ const tiers = [
     featured: false,
     tier: "intelligence-brief",
     bestFor: "Pre-trial, want judge intel + questions",
+    priorityAvailable: `Priority: ${TIER_CORE["intelligence-brief"].priorityDelivery} (+$${TIER_CORE["intelligence-brief"].priorityPrice! / 100})`,
   },
   {
     name: TIER_CORE["x-ray"].name,
     price: TIER_CORE["x-ray"].priceDisplay,
-    anchor: null,
+    anchor: "vs. $3,000+ for a second attorney to review discovery",
     description: "Full discovery analysis. 10 business days.",
     features: [
       "Everything in Intelligence Brief",
@@ -86,6 +88,7 @@ const tiers = [
     featured: false,
     tier: "x-ray",
     bestFor: "Have discovery, need deep analysis",
+    priorityAvailable: `Priority: ${TIER_CORE["x-ray"].priorityDelivery} (+$${TIER_CORE["x-ray"].priorityPrice! / 100})`,
   },
   {
     name: TIER_CORE["war-room"].name,
@@ -202,7 +205,10 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
             )}
             <p className="mt-2 text-sm text-zinc-400">{tier.description}</p>
             {tier.bestFor && (
-              <p className="mt-2 text-xs text-amber-400/70">Best for: {tier.bestFor}</p>
+              <p className="mt-2 text-sm font-medium text-amber-400">Best for: {tier.bestFor}</p>
+            )}
+            {"priorityAvailable" in tier && tier.priorityAvailable && (
+              <p className="mt-1 text-xs text-zinc-500">{tier.priorityAvailable}</p>
             )}
             <ul className="mt-6 flex-1 space-y-3">
               {tier.features.map((feature) => (
@@ -265,7 +271,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
             )}
             <p className="mt-2 text-sm text-zinc-400">{tier.description}</p>
             {tier.bestFor && (
-              <p className="mt-2 text-xs text-amber-400/70">Best for: {tier.bestFor}</p>
+              <p className="mt-2 text-sm font-medium text-amber-400">Best for: {tier.bestFor}</p>
             )}
             <ul className="mt-6 flex-1 space-y-3">
               {tier.features.map((feature) => (
