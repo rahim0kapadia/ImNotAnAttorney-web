@@ -23,6 +23,8 @@ import { getAllPosts } from "@/lib/blog";
 import { BlogCard } from "@/components/BlogCard";
 import { BlogCategoryFilter } from "@/components/BlogCategoryFilter";
 import { LeadCapture } from "@/components/LeadCapture";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 import { SITE_URL } from "@/lib/site";
 import { Suspense } from "react";
 import type { Metadata } from "next";
@@ -65,10 +67,12 @@ export default async function BlogPage({
         }}
       />
       <div className="mx-auto max-w-4xl">
-        <h1 className="text-3xl font-bold text-white md:text-4xl">Criminal Defense Blog — Questions Your Attorney Should Answer</h1>
-        <p className="mt-3 text-zinc-400">
-          Legal information that actually helps. No jargon, no fluff.
-        </p>
+        <FadeInUp>
+          <h1 className="font-display text-3xl font-bold text-white md:text-4xl">Criminal Defense Blog — Questions Your Attorney Should Answer</h1>
+          <p className="mt-3 text-zinc-400">
+            Legal information that actually helps. No jargon, no fluff.
+          </p>
+        </FadeInUp>
 
         {/* Category filters — client component for instant filtering */}
         <Suspense fallback={<div className="mt-8 h-8" />}>
@@ -76,19 +80,20 @@ export default async function BlogPage({
         </Suspense>
 
         {/* Posts */}
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
+        <StaggerContainer className="mt-8 grid gap-6 md:grid-cols-2">
           {posts.map((post) => (
-            <BlogCard
-              key={post.slug}
-              title={post.title}
-              excerpt={post.excerpt}
-              slug={post.slug}
-              date={post.date}
-              tags={post.tags}
-              readingTime={post.readingTime}
-            />
+            <StaggerItem key={post.slug}>
+              <BlogCard
+                title={post.title}
+                excerpt={post.excerpt}
+                slug={post.slug}
+                date={post.date}
+                tags={post.tags}
+                readingTime={post.readingTime}
+              />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
         {posts.length === 0 && (
           <div className="py-12 text-center text-zinc-400">
