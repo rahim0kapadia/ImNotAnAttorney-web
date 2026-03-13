@@ -129,15 +129,17 @@ export default async function RootLayout({
               logo: { "@type": "ImageObject", url: `${SITE_URL}/icon` },
 
               foundingDate: "2026",
+              founder: {
+                "@type": "Person",
+                name: "Rahim Kapadia",
+                jobTitle: "Founder",
+              },
               knowsAbout: [
                 "Criminal Defense",
                 "DUI Defense",
                 "Drug Trafficking Defense",
                 "Attorney Accountability",
                 "Legal Research",
-              ],
-              sameAs: [
-                "https://twitter.com/ImNotAnAttorney",
               ],
               areaServed: { "@type": "Country", name: "United States" },
             }),

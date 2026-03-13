@@ -156,6 +156,40 @@ export default function Home() {
               "Case-specific research and accountability questions for criminal defendants",
             provider: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
             areaServed: { "@type": "Country", name: "United States" },
+            hasOfferCatalog: {
+              "@type": "OfferCatalog",
+              name: "Defense Intelligence Tiers",
+              itemListElement: [
+                {
+                  "@type": "Offer",
+                  name: "Case Decoder",
+                  description: "Charge analysis + 10-15 targeted questions for your attorney",
+                  price: "197.00",
+                  priceCurrency: "USD",
+                },
+                {
+                  "@type": "Offer",
+                  name: "Case Intelligence Brief",
+                  description: "Judge intel + accountability research + 15-25 questions",
+                  price: "997.00",
+                  priceCurrency: "USD",
+                },
+                {
+                  "@type": "Offer",
+                  name: "The X-Ray",
+                  description: "Full discovery analysis + 35-50 questions + Discovery Strength Rating",
+                  price: "2497.00",
+                  priceCurrency: "USD",
+                },
+                {
+                  "@type": "Offer",
+                  name: "The War Room",
+                  description: "Ongoing intelligence operation with weekly updates",
+                  price: "4997.00",
+                  priceCurrency: "USD",
+                },
+              ],
+            },
           }),
         }}
       />

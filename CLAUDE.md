@@ -89,7 +89,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 - **Styling:** Tailwind CSS
 - **CMS:** MDX files in `content/blog/`
 - **Database:** Supabase (cases, orders, drip email tracking, discovery documents)
-- **Payments:** Stripe Checkout (webhook → order creation → drip sequence)
+- **Payments:** Stripe Checkout — SANDBOX MODE until all website pieces are complete (webhook → order creation → drip sequence)
 - **Email:** Resend (drip sequences, delivery notifications, admin digests)
 - **Hosting:** Vercel (live, auto-deploys on push to master)
 - **Schema:** FAQ, Service, Organization, Article
@@ -167,7 +167,9 @@ echo '{"type":"run-cv","project":"inna"}' > ~/.openclaw/workspace/claw-inbox.jso
 - INNA-H5: Adversarial UPL inputs are rejected by gate
 - INNA-H6: Orders table healthy
 
-**Known finding (2026-03-05, updated 2026-03-12):** Original 4 NULL-eval cases resolved (3 batch-cleaned 3/6, 1 unclear). 1 new test case (`test-review@imnotanattorney.com`, case-decoder, created 3/7) in "review" with NULL eval_results — INNA-H1 still technically violated but no real customers affected.
+**INNA-H1:** CLEAN as of 2026-03-13. All NULL eval_results cases resolved (3 batch-cleaned 3/6, 1 test case cleaned 3/13). Zero violations.
+
+**Stripe policy:** Sandbox mode (test keys) until ALL website pieces are complete — Visual+CRO overhaul, E2E testing, distribution content. Do NOT switch to live keys until Rahim explicitly approves.
 
 ## Reference
 - Business docs: `C:\Users\email\projects\ImNotAnAttorney\`

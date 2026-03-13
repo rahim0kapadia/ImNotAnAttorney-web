@@ -25,7 +25,7 @@ if (!stripeKey) {
   );
 }
 
-/** Initialized Stripe SDK client. Currently using test keys (live mode pending). */
+/** Initialized Stripe SDK client. Sandbox mode until all website pieces are complete (Visual+CRO, E2E, distribution). */
 export const stripe = new Stripe(stripeKey, {
   typescript: true,
 });
