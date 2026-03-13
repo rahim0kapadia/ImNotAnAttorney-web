@@ -127,9 +127,8 @@ export async function POST(req: NextRequest) {
       subject: "Your Discovery Checklist (Real Case Findings Inside)",
       unsubscribeEmail: normalizedEmail,
       html: `
-        <h1 style="color: #F59E0B;">I was in your seat 2 years ago.</h1>
-        <p>My name is Rahim. In 2023, I was facing drug trafficking charges in St. Petersburg, Florida. I paid thousands for an attorney who wouldn't return my calls. So one night I opened the discovery myself — and found four issues he never mentioned.</p>
-        <p>That night changed everything. I built a system so no defendant has to sit in the dark about their own case.</p>
+        <h1 style="color: #F59E0B;">We were in your seat.</h1>
+        <p>One of us was facing trafficking charges in Florida. Paid thousands for an attorney who wouldn't return calls. Opened the discovery one night — found four issues the attorney never mentioned. That's why we built this.</p>
         <p>Here's your free guide — the same evidence problems I found, turned into a checklist you can use on your case:</p>
         <a href="${siteUrl}/guides/discovery-checklist-7-evidence-problems.md" style="display: inline-block; margin: 24px 0; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Download Your Discovery Checklist</a>
         <p style="color: #A1A1AA;">Inside: 7 evidence problems from a real trafficking case — the weight that disappeared, the substance that changed, the fingerprints nobody mentioned, and 4 more. Plus the exact questions that expose each one.</p>

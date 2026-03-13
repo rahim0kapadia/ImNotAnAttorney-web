@@ -225,8 +225,8 @@ export default function Home() {
 
       {/* ------------------------------------------------------------------ */}
       {/* PROOF SECTION — Real Case Findings                                */}
-      {/* Shows three specific findings from Rahim's actual trafficking     */}
-      {/* case (23-01773-CF). Placed high on page (above pain points)       */}
+      {/* Shows three specific findings from a real trafficking case.          */}
+      {/* Placed high on page (above pain points)                             */}
       {/* because specificity converts better than empathy alone.           */}
       {/*   - 73% weight discrepancy (93.9g scene vs 25.59g lab = 68.3g)   */}
       {/*   - CI phone dual attribution (Franks v. Delaware issue)          */}
@@ -240,7 +240,7 @@ export default function Home() {
               What we actually found in a real case
             </h2>
             <p className="mt-3 text-center text-zinc-400">
-              This system was built by Rahim Kapadia — a real defendant facing drug trafficking charges in St. Petersburg, Florida. Here&apos;s what the analysis uncovered — issues his attorney hadn&apos;t raised.
+              This system was built by defendants — people who faced the same charges you&apos;re facing now. Here&apos;s what the analysis uncovered in one real trafficking case — issues the attorney hadn&apos;t raised.
             </p>
           </FadeInUp>
           <StaggerContainer className="mt-12 grid gap-6 md:grid-cols-3">
@@ -252,7 +252,7 @@ export default function Home() {
                 Scene weight: 93.9g. Lab weight: 25.59g. That&apos;s 68.3g missing — enough to change the charge tier entirely. The attorney never flagged it.
               </p>
               <p className="mt-2 text-xs text-zinc-500">
-                Identified using chain of custody protocols — the same methodology used in landmark DNA exoneration cases.
+                Identified using chain of custody protocols — tracking every hand that touched the evidence. The same methodology used in landmark DNA exoneration cases.
               </p>
             </div>
             </StaggerItem>
@@ -261,7 +261,7 @@ export default function Home() {
               <div className="text-3xl font-bold text-red-400">CI Phone</div>
               <p className="mt-1 text-sm font-semibold text-white">Dual Attribution</p>
               <p className="mt-2 text-sm text-zinc-400">
-                Same phone number attributed to BOTH the confidential informant and the defendant. Same detective, same report. A Franks v. Delaware issue hiding in plain sight.
+                Same phone number attributed to BOTH the confidential informant and the defendant. Same detective, same report. A Franks issue — the officer listed the same phone number for two different people in the warrant — hiding in plain sight.
               </p>
               <p className="mt-2 text-xs text-zinc-500">
                 Flagged using informant investigation methodology — proven in high-profile federal defense cases.
@@ -341,6 +341,10 @@ export default function Home() {
               {
                 title: "\u201CI paid $10K and he did nothing.\u201D",
                 desc: "You scraped that retainer together \u2014 borrowed from family, drained savings. Now you can\u2019t even get a status update on your own case. That\u2019s not frustrating. That\u2019s betrayal.",
+              },
+              {
+                title: "\u201CI\u2019m not the one facing charges \u2014 but I\u2019m the one doing all the research.\u201D",
+                desc: "Your husband, your son, your brother is facing charges. His attorney won\u2019t return YOUR calls either. Nobody will explain what\u2019s happening. You\u2019re the one up at 2am trying to understand what \u201Cdiscovery\u201D even means. We built this for you too.",
               },
             ].map((item) => (
               <StaggerItem key={item.title}>
@@ -429,7 +433,7 @@ export default function Home() {
               {
                 step: "02",
                 title: "We research everything",
-                desc: "We run your case through a research system built on 40+ elite defense attorneys — their documented tactics, their specific playbooks, their winning frameworks. Chain of custody protocols used in 375+ exonerations. Informant credibility methodologies proven in high-profile federal cases. Constitutional appellate frameworks. Investigation patterns from attorneys who never lost. We generate the questions they would ask if they were reading your file.",
+                desc: "We run your case through a research system built on 40+ elite defense attorneys — their documented tactics, their specific playbooks, their winning frameworks. Chain of custody protocols used in 375+ exonerations. Informant credibility methodologies proven in high-profile federal cases. Constitutional arguments — the rights-based challenges that have overturned convictions. Investigation patterns from attorneys who never lost. We generate the questions they would ask if they were reading your file.",
               },
               {
                 step: "03",
@@ -719,7 +723,7 @@ export default function Home() {
             <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
               You&apos;re up at 2am Googling your charges
               <br />
-              <span className="text-amber-400">because nobody will explain anything.</span>
+              <span className="text-amber-400">because nobody will explain anything to you &mdash; or anyone who loves you.</span>
             </h2>
             <p className="mt-4 text-zinc-400">
               Motions expire. Evidence disappears. Witnesses forget. But the

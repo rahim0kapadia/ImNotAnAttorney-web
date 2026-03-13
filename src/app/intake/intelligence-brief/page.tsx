@@ -220,7 +220,7 @@ function Phase2IntakeForm() {
                 value={form.caseNumber}
                 onChange={(e) => setField("caseNumber", e.target.value)}
                 className={inputClass}
-                placeholder="e.g. 23-01773-CF"
+                placeholder="e.g. 24-00123-CF"
               />
             </div>
             <div className="mt-4">

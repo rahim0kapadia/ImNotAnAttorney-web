@@ -41,9 +41,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Criminal Defense Case Analysis Services",
+  title: "Make Sure Your Attorney Is Actually Working Your Case",
   description:
-    `Case-specific research and question reports for criminal defendants. Five tiers from ${TIER_CORE["case-decoder"].priceDisplay} Case Decoder to ${TIER_CORE["situation-room"].priceDisplay} Situation Room. DUI, drug cases, white collar, and federal defense.`,
+    `Your attorney should be filing motions, reviewing evidence, and returning your calls. If they're not, these tools give you the questions that make them act. Five tiers from ${TIER_CORE["case-decoder"].priceDisplay} to ${TIER_CORE["situation-room"].priceDisplay}.`,
   alternates: {
     canonical: `${SITE_URL}/services`,
   },
@@ -66,7 +66,7 @@ const caseTypes = [
     title: "Drug Cases",
     subtitle: "Possession, trafficking, distribution",
     description:
-      "We analyze your case using chain of custody protocols, weight discrepancy frameworks, and informant credibility methodology — the same approaches used in landmark federal defense cases and 375+ exonerations.",
+      "We analyze your case using chain of custody protocols — tracking every person who touched the evidence, weight discrepancy frameworks — checking if the amount at arrest matches the lab, and informant credibility methodology — investigating whether the snitch was reliable. The same approaches used in landmark federal defense cases and 375+ exonerations.",
     tiers: [
       {
         name: TIER_CORE["case-decoder"].name,
@@ -95,7 +95,7 @@ const caseTypes = [
         name: TIER_CORE["war-room"].name,
         slug: "war-room",
         price: TIER_CORE["war-room"].priceDisplay,
-        desc: "Everything above + officer dossiers, witness analysis (up to 8), motion timing questions for your attorney, case law package, weekly updates. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
+        desc: "Everything above + officer dossiers, witness analysis (up to 8), motion timing questions for your attorney, case law package, weekly updates. Includes Evidence Chain Audit — was every piece of evidence handled properly? Every item traced through custody, gaps flagged. And Witness Reliability Rankings — how trustworthy is each witness? Scored across 7 credibility dimensions.",
         discovery: TIER_CORE["war-room"].requiresDiscovery,
       },
       {
@@ -141,7 +141,7 @@ const caseTypes = [
         name: TIER_CORE["war-room"].name,
         slug: "war-room",
         price: TIER_CORE["war-room"].priceDisplay,
-        desc: "Officer dossiers, expert witness challenges, motion timing questions for your attorney, case law package, weekly updates until resolution. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
+        desc: "Officer dossiers, expert witness challenges, motion timing questions for your attorney, case law package, weekly updates until resolution. Includes Evidence Chain Audit — was every piece of evidence handled properly? Every item traced through custody, gaps flagged. And Witness Reliability Rankings — how trustworthy is each witness? Scored across 7 credibility dimensions.",
         discovery: TIER_CORE["war-room"].requiresDiscovery,
       },
       {
@@ -158,7 +158,7 @@ const caseTypes = [
     title: "White Collar",
     subtitle: "Fraud, embezzlement, federal charges",
     description:
-      "Federal cases are a different game. We apply constitutional appellate frameworks, jury psychology methodology, and RICO dismantling approaches — drawn from attorneys who have handled the highest-profile federal cases — to help you understand complex charges and evaluate every strategic decision.",
+      "Federal cases are a different game. We apply constitutional appellate frameworks — legal arguments based on your constitutional rights, jury psychology methodology, and RICO dismantling approaches — drawn from attorneys who have handled the highest-profile federal cases — to help you understand complex charges and evaluate every strategic decision.",
     tiers: [
       {
         name: TIER_CORE["case-decoder"].name,
@@ -172,7 +172,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "Includes Case Decoder report (delivered within 48 hours). Judge sentencing patterns, AUSA profile, guidelines calculation review, questions about the cooperation decision for your attorney. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
+        desc: "Includes Case Decoder report (delivered within 48 hours). Judge sentencing patterns, AUSA profile — who the federal prosecutor is and their track record, guidelines calculation review — calculating your actual sentencing range, questions about the cooperation decision for your attorney. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
       },
       {
@@ -187,7 +187,7 @@ const caseTypes = [
         name: TIER_CORE["war-room"].name,
         slug: "war-room",
         price: TIER_CORE["war-room"].priceDisplay,
-        desc: "Full intelligence operation — AUSA dossier, cooperator analysis, sentencing guidelines deep dive, case law package, weekly updates. Includes Evidence Chain Audit and Witness Reliability Rankings — every piece of evidence traced through custody, every witness scored across 7 credibility dimensions.",
+        desc: "Full intelligence operation — AUSA dossier, cooperator analysis, sentencing guidelines deep dive, case law package, weekly updates. Includes Evidence Chain Audit — was every piece of evidence handled properly? Every item traced through custody, gaps flagged. And Witness Reliability Rankings — how trustworthy is each witness? Scored across 7 credibility dimensions.",
         discovery: TIER_CORE["war-room"].requiresDiscovery,
       },
       {
@@ -355,6 +355,9 @@ export default function ServicesPage() {
             12-month expiration.
           </p>
         </div>
+        <p className="mt-4 text-center text-sm text-zinc-400">
+          Whether you&apos;re the defendant or the person doing the research for someone you love — every product works the same way.
+        </p>
 
         {/* DECISION GUIDE — Routes visitors based on discovery status.       */}
         {/* No discovery: {TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay}) or {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay}).  */}
@@ -454,7 +457,7 @@ export default function ServicesPage() {
               <p className="mt-2 text-sm text-zinc-400">
                 26 questions that expose weak evidence. Chain of custody,
                 lab analysis challenges, search &amp; seizure, CI reliability.
-                Built from the founder&apos;s real case.
+                Built from real cases.
               </p>
               <p className="mt-2 text-xs text-zinc-500">
                 {TIER_CORE["drug-possession"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.

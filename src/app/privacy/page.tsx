@@ -721,7 +721,7 @@ export default function PrivacyPage() {
               .
             </p>
             <p className="mt-2">
-              ImNotAnAttorney, a business operated by Rahim Kapadia
+              ImNotAnAttorney LLC
               <br />
               195 Dr MLK Jr St N
               <br />

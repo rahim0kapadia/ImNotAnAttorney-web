@@ -127,7 +127,7 @@ export default async function RootLayout({
               url: SITE_URL,
               description: "Legal research and case analysis for criminal defendants. We provide legal information, not legal advice.",
               logo: { "@type": "ImageObject", url: `${SITE_URL}/icon` },
-              founder: { "@type": "Person", name: "Rahim Kapadia" },
+
               foundingDate: "2026",
               knowsAbout: [
                 "Criminal Defense",

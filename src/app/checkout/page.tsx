@@ -68,6 +68,7 @@ type TierInfo = {
   priorityPrice?: string | null;
   priorityDesc?: string | null;
   priorityPriceNum?: number;
+  story?: string;
   nudge?: {
     nextTierSlug: string;
     nextTierName: string;
@@ -122,6 +123,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
+    story: "One of our founders was told 'the BAC is too high to fight.' We pulled the breathalyzer calibration records — the device was 19 days past its maintenance window. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by DUI defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -153,6 +155,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
+    story: "In one real case, police weighed 93.9 grams at the scene. The lab confirmed 25.59 grams — a 73% discrepancy. The attorney never flagged it. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -184,6 +187,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
+    story: "A violation report listed a missed appointment — but the probation officer had confirmed attendance by text message three days earlier. The attorney hadn't requested the PO's communication logs. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -215,6 +219,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
+    story: "Three transactions in the indictment pre-dated the business relationship the government claimed created fraudulent intent. The timeline was wrong — and the attorney had never mapped it. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -246,6 +251,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
+    story: "Accusation details contradicted each other across two witness statements — dates, locations, and sequence of events didn't match. The attorney never compared them. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -277,6 +283,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
+    story: "A defendant received a target letter for wire fraud. We mapped the transaction dates against the contract records — three pre-dated the alleged scheme. The attorney had never checked. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -308,6 +315,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
+    story: "A CI phone number was attributed to both the informant and the defendant in the same report. The attorney never questioned it. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -339,6 +347,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
+    story: "Two witness statements contradicted each other on who initiated physical contact — one said the defendant, the other said the complainant. The attorney never compared them side by side. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -373,6 +382,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "Delivered within 48 hours with 15 calibrated questions + communication tools — or your money back.",
+    story: "In one real case, a defendant opened 500 pages of discovery and found four issues his attorney had never mentioned — a 73% weight discrepancy, a CI phone number attributed to two different people, a drug type mismatch, and 21 unmatched fingerprints. That's the kind of analysis we do for you.",
     validation:
       "The right place to start. Understand exactly what you are facing before your next attorney meeting.",
     whyThisWorks:
@@ -399,7 +409,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Case Decoder report delivered within 48 hours",
       "Everything in Case Decoder, plus:",
       "Case Progress Score — 6-dimension tracking with milestone timeline",
-      "Prosecution Case Vulnerability Report — where the prosecution's case has gaps, informed by court records and sentencing trends in your jurisdiction",
+      "Prosecution Case Vulnerability Report — where their case is weakest, informed by court records and sentencing trends in your jurisdiction",
       "Charge exposure map",
       "Judge intelligence profile",
       "Jurisdiction profile",
@@ -412,6 +422,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "Delivered within 72 hours with 10-15 targeted questions — or your money back.",
+    story: "Three transactions in a federal indictment pre-dated the business relationship the government claimed created fraudulent intent. The attorney had never mapped the timeline. That's why judge intelligence and prosecution analysis matter.",
     validation:
       "Everything you need to understand your case — without needing discovery yet.",
     whyThisWorks:
@@ -442,11 +453,12 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Discrepancy report",
       "Red flags summary",
       "35+ case-specific questions",
-      "Discovery Health Score — your discovery completeness rated out of 100",
-      "Defense Opportunity Index — defense angles organized by charge category",
+      "Discovery Health Score — how complete is your evidence? Rated out of 100",
+      "Defense Opportunity Index — where are the openings in their case? Organized by charge category",
     ],
     guarantee:
       "Delivered within 10 business days with 35+ case-specific questions — or your money back.",
+    story: "In one trafficking case, we found a 73% weight discrepancy, a CI dual attribution, a drug type mismatch, and 21 unmatched fingerprints — all in one discovery file the attorney had never fully reviewed. That's what a full X-Ray uncovers.",
     validation:
       "The most thorough analysis available without a multi-week engagement. Full discovery, full picture.",
     whyThisWorks:
@@ -479,8 +491,8 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Research-based questions about case strategy for your attorney",
       "Attorney delivery package",
       "Weekly updates for duration of case",
-      "Evidence Chain Audit — every piece of evidence traced, custody gaps flagged",
-      "Witness Reliability Rankings — each witness scored across 7 credibility dimensions",
+      "Evidence Chain Audit — was the evidence handled properly? Every piece traced, custody gaps flagged",
+      "Witness Reliability Rankings — how trustworthy is each witness? Scored on 7 dimensions",
     ],
     guarantee:
       "Initial package within 25-28 business days. Weekly updates every 7 days thereafter.",
@@ -779,6 +791,15 @@ function CheckoutContent() {
             </p>
           </div>
 
+          {/* Tier story — conversion reinforcement from real case */}
+          {info.story && (
+            <div className="mt-6 rounded-lg border border-zinc-700 bg-zinc-800/30 p-4">
+              <p className="text-sm leading-relaxed text-zinc-300 italic">
+                {info.story}
+              </p>
+            </div>
+          )}
+
           {/* UPGRADE NUDGE — Shows the next tier up with upgrade cost.         */}
           {/* Conversion tactic: even if they buy the current tier, this       */}
           {/* plants the seed for future upgrade (100% credit applies).        */}
@@ -866,7 +887,7 @@ function CheckoutContent() {
                       type="text"
                       value={existingCaseNumber}
                       onChange={(e) => setExistingCaseNumber(e.target.value)}
-                      placeholder="e.g. 23-01773-CF"
+                      placeholder="e.g. 24-00123-CF"
                       className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
                     />
                   </div>

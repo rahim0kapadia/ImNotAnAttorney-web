@@ -1,16 +1,16 @@
 /**
  * About Page (/about)
  *
- * Founder story page using an "epiphany bridge" narrative — the copywriting
+ * Founding team story page using an "epiphany bridge" narrative — the copywriting
  * technique where you share the personal experience that led to creating the
- * product. This builds trust by demonstrating lived experience as a defendant.
+ * product. This builds trust by demonstrating lived experience as defendants.
  *
  * User journey position:
  *   Nav / footer -> THIS PAGE -> /services (primary CTA) or /blog (secondary CTA)
  *
  * Narrative structure (epiphany bridge):
- *   1. Hero — "Built by a defendant. For defendants." (identity statement)
- *   2. The Setup — Rahim facing trafficking charges, paid thousands for attorney,
+ *   1. Hero — "Built by defendants. For defendants." (identity statement)
+ *   2. The Setup — One founder facing trafficking charges, paid thousands for attorney,
  *      got silence and inaction for months
  *   3. The Epiphany — Opened the discovery himself, found 4 critical issues
  *      in one week that the attorney never mentioned:
@@ -29,7 +29,7 @@
  *   8. Lead capture — Email opt-in fallback
  *
  * Conversion role: This page handles the "who are these people?" objection.
- * Founder-as-defendant credibility is the strongest trust signal for the
+ * Team-as-defendants credibility is the strongest trust signal for the
  * target audience (defendants who feel their attorney is failing them).
  */
 import { LeadCapture } from "@/components/LeadCapture";
@@ -41,9 +41,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About — Built by a Defendant, for Defendants",
+  title: "About — Built by Defendants, for Defendants",
   description:
-    "ImNotAnAttorney was built by a defendant, for defendants. We provide legal research and questions — not legal advice.",
+    "ImNotAnAttorney was built by defendants, for defendants. We provide legal research and questions — not legal advice.",
   alternates: {
     canonical: `${SITE_URL}/about`,
   },
@@ -69,24 +69,24 @@ export default function AboutPage() {
         {/* HERO — Identity statement that immediately establishes credibility */}
         <FadeInUp>
         <h1 className="font-display text-3xl font-bold text-white md:text-5xl">
-          Built by a defendant.
+          Built by defendants.
           <br />
           <span className="text-amber-400">For defendants.</span>
         </h1>
         </FadeInUp>
         <FadeInUp delay={0.1}>
         <p className="mt-6 text-lg leading-relaxed text-zinc-400">
-          I&apos;m Rahim Kapadia. In 2023, I was facing drug trafficking
-          charges in St. Petersburg, Florida. Mandatory minimum: 3 years.
+          One of our founders was facing drug trafficking charges in
+          Florida. Mandatory minimum: 3 years in state prison.
         </p>
         <p className="mt-4 text-lg leading-relaxed text-zinc-400">
-          I paid thousands for an attorney. He told me to trust the process.
-          So I trusted. For months. No motions filed. No calls returned. No
-          explanation of what was in my own discovery.
+          He paid thousands for an attorney. The attorney told him to trust the process.
+          So he trusted. For months. No motions filed. No calls returned. No
+          explanation of what was in his own discovery.
         </p>
         </FadeInUp>
 
-        {/* THE STORY — Epiphany bridge: the night Rahim opened his own      */}
+        {/* THE STORY — Epiphany bridge: the night one of our founders opened his own */}
         {/* discovery and found four issues the attorney had never raised.   */}
         {/* This is the emotional core of the brand narrative.               */}
         <FadeInUp>
@@ -94,20 +94,56 @@ export default function AboutPage() {
           <h2 className="font-display text-2xl font-bold text-white">The day everything changed</h2>
           <div className="mt-4 space-y-4 text-zinc-400 leading-relaxed">
             <p>
-              One night I opened the discovery myself. 500 pages of police
+              One night he opened the discovery himself. 500 pages of police
               reports, lab results, and witness statements.
             </p>
             <p>
-              Within a week, I found four issues my attorney had never
+              Within a week, he found four issues his attorney had never
               mentioned: A 73% weight discrepancy — 93.9 grams on the scene,
-              25.59 grams at the lab. 68.3 grams missing. A CI phone number
-              attributed to both the informant and me in the same report.
+              25.59 grams at the lab. 68.3 grams missing. A CI (confidential informant) phone number
+              attributed to both the informant and him in the same report.
               Officers wrote &quot;amphetamine&quot; — the lab confirmed
               MDMA/MDA. A completely different substance. 21 latent
-              fingerprints. Zero matched me.
+              fingerprints. Zero matched him.
             </p>
             <p>
-              My attorney had filed nothing on any of it.
+              His attorney had filed nothing on any of it.
+            </p>
+          </div>
+        </section>
+        </FadeInUp>
+
+        <FadeInUp>
+        <section className="mt-12">
+          <div className="space-y-4 text-zinc-400 leading-relaxed">
+            <p>
+              Another one of us was facing a second DUI. License, job,
+              custody — all on the line. The attorney&apos;s advice: take the
+              deal, the BAC is too high to fight.
+            </p>
+            <p>
+              We pulled the breathalyzer maintenance records ourselves. The
+              device was 19 days past its calibration window. The manufacturer
+              requires recalibration every 7 days. The attorney hadn&apos;t
+              requested those records.
+            </p>
+          </div>
+        </section>
+        </FadeInUp>
+
+        <FadeInUp>
+        <section className="mt-12">
+          <div className="space-y-4 text-zinc-400 leading-relaxed">
+            <p>
+              A third member of our team received a federal grand jury target
+              letter for wire fraud. The attorney said cooperate.
+            </p>
+            <p>
+              We read the discovery ourselves. Three of the transactions in
+              the indictment pre-dated the business relationship the government
+              claimed created the fraudulent intent. The timeline was wrong —
+              and it wasn&apos;t a detail, it was the case. The attorney had
+              never mapped the transaction dates against the contract records.
             </p>
           </div>
         </section>
@@ -117,15 +153,15 @@ export default function AboutPage() {
         {/* Shows how the personal epiphany became a service for others.     */}
         <FadeInUp>
         <section className="mt-16">
-          <h2 className="font-display text-2xl font-bold text-white">What I built after that day</h2>
+          <h2 className="font-display text-2xl font-bold text-white">What we built after that</h2>
           <div className="mt-4 space-y-4 text-zinc-400 leading-relaxed">
             <p>
-              I started reading everything the best defense attorneys ever
-              published. Their chain of custody protocols. Informant defense
+              We started reading everything the best defense attorneys ever
+              published. Their chain of custody protocols — who handled the evidence and when. Informant defense
               methodologies. Investigation patterns. 40+ legendary attorneys.
             </p>
             <p>
-              I built a system that does what I did — but faster, deeper, and
+              We built a system that does what he did — but faster, deeper, and
               available to any defendant who refuses to sit in the dark about
               their own case.
             </p>
@@ -152,7 +188,7 @@ export default function AboutPage() {
               },
               {
                 title: "Real case experience",
-                desc: "This isn't theoretical. Our analysis framework was built from Rahim's real case. We found weight discrepancies the attorney missed. We found CI attribution errors in the warrant. We found officer statement conflicts that became trial ammunition.",
+                desc: "This isn't theoretical. Our analysis framework was built from real cases — our founders' cases. We found weight discrepancies the attorney missed. We found CI attribution errors — when police listed the same informant's details for two different people — in the warrant. We found officer statement conflicts that became trial ammunition.",
               },
               {
                 title: "Plain English",
@@ -238,7 +274,7 @@ export default function AboutPage() {
           <div className="space-y-3">
             <Link href="/blog/trafficking-charges-constructive-possession" className="block rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
               <p className="text-sm font-semibold text-amber-400">Drug Trafficking & Constructive Possession</p>
-              <p className="mt-1 text-xs text-zinc-400">The defense strategy that applies to the founder&apos;s case — and might apply to yours.</p>
+              <p className="mt-1 text-xs text-zinc-400">The defense strategy that could apply to your case.</p>
             </Link>
             <Link href="/blog/how-your-attorney-makes-money" className="block rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
               <p className="text-sm font-semibold text-amber-400">How Your Attorney Makes Money</p>

@@ -900,7 +900,7 @@ function IntakeForm() {
                   </label>
                   <input id="caseNumber" type="text" required value={form.caseNumber as string}
                     onChange={(e) => setField("caseNumber", e.target.value)}
-                    className={inputClass} placeholder="e.g. 23-01773-CF" />
+                    className={inputClass} placeholder="e.g. 24-00123-CF" />
                   <p className="mt-1 text-xs text-zinc-500">
                     Your case number is on any court document &mdash; arraignment papers, bond paperwork, or court notices.
                     It helps us look up your public docket and match your records if you upgrade later.

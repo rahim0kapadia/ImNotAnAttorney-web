@@ -56,7 +56,7 @@ export default function TermsPage() {
             </h2>
             <p>
               By accessing or using ImNotAnAttorney, a business operated by
-              Rahim Kapadia (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;)
+              ImNotAnAttorney LLC (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;)
               at imnotanattorney.com (&quot;the Site&quot;), or by purchasing any
               of our services, you agree to be bound by these Terms of Service
               (&quot;Terms&quot;). These Terms constitute a legally binding
@@ -524,7 +524,7 @@ export default function TermsPage() {
               .
             </p>
             <p className="mt-2">
-              ImNotAnAttorney, a business operated by Rahim Kapadia
+              ImNotAnAttorney LLC
               <br />
               195 Dr MLK Jr St N
               <br />
