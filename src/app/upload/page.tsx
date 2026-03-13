@@ -151,6 +151,7 @@ function UploadContent() {
         <div className="mt-8">
           <FileUpload
             caseId={caseId}
+            email={email}
             onUploadComplete={(files) => setFileCount(files.length)}
           />
         </div>

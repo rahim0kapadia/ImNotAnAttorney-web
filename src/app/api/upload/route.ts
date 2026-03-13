@@ -41,8 +41,9 @@ const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
  * upload page. Server-side enforcement is necessary because client-side
  * validation can be trivially bypassed (curl, Postman, browser devtools).
  *
- * Accepted formats: PDF, common image types (JPEG, PNG, GIF, WebP),
- * plain text, and Word documents (legacy .doc and modern .docx).
+ * Accepted formats: PDF, common image types (JPEG, PNG, GIF, WebP, TIFF),
+ * plain text, Word documents (legacy .doc and modern .docx), audio (MP3, WAV),
+ * and video (MP4) — for dashcam, bodycam, and recorded statement uploads.
  */
 const ACCEPTED_MIME_TYPES = new Set([
   "application/pdf",
@@ -50,9 +51,13 @@ const ACCEPTED_MIME_TYPES = new Set([
   "image/png",
   "image/gif",
   "image/webp",
+  "image/tiff",
   "text/plain",
   "application/msword",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "audio/mpeg",
+  "audio/wav",
+  "video/mp4",
 ]);
 
 /**
@@ -66,8 +71,12 @@ const MAGIC_BYTES: { mime: string; bytes: number[] }[] = [
   { mime: "image/png", bytes: [0x89, 0x50, 0x4E, 0x47] },                 // .PNG
   { mime: "image/gif", bytes: [0x47, 0x49, 0x46, 0x38] },                 // GIF8
   { mime: "image/webp", bytes: [0x52, 0x49, 0x46, 0x46] },                // RIFF (WebP)
+  { mime: "image/tiff", bytes: [0x49, 0x49, 0x2A, 0x00] },                // Little-endian TIFF (II)
   { mime: "application/msword", bytes: [0xD0, 0xCF, 0x11, 0xE0] },        // OLE2
   { mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", bytes: [0x50, 0x4B, 0x03, 0x04] }, // PK (ZIP/OOXML)
+  { mime: "audio/mpeg", bytes: [0xFF, 0xFB] },                             // MP3 frame sync
+  { mime: "audio/wav", bytes: [0x52, 0x49, 0x46, 0x46] },                 // RIFF (WAV — same header as WebP)
+  { mime: "video/mp4", bytes: [0x00, 0x00, 0x00] },                       // ftyp box (variable 4th byte)
 ];
 
 function validateMagicBytes(buffer: Buffer, claimedMime: string): boolean {
@@ -75,6 +84,14 @@ function validateMagicBytes(buffer: Buffer, claimedMime: string): boolean {
   if (claimedMime === "text/plain") {
     const check = buffer.subarray(0, Math.min(8192, buffer.length));
     return !check.includes(0x00);
+  }
+
+  // audio/mpeg: MP3 files can start with either frame sync (0xFF 0xFB) or ID3 tag (0x49 0x44 0x33)
+  if (claimedMime === "audio/mpeg") {
+    if (buffer.length < 3) return false;
+    const isFrameSync = buffer[0] === 0xFF && (buffer[1] & 0xE0) === 0xE0; // 0xFF followed by 0xE0+ (any valid MPEG frame)
+    const isID3 = buffer[0] === 0x49 && buffer[1] === 0x44 && buffer[2] === 0x33; // "ID3"
+    return isFrameSync || isID3;
   }
 
   const sig = MAGIC_BYTES.find((s) => s.mime === claimedMime);
@@ -134,7 +151,7 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     if (!ACCEPTED_MIME_TYPES.has(file.type)) {
       return NextResponse.json(
-        { error: `File type not accepted: ${file.type}. Accepted: PDF, images, text, Word documents.` },
+        { error: `File type not accepted: ${file.type}. Accepted: PDF, images, text, Word documents, audio (MP3/WAV), and video (MP4).` },
         { status: 400 }
       );
     }

@@ -33,6 +33,7 @@ interface UploadedFile {
 
 interface FileUploadProps {
   caseId: string;
+  email: string;
   onUploadComplete?: (files: UploadedFile[]) => void;
 }
 
@@ -55,7 +56,7 @@ function formatSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-export function FileUpload({ caseId, onUploadComplete }: FileUploadProps) {
+export function FileUpload({ caseId, email, onUploadComplete }: FileUploadProps) {
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -82,6 +83,7 @@ export function FileUpload({ caseId, onUploadComplete }: FileUploadProps) {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("caseId", caseId);
+        formData.append("email", email);
 
         try {
           const res = await fetch("/api/upload", {
@@ -113,7 +115,7 @@ export function FileUpload({ caseId, onUploadComplete }: FileUploadProps) {
       });
       setUploading(false);
     },
-    [caseId, onUploadComplete]
+    [caseId, email, onUploadComplete]
   );
 
   return (
