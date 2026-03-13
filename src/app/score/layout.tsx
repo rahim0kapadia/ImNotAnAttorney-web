@@ -6,20 +6,39 @@ import { SITE_URL } from "@/lib/site";
  * This page is a lead magnet and should be indexed by search engines.
  */
 export const metadata: Metadata = {
-  title: "Free Defense Milestone Score",
+  title: "Is Your Attorney Working Your Case? | Free Defense Score",
   description:
-    "Is your defense on track? Answer 7 questions and get your free Defense Milestone Score in 60 seconds. No email required.",
+    "Answer 10 questions. Find out if your criminal defense attorney is meeting the milestones that matter — in 60 seconds, free, no email required.",
   alternates: {
     canonical: `${SITE_URL}/score`,
   },
   openGraph: {
-    title: "Free Defense Milestone Score",
+    title: "Is Your Attorney Working Your Case? | Free Defense Score",
     description:
-      "Is your defense on track? Answer 7 questions and get your free score in 60 seconds. No email required.",
+      "Answer 10 questions. Find out if your criminal defense attorney is meeting the milestones that matter — in 60 seconds, free, no email required.",
     url: `${SITE_URL}/score`,
   },
 };
 
 export default function ScoreLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "Defense Milestone Score",
+            description: "Free 10-question assessment to evaluate whether your criminal defense attorney is meeting key case milestones.",
+            url: `${SITE_URL}/score`,
+            applicationCategory: "UtilityApplication",
+            operatingSystem: "Any",
+            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          }),
+        }}
+      />
+      {children}
+    </>
+  );
 }

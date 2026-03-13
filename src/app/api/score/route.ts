@@ -28,7 +28,7 @@
  * - No cookies or session tracking
  *
  * Security:
- * - All 7 inputs are validated against an allowlist (ALLOWED_VALUES) before
+ * - All 10 inputs are validated against an allowlist (ALLOWED_VALUES) before
  *   processing. This prevents injection and ensures the scoring algorithm
  *   only receives expected values.
  */
@@ -105,7 +105,16 @@ function calculateScore(input: ScoreInput): ScoreResult {
     observations.push(
       "You don't have an attorney yet. This is urgent — most motion deadlines run from arrest date, not from when you hire counsel."
     );
+  } else if (input.hasAttorney === "not-sure") {
+    score -= 10;
+    observations.push(
+      "You're not certain about your representation status. Before anything else, confirm whether you have active counsel and who they are — your next court date may already be scheduled."
+    );
   }
+
+  // CHARGE-SPECIFIC OBSERVATION (mandatory — fires for every result)
+  // Pushed early to ensure it's never dropped by the 5-observation cap.
+  observations.push(getChargeSpecificObservation(input.chargeType, timeIndex, input.hasAttorney));
 
   // =========================================================================
   // MOTIONS FILED (20% weight)
@@ -125,7 +134,7 @@ function calculateScore(input: ScoreInput): ScoreResult {
     if (timeIndex >= 2) {
       score -= 20;
       observations.push(
-        `At ${getTimeLabel(input.timeSinceArrest)} post-arrest with no motions filed, your attorney may be behind on standard defense milestones. Key suppression and discovery motions typically need to be filed early.`
+        `At ${getTimeLabel(input.timeSinceArrest)} post-arrest with no motions filed, key defense windows may already be closing. Suppression motions filed late are often rejected outright — meaning evidence your attorney could have challenged stays in.`
       );
     } else {
       score -= 5;
@@ -134,7 +143,7 @@ function calculateScore(input: ScoreInput): ScoreResult {
     // "dont-know" -- the defendant not knowing is itself a red flag
     score -= 10;
     observations.push(
-      "You don't know whether motions have been filed. Your attorney should be telling you this proactively — ask them at your next meeting."
+      "You don't know whether motions have been filed. An engaged attorney communicates about filings proactively — if you don't know, it may mean nothing has been filed. Ask: \"What motions have you filed, and what is still pending?\""
     );
   }
 
@@ -152,7 +161,7 @@ function calculateScore(input: ScoreInput): ScoreResult {
     if (timeIndex >= 2) {
       score -= 15;
       observations.push(
-        "You should have received discovery by now. If your attorney hasn't provided it or explained the delay, this is a red flag."
+        "You should have received discovery by now. Without it, your attorney is building a defense without seeing the prosecution's evidence — and you can't challenge what you haven't reviewed."
       );
     } else {
       score -= 3;
@@ -184,12 +193,12 @@ function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.communicationFrequency === "rarely") {
     score -= 10;
     observations.push(
-      "Rare communication from your attorney is concerning. You're paying for representation — that includes keeping you informed about your own case."
+      "Rare communication from your attorney is concerning. If your attorney isn't contacting you, there's a real chance they haven't touched your file either — attorneys bill by the hour, and no contact often means no work."
     );
   } else if (input.communicationFrequency === "never") {
     score -= 20;
     observations.push(
-      "No communication from your attorney is a serious red flag. You have a right to know what's happening in your case. Consider sending a written request for a case status update."
+      "No communication from your attorney is a serious red flag. Deadlines, hearings, and plea offers can move forward whether you know about them or not. Send a written request for a case status update — email or letter, so there's a record."
     );
   }
 
@@ -210,7 +219,7 @@ function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.strategyDiscussed === "no") {
     score -= 12;
     observations.push(
-      "Your attorney hasn't discussed case strategy with you. This is a fundamental part of representation — you should understand the defense approach, not just show up to court dates."
+      "Your attorney hasn't discussed case strategy with you. An attorney who hasn't explained their defense theory either doesn't have one yet, or doesn't think you need to know. Neither is acceptable when your freedom is on the line."
     );
   }
 
@@ -224,7 +233,7 @@ function calculateScore(input: ScoreInput): ScoreResult {
   if (timeIndex >= 3 && input.motionsFiled !== "yes" && input.hasDiscovery !== "yes") {
     score -= 10;
     observations.push(
-      `At ${getTimeLabel(input.timeSinceArrest)} since arrest with no motions and no discovery, your case may be significantly behind schedule. Multiple defense milestones are likely overdue.`
+      `At ${getTimeLabel(input.timeSinceArrest)} since arrest with no motions and no discovery, multiple defense windows may have already closed. The longer this continues, the fewer options remain available.`
     );
   }
 
@@ -235,10 +244,15 @@ function calculateScore(input: ScoreInput): ScoreResult {
   // =========================================================================
   if (input.criminalHistory === "none") {
     score += 3;
+  } else if (input.criminalHistory === "misdemeanor") {
+    score -= 2;
+    observations.push(
+      "Prior misdemeanor convictions can affect plea negotiations and diversion eligibility. Ask your attorney: \"How are my priors affecting our options for diversion or reduced charges?\""
+    );
   } else if (input.criminalHistory === "felony" || input.criminalHistory === "multiple") {
     score -= 5;
     observations.push(
-      "Prior convictions can affect sentencing exposure, mandatory minimums, and diversion eligibility. Make sure your attorney has factored your full record into their strategy."
+      "Prior convictions can trigger sentencing enhancements, mandatory minimums, and loss of diversion eligibility. Ask your attorney: \"How are you accounting for my record in the defense strategy and sentencing exposure?\""
     );
   }
 
@@ -263,6 +277,31 @@ function calculateScore(input: ScoreInput): ScoreResult {
   }
 
   // =========================================================================
+  // CASE STAGE × MILESTONE INTERACTIONS
+  // Cross-references case stage with milestone inputs to detect stage-specific
+  // gaps. A defendant in pre-trial with no motions is different from one who
+  // was just arrested with no motions — the former is overdue.
+  // =========================================================================
+  if (input.caseStage === "pre-trial" && input.motionsFiled !== "yes") {
+    score -= 5;
+    observations.push(
+      "You're in the pre-trial phase but no motions have been filed. This is the stage where suppression motions, discovery motions, and other pre-trial motions are expected. Ask your attorney: \"What motions are we filing before trial?\""
+    );
+  }
+  if (input.caseStage === "trial-prep" && input.strategyDiscussed !== "yes-detail") {
+    score -= 5;
+    observations.push(
+      "You're preparing for trial but haven't had a detailed strategy discussion with your attorney. At this stage, you should understand the defense theory, know which witnesses will be called, and have reviewed key evidence together."
+    );
+  }
+  if (input.caseStage === "arraigned" && input.hasDiscovery !== "yes" && timeIndex >= 1) {
+    score -= 3;
+    observations.push(
+      "You've been arraigned but haven't received discovery yet. After arraignment, your attorney should be requesting or following up on discovery — the prosecution's evidence that your defense needs to review."
+    );
+  }
+
+  // =========================================================================
   // LICENSED PROFESSION (collateral career risk)
   // Licensed professionals face career-ending collateral consequences that
   // require specific attention in defense strategy.
@@ -270,6 +309,10 @@ function calculateScore(input: ScoreInput): ScoreResult {
   if (input.licensedProfession === "yes-licensed") {
     observations.push(
       "As a licensed professional, a conviction could trigger licensing board action, suspension, or revocation — separate from the criminal case itself. Make sure your attorney is addressing professional licensing consequences, not just the criminal charges."
+    );
+  } else if (input.licensedProfession === "student") {
+    observations.push(
+      "As a student, a conviction can affect financial aid eligibility, campus housing, and academic standing. For drug offenses specifically, federal law ties FAFSA eligibility to conviction status. Make sure your attorney knows you're a student — the collateral consequences may be as important as the criminal case."
     );
   }
 
@@ -288,29 +331,15 @@ function calculateScore(input: ScoreInput): ScoreResult {
   else if (score <= 85) band = "Adequate";
   else band = "Excellent";
 
-  // =========================================================================
-  // OBSERVATION PADDING
-  // Ensure at least 3 observations for a meaningful report. If the algorithm
-  // didn't generate enough (e.g., mostly positive answers), add generic but
-  // still useful observations. The charge-type-specific observation uses
-  // getChargeLabel() to provide relevant context. The final fallback is a
-  // Case Decoder upsell -- the natural next step from the free score.
-  // Observations are capped at 5 to keep the output digestible.
-  // =========================================================================
   if (observations.length < 3) {
     if (score >= 70) {
       observations.push(
-        "Based on your answers, your attorney appears to be meeting basic accountability benchmarks. A detailed Case Decoder report can verify this with 15 case-specific questions."
-      );
-    }
-    if (observations.length < 3 && input.chargeType) {
-      observations.push(
-        `For ${getChargeLabel(input.chargeType)} cases, make sure your attorney has explained the specific elements the prosecution must prove and which ones are weakest.`
+        "Your case shows no major red flags in the areas we measure. The Case Decoder goes deeper into charge-specific elements and jurisdiction patterns."
       );
     }
     if (observations.length < 3) {
       observations.push(
-        "Every case has defense opportunities. The question is whether your attorney is finding them. Our Case Decoder identifies 15 specific questions for your situation."
+        "No milestone assessment captures everything. The factors we can't measure from 10 questions — judge tendencies, prosecutor patterns, jurisdiction-specific deadlines — often matter most."
       );
     }
   }
@@ -346,6 +375,48 @@ function getChargeLabel(charge: string): string {
     "other-misdemeanor": "misdemeanor",
   };
   return labels[charge] ?? charge;
+}
+
+/**
+ * Returns a charge-specific observation tailored to the defendant's charge type
+ * and time since arrest. This fires for EVERY result — it's not padding.
+ * Provides actionable questions defendants can bring to their attorney.
+ */
+function getChargeSpecificObservation(chargeType: string, timeIndex: number, hasAttorney: string): string {
+  const noAttorney = hasAttorney === "no" || hasAttorney === "not-sure";
+
+  switch (chargeType) {
+    case "dui":
+      if (noAttorney) {
+        return "For DUI cases, the right attorney will immediately request breathalyzer calibration records, dash/body cam footage, and the arresting officer's field sobriety certification. These are the first questions to ask when you retain counsel.";
+      }
+      return timeIndex >= 2
+        ? "For DUI cases at this stage, your attorney should have already requested breathalyzer calibration records and the arresting officer's field sobriety certification. Ask: \"Have we received the breathalyzer maintenance logs?\""
+        : "For DUI cases, early priorities include requesting the dash/body cam footage and the breathalyzer calibration records. Ask your attorney if these have been requested.";
+    case "drug":
+      if (noAttorney) {
+        return "For drug cases, the right attorney will examine how the evidence was obtained — search warrant validity, informant reliability, chain of custody, and lab report accuracy. These are the first questions to ask when you retain counsel.";
+      }
+      return timeIndex >= 2
+        ? "For drug cases at this stage, lab report review is critical — weight calculation errors and chain-of-custody gaps have led to charge reductions. Ask: \"Have you reviewed the lab report for accuracy?\""
+        : "For drug cases, your attorney should be examining how the evidence was obtained — search warrant validity, informant reliability, and chain of custody. Ask what their plan is for challenging the evidence.";
+    case "white-collar":
+      if (noAttorney) {
+        return "White collar cases often have parallel civil or regulatory exposure on a separate timeline. When you retain an attorney, one of the first questions to ask is whether there is civil liability connected to the charges.";
+      }
+      return "White collar cases often have parallel civil or regulatory exposure on a separate timeline. Ask: \"Is there any civil liability connected to these charges, and are we addressing it?\"";
+    case "other-felony":
+      if (noAttorney) {
+        return "For felony cases, the right attorney will build a defense theory by identifying which elements of the charge are weakest. This should be one of the first conversations you have with counsel.";
+      }
+      return timeIndex >= 2
+        ? "For felony cases at this stage, your attorney should have a clear theory of defense and be preparing for key evidentiary hearings. Ask: \"What is our defense theory and what motions are we filing?\""
+        : `For felony cases, your attorney should be building a defense theory and identifying which elements of the charge are weakest. Ask: "What is our theory of defense?"`;
+    case "other-misdemeanor":
+      return "Even for misdemeanor charges, a conviction creates a permanent record that can affect employment, housing, and professional licensing. Make sure your attorney is treating this seriously.";
+    default:
+      return `For ${getChargeLabel(chargeType)} cases, make sure your attorney has explained the specific elements the prosecution must prove and which ones are weakest.`;
+  }
 }
 
 /**
@@ -387,7 +458,7 @@ export async function POST(req: NextRequest) {
 
     // =========================================================================
     // INPUT VALIDATION
-    // All 7 fields are required. Each value is checked against the ALLOWED_VALUES
+    // All 10 fields are required. Each value is checked against the ALLOWED_VALUES
     // allowlist. This is the ONLY validation needed -- the scoring algorithm
     // trusts that inputs have been pre-validated to known-good values.
     // =========================================================================

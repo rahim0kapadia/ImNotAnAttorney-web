@@ -42,9 +42,18 @@ export function AnimatedScoreArc({ score, maxScore = 100, size = 200 }: Animated
   const color = getScoreColor(score);
 
   return (
-    <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
+    <div
+      className="relative inline-flex items-center justify-center"
+      style={{ width: size, height: size }}
+      role="meter"
+      aria-valuenow={score}
+      aria-valuemin={0}
+      aria-valuemax={maxScore}
+      aria-label={`Defense Milestone Score: ${score} out of ${maxScore}`}
+    >
       <svg
         ref={ref}
+        aria-hidden="true"
         width={size}
         height={size}
         viewBox={`0 0 ${size} ${size}`}

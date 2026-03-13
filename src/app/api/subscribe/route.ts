@@ -46,6 +46,11 @@ export async function POST(req: NextRequest) {
     const ALLOWED_SOURCES = ["lead-capture", "checkout", "blog", "score", "score-page", "resources"];
     const source = ALLOWED_SOURCES.includes(body.source) ? body.source : "lead-capture";
 
+    // Score page passes additional context for segmented nurture sequences
+    const scoreBand = typeof body.scoreBand === "string" ? body.scoreBand : null;
+    const scoreValue = typeof body.scoreValue === "number" ? body.scoreValue : null;
+    const chargeType = typeof body.chargeType === "string" ? body.chargeType : null;
+
     // =========================================================================
     // 1. EMAIL VALIDATION
     // Simple regex: at least one non-space char, @, non-space char, dot, non-space char.
@@ -72,10 +77,15 @@ export async function POST(req: NextRequest) {
     // subscription source wins. This is intentional -- it tracks the latest
     // touchpoint that re-engaged the subscriber.
     // =========================================================================
+    const upsertData: Record<string, unknown> = { email: normalizedEmail, source, unsubscribed_at: null };
+    if (scoreBand) upsertData.score_band = scoreBand;
+    if (scoreValue !== null) upsertData.score_value = scoreValue;
+    if (chargeType) upsertData.charge_type = chargeType;
+
     const { error } = await supabase
       .from("subscribers")
       .upsert(
-        { email: normalizedEmail, source, unsubscribed_at: null },
+        upsertData,
         { onConflict: "email" }
       );
 

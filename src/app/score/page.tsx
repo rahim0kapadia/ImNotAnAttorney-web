@@ -45,13 +45,12 @@
  */
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { TIER_CORE } from "@/lib/tiers";
 import { SITE_URL } from "@/lib/site";
 import Link from "next/link";
 import { AnimatedScoreArc } from "@/components/motion/AnimatedScoreArc";
 import { FadeInUp } from "@/components/motion/FadeInUp";
-import { TrustBadges } from "@/components/TrustBadges";
 
 /**
  * The 10 scoring questions. Each has a unique id (used as the key in the
@@ -164,6 +163,25 @@ const questions = [
   },
 ];
 
+/** Maps score chargeType values to playbook tier slugs */
+const CHARGE_PLAYBOOK: Record<string, string> = {
+  dui: "dui-first-offense",
+  drug: "drug-possession",
+  "white-collar": "white-collar",
+};
+
+/** Converts chargeType slug to display label */
+function getChargeLabel(charge: string): string {
+  const labels: Record<string, string> = {
+    drug: "drug offense",
+    dui: "DUI/DWI",
+    "white-collar": "white collar",
+    "other-felony": "felony",
+    "other-misdemeanor": "misdemeanor",
+  };
+  return labels[charge] ?? charge;
+}
+
 /** Shape of the response from /api/score. */
 type ScoreResult = {
   score: number;
@@ -172,13 +190,14 @@ type ScoreResult = {
 };
 
 /**
- * ScoreDisplay — renders the score result after the 7 questions are answered.
- * Shows: score circle (color-coded by band), observations, optional email capture,
- * CTA to Case Decoder, and a "take again" reset link.
+ * ScoreDisplay — renders the score result after the 10 questions are answered.
+ * Shows: score circle, band context, methodology line, observations, urgency
+ * block (conditional), CTAs (band-specific), email capture, and reset link.
  */
-function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void; answers: Record<string, string> }) {
+function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAdjust }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void; answers: Record<string, string>; scoreRef: React.RefObject<HTMLDivElement | null>; onAdjust: () => void }) {
   const [emailSubmitting, setEmailSubmitting] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
+
   // Band-to-color mapping: Critical (red) through Excellent (emerald)
   const bandColors: Record<string, string> = {
     Critical: "text-red-400 border-red-500/50",
@@ -189,23 +208,50 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
   };
 
   const colorClass = bandColors[result.band] || "text-amber-400 border-amber-500/50";
-  const [borderClass] = colorClass.split(" ").filter((c) => c.startsWith("border-"));
   const [textClass] = colorClass.split(" ").filter((c) => c.startsWith("text-"));
 
+  // Band-specific context lines — gives meaning to the band label
+  const bandContextLines: Record<string, string> = {
+    Critical: "Multiple defense milestones are overdue for your case stage.",
+    Concerning: "Your defense is behind pace — 2-3 milestones need attention.",
+    Average: "Meeting minimum benchmarks, but gaps often hide at this level.",
+    Adequate: "Your attorney is clearing basic milestones. The vulnerabilities that matter most don\u2019t show up in 10 questions.",
+    Excellent: "Surface checks clear. The gaps that change outcomes live in the charge-specific details a targeted analysis catches.",
+  };
+
+  // Band-specific CTA headlines — tailored urgency per score band
+  const bandCTAHeadlines: Record<string, string> = {
+    Critical: "Your defense has gaps that may have deadlines. The Case Decoder shows you exactly where — and the questions to address them before windows close.",
+    Concerning: "You're behind pace. The Case Decoder identifies every overdue milestone and gives you the questions to close each gap.",
+    Average: "Average isn't a strategy. The Case Decoder finds what your attorney should be doing that isn't showing up in basic milestones.",
+    Adequate: "Your defense looks active on the surface. The Case Decoder checks what surface indicators miss — prosecutor patterns, jurisdiction-specific filing windows, and the questions elite attorneys ask that most defendants never think to raise.",
+    Excellent: "You\u2019re passing the basics. The Case Decoder checks the charge-specific vulnerabilities that don\u2019t show up in 10 questions — the gaps that separate adequate outcomes from the best possible outcome.",
+  };
+
   return (
-    <div className="mt-8 space-y-6">
+    <div className="mt-8 space-y-6" tabIndex={-1} ref={scoreRef} aria-label={`Your Defense Milestone Score is ${result.score} out of 100, rated ${result.band}`}>
       {/* SCORE ARC — Animated SVG arc with color transition by band */}
       <div className="text-center">
         <div className="mx-auto">
           <AnimatedScoreArc score={result.score} />
         </div>
         <p className={`mt-4 text-lg font-bold ${textClass}`}>{result.band}</p>
+        {/* Band-specific context line */}
+        <p className="mt-2 text-sm text-zinc-400">
+          {bandContextLines[result.band] || ""}
+        </p>
+        {/* Methodology credentialing */}
+        <p className="mt-1 text-xs text-zinc-400">
+          Scored against pre-trial preparation standards used by top criminal defense attorneys.
+        </p>
       </div>
 
       {/* OBSERVATIONS — Plain-English findings from the score algorithm */}
       <div className="space-y-3">
         <h3 className="text-sm font-semibold text-zinc-300">
-          What we found:
+          {result.score <= 50
+            ? "Here\u2019s what\u2019s behind your score \u2014 and what to do about it:"
+            : "Here\u2019s what your score reveals \u2014 and what to check next:"}
         </h3>
         {result.observations.map((obs, i) => (
           <FadeInUp key={i} delay={i * 0.1}>
@@ -216,13 +262,75 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
         ))}
       </div>
 
-      {/* OPTIONAL EMAIL CAPTURE — Soft ask after delivering free value.     */}
-      {/* Subscribes to /api/subscribe with source="score-page" for         */}
-      {/* segmented email marketing. No gate — user already got their score. */}
+      {/* URGENCY BLOCK — Dynamic, charge-aware deadline warning */}
+      {result.score <= 55 && (
+        <div className="rounded-lg border border-rose-500/30 bg-rose-500/5 p-4">
+          <p className="text-sm leading-relaxed text-rose-200/90">
+            <span className="font-semibold text-rose-400">Time-sensitive:</span>{" "}
+            {answers.chargeType === "dui" && answers.motionsFiled !== "yes"
+              ? "DUI cases have time-critical evidence — breathalyzer calibration logs and dash cam footage have fixed retention windows. Some agencies delete footage at 30 or 90 days. If your attorney hasn't preserved this evidence, it may already be gone."
+              : answers.chargeType === "drug" && answers.motionsFiled !== "yes"
+              ? "In drug cases, search warrant challenges and evidence suppression motions must be filed before specific court deadlines. Once those windows close, the evidence — even if improperly obtained — stays in."
+              : "Motion deadlines in criminal cases run from the date of arrest — not from when you decide to act. Suppression motions, speedy trial demands, and diversion applications all have filing windows that close permanently."}
+          </p>
+        </div>
+      )}
+
+      {/* "MY ATTORNEY SAYS FINE" HANDLER — for Adequate/Excellent scorers */}
+      {result.score > 55 && (
+        <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+          <p className="text-sm leading-relaxed text-zinc-300">
+            <span className="font-semibold text-white">If your attorney told you everything is fine:</span>{" "}
+            that&apos;s exactly what this tool is designed to check. Attorneys communicate at the level of detail they think you can handle. The Case Decoder gives you the specific benchmarks for your charge type so you can have a different kind of conversation — one where you ask the questions.
+          </p>
+        </div>
+      )}
+
+      {/* CASE DECODER CTA — Primary conversion from free -> paid */}
+      <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
+        <h3 className="font-bold text-white">
+          {bandCTAHeadlines[result.band] || "Want the full breakdown + 15 questions for your attorney?"}
+        </h3>
+        <p className="mt-1 text-sm font-semibold text-amber-400">
+          For {TIER_CORE["case-decoder"].priceDisplay}, not $300-500/hour.
+        </p>
+        <p className="mt-2 text-sm text-zinc-400">
+          The score measured 10 surface indicators. The Case Decoder goes deeper — analyzing {getChargeLabel(answers.chargeType)}-specific patterns, your exact case stage, and the gaps your score revealed. 15 calibrated questions, email templates, and a 7-day action plan, delivered in 48 hours.
+        </p>
+        <p className="mt-2 text-xs text-zinc-400">
+          Every dollar applies as credit toward higher tiers if you need deeper analysis later.
+        </p>
+        <div className="mt-4">
+          <Link
+            href={`/checkout?tier=case-decoder&charge=${answers.chargeType}`}
+            className="w-full rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
+          >
+            Get Your {getChargeLabel(answers.chargeType).replace(/^\w/, (c: string) => c.toUpperCase())} Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} →
+          </Link>
+        </div>
+      </div>
+
+      {/* PLAYBOOK CTA — Charge-specific step-down for defendants with matching playbook */}
+      {CHARGE_PLAYBOOK[answers.chargeType] && (
+        <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
+          <p className="text-sm text-zinc-300">
+            <span className="font-semibold text-white">Not ready for the full Case Decoder?</span>{" "}
+            The {TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE].name} is an instant PDF for {TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE].priceDisplay} — and every dollar applies as credit toward the Case Decoder within 30 days.
+          </p>
+          <Link
+            href={answers.chargeType === "dui" ? "/playbook/dui-first-offense" : `/checkout?tier=${CHARGE_PLAYBOOK[answers.chargeType]}`}
+            className="mt-3 w-full rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-colors hover:border-amber-500 sm:w-auto sm:inline-block block"
+          >
+            Start with the Playbook — {TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE].priceDisplay} →
+          </Link>
+        </div>
+      )}
+
+      {/* EMAIL CAPTURE — Moved after CTAs. Soft ask after delivering full value. */}
       {!emailSent && (
         <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
-          <p className="font-semibold text-white">Get our free Discovery Checklist emailed to you</p>
-          <p className="mt-1 text-sm text-zinc-400">Optional — no obligation.</p>
+          <p className="font-semibold text-white">Get the 10 Questions Your Attorney Hopes You Never Ask — free</p>
+          <p className="mt-1 text-sm text-zinc-400">Sent to your inbox immediately. The specific questions that expose whether your defense is on track.</p>
           <form onSubmit={async (e) => {
             e.preventDefault();
             if (emailSubmitting) return;
@@ -234,7 +342,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
               const res = await fetch("/api/subscribe", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: emailInput, source: "score-page" }),
+                body: JSON.stringify({ email: emailInput, source: "score-page", scoreBand: result.band, scoreValue: result.score, chargeType: answers.chargeType }),
               });
               if (res.ok) {
                 setEmailSent(true);
@@ -251,8 +359,8 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
               aria-label="Email address"
               className="flex-1 rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none" />
             <button type="submit" disabled={emailSubmitting}
-              className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-bold text-black hover:bg-amber-400 disabled:opacity-50">
-              {emailSubmitting ? "..." : "Send"}
+              className="rounded-lg bg-amber-500 px-4 py-3 text-sm font-bold text-black hover:bg-amber-400 disabled:opacity-50">
+              {emailSubmitting ? "..." : "Email It to Me"}
             </button>
           </form>
           {emailError && <p role="alert" className="mt-2 text-sm text-red-400">{emailError}</p>}
@@ -262,65 +370,24 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers }: { result: Sc
         <p className="text-center text-sm text-green-400">Sent! Check your inbox.</p>
       )}
 
-      {/* PLAYBOOK CTA — DUI-specific, appears above Case Decoder when applicable */}
-      {answers.chargeType === "dui" && (
-        <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
-          <h3 className="font-bold text-white">
-            DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay}, instant download
-          </h3>
-          <p className="mt-2 text-sm text-zinc-400">
-            23 DUI-specific questions for your attorney, a breathalyzer calibration
-            checklist, DMV deadline guide, case stage roadmap, and attorney
-            Case Progress Scorecard. Instant PDF.
-          </p>
-          <p className="mt-2 text-xs text-zinc-500">
-            Full credit toward Case Decoder within 30 days.
-          </p>
-          <Link
-            href="/playbook/dui-first-offense"
-            className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
-          >
-            Get the DUI Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} →
-          </Link>
-        </div>
-      )}
-
-      {/* CASE DECODER CTA — Primary conversion from free -> paid.           */}
-      <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
-        <h3 className="font-bold text-white">
-          Want the full breakdown + 15 questions for your attorney?
-        </h3>
-        <p className="mt-2 text-sm text-zinc-400">
-          Your Defense Milestone Score is just the surface. The full Case
-          Decoder report gives you a plain-English charge breakdown, 15
-          calibrated questions built from your case details, ready-to-send
-          email templates, and a 7-day action plan.
-        </p>
-        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-          <Link
-            href="/checkout?tier=case-decoder"
-            className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-bold text-black transition-colors hover:bg-amber-400"
-          >
-            Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} →
-          </Link>
-          <Link
-            href="/resources"
-            className="rounded-lg border border-zinc-700 px-6 py-3 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
-          >
-            Download Free Discovery Checklist
-          </Link>
-        </div>
-      </div>
-
-      <TrustBadges variant="compact" />
+      {/* TRUST LINE — Replaces TrustBadges (Stripe badge was irrelevant on a free tool) */}
+      <p className="text-center text-xs text-zinc-400">
+        Your answers are not stored, not associated with your name, and cannot be subpoenaed or used as evidence. This tool does not create an attorney-client relationship.
+      </p>
 
       {/* RESET — Full page reload to retake the score */}
-      <p className="text-center text-sm text-zinc-400">
+      <p className="text-center text-sm text-zinc-400 space-x-4">
         <button
           onClick={() => window.location.reload()}
           className="text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
         >
           Take the score again
+        </button>
+        <button
+          onClick={onAdjust}
+          className="text-zinc-400 underline decoration-zinc-500/50 hover:text-zinc-300"
+        >
+          Adjust my answers
         </button>
       </p>
     </div>
@@ -337,8 +404,10 @@ export default function ScorePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState(false);
+  const scoreRef = useRef<HTMLDivElement>(null);
 
-  const allAnswered = questions.every((q) => answers[q.id]);
+  const answeredCount = Object.keys(answers).length;
+  const allAnswered = answeredCount === questions.length;
 
   /** Submit answers to /api/score for server-side scoring. Answers are not persisted. */
   async function handleSubmit(e: React.FormEvent) {
@@ -362,6 +431,10 @@ export default function ScorePage() {
 
       const data = await res.json();
       setResult(data);
+      setTimeout(() => {
+        scoreRef.current?.focus();
+        scoreRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
     } catch {
       setError("Could not connect. Please try again.");
     } finally {
@@ -387,24 +460,43 @@ export default function ScorePage() {
       <div className="mx-auto max-w-2xl">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-white md:text-4xl">
-            Defense Milestone Score
+            Is Your Attorney Actually Working Your Case?
           </h1>
           <p className="mt-3 text-zinc-400">
-            Is your attorney doing their job? Answer 7 questions and find out in
-            60 seconds. Free — no email required.
+            Answer 10 questions. Get your Defense Milestone Score in 60 seconds — free, no email required.
           </p>
+          <p className="mt-2 text-xs text-zinc-500">Your answers are not stored.</p>
         </div>
 
         {result ? (
-          <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} />
+          <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} scoreRef={scoreRef} onAdjust={() => setResult(null)} />
         ) : (
           <form onSubmit={handleSubmit} className="mt-10 space-y-8">
+            <p className="text-sm text-zinc-400">
+              I built this because my attorney went silent for six weeks before a critical hearing. I didn&apos;t know what questions to ask — this tool tells you what I wish I&apos;d known. Answer honestly — there are no wrong answers.
+            </p>
+            {/* Progress indicator */}
+            <div className="sticky top-0 z-10 rounded-b-lg bg-zinc-950/90 pb-3 pt-2 backdrop-blur-sm">
+              <div className="h-1.5 overflow-hidden rounded-full bg-zinc-800">
+                <div
+                  className="h-full rounded-full bg-amber-500 transition-all duration-300"
+                  style={{ width: `${(answeredCount / questions.length) * 100}%` }}
+                />
+              </div>
+              <p className="mt-1 text-xs text-zinc-500">{answeredCount} of {questions.length} answered</p>
+            </div>
             {questions.map((q, qIndex) => (
               <fieldset key={q.id}>
                 <legend className="text-sm font-semibold text-zinc-300">
                   <span className="mr-2 text-amber-400">{qIndex + 1}.</span>
                   {q.label}
                 </legend>
+                {q.id === "criminalHistory" && (
+                  <p className="mt-1 text-xs text-zinc-500">This affects sentencing risk context in your score, not your attorney&apos;s competence rating.</p>
+                )}
+                {q.id === "licensedProfession" && (
+                  <p className="mt-1 text-xs text-zinc-500">Licensed professionals and students face separate collateral consequences — your score flags this if relevant.</p>
+                )}
                 <div className="mt-3 space-y-2">
                   {q.options.map((opt) => (
                     <label
@@ -474,9 +566,7 @@ export default function ScorePage() {
               )}
             </button>
 
-            <p className="text-center text-xs text-zinc-400">
-              Free. No email required. Your answers are not stored.
-            </p>
+            {/* Privacy notice moved to subtitle area above */}
           </form>
         )}
 
