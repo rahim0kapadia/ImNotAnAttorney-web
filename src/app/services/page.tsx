@@ -87,7 +87,7 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "Includes Case Decoder + Intelligence Brief delivered first. Full discovery analysis — weight discrepancies, lab methodology gaps, CI reliability, chain of custody. 35+ case-specific questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, defense angles organized by charge category.",
+        desc: "We read every page of your discovery looking for what doesn't add up — documents that contradict each other, evidence that's missing, rights that may have been violated. Every finding comes with page references and 35-50 specific questions to bring to your attorney, including what a solid answer looks like and what a red flag answer looks like. Includes your Intelligence Brief delivered first, Discovery Strength Rating, and Prosecution Case Weakness Analysis.",
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
         bestValue: true,
       },
@@ -133,7 +133,7 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "Includes Case Decoder + Intelligence Brief delivered first. Full discovery analysis — BAC evidence, breathalyzer calibration, dashcam review, field sobriety compliance. 35+ questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, defense angles organized by charge category.",
+        desc: "We read every page of your discovery looking for what doesn't add up — documents that contradict each other, evidence that's missing, rights that may have been violated. Every finding comes with page references and 35-50 specific questions to bring to your attorney, including what a solid answer looks like and what a red flag answer looks like. Includes your Intelligence Brief delivered first, Discovery Strength Rating, and Prosecution Case Weakness Analysis.",
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
         bestValue: true,
       },
@@ -179,7 +179,7 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "Discovery indexing for massive cases. Financial document analysis, witness statement review, timeline reconstruction. 35+ questions. Includes Discovery Health Score and Defense Opportunity Index — your discovery rated for completeness, defense angles organized by charge category.",
+        desc: "We read every page of your discovery looking for what doesn't add up — documents that contradict each other, evidence that's missing, rights that may have been violated. Every finding comes with page references and 35-50 specific questions to bring to your attorney, including what a solid answer looks like and what a red flag answer looks like. Includes your Intelligence Brief delivered first, Discovery Strength Rating, and Prosecution Case Weakness Analysis.",
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
         bestValue: true,
       },
@@ -645,6 +645,11 @@ export default function ServicesPage() {
                     </span>
                   </div>
                   <p className="mt-2 text-sm text-zinc-400">{tier.desc}</p>
+                  {tier.slug === "x-ray" && (
+                    <p className="mt-3 text-xs text-zinc-500">
+                      Analysis powered by 7 defense methodologies: evidence chain integrity, drug forensic analysis, constitutional compliance mapping, witness statement cross-referencing, suppression opportunity detection, investigation quality assessment, and 15-pattern forensic detection.
+                    </p>
+                  )}
                   {tier.discovery && (
                     <p className="mt-2 text-xs text-zinc-400">
                       Requires discovery documents
@@ -666,6 +671,14 @@ export default function ServicesPage() {
                       className="mt-2 block text-center text-xs text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
                     >
                       View Sample Report
+                    </Link>
+                  )}
+                  {tier.slug === "x-ray" && (
+                    <Link
+                      href="/sample-xray"
+                      className="mt-2 block text-center text-sm text-amber-400 underline hover:text-amber-300"
+                    >
+                      See what an X-Ray report looks like
                     </Link>
                   )}
                 </div>
@@ -717,14 +730,35 @@ export default function ServicesPage() {
             Our Guarantee
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-zinc-300">
-            Delivery Guarantee: If we miss the stated deadline or question count
-            — full cash refund, no questions asked. Satisfaction Guarantee: Not
-            satisfied after delivery? 100% credit toward any higher tier within
-            30 days.
+            Every tier comes with a delivery guarantee. If we miss the stated deadline or question count — full cash refund, no questions asked.
           </p>
-          <p className="mx-auto mt-3 max-w-xl text-sm text-zinc-400">
-            Upgrade credits apply to purchases you keep.
-          </p>
+
+          {/* X-Ray 3-Layer Guarantee Stack */}
+          <div className="mx-auto mt-8 max-w-2xl text-left">
+            <h3 className="text-lg font-bold text-amber-400 mb-4">{TIER_CORE["x-ray"].name} — Three Guarantees. Zero Exceptions.</h3>
+            <div className="space-y-4">
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-5">
+                <p className="font-semibold text-white mb-2">The Discovery Guarantee</p>
+                <p className="text-sm text-zinc-400">
+                  Every piece of discovery we have analyzed has contained at least one discrepancy, gap, or constitutional vulnerability. Every single one. That is not marketing language — it is the nature of police work and prosecutorial preparation. If we analyze your discovery documents and do not identify at least one concrete issue your attorney can act on — a contradiction, a chain of custody gap, a constitutional question, a missing piece of evidence that should be there — you get every dollar back. No forms. No phone calls. No waiting. Just email us and it&apos;s done.
+                </p>
+              </div>
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-5">
+                <p className="font-semibold text-white mb-2">The Attorney Meeting Guarantee</p>
+                <p className="text-sm text-zinc-400">
+                  Every X-Ray comes with an Attorney Delivery Package — a formatted summary of findings your attorney can read in 10 minutes, with every claim sourced back to a specific page in your discovery. If your attorney reviews our findings and tells you there is nothing there, send us the response and we will add a second round of analysis at no charge.
+                </p>
+              </div>
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-5">
+                <p className="font-semibold text-white mb-2">The 10-Day Hard Deadline</p>
+                <p className="text-sm text-zinc-400">
+                  Delivered within 10 business days of document receipt or you receive a 20% refund automatically — no request required. Past 15 business days for any reason: full refund. Your case moves on a schedule. So do we.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Other tier guarantees */}
           <div className="mx-auto mt-6 max-w-2xl text-left">
             <div className="space-y-2 text-sm text-zinc-400">
               <p>
@@ -736,10 +770,6 @@ export default function ServicesPage() {
                   {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay}):
                 </span>{" "}
                 Delivered within 72 hours. 10-15 targeted questions with judge intelligence.
-              </p>
-              <p>
-                <span className="font-semibold text-white">{TIER_CORE["x-ray"].name} ({TIER_CORE["x-ray"].priceDisplay}):</span>{" "}
-                Delivered within 10 business days. Full discovery analysis with 35+ questions.
               </p>
               <p>
                 <span className="font-semibold text-white">

@@ -446,18 +446,18 @@ const TIER_INFO: Record<string, TierInfo> = {
   "x-ray": {
     ...coreTier("x-ray"),
     features: [
-      "Case Decoder + Intelligence Brief delivered first",
-      "Everything in Intelligence Brief, plus:",
-      "Discovery document index",
-      "Comprehensive timeline",
-      "Discrepancy report",
-      "Red flags summary",
-      "35+ case-specific questions",
-      "Discovery Health Score — how complete is your evidence? Rated out of 100",
-      "Defense Opportunity Index — where are the openings in their case? Organized by charge category",
+      "Your Intelligence Brief and Case Decoder arrive first — you're not waiting 10 days with nothing",
+      "Every page of your discovery read and cross-referenced — police reports against lab reports, witness statements against each other",
+      "A case timeline built from your documents — showing what the prosecution's story actually says vs. what the evidence shows",
+      "Contradictions, missing evidence, and rights violations documented with exact page numbers",
+      "35-50 specific questions for your attorney meeting — each one tied to a finding in your file",
+      "For every question: what a solid answer looks like, and what a red flag answer looks like",
+      "One-page summary formatted to hand directly to your attorney at your next meeting",
+      "Discovery Strength Rating — your evidence graded by category, so you know exactly where the gaps are",
+      "Prosecution Case Weakness Analysis — the defense angles in your case, organized by charge, so nothing gets missed",
     ],
     guarantee:
-      "Delivered within 10 business days with 35+ case-specific questions — or your money back.",
+      "Three Guarantees: (1) The Discovery Guarantee — if we don't find at least one concrete issue your attorney can act on, every dollar back. (2) The Attorney Meeting Guarantee — if your attorney says there's nothing there, we add a second round at no charge. (3) The 10-Day Hard Deadline — delivered within 10 business days or 20% refund automatic; past 15 days, full refund.",
     story: "In one trafficking case, we found a 73% weight discrepancy, a CI dual attribution, a drug type mismatch, and 21 unmatched fingerprints — all in one discovery file the attorney had never fully reviewed. That's what a full X-Ray uncovers.",
     validation:
       "The most thorough analysis available without a multi-week engagement. Full discovery, full picture.",

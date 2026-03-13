@@ -698,14 +698,14 @@ export default async function MyCasePage({
         {/* Scores Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-            <SectionHeader title="Discovery Health Score" />
+            <SectionHeader title="Discovery Strength Rating" />
             <ScoreBar
               score={caseData.discovery_health_score}
               label="Overall health of the prosecution's discovery package"
             />
           </div>
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-            <SectionHeader title="Defense Opportunity Index" />
+            <SectionHeader title="Prosecution Case Weakness Analysis" />
             <ScoreBar
               score={doiValue}
               label="Opportunities identified for your defense"

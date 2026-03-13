@@ -463,13 +463,13 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>Your Intelligence Brief covered charges, judge intel, and accountability. But the real power is in the discovery documents.</p>
       <p>When you receive discovery, the <strong style="color: white;">${TIER_CORE["x-ray"].name} (${TIER_CORE["x-ray"].priceDisplay})</strong> analyzes every page:</p>
       <ul style="padding-left: 20px;">
-        <li>Complete document index</li>
-        <li>Comprehensive timeline</li>
-        <li>Discrepancy report (weight, dates, descriptions)</li>
-        <li>Red flags summary</li>
-        <li>35+ case-specific questions</li>
-        <li>Discovery Health Score — completeness rated out of 100</li>
-        <li>Defense Opportunity Index — defense angles organized by charge category</li>
+        <li>Your Discovery Inventory — every document cataloged</li>
+        <li>The Official Record, Reconstructed — case timeline from the documents</li>
+        <li>Where the Documents Contradict Each Other — contradictions with page citations</li>
+        <li>Constitutional Issues and Missing Evidence</li>
+        <li>35-50 targeted questions for your attorney meeting</li>
+        <li>Discovery Strength Rating — completeness graded by category, rated out of 100</li>
+        <li>Prosecution Case Weakness Analysis — defense angles organized by charge</li>
       </ul>
       <p><strong style="color: white;">Your ${TIER_CORE["intelligence-brief"].priceDisplay} is already credited.</strong> Upgrade for just ${upgradePrice("intelligence-brief")}.</p>
       ${cta(`Upgrade to ${TIER_CORE["x-ray"].name} — ${upgradePrice("intelligence-brief")} →`, "/checkout?tier=x-ray")}
@@ -1026,10 +1026,10 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>If your witness analysis raised more questions than it answered, a deeper dive might be worth it:</p>
       <p><strong style="color: white;">${TIER_CORE["x-ray"].name} (${TIER_CORE["x-ray"].priceDisplay})</strong> — full discovery analysis:</p>
       <ul style="padding-left: 20px;">
-        <li>Complete document index and timeline</li>
-        <li>Discrepancy report across ALL evidence</li>
-        <li>35+ case-specific questions</li>
-        <li>Discovery Health Score + Defense Opportunity Index</li>
+        <li>Every document indexed, timeline reconstructed from the evidence</li>
+        <li>Contradictions, missing evidence, and constitutional issues documented</li>
+        <li>35-50 targeted questions for your attorney meeting</li>
+        <li>Discovery Strength Rating + Prosecution Case Weakness Analysis</li>
       </ul>
       <p><strong style="color: white;">Your ${TIER_CORE["witness-pack"].priceDisplay} is already credited.</strong> Upgrade for ${upgradeCostBetween("witness-pack", "x-ray")}.</p>
       ${cta(`Upgrade to ${TIER_CORE["x-ray"].name} — ${upgradeCostBetween("witness-pack", "x-ray")} →`, "/checkout?tier=x-ray")}
