@@ -365,6 +365,38 @@ export async function GET(req: NextRequest) {
             // Skip upsell emails if customer already has a higher-tier purchase
             if (skipUpsell && email.key.includes("upsell")) continue;
 
+            // ── RELATIVE-TO-SUBMISSION TIMING ──
+            // Active-wait emails are timed relative to when discovery docs were
+            // submitted (case status became 'submitted'), not purchase date.
+            // Skip if case isn't submitted yet or is already delivered.
+            if (email.relativeToSubmission) {
+              const { data: submittedCase } = await supabase
+                .from("cases")
+                .select("status, updated_at")
+                .eq("email", order.email.toLowerCase())
+                .eq("tier", order.tier)
+                .in("status", ["submitted", "processing", "review"])
+                .order("updated_at", { ascending: false })
+                .limit(1)
+                .maybeSingle();
+
+              if (!submittedCase?.updated_at) continue; // Not submitted yet
+
+              // Skip if already delivered or refunded
+              if (["delivered", "refunded"].includes(submittedCase.status)) continue;
+
+              const submittedAt = new Date(submittedCase.updated_at);
+              const daysSinceSubmission = Math.floor(
+                (new Date().getTime() - submittedAt.getTime()) / (1000 * 60 * 60 * 24)
+              );
+
+              if (daysSinceSubmission >= email.delayDays && !sentKeys.has(email.key)) {
+                nextEmail = email;
+                break;
+              }
+              continue;
+            }
+
             // ── RELATIVE-TO-DELIVERY TIMING ──
             // Some emails are timed relative to when the report was delivered,
             // not when payment was made. Example: "How was your report?" sent
@@ -443,6 +475,27 @@ export async function GET(req: NextRequest) {
             }
           }
 
+          // ── GUARD: Upload reminder only sends if customer hasn't uploaded yet ──
+          // Discovery tiers (X-Ray, War Room, Situation Room) send upload reminders
+          // 2 days after purchase. Skip if files are already uploaded or case has
+          // progressed past the upload stage.
+          if (nextEmail.key.endsWith("_upload_reminder") && linkedCase) {
+            const uploadedStatuses = ["submitted", "processing", "review", "delivered", "refunded"];
+            const { data: caseForUpload } = await supabase
+              .from("cases")
+              .select("status, file_urls")
+              .eq("id", linkedCase.id)
+              .single();
+            if (caseForUpload) {
+              const hasUploads = (caseForUpload.file_urls?.length || 0) > 0;
+              const pastUpload = uploadedStatuses.includes(caseForUpload.status);
+              if (hasUploads || pastUpload) {
+                skipped++;
+                continue;
+              }
+            }
+          }
+
           // ── GUARD: IB Phase 2 reminder only sends if Phase 2 intake hasn't been submitted ──
           // The IB case sits in "intake" status until Phase 2 is submitted. Once
           // Phase 2 triggers generation, status moves to "auto-generating" or later.
@@ -485,6 +538,17 @@ export async function GET(req: NextRequest) {
               .replace(/\{\{CASE_ID\}\}/g, linkedCase?.id || "")
               .replace(/\{\{EMAIL\}\}/g, encodeURIComponent(order.email))
               .replace(/\{\{REPORT_URL\}\}/g, reportUrl);
+          }
+
+          // ── RESOLVE DOCUMENT COUNT (for active-wait emails) ──
+          if (emailHtml.includes("{{DOCUMENT_COUNT}}") && linkedCase) {
+            const { data: caseForCount } = await supabase
+              .from("cases")
+              .select("file_urls")
+              .eq("id", linkedCase.id)
+              .single();
+            const docCount = caseForCount?.file_urls?.length || 0;
+            emailHtml = emailHtml.replace(/\{\{DOCUMENT_COUNT\}\}/g, String(docCount));
           }
 
           // ── PERSONALIZE (family buyer, stage-aware, career-aware blocks) ──
@@ -1680,8 +1744,8 @@ export async function GET(req: NextRequest) {
                 <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Documents Analyzed:</strong> ${pc.document_count || 0}</p>
                 <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Findings Identified:</strong> ${pc.finding_count || 0}</p>
                 <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Witnesses Identified:</strong> ${pc.witness_count || 0}</p>
-                ${healthScore !== null ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Discovery Health Score:</strong> ${healthScore}/100</p>` : ""}
-                ${doiScore !== null ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Defense Opportunity Index:</strong> ${doiScore}</p>` : ""}
+                ${healthScore !== null ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Discovery Strength Rating:</strong> ${healthScore}/100</p>` : ""}
+                ${doiScore !== null ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Prosecution Case Weakness Analysis:</strong> ${doiScore}</p>` : ""}
               </div>
               ${priorityLine}
               ${failedJobs > 0 ? `<p style="color: #F59E0B;"><strong>Warning:</strong> ${failedJobs} job(s) failed. Review failed jobs before delivering the report.</p>` : ""}
@@ -1827,7 +1891,7 @@ export async function GET(req: NextRequest) {
               <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Documents Analyzed:</strong> ${wCase.document_count}</p>
               <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Findings Identified:</strong> ${wCase.finding_count}</p>
               <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Witnesses Identified:</strong> ${wCase.witness_count}</p>
-              ${wCase.discovery_health_score !== null ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Discovery Health Score:</strong> ${wCase.discovery_health_score}/100</p>` : ""}
+              ${wCase.discovery_health_score !== null ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Discovery Strength Rating:</strong> ${wCase.discovery_health_score}/100</p>` : ""}
             </div>
             ${portalUrl ? `<a href="${portalUrl}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">View Full Progress</a>` : ""}
             <p style="color: #A1A1AA; font-size: 13px;">Our team is actively working on your case. You'll receive another update next week.</p>

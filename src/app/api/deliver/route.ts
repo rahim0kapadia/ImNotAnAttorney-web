@@ -506,6 +506,53 @@ export async function POST(req: NextRequest) {
         <p style="margin: 0; color: #F59E0B; font-weight: bold;">When you get discovery — we're ready.</p>
         <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${TIER_CORE["intelligence-brief"].priceDisplay} is credited toward ${TIER_CORE["x-ray"].name} (${TIER_CORE["x-ray"].priceDisplay}). Pay only ${upgradePrice("intelligence-brief")}. <a href="${origin}/services" style="color: #F59E0B;">View upgrade options</a></p>
       </div>`;
+  } else if (caseData.tier === "x-ray") {
+    // Fetch analysis results for template variables
+    let docCount = 0;
+    let redFlagCount = 0;
+    let questionCount = 0;
+    let discoveryScore = "—";
+    const { data: analysisData } = await supabase
+      .from("case_analysis_results")
+      .select("red_flag_count, discovery_health_score")
+      .eq("case_id", caseId)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .single();
+    if (analysisData) {
+      redFlagCount = analysisData.red_flag_count || 0;
+      discoveryScore = analysisData.discovery_health_score != null ? String(analysisData.discovery_health_score) : "—";
+    }
+    // Count discovery documents
+    const { count: docCountResult } = await supabase
+      .from("discovery_documents")
+      .select("*", { count: "exact", head: true })
+      .eq("case_id", caseId);
+    docCount = docCountResult || caseData.file_urls?.length || 0;
+    // Estimate question count from findings
+    questionCount = Math.max(35, redFlagCount * 3);
+
+    instructionsHtml = `
+      <h2 style="color: #F59E0B; margin-top: 32px;">Your X-Ray Discovery Analysis Is Ready</h2>
+      <p>We analyzed <strong>${docCount} discovery document${docCount !== 1 ? "s" : ""}</strong> and found:</p>
+      <ul>
+        <li><strong>${redFlagCount} red flag${redFlagCount !== 1 ? "s" : ""}</strong> — issues in the prosecution's evidence that deserve attention</li>
+        <li><strong>${questionCount}+ targeted questions</strong> — specific questions for your next attorney meeting</li>
+        <li><strong>Discovery Strength Rating: ${escapeHtml(discoveryScore)}/100</strong> — how complete your discovery is</li>
+      </ul>
+      <h3 style="color: #E5E5E5;">How to Use This Report</h3>
+      <ol style="color: #D4D4D8; padding-left: 20px;">
+        <li style="margin-bottom: 8px;"><strong style="color: white;">Read the Executive Summary</strong> (page 1) — your case at a glance</li>
+        <li style="margin-bottom: 8px;"><strong style="color: white;">Review the Top 3 Findings</strong> (page 2) — hand this page to your attorney</li>
+        <li style="margin-bottom: 8px;"><strong style="color: white;">Bring the "If You Only Have 15 Minutes" questions</strong> to your next attorney meeting</li>
+        <li style="margin-bottom: 8px;"><strong style="color: white;">Share relevant sections</strong> with your attorney — especially the Red Flags</li>
+      </ol>
+      <p style="color: #71717A;">This is your Attorney Meeting Prep Kit. Schedule a meeting with your attorney within the next 7 days while findings are current.</p>`;
+    upgradeHtml = `
+      <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">
+        <p style="margin: 0; color: #F59E0B; font-weight: bold;">Need deeper investigation?</p>
+        <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${TIER_CORE["x-ray"].priceDisplay} is credited toward ${TIER_CORE["war-room"].name} (${TIER_CORE["war-room"].priceDisplay}). Pay only ${upgradePrice("x-ray")}. Witness dossiers, judge intelligence, and weekly updates. <a href="${origin}/services#war-room" style="color: #F59E0B;">Learn more</a></p>
+      </div>`;
   } else {
     // Case Decoder (default)
     instructionsHtml = `
