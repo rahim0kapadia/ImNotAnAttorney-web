@@ -68,6 +68,8 @@ export interface DripEmail {
   relativeToMeeting?: boolean;
   /** If true, delay is relative to cases.delivered_at, not subscribe/purchase date */
   relativeToDelivery?: boolean;
+  /** If true, delay is relative to cases.updated_at when status became 'submitted' */
+  relativeToSubmission?: boolean;
 }
 
 // ============================================================
@@ -533,6 +535,9 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>You walked into that meeting with a full discovery analysis. I have one question:</p>
       <p style="font-size: 18px; color: white;"><strong>Which finding surprised your attorney?</strong></p>
       <p>Just reply to this email. Your experience makes every future analysis better.</p>
+      <p style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #333;">
+        <strong style="color: white;">Did your attorney ask about any of the witnesses?</strong> If they want deeper investigation — backgrounds, testimony history, credibility challenges — that's exactly what <a href="${getSiteUrl()}/services#war-room" style="color: #F59E0B;">The War Room</a> provides. Your ${TIER_CORE["x-ray"].priceDisplay} is fully credited toward the upgrade.
+      </p>
     `,
   },
 
@@ -565,18 +570,23 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     relativeToDelivery: true,
     subject: "Your discovery revealed patterns — here's how to go deeper",
     html: `
-      <h1 style="color: #F59E0B;">Your Discovery Revealed Patterns</h1>
-      <p>Your X-Ray analyzed every document. But some of those patterns — witness contradictions, evidence gaps, timeline conflicts — deserve a deeper investigation.</p>
-      <p>The <strong style="color: white;">${TIER_CORE["war-room"].name} (${TIER_CORE["war-room"].priceDisplay})</strong> turns those findings into a full intelligence operation:</p>
-      <ul style="padding-left: 20px;">
-        <li>Witness dossiers (up to 8) — full background, statement analysis, cross-examination questions</li>
-        <li>Prosecution strategy analysis — what they're building and where it's weak</li>
-        <li>Case law package — relevant precedents organized by issue</li>
-        <li>Motion landscape — every applicable motion with strategic assessment</li>
-        <li>Weekly updates for the duration of your case</li>
+      <h1 style="color: #F59E0B;">Your Discovery Revealed Patterns — Here's How to Go Deeper</h1>
+      <p>Your X-Ray found red flags and contradictions. Those findings raise questions that need answers:</p>
+      <ul>
+        <li>Who are the witnesses behind these contradictions? What's their background?</li>
+        <li>Does the judge in your case tend to grant the types of motions your findings support?</li>
+        <li>Has the prosecutor handled similar cases? What's their pattern?</li>
       </ul>
-      <p><strong style="color: white;">Your ${TIER_CORE["x-ray"].priceDisplay} is already credited.</strong> Upgrade for just ${upgradePrice("x-ray")}.</p>
-      ${cta(`Upgrade to ${TIER_CORE["war-room"].name} — ${upgradePrice("x-ray")} →`, "/checkout?tier=war-room")}
+      <p><strong style="color: white;">The ${TIER_CORE["war-room"].name} (${TIER_CORE["war-room"].priceDisplay})</strong> picks up where the X-Ray left off:</p>
+      <ul style="padding-left: 20px;">
+        <li>Deep research on up to 8 witnesses (backgrounds, testimony history, credibility challenges)</li>
+        <li>Judge intelligence (ruling patterns, tendencies, sentencing data)</li>
+        <li>Prosecution team profiles</li>
+        <li>Motion strategy and filing support</li>
+        <li>Weekly updates as your case evolves</li>
+      </ul>
+      <p><strong style="color: white;">Your ${TIER_CORE["x-ray"].priceDisplay} is fully credited.</strong> The War Room upgrade is ${upgradePrice("x-ray")}.</p>
+      ${cta(`Learn About ${TIER_CORE["war-room"].name} →`, "/services#war-room")}
     `,
   },
   // --- X-Ray Referral (14 days after delivery) ---
@@ -592,6 +602,89 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>Share this with anyone facing charges who needs clarity about their evidence:</p>
       ${cta("Share ImNotAnAttorney →", "/?ref=friend")}
       <p style="color: #71717A;">Every defendant deserves to know what's in their discovery.</p>
+    `,
+  },
+
+  // --- X-Ray Active-Wait Emails (relative to document submission, not purchase) ---
+  // These fill the silence between doc submission and report delivery (7-10 days).
+  {
+    key: "post_x_ray_analysis_started",
+    delayDays: 1,
+    tier: "x-ray",
+    relativeToSubmission: true,
+    subject: "Your discovery analysis has begun — here's what's happening",
+    html: `
+      <h1 style="color: #F59E0B;">We're Inside Your Discovery</h1>
+      <p>We received your {{DOCUMENT_COUNT}} documents and our analysis is underway.</p>
+      <p>Here's what we're doing right now:</p>
+      <ol>
+        <li><strong style="color: white;">Document inventory</strong> — cataloging every document, page, and author</li>
+        <li><strong style="color: white;">Timeline reconstruction</strong> — building a chronological map of events from all documents</li>
+        <li><strong style="color: white;">Evidence chain analysis</strong> — tracking every piece of evidence from seizure to present</li>
+        <li><strong style="color: white;">Cross-document comparison</strong> — looking for contradictions between documents</li>
+        <li><strong style="color: white;">Pattern detection</strong> — running 15 forensic detection patterns used by elite defense teams</li>
+      </ol>
+      <p>This is not a quick scan — it's a systematic, document-by-document analysis that takes 4-5 hours of focused work.</p>
+      <p style="color: #71717A;">You don't need to do anything right now. We'll reach out if we need clarification on any documents.</p>
+    `,
+  },
+  {
+    key: "post_x_ray_midpoint",
+    delayDays: 5,
+    tier: "x-ray",
+    relativeToSubmission: true,
+    subject: "Midpoint update: We've found things worth discussing",
+    html: `
+      <h1 style="color: #F59E0B;">Midpoint Check</h1>
+      <p>We're about halfway through your analysis.</p>
+      <p>Without revealing specific findings yet (those come in the full report), here's what we can tell you:</p>
+      <ul>
+        <li>We've cataloged <strong style="color: white;">{{DOCUMENT_COUNT}} documents</strong></li>
+        <li>We're running cross-document analysis now — comparing what different documents say about the same events</li>
+        <li>We've started generating targeted questions for your attorney meeting</li>
+      </ul>
+      <p><strong style="color: white;">One thing you can do now:</strong> Start thinking about when you can schedule an attorney meeting for the week after you receive your report. The findings are most valuable when discussed while they're fresh.</p>
+      <p style="color: #71717A;">Your report is on track for delivery within the next 5 business days.</p>
+    `,
+  },
+  {
+    key: "post_x_ray_almost_ready",
+    delayDays: 8,
+    tier: "x-ray",
+    relativeToSubmission: true,
+    subject: "Your X-Ray report is almost ready — here's how to prepare",
+    html: `
+      <h1 style="color: #F59E0B;">Your Report Is Almost Ready</h1>
+      <p>Your X-Ray analysis is in final review. You'll receive the full report within the next 2 business days.</p>
+      <p><strong style="color: white;">How to prepare:</strong></p>
+      <ol>
+        <li><strong style="color: white;">Schedule an attorney meeting</strong> for within 7 days of receiving the report</li>
+        <li><strong style="color: white;">Block 30 minutes</strong> to read the report when it arrives — start with the Executive Summary and Top 3 Findings</li>
+        <li><strong style="color: white;">Have a notebook ready</strong> — you'll want to note which questions are most important to you</li>
+        <li><strong style="color: white;">If a family member is helping:</strong> Plan to review the Family Guide section together</li>
+      </ol>
+      <p>When the report arrives, it will include a one-page summary you can hand directly to your attorney.</p>
+      <p style="color: #71717A;">Almost there.</p>
+    `,
+  },
+  // --- X-Ray Meeting Followup (7 days after delivery) ---
+  {
+    key: "post_x_ray_meeting_followup",
+    delayDays: 7,
+    tier: "x-ray",
+    relativeToDelivery: true,
+    subject: "How did your attorney meeting go?",
+    html: `
+      <h1 style="color: #F59E0B;">How Did It Go?</h1>
+      <p>You've had about a week with your X-Ray report. If you've met with your attorney, we'd like to know:</p>
+      <ul>
+        <li>Did they already know about the findings in the report?</li>
+        <li>Were there findings that surprised them?</li>
+        <li>Did they commit to specific next steps?</li>
+      </ul>
+      <p>If you haven't met with your attorney yet — <strong style="color: white;">schedule that meeting this week.</strong> The findings are most actionable while they're current.</p>
+      <p>If your attorney was dismissive of the findings, or if they haven't reviewed discovery yet — that's information worth noting. Document the date and their response.</p>
+      <p style="color: #71717A;">Reply to this email if you want to share how it went. We read every response.</p>
     `,
   },
 

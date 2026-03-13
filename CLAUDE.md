@@ -17,6 +17,11 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 - `/intake` — Multi-step case intake form
 - `/blog` — Blog index with category filtering
 - `/blog/[slug]` — Individual posts with sharing, CTA, related posts
+- `/sample` — Sample report preview page
+- `/score` — Defense Milestone Score (free lead magnet)
+- `/upload` — Discovery document upload (for $2,497+ tiers)
+- `/checkout` — Checkout page
+- `/checkout/success` — Post-checkout confirmation
 
 ### Components
 - `LeadCapture` — Email capture with PDF download
@@ -29,7 +34,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 - `Footer` — Navigation, CTAs, sitemap link
 - `EmbeddableBadge` — Widget for other sites
 
-### Blog Posts (20 total)
+### Blog Posts (35 total)
 1. 5-questions-dui-attorney
 2. attorney-not-returning-calls
 3. discovery-rights-drug-cases
@@ -50,6 +55,21 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 18. how-to-file-bar-complaint-against-attorney
 19. can-criminal-charges-be-dropped
 20. can-dui-be-dismissed
+21. 7-things-criminal-justice-wont-tell-you
+22. 10-day-dmv-deadline
+23. breathalyzer-calibration-records
+24. complete-dui-defense-guide
+25. complete-white-collar-defense-guide
+26. cooperation-agreement-federal-case
+27. federal-investigation-what-to-expect
+28. field-sobriety-test-standards
+29. field-test-vs-lab-test-drug-cases
+30. how-criminal-cases-actually-work
+31. how-your-attorney-makes-money
+32. private-attorney-vs-public-defender
+33. trafficking-charges-constructive-possession
+34. what-500-pages-of-drug-trafficking-discovery-contained
+35. wire-fraud-defense-questions
 
 ### Tech Stack
 - **Framework:** Next.js 15 (App Router)

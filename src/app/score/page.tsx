@@ -473,7 +473,7 @@ export default function ScorePage() {
         ) : (
           <form onSubmit={handleSubmit} className="mt-10 space-y-8">
             <p className="text-sm text-zinc-400">
-              I built this because my attorney went silent for six weeks before a critical hearing. I didn&apos;t know what questions to ask — this tool tells you what I wish I&apos;d known. Answer honestly — there are no wrong answers.
+              We built this because one of us had an attorney go silent for six weeks before a critical hearing. We didn&apos;t know what questions to ask — this tool tells you what we wish we&apos;d known. Answer honestly — there are no wrong answers.
             </p>
             {/* Progress indicator */}
             <div className="sticky top-0 z-10 rounded-b-lg bg-zinc-950/90 pb-3 pt-2 backdrop-blur-sm">
