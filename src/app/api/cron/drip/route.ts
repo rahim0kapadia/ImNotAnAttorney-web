@@ -90,7 +90,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, sendEmailWithRetry, escapeHtml } from "@/lib/email";
-import { getNextNurtureEmail, getPostPurchaseEmails, personalizeEmailHtml } from "@/lib/drip-emails";
+import { getNextNurtureEmail, getNextScoreEmail, getScoreNurtureOffset, getPostPurchaseEmails, personalizeEmailHtml } from "@/lib/drip-emails";
 import type { DripEmail, DripPersonalizationData } from "@/lib/drip-emails";
 import { timingSafeEqual } from "crypto";
 import { signOperatorToken, signPhase2Token, SITE_URL, caseThreadId } from "@/lib/site";
@@ -173,7 +173,7 @@ export async function GET(req: NextRequest) {
     // they're permanently excluded from all nurture emails.
     const { data: subscribers, error: subError } = await supabase
       .from("subscribers")
-      .select("id, email, created_at")
+      .select("id, email, created_at, score_band")
       .is("unsubscribed_at", null)
       .order("created_at", { ascending: true })
       .limit(200);
@@ -210,11 +210,28 @@ export async function GET(req: NextRequest) {
 
           const sentKeys = sentBySubscriber.get(sub.id) ?? new Set<string>();
 
-          // getNextNurtureEmail returns the next email in the sequence that:
-          //   1. Is due based on daysSinceSubscribe
-          //   2. Hasn't been sent yet (not in sentKeys)
-          // Returns null if all emails are sent or none are due yet.
-          const nextEmail = getNextNurtureEmail(daysSinceSubscribe, sentKeys);
+          // ── BAND-BASED ROUTING ──
+          // Score-page subscribers with a band get band-specific emails first.
+          // Once all band-specific emails are sent, they fall through to
+          // standard nurture with an offset (skipping early generic emails).
+          let nextEmail: DripEmail | null = null;
+
+          if (sub.score_band) {
+            // Try score-specific emails first
+            nextEmail = getNextScoreEmail(daysSinceSubscribe, sentKeys, sub.score_band);
+
+            if (!nextEmail) {
+              // All score emails sent — fall through to standard nurture with offset
+              const offset = getScoreNurtureOffset(sub.score_band);
+              const adjustedDays = daysSinceSubscribe - offset;
+              if (adjustedDays >= 0) {
+                nextEmail = getNextNurtureEmail(adjustedDays, sentKeys);
+              }
+            }
+          } else {
+            // Non-score subscriber: standard nurture as-is
+            nextEmail = getNextNurtureEmail(daysSinceSubscribe, sentKeys);
+          }
 
           if (!nextEmail) {
             skipped++;

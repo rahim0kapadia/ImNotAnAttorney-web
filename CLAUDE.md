@@ -18,21 +18,34 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 - `/blog` — Blog index with category filtering
 - `/blog/[slug]` — Individual posts with sharing, CTA, related posts
 - `/sample` — Sample report preview page
+- `/sample-xray` — Sample X-Ray discovery analysis preview
 - `/score` — Defense Milestone Score (free lead magnet)
 - `/upload` — Discovery document upload (for $2,497+ tiers)
 - `/checkout` — Checkout page
 - `/checkout/success` — Post-checkout confirmation
+- `/my-case/[token]` — Customer case portal (report delivery, progress tracking)
 
 ### Components
 - `LeadCapture` — Email capture with PDF download
 - `BlogCTA` — Upsell to Question Pack on blog posts
 - `BlogCard` — Post preview card
+- `BlogCategoryFilter` — Blog index category filter
+- `BlogInlineCapture` — Inline email capture within blog posts
+- `FileUpload` — Discovery document upload with drag-and-drop
 - `PricingTable` — 3-tier pricing display
 - `FAQAccordion` — Collapsible FAQ
-- `TestimonialCard` — Social proof
+- `TestimonialSection` — Social proof section
+- `TrustBadges` — Trust/credibility badges
 - `Header` — Navigation with Get Started CTA
 - `Footer` — Navigation, CTAs, sitemap link
-- `EmbeddableBadge` — Widget for other sites
+- `StickyMobileCTA` — Fixed mobile call-to-action bar
+- `PlaybookSalesPage` — Playbook product sales page
+- `PlaybookCTA` — Playbook upsell CTA
+- `RecentPurchaseNotification` — Social proof purchase notifications
+- `SourceIntelligence` — Source attribution display
+- `TLDRBox` — Summary/TLDR display box
+- `OperatorShell` — Operator dashboard shell
+- `MDXErrorBoundary` — Error boundary for MDX rendering
 
 ### Blog Posts (35 total)
 1. 5-questions-dui-attorney
@@ -75,7 +88,10 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 - **Framework:** Next.js 15 (App Router)
 - **Styling:** Tailwind CSS
 - **CMS:** MDX files in `content/blog/`
-- **Hosting:** Vercel (pending deploy)
+- **Database:** Supabase (cases, orders, drip email tracking, discovery documents)
+- **Payments:** Stripe Checkout (webhook → order creation → drip sequence)
+- **Email:** Resend (drip sequences, delivery notifications, admin digests)
+- **Hosting:** Vercel (live, auto-deploys on push to master)
 - **Schema:** FAQ, Service, Organization, Article
 
 ### SEO
@@ -87,10 +103,22 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 
 ### Growth Features
 - Email capture with PDF lead magnet
+- Defense Milestone Score — free lead magnet quiz at `/score`
+- Post-purchase drip email sequences (per-tier, with upsell logic)
+- Submission-relative and delivery-relative email timing
 - Sharing CTAs on every blog post (SMS, WhatsApp, Email, Twitter, Facebook)
 - "Know someone facing charges?" framing
+- Recent purchase notification (social proof)
 - Embeddable widget script for other sites
 - Twitter content bank: 3 threads + 9 singles + posting calendar
+
+### Product Tiers
+- **Case Decoder** ($97) — Charge analysis + 10-15 questions
+- **Intelligence Brief** ($497) — Judge intel + accountability research + 15-25 questions
+- **X-Ray** ($2,497) — Full discovery analysis + 35-50 questions + Discovery Strength Rating + Prosecution Case Weakness Analysis
+- **War Room** ($4,997) — Ongoing intelligence operation with weekly updates
+- **Witness Pack** (add-on) — Witness background + credibility analysis
+- **Situation Room** (add-on) — Full-team defense coordination
 
 ## Brand Voice
 - Bold, irreverent, slightly provocative
@@ -139,7 +167,7 @@ echo '{"type":"run-cv","project":"inna"}' > ~/.openclaw/workspace/claw-inbox.jso
 - INNA-H5: Adversarial UPL inputs are rejected by gate
 - INNA-H6: Orders table healthy
 
-**Known finding (2026-03-05):** 4 cases in "review" with NULL eval_results (INNA-H1 violated).
+**Known finding (2026-03-05, updated 2026-03-12):** Original 4 NULL-eval cases resolved (3 batch-cleaned 3/6, 1 unclear). 1 new test case (`test-review@imnotanattorney.com`, case-decoder, created 3/7) in "review" with NULL eval_results — INNA-H1 still technically violated but no real customers affected.
 
 ## Reference
 - Business docs: `C:\Users\email\projects\ImNotAnAttorney\`

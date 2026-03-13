@@ -114,37 +114,92 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (subData?.id) {
-      await supabase.from("drip_emails").upsert(
-        {
-          subscriber_id: subData.id,
-          email_key: "nurture_day0",
-        },
-        { onConflict: "subscriber_id,email_key" }
-      );
+      // Record both nurture_day0 AND score_artifact for score-page subscribers
+      // to prevent the cron from sending duplicate welcome/artifact emails.
+      const dedupKeys = ["nurture_day0"];
+      if (source === "score-page" && scoreBand) {
+        dedupKeys.push("score_artifact");
+      }
+      for (const key of dedupKeys) {
+        await supabase.from("drip_emails").upsert(
+          {
+            subscriber_id: subData.id,
+            email_key: key,
+          },
+          { onConflict: "subscriber_id,email_key" }
+        );
+      }
     }
 
     // =========================================================================
-    // 4. WELCOME EMAIL WITH LEAD MAGNET
-    // Sends the Discovery Checklist -- our primary lead magnet. The email:
-    // - Links to /resources where the free guide is hosted
-    // - Teases the content (7 real evidence problems from an actual case)
-    // - Soft-sells the $197 Case Decoder as the natural next step
-    // - Includes CAN-SPAM compliant unsubscribe link via unsubscribeEmail param
+    // 4. WELCOME EMAIL — BAND-AWARE
+    // Score-page subscribers with a band get a Score Artifact email (their full
+    // score results, designed to be saved/forwarded to family). This replaces
+    // the generic welcome for these subscribers.
+    // Non-score subscribers get the original Discovery Checklist welcome.
     // =========================================================================
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
-    await sendEmail({
-      to: normalizedEmail,
-      subject: "Your Discovery Checklist (Real Case Findings Inside)",
-      unsubscribeEmail: normalizedEmail,
-      html: `
-        <h1 style="color: #F59E0B;">We were in your seat.</h1>
-        <p>One of us was facing trafficking charges in Florida. Paid thousands for an attorney who wouldn't return calls. Opened the discovery one night — found four issues the attorney never mentioned. That's why we built this.</p>
-        <p>Here's your free guide — the same evidence problems I found, turned into a checklist you can use on your case:</p>
-        <a href="${siteUrl}/guides/discovery-checklist-7-evidence-problems.md" style="display: inline-block; margin: 24px 0; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Download Your Discovery Checklist</a>
-        <p style="color: #A1A1AA;">Inside: 7 evidence problems from a real trafficking case — the weight that disappeared, the substance that changed, the fingerprints nobody mentioned, and 4 more. Plus the exact questions that expose each one.</p>
-        <p style="color: #A1A1AA;">Does any of this sound like your situation? If your attorney isn't answering your questions, our <a href="${siteUrl}/checkout?tier=case-decoder" style="color: #F59E0B;">Case Decoder</a> gives you 15 targeted questions built from YOUR case — starting at ${TIER_CORE["case-decoder"].priceDisplay}.</p>
-      `,
-    }, { category: "welcome" });
+
+    if (source === "score-page" && scoreBand && scoreValue !== null) {
+      // ── SCORE ARTIFACT EMAIL — immediate, trust-building, no CTA ──
+      const bandLabel = scoreBand as string;
+      const bandColors: Record<string, string> = {
+        Critical: "#EF4444",
+        Concerning: "#F97316",
+        Average: "#EAB308",
+        Adequate: "#22C55E",
+        Excellent: "#10B981",
+      };
+      const bandColor = bandColors[bandLabel] || "#F59E0B";
+      const chargeLabel = chargeType === "dui" ? "DUI/DWI"
+        : chargeType === "drug" ? "drug offense"
+        : chargeType === "white-collar" ? "white collar"
+        : chargeType === "other-felony" ? "felony"
+        : chargeType === "other-misdemeanor" ? "misdemeanor"
+        : "criminal";
+
+      await sendEmail({
+        to: normalizedEmail,
+        subject: `Your Defense Milestone Score: ${scoreValue}/100 — what this means for your ${chargeLabel} case`,
+        unsubscribeEmail: normalizedEmail,
+        html: `
+          <h1 style="color: ${bandColor};">Your Defense Milestone Score: ${scoreValue}/100</h1>
+          <p style="font-size: 18px;"><strong style="color: ${bandColor};">Band: ${bandLabel}</strong></p>
+          <p>You scored your defense against pre-trial preparation standards used by elite criminal defense attorneys. Here's what your score means.</p>
+
+          <div style="margin: 20px 0; padding: 16px; border-left: 3px solid ${bandColor}; background: #1C1917; border-radius: 4px;">
+            <p style="color: ${bandColor}; font-weight: bold; margin: 0 0 8px;">What your score does NOT mean</p>
+            <p style="color: #D4D4D8; margin: 0;">This score measures defense milestones visible from 10 questions. It does not measure your attorney's competence, your case outcome, or the strength of the prosecution's evidence. It measures whether certain preparation benchmarks have been met at your current case stage.</p>
+          </div>
+
+          <div style="margin: 20px 0; padding: 16px; border: 1px solid #3F3F46; background: #18181B; border-radius: 8px;">
+            <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">Save this email</p>
+            <p style="color: #D4D4D8; margin: 0;">Your answers are not stored on our servers. This email is your only record of this score. Save it or forward it to someone you trust.</p>
+          </div>
+
+          <div style="margin: 20px 0; padding: 16px; border: 1px solid #3F3F46; background: #18181B; border-radius: 8px;">
+            <p style="color: #A1A1AA; font-style: italic; margin: 0;">If you're reading this for a spouse, parent, or child — the score page at <a href="${siteUrl}/score" style="color: #F59E0B;">${siteUrl}/score</a> is free, takes 60 seconds, and doesn't require an account. You can score their defense yourself if you know the case details.</p>
+          </div>
+
+          <p style="margin-top: 24px; color: #A1A1AA;">From here: we'll send you practical information about your case stage, never more than once a week. Unsubscribe any time — one click, no questions.</p>
+        `,
+      }, { category: "score-artifact" });
+    } else {
+      // ── GENERIC WELCOME — Discovery Checklist lead magnet ──
+      await sendEmail({
+        to: normalizedEmail,
+        subject: "Your Discovery Checklist (Real Case Findings Inside)",
+        unsubscribeEmail: normalizedEmail,
+        html: `
+          <h1 style="color: #F59E0B;">We were in your seat.</h1>
+          <p>One of us was facing trafficking charges in Florida. Paid thousands for an attorney who wouldn't return calls. Opened the discovery one night — found four issues the attorney never mentioned. That's why we built this.</p>
+          <p>Here's your free guide — the same evidence problems I found, turned into a checklist you can use on your case:</p>
+          <a href="${siteUrl}/guides/discovery-checklist-7-evidence-problems.md" style="display: inline-block; margin: 24px 0; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Download Your Discovery Checklist</a>
+          <p style="color: #A1A1AA;">Inside: 7 evidence problems from a real trafficking case — the weight that disappeared, the substance that changed, the fingerprints nobody mentioned, and 4 more. Plus the exact questions that expose each one.</p>
+          <p style="color: #A1A1AA;">Does any of this sound like your situation? If your attorney isn't answering your questions, our <a href="${siteUrl}/checkout?tier=case-decoder" style="color: #F59E0B;">Case Decoder</a> gives you 15 targeted questions built from YOUR case — starting at ${TIER_CORE["case-decoder"].priceDisplay}.</p>
+        `,
+      }, { category: "welcome" });
+    }
 
     return NextResponse.json({ message: "Subscribed successfully" });
   } catch {

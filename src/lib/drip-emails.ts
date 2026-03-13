@@ -70,6 +70,8 @@ export interface DripEmail {
   relativeToDelivery?: boolean;
   /** If true, delay is relative to cases.updated_at when status became 'submitted' */
   relativeToSubmission?: boolean;
+  /** Score band filter — if set, this email only applies to subscribers with this band */
+  scoreBand?: "Critical" | "Concerning" | "Adequate" | "Excellent";
 }
 
 // ============================================================
@@ -217,6 +219,136 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
         <strong style="color: white;">DUI charges?</strong> Start with the ${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay} instant download. 26 questions + attorney scorecard. Your ${TIER_CORE["dui-first-offense"].priceDisplay} is credited toward any service tier. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
       </p>
+    `,
+  },
+];
+
+// ============================================================
+// SCORE-BASED CRISIS EMAILS (Critical/Concerning subscribers)
+// Sent to subscribers who came from the score page with a low band.
+// Day 0 (score_artifact) is sent by subscribe/route.ts immediately.
+// Days 1, 2, 5 are sent by the cron based on score_band.
+// After the transition email (Day 5), subscriber joins standard
+// nurture at Day 7+ (skipping Days 1-5 of generic nurture).
+// ============================================================
+
+export const SCORE_CRISIS_EMAILS: DripEmail[] = [
+  // Day 0: Score Artifact — sent immediately by subscribe/route.ts, not cron
+  // Recorded as score_artifact for dedup. Contains full score, band, observations.
+
+  // Day 1: Ask your attorney exactly this
+  {
+    key: "score_crisis_day1",
+    delayDays: 1,
+    subject: "Ask your attorney exactly this",
+    html: `
+      <h1 style="color: #F59E0B;">One Question. Ask It Today.</h1>
+      <p>Your Defense Milestone Score flagged gaps in your case. Before anything else — before any product, any purchase, any next step — ask your attorney this one question:</p>
+      <div style="margin: 20px 0; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; border-radius: 4px;">
+        <p style="color: white; font-weight: bold; margin: 0;">"What motions have been filed in my case, and what is the timeline for any remaining filing deadlines?"</p>
+      </div>
+      <p><strong style="color: white;">What to listen for:</strong></p>
+      <ol>
+        <li><strong style="color: white;">Specifics vs. generalities</strong> — a solid answer names motions by type and gives dates. A vague answer says "we're working on it."</li>
+        <li><strong style="color: white;">Past deadlines</strong> — if a filing window already closed and your attorney doesn't mention it, that's information.</li>
+        <li><strong style="color: white;">Reasoning</strong> — there may be good strategic reasons for not filing. But "we don't need motions" without explanation is a red flag.</li>
+        <li><strong style="color: white;">Next steps</strong> — a good answer ends with what happens next and when. A weak answer ends with "we'll see."</li>
+      </ol>
+      <p style="margin-top: 20px;">Whether the answer is reassuring or concerning — the Case Decoder translates it into plain language and tells you whether it adds up.</p>
+      ${cta(`See What's in My Case — ${TIER_CORE["case-decoder"].priceDisplay}`, "/checkout?tier=case-decoder")}
+    `,
+  },
+
+  // Day 2: Did your attorney respond?
+  {
+    key: "score_crisis_day2",
+    delayDays: 2,
+    subject: "Did your attorney respond?",
+    html: `
+      <h1 style="color: #F59E0B;">Did Your Attorney Respond?</h1>
+      <p><strong style="color: white;">If they responded:</strong></p>
+      <p>That's a positive sign. But knowing whether the answer is <em>good enough</em> requires context — what motions apply to your charge type, what deadlines exist in your jurisdiction, and what the answer means for your case stage.</p>
+      <p>The Case Decoder generates 15 questions specific to your charges and case stage. Each one includes what a solid answer sounds like — and what a red flag sounds like. So the next conversation isn't guesswork.</p>
+
+      <p style="margin-top: 24px;"><strong style="color: white;">If they didn't respond:</strong></p>
+      <p>Silence is not a strategy. It's a pattern — and it's the number one reason defendants come to us.</p>
+      <p>The Case Decoder includes a pre-written email template and phone script. You don't have to figure out what to say. The questions are already written. The email is already drafted. Copy, paste, send.</p>
+
+      ${cta(`Get My Case Decoder — ${TIER_CORE["case-decoder"].priceDisplay}`, "/checkout?tier=case-decoder")}
+
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Already have a Playbook?</strong> Your full purchase price applies as credit toward the Case Decoder within 30 days. You only pay the difference.
+      </p>
+    `,
+  },
+
+  // Day 5: Transition — closes crisis sequence, sets expectations
+  {
+    key: "score_crisis_transition",
+    delayDays: 5,
+    subject: "Still here",
+    html: `
+      <h1 style="color: #F59E0B;">Still Here</h1>
+      <p>You scored your defense ${new Date().toLocaleDateString("en-US", { month: "long" })}. We sent you a question to ask your attorney and followed up once.</p>
+      <p>That's the end of the urgent sequence. From here, you'll hear from us once a week or less — practical information about defense milestones, real case examples, and the questions defendants wish they'd asked sooner.</p>
+      <p>If your situation has changed since you scored — new charges, new information, a court date approaching — the Case Decoder is built for exactly that moment.</p>
+      ${cta(`Case Decoder — ${TIER_CORE["case-decoder"].priceDisplay}`, "/checkout?tier=case-decoder")}
+      <p style="margin-top: 20px; color: #A1A1AA;">One click to unsubscribe, always. No questions.</p>
+    `,
+  },
+];
+
+// ============================================================
+// SCORE-BASED ADEQUATE EMAILS (Adequate/Excellent subscribers)
+// One email on Day 1, then join standard nurture at Day 3+.
+// ============================================================
+
+export const SCORE_ADEQUATE_EMAILS: DripEmail[] = [
+  {
+    key: "score_adequate_day1",
+    delayDays: 1,
+    subject: "Your score means something specific",
+    html: `
+      <h1 style="color: #F59E0B;">Your Score Means Something Specific</h1>
+      <p>An Adequate or Excellent score means your attorney is clearing the milestones we can measure from 10 questions. That's a real signal — most defendants who take this score don't get that result.</p>
+      <p>What it doesn't tell you is whether the <em>charge-specific</em> vulnerabilities in your case have been addressed. The 10 questions measure general defense milestones. The Case Decoder measures the vulnerabilities specific to your charges, your jurisdiction, and your case stage.</p>
+      <p>This isn't because you're in trouble. It's because informed defendants get different conversations with their attorneys — conversations where they ask the questions instead of waiting for answers.</p>
+      ${cta(`Verify My Defense Is on Track — ${TIER_CORE["case-decoder"].priceDisplay}`, "/checkout?tier=case-decoder")}
+      <p style="margin-top: 20px; color: #A1A1AA;">From here: practical information about your case stage, once a week or less. Unsubscribe any time.</p>
+    `,
+  },
+];
+
+// ============================================================
+// RE-ENGAGEMENT EMAILS (Day 14 + Day 30 for crisis subscribers)
+// Appended to standard nurture for score-page subscribers who
+// didn't purchase. These have unique keys so the cron can send
+// them at the right offset.
+// ============================================================
+
+export const SCORE_REENGAGE_EMAILS: DripEmail[] = [
+  {
+    key: "score_reengage_day14",
+    delayDays: 14,
+    subject: "What changed in the last two weeks?",
+    html: `
+      <h1 style="color: #F59E0B;">What Changed in the Last Two Weeks?</h1>
+      <p>It's been two weeks since you scored your defense. Three things may have happened:</p>
+      <p><strong style="color: white;">1. Your attorney responded</strong> — and the answers were clear, specific, and on-timeline. That's a good sign. Hold onto your score results as a baseline and re-score in 30 days to see if milestones are progressing.</p>
+      <p><strong style="color: white;">2. Your attorney is still silent</strong> — two weeks of silence after direct questions is a pattern, not an incident. The Case Decoder gives you 15 more questions, a pre-written email template, and a phone script. You don't have to figure out what to say next.</p>
+      <p><strong style="color: white;">3. Something new came up</strong> — new charges, new evidence, a court date moved up. If your situation changed, your score changed with it. The Case Decoder is built for exactly that moment — ${TIER_CORE["case-decoder"].priceDisplay}, 48 hours, calibrated to your current situation.</p>
+      ${cta(`Get My Case Decoder — ${TIER_CORE["case-decoder"].priceDisplay}`, "/checkout?tier=case-decoder")}
+    `,
+  },
+  {
+    key: "score_reengage_day30",
+    delayDays: 30,
+    subject: "A month in. One question.",
+    html: `
+      <h1 style="color: #F59E0B;">A Month In. One Question.</h1>
+      <p>Has your attorney filed any motions since you scored your defense?</p>
+      <p>If yes — that's progress. If no — that's a month of filing windows closing.</p>
+      <p>Either way, you can reply to this email. We read every response.</p>
     `,
   },
 ];
@@ -1152,6 +1284,56 @@ export function getNextNurtureEmail(
     }
   }
   return null;
+}
+
+/**
+ * Determines the next score-based email for a subscriber based on their band.
+ *
+ * Crisis subscribers (Critical/Concerning): score_crisis_day1, day2, transition (Day 5).
+ * Adequate/Excellent subscribers: score_adequate_day1.
+ * Re-engagement (all score subscribers): Day 14, Day 30.
+ *
+ * After all score-specific emails are exhausted, returns null so the cron can
+ * fall through to standard nurture with an appropriate day offset.
+ *
+ * @param daysSinceSubscribe - Calendar days since the subscriber signed up.
+ * @param sentKeys - Set of email keys already sent to this subscriber.
+ * @param scoreBand - The subscriber's score band (Critical, Concerning, Adequate, Excellent).
+ * @returns The next score-specific email to send, or null if none remain.
+ */
+export function getNextScoreEmail(
+  daysSinceSubscribe: number,
+  sentKeys: Set<string>,
+  scoreBand: string
+): DripEmail | null {
+  const isCrisis = scoreBand === "Critical" || scoreBand === "Concerning";
+  const sequenceEmails = isCrisis ? SCORE_CRISIS_EMAILS : SCORE_ADEQUATE_EMAILS;
+
+  // Check sequence-specific emails first
+  for (const email of sequenceEmails) {
+    if (daysSinceSubscribe >= email.delayDays && !sentKeys.has(email.key)) {
+      return email;
+    }
+  }
+
+  // Check re-engagement emails (apply to all score subscribers)
+  for (const email of SCORE_REENGAGE_EMAILS) {
+    if (daysSinceSubscribe >= email.delayDays && !sentKeys.has(email.key)) {
+      return email;
+    }
+  }
+
+  // All score emails sent — return null so cron falls through to standard nurture
+  return null;
+}
+
+/**
+ * Returns the day offset at which a score subscriber should join standard nurture.
+ * Crisis (Critical/Concerning): join at Day 7 (skipping Days 1-5 of generic).
+ * Adequate/Excellent: join at Day 3.
+ */
+export function getScoreNurtureOffset(scoreBand: string): number {
+  return scoreBand === "Critical" || scoreBand === "Concerning" ? 7 : 3;
 }
 
 // ============================================================

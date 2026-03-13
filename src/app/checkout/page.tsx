@@ -572,6 +572,8 @@ const TIER_INFO: Record<string, TierInfo> = {
 function CheckoutContent() {
   const searchParams = useSearchParams();
   const tier = searchParams.get("tier") || "case-decoder";
+  const band = searchParams.get("band"); // Score band passed from score page CTA
+  const charge = searchParams.get("charge"); // Charge type passed from score page
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState("");
@@ -674,6 +676,15 @@ function CheckoutContent() {
           &larr; Back to pricing
         </Link>
 
+        {/* BAND-AWARE HOOK — shown when arriving from score page with a band */}
+        {band && (
+          <div className="mb-4 rounded-lg border border-amber-500/20 bg-amber-500/5 p-4">
+            <p className="text-sm text-zinc-300">
+              Your Defense Milestone Score was <strong className="text-amber-400">{band}</strong>. The {info.name} was built specifically for defendants at that stage.
+            </p>
+          </div>
+        )}
+
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-8">
           <h1 className="text-2xl font-bold text-white">{info.name}</h1>
           <div className="mt-2 flex items-baseline gap-2">
@@ -692,6 +703,27 @@ function CheckoutContent() {
             <span className="text-xs text-zinc-400">
               Delivery: {info.delivery}
             </span>
+          </div>
+
+          {/* GUARANTEE — moved up: risk removal BEFORE features (Brunson) */}
+          <div className="mt-6 rounded-lg border border-amber-500/20 bg-amber-500/5 p-4">
+            <p className="text-xs font-semibold text-amber-400">
+              Our Guarantee
+            </p>
+            <p className="mt-1 text-sm text-zinc-300">
+              {band === "Critical" || band === "Concerning"
+                ? "If the analysis and questions we deliver aren't specific to your charges, your case stage, and the gaps your attorney hasn't addressed — we'll rebuild it from scratch at no charge. If the rebuild still doesn't fit your situation, you get a full refund. No questions. No forms. One email."
+                : `Delivery Guarantee: ${info.guarantee}`}
+            </p>
+            {!(band === "Critical" || band === "Concerning") && (
+              <p className="mt-2 text-sm text-zinc-300">
+                Satisfaction Guarantee: Not satisfied after delivery? 100% credit
+                toward any higher tier within 30 days.
+              </p>
+            )}
+            <p className="mt-2 text-xs text-zinc-400">
+              Upgrade credits apply to purchases you keep.
+            </p>
           </div>
 
           {/* Why This Works — attorney methodology proof, tier-specific */}
@@ -773,23 +805,6 @@ function CheckoutContent() {
               </p>
             </div>
           )}
-
-          {/* Guarantee */}
-          <div className="mt-6 rounded-lg border border-amber-500/20 bg-amber-500/5 p-4">
-            <p className="text-xs font-semibold text-amber-400">
-              Our Guarantee
-            </p>
-            <p className="mt-1 text-sm text-zinc-300">
-              Delivery Guarantee: {info.guarantee}
-            </p>
-            <p className="mt-2 text-sm text-zinc-300">
-              Satisfaction Guarantee: Not satisfied after delivery? 100% credit
-              toward any higher tier within 30 days.
-            </p>
-            <p className="mt-2 text-xs text-zinc-400">
-              Upgrade credits apply to purchases you keep.
-            </p>
-          </div>
 
           {/* Tier story — conversion reinforcement from real case */}
           {info.story && (
@@ -940,9 +955,9 @@ function CheckoutContent() {
               />
               <div>
                 <span className="text-sm font-semibold text-white">
-                  Priority Delivery — +{info.priorityPrice}
+                  Priority 24-Hour Delivery — +{info.priorityPrice}
                 </span>
-                <p className="mt-0.5 text-xs text-zinc-400">{info.priorityDesc}</p>
+                <p className="mt-0.5 text-xs text-zinc-400">Your standard 48-hour delivery starts when you submit case details. Add priority and get your analysis in 24 hours instead. One fewer day of not knowing.</p>
                 {courtDateUrgent && (
                   <p className="mt-1 text-xs font-medium text-amber-400">
                     Your court date is {daysUntilCourt} days away — standard delivery may not arrive in time.
@@ -1002,6 +1017,8 @@ function CheckoutContent() {
               ? "Apply for The Situation Room"
               : info.isDigitalProduct
               ? `Get Instant Access — ${info.price}`
+              : band === "Critical" || band === "Concerning"
+              ? `Get My ${info.name} — Close These Gaps (${priorityDelivery && info.priorityPriceNum ? `$${info.priceNum + info.priorityPriceNum}` : info.price}) →`
               : `Pay ${priorityDelivery && info.priorityPriceNum ? `$${info.priceNum + info.priorityPriceNum}` : info.price} — Secure Checkout`}
           </button>
 
