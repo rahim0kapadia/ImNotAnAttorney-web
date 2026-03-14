@@ -175,8 +175,7 @@ export default function AboutPage() {
         </FadeInUp>
 
         {/* HOW WE DO IT — Three differentiators: deep research, real case   */}
-        {/* experience, and plain English. AI-powered positioning without    */}
-        {/* over-promising.                                                  */}
+        {/* experience, and plain English.                                   */}
         <FadeInUp>
         <section className="mt-16">
           <h2 className="font-display text-2xl font-bold text-white">How we do it</h2>
