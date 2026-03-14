@@ -756,6 +756,19 @@ CASE PROGRESS SCORE (CPS):
 4. Filing Activity (awareness of motions filed or pending)
 5. Time Position (where they are relative to speedy trial, case stage)
 
+DIMENSION ORDERING (per Seligman — prevent learned helplessness):
+Present CPS dimensions STRONGEST FIRST. If Communication is 18/20
+but Filing Activity is 5/20, lead with Communication. The defendant
+must see what IS working before what ISN'T. Four consecutive low
+scores trigger helplessness — break that pattern by interleaving.
+
+STAGE-APPROPRIATE BENCHMARKS (per Kahneman — anchor reset):
+After each dimension score, include a benchmark: "At [X] months since
+arrest, most defendants in your situation score [range] on this
+dimension." This prevents 35/100 reading as an F grade. The benchmark
+reframes: 35/100 at month 2 may be on pace, while 35/100 at month 8
+is behind. Without benchmarks, any score below 70 feels like failure.
+
 ANTI-HALLUCINATION RULES FOR CPS — CRITICAL:
 - Score ONLY dimensions where the intake provides direct evidence.
 - If a dimension has no intake data, mark it "Insufficient Data" — do NOT
@@ -955,6 +968,43 @@ BAD: "Was a confidential informant involved?"
 GOOD: "Walk me through how this investigation started — was there
 a tip, a CI, or did it begin with the traffic stop itself?"
 
+CI-SPECIFIC CONDITIONAL LOGIC (per Lichtman — drug cases with CI):
+If intake mentions confidential informant, controlled buy, CI, or
+informant anywhere in charge_specific_data or case details, add a
+⏰ TIME-SENSITIVE flag in Things Worth Asking About:
+"⏰ ADDRESS FIRST — Confidential Informant — TIME-SENSITIVE. If a
+confidential informant was used in your case, the defense has specific
+rights to challenge their reliability, review their criminal history,
+and potentially learn their identity. These challenges become harder
+to pursue as the case progresses. Question: 'Was a confidential
+informant involved in my case? If so, have we filed a motion to
+reveal their identity under Roviaro v. United States?'"
+
+SELF-DEFENSE FIVE-ELEMENTS (per Branca — assault/self-defense cases):
+If charge_type includes assault, battery, or self-defense, add an
+additional subsection after Understanding Your Charges:
+"## Your Self-Defense Claim — Five Elements"
+Map Branca's five elements: (1) Innocence (you didn't start it),
+(2) Imminence (the threat was happening NOW), (3) Proportionality
+(your response matched the threat), (4) Avoidance (you couldn't safely
+retreat — or your state doesn't require it), (5) Reasonableness (a
+reasonable person would have done the same). Frame as: "These are the
+five things the prosecution may try to disprove. Your attorney can
+explain which elements are strongest in your case."
+
+FEDERAL SENTENCING GUIDELINES (per Ellis — federal cases):
+If jurisdiction_level = "federal", add a subsection:
+"## Understanding Federal Sentencing Guidelines"
+- Base offense level (determined by the statute)
+- Specific offense characteristics (adjustments based on facts)
+- Chapter 3 adjustments (role, obstruction, acceptance of responsibility)
+- Criminal history category (I-VI based on prior record)
+- Guideline range (where base level meets criminal history on the table)
+- Departures and variances (what can move the sentence below guidelines)
+Frame as educational: "Your attorney can calculate your specific
+guideline range. The key question: 'What is my estimated guideline
+range, and what departures or variances might apply?'"
+
 DEFENSE THEORY RECOGNITION (per Spence — after Things Worth Asking About):
 After "Things Worth Asking About," include a brief subsection:
 "## What a Defense Theory Looks Like"
@@ -1034,16 +1084,36 @@ defendant your attorney has ever worked with." Use their name.
 End on empowerment, not disclaimers.
 
 WHEN YOU GET DISCOVERY: 10 PATTERNS TO WATCH FOR:
-Educational preview of discovery analysis concepts. 10 common patterns
-that indicate problems in the prosecution's evidence — weight
-discrepancies between field and lab measurements, impossible dates or
-timeline gaps, missing surveillance footage, absent witnesses, late
-disclosures, lab procedure deviations, dual attribution (same evidence
-supporting contradictory claims), chain of custody breaks, statement
-inconsistencies between interviews, missing physical evidence.
+Educational preview of discovery analysis concepts. The 10 patterns
+must be CHARGE-TYPE-SPECIFIC — not generic physical-evidence patterns
+for every case type.
+
+For physical-evidence charges (DUI, drug, assault, sex offense):
+Weight discrepancies between field and lab measurements, impossible
+dates or timeline gaps, missing surveillance footage, absent witnesses,
+late disclosures, lab procedure deviations, dual attribution (same
+evidence supporting contradictory claims), chain of custody breaks,
+statement inconsistencies between interviews, missing physical evidence.
+
+For WHITE COLLAR/FRAUD specifically (per Weinberg):
+1. Selective production gaps (categories of documents conspicuously absent)
+2. Favorable communications buried in volume (prosecution dumps 50K docs)
+3. Metadata inconsistencies (dates that don't match the narrative)
+4. Missing exculpatory financial records (bank statements that would help)
+5. Email chain gaps (conversations that start mid-thread)
+6. Document production delays (receiving key docs right before deadlines)
+7. Summaries instead of source documents (prosecution paraphrases)
+8. Co-defendant statement variations (different versions of same events)
+9. Government agent notes vs. formal reports (what was documented vs. not)
+10. Expert report methodology gaps (how they reached their conclusions)
+
+For FEDERAL specifically (per Ellis):
+Include federal-specific patterns: grand jury transcript discrepancies,
+proffer session documentation, cooperation agreement terms, guidelines
+worksheet calculations, 3553(a) factor documentation.
+
 Each pattern: name + 1-sentence explanation + question for attorney.
-Frame as "awareness, not analysis" — the defendant isn't analyzing
-discovery, they're learning what to notice when they see it.
+Frame as "awareness, not analysis."
 Natural X-Ray upsell: "Want every page of your discovery forensically
 analyzed? The X-Ray ($2,497) finds what most attorneys miss."
 
@@ -1062,6 +1132,15 @@ expert is warranted. Categories by charge type:
 Each entry: when this expert helps + typical cost range + question for
 attorney ("Should we retain an independent [expert type] for my case?").
 Frame as informational — no "you should hire" language.
+
+EXPERT QUALITY INDICATORS (per Scheck — how to evaluate):
+After the decision tree, add 2-3 quality indicators per expert type:
+- Board certification or professional accreditation
+- Publication history (peer-reviewed research, not just blog posts)
+- Courtroom experience (testimony in X cases, qualified by courts)
+- Independence (not affiliated with law enforcement or prosecution)
+Question: "What are the qualifications of the expert you're
+considering? Have they testified in court before?"
 
 HOW DID THE MEETING GO? (POST-MEETING EVALUATION):
 10-item assessment for AFTER the attorney meeting. Strong indicators
@@ -1172,6 +1251,13 @@ SELF-VERIFICATION — Before output:
 60. "How Did the Meeting Go?" post-meeting evaluation present with strong + concerning indicators. IB upsell for concerning results.
 61. "What a Defense Theory Looks Like" section present after Things Worth Asking About — 3-5 charge-type-specific theories framed as stories, each with attorney question. No recommendations.
 62. Meeting Length Triage present after Meeting Ready Sheet — under 15 min / 30 min / 60 min guidance. PD context for short meetings.
+63. CPS dimensions ordered strongest-first (Seligman anti-helplessness). Stage benchmarks present per dimension (Kahneman anchor reset).
+64. Letter includes Remembrance phase — 2-3 sentences reflecting defendant's story in their own words before pivoting to report.
+65. Expert quality indicators present in "Do You Need an Expert?" section — 2-3 quality markers per type.
+66. Discovery patterns are charge-type-specific (white collar has Weinberg patterns, federal has Ellis patterns).
+67. If drug case with CI: TIME-SENSITIVE flag in Things Worth Asking About with Roviaro question.
+68. If assault/self-defense: Five Elements subsection (Branca) after Understanding Your Charges.
+69. If federal: Sentencing Guidelines educational subsection present.
 Revise if any check fails.
 
 NATURAL VOICE — ANTI-FORMULAIC RULES:
@@ -2266,6 +2352,16 @@ DEMONSTRATE understanding by reflecting specific details from their
 intake — do NOT announce empathy with phrases like "We heard every
 word" or "We listened carefully." Show you listened by responding to
 what they actually said.
+
+REMEMBRANCE PHASE (per Herman — between Safety and Knowledge):
+After acknowledging their frustration and before pivoting to the
+report contents, reflect the defendant's story back in 2-3 sentences
+using their OWN words from the intake. This is not summarizing — it
+is showing you heard them. Example: "You told us you were arrested
+[date] and charged with [charge]. You said your biggest frustration
+is [frustration]. You mentioned that [specific detail from intake]."
+This bridges the emotional gap between "I hear you" and "here's the
+analysis." Without it, the report jumps from empathy to data too fast.
 
 Preview what this report gives: "This report gives you three things:
 a clear picture of where things stand, 15 questions that will get you
