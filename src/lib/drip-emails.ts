@@ -365,6 +365,31 @@ export const SCORE_REENGAGE_EMAILS: DripEmail[] = [
 
 export const POST_PURCHASE_EMAILS: DripEmail[] = [
   // --- Case Decoder ($197) ---
+
+  // CD #23: Post-purchase reassurance email — fills the 48-hour anxiety gap
+  // between intake submission and report delivery. Fires day 1 after purchase
+  // (during the generating period). Reduces buyer's remorse and sets expectations.
+  {
+    key: "cd_generating_reassurance",
+    delayDays: 1,
+    tier: "case-decoder",
+    subject: "Your Case Decoder is being built — here's what to expect",
+    html: `
+      <h1 style="color: #F59E0B;">Your Case Decoder Is Being Built</h1>
+      <p>Your case details are in. Right now, your report is being generated using methods from elite defense attorneys — calibrated to your specific charges, jurisdiction, and case stage.</p>
+      <p><strong style="color: white;">Here's what happens next:</strong></p>
+      <ol>
+        <li><strong style="color: white;">Analysis (happening now)</strong> — your charges, jurisdiction patterns, and case stage are being analyzed to generate 15 calibrated questions for your attorney</li>
+        <li><strong style="color: white;">Review</strong> — every report is reviewed before delivery to ensure accuracy</li>
+        <li><strong style="color: white;">Delivery (within 48 hours of intake)</strong> — you'll receive an email with your report link</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">One thing you can do right now:</strong> Write down everything you remember about your case while it's fresh — the arrest, what was said, what happened, any details your attorney may not know. This becomes your personal case journal. Even if it doesn't go into this report, it's invaluable for your next attorney meeting.
+      </p>
+      <p style="color: #A1A1AA; margin-top: 16px;">Questions? Reply to this email — we read every response.</p>
+    `,
+  },
+
   {
     key: "post_case_decoder_intake_reminder",
     delayDays: 2,
