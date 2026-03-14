@@ -90,7 +90,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, sendEmailWithRetry, escapeHtml } from "@/lib/email";
-import { getNextNurtureEmail, getNextScoreEmail, getScoreNurtureOffset, getPostPurchaseEmails, personalizeEmailHtml } from "@/lib/drip-emails";
+import { getNextNurtureEmail, getNextScoreEmail, getScoreNurtureOffset, getNextDui72hEmail, getDui72hNurtureOffset, getPostPurchaseEmails, personalizeEmailHtml } from "@/lib/drip-emails";
 import type { DripEmail, DripPersonalizationData } from "@/lib/drip-emails";
 import { timingSafeEqual } from "crypto";
 import { signOperatorToken, signPhase2Token, SITE_URL, caseThreadId } from "@/lib/site";
@@ -173,7 +173,7 @@ export async function GET(req: NextRequest) {
     // they're permanently excluded from all nurture emails.
     const { data: subscribers, error: subError } = await supabase
       .from("subscribers")
-      .select("id, email, created_at, score_band")
+      .select("id, email, created_at, score_band, source")
       .is("unsubscribed_at", null)
       .order("created_at", { ascending: true })
       .limit(200);
@@ -210,13 +210,29 @@ export async function GET(req: NextRequest) {
 
           const sentKeys = sentBySubscriber.get(sub.id) ?? new Set<string>();
 
-          // ── BAND-BASED ROUTING ──
-          // Score-page subscribers with a band get band-specific emails first.
-          // Once all band-specific emails are sent, they fall through to
-          // standard nurture with an offset (skipping early generic emails).
+          // ── SOURCE-BASED & BAND-BASED ROUTING ──
+          // Routing priority:
+          //   1. DUI 72-hour subscribers (source: "dui-72-hours") get crisis-cadence
+          //      emails first (Day 2, 4, 7), then fall through to standard nurture at Day 10+.
+          //   2. Score-page subscribers with a band get band-specific emails first.
+          //      Once all band-specific emails are sent, they fall through to
+          //      standard nurture with an offset (skipping early generic emails).
+          //   3. All other subscribers get standard nurture as-is.
           let nextEmail: DripEmail | null = null;
 
-          if (sub.score_band) {
+          if (sub.source === "dui-72-hours") {
+            // Try DUI 72-hour crisis sequence first
+            nextEmail = getNextDui72hEmail(daysSinceSubscribe, sentKeys);
+
+            if (!nextEmail) {
+              // All DUI emails sent — fall through to standard nurture with offset
+              const offset = getDui72hNurtureOffset();
+              const adjustedDays = daysSinceSubscribe - offset;
+              if (adjustedDays >= 0) {
+                nextEmail = getNextNurtureEmail(adjustedDays, sentKeys);
+              }
+            }
+          } else if (sub.score_band) {
             // Try score-specific emails first
             nextEmail = getNextScoreEmail(daysSinceSubscribe, sentKeys, sub.score_band);
 
@@ -229,7 +245,7 @@ export async function GET(req: NextRequest) {
               }
             }
           } else {
-            // Non-score subscriber: standard nurture as-is
+            // Non-score, non-DUI subscriber: standard nurture as-is
             nextEmail = getNextNurtureEmail(daysSinceSubscribe, sentKeys);
           }
 

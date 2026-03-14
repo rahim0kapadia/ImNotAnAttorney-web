@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const { email } = body;
-    const ALLOWED_SOURCES = ["lead-capture", "checkout", "blog", "score", "score-page", "resources"];
+    const ALLOWED_SOURCES = ["lead-capture", "checkout", "blog", "score", "score-page", "resources", "dui-72-hours"];
     const source = ALLOWED_SOURCES.includes(body.source) ? body.source : "lead-capture";
 
     // Score page passes additional context for segmented nurture sequences

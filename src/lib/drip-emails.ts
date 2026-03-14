@@ -1,13 +1,22 @@
 /**
  * @fileoverview Drip email templates for nurture and post-purchase sequences.
  *
- * This file defines two distinct email sequences:
+ * This file defines multiple email sequences:
  *
  * 1. **Nurture sequence** (NURTURE_EMAILS) — sent to free subscribers on a
  *    schedule of day 1, 3, 5, 7, 10, 14 after subscribing. Goal: demonstrate
  *    expertise with real case examples, build trust, convert to Case Decoder.
  *
- * 2. **Post-purchase sequences** (POST_PURCHASE_EMAILS) — tier-specific emails
+ * 2. **DUI 72-hour crisis sequence** (DUI_72_HOUR_EMAILS) — tighter cadence
+ *    for subscribers who entered via the "First 72 Hours" lead magnet
+ *    (source: "dui-72-hours"). Day 2, 4, 7 after subscribing. Goal: address
+ *    DMV deadline urgency, bridge to $97 DUI Playbook purchase. After Day 7,
+ *    subscribers join standard nurture at Day 10+.
+ *
+ * 3. **Score-based sequences** (SCORE_CRISIS_EMAILS, SCORE_ADEQUATE_EMAILS,
+ *    SCORE_REENGAGE_EMAILS) — for subscribers from the Case Progress Score page.
+ *
+ * 4. **Post-purchase sequences** (POST_PURCHASE_EMAILS) — tier-specific emails
  *    triggered after a purchase. Each tier has its own sequence:
  *      - Case Decoder: intake reminder → delivery → meeting prep → story harvest → upsell → referral
  *      - Intelligence Brief: phase2 reminder → delivery → meeting prep → story harvest → upsell → referral

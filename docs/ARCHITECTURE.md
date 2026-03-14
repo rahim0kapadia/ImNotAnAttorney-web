@@ -2,13 +2,50 @@
 
 ## System Overview
 
-ImNotAnAttorney is a content-driven legal empowerment business for criminal defendants. The tech stack delivers a fully automated pipeline from payment to report delivery for the Case Decoder tier ($197), with semi-automated Intelligence Brief ($997) and manual processing for discovery tiers ($2,497+). Digital playbooks ($97) are instant-delivery.
+ImNotAnAttorney is a content-driven legal empowerment business for criminal defendants. The tech stack delivers a fully automated pipeline from payment to report delivery for the Case Decoder tier ($197), with semi-automated Intelligence Brief ($997) and engine-powered processing for discovery tiers ($2,497+). Digital playbooks ($97) are instant-delivery.
+
+### Three-Project Architecture
+
+The system spans 3 repositories, connected through a shared Supabase database:
+
+```
+ImNotAnAttorney/                ← Business docs, strategy, templates, seed data
+  system/                       ← Evaluation teams, expert reference, emotional intelligence,
+                                  pipeline map, buyer states, content standards, attorney personas
+  system/templates/             ← Prompt templates for X-Ray, War Room, Situation Room
+  system/data/                  ← Anti-hallucination seed data (motion library, penalty ranges, etc.)
+
+ImNotAnAttorney-web/            ← Next.js customer-facing site (LIVE at imnotanattorney.com)
+  src/app/                      ← 28 pages, 35 API routes
+  src/lib/                      ← Business logic, IB pipeline, email system
+  supabase/functions/           ← Edge Functions (CD generation, evaluation)
+  content/blog/                 ← 35 MDX blog posts
+
+ImNotAnAttorney-engine/         ← Backend worker pipeline (Node.js, 27 workers, 6-phase job queue)
+  src/workers/                  ← Per-job-type worker modules
+  src/worker.mjs                ← Job dispatch + pipeline orchestration
+  src/queue.mjs                 ← Job claiming (FOR UPDATE SKIP LOCKED), retry logic
+  src/config.mjs                ← Model selection, env vars, template paths
+```
+
+```
+Data Flow:
+
+  [Web App]                      [Engine]                     [Business Docs]
+  Stripe webhook ──► Supabase ◄── Job queue polling           Templates loaded
+  Intake form ─────►   DB    ◄── Worker results               from system/
+  Edge Functions ──►         ◄── Citation verification        Seed data loaded
+  Cron (22 parts) ─►         ◄── Docket monitoring            from system/data/
+  Operator UI ─────►         ◄── Cost tracking
+```
+
+**Shared Supabase:** All three projects read/write the same PostgreSQL database. The web app owns customer-facing tables (orders, cases, intakes, subscribers). The engine owns processing tables (processing_jobs, document_pages, entity_extractions). Business docs provide templates and seed data consumed by both.
 
 ```
 Customer Journey:
 
   [Public Funnel]
-  Landing Page → Blog → Score (free lead magnet) → Checkout → Stripe Payment
+  Landing Page → Blog → Score / DUI 72-Hour Checklist (free lead magnets) → Checkout → Stripe Payment
 
   [Digital Product Path — Playbooks $97]
   Payment → Webhook → download_token (72h) → PDF delivery email → Playbook drip (4 emails)
@@ -39,10 +76,10 @@ Customer Journey:
 | **Styling** | Tailwind CSS v4 | PostCSS integration (`@tailwindcss/postcss`), no config file |
 | **Animation** | framer-motion 12.x | 4 motion components, all respect `prefers-reduced-motion` |
 | **Hosting** | Vercel | Auto-deploys on push to master, Edge Functions, Vercel Analytics |
-| **Database** | Supabase (PostgreSQL) | 43 tables across 11 migrations, 2 private storage buckets, Edge Functions |
+| **Database** | Supabase (PostgreSQL) | 52+ tables across 11 migrations, 2 private storage buckets, Edge Functions |
 | **Payments** | Stripe (test mode) | Checkout sessions, webhooks, refunds, upgrade credits |
 | **Email** | Resend API | Transactional + drip emails, inbound webhook, CAN-SPAM compliance |
-| **AI** | Claude Sonnet 4.6 | IB generation (Edge Function primary + GitHub Actions backup) |
+| **AI** | Claude Opus 4.6 + Sonnet 4.6 | Opus (CD generation, extended thinking 16K budget) + Sonnet (IB sections, evaluation) |
 | **CI/CD** | GitHub Actions | Backup worker cron for timed-out Edge Function runs |
 | **DNS** | Cloudflare | CNAME to Vercel (DNS only, no proxy) |
 | **Cron** | cron-job.org (external) | Free alternative to Vercel Pro native cron |
@@ -72,6 +109,371 @@ Customer Journey:
 | `CRON_SECRET` | cron/drip | Authenticate cron requests |
 | `SUPABASE_ACCESS_TOKEN` | Supabase CLI | Edge function deployment |
 | `CRONJOB_API_KEY` | setup script | cron-job.org management |
+
+## Engine Architecture (ImNotAnAttorney-engine)
+
+The engine is a distributed job queue worker that powers ALL discovery-tier processing ($2,497+). It polls the `processing_jobs` table, dispatches to worker modules, and writes results back to shared Supabase.
+
+### Deployment
+
+- **GitHub Actions cron** (`process-jobs.yml`): Runs every 5 minutes
+- **Entry:** `node src/worker.mjs --once` (process up to 10 jobs per run, then exit)
+- **Continuous mode:** `node src/worker.mjs` (poll loop with 10s interval, for local dev)
+- **Node.js ≥20** required
+
+### Job Queue Mechanics
+
+1. **Claim:** `claim_next_job()` Postgres RPC — uses `FOR UPDATE SKIP LOCKED` to prevent double-processing across concurrent workers
+2. **Process:** Dynamic import of worker module from registry → `workerModule.default(job)`
+3. **Complete:** `completeJob(job.id, summary, itemsProduced)` → schedules downstream jobs
+4. **Fail:** `failJob(job.id, errorMessage, metadata)` → marks for retry or creates operator task
+
+### Retry Strategy
+
+Exponential backoff: `4^retryCount × 5 minutes`
+
+| Retry | Delay | Cumulative |
+|-------|-------|-----------|
+| 1st | 20 minutes | 20 min |
+| 2nd | 80 minutes | 100 min |
+| 3rd (max) | 320 minutes | 420 min |
+
+Failed jobs with `retry_count < max_retries` (default 3) get `status = 'retrying'` with `next_retry_at` set. `requeueRetryableJobs()` runs at start of each poll cycle, promoting retryable jobs back to `queued`.
+
+### Worker Registry (27 workers across 6 phases)
+
+| Phase | Job Type | Model | Max Tokens | Purpose |
+|-------|----------|-------|-----------|---------|
+| **1: Document Ingestion** | `ocr` | Haiku | — | PDF/image text extraction (tesseract.js + pdf-parse) |
+| | `document_classification` | Haiku | 2,048 | Categorize documents (police report, lab, warrant, etc.) |
+| | `entity_extraction` | Haiku | 4,096 | Named entity recognition per document |
+| **2: Cross-Document Analysis** | `finding_analysis` | Opus | 32,000 | Case-level findings from all extractions |
+| | `red_flags` | Opus | 16,000 | Prosecution weaknesses + constitutional issues |
+| | `question_generation` | Opus | 16,000 | Targeted attorney questions from findings |
+| | `timeline_reconstruction` | Sonnet | 16,000 | Chronological event reconstruction |
+| | `evidence_inventory` | Sonnet | 8,192 | Physical evidence catalog |
+| | `chain_of_custody` | Sonnet | 8,192 | Custody chain analysis + gap detection |
+| | `witness_identification` | Sonnet | 8,192 | Witness identification from documents |
+| | `score_computation` | Sonnet | 4,096 | Defense Strength Score (0-100) |
+| **3: Report Generation** | `report_generation` | Opus | 32,000 | Assemble final report (emotional intelligence required) |
+| **4: Intelligence Gathering** | `judge_research` | Opus | 16,000 | Judge profiling (rulings, patterns, sentencing) |
+| | `prosecutor_research` | Opus | 16,000 | Prosecutor profiling |
+| | `witness_dossier_p1` | Opus | 16,000 | Witness intelligence dossiers (Part 1) |
+| **5: Strategy** | `motion_analysis` | Opus | 32,000 | Motion landscape + wave strategy |
+| | `case_law_research` | Opus | 16,000 | Case law search + Shepardize |
+| | `strategy_synthesis` | Opus | 32,000 | Defense strategy + battle plan |
+| **6: Trial Intelligence** | `witness_dossier_p2` | Opus | 16,000 | Full witness battle scripts |
+| | `cross_exam_script` | Opus | 16,000 | Cross-examination scripts |
+| | `trial_material` | Opus | 16,000 | Trial prep materials |
+| | `attack_intelligence` | Opus | 16,000 | Attack vectors + impeachment |
+| **Ongoing** | `update_generation` | Sonnet | 8,192 | War Room weekly updates |
+| **Verification** | `citation_verification` | API-only | 4,096 | Citation verification cascade |
+| **Data Fetch** | `docket_fetch` | API-only | — | Court docket retrieval |
+| | `legal_research` | API-only | — | Pre-generation legal source search |
+| | `jurisdiction_profile` | API-only | — | Jurisdiction context cache |
+| | `docket_monitor` | API-only | — | Ongoing docket alerts (War Room+) |
+
+**Model summary:** Haiku for Phase 1 (cheap classification), Sonnet for Phase 2 analysis, Opus for Phases 3-6 (deep reasoning + emotional intelligence). API-only workers have placeholder model entries.
+
+### Pipeline Orchestration
+
+```
+Per-document:    ocr ──► document_classification
+                    └──► entity_extraction
+
+Convergence 1:   ALL entity_extractions done ──► finding_analysis
+                                                  + docket_fetch
+                                                  + legal_research
+                                                  + jurisdiction_profile
+
+Fan-out:         finding_analysis ──► red_flags ──► question_generation
+                                  ├── timeline_reconstruction
+                                  ├── evidence_inventory ──► chain_of_custody
+                                  └── witness_identification
+
+Convergence 2:   ALL of [question_generation, timeline, custody, witnesses] done
+                 ──► score_computation ──► report_generation
+
+Post-report:     report_generation ──► docket_monitor (War Room+ only)
+```
+
+**Phase 4-6 workers** (intelligence, strategy, trial) are scheduled by the operator or future automation, not auto-chained from Phase 3.
+
+### Cost Tracking
+
+Every Claude API call is tracked in `job_cost_tracking` table:
+- Input tokens, output tokens, cache hits, latency
+- Per-model pricing with 90% discount on cache hits
+- Aggregation by job type, model, tier, case
+
+### Dependencies
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `@anthropic-ai/sdk` | ^0.39.0 | Claude API calls |
+| `@supabase/supabase-js` | ^2.49.0 | Job queue, case data, results |
+| `marked` | ^15.0.0 | Markdown parsing |
+| `pdf-parse` | ^1.1.1 | PDF text extraction |
+| `puppeteer-core` | ^24.39.1 | Headless browser (web scraping for docket fetch) |
+| `sanitize-html` | ^2.14.0 | HTML sanitization |
+| `tesseract.js` | ^5.1.0 | OCR (optical character recognition) |
+
+### Environment Variables
+
+| Variable | Required | Purpose |
+|----------|----------|---------|
+| `SUPABASE_URL` | Yes | Supabase project URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | Yes | Full DB access |
+| `ANTHROPIC_API_KEY` | Yes | Claude API |
+| `WORKER_AUTH_TOKEN` | Yes | Auth for `claim_next_job()` RPC |
+| `OPERATOR_SECRET` | No | HMAC signing for operator links |
+| `OPERATOR_EMAIL` | No | Operator notifications |
+| `RESEND_API_KEY` | No | Email sending |
+| `COURTLISTENER_API_TOKEN` | No | CourtListener API (graceful degradation) |
+| `PACER_LOGIN` / `PACER_PASSWORD` | No | PACER federal court access |
+| `JUDYRECORDS_API_KEY` | No | JudyRecords state court access |
+| `GOVINFO_API_KEY` | No | GovInfo API (US Code, CFR) |
+| `SERPAPI_API_KEY` | No | Google Scholar legal search ($50/mo) |
+| `SYSTEM_ROOT` | No | Path to business docs (defaults to `../ImNotAnAttorney/system`) |
+
+All optional API tokens degrade gracefully — workers skip external verification when tokens are absent.
+
+## External Legal Data Sources
+
+The engine integrates with 7 external legal data APIs for citation verification, docket monitoring, and legal research.
+
+| Source | Module(s) | Purpose | Auth | Rate Limit |
+|--------|-----------|---------|------|-----------|
+| **CourtListener** | `legal-verifier.mjs`, `docket-fetcher.mjs` | Dockets, opinions, judge profiles, financial disclosures, citation verification | Optional token | Per-domain |
+| **PACER** | `pacer-fetcher.mjs` | Federal court records (NextGen CSO auth, 2hr TTL) | Login/password | $0.10/page |
+| **JudyRecords** | `docket-fetcher.mjs` | State court records | Optional API key | Subscription |
+| **GovInfo** | `govinfo-fetcher.mjs` | US Code, CFR, congressional reports, Statutes at Large | API key | Standard |
+| **eCFR** | `legal-verifier.mjs` | Code of Federal Regulations (point-in-time snapshots) | Free | Standard |
+| **SerpAPI** | `serpapi-legal.mjs` | Google Scholar legal search | API key ($50/mo) | Plan-based |
+| **Wex** | `legal-verifier.mjs` | Legal term definitions (Cornell Law) | Free | Standard |
+
+### Citation Verification Cascade
+
+Citations are verified through a priority cascade:
+
+1. **CourtListener** (primary) — search by case name + citation
+2. **Harvard CAP** — fallback for historical cases
+3. **GovInfo** — for statutory references
+4. **eCFR** — for regulatory references
+
+**Confidence tiers:** STRONG (verified in primary source) → MODERATE (verified in secondary) → WEAK (partial match) → UNVERIFIED (no match found) → FABRICATED (contradicted by source). Claims below 90% confidence are marked `[VERIFY]` in output.
+
+## Anti-Hallucination Architecture
+
+Every Claude API call in the system includes anti-hallucination guardrails. Source: `ImNotAnAttorney/system/`.
+
+### Seed Data (5 JSON files)
+
+| File | Contents | Purpose |
+|------|----------|---------|
+| `motion-library.json` | 30+ motions with legal basis + attorney attribution | Prevents hallucinated motion names |
+| `penalty-ranges.json` | Charge-specific sentencing ranges from actual statutes | Prevents fabricated statistics |
+| `statute-references.json` | Statute citations with verification metadata | Prevents fake statute numbers |
+| `diversion-programs.json` | State-by-state diversion eligibility | Prevents wrong eligibility claims |
+| `speedy-trial-rules.json` | State-specific speedy trial timelines | Prevents wrong deadline claims |
+
+### Anti-Hallucination Block (injected in every Claude call)
+
+6 rules enforced in prompt templates:
+1. Never cite a case, statute, or rule without verification against seed data
+2. Never fabricate statistics, percentages, or specific numbers
+3. Never attribute a legal strategy to an expert not in the verified roster
+4. Mark any claim below 90% confidence with `[VERIFY]`
+5. Use qualitative language ("many jurisdictions" not "73% of jurisdictions")
+6. Convert specific claims to attorney questions when uncertain
+
+### Expert Attribution
+
+Every analytical insight must trace to a verified expert from the Expert Reference System. The `Victor Knapp` incident (March 2026) — a fabricated DUI attorney name that appeared in playbooks, blog posts, and checkout pages — led to the policy: **every expert cited in customer-facing content must exist in EXPERT-REFERENCE.md and be web-verified before first use.**
+
+### Banned Terminology (16 entries)
+
+| Banned | Replacement |
+|--------|-------------|
+| "red flag" | "what to listen for" |
+| "warning sign" | "what to listen for" |
+| "escalation ladder" | "Your Advocacy Steps" |
+| "you need to" | "here's your next step" / "you can" |
+| "you should" | "you can" / "consider" |
+| "we recommend" | "consider" |
+| "we advise" | "consider" |
+| "your best option" | (reframe as question for attorney) |
+| "you indicated" | "you told us" |
+| "you reported" | "you mentioned" |
+| "you selected" | "you shared" |
+
+## Expert Reference System
+
+63+ verified .01% experts across defense law, psychology, and marketing. Source: `ImNotAnAttorney/system/EXPERT-REFERENCE.md`.
+
+### Expert Categories
+
+| Category | Count | Key Names |
+|----------|-------|-----------|
+| DUI/DWI Defense | 4 | Lawrence Taylor, William "Bubba" Head, Justin McShane, Steven Oberman |
+| Drug Defense | 4 | Jeffrey Lichtman, Ron Chapman II, Jose Baez, Dick DeGuerin |
+| Sex Offense Defense | 3 | Specialists with 30-40 year track records |
+| White Collar/Fraud | 3 | Martin Weinberg, David Smith, Cristina Arguedas |
+| Self-Defense | 3 | Andrew Branca, Mark O'Mara, Don West |
+| Federal Criminal | 5 | Alan Ellis, Carmen Hernandez, Mark Allenbaugh, David Oscar Markus, Andrew Birrell |
+| Cross-Cutting Trial | 12+ | Benjamin Brafman, Tom Mesereau, Gerry Spence, Bryan Stevenson, Mark Geragos |
+| Probation/Parole | 3 | Fiona Doherty, Vincent Schiraldi, Adam Foss |
+| Legal Design | 3 | Margaret Hagan, Paul Bergman, Robin Steinberg |
+| Intelligence Analysis | 2 | Richards Heuer (ACH methodology), Randolph Pherson |
+| Psychology Tier 1 | 5 | Judith Herman, Albert Bandura, Martin Seligman, Kim Witte, BJ Fogg |
+| Psychology Tier 2-3 | 10 | Chris Voss, George Lakoff, Daniel Kahneman, Richard Thaler, Raj Jayadev |
+| Marketing | 9 | Alex Hormozi, Russell Brunson, Sabri Suby, Andre Chaperon, Eugene Schwartz |
+| System Truth Critics | 7 | Amy Bach, Alexandra Natapoff, Mark Godsey, Norm Pattis |
+
+### Tier-Based Expert Loading
+
+| Tier | Expert Depth | Framework |
+|------|-------------|-----------|
+| Playbook ($97) | 2-3 expert frameworks visible | Charge-specific |
+| Case Decoder ($197) | Charge-type routing to specific experts | Per-charge expert pair |
+| Intelligence Brief ($997) | 5-7 frameworks | Spence, Mesereau, Younger, Pozner, MacCarthy + charge-specific |
+| X-Ray ($2,497) | Forensic + evidence experts | Scheck, Garrett, ACH methodology (Heuer/Pherson) |
+| War Room ($4,997) | Full routing table | Brafman (jury), Berke (strategy), Birrell (contradictions), Vishny (motions) |
+| Situation Room ($9,997) | Trial legends | Dimitrius (voir dire), Markus (briefs), full Pozner-Dodd chapter method |
+
+## Emotional Intelligence Architecture
+
+8-dimension emotional profiling framework required for report generation. Source: `ImNotAnAttorney/system/EMOTIONAL-INTELLIGENCE.md`.
+
+**Why Opus 4.6 with extended thinking is required:** Sonnet 4.6 produced "mechanical emotional calibration" — correct format but emotionally flat. Opus uses the 16K thinking budget to build the 8-dimension profile internally before writing, producing calibrated emotional tone.
+
+### 8 Emotional Dimensions
+
+| # | Dimension | What It Captures |
+|---|-----------|-----------------|
+| 1 | Primary Fear | What they're MOST afraid of losing (career, prison, family, financial, reputation) |
+| 2 | Emotional Stance | Processing style: Minimizer / Catastrophizer / Intellectualizer / Dissociater |
+| 3 | Attorney Relationship as Wound | Abandonment / Betrayal / Kept in Dark |
+| 4 | Hope Signal | What they hope is true (mirror and build on it) |
+| 5 | Isolation Level | Support network or carrying alone? |
+| 6 | Charge-Specific Pattern | 7 charge types × emotional response calibration |
+| 7 | Co-Defendant Dynamic | Betrayal fear, cooperation pressure |
+| 8 | Reading Arc Awareness | 10-stage cumulative emotional journey through report |
+
+### Stance Calibration
+
+| Stance | Signals | Bridging After Hard Info |
+|--------|---------|------------------------|
+| **Minimizer** | "Not that big a deal" | Ground in what they CAN control |
+| **Catastrophizer** | "Ruin my life" | "This is RANGE, not prediction" |
+| **Intellectualizer** | Precise legal questions | "Question for attorney is your specific facts" |
+| **Dissociater** | Flat affect, "whatever" | Direct fact → action (skip emotion) |
+
+### Psychological Frameworks
+
+| Framework | Author | Application |
+|-----------|--------|------------|
+| EPPM (Extended Parallel Process Model) | Kim Witte | 2:1 efficacy-to-threat ratio — always more "you can" than "you face" |
+| B=MAP (Behavior = Motivation × Ability × Prompt) | BJ Fogg | Scared defendants = HIGH motivation + ZERO ability → increase ability |
+| Participatory Defense | Raj Jayadev | Defendant = prepared partner, not passive recipient |
+| Calibrated Questioning | Chris Voss | Questions sound like CLIENT asking for help, not lawyer playing lawyer |
+
+### 10-Stage Reading Arc
+
+The report is designed as a cumulative emotional journey, not isolated sections:
+
+1. **Letter** → Relief ("Someone heard me")
+2. **Where Things Stand** → Clarity
+3. **Understanding Charges** → Knowledge (anxiety spike from penalty ranges)
+4. **Communication Tools** → Empowerment (absorbs anxiety spike)
+5. **Questions** → Agency ("I can DO something")
+6. **Things Worth Asking** → Focus
+7. **Something We Missed** → Trust ("They care")
+8. **What Only Your Attorney Can Tell You** → Honest redirect
+9. **Your Next 7 Days** → Determination (emotional climax)
+10. **What Comes Next** → Natural next step
+
+### Self-Verification (38-point checklist)
+
+15 checks are critical for ALL tiers, including: all sections present, no banned terminology, warm language in diagnostic tables, no attorney blame, upgrade language restricted to postscript, 2:1 efficacy-to-threat ratio, stance-calibrated tone.
+
+## Buyer States Framework
+
+6 active states that drive report framing. Source: `ImNotAnAttorney/system/BUYER-STATES.md`. Evaluation criterion D11 checks buyer state alignment.
+
+| State | Signal | Need | Anti-Pattern |
+|-------|--------|------|-------------|
+| **distrust** — "I Don't Trust My Attorney" | Trust/competence doubts in intake | Independent validation | "Your attorney knows best" (dismisses instinct) |
+| **double-checking** — "I'm Double-Checking What He Said" | Substantive attorney_statements, uncertainty not anger | Context to evaluate | Undermining attorney when they're actually right |
+| **information-vacuum** — "He's Not Telling Me Anything" | Communication gap >2 weeks, ghosting | Fill the information vacuum | "Just keep trying to reach them" without providing info |
+| **no-attorney** — "No Attorney Yet" | attorney_type = "no attorney" | Understand case before hiring | Assuming attorney relationship exists |
+| **just-arrested** — "I Just Got Arrested" | arrest_date < 2 weeks | Orientation + 3 immediate actions | 25 pages of analysis when they need 3 actions |
+| **family-buyer** (future) | filled_out_by = "family" / "friend" | Actionable ways to help | Assuming reader IS defendant |
+
+## Content Architecture Standard
+
+11 principles every customer-facing deliverable must satisfy. Source: `ImNotAnAttorney/system/CONTENT-ARCHITECTURE-STANDARD.md`.
+
+| # | Principle | Rule |
+|---|-----------|------|
+| 1 | Crisis Response First | First thing scared person sees must be actionable, not context |
+| 2 | Origin Story Early | "Built by defendant who went through it" within first page |
+| 3 | Triage Before Depth | 3-5 path decision tree before content (Golden Question, ADDRESS FIRST) |
+| 4 | Dual Communication | Email template (copy-paste) + Phone script (read-aloud) + Follow-up |
+| 5 | Mobile-First | Tables max 2 columns, no horizontal scroll at 375px |
+| 6 | Table Pacing | Max 2 consecutive tables without 1-2 sentence bridges |
+| 7 | Plain English Always | Define every legal term on first use, parenthetical inline |
+| 8 | Tribe Signal | Reader finishes feeling FOUND: "Defendants who prepare instead of wait" |
+| 9 | Family Buyer Acknowledgment | One sentence: "If you're reading for spouse/child/friend..." |
+| 10 | No-Attorney Reframe | One sentence: "No attorney yet? Use Scorecard to evaluate" |
+| 11 | Emotional Peak Upsells | CTAs at moments of resonance, honest factual limits |
+
+**Audit protocol:** Score all 11, then 3-persona review: Hormozi (Value Equation), Suby (Readability + Conversion), Godin (Remarkability + Tribe).
+
+## Client Journey
+
+Per-tier customer experience timeline. Source: `ImNotAnAttorney/system/CLIENT-JOURNEY.md`.
+
+### Journey Timeline
+
+| Milestone | $197 CD | $997 IB | $2,497 X-Ray | $4,997 War Room | $9,997 Sit Room |
+|-----------|---------|---------|--------------|-----------------|-----------------|
+| Signup → first deliverable | 48 hrs | 48 hrs | 3-5 days | 3-5 days | 24-48 hrs |
+| Full initial package | 48 hrs | 48 hrs | 10 biz days | 25-28 days | 14-21 days |
+| Discovery required? | No | No | Yes | Yes | Yes |
+| Ongoing updates | None | None | None | Weekly | Trial Ops |
+| Human review time | 15-20 min | 2-3 hrs | 2-3 hrs | 12-16 hrs | 22-28 hrs |
+| Communication | Email | Email | Email | Dashboard + email | Priority channel |
+
+### 8 Key Emotional Moments
+
+1. **"Someone finally explained my charges"** — Case Decoder delivery
+2. **"Now I know my judge"** — Intelligence Brief delivery
+3. **"Someone finally organized my case"** — Document index + timeline
+4. **"I didn't know this was in MY OWN discovery"** — Discrepancies + red flags
+5. **"Now I know what to ask"** — Targeted questions for attorney
+6. **"My lawyer was impressed"** — Hand over attorney package
+7. **"I understand what's happening in my case"** — Strategy framework clicks
+8. **"I'm not going in blind"** — Trial prep materials arrive
+
+### Dashboard Features by Tier
+
+| Feature | $197 | $997 | $2,497 | $4,997 | $9,997 |
+|---------|------|------|--------|--------|--------|
+| Download reports | PDF | PDF | Yes | Yes | Yes |
+| Interactive timeline | — | — | — | Yes | Yes |
+| Witness map | — | — | — | Yes | Yes |
+| Motion tracker | — | — | — | Yes | Yes |
+| Trial Intelligence Ops | — | — | — | — | Yes |
+| Priority support | — | — | — | — | Yes |
+
+### Upgrade Credit Messaging
+
+Each tier delivery includes upgrade pitch with credit pre-calculated:
+- CD delivery → "Upgrade to Brief — your $197 is applied. Pay only $800."
+- IB delivery → "Upgrade to X-Ray — your $997 is applied. Pay only $1,500."
+- X-Ray delivery → "Upgrade to War Room — your $2,497 is applied. Pay only $2,500."
+- War Room (trial approaching) → "Upgrade to Situation Room — pay only $5,000."
 
 ## Architecture Patterns
 
@@ -282,7 +684,7 @@ Configured in `next.config.ts`:
 |--------|------|---------|
 | id | uuid (PK) | Auto-generated |
 | email | text (unique) | Subscriber email |
-| source | text | How they subscribed (`blog`, `checkout`, `score`, `lead-capture`) |
+| source | text | How they subscribed (`blog`, `checkout`, `score`, `lead-capture`, `dui-72-hours`, `score-page`, `resources`) |
 | score_band | text | `Critical` / `Concerning` / `Average` / `Adequate` / `Excellent` |
 | score_value | integer | Raw score (0-100) from Defense Milestone Score |
 | charge_type | text | Charge type from score quiz |
@@ -638,6 +1040,25 @@ Resend inbound webhook storage.
 | description | text | Subreddit description |
 | status | text | `pending`, `approved`, `rejected` |
 
+### Engine-Specific Tables
+
+Tables used by the ImNotAnAttorney-engine worker pipeline (not in web app code):
+
+| Table | Purpose |
+|-------|---------|
+| `document_pages` | OCR page-level output (text per page) |
+| `entity_extractions` | Named entity recognition results per document |
+| `finding_sources` | Source document linkage for each finding |
+| `evidence_inventory` | Evidence catalog (engine's detailed version) |
+| `chain_of_custody_records` | Custody chain analysis with gap detection |
+| `case_persons` | Role-based person registry (witness/judge/prosecutor) |
+| `case_analysis_scores` | Defense Strength Score (0-100) computation |
+| `case_monitoring` | CourtListener docket alerts (War Room+ ongoing monitoring) |
+| `job_cost_tracking` | Claude API cost per job (input/output tokens, cache hits, latency) |
+| `legal_citations` | Citation verification results (confidence tier, source, verified date) |
+| `jurisdiction_profiles` | Jurisdiction context cache (local rules, court procedures) |
+| `verified_case_law` | Verified case law with Shepardize status |
+
 ### Database RPCs
 
 | RPC | Purpose |
@@ -819,15 +1240,46 @@ All playbooks: `product_type: "digital-product"`, delivered via download token (
 
 ### Service Tiers (5 tiers — $197-$9,997, case-based)
 
-| Slug | Price | Delivery | Requires Discovery | Includes |
-|------|-------|----------|-------------------|----------|
-| `case-decoder` | $197 | 48 hours | No | — |
-| `intelligence-brief` | $997 | 72 hours | No | Case Decoder |
-| `x-ray` | $2,497 | 10 business days | Yes | CD + IB |
-| `war-room` | $4,997 | 25-28 days + weekly updates | Yes | CD + IB + X-Ray |
-| `situation-room` | $9,997 | 24-48h priority | Yes | CD + IB + X-Ray + War Room |
+| Slug | Price | Delivery | Discovery | Pipeline | Deliverables | Includes |
+|------|-------|----------|-----------|----------|-------------|----------|
+| `case-decoder` | $197 | 48 hours | No | Skills only | 7 | — |
+| `intelligence-brief` | $997 | 72 hours | No | Skills + research | 24 (v4) | Case Decoder |
+| `x-ray` | $2,497 | 10 business days | Yes | Stages 01-05 | 26 | CD + IB |
+| `war-room` | $4,997 | 25-28 days + weekly | Yes | Stages 01-11 | 38 | CD + IB + X-Ray |
+| `situation-room` | $9,997 | 24-48h priority | Yes | Stages 01-14 | 52 | CD + IB + X-Ray + War Room |
 
 **Situation Room prerequisite:** Requires prior paid War Room order.
+
+### Deliverables Detail (v4 — March 2026)
+
+**Case Decoder ($197):** Plain-English Charge Breakdown, Case Stage Benchmark, Defense Milestone Checklist, 15 Targeted Questions, Red Flags for Stage, Motion Overview, Case Progress Score (0-100).
+
+**Intelligence Brief ($997) — v4 restructure:** 6 sections + 5 appendices. Guarantee: "The Clarity or It's Free." v4 changes: Judge Intelligence Card generalized to Jurisdiction Intelligence Summary (specific judge profiling moved to X-Ray). New deliverables: 8-Domain Life Impact Map, Prosecution Pressure Tactics Decoder, Realistic Outcome Map, Defense Theory Landscape.
+
+**X-Ray ($2,497) — v4 additions:** Judge Intelligence Profile + Prosecutor Research Profile (data-focused stats/patterns/outcomes, NOT strategy). 35-50 questions (vs 10-15 in IB). Discovery Strength Rating (0-100).
+
+**War Room ($4,997):** Up to 8 witnesses included. Additional witnesses: $149 each. Witness Reliability Rankings: 7-dimension scoring rubric. Dual delivery: CLIENT versions (accessible) + ATTORNEY versions (technical, citation-heavy, filing-ready).
+
+**Situation Room ($9,997):** Full witness coverage (every witness). Trial Intelligence Operations: morning briefings, evening debriefs, daily updated scripts from testimony. Priority response: 2hr prep time, 4hr during trial.
+
+### Delivery Structure (Numbered Folders)
+
+```
+Client-Package/
+├── 00-DELIVERY-GUIDE.pdf         ← All tiers
+├── 1-Charge-Analysis/             ← $197+
+├── 2-Judge-Intel/                 ← $997+
+├── 3-Discovery-Analysis/          ← $2,497+
+├── 4-Judge-Dossiers/              ← $4,997+
+├── 5-Prosecution-Dossiers/        ← $4,997+
+├── 6-Witness-Intel/               ← $4,997 (8) / $9,997 (all)
+├── 7-Wave-Strategy/               ← $4,997+
+├── 8-Motion-Awareness/            ← $4,997+
+├── 9-Battle-Scripts/              ← $9,997 only
+├── 10-Trial-Prep/                 ← $9,997 only
+├── Reports/                       ← All tiers
+└── Updates/                       ← $4,997+ (weekly) / $9,997 (Trial Ops)
+```
 
 ### Add-on Tiers (2 tiers)
 
@@ -971,7 +1423,7 @@ Major subsystem generating comprehensive case intelligence reports. Source: `src
 
 ### Phase A (5 parallel sections)
 
-Generated simultaneously for speed. Each section is a separate Claude Sonnet 4.6 call (temp 0.3, maxTokens 4000).
+Generated simultaneously for speed. Each section is a separate Claude Sonnet 4.6 call (temp 0.3, maxTokens 2000-5000).
 
 | Section | Key | Emotion | Output |
 |---------|-----|---------|--------|
@@ -1001,7 +1453,7 @@ Phase A auto-triggers Phase B without waiting for judge data. Judge research can
 ### Prompt Architecture
 
 - **File:** `src/lib/intelligence-brief/prompts.ts` (59.7KB)
-- **Model:** Claude Sonnet 4.6 for all sections
+- **Model:** Claude Sonnet 4.6 for IB sections (Opus 4.6 with extended thinking for Case Decoder)
 - **Temperature:** 0.3 (factual), up to 0.5 for creative sections
 - **Max tokens:** 1500-4000 per section depending on complexity
 - **Banned phrases:** UPL gate — "you should", "we recommend", "we advise", "your best option", "red flag", "warning sign" (with approved replacements)
@@ -1010,7 +1462,7 @@ Phase A auto-triggers Phase B without waiting for judge data. Judge research can
 
 ### Variables
 
-168 fields in `IBVariables` interface across 7 categories. Source: `src/lib/intelligence-brief/variables.ts`.
+65 fields in `IBVariables` interface across 9 categories. Source: `src/lib/intelligence-brief/variables.ts`.
 
 | Category | Examples |
 |----------|---------|
@@ -1051,6 +1503,37 @@ Optional: `researching` (judge data pending, between auto-generating and compili
 ### Processing Pipeline
 
 Job queue with batch grouping: `ocr` → `classify` → `extract` → `analyze` → `timeline` → `witness` → `citation` → `motion` → `report`. Each job type processes in sequence. Failed jobs create operator tasks. Cron Part 16 detects pipeline completion and transitions case to "review".
+
+## Full Pipeline Map (16 Stages)
+
+Source: `ImNotAnAttorney/system/PIPELINE-MAP.md`. Stages 00-15, not all tiers use all stages.
+
+```
+00-Database ──► 01-Raw ──► 02-OCR ──► 03-Extracted ──► 04-Database ──► 05-Reports
+                                                           │
+    ┌───────────────────────────────────────────────────────┘
+    ├──► 06-Dossiers (Judge/Prosecution/Witnesses/Defense/Intel)
+    ├──► 07-Motions (Wave 1-9 + Emergency)
+    ├──► 08-Research (deep targeted)
+    ├──► 09-Case-Law (citations, Shepardize)
+    ├──► 10-Strategy (battle plans, charge maps, appellate preservation)
+    ├──► 11-For-Attorney (PDFs, briefs, battle scripts — dual CLIENT+ATTORNEY versions)
+    ├──► 12-Reply-Briefs (responses to state opposition)
+    ├──► 13-Attack-Intel (contradictions, gaps, evidence vectors)
+    └──► 14-Trial (voir dire, opening, closing, narrative, JOA, witness scripts)
+
+15-Archive ──► Superseded work, sessions, replaced motions
+```
+
+### Stage Coverage by Tier
+
+| Tier | Stages | Notes |
+|------|--------|-------|
+| Case Decoder ($197) | None | Skills-based generation only (Edge Function) |
+| Intelligence Brief ($997) | None | Skills + optional judge research (Edge Function) |
+| X-Ray ($2,497) | 01-05 | Document pipeline through report generation |
+| War Room ($4,997) | 01-11 | Full analysis + strategy + attorney package |
+| Situation Room ($9,997) | 01-14 | All stages including trial prep |
 
 ## Playbook / Digital Products
 
@@ -1142,6 +1625,7 @@ Source: `src/lib/drip-emails.ts` + cron Parts 1-2.
 | Category | Emails | Trigger |
 |----------|--------|---------|
 | Nurture | 6+ emails | Days since subscribe (1, 3, 5, 7, 10, 14) |
+| DUI 72-hour crisis | 3 emails | Days 2, 4, 7 — tighter cadence for DUI defendants in crisis (source: `dui-72-hours`). Falls to standard nurture at Day 10+ |
 | Score-band nurture | Band-specific | Crisis/Concerning urgency or Adequate/Excellent validation |
 | Post-purchase (CD) | ~6 emails | intake_reminder → delivery → meeting_prep → story_harvest → upsell → referral |
 | Post-purchase (IB) | ~6 emails | phase2_reminder → delivery → meeting_prep → story_harvest → upsell → referral |
@@ -1169,15 +1653,27 @@ Source: `src/lib/drip-emails.ts` + cron Parts 1-2.
 - CAN-SPAM: Physical address + unsubscribe link + List-Unsubscribe headers (RFC 8058)
 - Email styling: dark bg (#0C0A09), zinc text (#D4D4D8), amber accent (#F59E0B)
 
+## Trial Operations Emails
+
+3 daily cycle templates for Situation Room ($9,997) trial engagement. Source: `src/lib/trial-ops-emails.ts`. Operator-triggered (not automated drip).
+
+| Template | Timing | Purpose |
+|----------|--------|---------|
+| `trialInputSolicitation` | Evening (after court adjourns) | Asks defendant to report what happened today (7 structured prompts) |
+| `eveningDebriefDelivery` | Evening (within 3 hours of input) | Delivers evening debrief analysis + next day's expected witnesses |
+| `morningBriefDelivery` | Morning (by 7 AM) | Morning brief + printable cheat sheet + questions for attorney |
+
+Each template takes `firstName`, `dayNumber`, `todayDate`, plus template-specific content (debrief HTML, cheat sheet HTML, expected witnesses). Uses same branded HTML as all INNA emails (dark theme, amber accent).
+
 ## Cron Jobs
 
 ### `/api/cron/drip` — Daily at 14:00 UTC (9:00 AM EST)
 
-19 parts. Heartbeat inserts into `cron_runs` table. Concurrent execution prevented via `acquire_cron_lock(1)` advisory lock.
+22 parts (19 numbered + 3 sub-parts: 5b, 5c, 6b). Heartbeat inserts into `cron_runs` table. Concurrent execution prevented via `acquire_cron_lock(1)` advisory lock.
 
 | Part | What | Threshold / Target | Action |
 |------|------|-------------------|--------|
-| **1** | Nurture emails | Days since subscribe | Send next unsent email (band-routing if score_band set) |
+| **1** | Nurture emails | Days since subscribe | Send next unsent email (DUI-72h routing → band-routing → standard nurture) |
 | **2** | Post-purchase emails | Days since purchase/delivery/submission | Tier-specific follow-ups (3 timing models, guards for status) |
 | **3** | Review reminders | 12h in "review" | Alert operator (48h guarantee at risk) |
 | **4** | Stuck intake detection | 2h in "intake" (CD, non-included) | Mark intake-stalled, alert operator |
@@ -1203,18 +1699,27 @@ Source: `src/lib/drip-emails.ts` + cron Parts 1-2.
 
 ## Evaluation Pipeline
 
-5-team expert evaluation framework for report quality assurance. DB-driven via `eval_criteria` and `pipeline_eval_weights` tables.
+7-team expert evaluation framework for report quality assurance. DB-driven via `eval_criteria` and `pipeline_eval_weights` tables. **Production Edge Function implements 2 teams (UPL + Psych); full 7-team framework available in CLI tool.**
 
-| Team | Criteria | Weight | Focus |
-|------|----------|--------|-------|
-| UPL (Legal Compliance) | U1-U10 | GATE | No legal advice, banned phrases — must pass |
-| Psychology | P1-P10 | HIGH | Emotional calibration, buyer state awareness |
-| Legal Quality | L1-L10 | HIGH | Accuracy, specificity, actionability |
-| Defendant Experience | D1-D11 | MEDIUM | Readability, empowerment, trust |
-| Conversion & Brand | C1-C10 | LOW | CTA placement, brand consistency |
-| Cross-Pipeline | X1-X7 | — | Multi-report comparison (inactive) |
+| Team | Code | Criteria | Weight | Focus | Status |
+|------|------|----------|--------|-------|--------|
+| UPL Compliance | U1-U7 | 7 | GATE | No legal advice, banned phrases — must pass | **Production** (Edge Function) |
+| Psychological Architecture | P1-P10 | 10 | HIGH | Emotional calibration, buyer state awareness | **Production** (Edge Function) |
+| Legal Substance | L1-L10 | 10 | HIGH | Accuracy, specificity, actionability | CLI tool |
+| Defendant Experience | D1-D26 | 26 | HIGH (15/20+) | Readability, empowerment, trust, buyer state alignment | CLI tool |
+| Conversion & Value | C1-C10 | 10 | Varies | CTA placement, pricing, brand consistency | CLI tool |
+| Rendering & Delivery | R1-R11 | 11 | Varies | HTML rendering, mobile, accessibility | CLI tool |
+| System Truth | ST1-ST16 | 16 | Varies | Anti-hallucination, expert attribution, citation verification | Designed only |
 
-**Tier-aware filtering:** Criteria with `applicable_tiers` are skipped for tiers they don't apply to. Case Decoder runs 46/51 criteria; Intelligence Brief+ runs all 51.
+**Total: 90 criteria across 7 teams.**
+
+**Weight levels:**
+- **GATE** — Must pass ALL criteria. Any FAIL blocks delivery.
+- **HIGH** — Must pass 8/10+ (or 15/20+ for Team 4). 1-2 NEEDS WORK acceptable with justification.
+- **MEDIUM** — Must pass 6/10+. Failures noted but don't block.
+- **LOW** — Advisory only.
+
+**Tier-aware filtering:** Case Decoder runs ~46 applicable criteria; Intelligence Brief+ runs all. Teams 1 & 3 always run (UPL + Legal are existential).
 
 **CLI:** `node evaluate-report.mjs --file <report> --charge-type "<type>" --tier <tier>`
 - `--model sonnet` for budget runs (~$0.25 vs ~$1.25 for Opus)
@@ -1387,7 +1892,7 @@ Token-based customer portal at `/my-case/[token]`. No login required — unguess
 
 | Component | Purpose |
 |-----------|---------|
-| `LeadCapture` | Email capture with PDF download |
+| `LeadCapture` | Email capture with PDF download (accepts props for source, title, description, download link) |
 | `FileUpload` | Discovery document upload (drag-and-drop) |
 
 ### Product Components
@@ -1509,7 +2014,7 @@ Centralized in `src/lib/site.ts`:
 
 ## Backup Worker (GitHub Actions)
 
-The Supabase Edge Function Free tier has a 150-second hard timeout. Claude Sonnet 4.6 can exceed this on complex charges. A GitHub Actions cron workflow runs every 5 minutes to catch timed-out cases.
+The Supabase Edge Function Free tier has a 150-second hard timeout. Claude Opus 4.6 with extended thinking can exceed this on complex charges. A GitHub Actions cron workflow runs every 5 minutes to catch timed-out cases.
 
 **Files:** `scripts/generate-worker.mjs` + `.github/workflows/generate-report.yml`
 
@@ -1626,7 +2131,7 @@ src/
     operator-auth.ts             ← Timing-safe auth + isOperatorAuthorized
     playbook-configs.ts          ← Playbook sales page configs
     intelligence-brief/
-      prompts.ts                 ← IB prompt configs (59.7KB, 168 variables)
+      prompts.ts                 ← IB prompt configs (59.7KB, 65 variables)
       variables.ts               ← IBVariables interface + extractVariables()
       render.ts                  ← Dependency-free Markdown→HTML + dark theme
     types/
@@ -1678,7 +2183,7 @@ scripts/
   e2e-playbook-visual.mjs       ← Playbook visual E2E test
 supabase/
   functions/
-    generate-report/             ← Report generation Edge Function (Sonnet 4.6, Deno)
+    generate-report/             ← Report generation Edge Function (Opus 4.6 for CD, Sonnet 4.6 for IB, Deno)
     evaluate-report/             ← Report evaluation Edge Function (Sonnet 4.6)
   migrations/
     00001_initial_schema.sql     ← Core tables (orders, cases, intakes, subscribers, drip_emails)
@@ -1713,3 +2218,106 @@ supabase/
 | `e2e-all-pipelines.mjs` | E2E test: all pipelines (CD + IB + X-Ray) |
 | `test-e2e-dashboard.mjs` | E2E test: operator dashboard API routes |
 | `e2e-playbook-visual.mjs` | E2E test: playbook visual rendering |
+
+## Engine Project Structure
+
+```
+ImNotAnAttorney-engine/
+  src/
+    config.mjs              ← Env vars, MODEL_MAP (27 entries), MAX_TOKENS_MAP, template paths
+    worker.mjs              ← Entry point: poll loop, job dispatch, pipeline orchestration
+    queue.mjs               ← claim_next_job (RPC), completeJob, failJob, retry logic
+    supabase.mjs            ← Supabase client wrapper
+    workers/
+      ocr.mjs               ← Phase 1: PDF/image text extraction (pdf-parse + tesseract.js)
+      classify.mjs           ← Phase 1: Document classification
+      extract-entities.mjs   ← Phase 1: Named entity extraction
+      finding-analysis.mjs   ← Phase 2: Case-level findings
+      red-flags.mjs          ← Phase 2: Prosecution weaknesses
+      questions.mjs          ← Phase 2: Attorney question generation
+      timeline.mjs           ← Phase 2: Chronological reconstruction
+      evidence.mjs           ← Phase 2: Evidence catalog
+      chain-of-custody.mjs   ← Phase 2: Custody chain + gap detection
+      witness-id.mjs         ← Phase 2: Witness identification
+      score.mjs              ← Phase 2: Defense Strength Score
+      report.mjs             ← Phase 3: Final report assembly
+      judge-research.mjs     ← Phase 4: Judge profiling
+      prosecutor-research.mjs ← Phase 4: Prosecutor profiling
+      witness-dossier.mjs    ← Phase 4/6: Witness dossiers (Part 1 + Part 2)
+      motion-analysis.mjs    ← Phase 5: Motion landscape
+      case-law.mjs           ← Phase 5: Case law research
+      strategy.mjs           ← Phase 5: Defense strategy synthesis
+      cross-exam.mjs         ← Phase 6: Cross-examination scripts
+      trial-material.mjs     ← Phase 6: Trial prep materials
+      attack-intel.mjs       ← Phase 6: Attack intelligence
+      update.mjs             ← Ongoing: War Room weekly updates
+      citation-verify.mjs    ← Verification: Citation verification cascade
+      docket-fetch.mjs       ← Data Fetch: Court docket retrieval
+      legal-research.mjs     ← Data Fetch: Pre-generation legal research
+      jurisdiction-profile.mjs ← Data Fetch: Jurisdiction context
+      docket-monitor.mjs     ← Data Fetch: Ongoing docket alerts
+    integrations/
+      legal-verifier.mjs     ← CourtListener + eCFR + Wex verification
+      docket-fetcher.mjs     ← CourtListener + JudyRecords docket fetch
+      pacer-fetcher.mjs      ← PACER federal court records
+      govinfo-fetcher.mjs    ← GovInfo API (US Code, CFR)
+      serpapi-legal.mjs      ← SerpAPI Google Scholar search
+  .github/
+    workflows/
+      process-jobs.yml       ← Cron: every 5 min, node src/worker.mjs --once
+  package.json               ← 7 dependencies, Node.js ≥20
+```
+
+## Business Docs Structure
+
+```
+ImNotAnAttorney/
+  system/
+    EVALUATION-TEAM.md       ← 7 teams, 90 criteria, weight matrix
+    EXPERT-REFERENCE.md      ← 63+ verified experts across 14 categories
+    EMOTIONAL-INTELLIGENCE.md ← 8-dimension profiling, 4 psychological frameworks
+    PIPELINE-MAP.md          ← 16 stages (00-15), tier coverage matrix
+    DELIVERABLES-BY-TIER.md  ← v4 March 2026, 52 deliverables across 5 tiers
+    BUYER-STATES.md          ← 6 states with intake signals + anti-patterns
+    CONTENT-ARCHITECTURE-STANDARD.md ← 11 principles + 3-persona audit protocol
+    CLIENT-JOURNEY.md        ← Per-tier timeline, 8 emotional moments, touchpoints
+    Attorney-Personas/       ← 10 specialized personas + 11 masterclass transcripts
+    templates/
+      x-ray/                 ← X-Ray prompt templates (Stage 05)
+      war-room/              ← War Room prompt templates (Stages 06-11)
+      situation-room/        ← Situation Room prompt templates (Stages 12-14)
+    data/
+      motion-library.json    ← 30+ motions with legal basis (anti-hallucination)
+      penalty-ranges.json    ← Charge-specific sentencing ranges
+      statute-references.json ← Statute citations with verification metadata
+      diversion-programs.json ← State-by-state diversion eligibility
+      speedy-trial-rules.json ← State-specific speedy trial timelines
+```
+
+## Attorney Personas
+
+10 specialized attorney personas in `ImNotAnAttorney/system/Attorney-Personas/` + 11 masterclass transcripts. Each persona is a subject matter expert profile used in prompt templates for charge-specific expertise:
+
+- Charge-specific personas (DUI, Drug, Sex Offense, White Collar, Federal, Self-Defense, Domestic, Weapons)
+- Cross-cutting personas (Trial Strategy, Motion Strategy)
+- Each persona loads charge-specific expert pairs from the Expert Reference System
+
+The masterclass transcripts provide additional grounding for complex analytical sections (motion analysis, cross-examination strategy, trial preparation).
+
+## Cross-Reference: Business Documentation
+
+For complete specifications beyond this architecture doc, see:
+
+| Document | Path | Contents |
+|----------|------|----------|
+| Evaluation Framework | `ImNotAnAttorney/system/EVALUATION-TEAM.md` | 7 teams, 90 criteria, weight matrix, pass thresholds |
+| Expert Reference | `ImNotAnAttorney/system/EXPERT-REFERENCE.md` | 63+ experts, categories, tier loading, Victor Knapp policy |
+| Emotional Intelligence | `ImNotAnAttorney/system/EMOTIONAL-INTELLIGENCE.md` | 8 dimensions, 4 frameworks, stance calibration, 38-point checklist |
+| Pipeline Map | `ImNotAnAttorney/system/PIPELINE-MAP.md` | 16 stages, tier coverage, convergence points |
+| Deliverables by Tier | `ImNotAnAttorney/system/DELIVERABLES-BY-TIER.md` | v4 spec, 52 deliverables, pricing, guarantees |
+| Buyer States | `ImNotAnAttorney/system/BUYER-STATES.md` | 6 states, signals, addressing strategies |
+| Content Standard | `ImNotAnAttorney/system/CONTENT-ARCHITECTURE-STANDARD.md` | 11 principles, audit protocol |
+| Client Journey | `ImNotAnAttorney/system/CLIENT-JOURNEY.md` | Per-tier timelines, touchpoints, emotional moments |
+| Engine Config | `ImNotAnAttorney-engine/src/config.mjs` | MODEL_MAP, MAX_TOKENS_MAP, env vars |
+| Engine Worker | `ImNotAnAttorney-engine/src/worker.mjs` | Pipeline orchestration, downstream scheduling |
+| Engine Queue | `ImNotAnAttorney-engine/src/queue.mjs` | Job claim, retry strategy, requeue logic |
