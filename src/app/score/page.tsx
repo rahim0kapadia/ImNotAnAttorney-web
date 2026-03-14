@@ -45,11 +45,12 @@
  */
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { TIER_CORE } from "@/lib/tiers";
 import { SITE_URL } from "@/lib/site";
 import Link from "next/link";
 import { AnimatedScoreArc } from "@/components/motion/AnimatedScoreArc";
+import { ShareButtons } from "@/components/ShareButtons";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 
 /**
@@ -252,6 +253,54 @@ function getTimeIndex(timeSinceArrest: string): number {
     "12-plus-months": 4,
   };
   return map[timeSinceArrest] ?? 0;
+}
+
+/** Animated counter that counts up from 0 to the target value */
+function AnimatedCounter({ target }: { target: number }) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (target <= 0) return;
+    const duration = 1500;
+    const steps = 30;
+    const increment = target / steps;
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(timer);
+  }, [target]);
+
+  if (target <= 0) return null;
+  return (
+    <p className="mt-2 text-xs text-zinc-500">
+      {count.toLocaleString()} defendants have scored their defense
+    </p>
+  );
+}
+
+/** Personalized loading screen lines by charge type */
+function getLoadingSteps(chargeType: string): string[] {
+  const chargeLabel: Record<string, string> = {
+    drug: "drug",
+    dui: "DUI/DWI",
+    "white-collar": "white collar",
+    "other-felony": "felony",
+    "other-misdemeanor": "misdemeanor",
+  };
+  const label = chargeLabel[chargeType] || chargeType;
+  return [
+    `Checking motion filing benchmarks for ${label} cases...`,
+    "Analyzing communication frequency against attorney accountability standards...",
+    "Comparing discovery receipt timeline to case stage...",
+    "Evaluating defense milestone completion rate...",
+    "Generating your Defense Milestone Score...",
+  ];
 }
 
 /**
@@ -590,12 +639,26 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </div>
       )}
 
-      {/* 10. TRUST LINE */}
+      {/* 10. SHARE BUTTONS — viral growth loop */}
+      <ShareButtons
+        url="/score"
+        title="Defense Milestone Score"
+        heading="Know someone facing charges? Send them this tool — 60 seconds, free, no email."
+        subheading="Share the tool, not your result. Their score stays private."
+        shareText="Check if your attorney is actually working your case — free, 60 seconds, no email required: "
+        utmParams="utm_source=share&utm_medium=score&utm_campaign=viral"
+        order="sms-first"
+      />
+
+      {/* 11. PRIVACY + AGGREGATE NOTICE */}
       <p className="text-center text-xs text-zinc-400">
         Your answers are not stored, not associated with your name, and cannot be subpoenaed or used as evidence. This tool does not create an attorney-client relationship.
       </p>
+      <p className="text-center text-xs text-zinc-500">
+        Your individual answers are never stored. We track anonymous aggregate statistics to publish research that holds the system accountable.
+      </p>
 
-      {/* 11. RESET */}
+      {/* 12. RESET */}
       <p className="text-center text-sm text-zinc-400 space-x-4">
         <button
           onClick={() => window.location.reload()}
@@ -624,18 +687,57 @@ export default function ScorePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState(false);
+  const [completionCount, setCompletionCount] = useState(0);
+  const [loadingStep, setLoadingStep] = useState(0);
   const scoreRef = useRef<HTMLDivElement>(null);
 
   const answeredCount = Object.keys(answers).length;
   const allAnswered = answeredCount === questions.length;
 
+  // Fetch completion count on mount
+  useEffect(() => {
+    fetch("/api/score/count")
+      .then((r) => r.json())
+      .then((d) => setCompletionCount(d.count || 0))
+      .catch(() => {});
+  }, []);
+
+  // Restore score from sessionStorage on mount
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem("inna-score");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.score !== undefined && parsed.band && parsed.observations) {
+          setResult(parsed);
+          if (parsed.answers) setAnswers(parsed.answers);
+        }
+      }
+    } catch {
+      // Ignore parse errors
+    }
+  }, []);
+
   /** Submit answers to /api/score for server-side scoring. Answers are not persisted. */
-  async function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     if (!allAnswered) return;
 
     setLoading(true);
+    setLoadingStep(0);
     setError(null);
+
+    // Personalized loading animation — cycle through steps
+    const steps = getLoadingSteps(answers.chargeType);
+    let stepIndex = 0;
+    const stepTimer = setInterval(() => {
+      stepIndex++;
+      if (stepIndex < steps.length) {
+        setLoadingStep(stepIndex);
+      }
+    }, 800);
+
+    const startTime = Date.now();
 
     try {
       const res = await fetch("/api/score", {
@@ -645,22 +747,45 @@ export default function ScorePage() {
       });
 
       if (!res.ok) {
+        clearInterval(stepTimer);
         setError("Something went wrong. Please try again.");
         return;
       }
 
       const data = await res.json();
+
+      // Ensure minimum 3 second display for the loading animation
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, 3000 - elapsed);
+
+      await new Promise((resolve) => setTimeout(resolve, remaining));
+      clearInterval(stepTimer);
+
       setResult(data);
+      setCompletionCount((prev) => prev + 1);
+
+      // Persist to sessionStorage (score + answers for context restoration)
+      try {
+        sessionStorage.setItem("inna-score", JSON.stringify({
+          ...data,
+          chargeType: answers.chargeType,
+          answers,
+        }));
+      } catch {
+        // sessionStorage might be full or unavailable
+      }
+
       setTimeout(() => {
         scoreRef.current?.focus();
         scoreRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 100);
     } catch {
+      clearInterval(stepTimer);
       setError("Could not connect. Please try again.");
     } finally {
       setLoading(false);
     }
-  }
+  }, [allAnswered, answers]);
 
   return (
     <div className="px-4 py-16">
@@ -686,6 +811,7 @@ export default function ScorePage() {
             Answer 10 questions. Get your Defense Milestone Score in 60 seconds — free, no email required.
           </p>
           <p className="mt-2 text-xs text-zinc-500">Your answers are not stored.</p>
+          <AnimatedCounter target={completionCount} />
         </div>
 
         {result ? (
@@ -788,7 +914,9 @@ export default function ScorePage() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
                     />
                   </svg>
-                  Calculating...
+                  <span className="transition-opacity duration-300">
+                    {getLoadingSteps(answers.chargeType)[loadingStep]}
+                  </span>
                 </span>
               ) : (
                 "Get My Score"

@@ -494,6 +494,27 @@ export async function POST(req: NextRequest) {
     // Compute score -- pure function, no side effects, no data storage
     const result = calculateScore(body as ScoreInput);
 
+    // Fire-and-forget: increment counters and anonymous aggregates
+    // Supabase failures do NOT break the score response
+    const supabase = createAdminClient();
+    supabase.rpc("increment_counter", { p_id: "score_completions" }).then(() => {}, () => {});
+
+    // Anonymous aggregate tracking — NO individual answers stored
+    const input = body as ScoreInput;
+    supabase.rpc("increment_score_aggregate", { p_charge_type: input.chargeType, p_metric: "total_by_charge" }).then(() => {}, () => {});
+    if (input.motionsFiled === "no") {
+      supabase.rpc("increment_score_aggregate", { p_charge_type: input.chargeType, p_metric: "no_motions_filed" }).then(() => {}, () => {});
+    }
+    if (input.hasDiscovery === "no") {
+      supabase.rpc("increment_score_aggregate", { p_charge_type: input.chargeType, p_metric: "never_seen_discovery" }).then(() => {}, () => {});
+    }
+    if (input.communicationFrequency === "never") {
+      supabase.rpc("increment_score_aggregate", { p_charge_type: input.chargeType, p_metric: "communication_never" }).then(() => {}, () => {});
+    }
+    if (input.strategyDiscussed === "no") {
+      supabase.rpc("increment_score_aggregate", { p_charge_type: input.chargeType, p_metric: "no_strategy_discussion" }).then(() => {}, () => {});
+    }
+
     return NextResponse.json(result);
   } catch (error) {
     console.error("[Score] Error:", error);

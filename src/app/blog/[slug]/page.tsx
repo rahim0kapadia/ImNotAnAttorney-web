@@ -31,9 +31,11 @@ import { SourceIntelligence, ATTORNEYS } from "@/components/SourceIntelligence";
 import { TLDRBox } from "@/components/TLDRBox";
 import { BlogInlineCapture } from "@/components/BlogInlineCapture";
 import { MDXErrorBoundary } from "@/components/MDXErrorBoundary";
+import { ShareButtons } from "@/components/ShareButtons";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 import { SITE_URL } from "@/lib/site";
+import { getArticleAboutEntities, getArticleCitations } from "@/lib/schema";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -134,6 +136,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   "@type": "ListItem",
                   position: 3,
                   name: post.title,
+                  item: `${SITE_URL}/blog/${slug}`,
                 },
               ],
             }),
@@ -147,6 +150,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Article",
+              "@id": `${SITE_URL}/blog/${slug}#article`,
               headline: post.title,
               description: post.excerpt,
               datePublished: post.date,
@@ -162,6 +166,29 @@ export default async function BlogPostPage({ params }: PageProps) {
               keywords: post.tags.join(", "),
               articleSection:
                 CATEGORY_LABELS[post.category] || "Criminal Defense",
+              educationalLevel: "beginner",
+              audience: { "@type": "Audience", audienceType: "criminal defendant" },
+              speakable: {
+                "@type": "SpeakableSpecification",
+                cssSelector: [".tldr-box", "article h2:first-of-type + p"],
+              },
+              ...(() => {
+                const aboutEntities = getArticleAboutEntities(post.category, post.tags);
+                return aboutEntities.length > 0 ? { about: aboutEntities } : {};
+              })(),
+              ...(() => {
+                const citations = getArticleCitations(slug);
+                return citations ? { citation: citations } : {};
+              })(),
+              ...(slug === "what-500-pages-of-drug-trafficking-discovery-contained"
+                ? {
+                    isBasedOn: {
+                      "@type": "CreativeWork",
+                      name: "Florida Drug Trafficking Discovery Documents (Case Study)",
+                      description: "500 pages of discovery materials reviewed 2025",
+                    },
+                  }
+                : {}),
               mentions: (
                 ATTORNEYS[post.category] || ATTORNEYS["general-defense"]
               ).map((a) => ({
@@ -180,10 +207,33 @@ export default async function BlogPostPage({ params }: PageProps) {
               __html: JSON.stringify({
                 "@context": "https://schema.org",
                 "@type": "FAQPage",
+                isPartOf: { "@id": `${SITE_URL}/blog/${slug}#article` },
                 mainEntity: post.faqs.map((faq) => ({
                   "@type": "Question",
                   name: faq.q,
+                  isPartOf: { "@id": `${SITE_URL}/blog/${slug}#article` },
                   acceptedAnswer: { "@type": "Answer", text: faq.a },
+                })),
+              }),
+            }}
+          />
+        )}
+
+        {/* HowTo schema (if post has howToSteps in frontmatter) */}
+        {post.howToSteps.length > 0 && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "HowTo",
+                name: post.title,
+                description: post.excerpt,
+                step: post.howToSteps.map((step, i) => ({
+                  "@type": "HowToStep",
+                  position: i + 1,
+                  name: step.name,
+                  text: step.text,
                 })),
               }),
             }}
@@ -204,69 +254,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         <BlogInlineCapture category={post.category || "general-defense"} />
 
         {/* Share — growth loop */}
-        <FadeInUp>
-        <div className="mt-12 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
-          <p className="text-sm font-bold text-white">
-            Know someone facing charges? Send them this.
-          </p>
-          <p className="mt-1 text-xs text-zinc-400">
-            Most defendants don&apos;t know they can hold their attorney accountable. Share this with someone who needs it.
-          </p>
-          <StaggerContainer className="mt-4 flex flex-wrap gap-3">
-            <StaggerItem>
-            <a
-              href={`sms:?body=${encodeURIComponent(`Read this — it might help with your case: ${SITE_URL}/blog/${slug}`)}`}
-              className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-white transition-colors hover:bg-zinc-700"
-              aria-label="Share via text message"
-            >
-              📱 Text
-            </a>
-            </StaggerItem>
-            <StaggerItem>
-            <a
-              href={`https://wa.me/?text=${encodeURIComponent(`${post.title} ${SITE_URL}/blog/${slug}`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-white transition-colors hover:bg-zinc-700"
-              aria-label="Share via WhatsApp"
-            >
-              WhatsApp
-            </a>
-            </StaggerItem>
-            <StaggerItem>
-            <a
-              href={`mailto:?subject=${encodeURIComponent(`This might help — ${post.title}`)}&body=${encodeURIComponent(`I thought this might be useful for your case:\n\n${post.title}\n${SITE_URL}/blog/${slug}\n\nIt covers questions you should be asking your attorney.`)}`}
-              className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-white transition-colors hover:bg-zinc-700"
-              aria-label="Share via email"
-            >
-              ✉️ Email
-            </a>
-            </StaggerItem>
-            <StaggerItem>
-            <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${SITE_URL}/blog/${slug}`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-white transition-colors hover:bg-zinc-700"
-              aria-label="Share on Twitter / X"
-            >
-              𝕏 Twitter
-            </a>
-            </StaggerItem>
-            <StaggerItem>
-            <a
-              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${SITE_URL}/blog/${slug}`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-white transition-colors hover:bg-zinc-700"
-              aria-label="Share on Facebook"
-            >
-              Facebook
-            </a>
-            </StaggerItem>
-          </StaggerContainer>
-        </div>
-        </FadeInUp>
+        <ShareButtons url={`/blog/${slug}`} title={post.title} />
 
         {/* Playbook CTA — shown above BlogCTA for DUI posts */}
         {post.category === "dui" && (

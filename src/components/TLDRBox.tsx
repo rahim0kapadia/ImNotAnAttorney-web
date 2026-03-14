@@ -7,7 +7,7 @@
  */
 export function TLDRBox({ children }: { children: React.ReactNode }) {
   return (
-    <div className="not-prose mb-8 rounded-lg border border-amber-500/30 bg-amber-500/5 p-4">
+    <div className="tldr-box not-prose mb-8 rounded-lg border border-amber-500/30 bg-amber-500/5 p-4">
       <p className="mb-2 text-xs font-bold uppercase tracking-wider text-amber-400">
         TL;DR
       </p>
