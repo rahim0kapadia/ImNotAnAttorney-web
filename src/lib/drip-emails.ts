@@ -354,6 +354,81 @@ export const SCORE_REENGAGE_EMAILS: DripEmail[] = [
 ];
 
 // ============================================================
+// DUI 72-HOUR CHECKLIST SEQUENCE (dui-72-hours source subscribers)
+// Tighter cadence than standard nurture — these subscribers are in
+// active crisis (arrested in the last 48 hours). DMV deadline is
+// time-sensitive (7-10 days in most states).
+//
+// Day 0: Checklist delivery (handled by subscribe/route.ts, not cron)
+// Day 2: Per se vs. impairment — preview of Playbook Section 1
+// Day 4: Attorney consultation prep — bridge to Playbook purchase
+// Day 7: Playbook offer with urgency (30-day credit window)
+//
+// After Day 7, subscribers join standard nurture at Day 10+.
+// ============================================================
+
+export const DUI_72_HOUR_EMAILS: DripEmail[] = [
+  {
+    key: "dui_72h_day2",
+    delayDays: 2,
+    subject: "The two types of DUI — and why it matters for your defense",
+    html: `
+      <h1 style="color: #F59E0B;">Two Types of DUI. Your Defense Depends on Which One.</h1>
+      <p>Most people don't know this: there are two completely different ways the prosecution can charge a DUI.</p>
+      <p><strong style="color: white;">Per se DUI:</strong> Your BAC was over the legal limit. Period. They don't need to prove you were impaired — just that the number was over .08.</p>
+      <p><strong style="color: white;">Impairment DUI:</strong> They claim you were impaired regardless of BAC. This is where field sobriety tests, officer observations, and dashcam footage matter.</p>
+      <p>Each one has different defense angles. Different weaknesses. Different questions to ask your attorney.</p>
+      <p>The per se charge has a hidden vulnerability: <strong style="color: white;">breathalyzer calibration records.</strong> If the machine wasn't calibrated correctly, the number can be challenged. Most attorneys don't request these records unless you ask.</p>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Have you requested your DMV hearing yet?</strong> If you downloaded the 72-hour checklist, item #1 was the DMV deadline. In most states, that window is 7-10 days from arrest. If you haven't acted on it yet, today is the day.
+      </p>
+    `,
+  },
+  {
+    key: "dui_72h_day4",
+    delayDays: 4,
+    subject: "6 questions to bring to your attorney consultation",
+    html: `
+      <h1 style="color: #F59E0B;">Your Attorney Consultation Is Coming Up</h1>
+      <p>If you haven't had your first real attorney meeting yet, it's coming. Here's how to make it count:</p>
+      <p><strong style="color: white;">Ask these 6 questions:</strong></p>
+      <ol>
+        <li><strong style="color: white;">"Have you requested my DMV hearing?"</strong> — If they look confused, that's a red flag.</li>
+        <li><strong style="color: white;">"What's your plan for the breathalyzer evidence?"</strong> — "We'll see" is not a plan.</li>
+        <li><strong style="color: white;">"Have you reviewed the dashcam footage?"</strong> — This is often the most important evidence.</li>
+        <li><strong style="color: white;">"Were the field sobriety tests administered correctly?"</strong> — NHTSA has strict protocols. Deviations matter.</li>
+        <li><strong style="color: white;">"What motions are you considering?"</strong> — Suppression, exclusion, dismissal. They should have specifics.</li>
+        <li><strong style="color: white;">"What's the realistic best and worst outcome?"</strong> — Vague optimism is worse than honest assessment.</li>
+      </ol>
+      <p>Those 6 questions are a start. The DUI Defense Playbook has <strong style="color: white;">26 questions</strong> — each with examples of what a good answer sounds like and what a red flag sounds like.</p>
+      ${cta("Get the DUI Defense Playbook \u2014 " + TIER_CORE["dui-first-offense"].priceDisplay, "/playbook/dui-first-offense")}
+    `,
+  },
+  {
+    key: "dui_72h_day7",
+    delayDays: 7,
+    subject: "Your first attorney meeting: did they answer clearly?",
+    html: `
+      <h1 style="color: #F59E0B;">Did They Answer Clearly?</h1>
+      <p>By now you've probably had your first real conversation with your attorney. One question:</p>
+      <p style="font-size: 18px; color: white;"><strong>Could they explain your defense strategy in one sentence?</strong></p>
+      <p>If yes — that's a good sign. If no — it doesn't necessarily mean they're bad. It might mean they haven't focused on your case yet. Either way, that's information.</p>
+      <p>The <strong style="color: white;">DUI Defense Playbook</strong> gives you the full picture:</p>
+      <ul style="padding-left: 20px;">
+        <li>26 questions with good/bad answer examples</li>
+        <li>Case stage roadmap — every step from arrest to resolution</li>
+        <li>12-point evidence red flag checklist</li>
+        <li>Case Progress Scorecard</li>
+        <li>One-page cheat sheet for your next meeting</li>
+      </ul>
+      <p><strong style="color: white;">${TIER_CORE["dui-first-offense"].priceDisplay}. Instant download.</strong> Full credit toward case-specific analysis (Case Decoder, ${TIER_CORE["case-decoder"].priceDisplay}) within 30 days.</p>
+      ${cta("Get the DUI Defense Playbook \u2014 " + TIER_CORE["dui-first-offense"].priceDisplay, "/playbook/dui-first-offense")}
+      <p style="margin-top: 16px; color: #A1A1AA;">From here: practical information about DUI defense, once a week or less. Unsubscribe any time.</p>
+    `,
+  },
+];
+
+// ============================================================
 // POST-PURCHASE SEQUENCES (buyers)
 // Organized by tier. Each tier has: delivery (day 0), story harvest
 // (day 5 relative to delivery), upsell, and optionally referral.
@@ -1359,6 +1434,37 @@ export function getNextScoreEmail(
  */
 export function getScoreNurtureOffset(scoreBand: string): number {
   return scoreBand === "Critical" || scoreBand === "Concerning" ? 7 : 3;
+}
+
+/**
+ * Determines the next DUI 72-hour sequence email for a subscriber.
+ *
+ * DUI 72-hour subscribers (source: "dui-72-hours") get a tighter drip cadence
+ * (Day 2, 4, 7) focused on the DMV deadline and Playbook conversion.
+ * After Day 7, subscribers join standard nurture at Day 10+.
+ *
+ * @param daysSinceSubscribe - Calendar days since the subscriber signed up.
+ * @param sentKeys - Set of email keys already sent to this subscriber.
+ * @returns The next DUI-specific email to send, or null if none remain.
+ */
+export function getNextDui72hEmail(
+  daysSinceSubscribe: number,
+  sentKeys: Set<string>
+): DripEmail | null {
+  for (const email of DUI_72_HOUR_EMAILS) {
+    if (daysSinceSubscribe >= email.delayDays && !sentKeys.has(email.key)) {
+      return email;
+    }
+  }
+  return null;
+}
+
+/**
+ * Returns the day offset at which a DUI 72-hour subscriber should join standard nurture.
+ * Join at Day 10 (after the DUI-specific sequence ends at Day 7).
+ */
+export function getDui72hNurtureOffset(): number {
+  return 10;
 }
 
 // ============================================================

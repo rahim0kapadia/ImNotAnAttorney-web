@@ -162,6 +162,30 @@ export default function ResourcesPage() {
         </section>
         </FadeInUp>
 
+        {/* DUI 72-HOUR CHECKLIST — DUI-specific email-gated lead magnet */}
+        <FadeInUp>
+        <section className="mt-12">
+          <h2 className="font-display text-xl font-bold text-white">
+            Arrested for DUI in the Last 48 Hours?
+          </h2>
+          <p className="mt-1 text-sm text-zinc-400">
+            There are three things you need to do before your window closes — one has a deadline as short as 7 days.
+          </p>
+          <div className="mt-6">
+            <LeadCapture
+              source="dui-72-hours"
+              title="First 72 Hours After a DUI Arrest — Emergency Checklist"
+              description="The 3 things to do tonight, the DMV deadline that could cost you your license, and the 6 questions to ask at your attorney consultation. Printable. Takes 5 minutes."
+              buttonText="Send Me the Checklist"
+              successTitle="Check your inbox — the checklist is on its way."
+              successDescription="Handle the 72-hour items first. When you're ready for the full picture:"
+              downloadHref="/guides/dui-first-72-hours-checklist.pdf"
+              downloadLabel="Download 72-Hour Checklist →"
+            />
+          </div>
+        </section>
+        </FadeInUp>
+
         {/* KNOW YOUR RIGHTS — Free (no email required) rights guides per     */}
         {/* charge type. Pure educational value for SEO and trust-building.   */}
         <FadeInUp>
