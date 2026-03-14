@@ -273,6 +273,21 @@ async function sendEmail(params: {
  *   5. Per-section word budgets + conditional section rules (C1/C2)
  *   6. Self-verification checklist (no ratings, no scores, no blame)
  */
+// Universal anti-hallucination rules — injected into EVERY Claude call (CD + IB).
+// Domain-specific rules (outcome map, plea framework, immigration, etc.) stay in buildIBPrompt().
+const ANTI_HALLUCINATION_BLOCK = `
+
+ANTI-HALLUCINATION RULES (MANDATORY — violations invalidate entire output):
+
+1. CASE LAW: Only cite cases you are CERTAIN exist. Include full citation (case name, volume, reporter, page, year). If uncertain, describe the legal principle WITHOUT a case name. NEVER fabricate.
+2. STATUTES: Only cite statute numbers you are CERTAIN are correct for the jurisdiction specified. If unsure, cite chapter/title and add [VERIFY].
+3. EXPERTS/ATTORNEYS: Only attribute methods or quotes to real, verifiable people. Never invent expert names or technique labels.
+4. STATISTICS: NEVER fabricate conviction rates, suppression rates, plea percentages, or sentencing ranges. Use qualitative language unless citing a named source.
+5. COURT PROCEDURES: Only describe procedures you are certain apply in the specified jurisdiction. If uncertain: "Verify this procedure with your attorney."
+6. CONFIDENCE MARKING: For any factual claim below 90% confidence, prefix with [VERIFY].
+
+All citations are automatically verified against CourtListener's legal database. Fabricated citations will be caught and flagged.`;
+
 const SYSTEM_PROMPT = `You are an elite criminal defense research analyst generating a Case Decoder report.
 
 CRITICAL CONTEXT — WHAT YOU HAVE AND DON'T HAVE:
@@ -1617,6 +1632,196 @@ function getEvidenceContext(types: string[]): string {
   return "\n\nEVIDENCE ACCOUNTABILITY CONTEXT (defendant's beliefs about evidence — not confirmed):\n" + blocks.join("\n");
 }
 
+// ============================================================
+// LEGAL RESEARCH DATA INJECTION (Wave 5.2)
+// Fetches pre-researched legal data from Supabase and formats
+// it into a text block for injection into Claude prompts.
+// Data is SUPPLEMENTARY — if no legal research worker has run
+// for this case, the block is empty and nothing changes.
+// ============================================================
+
+/**
+ * Legal research data structure returned by fetchLegalResearchData().
+ * All fields are optional — empty/null means no data available.
+ */
+interface LegalResearchData {
+  jurisdictionProfile: Record<string, unknown> | null;
+  preResearchedCases: Array<Record<string, unknown>>;
+  wexDefinitions: Record<string, string> | null;
+  judgeProfile: Record<string, unknown> | null;
+}
+
+/**
+ * Fetches available legal research data from Supabase for a given case.
+ * Queries jurisdiction_profiles, case_law_references (pre_research only),
+ * wex_definitions from cases metadata, and optionally judge_profiles.
+ *
+ * All queries are wrapped in try/catch — if any table doesn't exist yet
+ * (migration not applied) or the query fails, that data source is skipped.
+ * This ensures the Edge Function continues to work even if the migration
+ * (011-legal-source-maximization.sql) hasn't been applied yet.
+ *
+ * @param caseId - The case UUID.
+ * @param url - Supabase project URL.
+ * @param key - Supabase service role key.
+ * @param judgeName - Optional judge name for judge profile lookup (IB only).
+ * @returns LegalResearchData with whatever was available.
+ */
+async function fetchLegalResearchData(
+  caseId: string,
+  url: string,
+  key: string,
+  judgeName?: string,
+): Promise<LegalResearchData> {
+  const result: LegalResearchData = {
+    jurisdictionProfile: null,
+    preResearchedCases: [],
+    wexDefinitions: null,
+    judgeProfile: null,
+  };
+
+  // 1. Jurisdiction profile (one per case)
+  try {
+    const rows = await supabaseSelect(url, key, "jurisdiction_profiles",
+      `case_id=eq.${caseId}&select=court_name,court_type,court_citation_string,coverage_count,coverage_first_year,coverage_last_year,charge_statute_text,charge_statute_url,charge_statute_source,offense_date_regulation_text,regulation_changed,current_regulation_text,speedy_trial_statute,speedy_trial_days`);
+    // deno-lint-ignore no-explicit-any
+    if (rows.length > 0) result.jurisdictionProfile = (rows as any[])[0];
+  } catch (err) {
+    console.log(`[legal-research] jurisdiction_profiles fetch skipped:`, err instanceof Error ? err.message : err);
+  }
+
+  // 2. Pre-researched case law (from legal-research worker, limit 10)
+  try {
+    const rows = await supabaseSelect(url, key, "case_law_references",
+      `case_id=eq.${caseId}&research_source=eq.pre_research&select=case_name,citation,court,year,holding,application&limit=10`);
+    // deno-lint-ignore no-explicit-any
+    if (rows.length > 0) result.preResearchedCases = rows as any[];
+  } catch (err) {
+    console.log(`[legal-research] case_law_references fetch skipped:`, err instanceof Error ? err.message : err);
+  }
+
+  // 3. Wex definitions from case metadata (JSONB column on cases table)
+  try {
+    const rows = await supabaseSelect(url, key, "cases",
+      `id=eq.${caseId}&select=wex_definitions`);
+    // deno-lint-ignore no-explicit-any
+    const caseRow = (rows as any[])[0];
+    if (caseRow?.wex_definitions && typeof caseRow.wex_definitions === "object" && Object.keys(caseRow.wex_definitions).length > 0) {
+      result.wexDefinitions = caseRow.wex_definitions;
+    }
+  } catch (err) {
+    console.log(`[legal-research] wex_definitions fetch skipped:`, err instanceof Error ? err.message : err);
+  }
+
+  // 4. Judge profile (IB only — keyed by last name)
+  if (judgeName) {
+    try {
+      const lastName = judgeName.trim().split(/\s+/).pop() || "";
+      if (lastName) {
+        const rows = await supabaseSelect(url, key, "judge_profiles",
+          `name_last=eq.${encodeURIComponent(lastName)}&select=full_name,political_affiliation,aba_rating,education,positions,appointing_president,appointment_date,gender,bio_url&limit=1`);
+        // deno-lint-ignore no-explicit-any
+        if (rows.length > 0) result.judgeProfile = (rows as any[])[0];
+      }
+    } catch (err) {
+      console.log(`[legal-research] judge_profiles fetch skipped:`, err instanceof Error ? err.message : err);
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Formats legal research data into a text block for Claude prompt injection.
+ * Returns empty string if no data is available — making this fully backward
+ * compatible with cases that have no pre-researched legal data.
+ *
+ * The block uses clear delimiters and labels so Claude knows this is
+ * VERIFIED external data (not intake data or generated content).
+ *
+ * @param data - Legal research data from fetchLegalResearchData().
+ * @param includeJudge - Whether to include judge profile (IB only).
+ * @returns Formatted text block or empty string.
+ */
+function formatLegalDataBlock(data: LegalResearchData, includeJudge = false): string {
+  const parts: string[] = [];
+
+  // Jurisdiction profile
+  const jp = data.jurisdictionProfile;
+  if (jp && jp.court_name) {
+    const jpLines: string[] = [];
+    jpLines.push(`Court: ${jp.court_name}`);
+    if (jp.court_type) jpLines.push(`Court Type: ${jp.court_type}`);
+    if (jp.court_citation_string) jpLines.push(`Court Citation: ${jp.court_citation_string}`);
+    if (jp.coverage_count) jpLines.push(`Reported Opinions: ${jp.coverage_count} (${jp.coverage_first_year || "?"}-${jp.coverage_last_year || "present"})`);
+    if (jp.charge_statute_text) {
+      jpLines.push(`Charge Statute Text: ${jp.charge_statute_text}`);
+      if (jp.charge_statute_url) jpLines.push(`Statute Source: ${jp.charge_statute_url}`);
+      if (jp.charge_statute_source) jpLines.push(`Statute Via: ${jp.charge_statute_source}`);
+    }
+    if (jp.speedy_trial_statute) {
+      jpLines.push(`Speedy Trial Statute: ${jp.speedy_trial_statute}${jp.speedy_trial_days ? ` (${jp.speedy_trial_days} days)` : ""}`);
+    }
+    if (jp.regulation_changed) {
+      jpLines.push(`WARNING — REGULATION CHANGED since offense date.`);
+      if (jp.offense_date_regulation_text) jpLines.push(`  Offense-date regulation: ${jp.offense_date_regulation_text}`);
+      if (jp.current_regulation_text) jpLines.push(`  Current regulation: ${jp.current_regulation_text}`);
+    }
+    parts.push(`JURISDICTION PROFILE (verified from CourtListener + statute sources):\n${jpLines.join("\n")}`);
+  }
+
+  // Pre-researched case law
+  if (data.preResearchedCases.length > 0) {
+    const caseLines = data.preResearchedCases.map((c) =>
+      `- ${c.case_name || "Unknown"}, ${c.citation || "no citation"} (${c.court || "?"}, ${c.year || "?"}) — ${c.holding || "holding not extracted"}${c.application ? ` | Application: ${c.application}` : ""}`
+    );
+    parts.push(`PRE-RESEARCHED CASE LAW (verified real cases — use as grounding, cite these over generated citations):\n${caseLines.join("\n")}`);
+  }
+
+  // Wex definitions
+  if (data.wexDefinitions) {
+    const defLines = Object.entries(data.wexDefinitions).map(([term, def]) =>
+      `- ${term}: ${def}`
+    );
+    parts.push(`LEGAL TERM DEFINITIONS (from Cornell LII Wex — verified plain-English definitions):\n${defLines.join("\n")}`);
+  }
+
+  // Judge profile (IB only)
+  if (includeJudge && data.judgeProfile) {
+    const j = data.judgeProfile;
+    const jLines: string[] = [];
+    jLines.push(`Name: ${j.full_name}`);
+    if (j.political_affiliation) jLines.push(`Political Affiliation: ${j.political_affiliation}`);
+    if (j.aba_rating) jLines.push(`ABA Rating: ${j.aba_rating}`);
+    if (j.appointing_president) jLines.push(`Appointed By: ${j.appointing_president}${j.appointment_date ? ` (${j.appointment_date})` : ""}`);
+    if (j.gender) jLines.push(`Gender: ${j.gender}`);
+    // deno-lint-ignore no-explicit-any
+    const education = j.education as any[];
+    if (education && Array.isArray(education) && education.length > 0) {
+      const eduLines = education.map((e) =>
+        `  - ${e.degree || "Degree"} from ${e.school || "?"} (${e.year || "?"})`
+      );
+      jLines.push(`Education:\n${eduLines.join("\n")}`);
+    }
+    // deno-lint-ignore no-explicit-any
+    const positions = j.positions as any[];
+    if (positions && Array.isArray(positions) && positions.length > 0) {
+      const posLines = positions.slice(0, 5).map((p) =>
+        `  - ${p.position_type || p.job_title || "Position"} at ${p.court || p.organization || "?"} (${p.date_start || "?"} — ${p.date_termination || "present"})`
+      );
+      jLines.push(`Positions:\n${posLines.join("\n")}`);
+    }
+    if (j.bio_url) jLines.push(`Bio: ${j.bio_url}`);
+    parts.push(`VERIFIED JUDGE PROFILE (from CourtListener — use to ground judge-related analysis):\n${jLines.join("\n")}`);
+  }
+
+  if (parts.length === 0) return "";
+
+  return `\n\n--- VERIFIED LEGAL RESEARCH DATA ---
+${parts.join("\n\n")}
+--- END VERIFIED LEGAL RESEARCH DATA ---\n`;
+}
+
 /**
  * Assembles the full user prompt from intake data for the Claude API call.
  * Uses XML section boundaries with per-section word budgets and exact counts.
@@ -1627,7 +1832,7 @@ function getEvidenceContext(types: string[]): string {
  * @param supabaseKey - Supabase service role key.
  * @returns The complete user prompt string.
  */
-async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabaseKey: string): Promise<string> {
+async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabaseKey: string, caseId: string): Promise<string> {
   const daysSinceArrest = intake.arrest_date
     ? Math.floor((Date.now() - new Date(intake.arrest_date).getTime()) / (1000 * 60 * 60 * 24))
     : null;
@@ -1636,6 +1841,18 @@ async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabase
   const chargeSpecificData = intake.charge_specific_data || {};
   const chargeBlock = await getChargeContext(intake.charge_type, jurisdictionLevel, chargeSpecificData, supabaseUrl, supabaseKey);
   const evidenceBlock = getEvidenceContext(intake.evidence_type || []);
+
+  // ── Legal research data injection (Wave 5.2) ──────────────
+  // Fetch pre-researched legal data if available. CD gets jurisdiction
+  // profile, pre-researched case law, and Wex definitions. Judge profile
+  // is IB-only (not included for CD). If no data exists (no legal-research
+  // or jurisdiction-profile worker has run), legalDataBlock is empty and
+  // the prompt is unchanged from before this feature was added.
+  const legalResearchData = await fetchLegalResearchData(caseId, supabaseUrl, supabaseKey);
+  const legalDataBlock = formatLegalDataBlock(legalResearchData, false);
+  if (legalDataBlock) {
+    console.log(`[generate-report] Legal research data injected: jurisdiction=${!!legalResearchData.jurisdictionProfile}, cases=${legalResearchData.preResearchedCases.length}, wex=${!!legalResearchData.wexDefinitions}`);
+  }
 
   const comm = intake.communication_frequency;
   const commInstruction = comm === "Rarely" || comm === "Never returned calls"
@@ -1889,7 +2106,7 @@ support persons.`);
 - Mental Health Relevant: ${intake.mental_health_relevant || "Not provided"}
 - Primary Frustration (their words): ${intake.situation || "Not provided"}
 - Specific Question (their words): ${intake.specific_question || "Not provided"}
-${chargeBlock}${commInstruction}${evidenceBlock}
+${chargeBlock}${commInstruction}${evidenceBlock}${legalDataBlock}
 ${conditionalInstructions.join("")}${systemTruthSection}
 
 **GENERATE ALL SECTIONS BELOW. Stay within each section's word budget.**
@@ -2367,16 +2584,17 @@ THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
  * @param apiKey - Anthropic API key.
  * @param supabaseUrl - Supabase project URL (for dynamic charge context).
  * @param supabaseKey - Supabase service role key.
+ * @param caseId - Case UUID for legal research data lookup.
  * @returns The generated markdown report.
  * @throws If the API returns an error or an empty response.
  */
-async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: string, supabaseKey: string): Promise<string> {
-  const userPrompt = await buildUserPrompt(intake, supabaseUrl, supabaseKey);
+async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: string, supabaseKey: string, caseId: string): Promise<string> {
+  const userPrompt = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
   const body = JSON.stringify({
     model: "claude-opus-4-6",
     max_tokens: 32000,
     thinking: { type: "enabled", budget_tokens: 16000 },
-    system: SYSTEM_PROMPT,
+    system: SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK,
     messages: [
       { role: "user", content: userPrompt },
     ],
@@ -3042,7 +3260,7 @@ async function callClaudeForSection(
     model,
     max_tokens: maxTokens,
     temperature,
-    system: systemPrompt,
+    system: systemPrompt + ANTI_HALLUCINATION_BLOCK,
     messages: [{ role: "user", content: userPrompt }],
   });
 
@@ -3143,11 +3361,20 @@ async function handleIBPhaseA(
   try {
     chargeContext = await getChargeContext(intake.charge_type, jurisdictionLevel, chargeSpecificData, supabaseUrl, supabaseKey);
   } catch {
-    chargeContext = getChargeContextFallback(intake.charge_type);
+    chargeContext = getChargeContextFallback(intake.charge_type, jurisdictionLevel, chargeSpecificData);
+  }
+
+  // ── Legal research data injection (Wave 5.2) ──────────────
+  // IB Phase A gets jurisdiction + case law + wex + judge profile.
+  // Judge profile uses the judge name from phase2 intake data.
+  const ibLegalData = await fetchLegalResearchData(caseId, supabaseUrl, supabaseKey, phase2.judge_name);
+  const ibLegalDataBlock = formatLegalDataBlock(ibLegalData, true);
+  if (ibLegalDataBlock) {
+    console.log(`[IB-Phase-A] Legal research data injected: jurisdiction=${!!ibLegalData.jurisdictionProfile}, cases=${ibLegalData.preResearchedCases.length}, wex=${!!ibLegalData.wexDefinitions}, judge=${!!ibLegalData.judgeProfile}`);
   }
 
   // Build variables
-  const v = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, "", null);
+  const v = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, "", null, ibLegalDataBlock);
 
   // Phase A sections (parallel)
   const phaseASections = [
@@ -3329,11 +3556,20 @@ async function handleIBPhaseB(
   try {
     chargeContext = await getChargeContext(intake.charge_type, intake.jurisdiction_level || "state", intake.charge_specific_data || {}, supabaseUrl, supabaseKey);
   } catch {
-    chargeContext = getChargeContextFallback(intake.charge_type);
+    chargeContext = getChargeContextFallback(intake.charge_type, intake.jurisdiction_level || "state", intake.charge_specific_data || {});
+  }
+
+  // ── Legal research data injection (Wave 5.2) ──────────────
+  // Phase B re-fetches legal data (same as Phase A) to ensure the latest
+  // pre-researched data is available. Judge profile included.
+  const ibBLegalData = await fetchLegalResearchData(caseId, supabaseUrl, supabaseKey, phase2.judge_name);
+  const ibBLegalDataBlock = formatLegalDataBlock(ibBLegalData, true);
+  if (ibBLegalDataBlock) {
+    console.log(`[IB-Phase-B] Legal research data injected: jurisdiction=${!!ibBLegalData.jurisdictionProfile}, cases=${ibBLegalData.preResearchedCases.length}, wex=${!!ibBLegalData.wexDefinitions}, judge=${!!ibBLegalData.judgeProfile}`);
   }
 
   // Build variables with Phase A outputs included
-  const v = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, phaseAOutputs);
+  const v = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, phaseAOutputs, ibBLegalDataBlock);
 
   // Phase B sections (sequential — each may depend on prior outputs)
   const phaseBSections = [
@@ -3350,7 +3586,7 @@ async function handleIBPhaseB(
     try {
       // For later sections, rebuild variables with latest outputs
       if (section.key === "your-plan" || section.key === "questions" || section.key === "48hr-priorities") {
-        const updatedV = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, allOutputs);
+        const updatedV = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, allOutputs, ibBLegalDataBlock);
         const prompt = buildIBPrompt(section.key, updatedV);
         section.system = prompt.system;
         section.user = prompt.user;
@@ -3453,7 +3689,7 @@ async function handleIBPhaseB(
 // and prompts.ts because the Edge Function can't import Next.js modules.
 
 // deno-lint-ignore no-explicit-any
-function buildIBVariables(intake: IntakeData, phase2: any, priorCdHtml: string, chargeContext: string, judgeResearch: string, sectionOutputs: Record<string, string> | null): Record<string, string> {
+function buildIBVariables(intake: IntakeData, phase2: any, priorCdHtml: string, chargeContext: string, judgeResearch: string, sectionOutputs: Record<string, string> | null, legalDataBlock?: string): Record<string, string> {
   const p2 = phase2 || {};
   const so = sectionOutputs || {};
 
@@ -3547,6 +3783,9 @@ function buildIBVariables(intake: IntakeData, phase2: any, priorCdHtml: string, 
     filled_out_by: intake.filled_out_by || "self",
     is_family_buyer: (intake.filled_out_by === "family" || intake.filled_out_by === "friend") ? "yes" : "no",
     mental_health_relevant: intake.mental_health_relevant || "Not provided",
+
+    // Legal research data (Wave 5.2) — injected into prompts if available
+    legal_research_data: legalDataBlock || "",
   };
 }
 
@@ -4000,7 +4239,17 @@ EXPERT GROUNDING:
     },
   };
 
-  return prompts[sectionKey] || { system: "", user: "" };
+  const prompt = prompts[sectionKey] || { system: "", user: "" };
+
+  // ── Legal research data injection (Wave 5.2) ──────────────
+  // Append verified legal research data to the user prompt if available.
+  // This data comes from pre-research workers (jurisdiction-profile,
+  // legal-research) and is stored in Supabase. If empty, prompt is unchanged.
+  if (v.legal_research_data) {
+    prompt.user += `\n\n${v.legal_research_data}`;
+  }
+
+  return prompt;
 }
 
 /**
@@ -4382,7 +4631,7 @@ Deno.serve(async (req: Request) => {
     // and email the operator a retry curl command for manual recovery.
     let markdown: string;
     try {
-      markdown = await callClaudeAPI(intake, anthropicKey, supabaseUrl, supabaseKey);
+      markdown = await callClaudeAPI(intake, anthropicKey, supabaseUrl, supabaseKey, caseId);
     } catch (err) {
       console.error("[generate-report] Claude API failed:", err);
 
