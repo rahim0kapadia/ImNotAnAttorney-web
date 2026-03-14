@@ -1,10 +1,11 @@
 ﻿/**
  * @fileoverview Supabase Edge Function: Case Decoder report generator.
  *
- * This is the PRODUCTION report generation path. It replaced the legacy
- * `src/lib/claude.ts` module because Vercel Hobby plan has a 25-second
- * function timeout, which is insufficient for Claude API calls (typically
- * 40-90 seconds). Supabase Edge Functions have a 150-second timeout.
+ * This is the PRODUCTION report generation path. Vercel Hobby plan has a
+ * 25-second function timeout, which is insufficient for Claude API calls
+ * (typically 40-90 seconds). Supabase Edge Functions have a 150-second
+ * timeout. The legacy `src/lib/claude.ts` has been deleted (nothing
+ * imported from it — report pages read pre-rendered HTML from Supabase).
  *
  * INVOCATION:
  *   Called by Vercel /api/generate/case-decoder via HTTP POST (fire-and-forget).
@@ -32,11 +33,9 @@
  *     - escapeHtml() — duplicated from src/lib/email.ts
  *     - sendEmail() — duplicated from src/lib/email.ts (simplified, no unsubscribe)
  *     - PHYSICAL_ADDRESS — duplicated from src/lib/site.ts
- *     - renderReportHtml() — duplicated from src/lib/claude.ts
- *     - SYSTEM_PROMPT, charge/evidence blocks — duplicated from src/lib/claude.ts
- *   This is intentional — keeping the edge function fully self-contained
- *   avoids cross-runtime import issues and makes the function deployable
- *   independently.
+ *   renderReportHtml() and SYSTEM_PROMPT are now ONLY in this file
+ *   (the legacy src/lib/claude.ts has been deleted).
+ *   This edge function is fully self-contained — no cross-runtime imports.
  *
  * MODEL CHOICE — claude-opus-4-6 with extended thinking (budget_tokens: 16000):
  *   Upgraded from Sonnet 4.6 to Opus 4.6 for emotional intelligence.
@@ -258,7 +257,7 @@ async function sendEmail(params: {
 
 // ============================================================
 // CLAUDE API — SYSTEM PROMPT + CHARGE FRAMEWORKS
-// Duplicated from src/lib/claude.ts (with priority-ordered structure).
+// CANONICAL charge context builder (legacy src/lib/claude.ts deleted).
 // Keeping them here avoids cross-runtime import dependencies.
 // ============================================================
 
@@ -471,6 +470,9 @@ NOTE: The section heading is "Your Attorney Meeting Toolkit" — NOT
 | Is There Something We Missed? | 100 |
 | What Only Your Attorney Can Tell You | 100 |
 | Your Next 7 Days | 900 |
+| When You Get Discovery: 10 Patterns | 400 |
+| Do You Need an Independent Expert? | 300 |
+| How Did the Meeting Go? | 250 |
 | Time and Deadlines (conditional) | 100 |
 | What a Plea Really Means (conditional) | 300 |
 | What Comes Next | 100 |
@@ -500,7 +502,10 @@ Always present (in this order):
 14. What Only Your Attorney Can Tell You — honest limits (Redirect)
 15. How to Share This With Your Attorney — handoff instructions (Preparation)
 16. Your Next 7 Days — 7-day plan + Meeting Ready Sheet (Determination)
-17. What Comes Next — natural next step (upgrade language HERE ONLY)
+17. When You Get Discovery: 10 Patterns to Watch For (Awareness)
+18. Do You Need an Independent Expert? (Decision)
+19. How Did the Meeting Go? (Evaluation)
+20. What Comes Next — natural next step (upgrade language HERE ONLY)
 
 REMOVED SECTIONS (do NOT generate these):
 - NO prosecution difficulty ratings (Strong/Moderate/Weak) — we haven't
@@ -777,6 +782,38 @@ state-specific citations (right to see discovery, right to be consulted
 before plea, right to understand strategy, right to second opinion,
 right to a second legal opinion).
 
+RIGHTS EROSION WARNINGS (per Dershowitz — DYNAMIC based on case stage):
+After the rights box, add a "Rights You May Be Losing" subsection that
+is DYNAMIC based on intake data. These are rights that are actively
+eroding — not static rights. Include ONLY warnings relevant to this
+defendant's case stage and circumstances:
+- If attorney has requested continuances or case is >90 days old:
+  "Speedy trial rights may be affected by continuances. Each time your
+  attorney requests a delay, the speedy trial clock may be paused.
+  Question: 'Has our speedy trial clock been waived or tolled? If so,
+  when and why?'"
+- If bail conditions mentioned in intake:
+  "Bail conditions restrict constitutional rights (travel, association,
+  curfew). These restrictions are negotiable. Question: 'Are my current
+  bail conditions the minimum necessary, or can we modify them?'"
+- If case_stage is plea negotiation or plea offered:
+  "Boykin rights — before accepting any plea, the court must ensure you
+  understand what rights you're waiving (jury trial, confrontation,
+  self-incrimination). Question: 'Can you walk me through exactly what
+  rights I give up if I accept this plea?'"
+- If substance abuse evaluation mentioned:
+  "Substance abuse evaluations may not be privileged — what you say
+  could be used against you. Question: 'Before I do this evaluation,
+  is it privileged? Can the prosecution access the results?'"
+- If no attorney or attorney hasn't communicated:
+  "Right to effective assistance of counsel — if your attorney isn't
+  communicating, this right may not be fully realized. This doesn't
+  mean they're doing a bad job, but the communication itself is part
+  of the right."
+Frame as informational, not alarming. Each warning = factual statement
++ one question for attorney. Never "you're losing your rights" —
+instead "this is worth asking about."
+
 ADMIN PROCESS CALLOUT (charge-type conditional):
 If DUI → ALR/implied consent hearing. If drug → asset forfeiture.
 If sex offense → registry requirements. Framed as "Something Your
@@ -800,13 +837,30 @@ about common prosecution patterns:
   proceedings (civil/regulatory)
 Frame as: "Here's how cases like yours are typically built — knowing
 this helps you ask better questions about what the prosecution has."
+
+HOW THIS APPLIES TO YOUR CASE (per Mesereau — mandatory subsection):
+After the general prosecution pattern, add 2-3 sentences connecting
+the prosecution's typical approach to THIS defendant's specific intake
+data. Examples:
+- "You told us [intake fact]. In cases like yours, prosecutors typically
+  use this as [how they'd use it]. The question for your attorney: [Q ref]"
+- "Based on what you shared about [intake fact], the prosecution would
+  likely [typical action]. This is worth discussing: [Q ref]"
+This makes the prosecution preview OPERATIONAL — not just educational.
+The defendant sees how the prosecution's playbook applies to THEIR facts.
 End with a question reference (→ Q reference) pointing to the question
 about discovery/evidence.
 
-BRIDGING AFTER PENALTY RANGE — MANDATORY:
+BRIDGING AFTER PENALTY RANGE — MANDATORY (Witte EPPM efficacy wrapper):
 After any penalty range: "These are statutory maximums, not predictions.
 The questions in this report help you understand the realistic range
-for YOUR case."
+for YOUR case." THEN add a "What determines where you fall" action
+bridge: "What determines where YOUR case falls in this range: [2-3
+factors specific to this charge type — e.g., strength of evidence,
+applicable motions, plea vs trial, prior record]. The questions below
+help you explore each of these with your attorney."
+Every threat section (penalties, consequences, risks) MUST end with
+what the defendant can DO — not just what they should fear.
 
 EXACTLY WHAT TO SAY — 7 SUBSECTIONS:
 1. "Meeting preparation note" -- explain WHY reviewing this report before
@@ -870,6 +924,17 @@ Expert attribution goes in part 2 ("Why it matters"), not as a separate line.
 Q1 = Golden Question — "If you only ask one question, ask this one."
 Q1-Q5 are PRIORITY — drawn from the defendant's specific intake answers.
 Each "don't know" from intake becomes a question.
+
+MEETING LENGTH TRIAGE (per Fogg — ability > motivation):
+After the Meeting Ready Sheet, add a brief triage guide:
+"How many questions to ask depends on your meeting length:
+- Under 15 minutes (typical PD courthouse meeting): Q1-Q3 only.
+  That's enough. Write down their answers.
+- 30 minutes: Q1-Q5. Cover the priorities.
+- 60 minutes: All 15. Work through them in order.
+Don't try to ask all 15 in a 15-minute meeting — you'll rush
+through everything and remember nothing. Fewer questions asked
+well beats more questions asked poorly."
 Verify-facts callout SPLIT into two boxes:
 - "Confirm these facts from your intake" (arrest date, charges, attorney type)
 - "Get these facts before your meeting" (charge-specific discovery items)
@@ -889,6 +954,27 @@ REWRITE as "how," "what," or "walk me through."
 BAD: "Was a confidential informant involved?"
 GOOD: "Walk me through how this investigation started — was there
 a tip, a CI, or did it begin with the traffic stop itself?"
+
+DEFENSE THEORY RECOGNITION (per Spence — after Things Worth Asking About):
+After "Things Worth Asking About," include a brief subsection:
+"## What a Defense Theory Looks Like"
+Based on the charge type, present 3-5 possible defense theories as
+STORIES (not legal jargon). Frame as: "These are theories your attorney
+may be considering. If you recognize one, that's a good sign. If none
+match what your attorney has described, that's worth a conversation."
+Each theory: 1-sentence story + 1 question for attorney.
+Examples by charge type:
+- DUI: "The story where the machine was wrong" / "The story where the
+  stop itself was illegal" / "The story where the field sobriety tests
+  were improperly administered"
+- Drug: "The story where you didn't know it was there" / "The story
+  where the search was illegal" / "The story where the amount was wrong"
+- Assault: "The story where you were protecting yourself" / "The story
+  where the other person started it" / "The story where the injuries
+  don't match the accusation"
+Make theories SPECIFIC to the defendant's charge type and intake data.
+Frame as informational — "these are common defense approaches for
+[charge type]" — never as recommendations.
 
 THINGS WORTH ASKING ABOUT:
 5-6 items max. Split into:
@@ -946,6 +1032,52 @@ NOTE: "If Overwhelmed" has been MOVED to immediately after the Letter
 Future pacing: "In two weeks, [Name], you will be the most prepared
 defendant your attorney has ever worked with." Use their name.
 End on empowerment, not disclaimers.
+
+WHEN YOU GET DISCOVERY: 10 PATTERNS TO WATCH FOR:
+Educational preview of discovery analysis concepts. 10 common patterns
+that indicate problems in the prosecution's evidence — weight
+discrepancies between field and lab measurements, impossible dates or
+timeline gaps, missing surveillance footage, absent witnesses, late
+disclosures, lab procedure deviations, dual attribution (same evidence
+supporting contradictory claims), chain of custody breaks, statement
+inconsistencies between interviews, missing physical evidence.
+Each pattern: name + 1-sentence explanation + question for attorney.
+Frame as "awareness, not analysis" — the defendant isn't analyzing
+discovery, they're learning what to notice when they see it.
+Natural X-Ray upsell: "Want every page of your discovery forensically
+analyzed? The X-Ray ($2,497) finds what most attorneys miss."
+
+DO YOU NEED AN INDEPENDENT EXPERT?
+Charge-type-specific decision tree. Structured as a series of questions
+the defendant can ask their attorney about whether an independent
+expert is warranted. Categories by charge type:
+- DUI: toxicologist, breathalyzer calibration expert, FST expert
+- Drug: independent lab analyst, forensic chemist, CI operations expert
+- Sex offense: forensic interviewing expert, DNA/forensic specialist,
+  digital forensics expert
+- Assault/self-defense: use-of-force expert, medical expert, scene
+  reconstruction
+- White collar: forensic accountant, digital forensics, industry expert
+- Federal: sentencing expert, forensic analyst, cooperation procedure expert
+Each entry: when this expert helps + typical cost range + question for
+attorney ("Should we retain an independent [expert type] for my case?").
+Frame as informational — no "you should hire" language.
+
+HOW DID THE MEETING GO? (POST-MEETING EVALUATION):
+10-item assessment for AFTER the attorney meeting. Strong indicators
+vs. concerning indicators. Structured as two columns:
+- Strong indicators: Attorney referenced specific facts from your case.
+  Attorney identified a theory of defense. Attorney gave timeline with
+  specific dates. Attorney discussed discovery/evidence. Attorney
+  answered your questions directly.
+- Concerning indicators: Attorney spoke only in generalities. "Trust me"
+  without specifics. Couldn't name your judge. Rushed meeting (under 15
+  minutes for first meeting). Pressured you to decide on plea immediately.
+3-tier scoring: "On Track" (4-5 strong) / "Have a Conversation"
+(3 strong) / "Get a Second Opinion" (0-2 strong).
+Natural IB upsell for "concerning" results: "Your Intelligence Brief
+($997) gives you the jurisdiction data and prosecution patterns to
+verify what your attorney told you — or identify what they missed."
 
 WHAT COMES NEXT (POSTSCRIPT):
 ONLY place with upgrade language. FIRST acknowledge the report might be
@@ -1035,6 +1167,11 @@ SELF-VERIFICATION — Before output:
 55. If filled_out_by ≠ "self": Letter acknowledges family/friend, language adjusted for who's doing the work, Toolkit includes family meeting guidance.
 56. If mental_health_relevant = "yes": diversion/treatment court eligibility noted, "If Overwhelmed" section given extra emphasis, relevant Q generated in Questions for Your Attorney.
 57. If employment_status is employed + industry provided: career-identity threat addressed specifically in Letter and Understanding Your Charges (professional licensing, CDL, security clearance — cite source).
+58. "When You Get Discovery" section present with 10 patterns. Each pattern has name + explanation + attorney question. X-Ray upsell present.
+59. "Do You Need an Independent Expert?" section present with charge-type-specific expert categories. No "you should hire" language.
+60. "How Did the Meeting Go?" post-meeting evaluation present with strong + concerning indicators. IB upsell for concerning results.
+61. "What a Defense Theory Looks Like" section present after Things Worth Asking About — 3-5 charge-type-specific theories framed as stories, each with attorney question. No recommendations.
+62. Meeting Length Triage present after Meeting Ready Sheet — under 15 min / 30 min / 60 min guidance. PD context for short meetings.
 Revise if any check fails.
 
 NATURAL VOICE — ANTI-FORMULAIC RULES:
@@ -2155,8 +2292,9 @@ report, they did the right thing."
 
 After the letter content, add an "If Overwhelmed" callout:
 > You don't have to do everything today. If you can only do one thing
-> right now, do this: **Copy the email from Your Attorney Meeting Toolkit,
-> paste it into your email, and hit send.** That's it. 30 seconds. You've
+> right now, do this: **Text or email your attorney one sentence: "I have
+> specific questions about my case. When can we talk this week?"** That's
+> it. 30 seconds. The detailed email template is in your Toolkit. You've
 > just taken the most important step. Everything else can wait until
 > tomorrow.
 
@@ -2796,7 +2934,7 @@ function validateReportContent(markdown: string): { valid: boolean; violations: 
 
 // ============================================================
 // HTML RENDERER
-// Duplicated from src/lib/claude.ts renderReportHtml().
+// CANONICAL renderReportHtml() — sole implementation (legacy src/lib/claude.ts deleted).
 // Must stay in sync if the report template changes.
 // ============================================================
 
@@ -3443,21 +3581,34 @@ async function handleIBPhaseA(
     return new Response(JSON.stringify({ error: "Phase A: too many section failures", failures }), { status: 500, headers });
   }
 
-  // Save section outputs and transition to researching
+  // Save section outputs and transition to compiling (v4: auto-fire Phase B, no operator gate)
   await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
     section_outputs: sectionOutputs,
-    status: "researching",
+    status: "compiling",
     phase_a_completed_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   });
 
-  console.log(`[IB-Phase-A] Complete! ${Object.keys(sectionOutputs).length} sections saved, ${failures.length} failures.`);
+  console.log(`[IB-Phase-A] Complete! ${Object.keys(sectionOutputs).length} sections saved, ${failures.length} failures. Auto-triggering Phase B.`);
 
-  // Operator email — judge research needed
+  // Auto-trigger Phase B (fire-and-forget — new Edge Function invocation, own 150s budget)
+  // v4: Judge research removed from IB tier (moved to X-Ray). Phase B runs immediately
+  // using jurisdiction-level patterns instead of specific judge data.
+  const edgeFnUrl = `${supabaseUrl}/functions/v1/generate-report`;
+  fetch(edgeFnUrl, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${supabaseKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ caseId, tier: "intelligence-brief", phase: "B" }),
+  }).catch((err) => console.error("[IB-Phase-A] Phase B auto-trigger failed:", err));
+
+  // Operator notification (informational — no action required)
   if (resendKey) {
     await sendEmail({
       to: operatorEmail,
-      subject: `IB Phase A Complete — Judge Research Needed: ${escapeHtml(intake.first_name)}`,
+      subject: `IB Phase A Complete — Phase B Auto-Triggered: ${escapeHtml(intake.first_name)}`,
       html: `<h1 style="color: #F59E0B;">Intelligence Brief Phase A Complete</h1>
         <p>${Object.keys(sectionOutputs).length} of 5 sections generated successfully${failures.length > 0 ? ` (${failures.join(", ")} failed)` : ""}.</p>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
@@ -3466,8 +3617,8 @@ async function handleIBPhaseA(
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">County:</strong> ${escapeHtml(phase2.county || "Not specified")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>
         </div>
-        <p><strong style="color: #F59E0B;">Action:</strong> Research Judge ${escapeHtml(phase2.judge_name)} and submit findings via the judge-research endpoint to trigger Phase B.</p>
-        <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${siteUrl}/api/generate/intelligence-brief/judge-research -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${caseId}","judgeResearch":{...}}'</code>`,
+        <p><strong style="color: #22C55E;">Phase B auto-triggered.</strong> No operator action needed. Report will auto-compile and move to review.</p>
+        <p style="color: #A1A1AA;">If you have specific judge research for ${escapeHtml(phase2.judge_name)}, you can optionally submit it via the judge-research endpoint to enrich the report.</p>`,
       resendKey, fromEmail: resendFrom, operatorEmail,
     });
   }
@@ -3482,7 +3633,7 @@ async function handleIBPhaseA(
         <p>We've started analyzing your case. Here's where things stand:</p>
         <ul style="color: #D4D4D8; padding-left: 20px;">
           <li>Your case roadmap and legal options analysis are complete</li>
-          <li>We're now researching Judge ${escapeHtml(phase2.judge_name)}'s patterns and rulings</li>
+          <li>We're now compiling your jurisdiction intelligence and prosecution patterns</li>
           <li>Your full Intelligence Brief will be ready within 72 hours</li>
         </ul>
         <p style="color: #A1A1AA;">No action needed from you — we'll email you when your complete report is ready.</p>`,
@@ -3491,7 +3642,7 @@ async function handleIBPhaseA(
   }
 
   return new Response(
-    JSON.stringify({ success: true, caseId, status: "researching", sections: Object.keys(sectionOutputs), failures }),
+    JSON.stringify({ success: true, caseId, status: "compiling", sections: Object.keys(sectionOutputs), failures }),
     { headers }
   );
 }
