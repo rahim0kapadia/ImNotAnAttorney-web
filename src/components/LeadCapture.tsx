@@ -42,6 +42,12 @@ interface LeadCaptureProps {
   downloadHref?: string;
   /** Download button label. */
   downloadLabel?: string;
+  /** Optional upsell CTA shown in success state (crisis buyers convert on thank-you page). */
+  successUpsellHref?: string;
+  /** Label for the upsell CTA button. */
+  successUpsellLabel?: string;
+  /** Description text above the upsell CTA. */
+  successUpsellDescription?: string;
 }
 
 export function LeadCapture({
@@ -53,6 +59,9 @@ export function LeadCapture({
   successDescription = "Here\u2019s your guide. Bookmark it \u2014 you\u2019ll need it.",
   downloadHref = "/guides/discovery-checklist-7-evidence-problems.md",
   downloadLabel = "Download Discovery Checklist \u2192",
+  successUpsellHref,
+  successUpsellLabel,
+  successUpsellDescription,
 }: LeadCaptureProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -93,6 +102,19 @@ export function LeadCapture({
         >
           {downloadLabel}
         </a>
+        {successUpsellHref && (
+          <div className="mt-6 border-t border-zinc-800 pt-6">
+            {successUpsellDescription && (
+              <p className="mb-3 text-sm text-zinc-300">{successUpsellDescription}</p>
+            )}
+            <a
+              href={successUpsellHref}
+              className="inline-block rounded-lg border-2 border-amber-500 px-6 py-3 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500 hover:text-black"
+            >
+              {successUpsellLabel}
+            </a>
+          </div>
+        )}
       </div>
     );
   }

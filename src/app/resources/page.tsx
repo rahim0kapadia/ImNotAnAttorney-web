@@ -177,12 +177,21 @@ export default function ResourcesPage() {
               title="First 72 Hours After a DUI Arrest — Emergency Checklist"
               description="The 3 things to do tonight, the DMV deadline that could cost you your license, and the 6 questions to ask at your attorney consultation. Printable. Takes 5 minutes."
               buttonText="Send Me the Checklist"
-              successTitle="Check your inbox — the checklist is on its way."
-              successDescription="Handle the 72-hour items first. When you're ready for the full picture:"
+              successTitle="Your checklist is ready — download it now."
+              successDescription="Handle the 3 urgent items tonight. Then prepare for your attorney meeting:"
               downloadHref="/guides/dui-first-72-hours-checklist.pdf"
               downloadLabel="Download 72-Hour Checklist →"
+              successUpsellHref="/playbook/dui-first-offense"
+              successUpsellLabel={`Get the Full DUI Defense Playbook \u2014 ${TIER_CORE["dui-first-offense"].priceDisplay}`}
+              successUpsellDescription="The checklist covers the first 72 hours. The Playbook gives you 26 questions with good/bad answer examples, a case stage roadmap, evidence red flag checklist, and a one-page cheat sheet for your attorney meeting. Instant download."
             />
           </div>
+          <p className="mt-4 text-center text-sm text-zinc-500">
+            Already know what you need?{" "}
+            <Link href="/playbook/dui-first-offense" className="text-amber-400 underline hover:text-amber-300">
+              Get the DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} instant download →
+            </Link>
+          </p>
         </section>
         </FadeInUp>
 

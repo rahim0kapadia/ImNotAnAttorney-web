@@ -213,7 +213,8 @@ export async function GET(req: NextRequest) {
           // ── SOURCE-BASED & BAND-BASED ROUTING ──
           // Routing priority:
           //   1. DUI 72-hour subscribers (source: "dui-72-hours") get crisis-cadence
-          //      emails first (Day 2, 4, 7), then fall through to standard nurture at Day 10+.
+          //      emails (Day 1, 3, 5, 7), then STOP. No standard nurture fallthrough —
+          //      crisis buyers have bought or moved on by Day 7.
           //   2. Score-page subscribers with a band get band-specific emails first.
           //      Once all band-specific emails are sent, they fall through to
           //      standard nurture with an offset (skipping early generic emails).
@@ -221,17 +222,12 @@ export async function GET(req: NextRequest) {
           let nextEmail: DripEmail | null = null;
 
           if (sub.source === "dui-72-hours") {
-            // Try DUI 72-hour crisis sequence first
+            // Try DUI 72-hour crisis sequence — no fallthrough after completion
             nextEmail = getNextDui72hEmail(daysSinceSubscribe, sentKeys);
-
-            if (!nextEmail) {
-              // All DUI emails sent — fall through to standard nurture with offset
-              const offset = getDui72hNurtureOffset();
-              const adjustedDays = daysSinceSubscribe - offset;
-              if (adjustedDays >= 0) {
-                nextEmail = getNextNurtureEmail(adjustedDays, sentKeys);
-              }
-            }
+            // When nextEmail is null, all 4 crisis emails sent — STOP. Do not
+            // fall through to standard nurture. Crisis buyers who haven't
+            // converted by Day 7 are gone. Sending Day 10/14 generic nurture
+            // burns sender reputation for near-zero conversion.
           } else if (sub.score_band) {
             // Try score-specific emails first
             nextEmail = getNextScoreEmail(daysSinceSubscribe, sentKeys, sub.score_band);
