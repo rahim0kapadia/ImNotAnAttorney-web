@@ -1620,6 +1620,10 @@ Refund webhook revokes access — download route returns 403 for refunded orders
 
 Source: `src/lib/drip-emails.ts` + cron Parts 1-2.
 
+### Crisis Buyer Psychology
+
+Defendants are **crisis buyers** with a 7-day decision window, NOT newsletter subscribers. By day 14, they've bought or moved on. Email capture is for follow-up during the decision window (2-3 touches), not list-building. Pre-purchase drip must convert fast (Day 2/4/7). Post-purchase drip works longer (active case, 30-90 day window). This is not a recurring revenue business — each defendant is a one-time buyer on a short clock.
+
 ### Sequence Categories
 
 | Category | Emails | Trigger |

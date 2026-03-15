@@ -26,6 +26,20 @@
  *      - Witness Pack: delivery → upload reminder → status update → story harvest → upsell
  *      - Extra Witness: delivery
  *
+ * CRISIS BUYER PSYCHOLOGY (NON-NEGOTIABLE):
+ *
+ * Defendants are CRISIS BUYERS with a 7-day decision window, NOT newsletter
+ * subscribers. By day 14, they've bought or moved on. Their case resolves in
+ * 3-12 months — after that, they never want to hear from us again.
+ *
+ * - Pre-purchase: Convert in 7 days or lose them. Crisis drip (Day 2/4/7) is
+ *   the right model. Long nurture (Day 14+) converts near zero for crisis buyers.
+ * - Post-purchase: Follow-up DOES work (active case, 30-90 day window) — meeting
+ *   prep, story harvest, upsell to next tier.
+ * - Email capture is for FOLLOW-UP during the decision window, not list-building.
+ * - This is NOT a recurring revenue business. Each defendant is a one-time buyer.
+ * - Different charge types have different windows: DUI 7d, Drug 48h, Federal 24h.
+ *
  * KEY DESIGN DECISIONS:
  *
  * - `relativeToDelivery` flag: When true, the `delayDays` is measured from
