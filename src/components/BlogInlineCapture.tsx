@@ -4,8 +4,8 @@ import { useState } from "react";
 
 const CHECKLIST_BY_CATEGORY: Record<string, { title: string; hook: string }> = {
   dui: {
-    title: "DUI Evidence Checklist",
-    hook: "5 things your DUI attorney should have checked by now — most haven't.",
+    title: "Arrested in the last 48 hours? Get the 72-Hour Emergency Checklist",
+    hook: "Your DMV hearing deadline may be 7 days away. 3 things to do tonight, the deadline that could cost your license, and 6 questions for your attorney consultation.",
   },
   "drug-cases": {
     title: "Drug Case Discovery Checklist",
@@ -38,7 +38,7 @@ export function BlogInlineCapture({ category = "general-defense" }: BlogInlineCa
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source: `blog-inline-${category}` }),
+        body: JSON.stringify({ email, source: category === "dui" ? "dui-72-hours" : `blog-inline-${category}` }),
       });
       setStatus(res.ok ? "success" : "error");
     } catch {

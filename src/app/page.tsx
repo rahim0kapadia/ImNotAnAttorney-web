@@ -254,6 +254,16 @@ export default function Home() {
               <AnimatedCounter target={500} suffix="+" className="text-amber-400" /> defendants armed with the right questions &middot; We Research. You Ask.
             </p>
           </FadeInUp>
+          <FadeInUp delay={0.4}>
+            <p className="mt-4 text-sm text-zinc-400">
+              <Link
+                href="/dui-checklist"
+                className="text-zinc-400 underline decoration-zinc-600 hover:text-amber-400 hover:decoration-amber-400/50"
+              >
+                Arrested for DUI? Your DMV hearing deadline may be 7 days away.
+              </Link>
+            </p>
+          </FadeInUp>
         </div>
       </section>
 

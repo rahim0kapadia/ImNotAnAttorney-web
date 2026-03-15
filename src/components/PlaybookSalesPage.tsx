@@ -12,6 +12,7 @@ import { TIER_CORE, upgradePrice, nextTierSlug } from "@/lib/tiers";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 import { TrustBadges } from "@/components/TrustBadges";
+import { LeadCapture } from "@/components/LeadCapture";
 import type { PlaybookConfig } from "@/lib/playbook-configs";
 import type { TierSlug } from "@/lib/tiers";
 
@@ -335,6 +336,30 @@ export default function PlaybookSalesPage({ config }: Props) {
               Your {tier.priceDisplay} {tier.name} purchase is credited toward
               the {nextTier.name}. Upgrade for {upgrade} within 30 days.
             </p>
+          </div>
+        </section>
+      )}
+
+      {/* EXIT CAPTURE — Free checklist for non-buyers (DUI only) */}
+      {config.slug === "dui-first-offense" && (
+        <section className="mt-16">
+          <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-6">
+            <p className="mb-4 text-sm text-zinc-400">
+              Not ready for the full Playbook? Start with the free 72-Hour Emergency Checklist.
+            </p>
+            <LeadCapture
+              source="dui-playbook-exit"
+              title="First 72 Hours After a DUI Arrest — Emergency Checklist"
+              description="The 3 things to do tonight, the DMV deadline that could cost you your license, and the 6 questions to ask at your attorney consultation. Free. Printable."
+              buttonText="Send Me the Free Checklist"
+              successTitle="Your checklist is ready — download it now."
+              successDescription="Handle the 3 urgent items tonight. Then prepare for your attorney meeting:"
+              downloadHref="/guides/dui-first-72-hours-checklist.pdf"
+              downloadLabel="Download 72-Hour Checklist →"
+              successUpsellHref={checkoutUrl}
+              successUpsellLabel={`Get the Full DUI Defense Playbook \u2014 ${tier.priceDisplay}`}
+              successUpsellDescription="The checklist covers the first 72 hours. The Playbook gives you 26 questions with good/bad answer examples, a case stage roadmap, evidence red flag checklist, and a one-page cheat sheet for your attorney meeting. Instant download."
+            />
           </div>
         </section>
       )}
