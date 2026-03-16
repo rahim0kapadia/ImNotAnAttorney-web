@@ -46,6 +46,7 @@ import { TIER_CORE, tierPriceNum, upgradePrice, upgradeCostBetween, type TierSlu
 import { useSearchParams } from "next/navigation";
 import { useState, Suspense } from "react";
 import Link from "next/link";
+import { TrustBadges } from "@/components/TrustBadges";
 
 /**
  * TierInfo shape for the TIER_INFO lookup table.
@@ -1034,6 +1035,7 @@ function CheckoutContent() {
           <p className="mt-1 text-center text-xs text-zinc-400">
             Visa, Mastercard, and Amex accepted
           </p>
+          <TrustBadges variant="checkout" />
         </div>
 
         {/* UPGRADE CREDITS REMINDER — Outside the main card, reinforces that */}
