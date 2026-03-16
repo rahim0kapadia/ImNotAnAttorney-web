@@ -1,6 +1,6 @@
 # Intelligence Brief ($997) — Pipeline Documentation
 
-> **STATUS (2026-03-03):** Pipeline is fully deployed and audited. Phase A (5 sections, parallel) + Phase B (4 sections, sequential) + static appendices + HTML rendering all automated. Operator intervenes only for judge research between phases. See `AUDIT-CHECKLIST.md` for the IB audit results.
+> **STATUS (2026-03-14):** Pipeline is fully deployed and audited. v4 update: Phase A now auto-triggers Phase B (no operator judge research gate). IB uses jurisdiction-level intelligence patterns; specific judge research moved to X-Ray ($2,497+). Operator intervenes only for review/delivery. See `AUDIT-CHECKLIST.md` for the IB audit results.
 >
 > The canonical delivery SOP is `system/templates/intelligence-brief/delivery-sop.md` in the ImNotAnAttorney repo.
 
@@ -10,7 +10,7 @@ The Case Intelligence Brief is the $997 tier (`intelligence-brief` slug). It inc
 
 **Delivery target:** 72 hours (24 hours with priority add-on at $297).
 
-**Pipeline flow:** Checkout → Webhook → CD auto-generation → Phase 2 intake → Phase A (5 sections parallel) → Operator judge research → Phase B (4 sections sequential) → HTML report compiled → Operator review → Delivery email.
+**Pipeline flow (v4):** Checkout → Webhook → CD auto-generation → Phase 2 intake → Phase A (5 sections parallel) → Phase B auto-triggered (4 sections sequential) → HTML report compiled → Operator review → Delivery email. No operator judge research gate — IB uses jurisdiction-level intelligence. Judge-research endpoint remains available for optional enrichment.
 
 ---
 
@@ -127,7 +127,7 @@ All items below have been built and deployed. Kept for historical reference.
 ### ~~2. Auto-Trigger from Webhook~~ — BUILT
 - Webhook auto-triggers CD generation for IB tier (included product)
 - Phase A auto-triggers after Phase 1 intake submission
-- Phase B triggered by operator via judge-research endpoint
+- Phase B auto-triggered by Phase A on completion (v4 — no operator gate)
 
 ### ~~3. Delivery Email Personalization~~ — BUILT
 - `/api/deliver` branches on tier for subject line and body copy
@@ -135,7 +135,7 @@ All items below have been built and deployed. Kept for historical reference.
 
 ### ~~4. Case Decoder-Specific Cron Logic~~ — FIXED
 - Cron stuck-intake detection skips IB-tier cases in `intake` status
-- IB-specific stuck detection: `researching` (24h) and `compiling` (30min)
+- IB-specific stuck detection: `compiling` (30min). v4: `researching` status no longer used in normal flow
 
 ---
 
@@ -148,17 +148,16 @@ All items below have been built and deployed. Kept for historical reference.
 4. Customer completes Phase 2 intake (judge, county, case details)
 5. Phase A auto-triggers → 5 sections generated in parallel
 6. Phase A failure threshold: 4+/5 failures → generation-failed + operator alert
-7. Operator receives judge-research instructions email
-8. Operator researches judge → POSTs to judge-research endpoint
-9. Phase B auto-triggers → 4 sections generated sequentially
-10. HTML report compiled with ToC + 3 static appendices + page breaks
-11. Case → review, operator notified with delivery link
-12. Operator reviews → delivers via /api/deliver
-13. Customer receives delivery email with report link
-14. Drip: story harvest (day 5), X-Ray upsell (day 10)
+7. Phase A complete → Phase B auto-triggered (fire-and-forget, new Edge Function invocation)
+8. Phase B → 4 sections generated sequentially (uses jurisdiction-level intelligence)
+9. HTML report compiled with ToC + 3 static appendices + page breaks
+10. Case → review, operator notified with delivery link
+11. Operator reviews → delivers via /api/deliver
+12. Customer receives delivery email with report link
+13. Drip: story harvest (day 5), X-Ray upsell (day 10)
 ```
 
-**Operator touchpoints:** Judge research (step 8) and review/delivery (step 12). Everything else is automated.
+**Operator touchpoints:** Review/delivery only (step 11). Everything else is fully automated. Judge-research endpoint remains available for optional enrichment.
 
 ---
 

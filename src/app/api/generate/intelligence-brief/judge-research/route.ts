@@ -1,19 +1,21 @@
 /**
- * @file /api/generate/intelligence-brief/judge-research — Phase B dispatcher
+ * @file /api/generate/intelligence-brief/judge-research — Optional judge research enrichment
  *
- * Pipeline position: Operator-facing endpoint for submitting judge research
- * and triggering Intelligence Brief Phase B compilation.
+ * v4 CHANGE: This endpoint is NO LONGER a mandatory pipeline gate.
+ * Phase A now auto-triggers Phase B without waiting for operator judge research.
+ * IB uses jurisdiction-level intelligence patterns instead of specific judge data.
  *
- * Flow:
- *   1. Operator researches the assigned judge (after Phase A email notification)
- *   2. Operator POSTs judge research data here
- *   3. This endpoint saves the research, atomically claims the case, then fires
- *      the Edge Function with tier=intelligence-brief, phase=B
+ * This endpoint is now OPTIONAL — operators can submit judge research to enrich
+ * the report if they have it. If Phase B hasn't run yet, this saves the data
+ * and triggers Phase B. If Phase B already ran, use force:true to re-trigger
+ * with the judge data included.
  *
- * Status flow: researching → compiling → review (Phase B success)
- *   - This endpoint handles: researching → compiling
+ * For X-Ray ($2,497+), judge research is a core deliverable and will use this
+ * endpoint as a mandatory gate.
+ *
+ * Status flow: compiling|researching → compiling → review
+ *   - Accepts both "compiling" (v4 auto-flow) and "researching" (legacy/fallback)
  *   - The Edge Function (handleIBPhaseB) handles: compiling → review
- *   - The cron detects stuck "compiling" after 30 minutes
  *
  * Security: OPERATOR_SECRET bearer token required.
  */
@@ -85,15 +87,16 @@ export async function POST(req: NextRequest) {
   }
 
   // ── ATOMIC GUARD ───────────────────────────────────────────
-  // Phase B can only start from "researching" status (set by Phase A on success).
-  // Simpler guard than Phase A — exactly one valid source state.
+  // v4: Accepts both "researching" (legacy) and "compiling" (auto Phase B flow).
+  // Phase A now auto-triggers Phase B, so the typical state is "compiling".
+  // This endpoint is optional enrichment — use force:true to re-trigger if needed.
   let guardQuery = supabase
     .from("cases")
     .update({ status: "compiling", updated_at: new Date().toISOString() })
     .eq("id", caseId);
 
   if (!force) {
-    guardQuery = guardQuery.eq("status", "researching");
+    guardQuery = guardQuery.in("status", ["researching", "compiling"]);
   }
 
   const { data: guardData } = await guardQuery.select("id").single();
@@ -101,7 +104,7 @@ export async function POST(req: NextRequest) {
   if (!guardData) {
     return NextResponse.json({
       skipped: true,
-      message: "Case is not in 'researching' status. Pass force:true to override.",
+      message: "Case is not in 'researching' or 'compiling' status. Pass force:true to override.",
     });
   }
 

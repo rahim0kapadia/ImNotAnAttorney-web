@@ -10,10 +10,13 @@
  *   Validates auth + idempotency, atomically claims the case, then fires
  *   the Supabase Edge Function with tier=intelligence-brief, phase=A.
  *
- * Status flow: intake → auto-generating → researching (Phase A success)
+ * Status flow (v4 — fully automated, no operator judge research gate):
+ *   intake → auto-generating → compiling → review
  *   - This endpoint handles: intake → auto-generating
- *   - The Edge Function (handleIBPhaseA) handles: auto-generating → researching
- *   - The cron detects stuck "auto-generating" after 30 minutes
+ *   - The Edge Function (handleIBPhaseA) handles: auto-generating → compiling
+ *   - Phase A auto-triggers Phase B (fire-and-forget)
+ *   - The Edge Function (handleIBPhaseB) handles: compiling → review
+ *   - The cron detects stuck "auto-generating" or "compiling" after 30 minutes
  *
  * Security: OPERATOR_SECRET bearer token required.
  */
@@ -152,6 +155,6 @@ export async function POST(req: NextRequest) {
     success: true,
     caseId,
     status: "auto-generating",
-    message: "Intelligence Brief Phase A started. Operator will be notified when judge research is needed.",
+    message: "Intelligence Brief Phase A started. Phase B will auto-trigger on completion (v4 — no operator gate).",
   });
 }

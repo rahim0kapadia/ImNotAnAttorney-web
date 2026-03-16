@@ -43,7 +43,8 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 - `PlaybookCTA` — Playbook upsell CTA
 - `RecentPurchaseNotification` — Social proof purchase notifications
 - `SourceIntelligence` — Source attribution display
-- `TLDRBox` — Summary/TLDR display box
+- `TLDRBox` — Summary/TLDR display box (`.tldr-box` class for `speakable` schema)
+- `ShareButtons` — Reusable share buttons (SMS, WhatsApp, Email, Twitter, Facebook, Copy Link)
 - `OperatorShell` — Operator dashboard shell
 - `MDXErrorBoundary` — Error boundary for MDX rendering
 
@@ -88,25 +89,42 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 - **Framework:** Next.js 15 (App Router)
 - **Styling:** Tailwind CSS
 - **CMS:** MDX files in `content/blog/`
-- **Database:** Supabase (cases, orders, drip email tracking, discovery documents)
+- **Database:** Supabase (cases, orders, drip email tracking, discovery documents, counters, score_aggregates)
 - **Payments:** Stripe Checkout — SANDBOX MODE until all website pieces are complete (webhook → order creation → drip sequence)
 - **Email:** Resend (drip sequences, delivery notifications, admin digests)
 - **Hosting:** Vercel (live, auto-deploys on push to master)
-- **Schema:** FAQ, Service, Organization, Article
+- **Schema:** FAQ, Service, Organization, Article, HowTo, BreadcrumbList (with `speakable`, `@id` binding, `citation`, `about`, `educationalLevel`, `audience`, `isBasedOn`)
 
-### SEO
+### SEO + GEO (.01% Structured Data)
 - Dynamic OG images (site-wide + per blog post)
 - Twitter card meta + canonical URLs
 - Structured data markup on all pages
 - Dynamic sitemap with all blog posts
 - robots.txt with allow/disallow rules
+- `speakable` schema on TLDRBox content (AI-extractable)
+- `@id` entity binding (Article ↔ FAQPage graph closure)
+- `citation` array to .gov/.edu sources on 4 posts
+- `isBasedOn` for case study posts
+- `about` entities from category + tags
+- `educationalLevel` + `audience` on all articles
+- HowTo schema on 2 procedural posts
+- TLDRBoxes on 20/35 posts (57% coverage)
+- Internal linking: 10 posts cross-linked with semantic anchor text variation
+- DefinedTerm-ready definition blocks on 2 posts (constructive possession, proffer session)
+- Schema utility: `src/lib/schema.ts` (about entities, citation mapping)
 
 ### Growth Features
 - Email capture with PDF lead magnet
 - Defense Milestone Score — free lead magnet quiz at `/score`
+  - Animated completion counter (fetched from Supabase `counters` table)
+  - Score persistence via `sessionStorage` (survives refresh)
+  - Personalized loading screen (charge-type-specific animation steps)
+  - ShareButtons with SMS-first ordering for viral sharing
+  - Anonymous aggregate tracking (`score_aggregates` table) — foundation for Defense Accountability Index
+  - Score-band + charge-type context continuity on checkout page
 - Post-purchase drip email sequences (per-tier, with upsell logic)
 - Submission-relative and delivery-relative email timing
-- Sharing CTAs on every blog post (SMS, WhatsApp, Email, Twitter, Facebook)
+- Sharing CTAs on every blog post + score page (reusable `ShareButtons` component)
 - "Know someone facing charges?" framing
 - Recent purchase notification (social proof)
 - Embeddable widget script for other sites
