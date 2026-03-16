@@ -24,6 +24,8 @@ export interface PlaybookConfig {
 
   /** Hero section */
   hero: {
+    /** Cover image path relative to /public, e.g. "/covers/dui-first-offense/thumbnail.png" */
+    coverImage?: string;
     /** Eyebrow text above headline */
     eyebrow: string;
     /** Main headline — bold, attention-grabbing */
@@ -96,6 +98,7 @@ export const DUI_FIRST_OFFENSE: PlaybookConfig = {
   seoDescription:
     "26 questions your DUI attorney hopes you never ask. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
+    coverImage: "/covers/dui-first-offense/thumbnail.png",
     eyebrow: "DUI Defense Playbook",
     headline: "The Breathalyzer Reading Is Not the Case.",
     subheadline:
@@ -248,6 +251,7 @@ export const DRUG_POSSESSION: PlaybookConfig = {
   seoDescription:
     "26 questions your drug possession attorney hopes you never ask. Lab analysis checklist, diversion programs, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
+    coverImage: "/covers/drug-possession/thumbnail.png",
     eyebrow: "Drug Possession Defense Playbook",
     headline: "The Lab Report Is Not the Case.",
     subheadline:
@@ -407,6 +411,7 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
   seoDescription:
     "26 questions your probation violation attorney hopes you never ask. Revocation hearing guide, willfulness defense, state cap laws, red flag checklist. Instant PDF download.",
   hero: {
+    coverImage: "/covers/probation-violation/thumbnail.png",
     eyebrow: "Probation Violation Defense Playbook",
     headline: "Missing a Meeting Is Not the Same as Committing a Crime.",
     subheadline:
@@ -566,6 +571,7 @@ export const WHITE_COLLAR: PlaybookConfig = {
   seoDescription:
     "26 questions your white collar attorney hopes you never ask. Federal sentencing guidelines, loss calculation challenge, forfeiture defense, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
+    coverImage: "/covers/white-collar/thumbnail.png",
     eyebrow: "White Collar Defense Playbook",
     headline: "The Loss Amount Is Not the Sentence.",
     subheadline:
@@ -725,6 +731,7 @@ export const SEX_OFFENSE: PlaybookConfig = {
   seoDescription:
     "26 questions your sex offense attorney hopes you never ask. Forensic interview challenges, SORNA registration tiers, collateral consequences, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
+    coverImage: "/covers/sex-offense/thumbnail.png",
     eyebrow: "Sex Offense Defense Playbook",
     headline: "The Accusation Is Not the Conviction.",
     subheadline:
@@ -884,6 +891,7 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
   seoDescription:
     "26 questions your federal criminal attorney hopes you never ask. Sentencing guidelines breakdown, cooperation strategy, BOP designation, mandatory minimums, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
+    coverImage: "/covers/federal-criminal/thumbnail.png",
     eyebrow: "Federal Criminal Defense Playbook",
     headline: "Federal Court Is a Different Game. Learn the Rules.",
     subheadline:
@@ -1043,6 +1051,7 @@ export const DRUG_TRAFFICKING: PlaybookConfig = {
   seoDescription:
     "26 questions your drug trafficking attorney hopes you never ask. Federal mandatory minimums, confidential informant cross-examination, drug quantity challenges, cooperation decisions, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
+    coverImage: "/covers/drug-trafficking/thumbnail.png",
     eyebrow: "Drug Trafficking Defense Playbook",
     headline: "The Informant Has a Deal. Do You Know Yours?",
     subheadline:
@@ -1202,6 +1211,7 @@ export const SELF_DEFENSE: PlaybookConfig = {
   seoDescription:
     "26 questions your self-defense attorney hopes you never ask. Stand Your Ground checklist, five-element framework, immunity hearing guide, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
+    coverImage: "/covers/self-defense/thumbnail.png",
     eyebrow: "Self-Defense / Justifiable Force Defense Playbook",
     headline: "You Defended Yourself. Now Defend Your Freedom.",
     subheadline:

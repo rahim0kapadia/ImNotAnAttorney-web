@@ -86,6 +86,17 @@ export default function PlaybookSalesPage({ config }: Props) {
         <p className="mt-3 text-xs text-zinc-500">
           Download within 60 seconds of purchase. No intake form. No waiting.
         </p>
+        {config.hero.coverImage && (
+          <div className="mt-8 flex justify-center">
+            <img
+              src={config.hero.coverImage}
+              alt={`${config.hero.headline} cover`}
+              className="h-auto w-full max-w-xs rounded-lg shadow-2xl"
+              width={400}
+              height={640}
+            />
+          </div>
+        )}
       </section>
       </FadeInUp>
 
