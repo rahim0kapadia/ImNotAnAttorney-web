@@ -362,8 +362,8 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
 
   // Band-specific email capture headlines (Godin + Chaperon)
   const bandEmailHeadlines: Record<string, string> = {
-    Critical: "Get the single most time-sensitive question for your case — sent now.",
-    Concerning: "Get the 10 questions your attorney hopes you never ask — sent now.",
+    Critical: "Your attorney has 48 hours to answer these 10 questions. Get them now.",
+    Concerning: "Your attorney has 48 hours to answer these 10 questions. Get them now.",
     Average: "Get the 10 questions your attorney hopes you never ask — sent now.",
     Adequate: "Get the checklist attorneys use to evaluate case readiness — sent now.",
     Excellent: "Get the checklist attorneys use to evaluate case readiness — sent now.",

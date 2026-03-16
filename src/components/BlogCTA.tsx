@@ -37,14 +37,13 @@ export function BlogCTA({ category }: { category?: string }) {
     <FadeInUp>
       <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
         <h3 className="text-lg font-bold text-white">
-          You don&apos;t need another lawyer.{" "}
-          <span className="text-amber-400">You need the right questions.</span>
+          Your attorney filed zero motions.{" "}
+          <span className="text-amber-400">Would you even know?</span>
         </h3>
         <p className="mt-2 text-sm text-zinc-400">
-          Questions built from YOUR charges, YOUR discovery, YOUR judge —
-          not generic legal info you can Google. Our Case Decoder gives
-          you 15 targeted questions your attorney isn&apos;t expecting.
-          Starting at {TIER_CORE["case-decoder"].priceDisplay}.
+          The Case Decoder gives you 15 questions calibrated to your charges —
+          built from YOUR discovery, YOUR judge, YOUR case stage.
+          Not generic legal info you can Google. Starting at {TIER_CORE["case-decoder"].priceDisplay}.
         </p>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row">
           <Link

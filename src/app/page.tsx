@@ -584,6 +584,9 @@ export default function Home() {
               </div>
             </div>
           </FadeInUp>
+          <p className="mt-4 text-sm text-zinc-400">
+            Every year, defendants spend $10,000+ on attorneys who file zero motions, return zero calls, and push for a plea without reviewing discovery.
+          </p>
           <StaggerContainer className="mt-8 grid gap-4 md:grid-cols-3">
             <StaggerItem>
               <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
