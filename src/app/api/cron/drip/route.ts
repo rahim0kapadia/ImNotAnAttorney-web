@@ -90,7 +90,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, sendEmailWithRetry, escapeHtml } from "@/lib/email";
-import { getNextNurtureEmail, getNextScoreEmail, getScoreNurtureOffset, getNextDui72hEmail, getDui72hNurtureOffset, getPostPurchaseEmails, personalizeEmailHtml } from "@/lib/drip-emails";
+import { getNextNurtureEmail, getNextScoreEmail, getScoreNurtureOffset, getNextDui72hEmail, getDui72hNurtureOffset, getPostPurchaseEmails, personalizeEmailHtml, getNextAbandonedScoreEmail, getNextWinbackEmail } from "@/lib/drip-emails";
 import type { DripEmail, DripPersonalizationData } from "@/lib/drip-emails";
 import { timingSafeEqual } from "crypto";
 import { signOperatorToken, signPhase2Token, SITE_URL, caseThreadId } from "@/lib/site";
@@ -200,6 +200,15 @@ export async function GET(req: NextRequest) {
         sentBySubscriber.get(row.subscriber_id)!.add(row.email_key);
       }
 
+      // ── Batch-fetch emails that have orders (for win-back suppression) ──
+      // Win-back emails should NOT be sent to subscribers who have purchased,
+      // since they receive their own post-purchase drip sequence instead.
+      const { data: orderEmails } = await supabase
+        .from("orders")
+        .select("email")
+        .in("status", ["paid", "delivered"]);
+      const purchasedEmails = new Set((orderEmails ?? []).map((o: { email: string }) => o.email.toLowerCase().trim()));
+
       for (const sub of subscribers) {
         try {
           const subscribedAt = new Date(sub.created_at);
@@ -228,6 +237,16 @@ export async function GET(req: NextRequest) {
             // fall through to standard nurture. Crisis buyers who haven't
             // converted by Day 7 are gone. Sending Day 10/14 generic nurture
             // burns sender reputation for near-zero conversion.
+          } else if (sub.source === "score-abandoned") {
+            // Score quiz abandonment sequence (3 emails, Day 1/2/5)
+            nextEmail = getNextAbandonedScoreEmail(daysSinceSubscribe, sentKeys);
+            if (!nextEmail) {
+              // After abandoned score sequence, fall through to standard nurture at Day 7
+              const adjustedDays = daysSinceSubscribe - 7;
+              if (adjustedDays >= 0) {
+                nextEmail = getNextNurtureEmail(adjustedDays, sentKeys);
+              }
+            }
           } else if (sub.score_band) {
             // Try score-specific emails first
             nextEmail = getNextScoreEmail(daysSinceSubscribe, sentKeys, sub.score_band);
@@ -243,6 +262,23 @@ export async function GET(req: NextRequest) {
           } else {
             // Non-score, non-DUI subscriber: standard nurture as-is
             nextEmail = getNextNurtureEmail(daysSinceSubscribe, sentKeys);
+          }
+
+          // ── WIN-BACK FALLTHROUGH ──
+          // If all standard sequences are exhausted (nextEmail is null) and
+          // enough time has passed (75+ days), try the win-back sequence.
+          // Suppressed for: DUI-72h subscribers (dead after Day 7), purchasers
+          // (they get post-purchase drips instead).
+          if (!nextEmail && sub.source !== "dui-72-hours" && daysSinceSubscribe >= 75) {
+            const hasPurchase = purchasedEmails.has(sub.email.toLowerCase().trim());
+            if (!hasPurchase) {
+              nextEmail = getNextWinbackEmail(daysSinceSubscribe, sentKeys);
+              // Resolve resubscribe URL placeholder for sunset emails (winback_4, winback_5)
+              if (nextEmail && nextEmail.html.includes("%%RESUBSCRIBE_URL%%")) {
+                const resubUrl = `${SITE_URL}/api/resubscribe?email=${Buffer.from(sub.email).toString("base64")}`;
+                nextEmail = { ...nextEmail, html: nextEmail.html.replace(/%%RESUBSCRIBE_URL%%/g, resubUrl) };
+              }
+            }
           }
 
           if (!nextEmail) {

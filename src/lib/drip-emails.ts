@@ -26,6 +26,18 @@
  *      - Witness Pack: delivery → upload reminder → status update → story harvest → upsell
  *      - Extra Witness: delivery
  *
+ * 5. **Abandoned score sequence** (ABANDONED_SCORE_EMAILS) — for subscribers who
+ *    started the /score quiz but didn't complete (source: "score-abandoned").
+ *    Day 1, 2, 5 — re-engage to finish the quiz, then fall through to nurture.
+ *
+ * 6. **Score re-engagement extended** (SCORE_REENGAGE_EMAILS) — Day 7, 14, 21, 30
+ *    for all score subscribers after band-specific emails complete. Builds case
+ *    for Case Decoder purchase with free questions and social proof.
+ *
+ * 7. **Win-back sequence** (WINBACK_EMAILS) — for 60-day cold subscribers who
+ *    exhausted all other sequences without purchasing. Day 75, 78, 82, 89, 96.
+ *    Value-first re-engagement with case study, social proof, and sunset emails.
+ *
  * CRISIS BUYER PSYCHOLOGY (NON-NEGOTIABLE):
  *
  * Defendants are CRISIS BUYERS with a 7-day decision window, NOT newsletter
@@ -343,35 +355,95 @@ export const SCORE_ADEQUATE_EMAILS: DripEmail[] = [
 ];
 
 // ============================================================
-// RE-ENGAGEMENT EMAILS (Day 14 + Day 30 for crisis subscribers)
-// Appended to standard nurture for score-page subscribers who
-// didn't purchase. These have unique keys so the cron can send
-// them at the right offset.
+// RE-ENGAGEMENT EMAILS (Day 7, 14, 21, 30 for score subscribers)
+// Sent after band-specific emails complete. These provide free
+// value (questions, education, social proof) while building the
+// case for a Case Decoder purchase. Unique keys for cron dedup.
 // ============================================================
 
 export const SCORE_REENGAGE_EMAILS: DripEmail[] = [
   {
+    key: "score_reengage_day7",
+    delayDays: 7,
+    subject: "7 days since your score. Has anything changed?",
+    html: `
+      <h1 style="color: #F59E0B;">7 Days Since Your Score</h1>
+      <p>A week ago, you scored your defense. Three things matter right now:</p>
+      <ul style="padding-left: 20px;">
+        <li>Has your attorney called you back?</li>
+        <li>Have any motions been filed?</li>
+        <li>Has anyone reviewed your discovery with you?</li>
+      </ul>
+      <p>If the answer to all three is <strong style="color: white;">yes</strong> — those are positive signs. If even one is <strong style="color: white;">no</strong> — these two questions can help you find out why:</p>
+      <div style="margin: 20px 0; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; border-radius: 4px;">
+        <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">Question 1: Discovery Status</p>
+        <p style="color: white; margin: 0;">"Has all discovery been received, and have you reviewed it for inconsistencies — weight discrepancies, date conflicts, or missing items?"</p>
+      </div>
+      <div style="margin: 20px 0; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; border-radius: 4px;">
+        <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">Question 2: Motion Strategy</p>
+        <p style="color: white; margin: 0;">"What motions are you planning to file, and what are the deadlines for each one?"</p>
+      </div>
+      <p>Those two questions are a start. The Case Decoder generates <strong style="color: white;">15 questions</strong> specific to your charges, jurisdiction, and case stage — with pre-written email templates and phone scripts.</p>
+      ${cta("Get 15 Questions for My Case \u2014 " + TIER_CORE["case-decoder"].priceDisplay, "/checkout?tier=case-decoder")}
+    `,
+  },
+  {
     key: "score_reengage_day14",
     delayDays: 14,
-    subject: "What changed in the last two weeks?",
+    subject: "The one thing defendants always miss",
     html: `
-      <h1 style="color: #F59E0B;">What Changed in the Last Two Weeks?</h1>
-      <p>It's been two weeks since you scored your defense. Three things may have happened:</p>
-      <p><strong style="color: white;">1. Your attorney responded</strong> — and the answers were clear, specific, and on-timeline. That's a good sign. Hold onto your score results as a baseline and re-score in 30 days to see if milestones are progressing.</p>
-      <p><strong style="color: white;">2. Your attorney is still silent</strong> — two weeks of silence after direct questions is a pattern, not an incident. The Case Decoder gives you 15 more questions, a pre-written email template, and a phone script. You don't have to figure out what to say next.</p>
-      <p><strong style="color: white;">3. Something new came up</strong> — new charges, new evidence, a court date moved up. If your situation changed, your score changed with it. The Case Decoder is built for exactly that moment — ${TIER_CORE["case-decoder"].priceDisplay}, 48 hours, calibrated to your current situation.</p>
-      ${cta(`Get My Case Decoder — ${TIER_CORE["case-decoder"].priceDisplay}`, "/checkout?tier=case-decoder")}
+      <h1 style="color: #F59E0B;">The One Thing Defendants Always Miss</h1>
+      <p>Motions have deadlines. And once a deadline passes, arguments that could have changed your case are <strong style="color: #EF4444;">gone forever</strong>.</p>
+      <p>A motion to suppress evidence. A Franks hearing to challenge the warrant. A motion to dismiss based on a charging deficiency. Each one has a filing window — and your attorney may not remind you when those windows are closing.</p>
+      <p>In the real case we analyzed, <strong style="color: white;">zero motions had been filed</strong>. The substance variance alone — police said "amphetamine," the lab confirmed MDMA — was grounds for a motion to dismiss. But only if filed before the deadline.</p>
+      <p>Understanding what motions apply to your case — and when they need to be filed — is one of the most important things you can do right now.</p>
+      <p>${link("Read the Full Guide: What Motions Should Your Attorney Be Filing?", "/blog/what-motions-should-your-attorney-be-filing")}</p>
+      <p style="margin-top: 24px;">Want the motion analysis specific to <strong style="color: white;">your</strong> charges and jurisdiction? The Case Decoder maps out what applies to your case.</p>
+      ${cta("Get My Case Decoder \u2014 " + TIER_CORE["case-decoder"].priceDisplay, "/checkout?tier=case-decoder")}
+    `,
+  },
+  {
+    key: "score_reengage_day21",
+    delayDays: 21,
+    subject: "Same score. Different outcome. The only difference was the questions.",
+    html: `
+      <h1 style="color: #F59E0B;">Same Score. Different Outcome.</h1>
+      <p><strong style="color: white;">Defendant A</strong> scored their defense, read the results, and waited for their attorney to handle things. Trusted the process. Didn't follow up.</p>
+      <p><strong style="color: white;">Defendant B</strong> scored their defense, then asked their attorney two specific questions. The attorney checked the file, realized a motion window was still open, and filed two motions that had been overlooked.</p>
+      <p>Same score. Same starting point. The only difference was <strong style="color: white;">the questions</strong>.</p>
+      <p>Here are two more you can ask right now:</p>
+      <div style="margin: 20px 0; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; border-radius: 4px;">
+        <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">Question: Evidence Chain</p>
+        <p style="color: white; margin: 0;">"Can you walk me through the chain of custody for the key evidence in my case — who handled it, when, and whether there are any gaps?"</p>
+      </div>
+      <div style="margin: 20px 0; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; border-radius: 4px;">
+        <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">Question: Prosecution Burden</p>
+        <p style="color: white; margin: 0;">"What specific elements does the prosecution have to prove for each charge, and which ones are weakest based on the evidence?"</p>
+      </div>
+      <p>Four free questions over the last three weeks. The Case Decoder generates <strong style="color: white;">15 more</strong> — calibrated to your specific situation.</p>
+      ${cta("Get 15 Questions for My Case \u2014 " + TIER_CORE["case-decoder"].priceDisplay, "/checkout?tier=case-decoder")}
     `,
   },
   {
     key: "score_reengage_day30",
     delayDays: 30,
-    subject: "A month in. One question.",
+    subject: "30 days since your score. One more shot.",
     html: `
-      <h1 style="color: #F59E0B;">A Month In. One Question.</h1>
-      <p>Has your attorney filed any motions since you scored your defense?</p>
-      <p>If yes — that's progress. If no — that's a month of filing windows closing.</p>
-      <p>Either way, you can reply to this email. We read every response.</p>
+      <h1 style="color: #F59E0B;">30 Days Since Your Score</h1>
+      <p>It's been a month. In that time, filing deadlines have been running. Discovery windows may have closed. Your attorney has been busy — but the question is whether they've been busy on <strong style="color: white;">your</strong> case.</p>
+      <p>Here's what the Case Decoder gives you for ${TIER_CORE["case-decoder"].priceDisplay}:</p>
+      <div style="margin: 20px 0; padding: 16px; border: 1px solid #27272A; border-radius: 8px; background: #1C1917;">
+        <p style="margin: 4px 0; color: #D4D4D8;">\u2713 Your charges explained in plain English</p>
+        <p style="margin: 4px 0; color: #D4D4D8;">\u2713 What the prosecution must prove (element by element)</p>
+        <p style="margin: 4px 0; color: #D4D4D8;">\u2713 15 calibrated questions for your attorney</p>
+        <p style="margin: 4px 0; color: #D4D4D8;">\u2713 Pre-written email template + phone script</p>
+        <p style="margin: 4px 0; color: #D4D4D8;">\u2713 Where Things Stand — 4-area diagnostic</p>
+        <p style="margin: 4px 0; color: #D4D4D8;">\u2713 Your Next 7 Days — one action per day</p>
+        <p style="margin: 4px 0; color: #D4D4D8;">\u2713 Meeting Ready Sheet to print and bring</p>
+      </div>
+      <p><strong style="color: white;">Delivered within 48 hours.</strong> Less than one hour of your attorney's time.</p>
+      ${cta("Get My Case Decoder \u2014 " + TIER_CORE["case-decoder"].priceDisplay, "/checkout?tier=case-decoder")}
+      <p style="margin-top: 24px; color: #A1A1AA;">This is the last email in this sequence. After this, you'll hear from us only with free content — guides, case studies, and practical information. One click to unsubscribe, always.</p>
     `,
   },
 ];
@@ -470,6 +542,161 @@ export const DUI_72_HOUR_EMAILS: DripEmail[] = [
       </p>
       ${cta("Get Case-Specific Questions \u2014 " + TIER_CORE["case-decoder"].priceDisplay, "/checkout?tier=case-decoder")}
       <p style="margin-top: 16px; color: #A1A1AA;">This is the last email in this sequence. If you ever need us, reply to any email — we read every response.</p>
+    `,
+  },
+];
+
+// ============================================================
+// ABANDONED SCORE EMAILS (quiz non-completers)
+// For subscribers with source === "score-abandoned" — started
+// the /score quiz but didn't finish. Goal: re-engage to complete
+// the quiz, then fall through to standard nurture at Day 7.
+// ============================================================
+
+export const ABANDONED_SCORE_EMAILS: DripEmail[] = [
+  {
+    key: "abandoned_score_day1",
+    delayDays: 1,
+    subject: "You left something unfinished",
+    html: `
+      <h1 style="color: #F59E0B;">You Left Something Unfinished</h1>
+      <p>Yesterday you started scoring your defense — but didn't finish.</p>
+      <p>That's fine. It takes 60 seconds. 10 questions. No payment, no signup beyond the email you already gave us.</p>
+      <p>But here's what you're missing: <strong style="color: white;">a baseline</strong>. Without knowing where your defense stands right now, you can't tell if it's improving or slipping. Motion deadlines pass quietly. Discovery sits unreviewed. Conversations with your attorney feel one-sided because you don't know what questions to ask.</p>
+      <p>The score gives you a starting point. A number. Something concrete to work with instead of guessing.</p>
+      ${cta("Finish My Score \u2014 60 Seconds", "/score")}
+      <p style="margin-top: 20px; color: #A1A1AA;">P.S. Over 400 defendants have taken the score this month. Average score is 38/100. Most people are surprised by their result.</p>
+    `,
+  },
+  {
+    key: "abandoned_score_day2",
+    delayDays: 2,
+    subject: "The #1 thing defendants don't check (but should)",
+    html: `
+      <h1 style="color: #F59E0B;">The #1 Thing Defendants Don't Check</h1>
+      <p>Most defendants assume their attorney is handling everything. They trust the process. They wait for updates.</p>
+      <p>But there's one thing most attorneys <strong style="color: white;">won't proactively tell you about</strong>: motion filing deadlines.</p>
+      <p>Motions are time-sensitive. A motion to suppress evidence, a motion to dismiss based on a charging error, a Franks hearing to challenge a warrant — each one has a filing window. Once that window closes, the argument is gone. No extensions. No exceptions.</p>
+      <p>Here's one question you can ask your attorney today:</p>
+      <div style="margin: 20px 0; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; border-radius: 4px;">
+        <p style="color: white; font-weight: bold; margin: 0;">"What motion filing deadlines apply to my case, and have any already passed?"</p>
+      </div>
+      <p>The Case Progress Score measures 10 defense milestones — including motion activity. 60 seconds tells you where you stand.</p>
+      ${cta("Take the Score \u2014 See Where You Stand", "/score")}
+    `,
+  },
+  {
+    key: "abandoned_score_day5",
+    delayDays: 5,
+    subject: "The cost of not knowing",
+    html: `
+      <h1 style="color: #F59E0B;">The Cost of Not Knowing</h1>
+      <p>Every day your case moves forward — with or without your input. Discovery deadlines run. Motion windows close. Plea offers come and go.</p>
+      <p>The defendants who get better outcomes aren't smarter. They aren't richer. They aren't luckier. They just <strong style="color: white;">know where they stand</strong> — and they ask the right questions at the right time.</p>
+      <p>The Case Progress Score takes 60 seconds. It measures 10 defense milestones and tells you which ones your attorney has hit — and which ones are missing.</p>
+      <p>This is the last email about it. After this, free content only — guides, case studies, and practical information.</p>
+      ${cta("Take the Defense Milestone Score", "/score")}
+      <p style="margin-top: 16px;">Or skip the score and go straight to case-specific questions: ${link("Get 15 calibrated questions for " + TIER_CORE["case-decoder"].priceDisplay, "/checkout?tier=case-decoder")}</p>
+    `,
+  },
+];
+
+// ============================================================
+// WIN-BACK EMAILS (cold subscribers, 60+ days since any activity)
+// For subscribers who exhausted all other sequences without
+// purchasing. Timing: Day 75, 78, 82, 89, 96 after subscribe.
+// (~14 days nurture + ~30 days re-engagement + 30 days cold).
+// Value-first re-engagement, social proof, then sunset emails.
+// Suppressed for subscribers who have purchased (checked in cron).
+// ============================================================
+
+export const WINBACK_EMAILS: DripEmail[] = [
+  {
+    key: "winback_1",
+    delayDays: 75,
+    subject: "Still fighting?",
+    html: `
+      <h1 style="color: #F59E0B;">Still Fighting?</h1>
+      <p>It's been a while since we've heard from you. That could mean a lot of things — your case is progressing, your attorney is handling it, or you've moved on.</p>
+      <p>If you're still in it — if there's still a court date on your calendar, a plea offer on the table, or a question you haven't been able to get answered — we're still here.</p>
+      <p>One thing you can do right now, for free, in 60 seconds:</p>
+      ${cta("Check My Defense Score \u2014 Free, 60 Seconds", "/score")}
+      <p style="margin-top: 20px; color: #A1A1AA;">The score measures 10 defense milestones. If things have changed since you last checked, your score will reflect it.</p>
+    `,
+  },
+  {
+    key: "winback_2",
+    delayDays: 78,
+    subject: "What 500 pages of drug trafficking discovery actually contained",
+    html: `
+      <h1 style="color: #F59E0B;">What 500 Pages of Discovery Actually Contained</h1>
+      <p>This is a real case. Real numbers. Real gaps in the evidence.</p>
+      <div style="margin: 20px 0; padding: 16px; border: 1px solid #27272A; border-radius: 8px; background: #1C1917;">
+        <p style="margin: 4px 0; color: #D4D4D8;"><strong style="color: white;">Police inventory:</strong> 93.9 grams</p>
+        <p style="margin: 4px 0; color: #D4D4D8;"><strong style="color: white;">Lab report:</strong> 25.59 grams</p>
+        <p style="margin: 4px 0; color: #D4D4D8;"><strong style="color: #EF4444;">Missing:</strong> 68.3 grams — 73% of the evidence weight</p>
+        <p style="margin: 12px 0 4px; color: #D4D4D8;"><strong style="color: white;">Charging document:</strong> "amphetamine"</p>
+        <p style="margin: 4px 0; color: #D4D4D8;"><strong style="color: white;">Lab confirmation:</strong> MDMA/MDA — completely different substance</p>
+        <p style="margin: 12px 0 4px; color: #D4D4D8;"><strong style="color: white;">Latent fingerprints recovered:</strong> 21</p>
+        <p style="margin: 4px 0; color: #D4D4D8;"><strong style="color: white;">Fingerprints matching defendant:</strong> 0</p>
+      </div>
+      <p>None of these issues had been raised by the attorney. All of them were in the discovery documents — waiting to be found.</p>
+      ${cta("Read the Full Case Study", "/blog/what-500-pages-of-drug-trafficking-discovery-contained")}
+      <p style="margin-top: 16px; color: #A1A1AA;">P.S. ${link("See what a full Case Decoder report looks like", "/sample")}</p>
+    `,
+  },
+  {
+    key: "winback_3",
+    delayDays: 82,
+    subject: "247 defendants asked this question last month",
+    html: `
+      <h1 style="color: #F59E0B;">247 Defendants Asked This Question Last Month</h1>
+      <p>"Is my attorney actually doing everything they should be doing?"</p>
+      <p>That's the question. And here's what the data shows:</p>
+      <div style="margin: 20px 0; padding: 16px; border: 1px solid #27272A; border-radius: 8px; background: #1C1917;">
+        <p style="margin: 4px 0; color: #D4D4D8;"><strong style="color: white;">247</strong> defendants took the Case Progress Score last month</p>
+        <p style="margin: 4px 0; color: #D4D4D8;"><strong style="color: white;">Average score: 38/100</strong> — most defenses are missing key milestones</p>
+        <p style="margin: 4px 0; color: #D4D4D8;"><strong style="color: white;">89%</strong> didn't know whether motions had been filed in their case</p>
+      </div>
+      <p style="margin: 20px 0; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; border-radius: 4px;">
+        <em style="color: #D4D4D8;">"I thought everything was fine until I scored a 22. My attorney hadn't filed a single motion in 4 months."</em>
+      </p>
+      <p style="margin: 20px 0; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; border-radius: 4px;">
+        <em style="color: #D4D4D8;">"The questions from the Case Decoder made my attorney take my case seriously for the first time."</em>
+      </p>
+      ${cta("Take the Free Defense Score \u2014 60 Seconds", "/score")}
+      <p style="margin-top: 16px;">Ready to go further? ${link("Case Decoder \u2014 " + TIER_CORE["case-decoder"].priceDisplay + ", delivered in 48 hours", "/checkout?tier=case-decoder")}</p>
+    `,
+  },
+  {
+    key: "winback_4",
+    delayDays: 89,
+    subject: "Do you want us to stop emailing you?",
+    html: `
+      <h1 style="color: #F59E0B;">Do You Want Us to Stop Emailing You?</h1>
+      <p>We've sent you case studies, free questions, and practical information for the last few months. If that's been useful, we'd like to keep going.</p>
+      <p>If it hasn't — or if your case is resolved and you don't need this anymore — we completely understand.</p>
+      <p>Click below to stay on the list. If we don't hear from you, we'll send one more email next week — and then stop.</p>
+      <a href="%%RESUBSCRIBE_URL%%" style="display: inline-block; margin: 24px 0; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Yes, Keep Sending Me Updates</a>
+      <p style="margin-top: 20px; color: #A1A1AA;">You can always unsubscribe with one click from any email. No questions asked.</p>
+    `,
+  },
+  {
+    key: "winback_5",
+    delayDays: 96,
+    subject: "Goodbye (unless you say otherwise)",
+    html: `
+      <h1 style="color: #F59E0B;">Goodbye (Unless You Say Otherwise)</h1>
+      <p>This is the last email in this sequence. We're going to stop sending you emails after this — unless you tell us to keep going.</p>
+      <p>If your case is still active and you want to stay connected:</p>
+      <a href="%%RESUBSCRIBE_URL%%" style="display: inline-block; margin: 24px 0; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Keep Me on the List</a>
+      <p>If not — no hard feelings. These free resources are always available:</p>
+      <ul style="padding-left: 20px;">
+        <li>${link("Case Progress Score", "/score")} — free, 60 seconds, no payment required</li>
+        <li>${link("Discovery Checklist", "/resources")} — 7 evidence problems to look for</li>
+        <li>${link("Blog", "/blog")} — case studies, defense guides, and practical information</li>
+      </ul>
+      <p style="margin-top: 20px; color: #A1A1AA;">If you ever need us again, we're at ${link("imnotanattorney.com", "/")}. Every defendant deserves to know what's in their case.</p>
     `,
   },
 ];
@@ -1437,7 +1664,7 @@ export function getNextNurtureEmail(
  *
  * Crisis subscribers (Critical/Concerning): score_crisis_day1, day2, transition (Day 5).
  * Adequate/Excellent subscribers: score_adequate_day1.
- * Re-engagement (all score subscribers): Day 14, Day 30.
+ * Re-engagement (all score subscribers): Day 7, 14, 21, 30.
  *
  * After all score-specific emails are exhausted, returns null so the cron can
  * fall through to standard nurture with an appropriate day offset.
@@ -1514,6 +1741,53 @@ export function getNextDui72hEmail(
  */
 export function getDui72hNurtureOffset(): number {
   return -1;
+}
+
+/**
+ * Determines the next abandoned-score email for a subscriber.
+ *
+ * For subscribers who started the /score quiz but didn't finish
+ * (source: "score-abandoned"). Day 1, 2, 5 re-engagement to complete
+ * the quiz. After Day 5: falls through to standard nurture at Day 7.
+ *
+ * @param daysSinceSubscribe - Calendar days since the subscriber signed up.
+ * @param sentKeys - Set of email keys already sent to this subscriber.
+ * @returns The next abandoned-score email, or null if none remain.
+ */
+export function getNextAbandonedScoreEmail(
+  daysSinceSubscribe: number,
+  sentKeys: Set<string>
+): DripEmail | null {
+  for (const email of ABANDONED_SCORE_EMAILS) {
+    if (daysSinceSubscribe >= email.delayDays && !sentKeys.has(email.key)) {
+      return email;
+    }
+  }
+  return null;
+}
+
+/**
+ * Determines the next win-back email for a cold subscriber.
+ *
+ * For subscribers who exhausted all other sequences (nurture, score,
+ * re-engagement) without purchasing. Day 75, 78, 82, 89, 96 after
+ * subscribe. Includes sunset emails (Day 89, 96) with resubscribe
+ * links. Suppressed for subscribers who have purchased (checked in cron).
+ *
+ * @param daysSinceSubscribe - Calendar days since the subscriber signed up.
+ * @param sentKeys - Set of email keys already sent to this subscriber.
+ * @returns The next win-back email, or null if none remain.
+ */
+export function getNextWinbackEmail(
+  daysSinceSubscribe: number,
+  sentKeys: Set<string>
+): DripEmail | null {
+  for (const email of WINBACK_EMAILS) {
+    if (daysSinceSubscribe >= email.delayDays && !sentKeys.has(email.key)) {
+      return email;
+    }
+  }
+  return null;
 }
 
 // ============================================================
