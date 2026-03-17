@@ -113,6 +113,40 @@ War Room supports a priority delivery add-on:
 - Added as a second Stripe Checkout line item when selected
 - Stored in order metadata as `priority_delivery: true`
 
+## Engagement Elements (Cross-Pipeline Standard)
+
+Expert basis: Cialdini (commitment/consistency), Kahneman (cognitive ease), Eyal (Hook Model).
+
+The War Room is the $4,997 tier — a multi-phase, ongoing engagement. Full engagement elements are active with discovery document references, and this tier adds **weekly update bridges** that maintain momentum across the 25-28 day delivery window and ongoing weekly updates.
+
+Every report section must include:
+
+1. **Section-End Executive Summary** — 3-5 key findings + recommended next action. Clearly boxed/separated from analysis text. At this tier, summaries are phase-aware — they reference what was delivered in prior phases and what the current phase adds. Example: "Building on the timeline gaps identified in Phase 1, this witness analysis reveals three additional inconsistencies your attorney should raise before the next hearing."
+
+2. **"Your Case" Personalization** — At least 1 personalized reference per section using the client's actual case details, jurisdiction-level intelligence, AND specific discovery document references (same depth as X-Ray). At this tier, personalization also references findings from PRIOR delivery phases. Example: "In Phase 1 we identified that Officer [Name]'s report contained a 33-minute gap. This witness statement from [Witness] now places them at a different location during that exact window."
+
+3. **Section Bridges** — Final 1-2 sentences of each section create anticipation for the next. Standard within-report bridges apply to all sections. Additionally, this tier requires **cross-phase bridges**:
+   - **Phase 1 closing bridge:** "Phase 2 begins next week with witness dossiers — the officer discrepancies identified above will be cross-referenced against every witness statement."
+   - **Phase 2 closing bridge:** "The final package (Phase 3) will compile everything into an attorney-ready delivery format with case law backing each finding."
+   - **Weekly update bridges:** Each weekly update opens with a bridge from the previous week ("Last week we identified X. This week, new discovery from [source] changes the picture...") and closes with a forward bridge ("Next week's update will incorporate the hearing results from [date]...").
+
+4. **Progress Structure** — Each section header includes position: "Section N of M: [Section Title]". For multi-phase delivery, progress is tracked at TWO levels:
+   - **Within a phase:** "Phase 1, Section 3 of 5: Discovery Deep Dive"
+   - **Across the engagement:** "Phase 2 of 3: Witness and Prosecution Analysis"
+   - **Weekly updates:** "Week 4 Update: [Key Development]"
+
+**Tier-specific enhancements over X-Ray ($2,497):**
+- Cross-phase bridges maintain engagement across the 25-28 day delivery window
+- Weekly update bridges create a continuous narrative thread across the case lifecycle
+- Personalization references findings from prior phases (cumulative intelligence)
+- Progress structure operates at both section and phase levels
+- Executive summaries are phase-aware, connecting new findings to prior deliverables
+
+**Tier-specific constraints:**
+- No real-time trial debrief/prep cycle bridges (that's Situation Room, $9,997)
+- Weekly updates are operator-paced, not tied to daily trial events
+- Cross-phase bridges connect weekly/phase deliveries, not daily trial sessions
+
 ## Witness Add-Ons
 
 Two witness-related add-on products are available. These are standalone Stripe products with their own tier slugs.

@@ -202,6 +202,42 @@ This SLA is communicated in the post-purchase delivery email (`post_situation_ro
 
 ---
 
+## Engagement Elements (Cross-Pipeline Standard)
+
+Expert basis: Cialdini (commitment/consistency), Kahneman (cognitive ease), Eyal (Hook Model).
+
+The Situation Room is the $9,997 premium tier — an ongoing, trial-focused engagement. All engagement elements from lower tiers are active with full discovery document references, plus this tier adds **trial cycle bridges** that maintain momentum through the daily debrief/prep rhythm of an active trial.
+
+Every report section must include:
+
+1. **Section-End Executive Summary** — 3-5 key findings + recommended next action. Clearly boxed/separated from analysis text. At this tier, summaries are phase-aware (like War Room) AND trial-aware — they reference what was delivered in prior phases, what the current phase adds, and how findings connect to upcoming trial events. Example: "The timeline gaps from Phase 1 and witness contradictions from Phase 2 converge on the prosecution's weakest link — Officer [Name]'s chain-of-custody testimony scheduled for Day 3."
+
+2. **"Your Case" Personalization** — At least 1 personalized reference per section using the client's actual case details, jurisdiction-level intelligence, AND specific discovery document references. At this tier, personalization also references findings from ALL prior delivery phases and ties to the trial calendar. Example: "In Phase 1 we identified the 33-minute gap. Phase 2 confirmed [Witness]'s contradicting statement. Tomorrow's cross-examination of Officer [Name] is the moment to surface both."
+
+3. **Section Bridges** — Final 1-2 sentences of each section create anticipation for the next. Standard within-report and cross-phase bridges apply (same as War Room). Additionally, this tier requires **trial cycle bridges**:
+   - **Evening debrief closing bridge:** "Based on today's testimony from [Witness], tomorrow morning's prep will focus on the chain-of-custody gaps this creates for the prosecution's timeline."
+   - **Morning prep closing bridge:** "Today's hearing on [Motion] will determine whether the Phase 2 witness dossier findings are admissible — tonight's debrief will analyze the ruling's impact."
+   - **Weekly update bridges** (pre-trial): Same as War Room — connect prior week's findings to current developments.
+
+4. **Progress Structure** — Each section header includes position: "Section N of M: [Section Title]". Progress is tracked at THREE levels:
+   - **Within a phase:** "Phase 1, Section 3 of 5: Discovery Deep Dive"
+   - **Across the engagement:** "Phase 2 of 3: Witness and Prosecution Analysis"
+   - **Trial cycle:** "Day 3 Evening Debrief" / "Day 4 Morning Prep"
+
+**Tier-specific enhancements over War Room ($4,997):**
+- Trial cycle bridges (debrief→prep→debrief) create a continuous daily narrative through active trial
+- Personalization references the trial calendar and connects all prior phases to upcoming courtroom events
+- Progress structure adds a third level for trial day tracking
+- Executive summaries are trial-aware, connecting analytical findings to specific scheduled testimony/hearings
+- Morning prep briefs explicitly reference the previous evening's debrief findings
+
+**Tier-specific notes:**
+- This is the highest tier — no upsell constraints on engagement elements
+- Trial cycle bridges are the unique differentiator vs. War Room's weekly update bridges
+- Operator is directly engaged with the client, so engagement elements complement (not replace) direct communication
+
+---
+
 ## 6. What's Built vs. Manual
 
 ### Built (Automated)

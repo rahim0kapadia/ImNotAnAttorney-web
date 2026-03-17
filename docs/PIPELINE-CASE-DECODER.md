@@ -456,6 +456,28 @@ The HTML includes:
 - Legal disclaimer ("not legal advice")
 - Soft upgrade CTA footer ("After your meeting, if you want to verify... No pressure.")
 
+### Engagement Elements (Cross-Pipeline Standard)
+
+Expert basis: Cialdini (commitment/consistency), Kahneman (cognitive ease), Eyal (Hook Model).
+
+The Case Decoder is the $197 entry tier. Engagement elements are basic — focused on clarity and momentum rather than deep personalization.
+
+Every report section must include:
+
+1. **Section-End Executive Summary** — 3-5 key findings + recommended next action. Clearly boxed/separated from analysis text. At this tier, summaries distill the section into what the defendant should DO (e.g., "Ask your attorney about X before your next hearing").
+
+2. **"Your Case" Personalization** — At least 1 personalized reference per section using the client's intake data (defendant name, charges, jurisdiction, arrest date). Personalization at this tier draws exclusively from intake questionnaire data — no external research is incorporated. Example: "Based on your [charge] in [jurisdiction], the standard process is..."
+
+3. **Section Bridges** — Final 1-2 sentences of each section create anticipation for the next. Example: "Now that you understand where things stand, the next section breaks down exactly what you're facing — and the questions that can change the outcome."
+
+4. **Progress Structure** — Each section header includes position: "Section N of M: [Section Title]". For the 7+2 architecture, conditional sections (C1, C2) are numbered after the core 7. Example: "Section 3 of 7: Communication Playbook" or "Section 8 of 9: Case Clock" (when conditional sections are present).
+
+**Tier-specific constraints:**
+- No jurisdiction-level intelligence in personalization (that's Intelligence Brief, $997)
+- No discovery document references (that's X-Ray, $2,497)
+- Executive summaries are action-oriented ("do this next") rather than analytical ("this means...")
+- Bridges reference the report's own content only — no promises about what deeper tiers would reveal
+
 ---
 
 ## Operator Workflow

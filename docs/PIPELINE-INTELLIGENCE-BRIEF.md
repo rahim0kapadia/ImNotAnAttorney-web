@@ -161,6 +161,35 @@ All items below have been built and deployed. Kept for historical reference.
 
 ---
 
+## Engagement Elements (Cross-Pipeline Standard)
+
+Expert basis: Cialdini (commitment/consistency), Kahneman (cognitive ease), Eyal (Hook Model).
+
+The Intelligence Brief is the $997 tier — the first tier with full engagement design. At this price point, every engagement element is active and personalization incorporates jurisdiction-level intelligence.
+
+Every report section must include:
+
+1. **Section-End Executive Summary** — 3-5 key findings + recommended next action. Clearly boxed/separated from analysis text. Summaries at this tier are analytical ("Based on sentencing patterns in [jurisdiction], this finding means...") in addition to action-oriented. Each summary should reference at least one jurisdiction-specific data point.
+
+2. **"Your Case" Personalization** — At least 1 personalized reference per section using the client's actual case details (defendant name, charges, jurisdiction, dates) AND jurisdiction-level intelligence (judge tendencies, local court patterns, county-specific procedures). Example: "In [County] courts, judges handling [charge type] cases have historically..." Personalization boxes should be visually distinct (bordered callout) and labeled "Your Case."
+
+3. **Section Bridges** — Final 1-2 sentences of each section create anticipation for the next. Bridges at this tier reference specific findings from the current section that connect to the next. Example: "Based on the prosecution's evidence pattern above, the next section reveals how this typically plays out at sentencing in [jurisdiction]..."
+
+4. **Progress Structure** — Each section header includes position: "Section N of M: [Section Title]". For the 9-section + 3-appendix structure: sections numbered 1-9, appendices labeled "Appendix A-C" without numbering. Example: "Section 4 of 9: Prosecution Strategy Analysis"
+
+**Tier-specific enhancements over Case Decoder ($197):**
+- Personalization uses jurisdiction + judge intelligence data (not just intake questionnaire)
+- Executive summaries include analytical depth, not just action items
+- Bridges reference specific findings that carry forward between sections
+- "Your Case" boxes are visually distinct callouts, not inline text
+
+**Tier-specific constraints:**
+- No discovery document references in personalization (that's X-Ray, $2,497)
+- No weekly update bridges (that's War Room, $4,997)
+- Judge data is jurisdiction-level patterns, not case-specific rulings
+
+---
+
 ## Drip Sequence Detail
 
 ### Post-Purchase Emails (intelligence-brief tier)

@@ -224,6 +224,36 @@ The webhook handler then stores `consent_timestamp` on the `orders` record for c
 
 ---
 
+## Engagement Elements (Cross-Pipeline Standard)
+
+Expert basis: Cialdini (commitment/consistency), Kahneman (cognitive ease), Eyal (Hook Model).
+
+The X-Ray is the $2,497 tier — the first discovery-based tier. Full engagement elements are active, and personalization incorporates actual discovery document references. This is where reports stop feeling like templates and start feeling like bespoke analysis.
+
+Every report section must include:
+
+1. **Section-End Executive Summary** — 3-5 key findings + recommended next action. Clearly boxed/separated from analysis text. At this tier, summaries cite specific discovery documents by name. Example: "Key findings from this section: (1) The arrest affidavit (uploaded 03/12) contains a timeline gap between 11:42 PM and 12:15 AM that your attorney should address..."
+
+2. **"Your Case" Personalization** — At least 1 personalized reference per section using the client's actual case details (defendant name, charges, jurisdiction, dates), jurisdiction-level intelligence, AND specific discovery document references. Personalization boxes at this tier should cite page numbers, timestamps, or specific quotes from uploaded documents. Example: "On page 3 of the police report, Officer [Name] states [quote] — but the dashcam timeline (file: dashcam-summary.pdf) shows a 33-minute discrepancy." Boxes are visually distinct callouts labeled "Your Case."
+
+3. **Section Bridges** — Final 1-2 sentences of each section create anticipation for the next. Bridges at this tier reference specific document findings that connect sections. Example: "The discrepancies identified in the arrest report above become more significant in the next section, where the lab results timeline reveals a second gap the prosecution hasn't addressed..."
+
+4. **Progress Structure** — Each section header includes position: "Section N of M: [Section Title]". The section count reflects the actual report structure produced by the operator's analysis (varies by case complexity). Example: "Section 3 of 8: Discovery Document Analysis — Timeline Reconstruction"
+
+**Tier-specific enhancements over Intelligence Brief ($997):**
+- Personalization cites specific discovery documents by filename, page number, and content
+- Executive summaries reference specific evidence with document attribution
+- Bridges connect findings ACROSS documents (not just across sections)
+- "Your Case" boxes may include direct quotes from uploaded materials
+- Discrepancy callouts cross-reference multiple documents within a single personalization box
+
+**Tier-specific constraints:**
+- No weekly update bridges (that's War Room, $4,997)
+- No trial-phase debrief/prep cycle bridges (that's Situation Room, $9,997)
+- Report is a single delivery, not phased — bridges connect sections within the same document
+
+---
+
 ## Drip Sequence
 
 The X-Ray post-purchase drip is defined in `src/lib/drip-emails.ts`. Three emails are configured:
