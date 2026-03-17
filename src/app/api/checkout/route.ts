@@ -22,7 +22,7 @@
  * the order, case, and trigger downstream emails without re-querying business logic.
  */
 import { NextRequest, NextResponse } from "next/server";
-import { stripe, TIERS, isValidTier } from "@/lib/stripe";
+import { stripe, stripeForTier, TIERS, isValidTier } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 
@@ -353,7 +353,8 @@ export async function POST(req: NextRequest) {
         const cappedCredit = Math.min(upgradeCreditCents, maxCredit);
 
         if (cappedCredit > 0) {
-          const coupon = await stripe.coupons.create({
+          const tierStripe = stripeForTier(tier);
+          const coupon = await tierStripe.coupons.create({
             amount_off: cappedCredit,
             currency: "usd",
             duration: "once",
@@ -417,7 +418,8 @@ export async function POST(req: NextRequest) {
     // open-redirect attacks. {CHECKOUT_SESSION_ID} is a Stripe template variable
     // that gets replaced with the actual session ID after payment.
     // =========================================================================
-    const session = await stripe.checkout.sessions.create({
+    const tierStripe = stripeForTier(tier);
+    const session = await tierStripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
       customer_email: normalizedEmail || undefined,

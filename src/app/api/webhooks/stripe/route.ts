@@ -81,12 +81,12 @@ async function sendEmailWithRetry(
 
 export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
-  // STRIPE SIGNATURE VERIFICATION
+  // STRIPE SIGNATURE VERIFICATION (DUAL-MODE)
   // ──────────────────────────────────────────────────────────────
-  // Stripe signs every webhook payload with STRIPE_WEBHOOK_SECRET.
-  // This prevents forged webhook calls. We read the raw body (not
-  // parsed JSON) because signature verification requires the exact
-  // bytes Stripe sent.
+  // Supports both test and live webhooks on the same endpoint.
+  // Tries the test secret first, then the live secret. This allows
+  // gradual go-live where some tiers use live keys and others use
+  // test keys. Both webhook endpoints (test + live) point here.
   const body = await req.text();
   const signature = req.headers.get("stripe-signature");
 
@@ -95,18 +95,30 @@ export async function POST(req: NextRequest) {
   }
 
   let event;
-  try {
-    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-    if (!webhookSecret) {
-      console.error("[Stripe Webhook] Missing STRIPE_WEBHOOK_SECRET env var");
-      return NextResponse.json(
-        { error: "Webhook not configured" },
-        { status: 500 }
-      );
+  const testSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  const liveSecret = process.env.STRIPE_WEBHOOK_SECRET_LIVE;
+
+  if (!testSecret && !liveSecret) {
+    console.error("[Stripe Webhook] No webhook secrets configured");
+    return NextResponse.json(
+      { error: "Webhook not configured" },
+      { status: 500 }
+    );
+  }
+
+  // Try each configured secret. Whichever verifies successfully wins.
+  const secrets = [testSecret, liveSecret].filter(Boolean) as string[];
+  for (const secret of secrets) {
+    try {
+      event = stripe.webhooks.constructEvent(body, signature, secret);
+      break; // Verified successfully
+    } catch {
+      // This secret didn't match — try the next one
     }
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-  } catch (err) {
-    console.error("[Stripe Webhook] Signature verification failed:", err);
+  }
+
+  if (!event) {
+    console.error("[Stripe Webhook] Signature verification failed with all configured secrets");
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 

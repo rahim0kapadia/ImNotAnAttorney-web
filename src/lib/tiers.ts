@@ -20,6 +20,12 @@
  *
  * NOTE: 100% upgrade credit policy — any purchase amount is credited toward
  * the next tier within 12 months. Refunded purchases forfeit upgrade credit.
+ *
+ * GRADUAL GO-LIVE: The `live` flag controls which Stripe mode each tier uses.
+ * When `live: false` (default), the tier uses test Stripe keys. When `live: true`,
+ * it uses live Stripe keys and accepts real payments. Flip one tier at a time,
+ * starting with the lowest-risk product (DUI Playbook), and work up.
+ * Once all tiers are live, remove the dual-mode code (see stripe.ts).
  */
 export const TIER_CORE = {
   "dui-first-offense": {
@@ -35,6 +41,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
+    live: false, // Flip to true when ready to accept real payments
   },
   "drug-possession": {
     name: "Drug Possession Defense Playbook",
@@ -49,6 +56,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
+    live: false,
   },
   "probation-violation": {
     name: "Probation Violation Defense Playbook",
@@ -63,6 +71,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
+    live: false,
   },
   "white-collar": {
     name: "White Collar Defense Playbook",
@@ -77,6 +86,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
+    live: false,
   },
   "sex-offense": {
     name: "Sex Offense Defense Playbook",
@@ -91,6 +101,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
+    live: false,
   },
   "federal-criminal": {
     name: "Federal Criminal Defense Playbook",
@@ -105,6 +116,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
+    live: false,
   },
   "drug-trafficking": {
     name: "Drug Trafficking Defense Playbook",
@@ -119,6 +131,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
+    live: false,
   },
   "self-defense": {
     name: "Self-Defense / Justifiable Force Defense Playbook",
@@ -133,6 +146,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
+    live: false,
   },
   "case-decoder": {
     name: "Case Decoder",
@@ -147,6 +161,7 @@ export const TIER_CORE = {
     priorityPrice: 9700,
     priorityDelivery: "Same-day (4 hours)",
     includesTiers: [] as readonly string[],
+    live: false,
   },
   "intelligence-brief": {
     name: "Case Intelligence Brief",
@@ -161,6 +176,7 @@ export const TIER_CORE = {
     priorityPrice: 29700,
     priorityDelivery: "24 hours",
     includesTiers: ["case-decoder"] as readonly string[],
+    live: false,
   },
   "x-ray": {
     name: "The X-Ray",
@@ -175,6 +191,7 @@ export const TIER_CORE = {
     priorityPrice: 49700,
     priorityDelivery: "5 business days",
     includesTiers: ["case-decoder", "intelligence-brief"] as readonly string[],
+    live: false,
   },
   "war-room": {
     name: "The War Room",
@@ -189,6 +206,7 @@ export const TIER_CORE = {
     priorityPrice: 99700,
     priorityDelivery: "Expedited 20-day delivery",
     includesTiers: ["case-decoder", "intelligence-brief", "x-ray"] as readonly string[],
+    live: false,
   },
   "situation-room": {
     name: "The Situation Room",
@@ -203,6 +221,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: ["case-decoder", "intelligence-brief", "x-ray", "war-room"] as readonly string[],
+    live: false,
   },
   "extra-witness": {
     name: "Extra Witness Intel",
@@ -217,6 +236,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
+    live: false,
   },
   "witness-pack": {
     name: "Standalone Witness Pack",
@@ -231,6 +251,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
+    live: false,
   },
 } as const;
 
@@ -279,6 +300,11 @@ export function addonTiers(): TierSlug[] {
   return (Object.keys(TIER_CORE) as TierSlug[]).filter(
     (slug) => TIER_CORE[slug].isAddon
   );
+}
+
+/** Returns true if a tier is in live Stripe mode (accepts real payments). */
+export function isTierLive(slug: TierSlug): boolean {
+  return TIER_CORE[slug].live;
 }
 
 // ============================================================
