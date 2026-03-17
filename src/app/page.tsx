@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "Your Lawyer Won't Call You Back. We Give You the Questions That Make Them.",
+    title: "Your Lawyer Won't Call You Back. We Give You the Questions That Change Your Next Meeting.",
     description:
       "You're scared. Confused. Nobody's explaining your case. We research your charges and hand you the exact questions that hold your attorney accountable.",
   },
@@ -76,7 +76,7 @@ const homeFaqs = [
   {
     question: "Will asking these questions upset my attorney?",
     answer:
-      "Good attorneys welcome informed clients. Asking educated questions isn't adversarial — it's your right. The lawyers who get angry when you push back? They're the reason you're here.",
+      "Good attorneys welcome informed clients. Asking educated questions isn't adversarial — it's your right as a defendant.",
   },
   {
     question: "Is this legal advice?",
@@ -215,7 +215,7 @@ export default function Home() {
             <h1 className="font-display text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
               Your Lawyer Won&apos;t Call You Back.
               <br />
-              <span className="text-amber-400">We&apos;ll Give You the Questions That Make Them.</span>
+              <span className="text-amber-400">We&apos;ll Give You the Questions That Change Your Next Meeting.</span>
             </h1>
           </FadeInUp>
           <FadeInUp delay={0.2}>
@@ -239,7 +239,7 @@ export default function Home() {
                 href="/checkout?tier=case-decoder"
                 className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
-                Get the Questions That Make Your Lawyer Act — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+                Get the Questions That Change Your Next Meeting — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
               </Link>
               <Link
                 href="/sample"
@@ -326,7 +326,7 @@ export default function Home() {
             </StaggerItem>
           </StaggerContainer>
           <p className="mt-8 text-center text-sm text-zinc-400">
-            This is what our analysis finds. These are the questions your attorney should be asking — but isn&apos;t.
+            This is what our analysis finds. These are the questions that belong in your next attorney meeting.
           </p>
           <div className="mt-6 flex flex-col items-center gap-2">
             <Link
@@ -384,7 +384,7 @@ export default function Home() {
               },
               {
                 title: "\u201CI paid $10K and he did nothing.\u201D",
-                desc: "You scraped that retainer together \u2014 borrowed from family, drained savings. Now you can\u2019t even get a status update on your own case. That\u2019s not frustrating. That\u2019s betrayal.",
+                desc: "You scraped that retainer together \u2014 borrowed from family, drained savings. Now you can\u2019t even get a status update on your own case. That\u2019s not frustrating. That\u2019s money spent on silence.",
               },
               {
                 title: "\u201CI\u2019m not the one facing charges \u2014 but I\u2019m the one doing all the research.\u201D",
@@ -482,7 +482,7 @@ export default function Home() {
               {
                 step: "03",
                 title: "You ask the questions",
-                desc: "We hand you a custom report with pointed, specific questions. You bring them to your next meeting. Suddenly, motions get filed. Calls get returned. Your defense gets real.",
+                desc: "We hand you a custom report with pointed, specific questions. You bring them to your next meeting. Your attorney now has specific, documented questions to address. That changes the meeting. That changes the defense.",
               },
             ].map((item) => (
               <StaggerItem key={item.step} className="text-center">
@@ -585,7 +585,7 @@ export default function Home() {
             </div>
           </FadeInUp>
           <p className="mt-4 text-sm text-zinc-400">
-            Every year, defendants spend $10,000+ on attorneys who file zero motions, return zero calls, and push for a plea without reviewing discovery.
+            Every year, defendants spend $10,000+ and still don&apos;t know whether their attorney has everything they need to fight for them.
           </p>
           <StaggerContainer className="mt-8 grid gap-4 md:grid-cols-3">
             <StaggerItem>
@@ -665,7 +665,7 @@ export default function Home() {
           <FadeInUp>
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-8">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/10">
-              <svg className="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="h-6 w-6 text-amber-400" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
@@ -784,7 +784,7 @@ export default function Home() {
               href="/checkout?tier=case-decoder"
               className="mt-8 inline-block rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
             >
-              Get the Questions That Make Your Lawyer Act — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+              Get the Questions That Change Your Next Meeting — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
             </Link>
           </FadeInUp>
           <TrustBadges variant="compact" />

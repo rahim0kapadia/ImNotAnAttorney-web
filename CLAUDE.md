@@ -144,6 +144,29 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — a legal empowermen
 - NOT corporate lawyer voice — for regular people
 - Example: "Your attorney forgot to file that motion? Cool. Here are 7 questions that'll remind them."
 
+## Fix the Engine, Not the Output — MANDATORY
+**When ANY output needs fixing, fix the engine/pipeline/config that PRODUCES it — never the individual artifact.**
+
+| Bad output | Fix THIS (the engine) | NOT this (the artifact) |
+|------------|----------------------|------------------------|
+| Report content wrong | `src/lib/intelligence-brief/prompts.ts` (9 prompt builders) | One report in Supabase |
+| Report formatting wrong | `src/lib/intelligence-brief/render.ts` (HTML renderer) | One report's HTML |
+| Report variables wrong | `src/lib/intelligence-brief/variables.ts` | One case's data |
+| Report fails UPL gate | `supabase/functions/evaluate-report/` (evaluation pipeline) | One eval result |
+| Report generation fails | `supabase/functions/generate-report/` or `scripts/generate-worker.mjs` | One stuck case |
+| Playbook content wrong | `src/lib/playbook-configs.ts` (5 charge-type configs) | One playbook page |
+| Email content wrong | `src/lib/drip-emails.ts` (7+ sequence definitions) | One sent email |
+| Trial ops email wrong | `src/lib/trial-ops-emails.ts` (3 operator templates) | One email |
+| Email delivery fails | `src/lib/email.ts` (Resend integration) | One failed send |
+| Drip timing wrong | `src/app/api/cron/drip/route.ts` (22-part dispatcher) | One subscriber's sequence |
+| Pricing/tier wrong | `src/lib/tiers.ts` (TIER_CORE array) | One checkout page |
+| Schema/SEO wrong | `src/lib/schema.ts` (structured data generators) | One page's meta |
+| Blog rendering wrong | `src/lib/blog.ts` (frontmatter parser + renderer) | One `.mdx` file |
+| Component broken | The shared component (`PricingTable`, `LeadCapture`, etc.) | One page using it |
+| Social content wrong | The content queue engine (`content/queue/`) | One platform's post |
+
+**The prompt engines create every report. The drip engine creates every email. The playbook configs create every sales page. Fix the engine = fix ALL outputs, current and future.**
+
 ## DO NOT
 - Provide actual legal advice in any copy
 - Use the word "attorney" to describe our service

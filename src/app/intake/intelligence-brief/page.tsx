@@ -486,6 +486,7 @@ function Phase2IntakeForm() {
               <span className="inline-flex items-center gap-2">
                 <svg
                   className="h-4 w-4 animate-spin"
+                  aria-hidden="true"
                   viewBox="0 0 24 24"
                   fill="none"
                 >

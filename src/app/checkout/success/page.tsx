@@ -390,6 +390,18 @@ function SuccessContent() {
                 <p className="mt-2 text-sm text-zinc-400">
                   Your {TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay ?? "$97"} is already credited. The Playbook gives you general questions — the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
                 </p>
+                {/* Charge-type-specific loss-aversion copy (Kahneman/Cialdini/Suby) */}
+                <p className="mt-2 text-sm text-zinc-300">
+                  {tier === "dui-first-offense"
+                    ? "DUI cases have time-critical evidence windows — breathalyzer calibration logs and dash cam footage can be deleted at 30 or 90 days. The Case Decoder identifies exactly which suppression questions to ask before those windows close."
+                    : tier === "drug-possession" || tier === "drug-trafficking"
+                    ? "Drug cases often hinge on search legality and chain-of-custody gaps your attorney may not have checked. The Case Decoder maps the specific suppression opportunities in your case before motion deadlines pass."
+                    : tier === "federal-criminal"
+                    ? "Federal cases move on a different timeline — grand jury strategy, cooperation pressure, and sentencing guidelines create layers that general questions can't reach. The Case Decoder breaks down the federal-specific questions that change outcomes."
+                    : tier === "white-collar"
+                    ? "White collar cases are document-heavy — forensic accounting gaps, transaction timelines, and asset protection questions require charge-specific analysis. The Case Decoder identifies the financial evidence questions your attorney should be asking."
+                    : "The Playbook gives you the general framework. The Case Decoder applies it to YOUR specific charges, YOUR jurisdiction, and YOUR attorney's track record."}
+                </p>
                 <p className="mt-1 text-xs text-zinc-500">
                   Adds: personalized charge breakdown, ready-to-send email templates, phone scripts, 7-day action plan, attorney meeting prep.
                 </p>

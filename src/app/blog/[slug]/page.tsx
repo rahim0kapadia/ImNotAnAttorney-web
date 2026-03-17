@@ -91,10 +91,12 @@ export default async function BlogPostPage({ params }: PageProps) {
       <div className="mx-auto max-w-3xl">
         {/* Header */}
         <div className="mb-8">
-          <div className="mb-4 flex items-center gap-3">
-            <time dateTime={new Date(post.date).toISOString()} className="text-sm text-zinc-400">{post.date}</time>
-            <span className="text-sm text-zinc-400">&bull;</span>
-            <span className="text-sm text-zinc-400">{post.readingTime}</span>
+          <div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-zinc-400">
+            <span>By <span className="text-zinc-300">Rahim Kapadia</span>, Founder</span>
+            <span>&bull;</span>
+            <time dateTime={new Date(post.date).toISOString()}>{post.date}</time>
+            <span>&bull;</span>
+            <span>{post.readingTime}</span>
           </div>
           <h1 className="font-display text-3xl font-bold leading-tight text-white md:text-4xl">
             {post.title}
@@ -160,8 +162,15 @@ export default async function BlogPostPage({ params }: PageProps) {
                 "@type": "WebPage",
                 "@id": `${SITE_URL}/blog/${slug}`,
               },
-              author: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
+              author: {
+                "@type": "Person",
+                name: "Rahim Kapadia",
+                url: `${SITE_URL}/about`,
+                jobTitle: "Founder, ImNotAnAttorney",
+                sameAs: [`${SITE_URL}/about`],
+              },
               publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
+              wordCount: post.content.split(/\s+/).length,
               image: `${SITE_URL}/blog/${slug}/opengraph-image`,
               keywords: post.tags.join(", "),
               articleSection:

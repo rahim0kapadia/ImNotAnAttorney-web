@@ -342,6 +342,15 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
   const colorClass = bandColors[result.band] || "text-amber-400 border-amber-500/50";
   const [textClass] = colorClass.split(" ").filter((c) => c.startsWith("text-"));
 
+  // Band-specific identity subtitles — VoC language that validates what the defendant is feeling
+  const bandIdentity: Record<string, string> = {
+    Critical: "Your gut was right. Something is wrong.",
+    Concerning: "You're not imagining it — your case needs attention.",
+    Average: "Your attorney is doing the minimum. Is that enough?",
+    Adequate: "Things look okay on the surface. Most gaps hide here.",
+    Excellent: "Your attorney appears to be working. Trust, but verify.",
+  };
+
   // Band-specific context lines — gives meaning to the band label
   const bandContextLines: Record<string, string> = {
     Critical: "This score means what you suspected: your defense is behind in ways that create permanent consequences.",
@@ -398,6 +407,9 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           <AnimatedScoreArc score={result.score} />
         </div>
         <p className={`mt-4 text-lg font-bold ${textClass}`}>{result.band}</p>
+        <p className="mt-1 text-sm text-zinc-300">
+          {bandIdentity[result.band] || ""}
+        </p>
         <p className="mt-2 text-sm text-zinc-400">
           {bandContextLines[result.band] || ""}
         </p>
@@ -897,6 +909,7 @@ export default function ScorePage() {
                 <span className="inline-flex items-center gap-2">
                   <svg
                     className="h-4 w-4 animate-spin"
+                    aria-hidden="true"
                     viewBox="0 0 24 24"
                     fill="none"
                   >

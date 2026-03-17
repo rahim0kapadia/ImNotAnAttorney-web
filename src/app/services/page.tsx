@@ -41,9 +41,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Make Sure Your Attorney Is Actually Working Your Case",
+  title: "Defense Intelligence Services — Understand Your Case, Ask Better Questions",
   description:
-    `Your attorney should be filing motions, reviewing evidence, and returning your calls. If they're not, these tools give you the questions that make them act. Five tiers from ${TIER_CORE["case-decoder"].priceDisplay} to ${TIER_CORE["situation-room"].priceDisplay}.`,
+    `Five tiers of defense research — from charge analysis to full trial intelligence. We research your case and give you the questions that change your next attorney meeting. From ${TIER_CORE["case-decoder"].priceDisplay} to ${TIER_CORE["situation-room"].priceDisplay}.`,
   alternates: {
     canonical: `${SITE_URL}/services`,
   },
@@ -251,14 +251,64 @@ const serviceSchema = {
   "@type": "ProfessionalService",
   name: "ImNotAnAttorney Case Review Services",
   description:
-    `Legal research and case analysis for criminal defendants. Five tiers from ${TIER_CORE["case-decoder"].priceDisplay} Case Decoder to ${TIER_CORE["situation-room"].priceDisplay} Situation Room.`,
+    `Defendant preparation intelligence for criminal defendants. Five tiers from ${TIER_CORE["case-decoder"].priceDisplay} Case Decoder to ${TIER_CORE["situation-room"].priceDisplay} Situation Room.`,
   provider: {
     "@type": "Organization",
-    name: "ImNotAnAttorney",
-    url: SITE_URL,
+    "@id": `${SITE_URL}/#organization`,
   },
-  serviceType: "Legal Research",
-  areaServed: "US",
+  serviceType: "Legal Information Research",
+  areaServed: { "@type": "Country", name: "United States" },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Defense Intelligence Tiers",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        name: TIER_CORE["case-decoder"].name,
+        description: "Charge analysis, 15 targeted questions, 7-day action plan, email templates",
+        price: "197.00",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: `${SITE_URL}/checkout?tier=case-decoder`,
+      },
+      {
+        "@type": "Offer",
+        name: TIER_CORE["intelligence-brief"].name,
+        description: "Judge intelligence, prosecution vulnerability report, 15-25 questions, jurisdiction analysis",
+        price: "997.00",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: `${SITE_URL}/checkout?tier=intelligence-brief`,
+      },
+      {
+        "@type": "Offer",
+        name: TIER_CORE["x-ray"].name,
+        description: "Full discovery analysis, 35-50 questions, Discovery Strength Rating, evidence chain audit",
+        price: "2497.00",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: `${SITE_URL}/checkout?tier=x-ray`,
+      },
+      {
+        "@type": "Offer",
+        name: TIER_CORE["war-room"].name,
+        description: "Ongoing intelligence operation with weekly updates, witness analysis, motion timing, case law package",
+        price: "4997.00",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: `${SITE_URL}/checkout?tier=war-room`,
+      },
+      {
+        "@type": "Offer",
+        name: TIER_CORE["situation-room"].name,
+        description: "Trial Intelligence Operations — evening debrief, morning prep, priority response, all witnesses researched",
+        price: "9997.00",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: `${SITE_URL}/checkout?tier=situation-room`,
+      },
+    ],
+  },
 };
 
 export default function ServicesPage() {
@@ -294,7 +344,7 @@ export default function ServicesPage() {
             <span className="text-amber-400">with the right questions</span>
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-lg text-zinc-300">
-            The defense team your attorney should have built.
+            The research layer your defense has been missing.
           </p>
           <p className="mx-auto mt-4 max-w-2xl text-zinc-400">
             For defendants who read their own discovery. Five tiers of defense
@@ -311,7 +361,7 @@ export default function ServicesPage() {
           <h2 className="font-display text-lg font-bold text-white">
             Smart defendants don&apos;t just hire an attorney.{" "}
             <span className="text-amber-400">
-              They make sure the attorney is working.
+              They make sure they understand their own case.
             </span>
           </h2>
           <p className="mt-2 text-sm text-zinc-400">

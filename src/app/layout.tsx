@@ -119,30 +119,53 @@ export default async function RootLayout({
           nonce={nonce}
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "@id": `${SITE_URL}/#organization`,
-              name: "ImNotAnAttorney",
-              url: SITE_URL,
-              description: "Legal research and case analysis for criminal defendants. We provide legal information, not legal advice.",
-              logo: { "@type": "ImageObject", url: `${SITE_URL}/icon` },
-
-              foundingDate: "2026",
-              founder: {
-                "@type": "Person",
-                name: "Rahim Kapadia",
-                jobTitle: "Founder",
+            __html: JSON.stringify([
+              {
+                "@context": "https://schema.org",
+                "@type": ["Organization", "LegalService"],
+                "@id": `${SITE_URL}/#organization`,
+                name: "ImNotAnAttorney",
+                url: SITE_URL,
+                description: "Defendant preparation intelligence — case-specific research and accountability questions for criminal defendants. Legal information, not legal advice.",
+                logo: { "@type": "ImageObject", url: `${SITE_URL}/icon` },
+                sameAs: [
+                  "https://x.com/ImNotAnAttorney",
+                ],
+                foundingDate: "2026",
+                founder: {
+                  "@type": "Person",
+                  name: "Rahim Kapadia",
+                  jobTitle: "Founder",
+                  url: `${SITE_URL}/about`,
+                },
+                knowsAbout: [
+                  "Criminal Defense",
+                  "DUI Defense",
+                  "Drug Trafficking Defense",
+                  "Defendant Preparation Intelligence",
+                  "Legal Research",
+                ],
+                areaServed: { "@type": "Country", name: "United States" },
+                serviceType: "Legal Information Research",
               },
-              knowsAbout: [
-                "Criminal Defense",
-                "DUI Defense",
-                "Drug Trafficking Defense",
-                "Attorney Accountability",
-                "Legal Research",
-              ],
-              areaServed: { "@type": "Country", name: "United States" },
-            }),
+              {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "@id": `${SITE_URL}/#website`,
+                url: SITE_URL,
+                name: "ImNotAnAttorney",
+                description: "Defendant preparation intelligence — case research and accountability questions for criminal defendants.",
+                publisher: { "@id": `${SITE_URL}/#organization` },
+                potentialAction: {
+                  "@type": "SearchAction",
+                  target: {
+                    "@type": "EntryPoint",
+                    urlTemplate: `${SITE_URL}/blog?q={search_term_string}`,
+                  },
+                  "query-input": "required name=search_term_string",
+                },
+              },
+            ]),
           }}
         />
         <Header />

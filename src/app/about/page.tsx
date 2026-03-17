@@ -65,6 +65,28 @@ export default function AboutPage() {
           }),
         }}
       />
+      {/* Person JSON-LD for founder (Barnard: entity establishment) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "@id": `${SITE_URL}/about#founder`,
+            name: "Rahim Kapadia",
+            jobTitle: "Founder",
+            url: `${SITE_URL}/about`,
+            worksFor: { "@id": `${SITE_URL}/#organization` },
+            sameAs: [`${SITE_URL}/about`],
+            knowsAbout: [
+              "Criminal Defense Research",
+              "Drug Trafficking Defense",
+              "Defendant Preparation Intelligence",
+              "Legal Information Services",
+            ],
+          }),
+        }}
+      />
       <div className="mx-auto max-w-3xl">
         {/* HERO — Identity statement that immediately establishes credibility */}
         <FadeInUp>
@@ -149,6 +171,16 @@ export default function AboutPage() {
         </section>
         </FadeInUp>
 
+        <FadeInUp>
+        <section className="mt-12">
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+            <p className="text-zinc-300 leading-relaxed">
+              The attorneys in our stories weren&apos;t all bad lawyers. Some were overworked. Some were under-resourced. What was missing in every case wasn&apos;t effort — it was information. The right questions, asked at the right time.
+            </p>
+          </div>
+        </section>
+        </FadeInUp>
+
         {/* WHAT WE BUILT — Transition from personal story to product.       */}
         {/* Shows how the personal epiphany became a service for others.     */}
         <FadeInUp>
@@ -191,7 +223,7 @@ export default function AboutPage() {
               },
               {
                 title: "Plain English",
-                desc: "Legal jargon is a weapon used to keep you confused. We translate everything into language you can actually understand — and act on.",
+                desc: "Legal documents are written for attorneys, not defendants. We translate everything into language you can understand — and act on.",
               },
             ].map((item) => (
               <StaggerItem
@@ -285,6 +317,27 @@ export default function AboutPage() {
             </Link>
           </div>
         </section>
+
+        {/* FOR ATTORNEYS — Referral signal. Opens the referral channel      */}
+        {/* without requiring a full page. Addresses segment 2 (double-     */}
+        {/* checkers with decent attorneys) and positions product as         */}
+        {/* complementary, not competitive.                                 */}
+        <FadeInUp>
+        <section className="mt-16 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+          <h2 className="font-display text-lg font-bold text-white">
+            For defense attorneys
+          </h2>
+          <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
+            Your clients who show up prepared ask better questions and get better outcomes. We provide case-specific research that helps defendants understand their situation — so when they sit down with you, the conversation is productive from the first minute.
+          </p>
+          <p className="mt-2 text-sm text-zinc-400">
+            Questions?{" "}
+            <a href="mailto:help@imnotanattorney.com" className="text-amber-400 underline decoration-amber-400/50 hover:text-amber-300">
+              help@imnotanattorney.com
+            </a>
+          </p>
+        </section>
+        </FadeInUp>
 
         {/* LEAD CAPTURE — Email opt-in fallback for visitors not ready to buy */}
         <div className="mt-16">

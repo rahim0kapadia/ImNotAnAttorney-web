@@ -90,6 +90,34 @@ export default async function PlaybookPage({ params }: PageProps) {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: tier.name,
+            description: config.seoDescription,
+            url: `${SITE_URL}/playbook/${slug}`,
+            brand: {
+              "@type": "Organization",
+              name: "ImNotAnAttorney",
+            },
+            offers: {
+              "@type": "Offer",
+              price: tier.price / 100,
+              priceCurrency: "USD",
+              availability: "https://schema.org/InStock",
+              url: `${SITE_URL}/checkout?tier=${config.slug}`,
+              seller: {
+                "@type": "Organization",
+                name: "ImNotAnAttorney",
+              },
+            },
+            category: "Legal Research",
+          }),
+        }}
+      />
       <PlaybookSalesPage config={config} />
     </>
   );
