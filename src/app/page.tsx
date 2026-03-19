@@ -424,7 +424,9 @@ export default function Home() {
           <p className="mt-3 text-center text-zinc-400">
             Three steps. Ten minutes. Questions your attorney won&apos;t expect.
           </p>
-          <StaggerContainer className="mt-12 grid gap-8 md:grid-cols-3">
+          <StaggerContainer className="relative mt-12 grid gap-8 md:grid-cols-3">
+            {/* Connecting line between step circles on desktop */}
+            <div className="pointer-events-none absolute left-[calc(16.67%+24px)] right-[calc(16.67%+24px)] top-[24px] hidden h-px bg-zinc-700 md:block" aria-hidden="true" />
             {[
               {
                 step: "01",
@@ -777,7 +779,7 @@ export default function Home() {
 
       {/* Global components */}
       <RecentPurchaseNotification />
-      <StickyMobileCTA />
+      <StickyMobileCTA href="/sample" label="See What We Found in a Real Case" />
     </>
   );
 }
