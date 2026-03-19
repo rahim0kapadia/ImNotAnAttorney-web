@@ -128,9 +128,7 @@ export default async function RootLayout({
                 url: SITE_URL,
                 description: "Defendant preparation intelligence — case-specific research and accountability questions for criminal defendants. Legal information, not legal advice.",
                 logo: { "@type": "ImageObject", url: `${SITE_URL}/icon` },
-                sameAs: [
-                  "https://x.com/ImNotAnAttorney",
-                ],
+                sameAs: [],
                 foundingDate: "2026",
                 founder: {
                   "@type": "Person",

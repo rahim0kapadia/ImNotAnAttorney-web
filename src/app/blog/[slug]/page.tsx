@@ -279,7 +279,18 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         {/* Lead Capture */}
         <div className="mt-8">
-          <LeadCapture />
+          {post.category === "dui" ? (
+            <LeadCapture
+              source="dui-72-hours"
+              title="Get the 72-Hour Emergency Checklist — free"
+              description="The 3 things to do tonight, the DMV deadline that could cost you your license, and the 6 questions to ask at your attorney consultation. Printable PDF. Takes 5 minutes."
+              buttonText="Send Me the Checklist"
+              downloadHref="/guides/dui-first-72-hours-checklist.pdf"
+              downloadLabel="Download 72-Hour Checklist →"
+            />
+          ) : (
+            <LeadCapture />
+          )}
         </div>
 
         {/* Related Posts */}

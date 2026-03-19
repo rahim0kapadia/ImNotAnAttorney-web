@@ -359,7 +359,7 @@ export default function PlaybookSalesPage({ config }: Props) {
               Not ready for the full Playbook? Start with the free 72-Hour Emergency Checklist.
             </p>
             <LeadCapture
-              source="dui-playbook-exit"
+              source="dui-72-hours"
               title="First 72 Hours After a DUI Arrest — Emergency Checklist"
               description="The 3 things to do tonight, the DMV deadline that could cost you your license, and the 6 questions to ask at your attorney consultation. Free. Printable."
               buttonText="Send Me the Free Checklist"

@@ -2,7 +2,7 @@
  * Footer -- Site-wide footer with navigation, legal links, and CAN-SPAM compliance.
  *
  * Layout (5-column grid on desktop, stacked on mobile):
- *   1. Brand column: Logo, tagline, "not legal advice" disclaimer, X/Twitter social link.
+ *   1. Brand column: Logo, tagline, "not legal advice" disclaimer.
  *   2. Explore: Blog, Services, Resources, About, Get Started.
  *   3. Blog Topics: Category filter links (DUI, Drug Cases, White Collar, General Defense).
  *   4. Our Services: Direct checkout links with prices for all 5 tiers.
@@ -39,13 +39,6 @@ export function Footer() {
             <p className="mt-2 text-xs text-zinc-400">
               Legal information, not legal advice.
             </p>
-            <a href="https://x.com/ImNotAnAttorney" target="_blank" rel="noopener noreferrer"
-               className="mt-3 inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white">
-              <svg className="h-4 w-4" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-              @ImNotAnAttorney
-            </a>
           </div>
 
           {/* Pages */}
