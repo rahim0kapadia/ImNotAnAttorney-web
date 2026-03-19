@@ -25,6 +25,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 /**
  * Verifies a Stripe checkout session's payment status and returns order details
@@ -60,7 +61,8 @@ export async function GET(req: NextRequest) {
     // - email: shown in the "check your email" confirmation message
     // - amount: displayed as the payment amount (in cents, formatted client-side)
     // - productName: human-readable tier name for the receipt summary
-    return NextResponse.json({
+    // - downloadUrl: for digital products, the secure download link (if webhook has fired)
+    const response: Record<string, unknown> = {
       verified: true,
       tier: session.metadata?.tier,
       email: session.customer_email || session.customer_details?.email,
@@ -68,7 +70,37 @@ export async function GET(req: NextRequest) {
       productName: session.metadata?.product_name,
       sessionCreated: session.created, // Unix timestamp (seconds) for OTO timer TTL
       priorityDelivery: session.metadata?.priority_delivery === "true",
-    });
+    };
+
+    // For digital products, generate a signed download URL directly from
+    // Supabase Storage. This is independent of the webhook — no race condition.
+    // The webhook still fires separately to send the email with a token-based
+    // URL (72hr expiry, refund-revocable). Both paths work independently.
+    if (session.metadata?.product_type === "digital-product" && session.metadata?.tier) {
+      try {
+        const supabase = createAdminClient();
+        const { data: pack } = await supabase
+          .from("charge_packs")
+          .select("pdf_storage_path")
+          .eq("slug", session.metadata.tier)
+          .single();
+
+        if (pack?.pdf_storage_path) {
+          const { data: signedUrlData } = await supabase
+            .storage
+            .from("charge-packs")
+            .createSignedUrl(pack.pdf_storage_path.replace("charge-packs/", ""), 3600);
+
+          if (signedUrlData?.signedUrl) {
+            response.downloadUrl = signedUrlData.signedUrl;
+          }
+        }
+      } catch {
+        // Signed URL generation failed — not critical, customer still gets email
+      }
+    }
+
+    return NextResponse.json(response);
   } catch {
     // On any Stripe API error (invalid session ID, network failure, etc.),
     // return unverified rather than an error. The success page will show a

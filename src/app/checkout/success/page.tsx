@@ -204,10 +204,11 @@ function SuccessContent() {
   const [customerEmail, setCustomerEmail] = useState<string>("");
   const [sessionCreated, setSessionCreated] = useState<number | null>(null);
   const [priorityDelivery, setPriorityDelivery] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
 
   // Verify the Stripe checkout session server-side via /api/checkout/verify.
   // This confirms the payment actually completed (prevents URL spoofing).
-  // Also extracts the customer email for pre-filling the intake form URL.
+  // Also extracts the customer email and download URL (for digital products).
   useEffect(() => {
     if (!sessionId) {
       setVerified(false);
@@ -220,9 +221,11 @@ function SuccessContent() {
         if (data.email) setCustomerEmail(data.email);
         if (data.sessionCreated) setSessionCreated(data.sessionCreated);
         if (data.priorityDelivery) setPriorityDelivery(true);
+        if (data.downloadUrl) setDownloadUrl(data.downloadUrl);
       })
       .catch(() => setVerified(false));
   }, [sessionId]);
+
 
   // OTO countdown timer. 24-hour window from Stripe session creation time.
   // Source of truth is sessionCreated (server-side, from Stripe). localStorage
@@ -323,17 +326,51 @@ function SuccessContent() {
         {info ? (
           <>
             <p className="mt-3 text-lg text-amber-400">{info.name}</p>
-            <p className="mt-4 text-zinc-400">{info.action}</p>
-            {priorityDelivery && tier && TIER_CORE[tier as keyof typeof TIER_CORE]?.priorityDelivery ? (
-              <div className="mt-3 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-2">
-                <p className="text-sm font-semibold text-amber-400">
-                  Priority Delivery: {TIER_CORE[tier as keyof typeof TIER_CORE].priorityDelivery}
-                </p>
+
+            {/* DIGITAL PRODUCT DOWNLOAD — instant download button + email backup */}
+            {info.isDigitalProduct ? (
+              <div className="mt-6">
+                {downloadUrl ? (
+                  <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
+                    <a
+                      href={downloadUrl}
+                      className="block w-full rounded-lg bg-amber-500 px-8 py-4 text-center text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+                    >
+                      Download Your Playbook &darr;
+                    </a>
+                    <p className="mt-3 text-sm text-zinc-400">
+                      We also sent a download link to <span className="text-zinc-300">{customerEmail}</span>
+                    </p>
+                    <p className="mt-1 text-xs text-zinc-500">
+                      This button expires in 1 hour. The email link lasts 72 hours.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
+                    <p className="text-zinc-400">
+                      Your playbook download link has been sent to <span className="text-zinc-300">{customerEmail}</span>
+                    </p>
+                    <p className="mt-2 text-sm text-zinc-500">
+                      Check your inbox — if you don&apos;t see it in 5 minutes, check spam.
+                    </p>
+                  </div>
+                )}
               </div>
             ) : (
-              <p className="mt-2 text-sm text-zinc-400">
-                Delivery: {info.delivery}
-              </p>
+              <>
+                <p className="mt-4 text-zinc-400">{info.action}</p>
+                {priorityDelivery && tier && TIER_CORE[tier as keyof typeof TIER_CORE]?.priorityDelivery ? (
+                  <div className="mt-3 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-2">
+                    <p className="text-sm font-semibold text-amber-400">
+                      Priority Delivery: {TIER_CORE[tier as keyof typeof TIER_CORE].priorityDelivery}
+                    </p>
+                  </div>
+                ) : (
+                  <p className="mt-2 text-sm text-zinc-400">
+                    Delivery: {info.delivery}
+                  </p>
+                )}
+              </>
             )}
 
             {/* INTAKE CTA — Case Decoder customers may not have submitted case  */}
