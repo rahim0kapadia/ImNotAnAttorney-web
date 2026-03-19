@@ -106,6 +106,11 @@ const homeFaqs = [
       `Find It or It's Free. If we don't identify at least one gap your attorney hasn't raised, full refund — no forms, no arguments. If we miss the delivery deadline, full refund AND you keep the report. Every dollar you spend is credited toward the next tier. Credits valid for 12 months.`,
   },
   {
+    question: "I've already spent everything on my attorney. Is $197 worth it?",
+    answer:
+      `That\u2019s the exact situation we built this for. You\u2019ve already spent $10,000 or more. INAA costs ${TIER_CORE["case-decoder"].priceDisplay} \u2014 less than one hour of your attorney\u2019s billing rate. The guarantee means if we don\u2019t find at least one gap your attorney hasn\u2019t raised, you pay nothing. One question from our report can change what motions your attorney files. One motion can change your case. The question is not whether ${TIER_CORE["case-decoder"].priceDisplay} is worth it. The question is whether you can afford not to know.`,
+  },
+  {
     question: "What if my case is already too far along?",
     answer:
       "It's almost never too late. Most of what we find — discovery gaps, officer inconsistencies, missed motions — can be raised at any stage before sentencing. Even at the plea stage, strong questions give your attorney leverage to negotiate better terms. We've found critical issues in cases that were months into the process.",
@@ -221,18 +226,19 @@ export default function Home() {
             </h1>
           </FadeInUp>
           <FadeInUp delay={0.2}>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-              Most defendants tell us the same thing: &ldquo;My attorney won&apos;t call me back.&rdquo;
-              We built this for that moment. 68.3 grams of missing evidence in one real
-              case. A CI phone attributed to two different people. A drug that didn&apos;t
-              match the charge. Your attorney may have missed something too.
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300">
+              I was on page 347 of my 500-page discovery file when I found it.
+              68.3 grams the lab report said was there &mdash; but wasn&apos;t in the
+              evidence log. A CI phone attributed to two different people on the
+              same case. A drug type that didn&apos;t match what I was charged with.
+              My attorney &mdash; the one I paid $40,000 &mdash; never mentioned
+              any of it. So I built the tool I needed.
             </p>
           </FadeInUp>
           <FadeInUp delay={0.25}>
             <p className="mx-auto mt-4 max-w-2xl text-sm text-zinc-400">
-              We research your charges using the documented tactics of 40+ elite
-              defense attorneys — the ones who win landmark cases. We&apos;re not lawyers.
-              We&apos;re researchers. And we catch what gets missed.
+              If your attorney won&apos;t call back, the answers are probably in
+              your case file. We&apos;ll find them.
             </p>
           </FadeInUp>
           <FadeInUp delay={0.28}>
@@ -283,24 +289,22 @@ export default function Home() {
       {/* ------------------------------------------------------------------ */}
       <DiscoveryReveal />
 
-      {/* WHAT WE ARE NOT — UPL clarity + DoNotPay disarmament (Brunson)     */}
-      <section className="px-4 py-10">
-        <div className="mx-auto max-w-3xl">
+      {/* BACKSTORY — Chaperon's trust ladder: peer voice before product      */}
+      <section className="px-4 py-12">
+        <div className="mx-auto max-w-2xl">
           <FadeInUp>
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
-              <p className="text-sm font-semibold uppercase tracking-wider text-amber-400">
-                Clear on what we are
+            <blockquote className="border-l-4 border-amber-500/50 pl-6 text-zinc-300 leading-relaxed">
+              <p>
+                I hired an attorney the same way you did. Paid the retainer.
+                Waited for the plan. The calls got shorter. Then they stopped.
+                Seven months in, I decided to read the file myself. I didn&apos;t
+                know what I was looking for. I found three things that changed
+                everything about my case. My attorney never mentioned any of them.
               </p>
-              <p className="mt-3 text-zinc-300">
-                We are not a law firm. We do not give legal advice. We do not
-                replace your attorney. We do not tell you what to do.
-              </p>
-              <p className="mt-2 text-zinc-300">
-                We research your charge type and give you the questions your
-                attorney needs to hear from you. That&apos;s it. That&apos;s all we do.
-                And we do it better than anyone.
-              </p>
-            </div>
+              <footer className="mt-4 text-sm text-amber-400 font-semibold">
+                &mdash; Rahim, Founder
+              </footer>
+            </blockquote>
           </FadeInUp>
         </div>
       </section>
@@ -309,9 +313,12 @@ export default function Home() {
       {/* without being manipulative (suppression motions genuinely expire). */}
       <section className="border-y border-amber-500/20 bg-amber-500/5 px-4 py-4">
         <p className="text-center text-sm text-amber-400">
-          Motion deadlines don&apos;t wait. Some suppression motions must be
-          filed within 30 days — and once the window closes, it&apos;s gone
-          forever.
+          Three deadlines are running right now, and your attorney may not have
+          calendared them. <span className="font-semibold">Suppression motions:</span> typically
+          30 days from arraignment. <span className="font-semibold">DMV administrative hearing (DUI):</span> 7-10
+          days from arrest. <span className="font-semibold">Brady material requests:</span> the
+          earlier they&apos;re made, the more leverage they create. Once these
+          windows close, they do not reopen.
         </p>
       </section>
 
@@ -324,8 +331,8 @@ export default function Home() {
         <div className="mx-auto max-w-4xl">
           <FadeInUp>
             <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
-              Sound familiar?{" "}
-              <span className="text-amber-400">You&apos;re not alone.</span>
+              You searched for this at 2am.{" "}
+              <span className="text-amber-400">So did I.</span>
             </h2>
           </FadeInUp>
           <StaggerContainer className="mt-12 grid gap-6 md:grid-cols-2">
@@ -635,6 +642,26 @@ export default function Home() {
         </div>
       </section>
 
+      {/* WHAT WE ARE — Peer-voiced identity (Chaperon rewrite). Moved from    */}
+      {/* post-DiscoveryReveal to pre-guarantee per all 5 experts.            */}
+      <section className="px-4 py-10">
+        <div className="mx-auto max-w-3xl">
+          <FadeInUp>
+            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
+              <p className="text-sm font-semibold uppercase tracking-wider text-amber-400">
+                Who we are
+              </p>
+              <p className="mt-3 text-zinc-300 leading-relaxed">
+                We&apos;re researchers, not lawyers. We read your case file the way
+                I read mine &mdash; looking for what doesn&apos;t add up. We hand you
+                the questions. Your attorney has to answer them. That&apos;s where
+                their work begins and ours ends.
+              </p>
+            </div>
+          </FadeInUp>
+        </div>
+      </section>
+
       {/* GUARANTEE SECTION — Named guarantee, cash refund first.             */}
       <section className="border-t border-zinc-800 px-4 py-16">
         <div className="mx-auto max-w-3xl text-center">
@@ -691,17 +718,18 @@ export default function Home() {
         <div className="mx-auto max-w-5xl">
           <FadeInUp>
             <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
-              Pick your level of defense intelligence
+              Here is everything you get &mdash; and what it would cost you anywhere else
             </h2>
           </FadeInUp>
           <p className="mt-3 text-center text-zinc-400">
-            Every tier draws from the same intelligence base: 40+ elite defense
-            attorneys, their documented tactics, their proven frameworks. The
-            tier determines how deep we go.
+            A second attorney consultation costs $500. Judge research costs $300.
+            Question scripts cost $200. All of it in 48 hours would run $1,000+.
+            Your Case Decoder: {TIER_CORE["case-decoder"].priceDisplay}. Every tier
+            draws from the same intelligence base &mdash; 40+ elite defense
+            attorneys and their documented tactics. The tier determines how deep we go.
           </p>
           <p className="mt-2 text-center text-sm text-zinc-400">
-            Defendants who fight back with research choose their tier. Start at
-            {TIER_CORE["case-decoder"].priceDisplay} — upgrade anytime with full credit.
+            Start at {TIER_CORE["case-decoder"].priceDisplay} &mdash; upgrade anytime with full credit.
           </p>
           <FadeInUp>
             <div className="mt-12">
