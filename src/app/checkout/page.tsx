@@ -858,8 +858,8 @@ function CheckoutContent() {
           {/* Business logic: email is sent to /api/checkout and stored in     */}
           {/* Stripe session metadata. Enables cart abandonment follow-up      */}
           {/* even if the customer never completes Stripe checkout.            */}
-          <div className="mt-6">
-            <label htmlFor="email" className="block text-sm font-medium text-zinc-300">
+          <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-5">
+            <label htmlFor="email" className="block text-sm font-semibold text-amber-400">
               Your email — we&apos;ll send your {info.isDigitalProduct ? "download link" : "report"} here
             </label>
             <input
@@ -874,10 +874,10 @@ function CheckoutContent() {
               }}
               placeholder="you@example.com"
               required
-              className={`mt-1 w-full rounded-lg border ${emailError ? "border-red-500" : "border-zinc-700"} bg-zinc-800 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500`}
+              className={`mt-2 w-full rounded-lg border-2 ${emailError ? "border-red-500" : "border-amber-500/50"} bg-zinc-900 px-4 py-3 text-base text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30`}
             />
             {emailError && <p className="mt-1 text-xs text-red-400">{emailError}</p>}
-            <p className="mt-1 text-xs text-zinc-400">No spam — ever. Just your report and delivery updates.</p>
+            <p className="mt-2 text-xs text-zinc-400">No spam — ever. Just your {info.isDigitalProduct ? "download link" : "report"} and delivery updates.</p>
           </div>
 
           {/* RETURNING CUSTOMER — For IB+ tiers, allow linking to existing CD. */}
