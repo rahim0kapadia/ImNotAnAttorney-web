@@ -95,7 +95,7 @@ Options:
 The #1 unspoken objection for someone who already spent $10K-$50K. Not addressed in FAQ.
 
 **Suby's suggested answer:**
-> "That's the exact situation we built this for. You've already spent $10,000 or more. INA costs $197 — less than one hour of your attorney's billing rate. The guarantee means if we don't find at least one gap, you pay nothing. One question from our report can change what motions your attorney files. The question is not whether $197 is worth it. The question is whether you can afford not to know."
+> "That's the exact situation we built this for. You've already spent $10,000 or more. INNA costs $197 — less than one hour of your attorney's billing rate. The guarantee means if we don't find at least one gap, you pay nothing. One question from our report can change what motions your attorney files. The question is not whether $197 is worth it. The question is whether you can afford not to know."
 
 ### 9. PRICING SECTION NEEDS VALUE STACKING (Brunson + Suby)
 
