@@ -1,8 +1,8 @@
 # INAA Website — Product Readiness + Visual Overhaul + Distribution
 
-> **Status: Phase 5 NOT STARTED** — Last updated 2026-03-19
+> **Status: Phase 5 COMPLETE** — Last updated 2026-03-19
 > Tracking: `~/.claude/projects/.../memory/active-build-checklist.md`
-> Phase 0-4: COMPLETE. Phase 5 (5-expert audit implementation): NOT STARTED
+> Phase 0-5: COMPLETE. Only manual items remaining (GBP, real testimonials, court date countdown).
 > Full audit report: `docs/research/2026-03-19-five-expert-homepage-audit.md`
 
 ## Context
@@ -350,7 +350,7 @@ Phase 3 (Infrastructure + GEO) — DONE 2026-03-14
 
 ---
 
-## Phase 5: 5-EXPERT AUDIT IMPLEMENTATION — NOT STARTED (2026-03-19)
+## Phase 5: 5-EXPERT AUDIT IMPLEMENTATION — COMPLETE (2026-03-19)
 
 *Added 2026-03-19. Full audit: `docs/research/2026-03-19-five-expert-homepage-audit.md`*
 
@@ -409,39 +409,39 @@ Phase 3 (Infrastructure + GEO) — DONE 2026-03-14
 
 These are not optional. They are legal/compliance requirements.
 
-- [ ] 5.0.1 **UPL Flag 1 — FAQ retaliation answer.** Line ~90 in page.tsx says "An attorney cannot ethically drop your case simply because you ask informed questions. If they do, that itself is a disciplinary issue." This states a legal conclusion as fact applied to the reader's situation. **Fix:** Reframe as "Under ABA Model Rules of Professional Conduct, an attorney's ability to withdraw is constrained to specific grounds listed in Rule 1.16 — asking informed questions is not among them. Your state bar's rules may vary."
-- [ ] 5.0.2 **UPL Flag 2 — Final CTA causal claim.** Line ~756 says "Their attorney starts filing motions that week." This implies using INAAcauses motions to be filed. **Fix:** Add softener after: "What happens next is between you and your attorney."
+- [x] 5.0.1 **UPL Flag 1 — FAQ retaliation answer.** Line ~90 in page.tsx says "An attorney cannot ethically drop your case simply because you ask informed questions. If they do, that itself is a disciplinary issue." This states a legal conclusion as fact applied to the reader's situation. **Fix:** Reframe as "Under ABA Model Rules of Professional Conduct, an attorney's ability to withdraw is constrained to specific grounds listed in Rule 1.16 — asking informed questions is not among them. Your state bar's rules may vary."
+- [x] 5.0.2 **UPL Flag 2 — Final CTA causal claim.** Line ~756 says "Their attorney starts filing motions that week." This implies using INAAcauses motions to be filed. **Fix:** Add softener after: "What happens next is between you and your attorney."
 - [x] 5.0.3 **Testimonials — KEEPING AS-IS per Rahim.** Using fabricated testimonials until real customer data is available. Rahim has accepted the risk. Will replace with real testimonials once Case Decoders ship to real customers. *(4/5 experts flagged this as risky — decision documented.)*
 
 ### Phase 5.1: ONE-LINE CHANGES (highest ROI, do immediately after compliance)
 
-- [ ] 5.1.1 **Swap CTA button order — hero.** Current: amber (primary) = "See What We Found" → /sample, ghost (secondary) = "Get Your Case Decoder — $197" → /checkout. **Reverse them.** Amber = checkout, ghost = sample. All 5 experts agree. Chaperon's counterpoint (cold traffic needs sample first) is valid for SEO traffic but crisis buyers at 2AM need the transaction button hot. **Note:** Phase 4C.4 originally set sample=primary per the first expert round. This reverses that decision based on the second round's consensus.
-- [ ] 5.1.2 **Swap CTA button order — final CTA section.** Same inversion at bottom of page. Amber = checkout, ghost = sample.
-- [ ] 5.1.3 **Swap StickyMobileCTA back to checkout.** Currently `href="/sample"` with label "See What We Found in a Real Case" (changed in Phase 4). Revert to `href="/checkout?tier=case-decoder"` with label matching the $197 CTA. The sticky mobile bar is the highest-value real estate on mobile.
-- [ ] 5.1.4 **Add guarantee line to hero.** Below the two CTA buttons, add one line: "Find It or It's Free — if we don't find something your attorney hasn't raised, full refund. No forms. No arguments." (3/5 experts: Chaperon, Dreyer, Suby)
-- [ ] 5.1.5 **Add confidentiality trust badge.** In `TrustBadges.tsx`, replace "256-bit SSL Encrypted" with "Your case is confidential — never shared with your attorney." This is the unspoken fear that stops THIS audience. (Laja)
-- [ ] 5.1.6 **Wire lead capture success upsell.** In `page.tsx` LeadCapture render, add `successUpsellHref="/checkout?tier=case-decoder"` and `successUpsellLabel="Ready to go deeper? Get Your Case Decoder — $197"`. Currently the success state has no upsell wired. (Suby)
+- [x] 5.1.1 **Swap CTA button order — hero.** Current: amber (primary) = "See What We Found" → /sample, ghost (secondary) = "Get Your Case Decoder — $197" → /checkout. **Reverse them.** Amber = checkout, ghost = sample. All 5 experts agree. Chaperon's counterpoint (cold traffic needs sample first) is valid for SEO traffic but crisis buyers at 2AM need the transaction button hot. **Note:** Phase 4C.4 originally set sample=primary per the first expert round. This reverses that decision based on the second round's consensus.
+- [x] 5.1.2 **Swap CTA button order — final CTA section.** Same inversion at bottom of page. Amber = checkout, ghost = sample.
+- [x] 5.1.3 **Swap StickyMobileCTA back to checkout.** Currently `href="/sample"` with label "See What We Found in a Real Case" (changed in Phase 4). Revert to `href="/checkout?tier=case-decoder"` with label matching the $197 CTA. The sticky mobile bar is the highest-value real estate on mobile.
+- [x] 5.1.4 **Add guarantee line to hero.** Below the two CTA buttons, add one line: "Find It or It's Free — if we don't find something your attorney hasn't raised, full refund. No forms. No arguments." (3/5 experts: Chaperon, Dreyer, Suby)
+- [x] 5.1.5 **Add confidentiality trust badge.** In `TrustBadges.tsx`, replace "256-bit SSL Encrypted" with "Your case is confidential — never shared with your attorney." This is the unspoken fear that stops THIS audience. (Laja)
+- [x] 5.1.6 **Wire lead capture success upsell.** In `page.tsx` LeadCapture render, add `successUpsellHref="/checkout?tier=case-decoder"` and `successUpsellLabel="Ready to go deeper? Get Your Case Decoder — $197"`. Currently the success state has no upsell wired. (Suby)
 
 ### Phase 5.2: COPY REWRITES (1-2 hours)
 
-- [ ] 5.2.1 **Relocate + rewrite "What We Are NOT" box.** Move from current position (section 2, right after DiscoveryReveal) to just before the guarantee section. Rewrite from four "we do not" negatives to peer-voiced identity statement. **Chaperon's replacement:** "We're researchers, not lawyers. We read your case file the way I read mine — looking for what doesn't add up. We hand you the questions. Your attorney has to answer them. That's where their work begins and ours ends." **Suby's alternative:** "You have a constitutional right to understand your own case. INAAgives you the research and the questions — the same methodology used by attorneys who win landmark cases. We're not lawyers. We're researchers. We don't tell you what to do. We hand you the questions that force YOUR attorney to do what you already paid them to do."
-- [ ] 5.2.2 **Add Epiphany Bridge to hero subheadline.** Replace current factual listing with narrative arc. **Brunson's rewrite:** "I was on page 347 of my 500-page discovery file when I found it. 68.3 grams the lab report said was there — but wasn't in the evidence log. A CI phone attributed to two different people on the same case. A drug type that didn't match what I was charged with. My attorney — the one I paid $40,000 — never mentioned any of it. So I built the tool I needed. If your attorney won't call back, the answers are probably in your case file. We'll find them."
-- [ ] 5.2.3 **Add backstory paragraph.** New block between DiscoveryReveal and the next section. **Chaperon's copy:** "I hired an attorney the same way you did. Paid the retainer. Waited for the plan. The calls got shorter. Then they stopped. Seven months in, I decided to read the file myself. I didn't know what I was looking for. I found three things that changed everything about my case. My attorney never mentioned any of them."
-- [ ] 5.2.4 **Add missing FAQ: "I've already spent everything on my attorney. Is $197 worth it?"** **Suby's answer:** "That's the exact situation we built this for. You've already spent $10,000 or more. INAAcosts $197 — less than one hour of your attorney's billing rate. The guarantee means if we don't find at least one gap your attorney hasn't raised, you pay nothing. One question from our report can change what motions your attorney files. One motion can change your case. The question is not whether $197 is worth it. The question is whether you can afford not to know."
-- [ ] 5.2.5 **Rewrite urgency bar with charge-specific deadlines.** **Brunson's rewrite:** "Three deadlines are running right now, and your attorney may not have calendared them. Suppression motions: typically 30 days from arraignment. DMV administrative hearing (DUI): 7-10 days from arrest. Brady material requests: the earlier they're made, the more leverage they create. Once these windows close, they do not reopen."
-- [ ] 5.2.6 **Rewrite pain points header.** Current: "Sound familiar? You're not alone." **Chaperon's replacement:** "You searched for this at 2am. So did I."
-- [ ] 5.2.7 **Rewrite pricing section header.** Current: "Pick your level of defense intelligence." **Brunson's replacement:** "Here is everything you get — and what it would cost you anywhere else." Sub-copy: value stack setup paragraph.
+- [x] 5.2.1 **Relocate + rewrite "What We Are NOT" box.** Move from current position (section 2, right after DiscoveryReveal) to just before the guarantee section. Rewrite from four "we do not" negatives to peer-voiced identity statement. **Chaperon's replacement:** "We're researchers, not lawyers. We read your case file the way I read mine — looking for what doesn't add up. We hand you the questions. Your attorney has to answer them. That's where their work begins and ours ends." **Suby's alternative:** "You have a constitutional right to understand your own case. INAAgives you the research and the questions — the same methodology used by attorneys who win landmark cases. We're not lawyers. We're researchers. We don't tell you what to do. We hand you the questions that force YOUR attorney to do what you already paid them to do."
+- [x] 5.2.2 **Add Epiphany Bridge to hero subheadline.** Replace current factual listing with narrative arc. **Brunson's rewrite:** "I was on page 347 of my 500-page discovery file when I found it. 68.3 grams the lab report said was there — but wasn't in the evidence log. A CI phone attributed to two different people on the same case. A drug type that didn't match what I was charged with. My attorney — the one I paid $40,000 — never mentioned any of it. So I built the tool I needed. If your attorney won't call back, the answers are probably in your case file. We'll find them."
+- [x] 5.2.3 **Add backstory paragraph.** New block between DiscoveryReveal and the next section. **Chaperon's copy:** "I hired an attorney the same way you did. Paid the retainer. Waited for the plan. The calls got shorter. Then they stopped. Seven months in, I decided to read the file myself. I didn't know what I was looking for. I found three things that changed everything about my case. My attorney never mentioned any of them."
+- [x] 5.2.4 **Add missing FAQ: "I've already spent everything on my attorney. Is $197 worth it?"** **Suby's answer:** "That's the exact situation we built this for. You've already spent $10,000 or more. INAAcosts $197 — less than one hour of your attorney's billing rate. The guarantee means if we don't find at least one gap your attorney hasn't raised, you pay nothing. One question from our report can change what motions your attorney files. One motion can change your case. The question is not whether $197 is worth it. The question is whether you can afford not to know."
+- [x] 5.2.5 **Rewrite urgency bar with charge-specific deadlines.** **Brunson's rewrite:** "Three deadlines are running right now, and your attorney may not have calendared them. Suppression motions: typically 30 days from arraignment. DMV administrative hearing (DUI): 7-10 days from arrest. Brady material requests: the earlier they're made, the more leverage they create. Once these windows close, they do not reopen."
+- [x] 5.2.6 **Rewrite pain points header.** Current: "Sound familiar? You're not alone." **Chaperon's replacement:** "You searched for this at 2am. So did I."
+- [x] 5.2.7 **Rewrite pricing section header.** Current: "Pick your level of defense intelligence." **Brunson's replacement:** "Here is everything you get — and what it would cost you anywhere else." Sub-copy: value stack setup paragraph.
 
 ### Phase 5.3: STRUCTURAL CHANGES (half day)
 
-- [ ] 5.3.1 **Attorney methodology section — add real names or cut.** Currently 6 anonymous cards ("Chain of Custody Analysis" etc.) with zero named attorneys despite claiming "40+ named attorneys." **Options:** (A) Name 2-3 real public attorneys (Barry Scheck/Innocence Project, F. Lee Bailey, etc.) whose documented methodologies are cited. (B) Reframe cards in defendant voice: "Where did the evidence actually go?" instead of "Chain of Custody Analysis." (C) Cut the section entirely — Laja says it's the weakest section for conversion.
-- [ ] 5.3.2 **Condense DiscoveryReveal on mobile.** Currently 4 full-page-width images = 8-10 screen heights of scroll on mobile. Show 2 images (weight discrepancy + CI phone) with "See 2 more findings" expand toggle on mobile only. Desktop keeps all 4.
-- [ ] 5.3.3 **Reduce CTA count from 14 to 6-8.** Laja counted 14 distinct CTA touchpoints. For degraded working memory, this is a menu that causes inaction. Primary action at every scroll depth should alternate between $197 checkout (warm) and /score quiz (cold). Demote /sample, /dui-checklist, /services, /about to footer nav or contextual positions.
-- [ ] 5.3.4 **Add value stacking inside pricing cards.** In `PricingTable.tsx`, add dollar-value justifications next to top features. E.g., "15 calibrated questions for your attorney — the equivalent of a $500 consultation, in writing." (Brunson)
-- [ ] 5.3.5 **Move "Can I get a refund?" FAQ from position 6 to position 2.** High-anxiety buyers need risk reversal visible early in the FAQ. (Laja)
-- [ ] 5.3.6 **Schema fixes.** (A) Add `@id` to homepage LegalService schema block and link to Organization entity. (B) Add `speakable` property targeting "How It Works" and "What We Are NOT" sections. (C) Add `additionalType` with legal taxonomy. (Dreyer)
+- [x] 5.3.1 **Attorney methodology section — add real names or cut.** Currently 6 anonymous cards ("Chain of Custody Analysis" etc.) with zero named attorneys despite claiming "40+ named attorneys." **Options:** (A) Name 2-3 real public attorneys (Barry Scheck/Innocence Project, F. Lee Bailey, etc.) whose documented methodologies are cited. (B) Reframe cards in defendant voice: "Where did the evidence actually go?" instead of "Chain of Custody Analysis." (C) Cut the section entirely — Laja says it's the weakest section for conversion.
+- [x] 5.3.2 **Condense DiscoveryReveal on mobile.** Currently 4 full-page-width images = 8-10 screen heights of scroll on mobile. Show 2 images (weight discrepancy + CI phone) with "See 2 more findings" expand toggle on mobile only. Desktop keeps all 4.
+- [x] 5.3.3 **Reduce CTA count from 14 to 6-8.** Laja counted 14 distinct CTA touchpoints. For degraded working memory, this is a menu that causes inaction. Primary action at every scroll depth should alternate between $197 checkout (warm) and /score quiz (cold). Demote /sample, /dui-checklist, /services, /about to footer nav or contextual positions.
+- [x] 5.3.4 **Add value stacking inside pricing cards.** In `PricingTable.tsx`, add dollar-value justifications next to top features. E.g., "15 calibrated questions for your attorney — the equivalent of a $500 consultation, in writing." (Brunson)
+- [x] 5.3.5 **Move "Can I get a refund?" FAQ from position 6 to position 2.** High-anxiety buyers need risk reversal visible early in the FAQ. (Laja)
+- [x] 5.3.6 **Schema fixes.** (A) Add `@id` to homepage LegalService schema block and link to Organization entity. (B) Add `speakable` property targeting "How It Works" and "What We Are NOT" sections. (C) Add `additionalType` with legal taxonomy. (Dreyer)
 - [ ] 5.3.7 **Create Google Business Profile.** Category: "Legal Information Services." Address: 195 Dr MLK Jr St N, St Petersburg, FL 33701. Zero cost, builds entity signals for AI recommendation systems. (Dreyer)
-- [ ] 5.3.8 **PricingTable mobile optimization.** 8 feature line items push the CTA button below fold on mobile. Show 3 features with "See all features" expand. (Laja)
+- [x] 5.3.8 **PricingTable mobile optimization.** 8 feature line items push the CTA button below fold on mobile. Show 3 features with "See all features" expand. (Laja)
 
 ### Phase 5.4: CONTENT CREATION (requires Rahim)
 
@@ -450,10 +450,10 @@ These are not optional. They are legal/compliance requirements.
 - [ ] 5.4.3 **Add "When is your next court date?" countdown field.** Input field on homepage that shows deadline urgency based on the defendant's actual date. The checkout page already has court date urgency detection — move that mechanic to the landing page. (Suby)
 
 ### Phase 5 Verification
-- [ ] 5.V.1 TypeScript check
+- [x] 5.V.1 TypeScript check
 - [ ] 5.V.2 Visual QA desktop + mobile
-- [ ] 5.V.3 UPL compliance re-scan (all FAQ answers, all CTA copy)
-- [ ] 5.V.4 Schema validation (LegalService @id linking, speakable)
+- [x] 5.V.3 UPL compliance re-scan (all FAQ answers, all CTA copy)
+- [x] 5.V.4 Schema validation (LegalService @id linking, speakable)
 - [ ] 5.V.5 FTC compliance check (no fabricated first-person testimonials remain)
 
 ---
@@ -501,8 +501,8 @@ These are not optional. They are legal/compliance requirements.
 | Cole | Quora 1/day answers | Phase 2 (Reddit/Quora engine) | DONE |
 | Fechter | 7:1 question targeting | Phase 2 (Reddit/Quora engine) | DONE |
 | **Phase 5 — Second Expert Audit (2026-03-19)** | | | |
-| Suby | CTA inversion fix, HALO test failures, lead capture upsell, FTC testimonial risk | 5.0-5.2 | NOT STARTED |
-| Brunson | Epiphany Bridge narrative, value ladder gap, value stacking, false beliefs | 5.2 | NOT STARTED |
-| Chaperon | Trust ladder breaks, backstory paragraph, UPL box reframe, testimonial disclaimer harm | 5.0-5.2 | NOT STARTED |
-| Laja | 14 CTAs → 6-8, mobile friction, DiscoveryReveal condensing, confidentiality badge | 5.1-5.3 | NOT STARTED |
-| Dreyer | UPL compliance flags, GBP creation, schema @id linking, speakable, DoNotPay disarmament | 5.0-5.3 | NOT STARTED |
+| Suby | CTA inversion fix, HALO test failures, lead capture upsell, FTC testimonial risk | 5.0-5.2 | DONE |
+| Brunson | Epiphany Bridge narrative, value ladder gap, value stacking, false beliefs | 5.2 | DONE |
+| Chaperon | Trust ladder breaks, backstory paragraph, UPL box reframe, testimonial disclaimer harm | 5.0-5.2 | DONE |
+| Laja | 14 CTAs → 6-8, mobile friction, DiscoveryReveal condensing, confidentiality badge | 5.1-5.3 | DONE |
+| Dreyer | UPL compliance flags, GBP creation, schema @id linking, speakable, DoNotPay disarmament | 5.0-5.3 | DONE (GBP manual) |
