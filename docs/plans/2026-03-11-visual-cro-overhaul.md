@@ -1,7 +1,8 @@
 # INNA Website — Product Readiness + Visual Overhaul + Distribution
 
-> **Status: 96% COMPLETE** — Last updated 2026-03-16
+> **Status: Phase 4 COMPLETE** — Last updated 2026-03-19
 > Tracking: `~/.claude/projects/.../memory/active-build-checklist.md`
+> Phase 0-3: COMPLETE. Phase 4 (homepage redesign + real discovery docs): COMPLETE
 
 ## Context
 
@@ -290,6 +291,61 @@ Phase 2 (Teams 2 & 3) — DONE 2026-03-13 (ran parallel with Phase 1)
   |
 Phase 3 (Infrastructure + GEO) — DONE 2026-03-14
 ```
+
+---
+
+## Phase 4: HOMEPAGE REDESIGN + REAL DISCOVERY DOCS — COMPLETE (2026-03-19)
+
+*Added 2026-03-18. Detailed plan: `docs/plans/2026-03-18-homepage-redesign.md`*
+
+**Core insight:** The DiscoveryReveal section must show REAL PDF pages from actual PCSO discovery reports — not hand-coded HTML replicas. A defendant at 2AM needs to see the EXACT same document format they're holding from their own discovery packet. Only the real PDF achieves this.
+
+### Phase 4A: PDF Redaction Pipeline — COMPLETE
+- [x] 4A.1 Write `scripts/redact-discovery.py` using PyMuPDF (pymupdf 1.26.7)
+- [x] 4A.2 Open target PCSO PDFs, draw black rectangles over PII (names, DOB, addresses, phones, VIN)
+- [x] 4A.3 Add amber highlight rectangles over 3 findings (CI phone dual attribution, 68.3g weight gap, drug type mismatch)
+- [x] 4A.4 Export each page as 2x retina PNG to `public/discovery/` (4 pages, 2448x3168)
+- [x] 4A.5 Visual QA — verified desktop + mobile, old unredacted PNGs deleted
+
+**Source PDFs:**
+- `~/projects/Court Case/Cases/23-01773-CF_Kapadia/03-Extracted/09 - PCSO - SUPPLEMENT SO22-401531-7 Report Date 02-07-2023 - 5 pages.pdf` — pages 3-4
+- Lab Report 23-000093 in `~/projects/Court Case/Cases/23-01773-CF_Kapadia/01-Raw/Laboratory Report/`
+- Text reference (NOT for visual design): `03-Extracted/markdown/*.md`
+
+**3 Findings to highlight:**
+1. CI Phone Dual Attribution — (912) 380-2720 listed for both suspect AND confidential informant
+2. 68.3g Weight Gap — Scene: 93.9g, Lab: 25.59g
+3. Drug Type Mismatch — Police: "Adderall" (amphetamine), Lab: MDMA/MDA — wrong statute
+
+### Phase 4B: DiscoveryReveal Component Rewrite — COMPLETE
+- [x] 4B.1 Replace HTML replica with Next.js `<Image>` loading real redacted PNGs
+- [x] 4B.2 Scroll-driven finding cards with Framer Motion opacity transforms
+- [x] 4B.3 Reduced-motion fallback (all findings visible, no animation)
+- [x] 4B.4 Section copy + bottom links preserved
+
+### Phase 4C: Homepage Copy Overhaul (page.tsx) — COMPLETE (done in prior session)
+- [x] 4C.1 H1 → "Your Case File Has Answers Your Attorney Hasn't Mentioned"
+- [x] 4C.2 Subheadline with origin story (68.3g, CI phone, drug type mismatch)
+- [x] 4C.3 Eyebrow → "Built by a defendant who read his own 500-page discovery file"
+- [x] 4C.4 CTA swap: "See What We Found" primary, "$197 Case Decoder" secondary
+- [x] 4C.5 Founder attribution update
+- [x] 4C.6 "What We Are NOT" section (UPL clarity)
+- [x] 4C.7 Bridge text → "ask questions until we get answers"
+- [x] 4C.8 Value anchor: hourly rate comparison
+- [x] 4C.9 Guarantee → "Find It or It's Free"
+- [x] 4C.10 FAQ reorder: lead with "Is this legal?"
+- [x] 4C.11 Final CTA: "Stop waiting. Start asking."
+- [x] 4C.12 Metadata update (title, OG)
+
+### Phase 4D: Integration — COMPLETE
+- [x] 4D.1 ChargeTypeSelector integrated into hero
+- [x] 4D.2 DiscoveryReveal with real PDF images
+- [x] 4D.3 TrustBadges "Find It or It's Free" badge
+
+### Phase 4E: Verification — COMPLETE
+- [x] 4E.1 TypeScript check — zero errors
+- [x] 4E.2 Visual QA desktop (1400px) + mobile (390px)
+- [x] 4E.3 FAQ schema — FAQPage JSON-LD, 9 questions, correct order
 
 ---
 
