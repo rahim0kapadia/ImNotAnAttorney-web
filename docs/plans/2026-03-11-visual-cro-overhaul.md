@@ -354,16 +354,56 @@ Phase 3 (Infrastructure + GEO) — DONE 2026-03-14
 
 *Added 2026-03-19. Full audit: `docs/research/2026-03-19-five-expert-homepage-audit.md`*
 
-**What happened:** After Phase 4 was complete, 5 expert agents (Suby, Brunson, Chaperon, Laja, Dreyer) audited every line of `page.tsx` against the live audience profile (criminal defendants at 2AM, cortisol elevated, already burned by attorneys). They found 21 action items the original plan missed.
+### READ THIS SECTION COMPLETELY BEFORE TOUCHING ANY CODE
 
-**Key context for a fresh session:**
-- The audience is a CRISIS BUYER — terrified, financially drained, working memory degraded by cortisol
-- VoC research: `docs/research/voc-defendant-language.md` (418 lines of verbatim defendant quotes)
+**What is INA?** ImNotAnAttorney is a legal defense RESEARCH service (NOT a law firm, NOT legal advice). It researches a criminal defendant's specific charges and generates the exact QUESTIONS that hold their attorney accountable. Pricing: Case Decoder ($197) -> Intelligence Brief ($997) -> X-Ray ($2,497) -> War Room ($4,997) -> Situation Room ($9,997). Tagline: "We Research. You Ask."
+
+**Who is the buyer?** A criminal defendant (or their family member) at 2AM. They've been arrested. They already paid $5K-$50K for an attorney who won't call them back. They are terrified, angry, financially drained. Cortisol is elevated — working memory is physically degraded. They cannot process complex information. They need to understand what this is and what to do within 5 seconds. They do NOT trust professionals — they've been burned. Read the full VoC research at `docs/research/voc-defendant-language.md` (418 lines of verbatim defendant quotes like "My lawyer won't return my calls" and "I paid $10K and he did nothing").
+
+**What is the origin story?** Founder Rahim was a trafficking defendant. He read his own 500-page discovery file and found: (1) 68.3 grams of missing evidence (scene: 93.9g, lab: 25.59g), (2) a CI phone number (912-380-2720) attributed to BOTH the suspect and the confidential informant in the same report, (3) a drug type mismatch (police said MDMA, lab found methamphetamine, charged under wrong statute). His attorney — who he paid $40,000 — never mentioned any of it. THIS IS REAL. This is the brand's conversion weapon.
+
+**What happened before this phase?** Phase 4 (2026-03-18/19) did a full homepage redesign using 8 expert consultations. It added real redacted PCSO discovery document images, rewrote all copy, added ChargeTypeSelector, "Find It or It's Free" guarantee, FAQ reorder, metadata updates. Then 5 more expert agents (Suby, Brunson, Chaperon, Laja, Dreyer) audited the result and found 21 things the first round missed or got wrong.
+
+**What does the current page look like (section order)?**
+1. Hero — eyebrow + H1 + subheadline + ChargeTypeSelector + 2 CTAs + founder attribution
+2. DiscoveryReveal — 4 real redacted PCSO PDF page images with scroll-animated finding cards
+3. "What We Are NOT" box — UPL disclaimer (THIS IS IN THE WRONG POSITION — experts say move it)
+4. Urgency bar — motion deadline warning
+5. Pain points — 5 VoC cards + inline testimonials
+6. Bridge — "People like us ask questions"
+7. How It Works — 3 steps with delivery badges
+8. Attorney Methodologies — 6 anonymous method cards
+9. Value Anchor — hourly rate comparison + testimonial
+10. Testimonials grid — 4 cards (FABRICATED — Rahim accepted the risk)
+11. Guarantee — "Find It or It's Free" with Discovery + Speed + Upgrade Credit
+12. Pricing — PricingTable with 3 tiers
+13. Lead Capture — email form for discovery checklist
+14. FAQ — 9 questions with FAQPage JSON-LD schema
+15. Final CTA — "Stop waiting. Start asking." + 2 CTAs
+
+**Critical decision that Phase 5 reverses:** Phase 4 set "See What We Found" (to /sample) as the PRIMARY amber CTA and "$197 Case Decoder" (to /checkout) as secondary. All 5 Phase 5 experts say this is BACKWARDS for crisis buyers. Phase 5.1.1 reverses it: checkout = primary amber, sample = secondary ghost. The StickyMobileCTA was also changed to /sample in Phase 4 — Phase 5.1.3 reverses it back to /checkout.
+
+**Rahim's explicit decisions (do not re-litigate):**
+- Testimonials: KEEPING fabricated ones until real customers exist (experts flagged risk, Rahim accepted it)
+- Founder video: SKIPPED (not doing it)
+
+**Key files:**
+- Homepage: `src/app/page.tsx` (~786 lines)
+- DiscoveryReveal: `src/components/motion/DiscoveryReveal.tsx`
+- ChargeTypeSelector: `src/components/ChargeTypeSelector.tsx`
+- TrustBadges: `src/components/TrustBadges.tsx`
+- PricingTable: `src/components/PricingTable.tsx`
+- StickyMobileCTA: `src/components/StickyMobileCTA.tsx`
+- LeadCapture: `src/components/LeadCapture.tsx`
+- TestimonialSection: `src/components/TestimonialSection.tsx`
 - Company brief: `~/projects/marketing-hq/companies/inna.md`
-- The site is PRE-REVENUE. Stripe is in sandbox mode. No real customers yet.
-- Testimonials on the page are FABRICATED (acknowledged in company brief). This is a compliance risk.
-- The origin story (68.3g missing evidence, CI phone dual attribution, drug type mismatch) is REAL — from Rahim's own case
-- The 5 expert reports with exact copy rewrites: `docs/research/2026-03-19-five-expert-homepage-audit.md`
+- VoC research: `docs/research/voc-defendant-language.md`
+- Design spec (Phase 4): `docs/superpowers/specs/2026-03-18-homepage-redesign-design.md`
+- Full 5-expert audit with exact copy rewrites: `docs/research/2026-03-19-five-expert-homepage-audit.md`
+
+**Dev server:** Run `npm run dev` from the project root. Default port 3000 (may bump to 3001 if TasteDrop is running). Verify changes visually with puppeteer screenshots or browser.
+
+**UPL compliance is existential.** INA provides legal INFORMATION and QUESTIONS, never legal ADVICE. Every line of copy must pass UPL review. No "you should," no "we recommend," no outcome promises. "Consider" and "one option is" are safe. Chris Dreyer (legal marketing expert) audited for UPL and found 2 flags — these are Phase 5.0 tasks.
 
 ### Phase 5.0: COMPLIANCE (before Stripe goes live — do these FIRST)
 
