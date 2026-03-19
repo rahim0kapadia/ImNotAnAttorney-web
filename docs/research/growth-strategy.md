@@ -60,7 +60,7 @@ Paid (Google) --->                           checklist]
 
 ## 2. Score Quiz Viral Loop
 
-The Defense Milestone Score at /score is INNA's primary free lead magnet and the highest-leverage viral asset. It has zero friction (no email required, no account, no paywall) and delivers immediate personalized value.
+The Defense Milestone Score at /score is INAA's primary free lead magnet and the highest-leverage viral asset. It has zero friction (no email required, no account, no paywall) and delivers immediate personalized value.
 
 ### Current State
 
@@ -225,8 +225,8 @@ Referral programs in legal services must account for:
 | Referrer Action | Referrer Reward | Referee Benefit |
 |----------------|-----------------|-----------------|
 | Share score link, referee completes score | Free "Top 10 Questions" PDF (normally email-gated) | N/A (score is already free) |
-| Share score link, referee purchases Case Decoder | $20 credit toward any INNA product | 10% discount on Case Decoder |
-| Share blog post, referee purchases any tier | $20 credit toward any INNA product | 10% discount on first purchase |
+| Share score link, referee purchases Case Decoder | $20 credit toward any INAA product | 10% discount on Case Decoder |
+| Share blog post, referee purchases any tier | $20 credit toward any INAA product | 10% discount on first purchase |
 | Existing customer refers new customer who purchases | 15% credit toward next tier upgrade | 10% discount on first purchase |
 
 **Implementation:**
@@ -235,7 +235,7 @@ Referral programs in legal services must account for:
 2. Append `?ref=[code]` to all share links
 3. When a referred user arrives, store the referral code in a cookie/localStorage
 4. On purchase, check for referral code and apply: (a) discount to buyer, (b) credit to referrer
-5. Notify referrer via email: "Someone you referred just used INNA. You've earned a $20 credit."
+5. Notify referrer via email: "Someone you referred just used INAA. You've earned a $20 credit."
 
 **Credit mechanics:**
 - Credits never expire (builds goodwill)
@@ -252,7 +252,7 @@ Family members (spouses, parents, siblings) are a critical referral channel. The
 - "If someone in your family is going through the system, this free score tool might help. No email needed."
 
 **Family-specific landing consideration:**
-- Consider a `/for-families` page that frames INNA from the family perspective: "Your loved one is facing charges. Here's how to help them hold their attorney accountable."
+- Consider a `/for-families` page that frames INAA from the family perspective: "Your loved one is facing charges. Here's how to help them hold their attorney accountable."
 - This page would link to /score (for the defendant to take) and /resources (for the family member to read)
 
 ---
@@ -269,13 +269,13 @@ Family members (spouses, parents, siblings) are a critical referral channel. The
 
 ### Channel A: Google Ads
 
-**Why Google:** High-intent keywords. When someone searches "what questions to ask my criminal defense attorney," they need help RIGHT NOW. This is the exact moment INNA serves.
+**Why Google:** High-intent keywords. When someone searches "what questions to ask my criminal defense attorney," they need help RIGHT NOW. This is the exact moment INAA serves.
 
 **The problem:** Primary criminal defense keywords ($100-$250+ CPC) are unaffordable for a bootstrapped budget. "Criminal defense lawyer near me" is dominated by law firm ad spend.
 
 **The solution: Long-tail informational keywords.**
 
-INNA is NOT competing with law firms for "hire a lawyer" searches. INNA targets the informational layer BELOW that -- defendants who already have a lawyer but need to know if that lawyer is doing their job.
+INAA is NOT competing with law firms for "hire a lawyer" searches. INAA targets the informational layer BELOW that -- defendants who already have a lawyer but need to know if that lawyer is doing their job.
 
 **Target keywords (estimated CPC $2-$15):**
 
@@ -484,7 +484,7 @@ Each of the 35 blog posts already has:
 ### Content Priorities
 
 **Immediate (next 5 posts):**
-1. "What happens if you violate probation" -- high volume, INNA has a probation playbook
+1. "What happens if you violate probation" -- high volume, INAA has a probation playbook
 2. "How to prepare for sentencing" -- no current coverage, high stakes moment
 3. "How to get charges reduced" -- directly feeds Case Decoder value prop
 4. "How to help someone in jail" -- opens the family member audience
@@ -652,5 +652,5 @@ Every piece of marketing content, ad copy, Reddit comment, and social post must 
 - Facebook Ads for Lawyers targeting strategies (Rankings.io, PSM Marketing)
 - Legal services referral program design (ReferralRock, Referral Factory)
 - Reddit Content Policy and subreddit-specific rules
-- INNA VoC research (docs/research/voc-defendant-language.md)
+- INAA VoC research (docs/research/voc-defendant-language.md)
 - Quiz lead magnet conversion benchmarks (Marquiz, Kyleads, Outgrow)

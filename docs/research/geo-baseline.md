@@ -1,4 +1,4 @@
-# GEO Baseline — INNA Brand Appearance in AI Assistants
+# GEO Baseline — INAA Brand Appearance in AI Assistants
 
 **Date:** 2026-03-11
 **Domain:** imnotanattorney.com

@@ -1,4 +1,4 @@
-# INNA Website — Product Readiness + Visual Overhaul + Distribution
+# INAA Website — Product Readiness + Visual Overhaul + Distribution
 
 > **Status: Phase 5 NOT STARTED** — Last updated 2026-03-19
 > Tracking: `~/.claude/projects/.../memory/active-build-checklist.md`
@@ -7,7 +7,7 @@
 
 ## Context
 
-INNA has a solid foundation: 29 blog posts, 8 playbook PDFs, full Stripe checkout + download flow, 5 service tiers + 8 digital products. But the product isn't fully wired up (PDFs not uploaded, 5 tiers missing from success page), the site has zero animations, and no distribution content exists.
+INAA has a solid foundation: 29 blog posts, 8 playbook PDFs, full Stripe checkout + download flow, 5 service tiers + 8 digital products. But the product isn't fully wired up (PDFs not uploaded, 5 tiers missing from success page), the site has zero animations, and no distribution content exists.
 
 This plan has 3 phases:
 - **Phase 0**: Wire up the last-mile product delivery (PDFs, DB seeds, bug fixes) — **COMPLETE**
@@ -356,7 +356,7 @@ Phase 3 (Infrastructure + GEO) — DONE 2026-03-14
 
 ### READ THIS SECTION COMPLETELY BEFORE TOUCHING ANY CODE
 
-**What is INNA?** ImNotAnAttorney is a legal defense RESEARCH service (NOT a law firm, NOT legal advice). It researches a criminal defendant's specific charges and generates the exact QUESTIONS that hold their attorney accountable. Pricing: Case Decoder ($197) -> Intelligence Brief ($997) -> X-Ray ($2,497) -> War Room ($4,997) -> Situation Room ($9,997). Tagline: "We Research. You Ask."
+**What is INAA?** ImNotAnAttorney is a legal defense RESEARCH service (NOT a law firm, NOT legal advice). It researches a criminal defendant's specific charges and generates the exact QUESTIONS that hold their attorney accountable. Pricing: Case Decoder ($197) -> Intelligence Brief ($997) -> X-Ray ($2,497) -> War Room ($4,997) -> Situation Room ($9,997). Tagline: "We Research. You Ask."
 
 **Who is the buyer?** A criminal defendant (or their family member) at 2AM. They've been arrested. They already paid $5K-$50K for an attorney who won't call them back. They are terrified, angry, financially drained. Cortisol is elevated — working memory is physically degraded. They cannot process complex information. They need to understand what this is and what to do within 5 seconds. They do NOT trust professionals — they've been burned. Read the full VoC research at `docs/research/voc-defendant-language.md` (418 lines of verbatim defendant quotes like "My lawyer won't return my calls" and "I paid $10K and he did nothing").
 
@@ -403,14 +403,14 @@ Phase 3 (Infrastructure + GEO) — DONE 2026-03-14
 
 **Dev server:** Run `npm run dev` from the project root. Default port 3000 (may bump to 3001 if TasteDrop is running). Verify changes visually with puppeteer screenshots or browser.
 
-**UPL compliance is existential.** INNAprovides legal INFORMATION and QUESTIONS, never legal ADVICE. Every line of copy must pass UPL review. No "you should," no "we recommend," no outcome promises. "Consider" and "one option is" are safe. Chris Dreyer (legal marketing expert) audited for UPL and found 2 flags — these are Phase 5.0 tasks.
+**UPL compliance is existential.** INAAprovides legal INFORMATION and QUESTIONS, never legal ADVICE. Every line of copy must pass UPL review. No "you should," no "we recommend," no outcome promises. "Consider" and "one option is" are safe. Chris Dreyer (legal marketing expert) audited for UPL and found 2 flags — these are Phase 5.0 tasks.
 
 ### Phase 5.0: COMPLIANCE (before Stripe goes live — do these FIRST)
 
 These are not optional. They are legal/compliance requirements.
 
 - [ ] 5.0.1 **UPL Flag 1 — FAQ retaliation answer.** Line ~90 in page.tsx says "An attorney cannot ethically drop your case simply because you ask informed questions. If they do, that itself is a disciplinary issue." This states a legal conclusion as fact applied to the reader's situation. **Fix:** Reframe as "Under ABA Model Rules of Professional Conduct, an attorney's ability to withdraw is constrained to specific grounds listed in Rule 1.16 — asking informed questions is not among them. Your state bar's rules may vary."
-- [ ] 5.0.2 **UPL Flag 2 — Final CTA causal claim.** Line ~756 says "Their attorney starts filing motions that week." This implies using INNAcauses motions to be filed. **Fix:** Add softener after: "What happens next is between you and your attorney."
+- [ ] 5.0.2 **UPL Flag 2 — Final CTA causal claim.** Line ~756 says "Their attorney starts filing motions that week." This implies using INAAcauses motions to be filed. **Fix:** Add softener after: "What happens next is between you and your attorney."
 - [x] 5.0.3 **Testimonials — KEEPING AS-IS per Rahim.** Using fabricated testimonials until real customer data is available. Rahim has accepted the risk. Will replace with real testimonials once Case Decoders ship to real customers. *(4/5 experts flagged this as risky — decision documented.)*
 
 ### Phase 5.1: ONE-LINE CHANGES (highest ROI, do immediately after compliance)
@@ -424,10 +424,10 @@ These are not optional. They are legal/compliance requirements.
 
 ### Phase 5.2: COPY REWRITES (1-2 hours)
 
-- [ ] 5.2.1 **Relocate + rewrite "What We Are NOT" box.** Move from current position (section 2, right after DiscoveryReveal) to just before the guarantee section. Rewrite from four "we do not" negatives to peer-voiced identity statement. **Chaperon's replacement:** "We're researchers, not lawyers. We read your case file the way I read mine — looking for what doesn't add up. We hand you the questions. Your attorney has to answer them. That's where their work begins and ours ends." **Suby's alternative:** "You have a constitutional right to understand your own case. INNAgives you the research and the questions — the same methodology used by attorneys who win landmark cases. We're not lawyers. We're researchers. We don't tell you what to do. We hand you the questions that force YOUR attorney to do what you already paid them to do."
+- [ ] 5.2.1 **Relocate + rewrite "What We Are NOT" box.** Move from current position (section 2, right after DiscoveryReveal) to just before the guarantee section. Rewrite from four "we do not" negatives to peer-voiced identity statement. **Chaperon's replacement:** "We're researchers, not lawyers. We read your case file the way I read mine — looking for what doesn't add up. We hand you the questions. Your attorney has to answer them. That's where their work begins and ours ends." **Suby's alternative:** "You have a constitutional right to understand your own case. INAAgives you the research and the questions — the same methodology used by attorneys who win landmark cases. We're not lawyers. We're researchers. We don't tell you what to do. We hand you the questions that force YOUR attorney to do what you already paid them to do."
 - [ ] 5.2.2 **Add Epiphany Bridge to hero subheadline.** Replace current factual listing with narrative arc. **Brunson's rewrite:** "I was on page 347 of my 500-page discovery file when I found it. 68.3 grams the lab report said was there — but wasn't in the evidence log. A CI phone attributed to two different people on the same case. A drug type that didn't match what I was charged with. My attorney — the one I paid $40,000 — never mentioned any of it. So I built the tool I needed. If your attorney won't call back, the answers are probably in your case file. We'll find them."
 - [ ] 5.2.3 **Add backstory paragraph.** New block between DiscoveryReveal and the next section. **Chaperon's copy:** "I hired an attorney the same way you did. Paid the retainer. Waited for the plan. The calls got shorter. Then they stopped. Seven months in, I decided to read the file myself. I didn't know what I was looking for. I found three things that changed everything about my case. My attorney never mentioned any of them."
-- [ ] 5.2.4 **Add missing FAQ: "I've already spent everything on my attorney. Is $197 worth it?"** **Suby's answer:** "That's the exact situation we built this for. You've already spent $10,000 or more. INNAcosts $197 — less than one hour of your attorney's billing rate. The guarantee means if we don't find at least one gap your attorney hasn't raised, you pay nothing. One question from our report can change what motions your attorney files. One motion can change your case. The question is not whether $197 is worth it. The question is whether you can afford not to know."
+- [ ] 5.2.4 **Add missing FAQ: "I've already spent everything on my attorney. Is $197 worth it?"** **Suby's answer:** "That's the exact situation we built this for. You've already spent $10,000 or more. INAAcosts $197 — less than one hour of your attorney's billing rate. The guarantee means if we don't find at least one gap your attorney hasn't raised, you pay nothing. One question from our report can change what motions your attorney files. One motion can change your case. The question is not whether $197 is worth it. The question is whether you can afford not to know."
 - [ ] 5.2.5 **Rewrite urgency bar with charge-specific deadlines.** **Brunson's rewrite:** "Three deadlines are running right now, and your attorney may not have calendared them. Suppression motions: typically 30 days from arraignment. DMV administrative hearing (DUI): 7-10 days from arrest. Brady material requests: the earlier they're made, the more leverage they create. Once these windows close, they do not reopen."
 - [ ] 5.2.6 **Rewrite pain points header.** Current: "Sound familiar? You're not alone." **Chaperon's replacement:** "You searched for this at 2am. So did I."
 - [ ] 5.2.7 **Rewrite pricing section header.** Current: "Pick your level of defense intelligence." **Brunson's replacement:** "Here is everything you get — and what it would cost you anywhere else." Sub-copy: value stack setup paragraph.

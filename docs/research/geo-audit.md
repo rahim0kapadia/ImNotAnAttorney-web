@@ -197,7 +197,7 @@ Then restructure body sections around this 5-point framework rather than narrati
 
 **2. Missing "Quick Answer" H2:** Zero posts use an explicit "Quick Answer" or "Short Answer" H2 as the first section heading. This format — a H2 that says "Quick Answer," then 2-3 direct sentences, then the full post — is the highest-converting structure for Google AI Overviews. Perplexity explicitly extracts from sections named this way.
 
-**3. Stat surfacing problem:** INNA has three proprietary statistics that no other site has:
+**3. Stat surfacing problem:** INAA has three proprietary statistics that no other site has:
 - 73% weight discrepancy (93.9g vs. 25.59g) — in `what-500-pages`
 - NHTSA accuracy rates (82% combined, 65% one-leg stand) — in `field-sobriety-test-standards`
 - Trial penalty data (federal sentences 3-6x longer for trial vs. plea) — in `7-things-criminal-justice-wont-tell-you` and `how-criminal-cases-actually-work`

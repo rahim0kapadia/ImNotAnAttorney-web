@@ -17,7 +17,7 @@
 - `how-to-file-bar-complaint-against-attorney.mdx` — Step-by-step process, actionable
 
 **Posts with WEAK AI extractability:**
-- `attorney-not-returning-calls.mdx` — Only 67 lines. INNA's founding pain point, but too thin for AI citation
+- `attorney-not-returning-calls.mdx` — Only 67 lines. INAA's founding pain point, but too thin for AI citation
 - `should-you-take-the-plea-deal.mdx` — Opens with narrative instead of direct answer
 - `is-your-attorney-actually-working-your-case.mdx` — Emotional opening before actionable content
 - `how-to-read-your-discovery.mdx` — Needs clearer document-type definitions upfront
@@ -28,7 +28,7 @@
 
 **DUI posts (6 posts):** Best coverage. `can-dui-be-dismissed`, `5-questions-dui-attorney`, `what-to-expect-after-dui-arrest` have good structure. Gap: no comprehensive hub post linking all DUI content.
 
-**Drug posts (3 posts):** `discovery-rights-drug-cases`, `trafficking-charges-constructive-possession` are solid. The 73% weight discrepancy — INNA's only original research stat — is buried mid-document instead of leading.
+**Drug posts (3 posts):** `discovery-rights-drug-cases`, `trafficking-charges-constructive-possession` are solid. The 73% weight discrepancy — INAA's only original research stat — is buried mid-document instead of leading.
 
 **General defense (15 posts):** Widest coverage but most posts need direct-answer opening paragraphs. `attorney-not-returning-calls` needs major expansion (67 lines → 1,500+ words).
 
@@ -67,7 +67,7 @@
 - Organization → makesOffer → Service/Product chain
 - No BreadcrumbList on any page
 
-**Highest-impact gap:** The `SourceIntelligence` component already contains named attorneys (Barry Scheck, Jeffrey Lichtman, F. Lee Bailey, Lawrence Taylor, Gerry Spence) — all indexed knowledge graph entities. Adding `"mentions"` Person entities to Article schema connects INNA's content to established knowledge graph nodes. ~10 lines of code.
+**Highest-impact gap:** The `SourceIntelligence` component already contains named attorneys (Barry Scheck, Jeffrey Lichtman, F. Lee Bailey, Lawrence Taylor, Gerry Spence) — all indexed knowledge graph entities. Adding `"mentions"` Person entities to Article schema connects INAA's content to established knowledge graph nodes. ~10 lines of code.
 
 ### B.3 Recommended Schema Additions
 
@@ -189,7 +189,7 @@ Replace hardcoded `/playbook/dui-first-offense`. Import `allPlaybookSlugs` and m
 
 **D.2.1 Expand `attorney-not-returning-calls.mdx` to 1,500+ words**
 File: `content/blog/attorney-not-returning-calls.mdx`
-Current: 67 lines. This post must own the "lawyer won't return calls" query — INNA's founding pain point. Add: escalation path, timing expectations, what to ask when they call back, how to fire and replace mid-case, distinction between "slow" and "abandonment," 10-item rights checklist.
+Current: 67 lines. This post must own the "lawyer won't return calls" query — INAA's founding pain point. Add: escalation path, timing expectations, what to ask when they call back, how to fire and replace mid-case, distinction between "slow" and "abandonment," 10-item rights checklist.
 
 **D.2.2 Direct-answer opening paragraphs on 5 posts**
 Files: `5-questions-dui-attorney.mdx`, `should-you-take-the-plea-deal.mdx`, `is-your-attorney-actually-working-your-case.mdx`, `what-happens-at-arraignment.mdx`, `attorney-not-returning-calls.mdx`
@@ -209,7 +209,7 @@ New: `wire-fraud-defense-questions.mdx`, `document-hold-federal-investigation.md
 At each stage section, add explicit internal link to the relevant detailed post: Arraignment → `/blog/what-happens-at-arraignment`, Discovery → `/blog/how-to-read-your-discovery`, Motions → `/blog/what-motions-should-your-attorney-be-filing`, Plea → `/blog/should-you-take-the-plea-deal`. Currently has no outbound internal links.
 
 **D.2.7 Surface the 73% weight discrepancy as site-wide data point**
-The 73% discrepancy (scene 93.9g vs lab 25.59g) is INNA's only original research statistic — the primary AI citation driver per Bailyn. Currently buried mid-document. Needs to lead in `trafficking-charges-constructive-possession.mdx` and reference in `how-criminal-cases-actually-work.mdx` Discovery section. Consider dedicated post: `drug-evidence-weight-discrepancy.mdx`.
+The 73% discrepancy (scene 93.9g vs lab 25.59g) is INAA's only original research statistic — the primary AI citation driver per Bailyn. Currently buried mid-document. Needs to lead in `trafficking-charges-constructive-possession.mdx` and reference in `how-criminal-cases-actually-work.mdx` Discovery section. Consider dedicated post: `drug-evidence-weight-discrepancy.mdx`.
 
 ### D.3 LOW Impact — Implement Within 60 Days
 
@@ -229,7 +229,7 @@ The 73% discrepancy (scene 93.9g vs lab 25.59g) is INNA's only original research
 
 **`src/app/sitemap.ts`:** All 29 blog posts included correctly via `getAllPosts()`. Priority assignments appropriate. Issue: only `/playbook/dui-first-offense` listed; 7 other playbook pages missing. Fix: use `allPlaybookSlugs()` dynamically.
 
-**`src/app/robots.ts`:** Correctly allows `/blog/*`, `/playbook/*`, all content pages. Correctly disallows `/checkout*`, `/report/*`, `/api/*`. No AI-crawler-specific disallow rules — correct for INNA; blocking GPTBot/ClaudeBot would reduce citation probability. No changes needed except sitemap completeness.
+**`src/app/robots.ts`:** Correctly allows `/blog/*`, `/playbook/*`, all content pages. Correctly disallows `/checkout*`, `/report/*`, `/api/*`. No AI-crawler-specific disallow rules — correct for INAA; blocking GPTBot/ClaudeBot would reduce citation probability. No changes needed except sitemap completeness.
 
 ---
 
@@ -239,7 +239,7 @@ Current estimated appearance rate: prompts 5 (arraignment), 8 (DUI dismissed), 9
 
 After D.1 implementation (TL;DR boxes, FAQPage schema, mentions entities): projected **15-20% (6-8/40)**. FAQPage schema and mentions connections have highest probability of movement within 30 days of recrawl.
 
-**90-day target of 25%:** Achievable with D.1 + D.2. The `attorney-not-returning-calls.mdx` expansion is the single highest-leverage content investment — that query is INNA's founding pain point and the post is only 67 lines.
+**90-day target of 25%:** Achievable with D.1 + D.2. The `attorney-not-returning-calls.mdx` expansion is the single highest-leverage content investment — that query is INAA's founding pain point and the post is only 67 lines.
 
 ---
 

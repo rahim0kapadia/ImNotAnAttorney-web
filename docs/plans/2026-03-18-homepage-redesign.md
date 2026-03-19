@@ -25,7 +25,7 @@ A2. Target pages:
     - SO22-401531/7 (Report Date 02/07/2023) — pages 3-4 (CI phone dual attribution + property weight 93.9g)
     - Lab Report 23-000093 — page showing weights (25.59g total) + drug type (MDMA/MDA not amphetamine)
     - Source files: `09 - PCSO - SUPPLEMENT SO22-401531-7 Report Date 02-07-2023 - 5 pages.pdf` and lab report in `01-Raw/Laboratory Report/`
-A3. Export redacted PNGs to `public/discovery/` in INNA-web project
+A3. Export redacted PNGs to `public/discovery/` in INAA-web project
 A4. Visual QA — verify redaction is complete, no PII leaks
 
 ### Phase B: DiscoveryReveal Component Rewrite

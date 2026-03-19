@@ -6,20 +6,20 @@
 
 ---
 
-## What Is Entity SEO and Why It Matters for INNA
+## What Is Entity SEO and Why It Matters for INAA
 
 Traditional keyword SEO optimizes for string matching: your page contains the words "criminal defense attorney questions" so it ranks for that query. Entity SEO is different. Google's Knowledge Graph and AI language models don't think in keywords — they think in entities: people, places, organizations, concepts, and the relationships between them.
 
 When ChatGPT answers "what should I ask my criminal defense attorney," it doesn't search for keyword-matching pages. It answers based on entities it has learned — including entities associated with established organizations. A site that has established its entity identity (what it is, what it knows, how it relates to other recognized entities) gets cited. A site that hasn't established entity identity gets passed over, even if its keyword ranking is strong.
 
-For INNA, entity SEO is particularly high-leverage because:
+For INAA, entity SEO is particularly high-leverage because:
 1. The service is definitionally niche (legal empowerment, not legal representation) — a clear, narrow entity definition is an advantage
-2. INNA's content references multiple high-authority Person entities (Barry Scheck, F. Lee Bailey, Lawrence Taylor, Gerry Spence) — connections to established knowledge graph nodes
+2. INAA's content references multiple high-authority Person entities (Barry Scheck, F. Lee Bailey, Lawrence Taylor, Gerry Spence) — connections to established knowledge graph nodes
 3. The Organization entity (ImNotAnAttorney) is new and not yet established in Google's Knowledge Graph — everything in this roadmap accelerates that establishment
 
 ---
 
-## Part 1: INNA Entity Map
+## Part 1: INAA Entity Map
 
 **Core Entities:**
 
@@ -42,7 +42,7 @@ For INNA, entity SEO is particularly high-leverage because:
 - Situation Room (add-on)
 
 **Person entities (referenced, not employees — `mentions` relationship):**
-These are established knowledge graph nodes that INNA's content connects to:
+These are established knowledge graph nodes that INAA's content connects to:
 - Barry Scheck — Innocence Project co-founder, forensic evidence challenge pioneer
 - F. Lee Bailey — O.J. Simpson defense team, cross-examination authority
 - Lawrence Taylor — DUI defense textbook author (*Drunk Driving Defense*)
@@ -56,7 +56,7 @@ These are established knowledge graph nodes that INNA's content connects to:
 - Federal/White Collar Defense — entities: wire fraud (18 U.S.C. § 1343), proffer session, 5K1.1 motion, safety valve, Federal Sentencing Guidelines, Brady material, cooperation agreement, grand jury
 - General Criminal Defense — entities: arraignment, discovery, motions to suppress, plea deal, trial penalty, bar complaint, public defender
 
-**Legal concept entities (INNA has definitional content for each):**
+**Legal concept entities (INAA has definitional content for each):**
 - Brady material (Brady v. Maryland)
 - Constructive possession
 - Motion to suppress
@@ -84,7 +84,7 @@ These are established knowledge graph nodes that INNA's content connects to:
 | Product / Offer | `blog/[slug]/page.tsx` (via `PlaybookCTA`) | Not in schema | Playbook pages need Product schema |
 | HowTo | None | Missing | Medium priority for process posts |
 | WebPage | Implicit via `mainEntityOfPage` | Partial | Good enough |
-| Person | None (Organization-level) | Missing | Low priority (INNA founder not a named public figure yet) |
+| Person | None (Organization-level) | Missing | Low priority (INAA founder not a named public figure yet) |
 
 **Schema gaps and their business impact:**
 
@@ -96,7 +96,7 @@ Gap 2: `Organization` has no `founder` property. This matters for knowledge grap
 
 Fix: Add `"founder": {"@type": "Person", "name": "Rahim Kapadia"}` to the Organization schema in `layout.tsx`.
 
-Gap 3: No `LegalService` schema anywhere on the site. This is the schema type that Google uses to understand legal service businesses in its knowledge graph. INNA is not a law firm, but it is a LegalService adjacent entity — "legal information service" is a valid `serviceType`. Without this schema, Google classifies INNA as a generic content site rather than a legal information service.
+Gap 3: No `LegalService` schema anywhere on the site. This is the schema type that Google uses to understand legal service businesses in its knowledge graph. INAA is not a law firm, but it is a LegalService adjacent entity — "legal information service" is a valid `serviceType`. Without this schema, Google classifies INAA as a generic content site rather than a legal information service.
 
 Fix: Add a `LegalService` JSON-LD block to the homepage (`src/app/page.tsx`):
 ```json
@@ -165,7 +165,7 @@ Spokes: `discovery-rights-drug-cases`, `trafficking-charges-constructive-possess
 
 Cluster strength: Medium. The individual posts are strong, but there is no hub post that establishes topical authority for drug defense as a whole. `what-500-pages` is the most citation-worthy post on the site but it's functioning as a spoke without a hub to connect it to.
 
-Gap: Create a `complete-drug-defense-guide.mdx` hub post that covers the drug case process from search to sentencing, linking all four spokes. This mirrors what `complete-dui-defense-guide` does for DUI. Until this hub exists, INNA cannot establish topical authority for drug defense in the same way it has for DUI.
+Gap: Create a `complete-drug-defense-guide.mdx` hub post that covers the drug case process from search to sentencing, linking all four spokes. This mirrors what `complete-dui-defense-guide` does for DUI. Until this hub exists, INAA cannot establish topical authority for drug defense in the same way it has for DUI.
 
 **Cluster 3: Federal/White Collar Defense (4 posts — new, well-structured)**
 
@@ -233,7 +233,7 @@ Each reference drives traffic back to the original post and builds its authority
 
 ## Part 5: Knowledge Panel Strategy
 
-Google's Knowledge Panel for an organization appears when the entity is sufficiently established in the Knowledge Graph. INNA is not there yet — it was founded in 2026. Here is the establishment sequence:
+Google's Knowledge Panel for an organization appears when the entity is sufficiently established in the Knowledge Graph. INAA is not there yet — it was founded in 2026. Here is the establishment sequence:
 
 **Phase 1: Entity consistency (implement now)**
 
@@ -251,17 +251,17 @@ Knowledge panels require that Google finds the entity described on multiple auth
 
 3. **Product Hunt listing:** Launch page creates inbound entity mentions from a high-authority source. Legal tech / productivity tools category. Describes the service as "We Research. You Ask." which is highly memeable on PH.
 
-4. **Justia or Avvo content reference:** These are the highest-authority legal information sites. Getting INNA mentioned — even informally — on a Justia article or legal blog establishes co-citation with trusted legal entities.
+4. **Justia or Avvo content reference:** These are the highest-authority legal information sites. Getting INAA mentioned — even informally — on a Justia article or legal blog establishes co-citation with trusted legal entities.
 
-5. **Podcast guesting:** Host or guest on a criminal defense or legal tech podcast. Podcast episode descriptions are indexed and create authoritative co-citations. The host entity (established podcast) transfers entity authority signal to the guest entity (INNA).
+5. **Podcast guesting:** Host or guest on a criminal defense or legal tech podcast. Podcast episode descriptions are indexed and create authoritative co-citations. The host entity (established podcast) transfers entity authority signal to the guest entity (INAA).
 
-6. **PR / news coverage:** A single article in a legal trade publication (Above the Law, Law360, Legal Dive) or mainstream outlet citing INNA as a legal tech company creates a high-authority entity mention that Google indexes as a knowledge graph signal.
+6. **PR / news coverage:** A single article in a legal trade publication (Above the Law, Law360, Legal Dive) or mainstream outlet citing INAA as a legal tech company creates a high-authority entity mention that Google indexes as a knowledge graph signal.
 
 **Phase 3: Wikipedia-adjacent signals (90-120 days)**
 
-INNA cannot create its own Wikipedia article (notability standards require third-party coverage). But it can:
-- Ensure relevant Wikipedia articles link or reference content INNA produces (e.g., the "constructive possession" Wikipedia article could reference INNA's case study on the 73% weight discrepancy if the case study is cited in an academic or legal context)
-- Create a Wikidata entry for INNA once sufficient off-site coverage exists
+INAA cannot create its own Wikipedia article (notability standards require third-party coverage). But it can:
+- Ensure relevant Wikipedia articles link or reference content INAA produces (e.g., the "constructive possession" Wikipedia article could reference INAA's case study on the 73% weight discrepancy if the case study is cited in an academic or legal context)
+- Create a Wikidata entry for INAA once sufficient off-site coverage exists
 
 **Phase 4: Entity consolidation (ongoing)**
 
@@ -271,17 +271,17 @@ Every Google Business Profile, social profile, and directory listing should use 
 
 ## Part 6: Competitive Entity Analysis
 
-Who are the established entities competing in INNA's semantic space?
+Who are the established entities competing in INAA's semantic space?
 
-**LegalMatch, Avvo, Justia:** These are attorney directories with massive entity authority in the "find a lawyer" space. INNA is not competing with them — it occupies a different entity niche (defendant empowerment, not attorney referral). The entities INNA competes with for AI citation are the informational content hubs.
+**LegalMatch, Avvo, Justia:** These are attorney directories with massive entity authority in the "find a lawyer" space. INAA is not competing with them — it occupies a different entity niche (defendant empowerment, not attorney referral). The entities INAA competes with for AI citation are the informational content hubs.
 
-**NOLO / Nolo.com:** The most established consumer legal information entity. Massive schema markup, extensive FAQs, decades of Google trust. INNA cannot compete broadly but can own specific query spaces where Nolo has thin coverage — particularly: attorney accountability (Nolo covers legal concepts, not defendant-attorney relationship management), discovery tactics (Nolo explains discovery at a basic level, not at INNA's depth), and the 73% weight discrepancy (Nolo has no original research in drug cases).
+**NOLO / Nolo.com:** The most established consumer legal information entity. Massive schema markup, extensive FAQs, decades of Google trust. INAA cannot compete broadly but can own specific query spaces where Nolo has thin coverage — particularly: attorney accountability (Nolo covers legal concepts, not defendant-attorney relationship management), discovery tactics (Nolo explains discovery at a basic level, not at INAA's depth), and the 73% weight discrepancy (Nolo has no original research in drug cases).
 
-**DUI Driving Laws / DUI Central:** Mid-tier DUI information sites. INNA's `complete-dui-defense-guide` and `field-sobriety-test-standards` are structurally superior to the equivalent pages on these sites. The NHTSA statistics and named expert citations give INNA citation authority that generic DUI information sites don't have.
+**DUI Driving Laws / DUI Central:** Mid-tier DUI information sites. INAA's `complete-dui-defense-guide` and `field-sobriety-test-standards` are structurally superior to the equivalent pages on these sites. The NHTSA statistics and named expert citations give INAA citation authority that generic DUI information sites don't have.
 
-**Federal defense attorney blogs:** High-authority for specific federal procedure queries. INNA's white collar cluster is weaker than established federal defense attorneys' sites — but those sites target attorneys as the audience, not defendants. INNA owns an uncontested niche in "federal defense explained to defendants."
+**Federal defense attorney blogs:** High-authority for specific federal procedure queries. INAA's white collar cluster is weaker than established federal defense attorneys' sites — but those sites target attorneys as the audience, not defendants. INAA owns an uncontested niche in "federal defense explained to defendants."
 
-**Entity differentiation strategy:** INNA should not try to compete with Nolo on general legal information. INNA should own three specific entity spaces that Nolo and AVVO do not: (1) attorney accountability and defendant rights, (2) discovery analysis for non-lawyers, and (3) original case study research in criminal defense. These are INNA's semantic territory.
+**Entity differentiation strategy:** INAA should not try to compete with Nolo on general legal information. INAA should own three specific entity spaces that Nolo and AVVO do not: (1) attorney accountability and defendant rights, (2) discovery analysis for non-lawyers, and (3) original case study research in criminal defense. These are INAA's semantic territory.
 
 ---
 

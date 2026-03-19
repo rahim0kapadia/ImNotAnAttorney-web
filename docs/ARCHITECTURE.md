@@ -1667,7 +1667,7 @@ Defendants are **crisis buyers** with a 7-day decision window, NOT newsletter su
 | `eveningDebriefDelivery` | Evening (within 3 hours of input) | Delivers evening debrief analysis + next day's expected witnesses |
 | `morningBriefDelivery` | Morning (by 7 AM) | Morning brief + printable cheat sheet + questions for attorney |
 
-Each template takes `firstName`, `dayNumber`, `todayDate`, plus template-specific content (debrief HTML, cheat sheet HTML, expected witnesses). Uses same branded HTML as all INNA emails (dark theme, amber accent).
+Each template takes `firstName`, `dayNumber`, `todayDate`, plus template-specific content (debrief HTML, cheat sheet HTML, expected witnesses). Uses same branded HTML as all INAA emails (dark theme, amber accent).
 
 ## Cron Jobs
 
