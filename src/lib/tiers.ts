@@ -41,7 +41,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false, // Flip to true when ready to accept real payments
+    live: true, // LIVE — accepting real payments as of 2026-03-19
   },
   "drug-possession": {
     name: "Drug Possession Defense Playbook",
