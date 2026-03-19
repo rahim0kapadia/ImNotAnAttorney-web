@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   type MotionValue,
   motion,
@@ -74,6 +74,7 @@ function FindingCard({ opacity, tag, children, animated = true }: FindingCardPro
 export function DiscoveryReveal() {
   const shouldReduce = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
+  const [showAllMobile, setShowAllMobile] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -119,6 +120,7 @@ export function DiscoveryReveal() {
               whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.5 }}
+              className={i >= 2 && !showAllMobile ? "hidden md:block" : undefined}
             >
               <div className="overflow-hidden rounded-sm shadow-xl">
                 <Image
@@ -140,6 +142,14 @@ export function DiscoveryReveal() {
               </FindingCard>
             </motion.div>
           ))}
+          {!showAllMobile && (
+            <button
+              onClick={() => setShowAllMobile(true)}
+              className="mt-4 w-full rounded-lg border border-zinc-700 py-3 text-center text-sm font-semibold text-amber-400 transition-colors hover:border-amber-500/50 md:hidden"
+            >
+              See 2 more findings &darr;
+            </button>
+          )}
         </div>
 
         <p className="mt-8 text-center text-sm text-zinc-400">

@@ -29,8 +29,8 @@ const tiers = [
     anchor: "vs. $500+ for a 1-hour consultation",
     description: "48-hour turnaround. No discovery needed.",
     features: [
-      "Plain-English charge breakdown with elements the prosecution must prove",
-      "15 calibrated questions for your attorney (6-part format)",
+      "Plain-English charge breakdown — the equivalent of a $500 consultation, in writing",
+      "15 calibrated questions for your attorney (6-part format) — $200+ if scripted by a paralegal",
       "Ready-to-send email template + phone script + follow-up template",
       "Your Advocacy Steps — 8-step communication playbook",
       "Where Things Stand — 4-area diagnostic",
@@ -210,7 +210,8 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
             {"priorityAvailable" in tier && tier.priorityAvailable && (
               <p className="mt-1 text-xs text-zinc-500">{tier.priorityAvailable}</p>
             )}
-            <ul className="mt-6 flex-1 space-y-3">
+            {/* Desktop: show all features. Mobile: show first 3 + expand */}
+            <ul className="mt-6 hidden flex-1 space-y-3 md:block">
               {tier.features.map((feature) => (
                 <li
                   key={feature}
@@ -221,6 +222,37 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
                 </li>
               ))}
             </ul>
+            <div className="mt-6 flex-1 md:hidden">
+              <ul className="space-y-3">
+                {tier.features.slice(0, 3).map((feature) => (
+                  <li
+                    key={feature}
+                    className="flex items-start gap-2 text-sm text-zinc-300"
+                  >
+                    <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              {tier.features.length > 3 && (
+                <details className="mt-2">
+                  <summary className="cursor-pointer text-xs font-semibold text-amber-400 hover:text-amber-300">
+                    See all {tier.features.length} features &darr;
+                  </summary>
+                  <ul className="mt-2 space-y-3">
+                    {tier.features.slice(3).map((feature) => (
+                      <li
+                        key={feature}
+                        className="flex items-start gap-2 text-sm text-zinc-300"
+                      >
+                        <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              )}
+            </div>
             {tier.tier === "case-decoder" && (
               <Link href="/sample" className="mt-4 block text-center text-xs text-amber-400 underline decoration-amber-400/50 hover:text-amber-300">
                 See a real sample report →

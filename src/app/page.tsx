@@ -81,6 +81,11 @@ const homeFaqs = [
       "Absolutely. You have a constitutional right to understand your own case. INA provides legal research and questions — the same information available in any law library. We do not provide legal advice. Your attorney provides legal advice. We research. You ask.",
   },
   {
+    question: "Can I get a refund?",
+    answer:
+      `Find It or It's Free. If we don't identify at least one gap your attorney hasn't raised, full refund — no forms, no arguments. If we miss the delivery deadline, full refund AND you keep the report. Every dollar you spend is credited toward the next tier. Credits valid for 12 months.`,
+  },
+  {
     question: "Will asking these questions upset my attorney?",
     answer:
       "The right attorneys welcome informed clients. The questions give you a way to find out which one you have. Defendants who come to meetings with specific, documented questions get more attorney time, more motions filed, and more thorough defense work. The questions don\u2019t create conflict — they create accountability.",
@@ -99,11 +104,6 @@ const homeFaqs = [
     question: "How fast do I get my report?",
     answer:
       `${TIER_CORE["case-decoder"].name}: ${TIER_CORE["case-decoder"].delivery}. ${TIER_CORE["intelligence-brief"].name}: ${TIER_CORE["intelligence-brief"].delivery}. ${TIER_CORE["x-ray"].name}: ${TIER_CORE["x-ray"].delivery}. ${TIER_CORE["war-room"].name}: ${TIER_CORE["war-room"].delivery.split(" +")[0]} initial + weekly updates. ${TIER_CORE["situation-room"].name}: ${TIER_CORE["situation-room"].delivery} with Trial Intelligence Operations.`,
-  },
-  {
-    question: "Can I get a refund?",
-    answer:
-      `Find It or It's Free. If we don't identify at least one gap your attorney hasn't raised, full refund — no forms, no arguments. If we miss the delivery deadline, full refund AND you keep the report. Every dollar you spend is credited toward the next tier. Credits valid for 12 months.`,
   },
   {
     question: "I've already spent everything on my attorney. Is $197 worth it?",
@@ -157,12 +157,18 @@ export default function Home() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "LegalService",
+            "@id": `${SITE_URL}/#legal-service`,
             name: "ImNotAnAttorney",
+            additionalType: "https://schema.org/ProfessionalService",
             serviceType: "Legal Information Research",
             description:
               "Case-specific research and accountability questions for criminal defendants",
             provider: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
             areaServed: { "@type": "Country", name: "United States" },
+            speakable: {
+              "@type": "SpeakableSpecification",
+              cssSelector: ["#how-it-works", ".font-display"],
+            },
             hasOfferCatalog: {
               "@type": "OfferCatalog",
               name: "Defense Intelligence Tiers",
@@ -269,16 +275,7 @@ export default function Home() {
               evidence his attorney never mentioned. &middot; We Research. You Ask.
             </p>
           </FadeInUp>
-          <FadeInUp delay={0.4}>
-            <p className="mt-4 text-sm text-zinc-400">
-              <Link
-                href="/dui-checklist"
-                className="text-zinc-400 underline decoration-zinc-600 hover:text-amber-400 hover:decoration-amber-400/50"
-              >
-                Arrested for DUI? Your DMV hearing deadline may be 7 days away.
-              </Link>
-            </p>
-          </FadeInUp>
+          {/* DUI checklist link demoted from hero per Laja: 14 CTAs → 6-8 */}
         </div>
       </section>
 
@@ -478,67 +475,60 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------------------ */}
-      {/* ATTORNEY CREDIBILITY SECTION                                      */}
-      {/* Names 6 elite defense attorneys whose documented methods power     */}
-      {/* our question generation. This is the core differentiator:         */}
-      {/* we don't generate generic questions — each traces to a specific   */}
-      {/* attorney's winning methodology. Social proof via real names       */}
-      {/* and real case wins (OJ, El Chapo, Gotti Jr, etc).                */}
+      {/* WHAT WE LOOK FOR — Reframed in defendant voice per Phase 5 audit  */}
+      {/* (Brunson/Chaperon/Laja: original had zero named attorneys despite  */}
+      {/* claiming "40+ named." Defendant voice is more honest and more     */}
+      {/* conversion-effective for crisis buyers.)                          */}
       {/* ------------------------------------------------------------------ */}
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-5xl">
           <FadeInUp>
             <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
-              The Methodologies Behind Your Questions
+              What We Look For in Your Case
             </h2>
           </FadeInUp>
           <p className="mt-3 text-center text-zinc-400">
-            Every question we generate traces to a documented winning method.
+            Every question we generate comes from documented defense methodologies
+            used in 375+ exonerations and landmark acquittals.
           </p>
           <StaggerContainer className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                name: "Chain of Custody Analysis",
-                record: "375+ exonerations, landmark DNA defense cases",
-                method: "Every piece of evidence traced from collection to courtroom. Gaps in custody = gaps in reliability.",
+                name: "Where did the evidence actually go?",
+                method: "We trace every piece of evidence from the scene to the courtroom. Weight discrepancies, missing items, broken chain of custody \u2014 if something vanished between the patrol car and the lab, we find it.",
               },
               {
-                name: "Informant Credibility",
-                record: "Proven in high-profile federal defense cases",
-                method: "Every cooperator's history, motives, and handler relationship scrutinized.",
+                name: "Who is the informant \u2014 and what were they promised?",
+                method: "Confidential informants have motives. We scrutinize their history, their handler relationship, and what they were offered in exchange for testimony.",
               },
               {
-                name: "Investigation Patterns",
-                record: "Methodology from attorneys who never lost",
-                method: "Find the one fact that destroys the prosecution's narrative.",
+                name: "What did the detective miss \u2014 or skip?",
+                method: "Investigations have patterns. When steps are skipped, corners cut, or reports contradict each other, those gaps become your questions.",
               },
               {
-                name: "Cross-Examination Design",
-                record: "Techniques from landmark acquittals and retrials",
-                method: "Witness examination questions that expose procedural failures.",
+                name: "What questions should break the witness\u2019s story?",
+                method: "Cross-examination isn\u2019t random. We design questions based on documented techniques that expose inconsistencies and procedural failures.",
               },
               {
-                name: "Constitutional Framework",
-                record: "Applied in landmark appellate reversals",
-                method: "Constitutional hooks built into every motion and appeal.",
+                name: "Were your rights violated during the investigation?",
+                method: "Fourth Amendment search issues, Miranda violations, Brady obligations \u2014 constitutional hooks that can suppress evidence or reverse convictions.",
               },
               {
-                name: "Drug Forensics",
-                record: "Federal drug defense methodology",
-                method: "Weight discrepancy and substance variance protocols for every drug case.",
+                name: "Does the lab report match what the police logged?",
+                method: "Substance type, weight, testing protocols. If the field test says one thing and the lab says another, that\u2019s a question your attorney needs to ask.",
               },
-            ].map((attorney) => (
-              <StaggerItem key={attorney.name}>
+            ].map((item) => (
+              <StaggerItem key={item.name}>
                 <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 h-full">
-                  <h3 className="font-bold text-amber-400">{attorney.name}</h3>
-                  <p className="mt-1 text-xs text-zinc-400">{attorney.record}</p>
-                  <p className="mt-3 text-sm text-zinc-300">{attorney.method}</p>
+                  <h3 className="font-bold text-amber-400">{item.name}</h3>
+                  <p className="mt-3 text-sm text-zinc-300">{item.method}</p>
                 </div>
               </StaggerItem>
             ))}
           </StaggerContainer>
           <p className="mt-8 text-center text-sm text-zinc-400">
-            Plus 34 more elite defense attorneys whose documented tactics inform every question we generate.
+            Built from 40+ elite defense methodologies &mdash; the same frameworks
+            used in 375+ exonerations and landmark acquittals, applied to your case.
           </p>
         </div>
       </section>
