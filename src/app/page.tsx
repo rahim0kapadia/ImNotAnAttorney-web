@@ -88,7 +88,7 @@ const homeFaqs = [
   {
     question: "What if my attorney retaliates or drops my case?",
     answer:
-      "An attorney cannot ethically drop your case simply because you ask informed questions. If they do, that itself is a disciplinary issue. Your questions are documented — they become part of the record of your defense.",
+      "Under ABA Model Rules of Professional Conduct, an attorney\u2019s ability to withdraw is constrained to specific grounds listed in Rule 1.16 \u2014 asking informed questions is not among them. Your state bar\u2019s rules may vary. Your questions are documented \u2014 they become part of the record of your defense.",
   },
   {
     question: "What if I don't have my discovery documents yet?",
@@ -241,18 +241,21 @@ export default function Home() {
           <FadeInUp delay={0.3}>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
-                href="/sample"
-                className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
-              >
-                See What We Found in a Real Case &rarr;
-              </Link>
-              <Link
                 href="/checkout?tier=case-decoder"
-                className="rounded-lg border border-zinc-700 px-8 py-4 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:border-zinc-500 hover:shadow-lg"
+                className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
                 Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
               </Link>
+              <Link
+                href="/sample"
+                className="rounded-lg border border-zinc-700 px-8 py-4 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:border-zinc-500 hover:shadow-lg"
+              >
+                See What We Found in a Real Case &rarr;
+              </Link>
             </div>
+            <p className="mt-4 text-sm text-zinc-300">
+              Find It or It&apos;s Free &mdash; if we don&apos;t find something your attorney hasn&apos;t raised, full refund. No forms. No arguments.
+            </p>
           </FadeInUp>
           <FadeInUp delay={0.35}>
             <p className="mt-3 text-sm font-semibold text-amber-500">
@@ -713,7 +716,11 @@ export default function Home() {
       {/* Falls back to free score link for zero-friction engagement.       */}
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-2xl">
-          <LeadCapture />
+          <LeadCapture
+            successUpsellHref="/checkout?tier=case-decoder"
+            successUpsellLabel={`Ready to go deeper? Get Your Case Decoder \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`}
+            successUpsellDescription="You're already doing the work most defendants never do. The Case Decoder takes it further."
+          />
           <p className="mt-6 text-center text-sm text-zinc-400">
             Want a quick answer?{" "}
             <Link
@@ -754,22 +761,23 @@ export default function Home() {
               Motions expire. Evidence disappears. Witnesses forget.
               But the defendant who walks in with the right questions?
               Their attorney starts filing motions that week.
+              What happens next is between you and your attorney.
             </p>
             <p className="mt-3 text-sm font-semibold text-zinc-300">
               Be the defendant your attorney wasn&apos;t expecting.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
-                href="/sample"
+                href="/checkout?tier=case-decoder"
                 className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
-                See What We Found in a Real Case &rarr;
+                Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
               </Link>
               <Link
-                href="/checkout?tier=case-decoder"
+                href="/sample"
                 className="rounded-lg border border-zinc-700 px-8 py-4 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:border-zinc-500 hover:shadow-lg"
               >
-                Ready to order? Get your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+                See What We Found in a Real Case &rarr;
               </Link>
             </div>
           </FadeInUp>
@@ -779,7 +787,7 @@ export default function Home() {
 
       {/* Global components */}
       <RecentPurchaseNotification />
-      <StickyMobileCTA href="/sample" label="See What We Found in a Real Case" />
+      <StickyMobileCTA />
     </>
   );
 }
