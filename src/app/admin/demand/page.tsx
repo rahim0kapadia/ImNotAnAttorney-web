@@ -9,6 +9,7 @@
  */
 
 import { useEffect, useState, useCallback } from "react";
+import { AdminNav } from "@/components/AdminNav";
 
 // ── Types ──────────────────────────────────────────────────
 interface DemandScore {
@@ -288,6 +289,7 @@ export default function DemandDashboard() {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-200 p-6">
       <div className="max-w-7xl mx-auto space-y-8">
+        <AdminNav />
         {/* Header */}
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-white">Legal Demand Intelligence</h1>

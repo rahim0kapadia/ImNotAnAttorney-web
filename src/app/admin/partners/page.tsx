@@ -7,6 +7,7 @@
  */
 
 import { useEffect, useState, useCallback } from "react";
+import { AdminNav } from "@/components/AdminNav";
 
 interface Partner {
   id: string;
@@ -249,6 +250,7 @@ export default function PartnersAdmin() {
   if (selectedId && selectedPartner) {
     return (
       <div className="min-h-screen bg-zinc-950 text-white p-6">
+        <AdminNav />
         <button
           onClick={() => {
             setSelectedId(null);
@@ -412,6 +414,7 @@ export default function PartnersAdmin() {
   // ── Main Dashboard ──
   return (
     <div className="min-h-screen bg-zinc-950 text-white p-6">
+      <AdminNav />
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Bondsman Partners</h1>
         <button

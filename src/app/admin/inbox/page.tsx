@@ -9,6 +9,7 @@
 
 import { useEffect, useState, useCallback, useMemo, Suspense } from "react";
 import sanitizeHtml from "sanitize-html";
+import { AdminNav } from "@/components/AdminNav";
 
 interface Email {
   id: string;
@@ -205,6 +206,7 @@ function InboxContent() {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-200">
       <div className="max-w-6xl mx-auto p-6">
+        <AdminNav />
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
