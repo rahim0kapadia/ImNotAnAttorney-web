@@ -10,8 +10,8 @@ interface StickyMobileCTAProps {
 }
 
 export function StickyMobileCTA({
-  href = "/checkout?tier=case-decoder",
-  label = `Get Your Questions — ${TIER_CORE["case-decoder"].priceDisplay}`,
+  href = "/checkout?tier=dui-first-offense",
+  label = `DUI Defense Playbook — ${TIER_CORE["dui-first-offense"].priceDisplay}`,
 }: StickyMobileCTAProps) {
   const [show, setShow] = useState(false);
 

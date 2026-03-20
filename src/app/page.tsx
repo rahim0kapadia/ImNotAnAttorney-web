@@ -50,7 +50,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "ImNotAnAttorney — Your Case File Has Answers. We Find Them.",
   description:
-    `Your case file has answers your attorney hasn't mentioned. We research your charges and hand you the exact questions — starting at ${TIER_CORE["case-decoder"].priceDisplay}.`,
+    `Your attorney hasn't called back. Your court date is approaching. We research your charges and hand you the exact questions — DUI Defense Playbook ${TIER_CORE["dui-first-offense"].priceDisplay}, instant download.`,
   alternates: {
     canonical: SITE_URL,
   },
@@ -253,10 +253,10 @@ export default function Home() {
           <FadeInUp delay={0.3}>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
-                href="/checkout?tier=case-decoder"
+                href="/checkout?tier=dui-first-offense"
                 className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
-                Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+                Get Your DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} &rarr;
               </Link>
               <Link
                 href="/sample"
@@ -265,7 +265,10 @@ export default function Home() {
                 See What We Found in a Real Case &rarr;
               </Link>
             </div>
-            <p className="mt-4 text-sm text-zinc-300">
+            <p className="mt-3 text-sm text-zinc-400">
+              Or <Link href="/score" className="text-amber-500 underline underline-offset-2 hover:text-amber-400">check your Defense Milestone Score</Link> &mdash; free
+            </p>
+            <p className="mt-2 text-sm text-zinc-300">
               Find It or It&apos;s Free &mdash; if we don&apos;t find something your attorney hasn&apos;t raised, full refund. No forms. No arguments.
             </p>
           </FadeInUp>
@@ -572,16 +575,16 @@ export default function Home() {
                 <div className="text-2xl font-bold text-red-400">$10K-$100K+</div>
                 <p className="mt-1 text-xs font-semibold text-zinc-500">What you already paid your attorney.</p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  INA makes sure that money does what you paid for.
+                  INAA makes sure that money does what you paid for.
                 </p>
               </div>
             </StaggerItem>
             <StaggerItem>
               <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
-                <div className="text-2xl font-bold text-amber-400">{TIER_CORE["case-decoder"].priceDisplay}</div>
-                <p className="mt-1 text-xs font-semibold text-zinc-500">Case Decoder. 48 hours.</p>
+                <div className="text-2xl font-bold text-amber-400">{TIER_CORE["dui-first-offense"].priceDisplay}</div>
+                <p className="mt-1 text-xs font-semibold text-zinc-500">DUI Defense Playbook. Instant download.</p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  The questions your attorney needs to hear — whether they want to or not.
+                  26 questions your DUI attorney hopes you never ask.
                 </p>
               </div>
             </StaggerItem>
@@ -735,9 +738,9 @@ export default function Home() {
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-2xl">
           <LeadCapture
-            successUpsellHref="/checkout?tier=case-decoder"
-            successUpsellLabel={`Ready to go deeper? Get Your Case Decoder \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`}
-            successUpsellDescription="You're already doing the work most defendants never do. The Case Decoder takes it further."
+            successUpsellHref="/checkout?tier=dui-first-offense"
+            successUpsellLabel={`Ready to go deeper? Get Your DUI Defense Playbook \u2014 ${TIER_CORE["dui-first-offense"].priceDisplay}`}
+            successUpsellDescription="26 questions your DUI attorney hopes you never ask. Instant download."
           />
           <p className="mt-6 text-center text-sm text-zinc-400">
             Want a quick answer?{" "}
@@ -786,10 +789,10 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
-                href="/checkout?tier=case-decoder"
+                href="/checkout?tier=dui-first-offense"
                 className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
-                Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+                Get Your DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} &rarr;
               </Link>
               <Link
                 href="/sample"

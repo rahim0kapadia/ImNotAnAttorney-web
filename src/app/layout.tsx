@@ -36,6 +36,7 @@ import { Geist, Playfair_Display } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -128,7 +129,7 @@ export default async function RootLayout({
                 url: SITE_URL,
                 description: "Defendant preparation intelligence — case-specific research and accountability questions for criminal defendants. Legal information, not legal advice.",
                 logo: { "@type": "ImageObject", url: `${SITE_URL}/icon` },
-                sameAs: [],
+                // sameAs: [] — add social profile URLs when Twitter/X account is created
                 foundingDate: "2026",
                 founder: {
                   "@type": "Person",
@@ -170,6 +171,9 @@ export default async function RootLayout({
         <main id="main-content" className="min-h-screen">{children}</main>
         <Footer />
         <Analytics />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
       </body>
     </html>
   );

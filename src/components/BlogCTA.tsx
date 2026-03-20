@@ -2,14 +2,8 @@
  * BlogCTA -- In-blog conversion call-to-action component.
  *
  * Placed after the content in every blog post to convert readers into customers.
- * Contains three conversion paths:
- *   1. Primary CTA: "Get Your Case Decoder" -- links to `/checkout?tier=case-decoder` ($197).
- *   2. Secondary CTA: "See a Sample Report" -- links to `/sample` for social proof.
- *   3. Tertiary link: "Check your Defense Milestone Score" -- links to `/score`,
- *      the free lead magnet that captures emails before showing results.
- *
- * The messaging emphasizes case-specific research over generic information to
- * differentiate from free blog content.
+ * Routes to the charge-matched playbook when it's live, or to the free Score Quiz
+ * when the playbook is still in sandbox mode. Never sends visitors to a dead end.
  *
  * Used in: `src/app/blog/[slug]/page.tsx` (rendered after MDX content, before LeadCapture).
  */
@@ -33,43 +27,66 @@ const CATEGORY_PLAYBOOK: Record<string, string> = {
 
 export function BlogCTA({ category }: { category?: string }) {
   const playbookSlug = category ? CATEGORY_PLAYBOOK[category] || "dui-first-offense" : "dui-first-offense";
+  const tier = TIER_CORE[playbookSlug as keyof typeof TIER_CORE];
+  const isLive = tier?.live === true;
+
   return (
     <FadeInUp>
       <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
-        <h3 className="text-lg font-bold text-white">
-          Your attorney filed zero motions.{" "}
-          <span className="text-amber-400">Would you even know?</span>
-        </h3>
-        <p className="mt-2 text-sm text-zinc-400">
-          The Case Decoder gives you 15 questions calibrated to your charges —
-          built from YOUR discovery, YOUR judge, YOUR case stage.
-          Not generic legal info you can Google. Starting at {TIER_CORE["case-decoder"].priceDisplay}.
-        </p>
-        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-          <Link
-            href="/checkout?tier=case-decoder"
-            className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
-          >
-            Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
-          </Link>
-          <Link
-            href={`/checkout?tier=${playbookSlug}`}
-            className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] hover:border-amber-500"
-          >
-            Start with a Playbook — {TIER_CORE[playbookSlug as keyof typeof TIER_CORE].priceDisplay}
-          </Link>
-        </div>
+        {isLive ? (
+          <>
+            <h3 className="text-lg font-bold text-white">
+              Your attorney filed zero motions.{" "}
+              <span className="text-amber-400">Would you even know?</span>
+            </h3>
+            <p className="mt-2 text-sm text-zinc-400">
+              {tier.name}: 26 questions your attorney hopes you never ask.
+              Built from real case research. {tier.priceDisplay}, instant download.
+            </p>
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href={`/checkout?tier=${playbookSlug}`}
+                className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+              >
+                Get Your {tier.name} — {tier.priceDisplay} &rarr;
+              </Link>
+              <Link
+                href="/score"
+                className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] hover:border-amber-500"
+              >
+                Check Your Score — Free
+              </Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <h3 className="text-lg font-bold text-white">
+              Is your attorney actually working your case?{" "}
+              <span className="text-amber-400">Find out in 60 seconds.</span>
+            </h3>
+            <p className="mt-2 text-sm text-zinc-400">
+              10 questions. No email required. See how your defense measures up
+              against the milestones that matter.
+            </p>
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/score"
+                className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+              >
+                Take the Defense Milestone Score — Free &rarr;
+              </Link>
+              <Link
+                href="/checkout?tier=dui-first-offense"
+                className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] hover:border-amber-500"
+              >
+                DUI Playbook — {TIER_CORE["dui-first-offense"].priceDisplay}
+              </Link>
+            </div>
+          </>
+        )}
         <div className="mt-4">
           <TrustBadges variant="compact" />
         </div>
-        <p className="mt-3 text-sm text-zinc-400">
-          <Link
-            href="/score"
-            className="text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
-          >
-            Check your Defense Milestone Score — free &rarr;
-          </Link>
-        </p>
       </div>
     </FadeInUp>
   );

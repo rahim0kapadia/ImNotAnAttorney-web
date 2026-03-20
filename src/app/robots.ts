@@ -6,7 +6,7 @@
  *
  * Disallowed paths:
  *   - /api/*       -- API routes (not for indexing)
- *   - /_next/*     -- Next.js internal assets
+ *   - /_next/data/* -- Next.js server data fetches (static assets allowed for rendering)
  *   - /404         -- Error page
  *   - /checkout*   -- Payment flow (contains dynamic Stripe sessions)
  *   - /upload      -- Authenticated file upload page
@@ -40,7 +40,7 @@ export default function robots(): MetadataRoute.Robots {
       ],
       disallow: [
         "/api/*",
-        "/_next/*",
+        "/_next/data/*",
         "/404",
         "/checkout",
         "/checkout/*",

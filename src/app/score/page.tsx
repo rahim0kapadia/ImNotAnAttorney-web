@@ -507,14 +507,61 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </p>
       </div>
 
-      {/* 7. CTA SECTION — Crisis vs non-crisis architecture */}
-      {isCrisis ? (
-        <>
-          {/* CRISIS TRIAGE CTA — multiple options (Task 1.3) */}
+      {/* 7. CTA SECTION — Route to live products; playbook primary when live, Case Decoder when not */}
+      {(() => {
+        const playbookKey = CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE | undefined;
+        const playbookTier = playbookKey ? TIER_CORE[playbookKey] : null;
+        const hasLivePlaybook = playbookTier?.live === true;
+
+        if (hasLivePlaybook && playbookTier && playbookKey) {
+          // PLAYBOOK IS LIVE — make it the primary CTA (e.g. DUI Playbook $97)
+          return (
+            <div className="space-y-4">
+              <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
+                <h3 className="font-bold text-white">
+                  {isCrisis
+                    ? `Your score says your defense has gaps. The ${playbookTier.name} shows you exactly where.`
+                    : `The score measured 10 surface indicators. The ${playbookTier.name} goes deeper.`}
+                </h3>
+                <p className="mt-2 text-sm text-zinc-400">
+                  26 questions your {getChargeLabel(answers.chargeType)} attorney hopes you never ask. A roadmap for every stage of your case. Instant download — start reading in 60 seconds.
+                </p>
+                <p className="mt-2 text-xs text-zinc-400">
+                  {playbookTier.priceDisplay}. Less than one hour of the attorney time you already paid for.
+                </p>
+                <div className="mt-4">
+                  <Link
+                    href={`/checkout?tier=${playbookKey}&charge=${answers.chargeType}&band=${result.band}`}
+                    className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-sm font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
+                  >
+                    Get Your {playbookTier.name} — {playbookTier.priceDisplay} →
+                  </Link>
+                </div>
+                <p className="mt-2 text-xs text-zinc-400">
+                  5 questions you&apos;ve never thought to ask — or full refund. No forms. No arguments.
+                </p>
+              </div>
+              {/* Case Decoder upsell — secondary, softer */}
+              <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
+                <p className="text-sm text-zinc-300">
+                  <span className="font-semibold text-white">Need case-specific analysis?</span>{" "}
+                  The Case Decoder ({TIER_CORE["case-decoder"].priceDisplay}) analyzes YOUR discovery, YOUR judge, YOUR case stage — 15 calibrated questions delivered in 48 hours. Every playbook dollar applies as credit.
+                </p>
+                <Link
+                  href={`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`}
+                  className="mt-2 inline-block text-sm text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+                >
+                  Learn about the Case Decoder →
+                </Link>
+              </div>
+            </div>
+          );
+        }
+
+        // NO LIVE PLAYBOOK — show Case Decoder as primary (existing behavior)
+        return isCrisis ? (
           <div className="space-y-4">
             <p className="text-sm font-semibold text-zinc-300">Where to start depends on what you need next.</p>
-
-            {/* Option A — Case Decoder (primary) */}
             <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
               <h3 className="font-bold text-white">Get your case analyzed in 48 hours — {TIER_CORE["case-decoder"].priceDisplay}</h3>
               <p className="mt-2 text-sm text-zinc-400">
@@ -535,8 +582,6 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 Not relevant to your specific situation? We rebuild it free, or refund everything.
               </p>
             </div>
-
-            {/* Option B — Intelligence Brief (secondary, conditional) */}
             {showIBNudge && (
               <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
                 <p className="text-sm text-zinc-300">
@@ -552,33 +597,32 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               </div>
             )}
           </div>
-        </>
-      ) : (
-        /* NON-CRISIS CTA — Single Case Decoder (softer copy) */
-        <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
-          <h3 className="font-bold text-white">
-            {result.band === "Adequate"
-              ? "Your defense looks active on the surface. The Case Decoder checks what surface indicators miss — prosecutor patterns, jurisdiction-specific filing windows, and the questions elite attorneys ask that most defendants never think to raise."
-              : result.band === "Excellent"
-              ? "You\u2019re passing the basics. The Case Decoder checks the charge-specific vulnerabilities that don\u2019t show up in 10 questions — the gaps that separate adequate outcomes from the best possible outcome."
-              : "Average isn\u2019t a strategy. The Case Decoder finds what your attorney should be doing that isn\u2019t showing up in basic milestones."}
-          </h3>
-          <p className="mt-2 text-sm text-zinc-400">
-            The score measured 10 surface indicators. The Case Decoder goes deeper — analyzing {getChargeLabel(answers.chargeType)}-specific patterns, your exact case stage, and the gaps your score revealed. 15 calibrated questions, email templates, and a 7-day action plan, delivered in 48 hours.
-          </p>
-          <p className="mt-2 text-xs text-zinc-400">
-            {TIER_CORE["case-decoder"].priceDisplay}. Less than one hour of the attorney time you already paid for. Every dollar applies as credit toward higher tiers.
-          </p>
-          <div className="mt-4">
-            <Link
-              href={`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`}
-              className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-sm font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
-            >
-              {bandCTAButton[result.band] || "See What My Score Misses"} — {TIER_CORE["case-decoder"].priceDisplay} →
-            </Link>
+        ) : (
+          <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
+            <h3 className="font-bold text-white">
+              {result.band === "Adequate"
+                ? "Your defense looks active on the surface. The Case Decoder checks what surface indicators miss — prosecutor patterns, jurisdiction-specific filing windows, and the questions elite attorneys ask that most defendants never think to raise."
+                : result.band === "Excellent"
+                ? "You\u2019re passing the basics. The Case Decoder checks the charge-specific vulnerabilities that don\u2019t show up in 10 questions — the gaps that separate adequate outcomes from the best possible outcome."
+                : "Average isn\u2019t a strategy. The Case Decoder finds what your attorney should be doing that isn\u2019t showing up in basic milestones."}
+            </h3>
+            <p className="mt-2 text-sm text-zinc-400">
+              The score measured 10 surface indicators. The Case Decoder goes deeper — analyzing {getChargeLabel(answers.chargeType)}-specific patterns, your exact case stage, and the gaps your score revealed. 15 calibrated questions, email templates, and a 7-day action plan, delivered in 48 hours.
+            </p>
+            <p className="mt-2 text-xs text-zinc-400">
+              {TIER_CORE["case-decoder"].priceDisplay}. Less than one hour of the attorney time you already paid for. Every dollar applies as credit toward higher tiers.
+            </p>
+            <div className="mt-4">
+              <Link
+                href={`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`}
+                className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-sm font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
+              >
+                {bandCTAButton[result.band] || "See What My Score Misses"} — {TIER_CORE["case-decoder"].priceDisplay} →
+              </Link>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* 8. EMAIL CAPTURE — Band-specific copy (Task 1.4) */}
       {!emailSent && (
@@ -626,8 +670,8 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         <p className="text-center text-sm text-green-400">Sent! Check your inbox.</p>
       )}
 
-      {/* 9. PLAYBOOK STEP-DOWN — Below email capture for crisis, normal position for others */}
-      {CHARGE_PLAYBOOK[answers.chargeType] && (
+      {/* 9. PLAYBOOK STEP-DOWN — Only shown when playbook is NOT already the primary CTA above */}
+      {CHARGE_PLAYBOOK[answers.chargeType] && !TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE]?.live && (
         <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
           <p className="text-sm text-zinc-300">
             {isCrisis ? (
@@ -643,7 +687,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             )}
           </p>
           <Link
-            href={answers.chargeType === "dui" ? "/playbook/dui-first-offense" : `/checkout?tier=${CHARGE_PLAYBOOK[answers.chargeType]}`}
+            href={`/checkout?tier=${CHARGE_PLAYBOOK[answers.chargeType]}`}
             className="mt-3 w-full rounded-lg border border-amber-500/50 px-6 py-4 text-center text-sm font-semibold text-amber-400 transition-colors hover:border-amber-500 sm:w-auto sm:inline-block block"
           >
             Start with the Playbook — {TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE].priceDisplay} →
