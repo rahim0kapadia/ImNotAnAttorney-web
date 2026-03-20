@@ -99,8 +99,9 @@ export default async function PlaybookPage({ params }: PageProps) {
             name: tier.name,
             description: config.seoDescription,
             url: `${SITE_URL}/playbook/${slug}`,
+            image: `${SITE_URL}/playbook/${slug}/opengraph-image`,
             brand: {
-              "@type": "Organization",
+              "@type": "Brand",
               name: "ImNotAnAttorney",
             },
             offers: {
@@ -112,6 +113,22 @@ export default async function PlaybookPage({ params }: PageProps) {
               seller: {
                 "@type": "Organization",
                 name: "ImNotAnAttorney",
+              },
+              shippingDetails: {
+                "@type": "OfferShippingDetails",
+                deliveryTime: {
+                  "@type": "ShippingDeliveryTime",
+                  businessDays: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0 },
+                },
+                shippingRate: { "@type": "MonetaryAmount", value: 0, currency: "USD" },
+              },
+              hasMerchantReturnPolicy: {
+                "@type": "MerchantReturnPolicy",
+                applicableCountry: "US",
+                returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+                merchantReturnDays: 30,
+                returnMethod: "https://schema.org/ReturnByMail",
+                returnFees: "https://schema.org/FreeReturn",
               },
             },
             category: "Legal Research",
