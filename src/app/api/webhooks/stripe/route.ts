@@ -30,12 +30,13 @@
  */
 
 import { NextRequest, NextResponse, after } from "next/server";
-import { stripe, TIERS, isValidTier } from "@/lib/stripe";
+import { stripe, TIERS, isValidTier, stripeForTier } from "@/lib/stripe";
 import { TIER_CORE, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
 import { signOperatorToken, signPhase2Token, caseThreadId } from "@/lib/site";
+import { calculateCommission, getPartnerByStripePromoId, getPartnerByPromoCode } from "@/lib/referral";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
@@ -229,6 +230,87 @@ export async function POST(req: NextRequest) {
           <p><strong>Error:</strong> ${escapeHtml(orderError.message)}</p>
           <p><strong>Action:</strong> Manually create order record in Supabase.</p>`,
       }, { category: "operator-alert", metadata: { reason: "order-insert-failed", tier, amount } });
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // REFERRAL TRACKING (Bondsman Partner System)
+    // ──────────────────────────────────────────────────────────────
+    // If the customer used a promotion code, check if it belongs to a
+    // bondsman partner. If so, create a referral record and update
+    // the partner's totals. Works for ALL product types (digital + service).
+    if (orderData && session.total_details?.amount_discount && session.total_details.amount_discount > 0) {
+      try {
+        const tierStripe = isValidTier(tier) ? stripeForTier(tier as TierSlug) : stripe;
+        // Retrieve session with expanded discount breakdown
+        const fullSession = await tierStripe.checkout.sessions.retrieve(session.id, {
+          expand: ["total_details.breakdown"],
+        });
+
+        const discountItems = (fullSession.total_details?.breakdown as { discounts?: Array<{ discount: { promotion_code?: string | { id: string; code: string; metadata: Record<string, string> } }; amount: number }> })?.discounts || [];
+
+        for (const item of discountItems) {
+          const promoCodeRef = item.discount.promotion_code;
+          if (!promoCodeRef) continue;
+
+          const promoCodeId = typeof promoCodeRef === "string" ? promoCodeRef : promoCodeRef.id;
+
+          // Try to find partner by Stripe promo code ID first, then by code text
+          let partner = await getPartnerByStripePromoId(promoCodeId);
+          if (!partner && typeof promoCodeRef !== "string" && promoCodeRef.code) {
+            partner = await getPartnerByPromoCode(promoCodeRef.code);
+          }
+          if (!partner && typeof promoCodeRef === "string") {
+            // Retrieve the promo code to get the code text for fallback lookup
+            try {
+              const promoObj = await tierStripe.promotionCodes.retrieve(promoCodeId);
+              partner = await getPartnerByPromoCode(promoObj.code);
+            } catch {
+              // Promo code might be from the other Stripe account — skip
+            }
+          }
+
+          if (!partner || partner.status !== "approved") continue;
+
+          const discountAmount = item.amount; // cents
+          const saleAmount = amount - discountAmount; // what customer actually paid
+          const commissionAmount = calculateCommission(saleAmount, partner.commission_rate);
+
+          // Insert referral record
+          const { error: refError } = await supabase.from("referrals").insert({
+            partner_id: partner.id,
+            order_id: orderData.id,
+            tier,
+            sale_amount: saleAmount,
+            discount_amount: discountAmount,
+            commission_amount: commissionAmount,
+          });
+
+          if (refError) {
+            console.error("[Webhook] Referral insert error:", refError);
+          } else {
+            // Update partner totals (read-then-increment; fine for low volume)
+            const { data: currentPartner } = await supabase
+              .from("partners")
+              .select("total_referrals, total_commission")
+              .eq("id", partner.id)
+              .single();
+            if (currentPartner) {
+              await supabase
+                .from("partners")
+                .update({
+                  total_referrals: (currentPartner.total_referrals || 0) + 1,
+                  total_commission: (currentPartner.total_commission || 0) + commissionAmount,
+                  updated_at: new Date().toISOString(),
+                })
+                .eq("id", partner.id);
+            }
+            console.log(`[Webhook] Referral tracked: partner=${partner.name}, commission=$${(commissionAmount / 100).toFixed(2)}`);
+          }
+        }
+      } catch (refTrackErr) {
+        // Non-blocking — referral tracking failure should not break order processing
+        console.error("[Webhook] Referral tracking error:", refTrackErr);
+      }
     }
 
     // ──────────────────────────────────────────────────────────────

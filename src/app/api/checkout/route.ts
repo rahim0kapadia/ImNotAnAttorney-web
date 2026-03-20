@@ -424,7 +424,9 @@ export async function POST(req: NextRequest) {
       payment_method_types: ["card"],
       customer_email: normalizedEmail || undefined,
       line_items: lineItems,
-      ...(stripeCouponId && { discounts: [{ coupon: stripeCouponId }] }),
+      ...(stripeCouponId
+        ? { discounts: [{ coupon: stripeCouponId }] }
+        : { allow_promotion_codes: true }),
       payment_intent_data: {
         statement_descriptor_suffix: "LEGAL INFO",
       },
