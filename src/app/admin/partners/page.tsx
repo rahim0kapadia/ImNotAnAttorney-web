@@ -8,6 +8,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { AdminNav } from "@/components/AdminNav";
+import { formatCents, formatDate } from "@/lib/format";
 
 interface Partner {
   id: string;
@@ -37,18 +38,6 @@ interface Referral {
   commission_paid: boolean;
   paid_at: string | null;
   created_at: string;
-}
-
-function formatCents(cents: number): string {
-  return "$" + (cents / 100).toFixed(2);
-}
-
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
 }
 
 export default function PartnersAdmin() {
@@ -430,7 +419,7 @@ export default function PartnersAdmin() {
     <div className="min-h-screen bg-zinc-950 text-white p-6">
       <AdminNav />
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Bondsman Partners</h1>
+        <h1 className="text-2xl font-bold">Partners</h1>
         <button
           onClick={() => setShowCreate(!showCreate)}
           className="px-4 py-2 bg-amber-500 text-black font-bold rounded-lg hover:bg-amber-400"

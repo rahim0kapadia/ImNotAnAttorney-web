@@ -4,6 +4,7 @@ import { useState } from "react";
 import { SITE_URL } from "@/lib/site";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
+import { copyToClipboard } from "@/lib/clipboard";
 
 interface ShareButtonsProps {
   url: string;
@@ -13,15 +14,12 @@ interface ShareButtonsProps {
   heading?: string;
   subheading?: string;
   utmParams?: string;
-  order?: "sms-first" | "default";
 }
 
 /**
  * ShareButtons — Reusable share button strip (SMS, WhatsApp, Email, Twitter/X, Facebook, Copy Link).
  *
- * Used on blog posts and score page. The `order` prop controls button sequence:
- * - "sms-first" (default for score page): SMS first — defendants share via text
- * - "default": standard order matching blog post layout
+ * Used on blog posts and score page. SMS is always first — defendants share via text.
  */
 export function ShareButtons({
   url,
@@ -31,7 +29,6 @@ export function ShareButtons({
   heading = "Know someone facing charges? Send them this.",
   subheading = "Most defendants don\u2019t know they can hold their attorney accountable. Share this with someone who needs it.",
   utmParams = "",
-  order = "default",
 }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
 
@@ -78,19 +75,13 @@ export function ShareButtons({
     },
   ];
 
-  // SMS-first ordering: SMS stays first, rest follows
-  // Default ordering: same as current blog layout
-  const orderedButtons = order === "sms-first"
-    ? buttons
-    : buttons;
-
   return (
     <FadeInUp>
       <div className="mt-12 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
         <p className="text-sm font-bold text-white">{heading}</p>
         <p className="mt-1 text-xs text-zinc-400">{subheading}</p>
         <StaggerContainer className="mt-4 flex flex-wrap gap-3">
-          {orderedButtons.map((btn) => (
+          {buttons.map((btn) => (
             <StaggerItem key={btn.id}>
               <a
                 href={btn.href}
@@ -104,10 +95,12 @@ export function ShareButtons({
           ))}
           <StaggerItem>
             <button
-              onClick={() => {
-                navigator.clipboard.writeText(shareUrl);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 3000);
+              onClick={async () => {
+                const ok = await copyToClipboard(shareUrl);
+                if (ok) {
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 3000);
+                }
               }}
               className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-white transition-colors hover:bg-zinc-700"
               aria-label="Copy link to clipboard"

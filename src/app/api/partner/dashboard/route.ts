@@ -7,18 +7,11 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { validatePartnerSession, PARTNER_SESSION_COOKIE } from "@/lib/partner-auth";
+import { requirePartnerAuth } from "@/lib/partner-helpers";
 
 export async function GET(req: NextRequest) {
-  const sessionToken = req.cookies.get(PARTNER_SESSION_COOKIE)?.value;
-  if (!sessionToken) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  const partner = await validatePartnerSession(sessionToken);
-  if (!partner) {
-    return NextResponse.json({ error: "Session expired" }, { status: 401 });
-  }
+  const { partner, error: authError } = await requirePartnerAuth(req);
+  if (authError) return authError;
 
   const supabase = createAdminClient();
 
@@ -38,15 +31,9 @@ export async function GET(req: NextRequest) {
     .order("created_at", { ascending: false })
     .limit(20);
 
-  // Calculate earnings summary
-  const totalEarned = (referrals || []).reduce(
-    (sum, r) => sum + (r.commission_amount || 0),
-    0
-  );
-  const totalPaid = (payouts || []).reduce(
-    (sum, p) => sum + (p.amount || 0),
-    0
-  );
+  // Use the maintained partner totals (accurate even with >50 referrals)
+  const totalEarned = partner.total_commission || 0;
+  const totalPaid = partner.total_paid_out || 0;
 
   return NextResponse.json({
     partner: {
@@ -66,7 +53,7 @@ export async function GET(req: NextRequest) {
       total_earned: totalEarned,
       total_paid: totalPaid,
       pending_payout: totalEarned - totalPaid,
-      total_referrals: (referrals || []).length,
+      total_referrals: partner.total_referrals || 0,
     },
     referrals: referrals || [],
     payouts: payouts || [],

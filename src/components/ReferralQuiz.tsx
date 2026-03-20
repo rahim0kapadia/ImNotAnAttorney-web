@@ -8,7 +8,7 @@
  */
 
 import { useState } from "react";
-import { TIER_CORE, type TierSlug } from "@/lib/tiers";
+import { TIER_CORE, isValidTier, type TierSlug } from "@/lib/tiers";
 import Link from "next/link";
 
 interface ReferralQuizProps {
@@ -57,6 +57,10 @@ const FOLLOW_UPS = [
   },
 ];
 
+// Fallback tier slugs — validated at compile time via satisfies
+const FALLBACK_INTEL: TierSlug = "intelligence-brief" satisfies TierSlug;
+const FALLBACK_DECODER: TierSlug = "case-decoder" satisfies TierSlug;
+
 type RecommendedTier = {
   slug: TierSlug;
   reason: string;
@@ -73,7 +77,7 @@ function getRecommendation(
     concern === "no-communication"
   ) {
     return {
-      slug: "intelligence-brief" as TierSlug,
+      slug: FALLBACK_INTEL,
       reason: "Your charges are serious and your attorney needs to hear the right questions. This gives you the full intelligence picture.",
     };
   }
@@ -81,22 +85,22 @@ function getRecommendation(
   // No attorney yet or attorney not communicating → Case Decoder
   if (attorney === "none" || concern === "no-communication") {
     return {
-      slug: "case-decoder" as TierSlug,
+      slug: FALLBACK_DECODER,
       reason: "You need clarity on your case and the exact questions to bring to any attorney you meet with.",
     };
   }
 
   // Has attorney, wants quick prep → charge-specific Playbook
-  if (chargeSlug !== "other") {
+  if (chargeSlug !== "other" && isValidTier(chargeSlug)) {
     return {
-      slug: chargeSlug as TierSlug,
+      slug: chargeSlug,
       reason: "You have an attorney. This gives you the specific questions they hope you never ask — tailored to your exact charge type.",
     };
   }
 
   // "Other" charges → Case Decoder (no generic playbook)
   return {
-    slug: "case-decoder" as TierSlug,
+    slug: FALLBACK_DECODER,
     reason: "We'll research your specific charges and give you 10-15 targeted questions for your attorney.",
   };
 }
@@ -117,17 +121,14 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
   function selectFollowUp(value: string) {
     const newAnswers = [...answers, value];
     setAnswers(newAnswers);
-    if (step < totalSteps) {
-      setStep(step + 1);
-    } else {
-      setStep(totalSteps); // go to recommendation
-    }
+    setStep(Math.min(step + 1, totalSteps));
   }
 
   // Recommendation phase
   if (step === totalSteps) {
     const rec = getRecommendation(chargeSlug, answers[0] || "", answers[2] || "");
     const tier = TIER_CORE[rec.slug];
+    if (!tier) return null;
     const originalPrice = tier.price / 100;
     const discountedPrice = Math.round(originalPrice * 0.9 * 100) / 100;
     const savings = (originalPrice - discountedPrice).toFixed(2);
@@ -220,8 +221,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
   // Follow-up steps (1-3)
   const followUp = FOLLOW_UPS[step - 1];
   if (!followUp) {
-    // Safety: skip to recommendation if no more follow-ups
-    setStep(totalSteps);
+    // Safety fallback — render null; recommendation check above handles step === totalSteps
     return null;
   }
 

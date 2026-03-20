@@ -396,28 +396,20 @@ export default async function MyCasePage({
     .maybeSingle();
 
   if (orderData) {
-    const { data: referralData } = await supabase
+    const { data: refWithPartner } = await supabase
       .from("referrals")
-      .select("id")
+      .select("partner_id, partners(promo_code)")
       .eq("order_id", orderData.id)
       .limit(1)
       .maybeSingle();
 
-    if (referralData) {
-      // Look up the promo code from the partner
-      const { data: refDetail } = await supabase
-        .from("referrals")
-        .select("partner_id")
-        .eq("id", referralData.id)
-        .single();
-      if (refDetail) {
-        const { data: partnerData } = await supabase
-          .from("partners")
-          .select("promo_code")
-          .eq("id", refDetail.partner_id)
-          .single();
-        if (partnerData?.promo_code) {
-          referralCode = partnerData.promo_code;
+    if (refWithPartner) {
+      const partnerRaw = refWithPartner.partners as unknown;
+      const partnerInfo = Array.isArray(partnerRaw) ? partnerRaw[0] : partnerRaw;
+      if (partnerInfo && typeof partnerInfo === "object" && "promo_code" in partnerInfo) {
+        const code = (partnerInfo as { promo_code: string | null }).promo_code;
+        if (code) {
+          referralCode = code;
         }
       }
     }

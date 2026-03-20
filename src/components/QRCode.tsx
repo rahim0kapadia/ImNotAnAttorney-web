@@ -4,7 +4,7 @@
  * Generates QR code client-side using canvas. Downloadable as PNG.
  */
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 
 interface QRCodeProps {
   url: string;
@@ -17,9 +17,14 @@ interface QRCodeProps {
 export function QRCode({ url, size = 200 }: QRCodeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const [loading, setLoading] = useState(true);
+  const [showCanvas, setShowCanvas] = useState(false);
 
   const generateQR = useCallback(async () => {
-    // Use dynamic import for the qrcode library if available, otherwise show URL text
+    if (!url) {
+      setLoading(false);
+      return;
+    }
     try {
       const QRCodeLib = (await import("qrcode")).default;
       const dataUrl = await QRCodeLib.toDataURL(url, {
@@ -29,9 +34,10 @@ export function QRCode({ url, size = 200 }: QRCodeProps) {
       });
       if (imgRef.current) {
         imgRef.current.src = dataUrl;
+        setLoading(false);
       }
     } catch {
-      // qrcode package not installed — draw a placeholder
+      // qrcode package not installed — draw a placeholder on canvas
       const canvas = canvasRef.current;
       if (!canvas) return;
       const ctx = canvas.getContext("2d");
@@ -43,6 +49,8 @@ export function QRCode({ url, size = 200 }: QRCodeProps) {
       ctx.textAlign = "center";
       ctx.fillText("QR Code", size / 2, size / 2 - 10);
       ctx.fillText("(install qrcode pkg)", size / 2, size / 2 + 10);
+      setShowCanvas(true);
+      setLoading(false);
     }
   }, [url, size]);
 
@@ -75,19 +83,25 @@ export function QRCode({ url, size = 200 }: QRCodeProps) {
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <div className="bg-white rounded-xl p-3">
+      <div className="bg-white rounded-xl p-3" style={{ width: size + 24, height: size + 24 }}>
+        {loading && (
+          <div style={{ width: size, height: size }} className="flex items-center justify-center">
+            <div className="w-6 h-6 border-2 border-zinc-300 border-t-transparent rounded-full animate-spin" />
+          </div>
+        )}
         <img
           ref={imgRef}
+          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
           alt="QR Code"
           width={size}
           height={size}
-          className="block"
+          className={loading || showCanvas ? "hidden" : "block"}
         />
         <canvas
           ref={canvasRef}
           width={size}
           height={size}
-          className="hidden"
+          className={showCanvas ? "block" : "hidden"}
         />
       </div>
       <button

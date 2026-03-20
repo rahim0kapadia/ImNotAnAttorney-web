@@ -11,8 +11,10 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { QRCode } from "@/components/QRCode";
 import { MessageTemplates } from "@/components/MessageTemplates";
-
-const SITE_URL = "https://imnotanattorney.com";
+import { formatCents, formatDate } from "@/lib/format";
+import { tierDisplayName } from "@/lib/tiers";
+import { copyToClipboard } from "@/lib/clipboard";
+import { SITE_URL, CONTACT_EMAIL } from "@/lib/site";
 
 interface PartnerData {
   id: string;
@@ -51,30 +53,6 @@ interface Payout {
   created_at: string;
 }
 
-function formatCents(cents: number): string {
-  return "$" + (cents / 100).toFixed(2);
-}
-
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-}
-
-function tierDisplayName(slug: string): string {
-  const names: Record<string, string> = {
-    "dui-first-offense": "DUI Playbook",
-    "drug-possession": "Drug Possession Playbook",
-    "case-decoder": "Case Decoder",
-    "intelligence-brief": "Intelligence Brief",
-    "x-ray": "X-Ray",
-    "war-room": "War Room",
-    "situation-room": "Situation Room",
-  };
-  return names[slug] || slug;
-}
 
 export default function PartnerDashboard() {
   const router = useRouter();
@@ -157,17 +135,9 @@ export default function PartnerDashboard() {
     }
   }
 
-  async function copyToClipboard(text: string, type: "code" | "url") {
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch {
-      const textarea = document.createElement("textarea");
-      textarea.value = text;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-    }
+  async function handleCopy(text: string, type: "code" | "url") {
+    const ok = await copyToClipboard(text);
+    if (!ok) return;
     if (type === "code") {
       setCodeCopied(true);
       setTimeout(() => setCodeCopied(false), 2000);
@@ -195,7 +165,7 @@ export default function PartnerDashboard() {
 
   if (!partner || !earnings) return null;
 
-  const referralUrl = `${SITE_URL}/r/${partner.promo_code}`;
+  const referralUrl = partner.promo_code ? `${SITE_URL}/r/${partner.promo_code}` : "";
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
@@ -230,48 +200,52 @@ export default function PartnerDashboard() {
         {/* ── Section 1: Your Toolkit ── */}
         <section className="bg-zinc-900 rounded-xl border border-zinc-800 p-6">
           <h2 className="text-xl font-bold mb-4">Your Toolkit</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <p className="text-sm text-zinc-400 mb-1">Your Promo Code</p>
-              <div className="flex items-center gap-2">
-                <span className="text-2xl font-mono font-bold text-amber-400">
-                  {partner.promo_code}
-                </span>
-                <button
-                  onClick={() => copyToClipboard(partner.promo_code || "", "code")}
-                  className="text-xs px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700"
+          {referralUrl ? (
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <p className="text-sm text-zinc-400 mb-1">Your Promo Code</p>
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl font-mono font-bold text-amber-400">
+                    {partner.promo_code}
+                  </span>
+                  <button
+                    onClick={() => handleCopy(partner.promo_code || "", "code")}
+                    className="text-xs px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700"
+                  >
+                    {codeCopied ? "Copied!" : "Copy"}
+                  </button>
+                </div>
+
+                <p className="text-sm text-zinc-400 mt-4 mb-1">Your Referral URL</p>
+                <div className="flex items-center gap-2">
+                  <code className="text-sm text-amber-300 bg-zinc-800 px-3 py-1.5 rounded-lg break-all">
+                    {referralUrl}
+                  </code>
+                  <button
+                    onClick={() => handleCopy(referralUrl, "url")}
+                    className="text-xs px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700 shrink-0"
+                  >
+                    {urlCopied ? "Copied!" : "Copy"}
+                  </button>
+                </div>
+
+                <a
+                  href={referralUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-4 text-sm text-amber-400 hover:text-amber-300"
                 >
-                  {codeCopied ? "Copied!" : "Copy"}
-                </button>
+                  Preview what your clients see &rarr;
+                </a>
               </div>
 
-              <p className="text-sm text-zinc-400 mt-4 mb-1">Your Referral URL</p>
-              <div className="flex items-center gap-2">
-                <code className="text-sm text-amber-300 bg-zinc-800 px-3 py-1.5 rounded-lg break-all">
-                  {referralUrl}
-                </code>
-                <button
-                  onClick={() => copyToClipboard(referralUrl, "url")}
-                  className="text-xs px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700 shrink-0"
-                >
-                  {urlCopied ? "Copied!" : "Copy"}
-                </button>
+              <div className="flex justify-center">
+                <QRCode url={referralUrl} size={160} />
               </div>
-
-              <a
-                href={referralUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block mt-4 text-sm text-amber-400 hover:text-amber-300"
-              >
-                Preview what your clients see &rarr;
-              </a>
             </div>
-
-            <div className="flex justify-center">
-              <QRCode url={referralUrl} size={160} />
-            </div>
-          </div>
+          ) : (
+            <p className="text-zinc-400">Your promo code is being set up. Check back shortly.</p>
+          )}
         </section>
 
         {/* ── Section 2: Ready-to-Send Messages ── */}
@@ -462,8 +436,8 @@ export default function PartnerDashboard() {
           </div>
           <p className="text-zinc-500 text-sm mt-4">
             Need to update your info? Email{" "}
-            <a href="mailto:support@imnotanattorney.com" className="text-amber-400 hover:text-amber-300">
-              support@imnotanattorney.com
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-amber-400 hover:text-amber-300">
+              {CONTACT_EMAIL}
             </a>
           </p>
         </section>

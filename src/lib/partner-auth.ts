@@ -16,6 +16,7 @@
  */
 
 import { createAdminClient } from "./supabase/admin";
+import { normalizeEmail } from "./site";
 import crypto from "crypto";
 
 const MAGIC_LINK_EXPIRY_MINUTES = 15;
@@ -35,7 +36,7 @@ export async function generateMagicLink(email: string): Promise<{
   const { data: partner, error } = await supabase
     .from("partners")
     .select("id, name, phone")
-    .eq("email", email.toLowerCase().trim())
+    .eq("email", normalizeEmail(email))
     .eq("status", "approved")
     .limit(1)
     .maybeSingle();
@@ -63,29 +64,19 @@ export async function generateMagicLink(email: string): Promise<{
 /**
  * Verifies a magic link token. Returns the partner_id if valid, null otherwise.
  * Marks the token as used (single-use).
+ * Uses an atomic RPC call to prevent TOCTOU race conditions.
  */
 export async function verifyMagicLink(token: string): Promise<string | null> {
   const supabase = createAdminClient();
 
-  // Find unused, non-expired token
-  const { data: link, error } = await supabase
-    .from("partner_magic_links")
-    .select("id, partner_id, expires_at, used_at")
-    .eq("token", token)
-    .limit(1)
-    .maybeSingle();
+  const { data, error } = await supabase.rpc("consume_magic_link", { p_token: token });
 
-  if (error || !link) return null;
-  if (link.used_at) return null; // Already used
-  if (new Date(link.expires_at) < new Date()) return null; // Expired
+  if (error) {
+    console.error("[PartnerAuth] Magic link verify error:", error);
+    return null;
+  }
 
-  // Mark as used
-  await supabase
-    .from("partner_magic_links")
-    .update({ used_at: new Date().toISOString() })
-    .eq("id", link.id);
-
-  return link.partner_id;
+  return data || null;
 }
 
 /**
@@ -127,24 +118,27 @@ export async function validatePartnerSession(sessionToken: string): Promise<{
   payment_zelle: string | null;
   payment_venmo: string | null;
   payment_check_address: string | null;
+  total_referrals: number;
+  total_commission: number;
+  total_paid_out: number;
 } | null> {
   const supabase = createAdminClient();
 
-  // Find non-expired session
+  // Find non-expired session (expiry filtered in query to skip extra round-trip)
   const { data: session, error: sessionError } = await supabase
     .from("partner_sessions")
-    .select("partner_id, expires_at")
+    .select("partner_id")
     .eq("session_token", sessionToken)
+    .gt("expires_at", new Date().toISOString())
     .limit(1)
     .maybeSingle();
 
   if (sessionError || !session) return null;
-  if (new Date(session.expires_at) < new Date()) return null;
 
   // Fetch partner data
   const { data: partner, error: partnerError } = await supabase
     .from("partners")
-    .select("id, name, email, phone, company, promo_code, commission_rate, status, preferred_payment_method, payment_zelle, payment_venmo, payment_check_address")
+    .select("id, name, email, phone, company, promo_code, commission_rate, status, preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, total_referrals, total_commission, total_paid_out")
     .eq("id", session.partner_id)
     .eq("status", "approved")
     .single();

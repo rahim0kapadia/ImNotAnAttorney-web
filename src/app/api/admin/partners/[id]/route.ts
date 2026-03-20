@@ -10,6 +10,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { VALID_PAYMENT_METHODS } from "@/lib/partner-data";
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -25,7 +26,7 @@ export async function GET(
   // Fetch partner
   const { data: partner, error: partnerError } = await supabase
     .from("partners")
-    .select("*")
+    .select("id, name, company, email, phone, region, status, commission_rate, promo_code, stripe_promo_code_id, notes, total_referrals, total_commission, total_paid_out, preferred_payment_method, created_at")
     .eq("id", id)
     .single();
 
@@ -36,7 +37,7 @@ export async function GET(
   // Fetch referral history
   const { data: referrals, error: refError } = await supabase
     .from("referrals")
-    .select("*")
+    .select("id, tier, sale_amount, discount_amount, commission_amount, commission_paid, paid_at, created_at")
     .eq("partner_id", id)
     .order("created_at", { ascending: false });
 
@@ -58,20 +59,35 @@ export async function PATCH(
   context: RouteContext
 ) {
   const { id } = await context.params;
-  const body = await req.json();
+  let body;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   const { status, notes, commission_rate } = body;
 
   const updates: Record<string, unknown> = {
     updated_at: new Date().toISOString(),
   };
 
-  if (status && ["pending", "approved", "suspended"].includes(status)) {
+  const VALID_STATUSES = ["pending", "approved", "suspended"];
+  if (status !== undefined) {
+    if (!VALID_STATUSES.includes(status)) {
+      return NextResponse.json({ error: `Invalid status. Must be one of: ${VALID_STATUSES.join(", ")}` }, { status: 400 });
+    }
     updates.status = status;
   }
   if (notes !== undefined) {
+    if (typeof notes !== "string" || notes.length > 5000) {
+      return NextResponse.json({ error: "Notes must be a string under 5000 characters" }, { status: 400 });
+    }
     updates.notes = notes;
   }
-  if (commission_rate !== undefined && typeof commission_rate === "number" && commission_rate >= 0 && commission_rate <= 100) {
+  if (commission_rate !== undefined) {
+    if (typeof commission_rate !== "number" || commission_rate < 0 || commission_rate > 100) {
+      return NextResponse.json({ error: "Commission rate must be a number between 0 and 100" }, { status: 400 });
+    }
     updates.commission_rate = commission_rate;
   }
 
@@ -93,8 +109,7 @@ export async function PATCH(
 
 /**
  * POST /api/admin/partners/[id] — Mark unpaid commissions as paid.
- * Sets commission_paid=true on all unpaid referrals for this partner,
- * updates total_paid_out on the partner record.
+ * Uses an atomic RPC to prevent race conditions (double-pay).
  */
 export async function POST(
   req: NextRequest,
@@ -119,67 +134,21 @@ export async function POST(
     // No body — use partner's preferred method
   }
 
-  // Get all unpaid referrals for this partner
-  const { data: unpaidReferrals, error: fetchError } = await supabase
-    .from("referrals")
-    .select("id, commission_amount")
-    .eq("partner_id", id)
-    .eq("commission_paid", false);
-
-  if (fetchError) {
-    console.error("[Admin Partners] Payout fetch error:", fetchError);
-    return NextResponse.json({ error: "Failed to fetch unpaid referrals" }, { status: 500 });
+  // Validate payment method
+  if (!VALID_PAYMENT_METHODS.includes(paymentMethod)) {
+    return NextResponse.json({ error: "Invalid payment method" }, { status: 400 });
   }
 
-  if (!unpaidReferrals || unpaidReferrals.length === 0) {
-    return NextResponse.json({ message: "No unpaid commissions", paid: 0 });
-  }
-
-  const totalPayout = unpaidReferrals.reduce(
-    (sum, r) => sum + (r.commission_amount || 0),
-    0
-  );
-
-  // Mark all as paid
-  const referralIds = unpaidReferrals.map((r) => r.id);
-  const now = new Date().toISOString();
-
-  const { error: updateError } = await supabase
-    .from("referrals")
-    .update({ commission_paid: true, paid_at: now })
-    .in("id", referralIds);
-
-  if (updateError) {
-    console.error("[Admin Partners] Payout update error:", updateError);
-    return NextResponse.json({ error: "Failed to mark as paid" }, { status: 500 });
-  }
-
-  // Atomic increment on total_paid_out (avoids race condition)
-  const { error: rpcError } = await supabase.rpc("increment_partner_total", {
+  // Atomic payout: lock referrals, create payout record, mark paid, increment total — all in one transaction
+  const { data, error } = await supabase.rpc("process_partner_payout", {
     p_partner_id: id,
-    p_column: "total_paid_out",
-    p_amount: totalPayout,
+    p_payment_method: paymentMethod,
   });
 
-  if (rpcError) {
-    console.error("[Admin Partners] Payout increment error:", rpcError);
+  if (error) {
+    console.error("[Admin Partners] Payout RPC error:", error);
+    return NextResponse.json({ error: "Failed to process payout" }, { status: 500 });
   }
 
-  // Create payout history record
-  const { error: payoutError } = await supabase.from("partner_payouts").insert({
-    partner_id: id,
-    amount: totalPayout,
-    payment_method: paymentMethod,
-    referral_ids: referralIds,
-  });
-
-  if (payoutError) {
-    console.error("[Admin Partners] Payout record error:", payoutError);
-  }
-
-  return NextResponse.json({
-    message: "Payout recorded",
-    paid: totalPayout,
-    referrals_marked: referralIds.length,
-  });
+  return NextResponse.json(data);
 }

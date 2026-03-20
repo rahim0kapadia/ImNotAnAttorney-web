@@ -6,26 +6,37 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { validatePartnerSession, PARTNER_SESSION_COOKIE } from "@/lib/partner-auth";
-
-const VALID_METHODS = ["zelle", "venmo", "check"];
+import { requirePartnerAuth } from "@/lib/partner-helpers";
+import { VALID_PAYMENT_METHODS } from "@/lib/partner-data";
 
 export async function PATCH(req: NextRequest) {
-  const sessionToken = req.cookies.get(PARTNER_SESSION_COOKIE)?.value;
-  if (!sessionToken) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const { partner, error: authError } = await requirePartnerAuth(req);
+  if (authError) return authError;
 
-  const partner = await validatePartnerSession(sessionToken);
-  if (!partner) {
-    return NextResponse.json({ error: "Session expired" }, { status: 401 });
+  let body;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
-
-  const body = await req.json();
   const { preferred_payment_method, payment_zelle, payment_venmo, payment_check_address } = body;
 
+  // Validate input types and lengths
+  const stringFields = { payment_zelle, payment_venmo, payment_check_address };
+  for (const [key, val] of Object.entries(stringFields)) {
+    if (val !== undefined && val !== null) {
+      if (typeof val !== "string") {
+        return NextResponse.json({ error: `${key} must be a string` }, { status: 400 });
+      }
+      const maxLen = key === "payment_check_address" ? 500 : 100;
+      if (val.length > maxLen) {
+        return NextResponse.json({ error: `${key} exceeds maximum length of ${maxLen}` }, { status: 400 });
+      }
+    }
+  }
+
   // Validate payment method
-  if (preferred_payment_method && !VALID_METHODS.includes(preferred_payment_method)) {
+  if (preferred_payment_method !== undefined && preferred_payment_method !== null && !VALID_PAYMENT_METHODS.includes(preferred_payment_method)) {
     return NextResponse.json({ error: "Invalid payment method" }, { status: 400 });
   }
 

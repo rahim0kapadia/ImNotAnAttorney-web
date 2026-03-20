@@ -52,6 +52,7 @@ import Link from "next/link";
 import { AnimatedScoreArc } from "@/components/motion/AnimatedScoreArc";
 import { ShareButtons } from "@/components/ShareButtons";
 import { FadeInUp } from "@/components/motion/FadeInUp";
+import { copyToClipboard } from "@/lib/clipboard";
 
 /**
  * The 10 scoring questions. Each has a unique id (used as the key in the
@@ -468,10 +469,12 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           <div className="relative mt-4 rounded-lg border border-zinc-700 bg-zinc-800/80 p-4">
             <pre className="whitespace-pre-wrap text-sm leading-relaxed text-zinc-300 font-sans">{getAttorneyEmailText()}</pre>
             <button
-              onClick={() => {
-                navigator.clipboard.writeText(getAttorneyEmailText());
-                setCopiedTemplate(true);
-                setTimeout(() => setCopiedTemplate(false), 3000);
+              onClick={async () => {
+                const ok = await copyToClipboard(getAttorneyEmailText());
+                if (ok) {
+                  setCopiedTemplate(true);
+                  setTimeout(() => setCopiedTemplate(false), 3000);
+                }
               }}
               className="absolute right-3 top-3 rounded-md bg-zinc-700 px-3 py-1 text-xs font-medium text-zinc-300 hover:bg-zinc-600 transition-colors"
             >
@@ -706,7 +709,6 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         subheading="Share the tool, not your result. Their score stays private."
         shareText="Check if your attorney is actually working your case — free, 60 seconds, no email required: "
         utmParams="utm_source=share&utm_medium=score&utm_campaign=viral"
-        order="sms-first"
       />
 
       {/* 11. PRIVACY + AGGREGATE NOTICE */}

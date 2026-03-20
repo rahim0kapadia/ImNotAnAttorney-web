@@ -95,15 +95,18 @@ export async function middleware(req: NextRequest) {
   // ── Partner API routes (/api/partner/*) ──────────────────────
   // Cookie-exists check only (no DB call in Edge). Route handlers do the
   // actual session validation via validatePartnerSession() in Node runtime.
-  if (pathname.startsWith("/api/partner")) {
+  if (pathname.startsWith("/api/partner/") || pathname.startsWith("/api/partners/")) {
     // Public routes — no auth needed
     if (
       pathname === "/api/partner/magic-link" ||
-      pathname === "/api/partner/magic-link/verify"
+      pathname === "/api/partner/magic-link/verify" ||
+      pathname === "/api/partners/apply" ||
+      pathname === "/api/partner/logout"
     ) {
       return NextResponse.next();
     }
     // All other partner routes — check cookie exists
+    // Must match PARTNER_SESSION_COOKIE in src/lib/partner-auth.ts (can't import — Edge Runtime)
     const session = req.cookies.get("partner-session");
     if (!session?.value) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

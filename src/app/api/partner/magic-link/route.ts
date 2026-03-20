@@ -1,7 +1,7 @@
 /**
  * POST /api/partner/magic-link — Request a magic link for partner login.
  *
- * Public route (no auth). Rate-limited to 3 requests per email per hour.
+ * Public route (no auth). Rate-limited to 3 requests per email per hour + 10 per IP per hour.
  * Sends magic link via Resend (email) + Twilio (SMS, if phone on file).
  */
 
@@ -9,20 +9,26 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { generateMagicLink } from "@/lib/partner-auth";
-import { sendEmail } from "@/lib/email";
+import { sendEmail, escapeHtml } from "@/lib/email";
 import { sendSMS } from "@/lib/twilio";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+import { SITE_URL, normalizeEmail } from "@/lib/site";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email } = await req.json();
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    }
+    const { email } = body;
 
     if (!email || typeof email !== "string") {
       return NextResponse.json({ error: "Email required" }, { status: 400 });
     }
 
-    const normalizedEmail = email.toLowerCase().trim();
+    const normalizedEmail = normalizeEmail(email);
+    const ip = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
 
     // Rate limit: 3 magic link requests per email per hour
     const supabase = createAdminClient();
@@ -39,6 +45,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Secondary rate limit: 10 magic link requests per IP per hour
+    const { limited: ipLimited } = await checkRateLimit(
+      supabase,
+      `partner-magic-ip:${ip}`,
+      10,
+      3600
+    );
+    if (ipLimited) {
+      return NextResponse.json(
+        { error: "Too many login attempts. Please try again in an hour." },
+        { status: 429 }
+      );
+    }
+
     const result = await generateMagicLink(normalizedEmail);
 
     // Always return success to prevent email enumeration
@@ -47,7 +67,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { token, partner } = result;
-    const magicUrl = `${SITE_URL}/partner/login/verify?token=${token}`;
+    const magicUrl = `${SITE_URL}/partner/login/verify#token=${token}`;
 
     // Send via email
     await sendEmail({
@@ -56,7 +76,7 @@ export async function POST(req: NextRequest) {
       html: `
         <div style="font-family: system-ui, sans-serif; max-width: 480px; margin: 0 auto;">
           <h2 style="color: #F59E0B;">Partner Login</h2>
-          <p>Hey ${partner.name},</p>
+          <p>Hey ${escapeHtml(partner.name)},</p>
           <p>Click below to access your partner dashboard:</p>
           <a href="${magicUrl}" style="display: inline-block; padding: 12px 24px; background: #F59E0B; color: #000; font-weight: bold; text-decoration: none; border-radius: 8px; margin: 16px 0;">
             Open Dashboard
@@ -69,10 +89,13 @@ export async function POST(req: NextRequest) {
 
     // Send via SMS if phone on file
     if (partner.phone) {
-      await sendSMS(
+      const smsResult = await sendSMS(
         partner.phone,
         `ImNotAnAttorney Partner Login: ${magicUrl} — expires in 15 min.`
       );
+      if (!smsResult.success) {
+        console.warn("[Partner Magic Link] SMS failed:", smsResult.error);
+      }
     }
 
     return NextResponse.json({ sent: true });

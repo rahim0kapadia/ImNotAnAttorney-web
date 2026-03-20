@@ -1,8 +1,9 @@
 /**
- * GET /api/partner/magic-link/verify?token=xxx — Verify magic link token.
+ * POST /api/partner/magic-link/verify — Verify magic link token.
  *
- * Called by the client-rendered verify page via fetch (not a redirect).
+ * Called by the client-rendered verify page via fetch (same origin).
  * Validates token, creates session, returns session token for cookie setting.
+ * POST to prevent token from appearing in server logs via query string.
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -13,8 +14,14 @@ import {
   PARTNER_SESSION_MAX_AGE,
 } from "@/lib/partner-auth";
 
-export async function GET(req: NextRequest) {
-  const token = req.nextUrl.searchParams.get("token");
+export async function POST(req: NextRequest) {
+  let token: string | null = null;
+  try {
+    const body = await req.json();
+    token = typeof body.token === "string" ? body.token : null;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
 
   if (!token) {
     return NextResponse.json({ error: "Missing token" }, { status: 400 });

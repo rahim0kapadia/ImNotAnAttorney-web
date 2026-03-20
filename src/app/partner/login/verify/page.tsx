@@ -1,31 +1,43 @@
 "use client";
 /**
- * /partner/login/verify?token=xxx — Magic link verification page.
+ * /partner/login/verify#token=xxx — Magic link verification page.
  *
  * Client-rendered page that calls the verify API via fetch (same origin).
- * This avoids Safari ITP issues with cookies set on cross-origin GET redirects.
+ * Token is read from the URL fragment (hash) — fragments are never sent to
+ * servers, don't appear in logs, and aren't included in Referer headers.
  */
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 
-function VerifyContent() {
-  const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+export default function PartnerVerifyPage() {
+  const [token, setToken] = useState<string | null>(null);
   const [status, setStatus] = useState<"verifying" | "success" | "error">("verifying");
   const [errorMsg, setErrorMsg] = useState("");
 
+  // Read token from URL fragment on mount
   useEffect(() => {
-    if (!token) {
+    const hash = window.location.hash;
+    if (hash.startsWith("#token=")) {
+      setToken(hash.slice(7));
+      // Clear token from URL after reading
+      window.history.replaceState(null, "", window.location.pathname);
+    } else {
       setStatus("error");
       setErrorMsg("No token provided.");
-      return;
     }
+  }, []);
+
+  // Verify once token is available
+  useEffect(() => {
+    if (!token) return;
 
     async function verify() {
       try {
-        const res = await fetch(`/api/partner/magic-link/verify?token=${token}`);
+        const res = await fetch("/api/partner/magic-link/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token }),
+        });
         const data = await res.json();
 
         if (!res.ok) {
@@ -90,17 +102,5 @@ function VerifyContent() {
         )}
       </div>
     </div>
-  );
-}
-
-export default function PartnerVerifyPage() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
-      </div>
-    }>
-      <VerifyContent />
-    </Suspense>
   );
 }

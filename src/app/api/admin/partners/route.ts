@@ -11,13 +11,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createPartnerPromoCode } from "@/lib/referral";
+import { normalizeEmail, isValidEmail } from "@/lib/site";
 
 export async function GET() {
   const supabase = createAdminClient();
 
   const { data, error } = await supabase
     .from("partners")
-    .select("*")
+    .select("id, name, company, email, phone, region, status, commission_rate, promo_code, stripe_promo_code_id, notes, total_referrals, total_commission, total_paid_out, created_at")
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -35,14 +36,37 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  let body;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   const { name, company, email, phone, region, promoCode, notes } = body;
 
-  if (!name || !email) {
+  if (!name?.trim() || !email?.trim()) {
     return NextResponse.json(
       { error: "Name and email are required" },
       { status: 400 }
     );
+  }
+
+  if (typeof email !== "string" || !isValidEmail(email)) {
+    return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
+  }
+
+  // Validate field types and lengths
+  const stringFields: Record<string, unknown> = { name, company, phone, region, promoCode, notes };
+  const maxLengths: Record<string, number> = { name: 200, company: 200, phone: 50, region: 200, promoCode: 50, notes: 5000 };
+  for (const [key, val] of Object.entries(stringFields)) {
+    if (val !== undefined && val !== null) {
+      if (typeof val !== "string") {
+        return NextResponse.json({ error: `${key} must be a string` }, { status: 400 });
+      }
+      if (val.length > (maxLengths[key] || 500)) {
+        return NextResponse.json({ error: `${key} exceeds maximum length` }, { status: 400 });
+      }
+    }
   }
 
   // Generate promo code: use provided or derive from name + randomized suffix
@@ -85,11 +109,27 @@ export async function POST(req: NextRequest) {
     code = `${base}${suffix}`;
   }
 
+  // Final uniqueness check — if still colliding after 5 retries, fail
+  {
+    const { data: stillExists } = await supabase
+      .from("partners")
+      .select("id")
+      .eq("promo_code", code)
+      .limit(1)
+      .maybeSingle();
+    if (stillExists) {
+      return NextResponse.json(
+        { error: "Could not generate a unique promo code. Please try again or specify one manually." },
+        { status: 409 }
+      );
+    }
+  }
+
   // Check for duplicate email
   const { data: existing } = await supabase
     .from("partners")
     .select("id")
-    .eq("email", email.toLowerCase().trim())
+    .eq("email", normalizeEmail(email))
     .limit(1)
     .maybeSingle();
 
@@ -106,7 +146,7 @@ export async function POST(req: NextRequest) {
     .insert({
       name,
       company: company || null,
-      email: email.toLowerCase().trim(),
+      email: normalizeEmail(email),
       phone: phone || null,
       region: region || null,
       promo_code: code,

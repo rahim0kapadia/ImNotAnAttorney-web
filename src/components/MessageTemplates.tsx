@@ -5,6 +5,7 @@
  */
 
 import { useState } from "react";
+import { copyToClipboard } from "@/lib/clipboard";
 
 interface MessageTemplatesProps {
   promoCode: string;
@@ -38,21 +39,10 @@ export function MessageTemplates({ promoCode, referralUrl }: MessageTemplatesPro
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
 
   async function handleCopy(text: string, idx: number) {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedIdx(idx);
-      setTimeout(() => setCopiedIdx(null), 2000);
-    } catch {
-      // Fallback for older browsers
-      const textarea = document.createElement("textarea");
-      textarea.value = text;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      setCopiedIdx(idx);
-      setTimeout(() => setCopiedIdx(null), 2000);
-    }
+    const ok = await copyToClipboard(text);
+    if (!ok) return;
+    setCopiedIdx(idx);
+    setTimeout(() => setCopiedIdx(null), 2000);
   }
 
   return (
