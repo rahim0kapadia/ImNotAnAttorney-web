@@ -97,11 +97,27 @@ export async function PATCH(
  * updates total_paid_out on the partner record.
  */
 export async function POST(
-  _req: NextRequest,
+  req: NextRequest,
   context: RouteContext
 ) {
   const { id } = await context.params;
   const supabase = createAdminClient();
+
+  // Get partner's payment method info
+  const { data: partnerInfo } = await supabase
+    .from("partners")
+    .select("preferred_payment_method")
+    .eq("id", id)
+    .single();
+
+  // Allow admin to override payment method in request body
+  let paymentMethod = partnerInfo?.preferred_payment_method || "zelle";
+  try {
+    const body = await req.json();
+    if (body.payment_method) paymentMethod = body.payment_method;
+  } catch {
+    // No body — use partner's preferred method
+  }
 
   // Get all unpaid referrals for this partner
   const { data: unpaidReferrals, error: fetchError } = await supabase
@@ -147,6 +163,18 @@ export async function POST(
 
   if (rpcError) {
     console.error("[Admin Partners] Payout increment error:", rpcError);
+  }
+
+  // Create payout history record
+  const { error: payoutError } = await supabase.from("partner_payouts").insert({
+    partner_id: id,
+    amount: totalPayout,
+    payment_method: paymentMethod,
+    referral_ids: referralIds,
+  });
+
+  if (payoutError) {
+    console.error("[Admin Partners] Payout record error:", payoutError);
   }
 
   return NextResponse.json({

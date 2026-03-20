@@ -1,22 +1,31 @@
 "use client";
 /**
- * /partners — Public Bondsman Partner Signup Page
+ * /partners — Public Partner Signup Page (Generic)
  *
- * Landing page for bail bondsmen to learn about the referral program
- * and submit an application. No auth required.
+ * Landing page for all partner types — bondsmen, paralegals, content creators,
+ * community advocates, anyone. Commission table derived from TIER_CORE.
  */
 
 import { useState } from "react";
 import Link from "next/link";
+import { TIER_CORE, type TierSlug } from "@/lib/tiers";
 
-const COMMISSION_TABLE = [
-  { tier: "DUI Defense Playbook", price: "$97", clientPays: "$87.30", commission: "$8.73" },
-  { tier: "Case Decoder", price: "$197", clientPays: "$177.30", commission: "$17.73" },
-  { tier: "Intelligence Brief", price: "$997", clientPays: "$897.30", commission: "$89.73" },
-  { tier: "The X-Ray", price: "$2,497", clientPays: "$2,247.30", commission: "$224.73" },
-  { tier: "The War Room", price: "$4,997", clientPays: "$4,497.30", commission: "$449.73" },
-  { tier: "The Situation Room", price: "$9,997", clientPays: "$8,997.30", commission: "$899.73" },
+// Derive commission table from TIER_CORE (exclude add-ons, show representative tiers)
+const COMMISSION_TIERS: TierSlug[] = [
+  "dui-first-offense", "case-decoder", "intelligence-brief", "x-ray", "war-room", "situation-room",
 ];
+const COMMISSION_TABLE = COMMISSION_TIERS.map((slug) => {
+  const t = TIER_CORE[slug];
+  const price = t.price / 100;
+  const clientPays = Math.round(price * 0.9 * 100) / 100;
+  const commission = Math.round(price * 0.1 * 100) / 100;
+  return {
+    tier: t.name,
+    price: t.priceDisplay,
+    clientPays: `$${clientPays.toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
+    commission: `$${commission.toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
+  };
+});
 
 const FAQS = [
   {
@@ -52,6 +61,7 @@ export default function PartnersPage() {
   const [phone, setPhone] = useState("");
   const [region, setRegion] = useState("");
   const [message, setMessage] = useState("");
+  const [heardAboutUs, setHeardAboutUs] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -65,7 +75,7 @@ export default function PartnersPage() {
       const res = await fetch("/api/partners/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, company, email, phone, region, message }),
+        body: JSON.stringify({ name, company, email, phone, region, message, heardAboutUs, source: "generic" }),
       });
       if (!res.ok) {
         const data = await res.json();
@@ -87,25 +97,27 @@ export default function PartnersPage() {
           <Link href="/" className="font-bold text-lg text-amber-400">
             ImNotAnAttorney
           </Link>
-          <Link
-            href="/"
-            className="text-sm text-zinc-400 hover:text-white"
-          >
-            Back to main site
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/partner/login" className="text-sm text-amber-400 hover:text-amber-300">
+              Partner Login
+            </Link>
+            <Link href="/" className="text-sm text-zinc-400 hover:text-white">
+              Back to main site
+            </Link>
+          </div>
         </div>
       </header>
 
       {/* Hero */}
       <section className="max-w-5xl mx-auto px-6 py-16 md:py-24 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-          Your Clients Need Help.
+          Know Someone Facing Charges?
           <br />
-          <span className="text-amber-400">Earn Commission Sending It.</span>
+          <span className="text-amber-400">Earn Commission Helping Them.</span>
         </h1>
         <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-8">
-          Every defendant you bond out is searching for answers about their case.
-          Give them a promo code for ImNotAnAttorney. They save 10%.
+          Defendants are searching for answers about their case.
+          Share your referral link. They save 10%.
           You earn 10% commission on every purchase.
         </p>
         <a
@@ -129,8 +141,8 @@ export default function PartnersPage() {
               </div>
               <h3 className="text-lg font-bold mb-2">Get Your Code</h3>
               <p className="text-zinc-400">
-                Apply below. Once approved, you get a unique promo code
-                and a simple one-pager to hand defendants.
+                Apply below. Once approved, you get a unique promo code,
+                referral link, QR code, and ready-to-send messages.
               </p>
             </div>
             <div className="text-center">
@@ -139,8 +151,8 @@ export default function PartnersPage() {
               </div>
               <h3 className="text-lg font-bold mb-2">Share It</h3>
               <p className="text-zinc-400">
-                Hand the code to defendants when they bond out.
-                They enter it at checkout for 10% off any service.
+                Share your link or code with anyone facing criminal charges.
+                They get 10% off any service.
               </p>
             </div>
             <div className="text-center">
@@ -155,6 +167,33 @@ export default function PartnersPage() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Who's This For */}
+      <section className="max-w-5xl mx-auto px-6 py-16">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
+          Who Partners With Us
+        </h2>
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            { title: "Bail Bondsmen", desc: "Hand out codes when defendants bond out. They're already looking for help." },
+            { title: "Paralegals & Legal Staff", desc: "Recommend a resource that helps clients show up prepared." },
+            { title: "Content Creators", desc: "Share with your audience. Legal content converts at high rates." },
+            { title: "Community Advocates", desc: "Help people in your network navigate the justice system." },
+            { title: "Court Reporters", desc: "You see defendants every day. Give them a tool that helps." },
+            { title: "Anyone", desc: "Know someone facing charges? That's all it takes." },
+          ].map((item) => (
+            <div key={item.title} className="bg-zinc-900 rounded-xl border border-zinc-800 p-5">
+              <p className="font-bold text-amber-400 mb-1">{item.title}</p>
+              <p className="text-zinc-400 text-sm">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+        <p className="text-center mt-6">
+          <Link href="/partners/bondsman" className="text-amber-400 hover:text-amber-300 text-sm">
+            Bail bondsman? See our bondsman-specific page &rarr;
+          </Link>
+        </p>
       </section>
 
       {/* Commission Table */}
@@ -357,6 +396,18 @@ export default function PartnersPage() {
                     value={region}
                     onChange={(e) => setRegion(e.target.value)}
                     placeholder="e.g., Maricopa County, AZ"
+                    className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm text-zinc-400 mb-1">
+                    How did you hear about us?
+                  </label>
+                  <input
+                    type="text"
+                    value={heardAboutUs}
+                    onChange={(e) => setHeardAboutUs(e.target.value)}
+                    placeholder="Google, social media, friend, etc."
                     className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
                   />
                 </div>
