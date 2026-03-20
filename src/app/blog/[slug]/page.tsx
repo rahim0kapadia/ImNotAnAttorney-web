@@ -95,6 +95,12 @@ export default async function BlogPostPage({ params }: PageProps) {
             <span>By <span className="text-zinc-300">Rahim Kapadia</span>, Founder</span>
             <span>&bull;</span>
             <time dateTime={new Date(post.date).toISOString()}>{post.date}</time>
+            {post.lastModified && post.lastModified !== post.date && (
+              <>
+                <span>&bull;</span>
+                <span>Updated <time dateTime={new Date(post.lastModified).toISOString()}>{post.lastModified}</time></span>
+              </>
+            )}
             <span>&bull;</span>
             <span>{post.readingTime}</span>
           </div>

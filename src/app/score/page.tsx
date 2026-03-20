@@ -507,7 +507,54 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </p>
       </div>
 
-      {/* 7. CTA SECTION — Route to live products; playbook primary when live, Case Decoder when not */}
+      {/* 7. EMAIL CAPTURE — Moved before paid CTAs per McGlaughlin: peak engagement moment */}
+      {!emailSent && (
+        <div className="rounded-xl border border-amber-500/40 bg-amber-500/5 p-6">
+          <p className="text-lg font-bold text-white">{bandEmailHeadlines[result.band] || "Get your free Defense Gap Report — the 10 questions your attorney hopes you never ask."}</p>
+          <p className="mt-2 text-sm text-zinc-300">
+            Based on your score, we&apos;ll send your personalized Defense Gap Report immediately. No pitch. No sales sequence. After that: practical information about your case stage, never more than once a week. Unsubscribe any time — one click.
+          </p>
+          <form onSubmit={async (e) => {
+            e.preventDefault();
+            if (emailSubmitting) return;
+            setEmailSubmitting(true);
+            setEmailError(null);
+            const form = e.target as HTMLFormElement;
+            const emailInput = (form.elements.namedItem("scoreEmail") as HTMLInputElement).value;
+            try {
+              const res = await fetch("/api/subscribe", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: emailInput, source: "score-page", scoreBand: result.band, scoreValue: result.score, chargeType: answers.chargeType }),
+              });
+              if (res.ok) {
+                setEmailSent(true);
+              } else {
+                setEmailError("Something went wrong. Please try again.");
+              }
+            } catch {
+              setEmailError("Could not connect. Please try again.");
+            } finally {
+              setEmailSubmitting(false);
+            }
+          }} className="mt-4 flex gap-2">
+            <input name="scoreEmail" type="email" required placeholder="you@example.com"
+              autoFocus={isCrisis}
+              aria-label="Email address"
+              className="flex-1 rounded-lg border border-amber-500/30 bg-zinc-800 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none" />
+            <button type="submit" disabled={emailSubmitting}
+              className="rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black hover:bg-amber-400 disabled:opacity-50">
+              {emailSubmitting ? "..." : "Send My Report"}
+            </button>
+          </form>
+          {emailError && <p role="alert" className="mt-2 text-sm text-red-400">{emailError}</p>}
+        </div>
+      )}
+      {emailSent && (
+        <p className="text-center text-sm text-green-400">Sent! Check your inbox for your Defense Gap Report.</p>
+      )}
+
+      {/* 8. CTA SECTION — Route to live products; playbook primary when live, Case Decoder when not */}
       {(() => {
         const playbookKey = CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE | undefined;
         const playbookTier = playbookKey ? TIER_CORE[playbookKey] : null;
@@ -624,51 +671,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         );
       })()}
 
-      {/* 8. EMAIL CAPTURE — Band-specific copy (Task 1.4) */}
-      {!emailSent && (
-        <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
-          <p className="font-semibold text-white">{bandEmailHeadlines[result.band] || "Get the 10 questions your attorney hopes you never ask — sent now."}</p>
-          <p className="mt-1 text-sm text-zinc-400">
-            Enter your email and we&apos;ll send it immediately. No pitch. No sales sequence. After that: practical information about your case stage, never more than once a week. Unsubscribe any time — one click, no questions.
-          </p>
-          <form onSubmit={async (e) => {
-            e.preventDefault();
-            if (emailSubmitting) return;
-            setEmailSubmitting(true);
-            setEmailError(null);
-            const form = e.target as HTMLFormElement;
-            const emailInput = (form.elements.namedItem("scoreEmail") as HTMLInputElement).value;
-            try {
-              const res = await fetch("/api/subscribe", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: emailInput, source: "score-page", scoreBand: result.band, scoreValue: result.score, chargeType: answers.chargeType }),
-              });
-              if (res.ok) {
-                setEmailSent(true);
-              } else {
-                setEmailError("Something went wrong. Please try again.");
-              }
-            } catch {
-              setEmailError("Could not connect. Please try again.");
-            } finally {
-              setEmailSubmitting(false);
-            }
-          }} className="mt-3 flex gap-2">
-            <input name="scoreEmail" type="email" required placeholder="you@example.com"
-              aria-label="Email address"
-              className="flex-1 rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none" />
-            <button type="submit" disabled={emailSubmitting}
-              className="rounded-lg bg-amber-500 px-4 py-4 text-sm font-bold text-black hover:bg-amber-400 disabled:opacity-50">
-              {emailSubmitting ? "..." : "Send It"}
-            </button>
-          </form>
-          {emailError && <p role="alert" className="mt-2 text-sm text-red-400">{emailError}</p>}
-        </div>
-      )}
-      {emailSent && (
-        <p className="text-center text-sm text-green-400">Sent! Check your inbox.</p>
-      )}
+      {/* Old email capture removed — moved to section 7 above paid CTAs */}
 
       {/* 9. PLAYBOOK STEP-DOWN — Only shown when playbook is NOT already the primary CTA above */}
       {CHARGE_PLAYBOOK[answers.chargeType] && !TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE]?.live && (
