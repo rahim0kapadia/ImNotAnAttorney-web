@@ -198,24 +198,38 @@ export default function PartnersAdmin() {
   // Toggle status
   async function toggleStatus(id: string, currentStatus: string) {
     const newStatus = currentStatus === "approved" ? "suspended" : "approved";
-    await fetch(`/api/admin/partners/${id}`, {
-      method: "PATCH",
-      headers: headers(),
-      body: JSON.stringify({ status: newStatus }),
-    });
-    fetchPartners();
-    if (selectedId === id) fetchDetail(id);
+    try {
+      const res = await fetch(`/api/admin/partners/${id}`, {
+        method: "PATCH",
+        headers: headers(),
+        body: JSON.stringify({ status: newStatus }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Failed to ${newStatus} partner`);
+      }
+      fetchPartners();
+      if (selectedId === id) fetchDetail(id);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Failed to update partner status");
+    }
   }
 
   // Mark payout
   async function markPayout(id: string) {
-    const res = await fetch(`/api/admin/partners/${id}`, {
-      method: "POST",
-      headers: headers(),
-    });
-    if (res.ok) {
+    try {
+      const res = await fetch(`/api/admin/partners/${id}`, {
+        method: "POST",
+        headers: headers(),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to process payout");
+      }
       fetchPartners();
       if (selectedId === id) fetchDetail(id);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Failed to process payout");
     }
   }
 

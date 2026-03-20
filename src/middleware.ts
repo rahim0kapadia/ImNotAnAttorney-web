@@ -11,12 +11,23 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 
-function timingSafeCompare(a: string, b: string): boolean {
-  // Edge Runtime doesn't have Node's timingSafeEqual, so use constant-time comparison
+/**
+ * HMAC-SHA256 timing-safe comparison.
+ * Hashes both values with a fixed key, then compares the fixed-length digests.
+ * Eliminates the length oracle present in XOR-based approaches.
+ */
+async function timingSafeCompare(a: string, b: string): Promise<boolean> {
   const encoder = new TextEncoder();
-  const bufA = encoder.encode(a);
-  const bufB = encoder.encode(b);
-  if (bufA.length !== bufB.length) return false;
+  const keyData = encoder.encode("inna-middleware-hmac-key");
+  const key = await crypto.subtle.importKey(
+    "raw", keyData, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+  );
+  const [sigA, sigB] = await Promise.all([
+    crypto.subtle.sign("HMAC", key, encoder.encode(a)),
+    crypto.subtle.sign("HMAC", key, encoder.encode(b)),
+  ]);
+  const bufA = new Uint8Array(sigA);
+  const bufB = new Uint8Array(sigB);
   let result = 0;
   for (let i = 0; i < bufA.length; i++) {
     result |= bufA[i] ^ bufB[i];
@@ -24,7 +35,7 @@ function timingSafeCompare(a: string, b: string): boolean {
   return result === 0;
 }
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // ── Admin + Operator routes (/api/admin/*, /api/operator/*) ──
@@ -37,7 +48,7 @@ export function middleware(req: NextRequest) {
       );
     }
     const fromHeader = req.headers.get("x-admin-password");
-    if (!fromHeader || !timingSafeCompare(password, fromHeader)) {
+    if (!fromHeader || !(await timingSafeCompare(password, fromHeader))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     return NextResponse.next();
@@ -58,7 +69,7 @@ export function middleware(req: NextRequest) {
     }
     const auth = req.headers.get("authorization");
     const token = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
-    if (!token || !timingSafeCompare(secret, token)) {
+    if (!token || !(await timingSafeCompare(secret, token))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     return NextResponse.next();
@@ -75,7 +86,7 @@ export function middleware(req: NextRequest) {
     }
     const auth = req.headers.get("authorization");
     const token = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
-    if (!token || !timingSafeCompare(cronSecret, token)) {
+    if (!token || !(await timingSafeCompare(cronSecret, token))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     return NextResponse.next();

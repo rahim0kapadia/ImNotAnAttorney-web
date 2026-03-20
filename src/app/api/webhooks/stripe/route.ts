@@ -288,22 +288,17 @@ export async function POST(req: NextRequest) {
           if (refError) {
             console.error("[Webhook] Referral insert error:", refError);
           } else {
-            // Update partner totals (read-then-increment; fine for low volume)
-            const { data: currentPartner } = await supabase
-              .from("partners")
-              .select("total_referrals, total_commission")
-              .eq("id", partner.id)
-              .single();
-            if (currentPartner) {
-              await supabase
-                .from("partners")
-                .update({
-                  total_referrals: (currentPartner.total_referrals || 0) + 1,
-                  total_commission: (currentPartner.total_commission || 0) + commissionAmount,
-                  updated_at: new Date().toISOString(),
-                })
-                .eq("id", partner.id);
-            }
+            // Atomic increments on partner totals (avoids race condition)
+            await supabase.rpc("increment_partner_total", {
+              p_partner_id: partner.id,
+              p_column: "total_referrals",
+              p_amount: 1,
+            });
+            await supabase.rpc("increment_partner_total", {
+              p_partner_id: partner.id,
+              p_column: "total_commission",
+              p_amount: commissionAmount,
+            });
             console.log(`[Webhook] Referral tracked: partner=${partner.name}, commission=$${(commissionAmount / 100).toFixed(2)}`);
           }
         }

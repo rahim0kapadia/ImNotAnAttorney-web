@@ -138,20 +138,16 @@ export async function POST(
     return NextResponse.json({ error: "Failed to mark as paid" }, { status: 500 });
   }
 
-  // Update partner's total_paid_out
-  const { data: partner } = await supabase
-    .from("partners")
-    .select("total_paid_out")
-    .eq("id", id)
-    .single();
+  // Atomic increment on total_paid_out (avoids race condition)
+  const { error: rpcError } = await supabase.rpc("increment_partner_total", {
+    p_partner_id: id,
+    p_column: "total_paid_out",
+    p_amount: totalPayout,
+  });
 
-  await supabase
-    .from("partners")
-    .update({
-      total_paid_out: (partner?.total_paid_out || 0) + totalPayout,
-      updated_at: now,
-    })
-    .eq("id", id);
+  if (rpcError) {
+    console.error("[Admin Partners] Payout increment error:", rpcError);
+  }
 
   return NextResponse.json({
     message: "Payout recorded",

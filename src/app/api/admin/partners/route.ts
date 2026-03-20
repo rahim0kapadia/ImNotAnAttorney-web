@@ -45,13 +45,45 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Generate promo code: use provided or derive from name (short string, regex safe)
-  const rawCode = promoCode || name.split(" ").join("").slice(0, 12) + "10";
-  const code = rawCode.toUpperCase().split("").filter((c: string) =>
-    (c >= "A" && c <= "Z") || (c >= "0" && c <= "9")
-  ).join("");
+  // Generate promo code: use provided or derive from name + randomized suffix
+  let code: string;
+  if (promoCode) {
+    code = promoCode.toUpperCase().split("").filter((c: string) =>
+      (c >= "A" && c <= "Z") || (c >= "0" && c <= "9")
+    ).join("");
+  } else {
+    const base = name.split(" ").join("").slice(0, 8).toUpperCase().split("").filter((c: string) =>
+      (c >= "A" && c <= "Z") || (c >= "0" && c <= "9")
+    ).join("");
+    const suffix = Math.floor(Math.random() * 900 + 100); // 3-digit random
+    code = `${base}${suffix}`;
+  }
 
   const supabase = createAdminClient();
+
+  // Check for duplicate promo code and retry with new suffix if collision
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const { data: existingCode } = await supabase
+      .from("partners")
+      .select("id")
+      .eq("promo_code", code)
+      .limit(1)
+      .maybeSingle();
+    if (!existingCode) break;
+    if (promoCode) {
+      // User-specified code collides — fail with clear error
+      return NextResponse.json(
+        { error: `Promo code "${code}" is already in use` },
+        { status: 409 }
+      );
+    }
+    // Auto-generated collision — retry with new random suffix
+    const base = name.split(" ").join("").slice(0, 8).toUpperCase().split("").filter((c: string) =>
+      (c >= "A" && c <= "Z") || (c >= "0" && c <= "9")
+    ).join("");
+    const suffix = Math.floor(Math.random() * 900 + 100);
+    code = `${base}${suffix}`;
+  }
 
   // Check for duplicate email
   const { data: existing } = await supabase
