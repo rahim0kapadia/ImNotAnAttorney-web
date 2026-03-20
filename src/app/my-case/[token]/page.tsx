@@ -382,6 +382,47 @@ export default async function MyCasePage({
   }
 
   // ── Step 3: Non-discovery tiers — simple status page ────────
+  // ── Step 4b: Referral attribution lookup ───────────────────
+  // Check if this purchase came through a partner referral
+  let referralCode: string | null = null;
+  const { data: orderData } = await supabase
+    .from("orders")
+    .select("id")
+    .eq("email", caseData.email)
+    .eq("tier", caseData.tier)
+    .eq("status", "paid")
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (orderData) {
+    const { data: referralData } = await supabase
+      .from("referrals")
+      .select("id")
+      .eq("order_id", orderData.id)
+      .limit(1)
+      .maybeSingle();
+
+    if (referralData) {
+      // Look up the promo code from the partner
+      const { data: refDetail } = await supabase
+        .from("referrals")
+        .select("partner_id")
+        .eq("id", referralData.id)
+        .single();
+      if (refDetail) {
+        const { data: partnerData } = await supabase
+          .from("partners")
+          .select("promo_code")
+          .eq("id", refDetail.partner_id)
+          .single();
+        if (partnerData?.promo_code) {
+          referralCode = partnerData.promo_code;
+        }
+      }
+    }
+  }
+
   const isDiscovery = ["x-ray", "war-room", "situation-room"].includes(
     caseData.tier
   );
@@ -428,6 +469,35 @@ export default async function MyCasePage({
               </a>
             )}
           </div>
+
+          {/* What to Do Next */}
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mt-4">
+            <h2 className="text-lg font-semibold text-white mb-3">What to Do Next</h2>
+            {isDelivered ? (
+              <ul className="space-y-2 text-sm text-zinc-300">
+                <li>1. Review your report — read every question carefully.</li>
+                <li>2. Schedule a meeting with your attorney and bring these questions.</li>
+                <li>3. Take notes on their answers — write down what they say.</li>
+                <li>4. If anything is unclear, email us and we will help you understand it.</li>
+              </ul>
+            ) : (
+              <ul className="space-y-2 text-sm text-zinc-300">
+                <li>1. We are researching your case right now.</li>
+                <li>2. You will receive an email when your report is ready.</li>
+                <li>3. While you wait, write down any questions you already have for your attorney.</li>
+              </ul>
+            )}
+          </div>
+
+          {/* Referral Attribution */}
+          {referralCode && (
+            <div className="rounded-xl border border-green-800/30 bg-green-900/10 p-4 mt-4 text-center">
+              <p className="text-sm text-green-300">
+                Code <span className="font-mono font-bold">{referralCode}</span> saved you 10% on your purchase.
+              </p>
+            </div>
+          )}
+
           <p className="mt-6 text-center text-sm text-zinc-500">
             Questions?{" "}
             <a
@@ -915,6 +985,35 @@ export default async function MyCasePage({
             >
               View Your Report
             </a>
+          </div>
+        )}
+
+        {/* What to Do Next */}
+        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mb-6">
+          <h2 className="text-lg font-semibold text-white mb-3">What to Do Next</h2>
+          {isDelivered ? (
+            <ul className="space-y-2 text-sm text-zinc-300">
+              <li>1. Review your full report — read every question and finding.</li>
+              <li>2. Schedule a meeting with your attorney and bring these questions.</li>
+              <li>3. Take notes on their answers — write down what they say.</li>
+              <li>4. If anything is unclear, email us and we will help you understand it.</li>
+            </ul>
+          ) : (
+            <ul className="space-y-2 text-sm text-zinc-300">
+              <li>1. We are analyzing your case and documents right now.</li>
+              <li>2. Check back here for real-time progress updates.</li>
+              <li>3. You will receive an email when your full report is ready.</li>
+              <li>4. While you wait, write down any questions you already have for your attorney.</li>
+            </ul>
+          )}
+        </div>
+
+        {/* Referral Attribution */}
+        {referralCode && (
+          <div className="rounded-xl border border-green-800/30 bg-green-900/10 p-4 mb-6 text-center">
+            <p className="text-sm text-green-300">
+              Code <span className="font-mono font-bold">{referralCode}</span> saved you 10% on your purchase.
+            </p>
           </div>
         )}
 
