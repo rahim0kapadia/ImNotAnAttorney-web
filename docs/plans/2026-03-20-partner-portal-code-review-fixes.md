@@ -55,11 +55,11 @@
 
 ### SUGGESTION (5 — deferred, not fixing now)
 
-- [ ] **#29** Session tokens stored plaintext — needs architectural change (hash tokens), separate task.
-- [ ] **#30** No RLS on partner portal tables — needs migration + policy design, separate task.
-- [ ] **#31** No UUID validation on admin `[id]` param — admin-only, DB rejects invalid UUIDs.
-- [ ] **#32** `unpaid_commission` calc duplicated in 2 GET handlers — low impact.
-- [ ] **#33** Promo code sanitization logic duplicated — low impact.
+- [x] **#29** Session tokens stored plaintext — migration 017 + hashToken() in partner-auth.ts.
+- [x] **#30** No RLS on partner portal tables — migration 018.
+- [x] **#31** No UUID validation on admin `[id]` param — UUID_RE check in all 3 handlers.
+- [x] **#32** `unpaid_commission` calc duplicated — extracted to `computeUnpaidCommission()` in partner-data.ts.
+- [x] **#33** Promo code sanitization logic duplicated — extracted to `sanitizePromoCode()` in admin route.
 
 ---
 
@@ -82,7 +82,7 @@
 | 3 | 23 | 23 | 0 |
 | 4 | 10 | 5 (5 deferred) | 5 deferred |
 | 5 | 0 CRITICAL/WARNING | — | CLEAN |
-| **Total** | **84** | **79 fixed** | **5 deferred** |
+| **Total** | **84** | **84 fixed** | **0** |
 
 ---
 

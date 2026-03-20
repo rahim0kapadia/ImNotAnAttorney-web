@@ -22,6 +22,11 @@ import crypto from "crypto";
 const MAGIC_LINK_EXPIRY_MINUTES = 15;
 const SESSION_EXPIRY_DAYS = 30;
 
+/** Hash a token with SHA-256 for storage. Raw token stays in cookie/URL only. */
+function hashToken(token: string): string {
+  return crypto.createHash("sha256").update(token).digest("hex");
+}
+
 /**
  * Generates a magic link token for a partner.
  * Returns the token string and partner info, or null if partner not found/not approved.
@@ -89,7 +94,7 @@ export async function createPartnerSession(partnerId: string): Promise<string | 
 
   const { error } = await supabase.from("partner_sessions").insert({
     partner_id: partnerId,
-    session_token: sessionToken,
+    session_token_hash: hashToken(sessionToken),
     expires_at: expiresAt.toISOString(),
   });
 
@@ -128,7 +133,7 @@ export async function validatePartnerSession(sessionToken: string): Promise<{
   const { data: session, error: sessionError } = await supabase
     .from("partner_sessions")
     .select("partner_id")
-    .eq("session_token", sessionToken)
+    .eq("session_token_hash", hashToken(sessionToken))
     .gt("expires_at", new Date().toISOString())
     .limit(1)
     .maybeSingle();
@@ -156,7 +161,7 @@ export async function destroyPartnerSession(sessionToken: string): Promise<void>
   await supabase
     .from("partner_sessions")
     .delete()
-    .eq("session_token", sessionToken);
+    .eq("session_token_hash", hashToken(sessionToken));
 }
 
 /** Session cookie name used across partner auth. */

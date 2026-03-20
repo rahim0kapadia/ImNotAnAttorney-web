@@ -12,6 +12,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createPartnerPromoCode } from "@/lib/referral";
 import { normalizeEmail, isValidEmail } from "@/lib/site";
+import { computeUnpaidCommission } from "@/lib/partner-data";
+
+/** Strip non-alphanumeric chars and uppercase. */
+function sanitizePromoCode(s: string): string {
+  return s.toUpperCase().split("").filter(c => (c >= "A" && c <= "Z") || (c >= "0" && c <= "9")).join("");
+}
 
 export async function GET() {
   const supabase = createAdminClient();
@@ -29,7 +35,7 @@ export async function GET() {
   // Calculate unpaid commission for each partner
   const partners = (data || []).map((p) => ({
     ...p,
-    unpaid_commission: (p.total_commission || 0) - (p.total_paid_out || 0),
+    unpaid_commission: computeUnpaidCommission(p),
   }));
 
   return NextResponse.json({ partners });
@@ -72,13 +78,9 @@ export async function POST(req: NextRequest) {
   // Generate promo code: use provided or derive from name + randomized suffix
   let code: string;
   if (promoCode) {
-    code = promoCode.toUpperCase().split("").filter((c: string) =>
-      (c >= "A" && c <= "Z") || (c >= "0" && c <= "9")
-    ).join("");
+    code = sanitizePromoCode(promoCode);
   } else {
-    const base = name.split(" ").join("").slice(0, 8).toUpperCase().split("").filter((c: string) =>
-      (c >= "A" && c <= "Z") || (c >= "0" && c <= "9")
-    ).join("");
+    const base = sanitizePromoCode(name.split(" ").join("").slice(0, 8));
     const suffix = Math.floor(Math.random() * 900 + 100); // 3-digit random
     code = `${base}${suffix}`;
   }
@@ -102,11 +104,8 @@ export async function POST(req: NextRequest) {
       );
     }
     // Auto-generated collision — retry with new random suffix
-    const base = name.split(" ").join("").slice(0, 8).toUpperCase().split("").filter((c: string) =>
-      (c >= "A" && c <= "Z") || (c >= "0" && c <= "9")
-    ).join("");
-    const suffix = Math.floor(Math.random() * 900 + 100);
-    code = `${base}${suffix}`;
+    const base = sanitizePromoCode(name.split(" ").join("").slice(0, 8));
+    code = `${base}${Math.floor(Math.random() * 900 + 100)}`;
   }
 
   // Final uniqueness check — if still colliding after 5 retries, fail

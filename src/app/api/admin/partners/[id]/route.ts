@@ -10,7 +10,9 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { VALID_PAYMENT_METHODS } from "@/lib/partner-data";
+import { VALID_PAYMENT_METHODS, computeUnpaidCommission } from "@/lib/partner-data";
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -21,6 +23,9 @@ export async function GET(
   context: RouteContext
 ) {
   const { id } = await context.params;
+  if (!UUID_RE.test(id)) {
+    return NextResponse.json({ error: "Invalid partner ID" }, { status: 400 });
+  }
   const supabase = createAdminClient();
 
   // Fetch partner
@@ -48,7 +53,7 @@ export async function GET(
   return NextResponse.json({
     partner: {
       ...partner,
-      unpaid_commission: (partner.total_commission || 0) - (partner.total_paid_out || 0),
+      unpaid_commission: computeUnpaidCommission(partner),
     },
     referrals: referrals || [],
   });
@@ -59,6 +64,9 @@ export async function PATCH(
   context: RouteContext
 ) {
   const { id } = await context.params;
+  if (!UUID_RE.test(id)) {
+    return NextResponse.json({ error: "Invalid partner ID" }, { status: 400 });
+  }
   let body;
   try {
     body = await req.json();
@@ -116,6 +124,9 @@ export async function POST(
   context: RouteContext
 ) {
   const { id } = await context.params;
+  if (!UUID_RE.test(id)) {
+    return NextResponse.json({ error: "Invalid partner ID" }, { status: 400 });
+  }
   const supabase = createAdminClient();
 
   // Get partner's payment method info

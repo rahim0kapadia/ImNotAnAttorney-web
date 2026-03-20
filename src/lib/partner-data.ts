@@ -8,6 +8,11 @@ import { TIER_CORE, type TierSlug } from "@/lib/tiers";
 /** Valid payment methods accepted for partner payouts. */
 export const VALID_PAYMENT_METHODS = ["zelle", "venmo", "check"] as const;
 
+/** Computes unpaid commission from partner totals. */
+export function computeUnpaidCommission(partner: { total_commission?: number; total_paid_out?: number }): number {
+  return (partner.total_commission || 0) - (partner.total_paid_out || 0);
+}
+
 export const COMMISSION_TIERS: TierSlug[] = [
   "dui-first-offense", "case-decoder", "intelligence-brief", "x-ray", "war-room", "situation-room",
 ];
