@@ -175,6 +175,12 @@ export function Footer() {
                 Privacy Policy
               </Link>
               <Link
+                href="/editorial-policy"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Editorial Policy
+              </Link>
+              <Link
                 href="/contact"
                 className="text-sm text-zinc-400 hover:text-white"
               >

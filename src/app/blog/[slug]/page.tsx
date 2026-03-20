@@ -38,6 +38,7 @@ import { SITE_URL } from "@/lib/site";
 import { getArticleAboutEntities, getArticleCitations } from "@/lib/schema";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import type { Metadata } from "next";
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -92,7 +93,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* Header */}
         <div className="mb-8">
           <div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-zinc-400">
-            <span>By <span className="text-zinc-300">Rahim Kapadia</span>, Founder</span>
+            <span>By <Link href="/about" className="text-zinc-300 underline decoration-zinc-600 underline-offset-2 hover:text-amber-400">Rahim Kapadia</Link>, Founder</span>
             <span>&bull;</span>
             <time dateTime={new Date(post.date).toISOString()}>{post.date}</time>
             {post.lastModified && post.lastModified !== post.date && (
