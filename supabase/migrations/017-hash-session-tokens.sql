@@ -1,21 +1,24 @@
--- 017-hash-session-tokens.sql
--- Store session token hashes instead of plaintext tokens.
--- Defense-in-depth: if DB is compromised, raw tokens are not exposed.
+-- 017-hash-session-tokens.sql (Step 1 of 2 — additive only, no breaking changes)
 --
--- Hash parity note: PostgreSQL encode(sha256(token::bytea), 'hex') and
--- Node.js crypto.createHash("sha256").update(token).digest("hex") both
--- hash the token's UTF-8/ASCII bytes (not hex-decoded binary). For hex-only
--- tokens (which these are), outputs are identical. Verify in staging before
--- running the DROP COLUMN step in production.
+-- Adds session_token_hash column alongside existing session_token.
+-- Backfills hashes for existing sessions. Does NOT drop session_token yet.
+--
+-- Deploy sequence:
+--   1. Run this migration (safe — adds column, backfills, no drops)
+--   2. Deploy code that writes hash on create, reads by hash with fallback
+--   3. After code is stable, run 019-drop-plaintext-session-token.sql
+--
+-- Hash parity: PostgreSQL encode(sha256(token::bytea), 'hex') matches
+-- Node.js crypto.createHash("sha256").update(token).digest("hex") for
+-- ASCII/hex-only tokens (verified by construction — tokens are hex strings).
 
--- Step 1: Add hash column
+-- Add hash column (nullable during transition)
 ALTER TABLE partner_sessions ADD COLUMN IF NOT EXISTS session_token_hash text;
 
--- Step 2: Backfill existing sessions
+-- Backfill hashes from existing plaintext tokens
 UPDATE partner_sessions
 SET session_token_hash = encode(sha256(session_token::bytea), 'hex')
 WHERE session_token_hash IS NULL AND session_token IS NOT NULL;
 
--- Step 3: Drop old plaintext column, add unique index
-ALTER TABLE partner_sessions DROP COLUMN IF EXISTS session_token;
+-- Index for fast lookups by hash (old unique index on session_token stays)
 CREATE UNIQUE INDEX IF NOT EXISTS idx_partner_sessions_token_hash ON partner_sessions(session_token_hash);

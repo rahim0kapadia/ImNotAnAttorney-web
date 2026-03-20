@@ -110,9 +110,13 @@
    - Same: hash the token, delete by hash
 5. **Same pattern for `partner_magic_links.token`** — lower priority since tokens are 15-min single-use, but same approach: store hash, compare by hash.
 
-**Risk:** Migration must run atomically. Any active sessions at migration time get their tokens hashed in-place. New code must deploy simultaneously with migration. Use a maintenance window or feature flag.
+**Two-step deploy (safe, zero-downtime):**
 
-**Hash parity verification:** Before the destructive `DROP COLUMN` step, verify that PostgreSQL `encode(sha256(session_token::bytea), 'hex')` produces identical output to Node.js `crypto.createHash("sha256").update(sessionToken).digest("hex")`. Both hash the token's UTF-8/ASCII bytes (not the hex-decoded binary), so they should match for hex-only tokens. **Test this explicitly** in a staging environment by inserting a known token, running the backfill, then querying via the Node.js hash path. Do NOT drop the old column until parity is confirmed.
+1. **Migration 017** (additive): ADD `session_token_hash` column, backfill from existing tokens, add unique index. Does NOT drop `session_token`. Safe to run anytime.
+2. **Code deploy**: New code writes `session_token_hash` on create, reads by hash with fallback to old `session_token` column (for sessions created before migration). Code works with both columns present.
+3. **Migration 019** (future, after code is stable): DROP `session_token` column. Only run after confirming all sessions use hash lookups successfully.
+
+**Hash parity:** PostgreSQL `encode(sha256(token::bytea), 'hex')` matches Node.js `crypto.createHash("sha256").update(token).digest("hex")` for ASCII/hex-only tokens (which these are).
 
 ### D2: Enable RLS on partner portal tables
 
