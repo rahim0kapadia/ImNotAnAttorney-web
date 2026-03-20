@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { tier, email, consent, priorityDelivery, courtDate, chargeType, existingCaseNumber, existingCaseState, productType } = body;
+    const { tier, email, consent, priorityDelivery, courtDate, chargeType, existingCaseNumber, existingCaseState, productType, promoCode } = body;
 
     // =========================================================================
     // 1. TIER VALIDATION
@@ -353,8 +353,8 @@ export async function POST(req: NextRequest) {
         const cappedCredit = Math.min(upgradeCreditCents, maxCredit);
 
         if (cappedCredit > 0) {
-          const tierStripe = stripeForTier(tier);
-          const coupon = await tierStripe.coupons.create({
+          const stripeClient = stripeForTier(tier);
+          const coupon = await stripeClient.coupons.create({
             amount_off: cappedCredit,
             currency: "usd",
             duration: "once",
@@ -408,6 +408,68 @@ export async function POST(req: NextRequest) {
     }
 
     // =========================================================================
+    // 8b. REFERRAL PROMO CODE LOOKUP
+    // If the customer came through a partner referral (promoCode field),
+    // look up the partner's Stripe promo code ID for pre-applied discount.
+    // =========================================================================
+    let referralStripePromoId: string | undefined;
+    let referralPartnerId: string | undefined;
+    if (promoCode && typeof promoCode === "string") {
+      const { data: referralPartner } = await supabase
+        .from("partners")
+        .select("id, stripe_promo_code_id")
+        .eq("promo_code", promoCode.toUpperCase())
+        .eq("status", "approved")
+        .limit(1)
+        .maybeSingle();
+      if (referralPartner?.stripe_promo_code_id) {
+        referralStripePromoId = referralPartner.stripe_promo_code_id;
+        referralPartnerId = referralPartner.id;
+      }
+    }
+
+    // =========================================================================
+    // 8c. BUILD DISCOUNT STRATEGY (4-way conditional)
+    // Stripe Checkout mode:"payment" allows only 1 entry in discounts[].
+    // - referral only: discounts: [{ promotion_code: stripePromoCodeId }]
+    // - upgrade only: discounts: [{ coupon: stripeCouponId }]
+    // - both: create combined amount_off coupon, track referral via metadata
+    // - neither: allow_promotion_codes: true
+    // =========================================================================
+    let discountConfig: { discounts?: Array<{ coupon?: string; promotion_code?: string }>; allow_promotion_codes?: boolean } = {};
+
+    if (referralStripePromoId && stripeCouponId) {
+      // BOTH: combined coupon (referral 10% + upgrade credit)
+      const referralDiscount = Math.floor(
+        (tierConfig.price + (priorityDelivery && tierConfig.priorityPrice ? tierConfig.priorityPrice : 0)) * 0.1
+      );
+      const stripeForDiscount = stripeForTier(tier);
+      const upgradeCoupon = await stripeForDiscount.coupons.retrieve(stripeCouponId);
+      const upgradeAmount = upgradeCoupon.amount_off || 0;
+      const combinedAmount = referralDiscount + upgradeAmount;
+      const sessionTotal = tierConfig.price + (priorityDelivery && tierConfig.priorityPrice ? tierConfig.priorityPrice : 0);
+      const cappedCombined = Math.min(combinedAmount, Math.max(sessionTotal - 50, 0));
+
+      if (cappedCombined > 0) {
+        const combinedCoupon = await stripeForDiscount.coupons.create({
+          amount_off: cappedCombined,
+          currency: "usd",
+          duration: "once",
+          name: "Referral + Upgrade Credit",
+        });
+        discountConfig = { discounts: [{ coupon: combinedCoupon.id }] };
+      } else {
+        discountConfig = { allow_promotion_codes: true };
+      }
+    } else if (referralStripePromoId) {
+      discountConfig = { discounts: [{ promotion_code: referralStripePromoId }] };
+    } else if (stripeCouponId) {
+      discountConfig = { discounts: [{ coupon: stripeCouponId }] };
+    } else {
+      discountConfig = { allow_promotion_codes: true };
+    }
+
+    // =========================================================================
     // 9. CREATE STRIPE CHECKOUT SESSION
     // Session metadata carries all business context downstream to the webhook
     // handler (POST /api/webhooks/stripe). The webhook uses this metadata to
@@ -424,9 +486,7 @@ export async function POST(req: NextRequest) {
       payment_method_types: ["card"],
       customer_email: normalizedEmail || undefined,
       line_items: lineItems,
-      ...(stripeCouponId
-        ? { discounts: [{ coupon: stripeCouponId }] }
-        : { allow_promotion_codes: true }),
+      ...discountConfig,
       payment_intent_data: {
         statement_descriptor_suffix: "LEGAL INFO",
       },
@@ -446,6 +506,8 @@ export async function POST(req: NextRequest) {
           existing_case_state: existingCaseState,
         }),
         ...(caseNumberEmail && { case_number_matched_email: caseNumberEmail }),
+        ...(referralPartnerId && { partner_id: referralPartnerId }),
+        ...(promoCode && { partner_promo_code: promoCode.toUpperCase() }),
         ...(tierConfig.includesTiers.length > 0 && {
           includes_tiers: tierConfig.includesTiers.join(","),
         }),

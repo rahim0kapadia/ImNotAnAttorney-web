@@ -575,6 +575,7 @@ function CheckoutContent() {
   const tier = searchParams.get("tier") || "case-decoder";
   const band = searchParams.get("band"); // Score band passed from score page CTA
   const charge = searchParams.get("charge"); // Charge type passed from score page
+  const refParam = searchParams.get("ref"); // Referral code from quiz link
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState("");
@@ -586,6 +587,16 @@ function CheckoutContent() {
   const [returningCustomer, setReturningCustomer] = useState(false);
   const [existingCaseNumber, setExistingCaseNumber] = useState("");
   const [existingCaseState, setExistingCaseState] = useState("");
+
+  // Read referral promo code from cookie or URL param
+  const [promoCode] = useState<string | null>(() => {
+    if (refParam) return refParam;
+    if (typeof document !== "undefined") {
+      const match = document.cookie.split("; ").find(c => c.startsWith("ref="));
+      return match ? match.split("=")[1] : null;
+    }
+    return null;
+  });
 
   const info = TIER_INFO[tier];
 
@@ -647,6 +658,7 @@ function CheckoutContent() {
             existingCaseNumber, existingCaseState,
           }),
           ...(info.isDigitalProduct && { productType: "digital-product" }),
+          ...(promoCode && { promoCode }),
         }),
       });
 
@@ -708,6 +720,15 @@ function CheckoutContent() {
               Delivery: {info.delivery}
             </span>
           </div>
+
+          {/* REFERRAL ATTRIBUTION — show if partner code is applied */}
+          {promoCode && (
+            <div className="mt-4 rounded-lg border border-green-500/20 bg-green-500/5 p-3 text-center">
+              <p className="text-sm text-green-300">
+                Code <span className="font-mono font-bold">{promoCode}</span> saves you 10%
+              </p>
+            </div>
+          )}
 
           {/* GUARANTEE — moved up: risk removal BEFORE features (Brunson) */}
           <div className="mt-6 rounded-lg border border-amber-500/20 bg-amber-500/5 p-4">
