@@ -313,7 +313,7 @@ const serviceSchema = {
 
 export default function ServicesPage() {
   return (
-    <div className="px-4 py-16">
+    <main className="px-4 py-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -857,6 +857,6 @@ export default function ServicesPage() {
           <LeadCapture />
         </div>
       </div>
-    </div>
+    </main>
   );
 }

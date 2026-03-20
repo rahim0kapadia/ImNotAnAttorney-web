@@ -64,7 +64,7 @@ export default function PartnerVerifyPage() {
     <div className="min-h-screen bg-zinc-950 flex items-center justify-center px-4">
       <div className="w-full max-w-sm text-center">
         {status === "verifying" && (
-          <div>
+          <div role="status" aria-label="Verifying login">
             <div className="w-8 h-8 border-2 border-amber-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
             <p className="text-white text-lg font-medium">Verifying your login...</p>
             <p className="text-zinc-400 text-sm mt-2">This will only take a moment.</p>

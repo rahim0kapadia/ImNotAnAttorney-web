@@ -53,13 +53,8 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM_EMAIL =
   process.env.RESEND_FROM_EMAIL || "noreply@imnotanattorney.com";
 
-/**
- * CAN-SPAM required physical mailing address.
- * Shown in the footer of every customer-facing email per 15 U.S.C. 7704.
- * Also duplicated in the edge function (supabase/functions/generate-report)
- * because that Deno environment cannot import from Next.js modules.
- */
-const PHYSICAL_ADDRESS = "195 Dr MLK Jr St N, St Petersburg, FL 33701";
+// PHYSICAL_ADDRESS imported from @/lib/site (CAN-SPAM compliance).
+// Also duplicated in supabase/functions/generate-report (Deno can't import Next.js modules).
 
 // ============================================================
 // TYPES
@@ -116,6 +111,7 @@ export interface EmailLogContext {
 // ============================================================
 
 import { createAdminClient } from "@/lib/supabase/admin";
+import { PHYSICAL_ADDRESS } from "@/lib/site";
 
 async function logEmailSend(
   params: EmailParams,

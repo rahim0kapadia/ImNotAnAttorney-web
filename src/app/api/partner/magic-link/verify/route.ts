@@ -13,8 +13,18 @@ import {
   PARTNER_SESSION_COOKIE,
   PARTNER_SESSION_MAX_AGE,
 } from "@/lib/partner-auth";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
+  // Rate limit: 10 verify attempts per IP per 5 minutes
+  const ip = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const supabase = createAdminClient();
+  const { limited } = await checkRateLimit(supabase, `partner-verify:${ip}`, 10, 300);
+  if (limited) {
+    return NextResponse.json({ error: "Too many attempts. Please try again later." }, { status: 429 });
+  }
+
   let token: string | null = null;
   try {
     const body = await req.json();

@@ -542,7 +542,6 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             }
           }} className="mt-4 flex gap-2">
             <input name="scoreEmail" type="email" required placeholder="you@example.com"
-              autoFocus={isCrisis}
               aria-label="Email address"
               className="flex-1 rounded-lg border border-amber-500/30 bg-zinc-800 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none" />
             <button type="submit" disabled={emailSubmitting}
@@ -849,7 +848,7 @@ export default function ScorePage() {
   }, [allAnswered, answers]);
 
   return (
-    <div className="px-4 py-16">
+    <main className="px-4 py-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -998,6 +997,6 @@ export default function ScorePage() {
           </p>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

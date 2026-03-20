@@ -244,10 +244,11 @@ function SuccessContent() {
       // sessionCreated is Unix seconds from Stripe — convert to ms + 24h
       end = sessionCreated * 1000 + 24 * 60 * 60 * 1000;
       // Cache in localStorage for flicker-free re-renders
-      localStorage.setItem(key, String(end));
+      try { localStorage.setItem(key, String(end)); } catch { /* Safari private browsing */ }
     } else {
       // Fallback to localStorage cache while waiting for verify API response
-      const cached = localStorage.getItem(key);
+      let cached: string | null = null;
+      try { cached = localStorage.getItem(key); } catch { /* Safari private browsing */ }
       if (cached) {
         end = Number(cached);
       } else {

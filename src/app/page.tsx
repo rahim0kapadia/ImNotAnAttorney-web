@@ -143,7 +143,7 @@ const faqSchema = {
 
 export default function Home() {
   return (
-    <>
+    <main>
       {/* FAQ Schema */}
       <script
         type="application/ld+json"
@@ -809,6 +809,6 @@ export default function Home() {
       {/* Global components */}
       <RecentPurchaseNotification />
       <StickyMobileCTA />
-    </>
+    </main>
   );
 }

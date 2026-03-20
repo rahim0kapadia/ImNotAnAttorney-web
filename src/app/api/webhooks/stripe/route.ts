@@ -35,7 +35,7 @@ import { TIER_CORE, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
-import { signOperatorToken, signPhase2Token, caseThreadId } from "@/lib/site";
+import { signOperatorToken, signPhase2Token, caseThreadId, normalizeEmail } from "@/lib/site";
 import { calculateCommission, getPartnerByStripePromoId, getPartnerByPromoCode } from "@/lib/referral";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
@@ -52,7 +52,7 @@ const OPERATOR_EMAIL =
  * @param context - Human-readable description of what this email is for (used in operator alert)
  * @returns The result of the last send attempt
  */
-async function sendEmailWithRetry(
+async function sendEmailWithOperatorAlert(
   params: Parameters<typeof sendEmail>[0],
   context: string,
   logContext?: EmailLogContext
@@ -141,7 +141,7 @@ export async function POST(req: NextRequest) {
     // and "user@gmail.com" from being treated as different customers.
     const tier = session.metadata?.tier;
     const rawEmail = session.customer_email || session.customer_details?.email;
-    const email = rawEmail ? rawEmail.toLowerCase().trim() : null;
+    const email = rawEmail ? normalizeEmail(rawEmail) : null;
     const isInstallment = session.metadata?.payment_plan === "2x";
     const amount = isInstallment && session.metadata?.full_price
       ? parseInt(session.metadata.full_price, 10)
@@ -233,6 +233,8 @@ export async function POST(req: NextRequest) {
           <p><strong>Error:</strong> ${escapeHtml(orderError.message)}</p>
           <p><strong>Action:</strong> Manually create order record in Supabase.</p>`,
       }, { category: "operator-alert", metadata: { reason: "order-insert-failed", tier, amount } });
+      // Stop processing — no order record exists, cannot proceed with case creation or emails
+      return NextResponse.json({ received: true });
     }
 
     // ──────────────────────────────────────────────────────────────
@@ -296,30 +298,24 @@ export async function POST(req: NextRequest) {
           const saleAmount = amount - discountAmount; // what customer actually paid
           const commissionAmount = calculateCommission(saleAmount, partner.commission_rate);
 
-          // Insert referral record
-          const { error: refError } = await supabase.from("referrals").insert({
-            partner_id: partner.id,
-            order_id: orderData.id,
-            tier,
-            sale_amount: saleAmount,
-            discount_amount: discountAmount,
-            commission_amount: commissionAmount,
+          // Atomic: insert referral + increment partner totals in one transaction
+          const { error: refError } = await supabase.rpc("track_referral", {
+            p_partner_id: partner.id,
+            p_order_id: orderData.id,
+            p_tier: tier,
+            p_sale_amount: saleAmount,
+            p_discount_amount: discountAmount,
+            p_commission_amount: commissionAmount,
           });
 
           if (refError) {
-            console.error("[Webhook] Referral insert error:", refError);
+            // 23505 = duplicate (order_id, partner_id) — already tracked, skip
+            if (refError.code === "23505") {
+              console.log(`[Webhook] Referral already tracked for order=${orderData.id}, partner=${partner.id}`);
+            } else {
+              console.error("[Webhook] Referral tracking error:", refError);
+            }
           } else {
-            // Atomic increments on partner totals (avoids race condition)
-            await supabase.rpc("increment_partner_total", {
-              p_partner_id: partner.id,
-              p_column: "total_referrals",
-              p_amount: 1,
-            });
-            await supabase.rpc("increment_partner_total", {
-              p_partner_id: partner.id,
-              p_column: "total_commission",
-              p_amount: commissionAmount,
-            });
             console.log(`[Webhook] Referral tracked: partner=${partner.name}, commission=$${(commissionAmount / 100).toFixed(2)}`);
           }
         }
@@ -424,7 +420,7 @@ export async function POST(req: NextRequest) {
           </div>`
         : `<a href="${downloadUrl}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Download Your Playbook</a>`;
 
-      await sendEmailWithRetry({
+      await sendEmailWithOperatorAlert({
         to: email,
         subject: `Your ${escapeHtml(productName)} is ready — download now`,
         unsubscribeEmail: email,
@@ -445,7 +441,7 @@ export async function POST(req: NextRequest) {
       }, `playbook delivery for ${email}`, { category: "playbook-delivery", order_id: orderData.id, metadata: { tier, product_type: "digital-product" } });
 
       // Simplified operator notification for digital products
-      await sendEmailWithRetry({
+      await sendEmailWithOperatorAlert({
         to: OPERATOR_EMAIL,
         subject: `New Playbook Sale: ${escapeHtml(productName)} — $${(amount / 100).toFixed(2)}`,
         html: `
@@ -697,7 +693,7 @@ export async function POST(req: NextRequest) {
         }
 
         const phase2Token = signPhase2Token(caseId);
-        await sendEmailWithRetry({
+        await sendEmailWithOperatorAlert({
           to: email,
           subject: `Next Step: Complete Your ${escapeHtml(productName)} Intake`,
           unsubscribeEmail: email,
@@ -742,7 +738,7 @@ export async function POST(req: NextRequest) {
             }
           });
         } else {
-          await sendEmailWithRetry({
+          await sendEmailWithOperatorAlert({
             to: email,
             subject: "Complete Your Case Details to Start Your Report",
             unsubscribeEmail: email,
@@ -762,7 +758,7 @@ export async function POST(req: NextRequest) {
 
       // For IB+ tiers without intake, email customer to complete intake
       if (caseId && tier !== "case-decoder" && tierConfig?.includesTiers && tierConfig.includesTiers.length > 0 && !hasIntake) {
-        await sendEmailWithRetry({
+        await sendEmailWithOperatorAlert({
           to: email,
           subject: `Complete Your Case Details — Your ${escapeHtml(productName)} Package`,
           unsubscribeEmail: email,
@@ -804,7 +800,7 @@ export async function POST(req: NextRequest) {
     //   - Product name, amount, expected delivery timeframe
     //   - Upload section (discovery tiers only)
     //   - Unsubscribe link (CAN-SPAM compliance)
-    await sendEmailWithRetry({
+    await sendEmailWithOperatorAlert({
       to: email,
       subject: `Payment Confirmed — Your ${escapeHtml(productName)} is Being Prepared`,
       unsubscribeEmail: email,
@@ -832,7 +828,7 @@ export async function POST(req: NextRequest) {
     // ──────────────────────────────────────────────────────────────
     // Every payment triggers an operator email with full order details.
     // This is the operator's primary awareness mechanism for new orders.
-    await sendEmailWithRetry({
+    await sendEmailWithOperatorAlert({
       to: OPERATOR_EMAIL,
       subject: `New Order: ${escapeHtml(productName)} — $${(amount / 100).toFixed(2)}`,
       html: `
@@ -946,7 +942,7 @@ export async function POST(req: NextRequest) {
         // gets no notification from Stripe, so we send one.
         if (!isFullRefund) {
           const partialRefundAmount = (charge.amount_refunded / 100).toFixed(2);
-          await sendEmailWithRetry({
+          await sendEmailWithOperatorAlert({
             to: refundedOrder.email,
             subject: `Partial Refund Processed — $${partialRefundAmount}`,
             unsubscribeEmail: refundedOrder.email,

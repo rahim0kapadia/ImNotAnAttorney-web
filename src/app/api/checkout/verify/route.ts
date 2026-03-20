@@ -26,6 +26,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 /**
  * Verifies a Stripe checkout session's payment status and returns order details
@@ -35,6 +36,14 @@ import { createAdminClient } from "@/lib/supabase/admin";
  * @returns JSON with verified (boolean), and if true: tier, email, amount (cents), productName
  */
 export async function GET(req: NextRequest) {
+  // Rate limit: 20 requests per minute per IP
+  const ip = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const supabase = createAdminClient();
+  const { limited } = await checkRateLimit(supabase, `checkout-verify:${ip}`, 20, 60);
+  if (limited) {
+    return NextResponse.json({ verified: false });
+  }
+
   const sessionId = req.nextUrl.searchParams.get("session_id");
   if (!sessionId) {
     return NextResponse.json({ error: "Missing session_id" }, { status: 400 });
@@ -72,45 +81,9 @@ export async function GET(req: NextRequest) {
       priorityDelivery: session.metadata?.priority_delivery === "true",
     };
 
-    // For digital products, generate a signed download URL directly from
-    // Supabase Storage. This is independent of the webhook — no race condition.
-    // The webhook still fires separately to send the email with a token-based
-    // URL (72hr expiry, refund-revocable). Both paths work independently.
-    if (session.metadata?.product_type === "digital-product" && session.metadata?.tier) {
-      try {
-        const supabase = createAdminClient();
-        const { data: pack } = await supabase
-          .from("charge_packs")
-          .select("pdf_storage_path, emergency_pdf_path")
-          .eq("slug", session.metadata.tier)
-          .single();
-
-        if (pack?.pdf_storage_path) {
-          const { data: signedUrlData } = await supabase
-            .storage
-            .from("charge-packs")
-            .createSignedUrl(pack.pdf_storage_path.replace("charge-packs/", ""), 3600);
-
-          if (signedUrlData?.signedUrl) {
-            response.downloadUrl = signedUrlData.signedUrl;
-          }
-        }
-
-        // Generate emergency playbook download URL if available
-        if (pack?.emergency_pdf_path) {
-          const { data: emergencySignedUrl } = await supabase
-            .storage
-            .from("charge-packs")
-            .createSignedUrl(pack.emergency_pdf_path.replace("charge-packs/", ""), 3600);
-
-          if (emergencySignedUrl?.signedUrl) {
-            response.emergencyDownloadUrl = emergencySignedUrl.signedUrl;
-          }
-        }
-      } catch {
-        // Signed URL generation failed — not critical, customer still gets email
-      }
-    }
+    // Download URLs are delivered via webhook email (token-based, 72hr expiry,
+    // refund-revocable). Not generated here — this endpoint is unauthenticated
+    // and session_ids are not secret enough to gate file access.
 
     return NextResponse.json(response);
   } catch {

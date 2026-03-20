@@ -55,7 +55,7 @@ export async function generateMagicLink(email: string): Promise<{
 
   const { error: insertError } = await supabase.from("partner_magic_links").insert({
     partner_id: partner.id,
-    token,
+    token: hashToken(token),
     expires_at: expiresAt.toISOString(),
   });
 

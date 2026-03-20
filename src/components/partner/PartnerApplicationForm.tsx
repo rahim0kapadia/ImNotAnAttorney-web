@@ -67,7 +67,7 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
+            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
           />
         </div>
         <div>
@@ -76,7 +76,7 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
             type="text"
             value={company}
             onChange={(e) => setCompany(e.target.value)}
-            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
+            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
           />
         </div>
         <div>
@@ -86,7 +86,7 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
+            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
           />
         </div>
         <div>
@@ -95,7 +95,7 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
+            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
           />
         </div>
         <div className="md:col-span-2">
@@ -105,7 +105,7 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
             value={region}
             onChange={(e) => setRegion(e.target.value)}
             placeholder="e.g., Maricopa County, AZ"
-            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
+            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
           />
         </div>
         {includeHeardAboutUs && (
@@ -116,7 +116,7 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
               value={heardAboutUs}
               onChange={(e) => setHeardAboutUs(e.target.value)}
               placeholder="Google, social media, friend, etc."
-              className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
+              className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
           </div>
         )}
@@ -126,7 +126,7 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             rows={3}
-            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
+            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
           />
         </div>
       </div>

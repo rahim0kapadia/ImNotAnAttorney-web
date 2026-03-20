@@ -35,16 +35,6 @@ function memoryRateLimit(key: string): boolean {
   return false;
 }
 
-// Periodic cleanup to prevent memory leaks from stale entries
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, timestamps] of memoryStore) {
-    const valid = timestamps.filter((t) => now - t < MEMORY_WINDOW_MS);
-    if (valid.length === 0) memoryStore.delete(key);
-    else memoryStore.set(key, valid);
-  }
-}, 60_000);
-
 /**
  * Check if a request should be rate limited.
  * @param supabase - Admin Supabase client
