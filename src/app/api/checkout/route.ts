@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { tier, email, consent, priorityDelivery, courtDate, chargeType, existingCaseNumber, existingCaseState, productType, promoCode } = body;
+    const { tier, email, consent, priorityDelivery, courtDate, chargeType, existingCaseNumber, existingCaseState, productType, promoCode, paymentPlan } = body;
 
     // =========================================================================
     // 1. TIER VALIDATION
@@ -467,6 +467,58 @@ export async function POST(req: NextRequest) {
       discountConfig = { discounts: [{ coupon: stripeCouponId }] };
     } else {
       discountConfig = { allow_promotion_codes: true };
+    }
+
+    // =========================================================================
+    // 9a. INSTALLMENT CHECKOUT (for digital products)
+    // Creates a subscription with 2 monthly payments instead of a one-time
+    // charge. The webhook sets cancel_at on the subscription after creation
+    // so it auto-terminates after 2 billing cycles.
+    // =========================================================================
+    if (paymentPlan && tierConfig.isDigitalProduct) {
+      const installmentAmount = Math.ceil(tierConfig.price / 2);
+      const tierStripeInstallment = stripeForTier(tier);
+
+      const installmentSession = await tierStripeInstallment.checkout.sessions.create({
+        mode: "subscription",
+        payment_method_types: ["card"],
+        customer_email: normalizedEmail || undefined,
+        line_items: [{
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: tierConfig.name,
+              description: `Delivery: ${tierConfig.delivery}`,
+            },
+            unit_amount: installmentAmount,
+            recurring: { interval: "month" },
+          },
+          quantity: 1,
+        }],
+        ...discountConfig,
+        subscription_data: {
+          metadata: {
+            payment_plan: "2x",
+            full_price: String(tierConfig.price),
+            tier,
+          },
+        },
+        metadata: {
+          tier,
+          product_name: tierConfig.name,
+          product_type: "digital-product",
+          payment_plan: "2x",
+          full_price: String(tierConfig.price),
+          ...(consent && { consent_timestamp: new Date().toISOString() }),
+          ...(resolvedChargeType && { charge_type: resolvedChargeType }),
+          ...(referralPartnerId && { partner_id: referralPartnerId }),
+          ...(promoCode && { partner_promo_code: promoCode.toUpperCase() }),
+        },
+        success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
+        cancel_url: `${origin}/checkout?tier=${tier}&plan=2x`,
+      });
+
+      return NextResponse.json({ url: installmentSession.url });
     }
 
     // =========================================================================

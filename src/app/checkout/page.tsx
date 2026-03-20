@@ -576,6 +576,7 @@ function CheckoutContent() {
   const band = searchParams.get("band"); // Score band passed from score page CTA
   const charge = searchParams.get("charge"); // Charge type passed from score page
   const refParam = searchParams.get("ref"); // Referral code from quiz link
+  const planParam = searchParams.get("plan"); // Payment plan (e.g., "2x" for installments)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState("");
@@ -587,6 +588,7 @@ function CheckoutContent() {
   const [returningCustomer, setReturningCustomer] = useState(false);
   const [existingCaseNumber, setExistingCaseNumber] = useState("");
   const [existingCaseState, setExistingCaseState] = useState("");
+  const [useInstallment, setUseInstallment] = useState(planParam === "2x");
 
   // Read referral promo code from cookie or URL param
   const [promoCode] = useState<string | null>(() => {
@@ -658,6 +660,7 @@ function CheckoutContent() {
             existingCaseNumber, existingCaseState,
           }),
           ...(info.isDigitalProduct && { productType: "digital-product" }),
+          ...(info.isDigitalProduct && useInstallment && { paymentPlan: true }),
           ...(promoCode && { promoCode }),
         }),
       });
@@ -703,12 +706,41 @@ function CheckoutContent() {
 
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-8">
           <h1 className="text-2xl font-bold text-white">{info.name}</h1>
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-4xl font-bold text-amber-400">
-              {info.price}
-            </span>
-            <span className="text-sm text-zinc-400">one-time</span>
-          </div>
+          {info.isDigitalProduct ? (
+            <div className="mt-4 space-y-2">
+              <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 p-3 transition-colors hover:border-zinc-600 has-[:checked]:border-amber-500/50 has-[:checked]:bg-amber-500/5">
+                <input
+                  type="radio"
+                  name="paymentOption"
+                  checked={!useInstallment}
+                  onChange={() => setUseInstallment(false)}
+                  className="accent-amber-500"
+                />
+                <div>
+                  <span className="text-sm font-semibold text-white">Pay in full &mdash; {info.price}</span>
+                </div>
+              </label>
+              <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 p-3 transition-colors hover:border-zinc-600 has-[:checked]:border-amber-500/50 has-[:checked]:bg-amber-500/5">
+                <input
+                  type="radio"
+                  name="paymentOption"
+                  checked={useInstallment}
+                  onChange={() => setUseInstallment(true)}
+                  className="accent-amber-500"
+                />
+                <div>
+                  <span className="text-sm font-semibold text-white">2 monthly payments of ${(info.priceNum / 2).toFixed(2)}</span>
+                </div>
+              </label>
+            </div>
+          ) : (
+            <div className="mt-2 flex items-baseline gap-2">
+              <span className="text-4xl font-bold text-amber-400">
+                {info.price}
+              </span>
+              <span className="text-sm text-zinc-400">one-time</span>
+            </div>
+          )}
 
           {/* Tier validation — reassurance copy specific to each tier */}
           {info.validation && (
@@ -1041,7 +1073,9 @@ function CheckoutContent() {
             ) : tier === "situation-room"
               ? "Apply for The Situation Room"
               : info.isDigitalProduct
-              ? `Get Instant Access — ${info.price}`
+              ? useInstallment
+                ? `Get Instant Access — 2 × $${(info.priceNum / 2).toFixed(2)}`
+                : `Get Instant Access — ${info.price}`
               : band === "Critical" || band === "Concerning"
               ? `Get My ${info.name} — Close These Gaps (${priorityDelivery && info.priorityPriceNum ? `$${info.priceNum + info.priorityPriceNum}` : info.price}) →`
               : `Pay ${priorityDelivery && info.priorityPriceNum ? `$${info.priceNum + info.priorityPriceNum}` : info.price} — Secure Checkout`}

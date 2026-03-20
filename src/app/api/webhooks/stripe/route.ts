@@ -142,7 +142,10 @@ export async function POST(req: NextRequest) {
     const tier = session.metadata?.tier;
     const rawEmail = session.customer_email || session.customer_details?.email;
     const email = rawEmail ? rawEmail.toLowerCase().trim() : null;
-    const amount = session.amount_total;
+    const isInstallment = session.metadata?.payment_plan === "2x";
+    const amount = isInstallment && session.metadata?.full_price
+      ? parseInt(session.metadata.full_price, 10)
+      : session.amount_total;
 
     if (!tier || !email || amount == null) {
       console.error("[Stripe Webhook] Missing metadata:", { tier, email, amount });
@@ -230,6 +233,24 @@ export async function POST(req: NextRequest) {
           <p><strong>Error:</strong> ${escapeHtml(orderError.message)}</p>
           <p><strong>Action:</strong> Manually create order record in Supabase.</p>`,
       }, { category: "operator-alert", metadata: { reason: "order-insert-failed", tier, amount } });
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // INSTALLMENT SUBSCRIPTION AUTO-CANCEL
+    // ──────────────────────────────────────────────────────────────
+    // For 2-payment installment plans, set cancel_at on the subscription
+    // so Stripe auto-cancels after the second billing cycle (35 days buffer).
+    if (isInstallment && orderData && session.subscription) {
+      const subId = typeof session.subscription === "string"
+        ? session.subscription
+        : (session.subscription as { id: string }).id;
+      const cancelAt = Math.floor(Date.now() / 1000) + 35 * 86400;
+      try {
+        const tierStripeClient = isValidTier(tier) ? stripeForTier(tier as TierSlug) : stripe;
+        await tierStripeClient.subscriptions.update(subId, { cancel_at: cancelAt });
+      } catch (err) {
+        console.error("[Webhook] Failed to set cancel_at on installment subscription:", err);
+      }
     }
 
     // ──────────────────────────────────────────────────────────────

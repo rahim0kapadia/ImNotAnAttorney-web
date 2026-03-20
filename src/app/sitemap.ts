@@ -24,6 +24,7 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blog";
 import { allPlaybookSlugs } from "@/lib/playbook-configs";
+import { allStateSlugs } from "@/data/state-dui-laws";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -120,5 +121,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
     ...blogEntries,
+    // Family landing page
+    {
+      url: `${SITE_URL}/family`,
+      lastModified: new Date("2026-03-20"),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    },
+    // State-specific DUI defense pages (50 states)
+    ...allStateSlugs().map((slug) => ({
+      url: `${SITE_URL}/dui-defense/${slug}`,
+      lastModified: new Date("2026-03-20"),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
   ];
 }

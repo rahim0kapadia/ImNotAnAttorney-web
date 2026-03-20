@@ -86,7 +86,16 @@ export default function PlaybookSalesPage({ config }: Props) {
         >
           Get Instant Access &mdash; {tier.priceDisplay}
         </Link>
-        <p className="mt-3 text-xs text-zinc-500">
+        <p className="mt-2 text-sm text-zinc-400">
+          or{" "}
+          <Link
+            href={`${checkoutUrl}&plan=2x`}
+            className="text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+          >
+            2 payments of ${(tier.price / 200).toFixed(2)}
+          </Link>
+        </p>
+        <p className="mt-2 text-xs text-zinc-500">
           Download within 60 seconds of purchase. No intake form. No waiting.
         </p>
         {config.hero.coverImage && (
@@ -213,6 +222,15 @@ export default function PlaybookSalesPage({ config }: Props) {
           >
             Get Instant Access &mdash; {tier.priceDisplay}
           </Link>
+          <p className="mt-2 text-sm text-zinc-400">
+            or{" "}
+            <Link
+              href={`${checkoutUrl}&plan=2x`}
+              className="text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+            >
+              2 payments of ${(tier.price / 200).toFixed(2)}
+            </Link>
+          </p>
         </div>
         <div className="mt-6">
           <TrustBadges variant="checkout" />
@@ -344,7 +362,16 @@ export default function PlaybookSalesPage({ config }: Props) {
         >
           Get Instant Access &mdash; {tier.priceDisplay}
         </Link>
-        <p className="mt-3 text-xs text-zinc-500">
+        <p className="mt-2 text-sm text-zinc-400">
+          or{" "}
+          <Link
+            href={`${checkoutUrl}&plan=2x`}
+            className="text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+          >
+            2 payments of ${(tier.price / 200).toFixed(2)}
+          </Link>
+        </p>
+        <p className="mt-2 text-xs text-zinc-500">
           {config.guarantee.headline}
         </p>
         <div className="mt-4">
