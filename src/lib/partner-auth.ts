@@ -130,34 +130,16 @@ export async function validatePartnerSession(sessionToken: string): Promise<{
 } | null> {
   const supabase = createAdminClient();
 
-  // Find non-expired session by hash (primary) or plaintext fallback (transition period)
-  const now = new Date().toISOString();
-  let session: { partner_id: string } | null = null;
-
-  // Try hash lookup first (new sessions + backfilled sessions)
-  const { data: hashMatch, error: hashError } = await supabase
+  // Find non-expired session by token hash
+  const { data: session, error: sessionError } = await supabase
     .from("partner_sessions")
     .select("partner_id")
     .eq("session_token_hash", hashToken(sessionToken))
-    .gt("expires_at", now)
+    .gt("expires_at", new Date().toISOString())
     .limit(1)
     .maybeSingle();
 
-  if (!hashError && hashMatch) {
-    session = hashMatch;
-  } else {
-    // Fallback: try old plaintext column (pre-migration sessions, removed by 019)
-    const { data: plainMatch } = await supabase
-      .from("partner_sessions")
-      .select("partner_id")
-      .eq("session_token", sessionToken)
-      .gt("expires_at", now)
-      .limit(1)
-      .maybeSingle();
-    session = plainMatch;
-  }
-
-  if (!session) return null;
+  if (sessionError || !session) return null;
 
   // Fetch partner data
   const { data: partner, error: partnerError } = await supabase
@@ -177,16 +159,10 @@ export async function validatePartnerSession(sessionToken: string): Promise<{
  */
 export async function destroyPartnerSession(sessionToken: string): Promise<void> {
   const supabase = createAdminClient();
-  // Delete by hash (primary) and plaintext fallback (transition period)
   await supabase
     .from("partner_sessions")
     .delete()
     .eq("session_token_hash", hashToken(sessionToken));
-  // Also try old column for pre-migration sessions (no-op after 019 drops column)
-  await supabase
-    .from("partner_sessions")
-    .delete()
-    .eq("session_token", sessionToken);
 }
 
 /** Session cookie name used across partner auth. */
