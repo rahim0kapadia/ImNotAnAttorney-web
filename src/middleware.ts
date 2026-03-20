@@ -92,6 +92,25 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // ── Partner API routes (/api/partner/*) ──────────────────────
+  // Cookie-exists check only (no DB call in Edge). Route handlers do the
+  // actual session validation via validatePartnerSession() in Node runtime.
+  if (pathname.startsWith("/api/partner")) {
+    // Public routes — no auth needed
+    if (
+      pathname === "/api/partner/magic-link" ||
+      pathname === "/api/partner/magic-link/verify"
+    ) {
+      return NextResponse.next();
+    }
+    // All other partner routes — check cookie exists
+    const session = req.cookies.get("partner-session");
+    if (!session?.value) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    return NextResponse.next();
+  }
+
   // ── Nonce-based CSP for page routes ──────────────────────────
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
 
@@ -139,5 +158,6 @@ export const config = {
     "/api/cron/:path*",
     "/api/evaluate/:path*",
     "/api/deliver",
+    "/api/partner/:path*",
   ],
 };
