@@ -42,3 +42,11 @@ next-env.d.ts
 
 .vercel
 .env*.local
+
+# IDE
+.idea/
+.vscode/
+.claude/
+
+# Tool artifacts
+.review-state.json
