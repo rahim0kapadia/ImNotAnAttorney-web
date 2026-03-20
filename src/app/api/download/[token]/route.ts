@@ -10,6 +10,11 @@
  *   3. If valid: generates a 1-hour signed Supabase Storage URL
  *   4. Redirects customer to the signed URL (browser downloads PDF)
  *
+ * Two-document support (Emergency Playbook split):
+ *   - Default (no query param): serves the full defense playbook PDF
+ *   - ?doc=emergency: serves the emergency playbook PDF (if available)
+ *   - Both documents use the same download token (one purchase = both books)
+ *
  * Security:
  *   - Token is a random UUID (not guessable)
  *   - Token expires after 72 hours (download_token_expires_at)
@@ -75,10 +80,14 @@ export async function GET(
     }
   }
 
+  // Determine which document to serve (full playbook or emergency)
+  const docType = _req.nextUrl.searchParams.get("doc");
+  const isEmergency = docType === "emergency";
+
   // Look up the charge pack to get the PDF path
   const { data: pack, error: packError } = await supabase
     .from("charge_packs")
-    .select("pdf_storage_path")
+    .select("pdf_storage_path, emergency_pdf_path")
     .eq("slug", order.tier)
     .single();
 
@@ -90,11 +99,22 @@ export async function GET(
     );
   }
 
+  // Select the right PDF path based on doc type
+  const pdfPath = isEmergency ? pack.emergency_pdf_path : pack.pdf_storage_path;
+
+  if (!pdfPath) {
+    // Emergency PDF requested but not available for this charge type
+    return NextResponse.json(
+      { error: `Emergency playbook not available for this product. Contact ${CONTACT_EMAIL}.` },
+      { status: 404 }
+    );
+  }
+
   // Generate signed URL (1-hour expiry)
   const { data: signedUrlData, error: signedUrlError } = await supabase
     .storage
     .from("charge-packs")
-    .createSignedUrl(pack.pdf_storage_path.replace("charge-packs/", ""), 3600);
+    .createSignedUrl(pdfPath.replace("charge-packs/", ""), 3600);
 
   if (signedUrlError || !signedUrlData?.signedUrl) {
     console.error("[Download] Signed URL generation failed:", signedUrlError);

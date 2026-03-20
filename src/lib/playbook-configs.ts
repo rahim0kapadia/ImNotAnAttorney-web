@@ -84,7 +84,7 @@ export interface PlaybookConfig {
   /** Final CTA — comparison line (e.g., "A 30-minute attorney consultation costs $150-$250.") */
   comparisonLine: string;
 
-  /** Summary line for final CTA (e.g., "Instant PDF. 26 questions. 12 red flags.") */
+  /** Summary line for final CTA (e.g., "Two books, instant download. 26 questions. 12 red flags.") */
   summaryLine: string;
 }
 
@@ -152,6 +152,11 @@ export const DUI_FIRST_OFFENSE: PlaybookConfig = {
   valueStack: {
     sections: [
       {
+        title: "Emergency Playbook (Book 1)",
+        desc: "What to do right now. First 72 Hours checklist, DMV deadline alert, 5 Priority Questions, crisis resources. Start here.",
+        value: "$97",
+      },
+      {
         title: "Charge Reality Report",
         desc: "DUI first offense elements explained in plain English \u2014 dual-track (DMV + criminal), sentencing ranges, what the prosecution must prove.",
         value: "$297",
@@ -177,7 +182,7 @@ export const DUI_FIRST_OFFENSE: PlaybookConfig = {
         value: "$97",
       },
     ],
-    totalValue: "$785",
+    totalValue: "$882",
   },
   guarantee: {
     headline: "5 questions you never thought to ask \u2014 or full refund.",
@@ -224,7 +229,7 @@ export const DUI_FIRST_OFFENSE: PlaybookConfig = {
     },
     {
       q: "How is this delivered?",
-      a: "Instant PDF download. After payment, you\u2019ll receive an email with a download link within 60 seconds. No intake form, no waiting.",
+      a: "Two instant PDF downloads. After payment, you\u2019ll receive an email with download links for both the Emergency Playbook (start here) and the Full Defense Playbook (complete reference) within 60 seconds. No intake form, no waiting.",
     },
     {
       q: "What\u2019s your refund policy?",
@@ -237,7 +242,7 @@ export const DUI_FIRST_OFFENSE: PlaybookConfig = {
   ],
   comparisonLine: "A 30-minute attorney consultation costs $150\u2013$250.",
   summaryLine:
-    "Instant PDF. 26 questions. 12 red flags. Case stage roadmap. Attorney scorecard.",
+    "Two books, instant download. 26 questions. 12 red flags. Case stage roadmap. Attorney scorecard.",
 };
 
 // ---------------------------------------------------------------------------
@@ -306,6 +311,11 @@ export const DRUG_POSSESSION: PlaybookConfig = {
   valueStack: {
     sections: [
       {
+        title: "Emergency Playbook (Book 1)",
+        desc: "What to do right now. First 72 Hours checklist, 5 Priority Questions, what makes your case unique, crisis resources. Start here.",
+        value: "$97",
+      },
+      {
         title: "Charge Reality Report",
         desc: "Drug possession elements explained in plain English \u2014 schedules, weight thresholds, sentencing ranges, what the prosecution must prove.",
         value: "$297",
@@ -331,7 +341,7 @@ export const DRUG_POSSESSION: PlaybookConfig = {
         value: "$97",
       },
     ],
-    totalValue: "$785",
+    totalValue: "$882",
   },
   guarantee: {
     headline:
@@ -383,7 +393,7 @@ export const DRUG_POSSESSION: PlaybookConfig = {
     },
     {
       q: "How is this delivered?",
-      a: "Instant PDF download. After payment, you\u2019ll receive an email with a download link within 60 seconds. No intake form, no waiting.",
+      a: "Two instant PDF downloads. After payment, you\u2019ll receive an email with download links for both the Emergency Playbook (start here) and the Full Defense Playbook (complete reference) within 60 seconds. No intake form, no waiting.",
     },
     {
       q: "What\u2019s your refund policy?",
@@ -397,7 +407,7 @@ export const DRUG_POSSESSION: PlaybookConfig = {
   comparisonLine:
     "A 30-minute attorney consultation costs $150\u2013$300.",
   summaryLine:
-    "Instant PDF. 26 questions. 12 red flags. Case stage roadmap. Attorney scorecard. Diversion program guide.",
+    "Two books, instant download. 26 questions. 12 red flags. Case stage roadmap. Attorney scorecard. Diversion program guide.",
 };
 
 // ---------------------------------------------------------------------------
@@ -466,6 +476,11 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
   valueStack: {
     sections: [
       {
+        title: "Emergency Playbook (Book 1)",
+        desc: "What to do right now. First 72 Hours checklist, 5 Priority Questions, violation type assessment, crisis resources. Start here.",
+        value: "$97",
+      },
+      {
         title: "Probation Violation Reality Report",
         desc: "Technical vs. substantive violations, burden of proof, your rights at the hearing, state cap laws, and what the prosecution must prove \u2014 all in plain English.",
         value: "$297",
@@ -491,7 +506,7 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
         value: "$97",
       },
     ],
-    totalValue: "$785",
+    totalValue: "$882",
   },
   guarantee: {
     headline:
@@ -543,7 +558,7 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
     },
     {
       q: "How is this delivered?",
-      a: "Instant PDF download. After payment, you\u2019ll receive an email with a download link within 60 seconds. No intake form, no waiting.",
+      a: "Two instant PDF downloads. After payment, you\u2019ll receive an email with download links for both the Emergency Playbook (start here) and the Full Defense Playbook (complete reference) within 60 seconds. No intake form, no waiting.",
     },
     {
       q: "What\u2019s your refund policy?",
@@ -557,7 +572,7 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
   comparisonLine:
     "A 30-minute attorney consultation costs $150\u2013$300.",
   summaryLine:
-    "Instant PDF. 26 questions. 12 red flags. Hearing roadmap. Attorney scorecard. State cap law guide.",
+    "Two books, instant download. 26 questions. 12 red flags. Hearing roadmap. Attorney scorecard. State cap law guide.",
 };
 
 // ---------------------------------------------------------------------------
@@ -626,6 +641,11 @@ export const WHITE_COLLAR: PlaybookConfig = {
   valueStack: {
     sections: [
       {
+        title: "Emergency Playbook (Book 1)",
+        desc: "What to do right now. Document preservation checklist, 5 Priority Questions, financial exposure assessment, crisis resources. Start here.",
+        value: "$97",
+      },
+      {
         title: "Charge Reality Report",
         desc: "White collar offense elements explained in plain English \u2014 wire fraud, embezzlement, tax evasion, identity theft, securities fraud, money laundering. Loss amount table, sentencing guidelines, what the prosecution must prove.",
         value: "$297",
@@ -651,7 +671,7 @@ export const WHITE_COLLAR: PlaybookConfig = {
         value: "$97",
       },
     ],
-    totalValue: "$785",
+    totalValue: "$882",
   },
   guarantee: {
     headline:
@@ -703,7 +723,7 @@ export const WHITE_COLLAR: PlaybookConfig = {
     },
     {
       q: "How is this delivered?",
-      a: "Instant PDF download. After payment, you\u2019ll receive an email with a download link within 60 seconds. No intake form, no waiting.",
+      a: "Two instant PDF downloads. After payment, you\u2019ll receive an email with download links for both the Emergency Playbook (start here) and the Full Defense Playbook (complete reference) within 60 seconds. No intake form, no waiting.",
     },
     {
       q: "What\u2019s your refund policy?",
@@ -717,7 +737,7 @@ export const WHITE_COLLAR: PlaybookConfig = {
   comparisonLine:
     "A 30-minute white collar attorney consultation costs $300\u2013$750.",
   summaryLine:
-    "Instant PDF. 26 questions. 12 red flags. Federal case roadmap. Loss calculation guide. Attorney scorecard.",
+    "Two books, instant download. 26 questions. 12 red flags. Federal case roadmap. Loss calculation guide. Attorney scorecard.",
 };
 
 // ---------------------------------------------------------------------------
@@ -786,6 +806,11 @@ export const SEX_OFFENSE: PlaybookConfig = {
   valueStack: {
     sections: [
       {
+        title: "Emergency Playbook (Book 1)",
+        desc: "What to do right now. First 72 Hours checklist, 5 Priority Questions, collateral consequences overview, crisis resources. Start here.",
+        value: "$97",
+      },
+      {
         title: "Charge Reality Report",
         desc: "Sex offense elements explained in plain English \u2014 sexual assault, child abuse, statutory rape, internet offenses, federal charges. Sentencing ranges, registration tiers, what the prosecution must prove.",
         value: "$297",
@@ -811,7 +836,7 @@ export const SEX_OFFENSE: PlaybookConfig = {
         value: "$97",
       },
     ],
-    totalValue: "$785",
+    totalValue: "$882",
   },
   guarantee: {
     headline:
@@ -863,7 +888,7 @@ export const SEX_OFFENSE: PlaybookConfig = {
     },
     {
       q: "How is this delivered?",
-      a: "Instant PDF download. After payment, you\u2019ll receive an email with a download link within 60 seconds. No intake form, no waiting.",
+      a: "Two instant PDF downloads. After payment, you\u2019ll receive an email with download links for both the Emergency Playbook (start here) and the Full Defense Playbook (complete reference) within 60 seconds. No intake form, no waiting.",
     },
     {
       q: "What\u2019s your refund policy?",
@@ -877,7 +902,7 @@ export const SEX_OFFENSE: PlaybookConfig = {
   comparisonLine:
     "A 30-minute sex offense attorney consultation costs $300\u2013$750.",
   summaryLine:
-    "Instant PDF. 26 questions. 12 red flags. Case stage roadmap. Registration guide. Attorney scorecard.",
+    "Two books, instant download. 26 questions. 12 red flags. Case stage roadmap. Registration guide. Attorney scorecard.",
 };
 
 // ---------------------------------------------------------------------------
@@ -946,6 +971,11 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
   valueStack: {
     sections: [
       {
+        title: "Emergency Playbook (Book 1)",
+        desc: "What to do right now. First 72 Hours checklist, 5 Priority Questions, federal vs. state differences, crisis resources. Start here.",
+        value: "$97",
+      },
+      {
         title: "Federal System Reality Report",
         desc: "How the federal system actually works \u2014 sentencing guidelines formula, mandatory minimums, grand jury process, cooperation mechanics, BOP designation. Everything your attorney assumes you already know.",
         value: "$297",
@@ -971,7 +1001,7 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
         value: "$97",
       },
     ],
-    totalValue: "$785",
+    totalValue: "$882",
   },
   guarantee: {
     headline:
@@ -1023,7 +1053,7 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
     },
     {
       q: "How is this delivered?",
-      a: "Instant PDF download. After payment, you\u2019ll receive an email with a download link within 60 seconds. No intake form, no waiting.",
+      a: "Two instant PDF downloads. After payment, you\u2019ll receive an email with download links for both the Emergency Playbook (start here) and the Full Defense Playbook (complete reference) within 60 seconds. No intake form, no waiting.",
     },
     {
       q: "What\u2019s your refund policy?",
@@ -1037,7 +1067,7 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
   comparisonLine:
     "A 30-minute federal criminal attorney consultation costs $400\u2013$1,000.",
   summaryLine:
-    "Instant PDF. 26 questions. 12 red flags. 13-stage roadmap. Guidelines breakdown. Attorney scorecard.",
+    "Two books, instant download. 26 questions. 12 red flags. 13-stage roadmap. Guidelines breakdown. Attorney scorecard.",
 };
 
 // ---------------------------------------------------------------------------
@@ -1106,6 +1136,11 @@ export const DRUG_TRAFFICKING: PlaybookConfig = {
   valueStack: {
     sections: [
       {
+        title: "Emergency Playbook (Book 1)",
+        desc: "What to do right now. First 72 Hours checklist, 5 Priority Questions, conspiracy exposure assessment, crisis resources. Start here.",
+        value: "$97",
+      },
+      {
         title: "Trafficking Charge Reality Report",
         desc: "How the system actually works \u2014 mandatory minimum quantity tables, conspiracy and Pinkerton liability, enhancement factors, safety valve eligibility, cooperation mechanics. Everything your attorney assumes you already know.",
         value: "$297",
@@ -1131,7 +1166,7 @@ export const DRUG_TRAFFICKING: PlaybookConfig = {
         value: "$97",
       },
     ],
-    totalValue: "$785",
+    totalValue: "$882",
   },
   guarantee: {
     headline:
@@ -1183,7 +1218,7 @@ export const DRUG_TRAFFICKING: PlaybookConfig = {
     },
     {
       q: "How is this delivered?",
-      a: "Instant PDF download. After payment, you\u2019ll receive an email with a download link within 60 seconds. No intake form, no waiting.",
+      a: "Two instant PDF downloads. After payment, you\u2019ll receive an email with download links for both the Emergency Playbook (start here) and the Full Defense Playbook (complete reference) within 60 seconds. No intake form, no waiting.",
     },
     {
       q: "What\u2019s your refund policy?",
@@ -1197,7 +1232,7 @@ export const DRUG_TRAFFICKING: PlaybookConfig = {
   comparisonLine:
     "A 30-minute drug trafficking attorney consultation costs $300\u2013$750.",
   summaryLine:
-    "Instant PDF. 26 questions. 12 red flags. 12-stage roadmap. Quantity tables. Attorney scorecard.",
+    "Two books, instant download. 26 questions. 12 red flags. 12-stage roadmap. Quantity tables. Attorney scorecard.",
 };
 
 // ---------------------------------------------------------------------------
@@ -1265,6 +1300,11 @@ export const SELF_DEFENSE: PlaybookConfig = {
   valueStack: {
     sections: [
       {
+        title: "Emergency Playbook (Book 1)",
+        desc: "What to do right now. First 72 Hours checklist, 5 Priority Questions, force proportionality assessment, crisis resources. Start here.",
+        value: "$97",
+      },
+      {
         title: "26 Attorney Questions",
         desc: "5 priority + 21 organized by evidence, case strength, and attorney accountability",
         value: "$250",
@@ -1295,7 +1335,7 @@ export const SELF_DEFENSE: PlaybookConfig = {
         value: "$85",
       },
     ],
-    totalValue: "$785",
+    totalValue: "$882",
   },
   guarantee: {
     headline: "The 5-Question Guarantee",
@@ -1353,7 +1393,7 @@ export const SELF_DEFENSE: PlaybookConfig = {
     },
     {
       q: "How is this delivered?",
-      a: "Instant PDF download. After payment, you\u2019ll receive an email with a download link within 60 seconds. No intake form, no waiting.",
+      a: "Two instant PDF downloads. After payment, you\u2019ll receive an email with download links for both the Emergency Playbook (start here) and the Full Defense Playbook (complete reference) within 60 seconds. No intake form, no waiting.",
     },
     {
       q: "What\u2019s your refund policy?",
@@ -1367,7 +1407,7 @@ export const SELF_DEFENSE: PlaybookConfig = {
   comparisonLine:
     "A 30-minute self-defense attorney consultation costs $300\u2013$750.",
   summaryLine:
-    "Instant PDF. 26 questions. 12 red flags. 11-stage roadmap. Five-element guide. Attorney scorecard.",
+    "Two books, instant download. 26 questions. 12 red flags. 11-stage roadmap. Five-element guide. Attorney scorecard.",
 };
 
 // ---------------------------------------------------------------------------

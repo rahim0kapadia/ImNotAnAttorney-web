@@ -81,7 +81,7 @@ export async function GET(req: NextRequest) {
         const supabase = createAdminClient();
         const { data: pack } = await supabase
           .from("charge_packs")
-          .select("pdf_storage_path")
+          .select("pdf_storage_path, emergency_pdf_path")
           .eq("slug", session.metadata.tier)
           .single();
 
@@ -93,6 +93,18 @@ export async function GET(req: NextRequest) {
 
           if (signedUrlData?.signedUrl) {
             response.downloadUrl = signedUrlData.signedUrl;
+          }
+        }
+
+        // Generate emergency playbook download URL if available
+        if (pack?.emergency_pdf_path) {
+          const { data: emergencySignedUrl } = await supabase
+            .storage
+            .from("charge-packs")
+            .createSignedUrl(pack.emergency_pdf_path.replace("charge-packs/", ""), 3600);
+
+          if (emergencySignedUrl?.signedUrl) {
+            response.emergencyDownloadUrl = emergencySignedUrl.signedUrl;
           }
         }
       } catch {

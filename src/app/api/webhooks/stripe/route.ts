@@ -307,6 +307,39 @@ export async function POST(req: NextRequest) {
         console.error("[Webhook] Referral tracking error:", refTrackErr);
       }
     }
+    // Metadata fallback: track referral even when promo code didn't create a discount
+    // (e.g., manual metadata set by checkout flow when cookie-based attribution is used)
+    else if (orderData && session.metadata?.partner_promo_code) {
+      try {
+        const partner = await getPartnerByPromoCode(session.metadata.partner_promo_code);
+        if (partner && partner.status === "approved") {
+          const commissionAmount = calculateCommission(amount, partner.commission_rate);
+          const { error: refError } = await supabase.from("referrals").insert({
+            partner_id: partner.id,
+            order_id: orderData.id,
+            tier,
+            sale_amount: amount,
+            discount_amount: 0,
+            commission_amount: commissionAmount,
+          });
+          if (!refError) {
+            await supabase.rpc("increment_partner_total", {
+              p_partner_id: partner.id,
+              p_column: "total_referrals",
+              p_amount: 1,
+            });
+            await supabase.rpc("increment_partner_total", {
+              p_partner_id: partner.id,
+              p_column: "total_commission",
+              p_amount: commissionAmount,
+            });
+            console.log(`[Webhook] Referral tracked (metadata fallback): partner=${partner.name}, commission=$${(commissionAmount / 100).toFixed(2)}`);
+          }
+        }
+      } catch (metaRefErr) {
+        console.error("[Webhook] Metadata referral tracking error:", metaRefErr);
+      }
+    }
 
     // ──────────────────────────────────────────────────────────────
     // DIGITAL PRODUCT BRANCH (Defense Playbooks)
@@ -330,8 +363,17 @@ export async function POST(req: NextRequest) {
         .eq("id", orderData.id);
 
       const downloadUrl = `${origin}/api/download/${downloadToken}`;
+      const emergencyDownloadUrl = `${origin}/api/download/${downloadToken}?doc=emergency`;
 
-      // Send delivery email with download link
+      // Check if this charge type has an emergency playbook
+      const { data: chargePack } = await supabase
+        .from("charge_packs")
+        .select("emergency_pdf_path")
+        .eq("slug", tier)
+        .single();
+      const hasEmergency = !!chargePack?.emergency_pdf_path;
+
+      // Send delivery email with download link(s)
       // Per-playbook delivery email step 2 (charge-specific action)
       const playbookStep2: Record<string, string> = {
         "dui-first-offense": "Check your state's DMV hearing deadline NOW (page 2). In most states, you have 10 days or fewer — miss it and your license is automatically suspended.",
@@ -348,15 +390,28 @@ export async function POST(req: NextRequest) {
       const upgradeTierSlug = tier as TierSlug;
       const upgradeCost = upgradeCostBetween(upgradeTierSlug, "case-decoder");
 
+      // Build download buttons — two-document layout if emergency exists
+      const downloadButtons = hasEmergency
+        ? `<div style="margin: 24px 0;">
+            <p style="color: #D4D4D8; margin: 0 0 12px; font-size: 14px;">Your purchase includes <strong style="color: white;">two books</strong> — start with the Emergency Playbook.</p>
+            <a href="${emergencyDownloadUrl}" style="display: inline-block; padding: 14px 28px; background: #EF4444; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Download Emergency Playbook</a>
+            <p style="color: #A1A1AA; font-size: 13px; margin: 8px 0 0;">Start here — your First 72 Hours checklist, 5 Priority Questions, and what to do right now.</p>
+          </div>
+          <div style="margin: 24px 0;">
+            <a href="${downloadUrl}" style="display: inline-block; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Download Full Defense Playbook</a>
+            <p style="color: #A1A1AA; font-size: 13px; margin: 8px 0 0;">The complete reference — case stage roadmap, red flag checklist, scorecard, all 26 questions, and more.</p>
+          </div>`
+        : `<a href="${downloadUrl}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Download Your Playbook</a>`;
+
       await sendEmailWithRetry({
         to: email,
         subject: `Your ${escapeHtml(productName)} is ready — download now`,
         unsubscribeEmail: email,
         html: `
           <h1 style="color: #F59E0B;">Your ${escapeHtml(productName)} Is Ready</h1>
-          <p>Your ${escapeHtml(productName)} is inside. Click below to download your PDF.</p>
-          <a href="${downloadUrl}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Download Your Playbook</a>
-          <p><strong style="color: white;">Step 1:</strong> Open the playbook and read page 2 — your <strong style="color: #F59E0B;">First 72 Hours</strong> checklist. These are the actions that matter most right now.</p>
+          <p>${hasEmergency ? "Two books are inside — an Emergency Playbook for right now, and the Full Defense Playbook for everything else." : `Your ${escapeHtml(productName)} is inside. Click below to download your PDF.`}</p>
+          ${downloadButtons}
+          <p><strong style="color: white;">Step 1:</strong> ${hasEmergency ? "Open the <strong style=\"color: #EF4444;\">Emergency Playbook</strong> and read the First 72 Hours checklist. These are the actions that matter most right now." : "Open the playbook and read page 2 — your <strong style=\"color: #F59E0B;\">First 72 Hours</strong> checklist. These are the actions that matter most right now."}</p>
           <p><strong style="color: white;">Step 2:</strong> ${step2}</p>
           <p><strong style="color: white;">Step 3:</strong> Read the 5 Priority Questions before your next attorney conversation. Most people can only answer 1 or 2. The blanks are what your next meeting is for.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
@@ -364,7 +419,7 @@ export async function POST(req: NextRequest) {
             <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${TIER_CORE[upgradeTierSlug].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}). Get 15 questions built from YOUR charges, YOUR state, YOUR stage.</p>
             <a href="${origin}/checkout?tier=case-decoder" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: transparent; color: #F59E0B; font-weight: bold; text-decoration: none; border: 1px solid #F59E0B; border-radius: 8px;">${upgradeCost ? `Upgrade for ${upgradeCost} →` : "Upgrade to Case Decoder →"}</a>
           </div>
-          <p style="color: #A1A1AA;">This download link expires in 72 hours. Reply to this email if you have questions.</p>
+          <p style="color: #A1A1AA;">These download links expire in 72 hours. Reply to this email if you have questions.</p>
         `,
       }, `playbook delivery for ${email}`, { category: "playbook-delivery", order_id: orderData.id, metadata: { tier, product_type: "digital-product" } });
 

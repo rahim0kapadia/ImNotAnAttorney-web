@@ -205,10 +205,11 @@ function SuccessContent() {
   const [sessionCreated, setSessionCreated] = useState<number | null>(null);
   const [priorityDelivery, setPriorityDelivery] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const [emergencyDownloadUrl, setEmergencyDownloadUrl] = useState<string | null>(null);
 
   // Verify the Stripe checkout session server-side via /api/checkout/verify.
   // This confirms the payment actually completed (prevents URL spoofing).
-  // Also extracts the customer email and download URL (for digital products).
+  // Also extracts the customer email and download URL(s) (for digital products).
   useEffect(() => {
     if (!sessionId) {
       setVerified(false);
@@ -222,6 +223,7 @@ function SuccessContent() {
         if (data.sessionCreated) setSessionCreated(data.sessionCreated);
         if (data.priorityDelivery) setPriorityDelivery(true);
         if (data.downloadUrl) setDownloadUrl(data.downloadUrl);
+        if (data.emergencyDownloadUrl) setEmergencyDownloadUrl(data.emergencyDownloadUrl);
       })
       .catch(() => setVerified(false));
   }, [sessionId]);
@@ -327,28 +329,54 @@ function SuccessContent() {
           <>
             <p className="mt-3 text-lg text-amber-400">{info.name}</p>
 
-            {/* DIGITAL PRODUCT DOWNLOAD — instant download button + email backup */}
+            {/* DIGITAL PRODUCT DOWNLOAD — instant download button(s) + email backup */}
             {info.isDigitalProduct ? (
               <div className="mt-6">
                 {downloadUrl ? (
                   <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
-                    <a
-                      href={downloadUrl}
-                      className="block w-full rounded-lg bg-amber-500 px-8 py-4 text-center text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
-                    >
-                      Download Your Playbook &darr;
-                    </a>
+                    {emergencyDownloadUrl ? (
+                      <>
+                        <p className="mb-4 text-sm text-zinc-400">
+                          Your purchase includes <span className="font-semibold text-white">two books</span> — start with the Emergency Playbook.
+                        </p>
+                        <a
+                          href={emergencyDownloadUrl}
+                          className="block w-full rounded-lg bg-red-500 px-8 py-4 text-center text-base font-bold text-white transition-all hover:scale-[1.02] hover:bg-red-400 hover:shadow-lg hover:shadow-red-500/20"
+                        >
+                          Download Emergency Playbook &darr;
+                        </a>
+                        <p className="mt-1 mb-4 text-xs text-zinc-500">
+                          Start here — First 72 Hours, 5 Priority Questions, and what to do right now.
+                        </p>
+                        <a
+                          href={downloadUrl}
+                          className="block w-full rounded-lg bg-amber-500 px-8 py-4 text-center text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+                        >
+                          Download Full Defense Playbook &darr;
+                        </a>
+                        <p className="mt-1 text-xs text-zinc-500">
+                          The complete reference — case stage roadmap, red flag checklist, scorecard, and more.
+                        </p>
+                      </>
+                    ) : (
+                      <a
+                        href={downloadUrl}
+                        className="block w-full rounded-lg bg-amber-500 px-8 py-4 text-center text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+                      >
+                        Download Your Playbook &darr;
+                      </a>
+                    )}
                     <p className="mt-3 text-sm text-zinc-400">
-                      We also sent a download link to <span className="text-zinc-300">{customerEmail}</span>
+                      We also sent download link{emergencyDownloadUrl ? "s" : ""} to <span className="text-zinc-300">{customerEmail}</span>
                     </p>
                     <p className="mt-1 text-xs text-zinc-500">
-                      This button expires in 1 hour. The email link lasts 72 hours.
+                      {emergencyDownloadUrl ? "These buttons expire" : "This button expires"} in 1 hour. The email link{emergencyDownloadUrl ? "s last" : " lasts"} 72 hours.
                     </p>
                   </div>
                 ) : (
                   <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
                     <p className="text-zinc-400">
-                      Your playbook download link has been sent to <span className="text-zinc-300">{customerEmail}</span>
+                      Your playbook download link{emergencyDownloadUrl ? "s have" : " has"} been sent to <span className="text-zinc-300">{customerEmail}</span>
                     </p>
                     <p className="mt-2 text-sm text-zinc-500">
                       Check your inbox — if you don&apos;t see it in 5 minutes, check spam.

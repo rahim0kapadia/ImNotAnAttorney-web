@@ -74,9 +74,12 @@ export default function PlaybookSalesPage({ config }: Props) {
             {tier.priceDisplay}
           </span>
           <span className="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-400">
-            Instant PDF
+            Two Books Included
           </span>
         </div>
+        <p className="mt-2 text-sm text-zinc-500">
+          Emergency Playbook + Full Defense Playbook &mdash; both delivered instantly
+        </p>
         <Link
           href={checkoutUrl}
           className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
@@ -97,6 +100,32 @@ export default function PlaybookSalesPage({ config }: Props) {
             />
           </div>
         )}
+      </section>
+      </FadeInUp>
+
+      {/* TWO-BOOK SPLIT */}
+      <FadeInUp>
+      <section className="mt-16">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="rounded-lg border border-red-500/30 bg-red-500/5 p-6">
+            <p className="text-xs font-bold uppercase tracking-widest text-red-400">
+              Book 1
+            </p>
+            <p className="mt-2 text-lg font-bold text-white">Emergency Playbook</p>
+            <p className="mt-2 text-sm text-zinc-400">
+              What to do right now. First 72 Hours checklist, 5 Priority Questions, crisis resources. Read this first.
+            </p>
+          </div>
+          <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-6">
+            <p className="text-xs font-bold uppercase tracking-widest text-amber-400">
+              Book 2
+            </p>
+            <p className="mt-2 text-lg font-bold text-white">Full Defense Playbook</p>
+            <p className="mt-2 text-sm text-zinc-400">
+              The complete reference. Case stage roadmap, red flag checklist, scorecard, all 26 questions, and more.
+            </p>
+          </div>
+        </div>
       </section>
       </FadeInUp>
 
