@@ -21,6 +21,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import { SITE_URL, CONTACT_EMAIL, verifyPhase2Token } from "@/lib/site";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIp } from "@/lib/request";
 
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
   try {
     const supabase = createAdminClient();
     const ip =
-      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+      getClientIp(req);
     const { limited } = await checkRateLimit(
       supabase,
       `phase2-intake:${ip}`,

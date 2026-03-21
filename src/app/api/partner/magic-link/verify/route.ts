@@ -15,10 +15,11 @@ import {
 } from "@/lib/partner-auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIp } from "@/lib/request";
 
 export async function POST(req: NextRequest) {
   // Rate limit: 10 verify attempts per IP per 5 minutes
-  const ip = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const ip = getClientIp(req);
   const supabase = createAdminClient();
   const { limited } = await checkRateLimit(supabase, `partner-verify:${ip}`, 10, 300);
   if (limited) {

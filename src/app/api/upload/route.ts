@@ -31,6 +31,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIp } from "@/lib/request";
 
 /** Maximum allowed file size: 50MB in bytes */
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
@@ -111,7 +112,7 @@ function validateMagicBytes(buffer: Buffer, claimedMime: string): boolean {
 export async function POST(req: NextRequest) {
   try {
     // Rate limit: 10 uploads per 5 minutes per IP
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const ip = getClientIp(req);
     const { limited } = await checkRateLimit(createAdminClient(), `upload:${ip}`, 10, 300);
     if (limited) {
       return NextResponse.json({ error: "Too many uploads. Please wait a few minutes." }, { status: 429 });

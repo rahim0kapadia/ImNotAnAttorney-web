@@ -9,6 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { sendEmail, escapeHtml } from "@/lib/email";
+import { getClientIp } from "@/lib/request";
 import { normalizeEmail, isValidEmail, OPERATOR_EMAIL_FALLBACK } from "@/lib/site";
 
 const OPERATOR_EMAIL =
@@ -18,8 +19,7 @@ export async function POST(req: NextRequest) {
   const supabase = createAdminClient();
 
   // Rate limit: 3 applications per IP per hour
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const ip = getClientIp(req);
   const { limited } = await checkRateLimit(
     supabase,
     `partner-apply:${ip}`,

@@ -12,6 +12,7 @@ import { generateMagicLink } from "@/lib/partner-auth";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import { sendSMS } from "@/lib/twilio";
 import { SITE_URL, normalizeEmail } from "@/lib/site";
+import { getClientIp } from "@/lib/request";
 
 export async function POST(req: NextRequest) {
   try {
@@ -28,7 +29,7 @@ export async function POST(req: NextRequest) {
     }
 
     const normalizedEmail = normalizeEmail(email);
-    const ip = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const ip = getClientIp(req);
 
     // Rate limit: 3 magic link requests per email per hour
     const supabase = createAdminClient();

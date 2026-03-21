@@ -20,6 +20,8 @@ import { SupabaseClient } from "@supabase/supabase-js";
 const memoryStore = new Map<string, number[]>();
 const MEMORY_WINDOW_MS = 60_000; // 1 minute
 const MEMORY_MAX_REQUESTS = 10; // conservative default per window
+const MEMORY_MAX_KEYS = 10_000; // cap to prevent unbounded growth
+let lastCleanup = Date.now();
 
 /**
  * In-memory rate limiter used when the primary Supabase RPC is unreachable.
@@ -27,6 +29,20 @@ const MEMORY_MAX_REQUESTS = 10; // conservative default per window
  */
 function memoryRateLimit(key: string): boolean {
   const now = Date.now();
+
+  // Periodic cleanup: evict expired keys every 60s or when map exceeds cap
+  if (now - lastCleanup > MEMORY_WINDOW_MS || memoryStore.size > MEMORY_MAX_KEYS) {
+    for (const [k, timestamps] of memoryStore) {
+      const valid = timestamps.filter((t) => now - t < MEMORY_WINDOW_MS);
+      if (valid.length === 0) {
+        memoryStore.delete(k);
+      } else {
+        memoryStore.set(k, valid);
+      }
+    }
+    lastCleanup = now;
+  }
+
   const timestamps = memoryStore.get(key) || [];
   const valid = timestamps.filter((t) => now - t < MEMORY_WINDOW_MS);
   if (valid.length >= MEMORY_MAX_REQUESTS) return true;

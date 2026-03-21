@@ -33,7 +33,7 @@ import { NextRequest, NextResponse, after } from "next/server";
 import { stripe, TIERS, isValidTier, stripeForTier } from "@/lib/stripe";
 import { TIER_CORE, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { sendEmail, escapeHtml } from "@/lib/email";
+import { sendEmail, sendEmailWithOperatorAlert, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
 import { signOperatorToken, signPhase2Token, caseThreadId, normalizeEmail } from "@/lib/site";
 import { calculateCommission, getPartnerByStripePromoId, getPartnerByPromoCode } from "@/lib/referral";
@@ -41,44 +41,6 @@ import { calculateCommission, getPartnerByStripePromoId, getPartnerByPromoCode }
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
-
-/**
- * Sends an email with one automatic retry after a 2-second delay.
- * If both attempts fail, sends an alert to the operator so the email
- * can be sent manually. This prevents silent email delivery failures
- * from leaving customers in the dark after payment.
- *
- * @param params - Email parameters (to, subject, html, etc.)
- * @param context - Human-readable description of what this email is for (used in operator alert)
- * @returns The result of the last send attempt
- */
-async function sendEmailWithOperatorAlert(
-  params: Parameters<typeof sendEmail>[0],
-  context: string,
-  logContext?: EmailLogContext
-) {
-  const result = await sendEmail(params, logContext);
-  if (result.success) return result;
-
-  // First attempt failed — wait 2s and retry (transient Resend API errors)
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  const retry = await sendEmail(params, logContext);
-  if (retry.success) return retry;
-
-  // Both failed — notify operator so they can send manually
-  console.error(`[Webhook] Email failed after retry: ${context}`, retry.error);
-  await sendEmail({
-    to: OPERATOR_EMAIL,
-    subject: `ALERT: Email delivery failed — ${context}`,
-    html: `<h1 style="color: #EF4444;">Email Delivery Failed</h1>
-      <p><strong>Context:</strong> ${escapeHtml(context)}</p>
-      <p><strong>Recipient:</strong> ${escapeHtml(params.to)}</p>
-      <p><strong>Subject:</strong> ${escapeHtml(params.subject)}</p>
-      <p><strong>Error:</strong> ${escapeHtml(retry.error || "Unknown")}</p>
-      <p>Both attempts failed. Please send this email manually.</p>`,
-  }, logContext ? { category: "operator-alert", case_id: logContext.case_id, metadata: { original_category: logContext.category, error: retry.error } } : undefined);
-  return retry;
-}
 
 export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
@@ -261,7 +223,8 @@ export async function POST(req: NextRequest) {
     // If the customer used a promotion code, check if it belongs to a
     // bondsman partner. If so, create a referral record and update
     // the partner's totals. Works for ALL product types (digital + service).
-    if (orderData && session.total_details?.amount_discount && session.total_details.amount_discount > 0) {
+    // Track referrals when a discount was applied (including $0 discounts from promo codes)
+    if (orderData && session.total_details?.amount_discount != null) {
       try {
         const tierStripe = isValidTier(tier) ? stripeForTier(tier as TierSlug) : stripe;
         // Retrieve session with expanded discount breakdown
@@ -331,25 +294,22 @@ export async function POST(req: NextRequest) {
         const partner = await getPartnerByPromoCode(session.metadata.partner_promo_code);
         if (partner && partner.status === "approved") {
           const commissionAmount = calculateCommission(amount, partner.commission_rate);
-          const { error: refError } = await supabase.from("referrals").insert({
-            partner_id: partner.id,
-            order_id: orderData.id,
-            tier,
-            sale_amount: amount,
-            discount_amount: 0,
-            commission_amount: commissionAmount,
+          // Atomic: same RPC as the primary path to prevent partial-failure inconsistency
+          const { error: refError } = await supabase.rpc("track_referral", {
+            p_partner_id: partner.id,
+            p_order_id: orderData.id,
+            p_tier: tier,
+            p_sale_amount: amount,
+            p_discount_amount: 0,
+            p_commission_amount: commissionAmount,
           });
-          if (!refError) {
-            await supabase.rpc("increment_partner_total", {
-              p_partner_id: partner.id,
-              p_column: "total_referrals",
-              p_amount: 1,
-            });
-            await supabase.rpc("increment_partner_total", {
-              p_partner_id: partner.id,
-              p_column: "total_commission",
-              p_amount: commissionAmount,
-            });
+          if (refError) {
+            if (refError.code === "23505") {
+              console.log(`[Webhook] Referral already tracked (metadata fallback) for order=${orderData.id}, partner=${partner.id}`);
+            } else {
+              console.error("[Webhook] Metadata referral tracking error:", refError);
+            }
+          } else {
             console.log(`[Webhook] Referral tracked (metadata fallback): partner=${partner.name}, commission=$${(commissionAmount / 100).toFixed(2)}`);
           }
         }

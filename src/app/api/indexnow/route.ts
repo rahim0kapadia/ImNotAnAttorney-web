@@ -10,7 +10,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SITE_URL } from "@/lib/site";
 
-const INDEXNOW_KEY = "e4052ae08a6601d2550172f078562c00";
+const INDEXNOW_KEY = process.env.INDEXNOW_KEY || "e4052ae08a6601d2550172f078562c00";
 const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
 
 export async function POST(req: NextRequest) {
@@ -19,8 +19,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const body = await req.json();
-  const urls: string[] = body.urls;
+  let body;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
+  const urls: unknown = body.urls;
 
   if (!urls || !Array.isArray(urls) || urls.length === 0) {
     return NextResponse.json(
@@ -29,12 +35,31 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Validate all URLs belong to our domain — prevent SSRF via IndexNow
+  const siteHost = new URL(SITE_URL).host;
+  const validUrls = (urls as string[])
+    .map((u) => (u.startsWith("http") ? u : `${SITE_URL}${u}`))
+    .filter((u) => {
+      try {
+        return new URL(u).host === siteHost;
+      } catch {
+        return false;
+      }
+    });
+
+  if (validUrls.length === 0) {
+    return NextResponse.json(
+      { error: "No valid URLs for this domain" },
+      { status: 400 }
+    );
+  }
+
   // IndexNow accepts up to 10,000 URLs per request
   const payload = {
-    host: new URL(SITE_URL).host,
+    host: siteHost,
     key: INDEXNOW_KEY,
     keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
-    urlList: urls.map((u) => (u.startsWith("http") ? u : `${SITE_URL}${u}`)),
+    urlList: validUrls,
   };
 
   const res = await fetch(INDEXNOW_ENDPOINT, {

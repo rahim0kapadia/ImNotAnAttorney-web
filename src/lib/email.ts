@@ -289,3 +289,46 @@ export async function sendEmailWithRetry(
   }
   return retry;
 }
+
+// ============================================================
+// SEND EMAIL WITH OPERATOR ALERT ON FAILURE
+// ============================================================
+
+const OPERATOR_EMAIL =
+  process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
+
+/**
+ * Sends an email with one retry, then alerts the operator if both fail.
+ * Use this for critical transactional emails (payment confirmation, delivery)
+ * where silent failure would leave the customer in the dark.
+ *
+ * @param params - Email parameters
+ * @param context - Human-readable description for the operator alert
+ * @param logContext - Optional audit log context
+ */
+export async function sendEmailWithOperatorAlert(
+  params: EmailParams,
+  context: string,
+  logContext?: EmailLogContext
+): Promise<EmailResult> {
+  const result = await sendEmail(params, logContext);
+  if (result.success) return result;
+
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  const retry = await sendEmail(params, logContext);
+  if (retry.success) return retry;
+
+  // Both failed — notify operator so they can send manually
+  console.error(`[Email] Failed after retry: ${context}`, retry.error);
+  await sendEmail({
+    to: OPERATOR_EMAIL,
+    subject: `ALERT: Email delivery failed — ${context}`,
+    html: `<h1 style="color: #EF4444;">Email Delivery Failed</h1>
+      <p><strong>Context:</strong> ${escapeHtml(context)}</p>
+      <p><strong>Recipient:</strong> ${escapeHtml(params.to)}</p>
+      <p><strong>Subject:</strong> ${escapeHtml(params.subject)}</p>
+      <p><strong>Error:</strong> ${escapeHtml(retry.error || "Unknown")}</p>
+      <p>Both attempts failed. Please send this email manually.</p>`,
+  }, logContext ? { category: "operator-alert", case_id: logContext.case_id, metadata: { original_category: logContext.category, error: retry.error } } : undefined);
+  return retry;
+}

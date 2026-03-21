@@ -25,6 +25,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe, stripeForTier, TIERS, isValidTier } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { normalizeEmail } from "@/lib/site";
+import { isValidChargeType } from "@/lib/charge-types";
+import { getClientIp } from "@/lib/request";
 
 /**
  * Creates a Stripe Checkout session for a given product tier.
@@ -39,7 +42,7 @@ import { checkRateLimit } from "@/lib/rate-limit";
  */
 export async function POST(req: NextRequest) {
   try {
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const ip = getClientIp(req);
     const { limited } = await checkRateLimit(createAdminClient(), `checkout:${ip}`, 10, 300);
     if (limited) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
@@ -75,7 +78,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Normalize email: lowercase + trim for consistent lookups across all tables.
-    const normalizedEmail = email.toLowerCase().trim();
+    const normalizedEmail = normalizeEmail(email);
 
     // =========================================================================
     // 2. EMAIL CAPTURE FOR ABANDONMENT RECOVERY
@@ -104,14 +107,8 @@ export async function POST(req: NextRequest) {
     // B8: Validate courtDate format if provided (ISO date, max 20 chars)
     const validCourtDate = courtDate && /^\d{4}-\d{2}-\d{2}$/.test(courtDate) ? courtDate : null;
 
-    // B9: Validate chargeType against known types before writing to Stripe metadata
-    const ALLOWED_CHARGE_TYPES = [
-      "drug-possession", "drug-trafficking", "dui-first", "dui-repeat",
-      "white-collar", "assault", "theft", "other-felony", "other-misdemeanor",
-      "drug", "dui", "domestic-violence", "sex-offense", "weapons", "federal",
-      "robbery", "burglary", "fraud", "other",
-    ];
-    let resolvedChargeType = (chargeType && ALLOWED_CHARGE_TYPES.includes(chargeType)) ? chargeType : null;
+    // B9: Validate chargeType against shared allowlist before writing to Stripe metadata
+    let resolvedChargeType = (chargeType && isValidChargeType(chargeType)) ? chargeType : null;
     if (!resolvedChargeType && normalizedEmail) {
       const { data: priorIntake, error: intakeError } = await supabase
         .from("intakes")
@@ -223,17 +220,25 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     let caseNumberEmail: string | null = null;
     if (existingCaseNumber && existingCaseState) {
-      const { data: matchedCase } = await supabase
-        .from("cases")
-        .select("email")
-        .eq("court_case_number", existingCaseNumber.trim())
-        .eq("court_state", existingCaseState)
-        .eq("status", "delivered")
-        .limit(1)
-        .maybeSingle();
+      // Validate input lengths to prevent metadata pollution
+      const trimmedCaseNumber = String(existingCaseNumber).trim().slice(0, 50);
+      const trimmedCaseState = String(existingCaseState).trim().slice(0, 2).toUpperCase();
 
-      if (matchedCase?.email) {
-        caseNumberEmail = matchedCase.email;
+      if (trimmedCaseNumber && /^[A-Z]{2}$/.test(trimmedCaseState)) {
+        const { data: matchedCase } = await supabase
+          .from("cases")
+          .select("email")
+          .eq("court_case_number", trimmedCaseNumber)
+          .eq("court_state", trimmedCaseState)
+          .eq("status", "delivered")
+          .limit(1)
+          .maybeSingle();
+
+        // Only grant upgrade credit if the matched case belongs to this customer.
+        // Prevents IDOR where an attacker probes case numbers to steal credits.
+        if (matchedCase?.email && matchedCase.email === normalizedEmail) {
+          caseNumberEmail = matchedCase.email;
+        }
       }
     }
 
@@ -414,7 +419,7 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     let referralStripePromoId: string | undefined;
     let referralPartnerId: string | undefined;
-    if (promoCode && typeof promoCode === "string") {
+    if (promoCode && typeof promoCode === "string" && promoCode.length <= 50) {
       const { data: referralPartner } = await supabase
         .from("partners")
         .select("id, stripe_promo_code_id")

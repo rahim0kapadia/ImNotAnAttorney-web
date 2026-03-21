@@ -175,7 +175,7 @@ export default async function RootLayout({
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         )}
         {/* Meta Pixel — env var guard: set NEXT_PUBLIC_META_PIXEL_ID when account is created */}
-        {process.env.NEXT_PUBLIC_META_PIXEL_ID && (
+        {process.env.NEXT_PUBLIC_META_PIXEL_ID && /^\d+$/.test(process.env.NEXT_PUBLIC_META_PIXEL_ID) && (
           <script
             nonce={nonce}
             dangerouslySetInnerHTML={{
@@ -193,7 +193,7 @@ fbq('track', 'PageView');`,
           />
         )}
         {/* Google Ads Tag — env var guard: set NEXT_PUBLIC_GOOGLE_ADS_ID when account is created */}
-        {process.env.NEXT_PUBLIC_GOOGLE_ADS_ID && (
+        {process.env.NEXT_PUBLIC_GOOGLE_ADS_ID && /^(AW|G)-[A-Za-z0-9_-]+$/.test(process.env.NEXT_PUBLIC_GOOGLE_ADS_ID) && (
           <>
             <script
               async

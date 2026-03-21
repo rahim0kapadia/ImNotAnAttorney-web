@@ -25,8 +25,10 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
+import { stripeTest, stripeLive } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIp } from "@/lib/request";
 
 /**
  * Verifies a Stripe checkout session's payment status and returns order details
@@ -37,7 +39,7 @@ import { checkRateLimit } from "@/lib/rate-limit";
  */
 export async function GET(req: NextRequest) {
   // Rate limit: 20 requests per minute per IP
-  const ip = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const ip = getClientIp(req);
   const supabase = createAdminClient();
   const { limited } = await checkRateLimit(supabase, `checkout-verify:${ip}`, 20, 60);
   if (limited) {
@@ -54,9 +56,19 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ verified: false });
   }
   try {
-    // Retrieve the full session object from Stripe, including metadata
-    // that was set during session creation in POST /api/checkout
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    // Try test client first, then live client. Sessions created with one mode
+    // cannot be retrieved by the other — ensures verify works for all tiers
+    // regardless of their live/test mode.
+    let session;
+    try {
+      session = await stripeTest.checkout.sessions.retrieve(sessionId);
+    } catch {
+      if (stripeLive) {
+        session = await stripeLive.checkout.sessions.retrieve(sessionId);
+      } else {
+        throw new Error("Session not found in test mode and no live client configured");
+      }
+    }
 
     // Only treat "paid" as verified. Stripe sessions can also be "unpaid"
     // (abandoned) or "no_payment_required" (100% coupon). We require "paid"

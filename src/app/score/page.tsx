@@ -257,7 +257,7 @@ function getTimeIndex(timeSinceArrest: string): number {
 }
 
 /** Animated counter that counts up from 0 to the target value */
-function AnimatedCounter({ target }: { target: number }) {
+function CompletionCounter({ target }: { target: number }) {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (target <= 0) return;
@@ -871,7 +871,7 @@ export default function ScorePage() {
             Answer 10 questions. Get your Defense Milestone Score in 60 seconds — free, no email required.
           </p>
           <p className="mt-2 text-xs text-zinc-500">Your answers are not stored.</p>
-          <AnimatedCounter target={completionCount} />
+          <CompletionCounter target={completionCount} />
         </div>
 
         {result ? (

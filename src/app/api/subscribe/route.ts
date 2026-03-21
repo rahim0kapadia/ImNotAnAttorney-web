@@ -25,6 +25,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email";
 import { TIER_CORE } from "@/lib/tiers";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIp } from "@/lib/request";
 
 /**
  * Subscribes an email address and sends the welcome email with lead magnet.
@@ -35,7 +36,7 @@ import { checkRateLimit } from "@/lib/rate-limit";
 export async function POST(req: NextRequest) {
   try {
     const supabase = createAdminClient();
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const ip = getClientIp(req);
     const { limited } = await checkRateLimit(supabase, `subscribe:${ip}`, 5, 60);
     if (limited) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });

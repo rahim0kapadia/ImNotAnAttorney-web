@@ -41,43 +41,12 @@ import { sendEmail, escapeHtml } from "@/lib/email";
 import { SITE_URL } from "@/lib/site";
 import { TIER_CORE } from "@/lib/tiers";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { ALLOWED_CHARGE_TYPES } from "@/lib/charge-types";
+import { getClientIp } from "@/lib/request";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
-
-/**
- * Allowlist of valid charge types accepted by the intake form.
- *
- * Split into two groups:
- *   1. Current intake form values (multi-step form with specific subcategories)
- *   2. Legacy values from older intake forms (broader categories)
- *
- * This prevents injection of arbitrary strings into the database while
- * maintaining backward compatibility with existing intake records.
- * Any chargeType not in this list is rejected with a 400 error.
- */
-const ALLOWED_CHARGE_TYPES = [
-  // Current intake form values (hierarchical flow)
-  "drug-possession",
-  "drug-trafficking",
-  "dui",
-  "assault",
-  "domestic-violence",
-  "theft",
-  "sex-offense",
-  "sex-offense-contact",
-  "sex-offense-digital",
-  "weapons",
-  "white-collar",
-  "federal",
-  "probation-violation",
-  "self-defense",
-  "other",
-  // Legacy values from older intake forms (backward compatibility)
-  "dui-first", "dui-repeat", "other-felony", "other-misdemeanor",
-  "drug", "robbery", "burglary", "fraud",
-];
 
 /** Valid jurisdiction levels for the intake form. */
 const ALLOWED_JURISDICTION_LEVELS = ["federal", "state", "unknown"];
@@ -93,7 +62,7 @@ const ALLOWED_FILLED_OUT_BY = ["self", "family", "friend", "other"];
 
 export async function POST(req: NextRequest) {
   try {
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const ip = getClientIp(req);
     const { limited } = await checkRateLimit(createAdminClient(), `intake:${ip}`, 5, 300);
     if (limited) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });

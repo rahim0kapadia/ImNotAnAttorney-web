@@ -26,6 +26,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { CONTACT_EMAIL } from "@/lib/site";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIp } from "@/lib/request";
 
 export async function GET(
   _req: NextRequest,
@@ -40,7 +41,7 @@ export async function GET(
   const supabase = createAdminClient();
 
   // Rate limit by IP to prevent token enumeration
-  const ip = _req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const ip = getClientIp(_req);
   const { limited } = await checkRateLimit(supabase, `download:${ip}`, 20, 60);
   if (limited) {
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
