@@ -97,6 +97,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${SITE_URL}/research/defense-score-data`,
+      lastModified: new Date("2026-03-21"),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE_URL}/editorial-policy`,
       lastModified: new Date("2026-03-20"),
       changeFrequency: "yearly",
