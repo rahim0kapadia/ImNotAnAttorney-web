@@ -24,7 +24,6 @@
  *   enters payment info). One of these is always available for paid sessions.
  */
 import { NextRequest, NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
 import { stripeTest, stripeLive } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";

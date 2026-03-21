@@ -62,15 +62,23 @@ export async function POST(req: NextRequest) {
     urlList: validUrls,
   };
 
-  const res = await fetch(INDEXNOW_ENDPOINT, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+  try {
+    const res = await fetch(INDEXNOW_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
 
-  return NextResponse.json({
-    ok: res.ok,
-    status: res.status,
-    submitted: payload.urlList.length,
-  });
+    return NextResponse.json({
+      ok: res.ok,
+      status: res.status,
+      submitted: payload.urlList.length,
+    });
+  } catch (err) {
+    console.error("[IndexNow] Fetch failed:", err);
+    return NextResponse.json(
+      { error: "IndexNow API unreachable", submitted: 0 },
+      { status: 502 }
+    );
+  }
 }

@@ -342,8 +342,8 @@ export async function POST(req: NextRequest) {
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(chargeType)}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Jurisdiction:</strong> ${escapeHtml(jurisdictionLevel)}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">State:</strong> ${escapeHtml(body.state || "Not provided")}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Has Attorney:</strong> ${body.hasAttorney || "Not specified"}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Has Discovery:</strong> ${body.hasDiscovery || "Not specified"}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Has Attorney:</strong> ${escapeHtml(body.hasAttorney || "Not specified")}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Has Discovery:</strong> ${escapeHtml(body.hasDiscovery || "Not specified")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Arrested/Charged:</strong> ${escapeHtml(body.timeSinceArrest || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Location:</strong> ${escapeHtml(body.incidentLocation || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">How LE Involved:</strong> ${(body.arrestCircumstances || []).map((s: string) => escapeHtml(s)).join(", ") || "Not provided"}</p>
@@ -357,7 +357,7 @@ export async function POST(req: NextRequest) {
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Last Attorney Contact:</strong> ${escapeHtml(body.lastAttorneyContact || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Arrest Date:</strong> ${escapeHtml(body.arrestDate || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Evidence Types:</strong> ${(body.evidenceType || []).map((s: string) => escapeHtml(s)).join(", ") || "Not specified"}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Services:</strong> ${(body.services || []).join(", ") || "None selected"}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Services:</strong> ${(body.services || []).map((s: string) => escapeHtml(s)).join(", ") || "None selected"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Criminal History:</strong> ${escapeHtml(body.criminalHistory || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Employment:</strong> ${escapeHtml(body.employmentStatus || "Not provided")}${body.employmentIndustry ? ` — ${escapeHtml(body.employmentIndustry)}` : ""}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case Stage:</strong> ${escapeHtml(body.caseStage || "Not provided")}</p>

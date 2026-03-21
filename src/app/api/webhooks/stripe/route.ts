@@ -485,9 +485,9 @@ export async function POST(req: NextRequest) {
           html: `<h1 style="color: #EF4444;">Case Creation Failed</h1>
             <p>Payment received but case record failed to create.</p>
             <p><strong>Customer:</strong> ${escapeHtml(email)}</p>
-            <p><strong>Tier:</strong> ${tier}</p>
-            <p><strong>Order ID:</strong> ${orderData.id}</p>
-            <p><strong>Error:</strong> ${caseError.message}</p>
+            <p><strong>Tier:</strong> ${escapeHtml(tier)}</p>
+            <p><strong>Order ID:</strong> ${escapeHtml(orderData.id)}</p>
+            <p><strong>Error:</strong> ${escapeHtml(caseError.message)}</p>
             <p><strong>Action:</strong> Manually create case.</p>`,
         }, { category: "operator-alert", order_id: orderData.id, metadata: { reason: "case-insert-failed", tier } });
       }

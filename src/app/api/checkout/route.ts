@@ -219,10 +219,13 @@ export async function POST(req: NextRequest) {
     // find the original order email to include in upgrade credit calculation.
     // =========================================================================
     let caseNumberEmail: string | null = null;
+    // Validated/sanitized values — used for both DB query and Stripe metadata
+    let trimmedCaseNumber = "";
+    let trimmedCaseState = "";
     if (existingCaseNumber && existingCaseState) {
       // Validate input lengths to prevent metadata pollution
-      const trimmedCaseNumber = String(existingCaseNumber).trim().slice(0, 50);
-      const trimmedCaseState = String(existingCaseState).trim().slice(0, 2).toUpperCase();
+      trimmedCaseNumber = String(existingCaseNumber).trim().slice(0, 50);
+      trimmedCaseState = String(existingCaseState).trim().slice(0, 2).toUpperCase();
 
       if (trimmedCaseNumber && /^[A-Z]{2}$/.test(trimmedCaseState)) {
         const { data: matchedCase } = await supabase
@@ -419,11 +422,15 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     let referralStripePromoId: string | undefined;
     let referralPartnerId: string | undefined;
-    if (promoCode && typeof promoCode === "string" && promoCode.length <= 50) {
+    // Sanitize promoCode early — used in both DB lookup and Stripe metadata
+    const sanitizedPromoCode = (promoCode && typeof promoCode === "string" && promoCode.length <= 50)
+      ? promoCode.toUpperCase()
+      : null;
+    if (sanitizedPromoCode) {
       const { data: referralPartner } = await supabase
         .from("partners")
         .select("id, stripe_promo_code_id")
-        .eq("promo_code", promoCode.toUpperCase())
+        .eq("promo_code", sanitizedPromoCode)
         .eq("status", "approved")
         .limit(1)
         .maybeSingle();
@@ -517,7 +524,7 @@ export async function POST(req: NextRequest) {
           ...(consent && { consent_timestamp: new Date().toISOString() }),
           ...(resolvedChargeType && { charge_type: resolvedChargeType }),
           ...(referralPartnerId && { partner_id: referralPartnerId }),
-          ...(promoCode && { partner_promo_code: promoCode.toUpperCase() }),
+          ...(sanitizedPromoCode && { partner_promo_code: sanitizedPromoCode }),
         },
         success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
         cancel_url: `${origin}/checkout?tier=${tier}&plan=2x`,
@@ -558,13 +565,13 @@ export async function POST(req: NextRequest) {
         ...(validCourtDate && { court_date: validCourtDate }),
         ...(resolvedChargeType && { charge_type: resolvedChargeType }),
         ...(upgradeCreditCents > 0 && { upgrade_credit_applied: String(upgradeCreditCents) }),
-        ...(existingCaseNumber && existingCaseState && {
-          existing_case_number: existingCaseNumber.trim(),
-          existing_case_state: existingCaseState,
+        ...(trimmedCaseNumber && trimmedCaseState && {
+          existing_case_number: trimmedCaseNumber,
+          existing_case_state: trimmedCaseState,
         }),
         ...(caseNumberEmail && { case_number_matched_email: caseNumberEmail }),
         ...(referralPartnerId && { partner_id: referralPartnerId }),
-        ...(promoCode && { partner_promo_code: promoCode.toUpperCase() }),
+        ...(sanitizedPromoCode && { partner_promo_code: sanitizedPromoCode }),
         ...(tierConfig.includesTiers.length > 0 && {
           includes_tiers: tierConfig.includesTiers.join(","),
         }),
