@@ -42,11 +42,23 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { timingSafeEqual, createHmac } from "crypto";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
 import { verifyOperatorToken, signPhase2Token, caseThreadId } from "@/lib/site";
 import { TIER_CORE, upgradePrice, tierDisplayName } from "@/lib/tiers";
+
+/**
+ * Timing-safe string comparison using HMAC-then-compare.
+ * HMAC digests are always 32 bytes, eliminating the length oracle
+ * that raw Buffer comparison would leak via early return.
+ */
+function safeCompare(a: string, b: string): boolean {
+  const hmacA = createHmac("sha256", "inna-guard-compare").update(a).digest();
+  const hmacB = createHmac("sha256", "inna-guard-compare").update(b).digest();
+  return timingSafeEqual(hmacA, hmacB);
+}
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
@@ -329,7 +341,8 @@ export async function POST(req: NextRequest) {
   }
 
   // Accept raw OPERATOR_SECRET (curl) or HMAC-signed token (email links)
-  const isRawSecretPost = token === process.env.OPERATOR_SECRET;
+  // Uses timing-safe comparison to prevent response-time side-channel leaks.
+  const isRawSecretPost = safeCompare(token, process.env.OPERATOR_SECRET!);
   const isSignedTokenPost = !isRawSecretPost && verifyOperatorToken(token, caseId);
   if (!isRawSecretPost && !isSignedTokenPost) {
     return new NextResponse(
