@@ -16,7 +16,9 @@ export async function isFeatureEnabled(flagKey: string, tier?: string): Promise<
   const cached = cache.get(flagKey);
 
   if (cached && now - cached.fetchedAt < CACHE_TTL_MS) {
-    if (cached.tierScope && tier && !cached.tierScope.includes(tier)) return false;
+    if (cached.tierScope) {
+      if (!tier || !cached.tierScope.includes(tier)) return false;
+    }
     return cached.enabled;
   }
 
@@ -38,7 +40,9 @@ export async function isFeatureEnabled(flagKey: string, tier?: string): Promise<
     fetchedAt: now,
   });
 
-  if (data.tier_scope && tier && !data.tier_scope.includes(tier)) return false;
+  if (data.tier_scope) {
+    if (!tier || !data.tier_scope.includes(tier)) return false;
+  }
   return data.is_enabled;
 }
 
