@@ -6,7 +6,7 @@
  * These guards provide defense-in-depth (Node Runtime).
  */
 import { NextRequest, NextResponse } from "next/server";
-import { timingSafeEqual } from "crypto";
+import { timingSafeEqual, createHmac } from "crypto";
 
 // ── Error Classes ──────────────────────────────────────────
 export class AuthError {
@@ -29,11 +29,15 @@ export type GuardResult =
   | { authorized: false; error: NextResponse };
 
 // ── Timing-safe comparison (Node Runtime) ──────────────────
+// Uses HMAC-then-compare to eliminate the length oracle.
+// Raw Buffer comparison leaks whether the attacker's input has the correct
+// LENGTH via response timing (early return on bufA.length !== bufB.length).
+// HMAC digests are always 32 bytes regardless of input length, so
+// timingSafeEqual never short-circuits on length mismatch.
 function timingSafeCompare(a: string, b: string): boolean {
-  const bufA = Buffer.from(a);
-  const bufB = Buffer.from(b);
-  if (bufA.length !== bufB.length) return false;
-  return timingSafeEqual(bufA, bufB);
+  const hmacA = createHmac("sha256", "inna-guard-compare").update(a).digest();
+  const hmacB = createHmac("sha256", "inna-guard-compare").update(b).digest();
+  return timingSafeEqual(hmacA, hmacB);
 }
 
 // ── Guards ─────────────────────────────────────────────────
