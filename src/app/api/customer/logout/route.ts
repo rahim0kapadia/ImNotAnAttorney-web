@@ -6,8 +6,15 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { destroyCustomerSession, CUSTOMER_SESSION_COOKIE } from "@/lib/customer-auth";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
+  const supabase = createAdminClient();
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const { limited } = await checkRateLimit(supabase, `customer-logout:${ip}`, 10, 300);
+  if (limited) return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+
   const sessionToken = req.cookies.get(CUSTOMER_SESSION_COOKIE)?.value;
 
   if (sessionToken) {

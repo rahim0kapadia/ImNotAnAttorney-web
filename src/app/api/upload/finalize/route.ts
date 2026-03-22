@@ -27,6 +27,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { sendEmail, escapeHtml } from "@/lib/email";
 
 /** Operator email for case-ready notifications. Falls back to founder's personal Gmail. */
@@ -42,6 +43,11 @@ const OPERATOR_EMAIL =
  */
 export async function POST(req: NextRequest) {
   try {
+    const supabaseRL = createAdminClient();
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const { limited } = await checkRateLimit(supabaseRL, `finalize:${ip}`, 10, 300);
+    if (limited) return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+
     const body = await req.json();
     const { caseId, email } = body;
 
