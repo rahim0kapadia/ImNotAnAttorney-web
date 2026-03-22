@@ -314,10 +314,15 @@ export async function POST(req: NextRequest) {
           .gte("paid_at", thirtyDaysAgo.toISOString());
 
         if (playbookOrders && playbookOrders.length > 0) {
-          const playbookCredit = playbookOrders.reduce(
+          let playbookCredit = playbookOrders.reduce(
             (sum: number, o: { amount: number }) => sum + (o.amount || 0),
             0
           );
+          // Cap playbook credit at target tier price minus minimum charge
+          const targetTierPrice = TIERS[tier]?.price || 0;
+          if (playbookCredit > 0) {
+            playbookCredit = Math.min(playbookCredit, Math.max(0, targetTierPrice - 50));
+          }
           upgradeCreditCents += playbookCredit;
         }
       }
@@ -487,7 +492,7 @@ export async function POST(req: NextRequest) {
     // charge. The webhook sets cancel_at on the subscription after creation
     // so it auto-terminates after 2 billing cycles.
     // =========================================================================
-    if (paymentPlan && tierConfig.isDigitalProduct) {
+    if (paymentPlan === true && tierConfig.isDigitalProduct) {
       const installmentAmount = Math.ceil(tierConfig.price / 2);
       const tierStripeInstallment = stripeForTier(tier);
 
@@ -557,7 +562,7 @@ export async function POST(req: NextRequest) {
       metadata: {
         tier,
         product_name: tierConfig.name,
-        ...(productType === "digital-product" && { product_type: "digital-product" }),
+        ...(tierConfig.isDigitalProduct && { product_type: "digital-product" }),
         ...(prerequisiteSkipped && { prerequisite_skipped: "true" }),
         ...(upgradeCreditVoided && { upgrade_credit_voided: "true" }),
         ...(consent && { consent_timestamp: new Date().toISOString() }),
