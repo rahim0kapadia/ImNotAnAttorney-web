@@ -63,11 +63,23 @@ export async function sendReportExpiryWarnings(ctx: CronContext): Promise<CronRe
         `,
       }, { category: "report-expiry-warning", case_id: expCase.id, metadata: { tier: expCase.tier } });
 
-      if (sendResult.success && expSub?.id) {
-        await ctx.supabase.from("drip_emails").insert({
-          subscriber_id: expSub.id,
-          email_key: `report_expiry_warning_${expCase.id}`,
-        });
+      if (sendResult.success) {
+        // Ensure subscriber exists for dedup (some customers have no subscriber record)
+        let subId = expSub?.id;
+        if (!subId) {
+          const { data: newSub } = await ctx.supabase
+            .from("subscribers")
+            .upsert({ email: expCase.email.toLowerCase(), source: "checkout" }, { onConflict: "email" })
+            .select("id")
+            .single();
+          subId = newSub?.id;
+        }
+        if (subId) {
+          await ctx.supabase.from("drip_emails").insert({
+            subscriber_id: subId,
+            email_key: `report_expiry_warning_${expCase.id}`,
+          });
+        }
         result.sent++;
       }
     }

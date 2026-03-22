@@ -68,7 +68,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
 
-    const body = await req.json();
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    }
     const { firstName, email, chargeType } = body;
 
     // ──────────────────────────────────────────────────────────────
@@ -82,6 +87,9 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Strip control characters from firstName (prevent email header injection)
+    const sanitizedFirstName = firstName.replace(/[\r\n]/g, "").slice(0, 100);
 
     // Validate email format (basic regex — not exhaustive, but catches typos)
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -161,7 +169,7 @@ export async function POST(req: NextRequest) {
       : "unknown";
 
     const { data: insertedIntake, error } = await supabase.from("intakes").insert({
-      first_name: firstName.slice(0, 100),
+      first_name: sanitizedFirstName,
       last_name: cap(body.lastName, 100),
       email: email.toLowerCase().trim(),
       phone: cap(body.phone, 30),
@@ -325,8 +333,8 @@ export async function POST(req: NextRequest) {
     await sendEmail({
       to: email.toLowerCase().trim(),
       subject: hasPendingCase
-        ? `We're analyzing your case now, ${firstName}`
-        : `We Received Your Case Details, ${firstName}`,
+        ? `We're analyzing your case now, ${sanitizedFirstName}`
+        : `We Received Your Case Details, ${sanitizedFirstName}`,
       unsubscribeEmail: email.toLowerCase().trim(),
       html: confirmationHtml,
     }, { category: "intake-confirmation", metadata: { charge_type: chargeType } });
@@ -340,7 +348,7 @@ export async function POST(req: NextRequest) {
     // customer's #1 specific question and situation narrative if provided.
     await sendEmail({
       to: OPERATOR_EMAIL,
-      subject: `New Intake: ${chargeType} — ${firstName}`,
+      subject: `New Intake: ${chargeType} — ${sanitizedFirstName}`,
       html: `
         <h1 style="color: #F59E0B;">New Intake Submission</h1>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">

@@ -535,11 +535,22 @@ export async function sendAwaitingIntakeReminders(ctx: CronContext): Promise<Cro
         `,
       }, { category: "intake-reminder", case_id: awCase.id, metadata: { tier: awCase.tier } });
 
-      if (sendResult.success && existingSub?.id) {
-        await ctx.supabase.from("drip_emails").insert({
-          subscriber_id: existingSub.id,
-          email_key: `intake_reminder_${awCase.id}`,
-        });
+      if (sendResult.success) {
+        let subId = existingSub?.id;
+        if (!subId) {
+          const { data: newSub } = await ctx.supabase
+            .from("subscribers")
+            .upsert({ email: awCase.email.toLowerCase(), source: "checkout" }, { onConflict: "email" })
+            .select("id")
+            .single();
+          subId = newSub?.id;
+        }
+        if (subId) {
+          await ctx.supabase.from("drip_emails").insert({
+            subscriber_id: subId,
+            email_key: `intake_reminder_${awCase.id}`,
+          });
+        }
         result.sent++;
       }
     }
@@ -606,11 +617,22 @@ export async function escalateStuckIntakes(ctx: CronContext): Promise<CronResult
           <p><strong>Action:</strong> ${isSevenDay ? "Consider reaching out directly or initiating a refund." : "Send a personal follow-up email."}</p>`,
       }, { category: "operator-alert", case_id: escCase.id, metadata: { reason: "intake-escalation", days: daysSincePaid } });
 
-      if (escSub?.id) {
-        await ctx.supabase.from("drip_emails").insert({
-          subscriber_id: escSub.id,
-          email_key: escalationKey,
-        });
+      {
+        let subId = escSub?.id;
+        if (!subId) {
+          const { data: newSub } = await ctx.supabase
+            .from("subscribers")
+            .upsert({ email: escCase.email.toLowerCase(), source: "checkout" }, { onConflict: "email" })
+            .select("id")
+            .single();
+          subId = newSub?.id;
+        }
+        if (subId) {
+          await ctx.supabase.from("drip_emails").insert({
+            subscriber_id: subId,
+            email_key: escalationKey,
+          });
+        }
       }
     }
   }
