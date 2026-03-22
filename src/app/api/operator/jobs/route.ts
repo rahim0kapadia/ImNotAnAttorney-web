@@ -10,13 +10,12 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { isOperatorAuthorized } from "@/lib/operator-auth";
+import { requireAdmin } from "@/lib/auth/guards";
 import type { ProcessingJobRow } from "@/lib/types/operator";
 
 export async function GET(req: NextRequest) {
-  if (!isOperatorAuthorized(req)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const auth = requireAdmin(req);
+  if (!auth.authorized) return auth.error;
 
   const supabase = createAdminClient();
   const searchParams = req.nextUrl.searchParams;

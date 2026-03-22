@@ -12,15 +12,14 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { isOperatorAuthorized } from "@/lib/operator-auth";
+import { requireAdmin } from "@/lib/auth/guards";
 import type { CaseDetail } from "@/lib/types/operator";
 
 type RouteContext = { params: Promise<{ id: string }> };
 
 export async function GET(req: NextRequest, { params }: RouteContext) {
-  if (!isOperatorAuthorized(req)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const auth = requireAdmin(req);
+  if (!auth.authorized) return auth.error;
 
   const { id } = await params;
   if (!id) {
@@ -207,9 +206,8 @@ export async function GET(req: NextRequest, { params }: RouteContext) {
 }
 
 export async function PATCH(req: NextRequest, { params }: RouteContext) {
-  if (!isOperatorAuthorized(req)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const auth = requireAdmin(req);
+  if (!auth.authorized) return auth.error;
 
   const { id } = await params;
   if (!id) {

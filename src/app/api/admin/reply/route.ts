@@ -10,14 +10,13 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { isOperatorAuthorized } from "@/lib/operator-auth";
+import { requireAdmin } from "@/lib/auth/guards";
 
 const RESEND_API = "https://api.resend.com";
 
 export async function POST(req: NextRequest) {
-  if (!isOperatorAuthorized(req)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const auth = requireAdmin(req);
+  if (!auth.authorized) return auth.error;
 
   const { to, subject, text, message_id } = await req.json();
 

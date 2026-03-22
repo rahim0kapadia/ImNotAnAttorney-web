@@ -9,16 +9,15 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { isOperatorAuthorized } from "@/lib/operator-auth";
+import { requireAdmin } from "@/lib/auth/guards";
 import type { CaseListItem } from "@/lib/types/operator";
 
 const CASE_LIST_FIELDS =
   "id, email, tier, charge_type, status, phase, created_at, delivery_due_at, next_update_due_at, document_count, finding_count, witness_count, discovery_health_score, defense_opportunity_index, report_token";
 
 export async function GET(req: NextRequest) {
-  if (!isOperatorAuthorized(req)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const auth = requireAdmin(req);
+  if (!auth.authorized) return auth.error;
 
   const supabase = createAdminClient();
   const searchParams = req.nextUrl.searchParams;
