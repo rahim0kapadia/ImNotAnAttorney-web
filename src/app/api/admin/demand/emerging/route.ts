@@ -4,23 +4,11 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { timingSafeEqual } from "crypto";
-
-function isAuthorized(req: NextRequest): boolean {
-  const password = process.env.ADMIN_PASSWORD;
-  if (!password) return false;
-  const fromHeader = req.headers.get("x-admin-password");
-  if (!fromHeader) return false;
-  const a = Buffer.from(password);
-  const b = Buffer.from(fromHeader);
-  if (a.length !== b.length) return false;
-  return timingSafeEqual(a, b);
-}
+import { requireAdmin } from "@/lib/auth/guards";
 
 export async function GET(req: NextRequest) {
-  if (!isAuthorized(req)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const auth = requireAdmin(req);
+  if (!auth.authorized) return auth.error;
 
   const supabase = createAdminClient();
   const status = req.nextUrl.searchParams.get("status") || "detected";
@@ -40,9 +28,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-  if (!isAuthorized(req)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const auth = requireAdmin(req);
+  if (!auth.authorized) return auth.error;
 
   const { id, action, promoted_to_charge_type, promoted_to_pain_point, notes } = await req.json();
   if (!id || !action) {
