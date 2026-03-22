@@ -217,7 +217,7 @@ export const TIER_CORE = {
     requiresDiscovery: true,
     isAddon: false,
     isDigitalProduct: false,
-    requiresWarRoom: true,
+    requiresWarRoom: false,
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: ["case-decoder", "intelligence-brief", "x-ray", "war-room"] as readonly string[],

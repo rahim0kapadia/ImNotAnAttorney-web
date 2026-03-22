@@ -12,7 +12,7 @@
  * - Email normalization (lowercase + trim) for consistent Supabase lookups
  * - Upgrade credit calculation: 100% of prior lower-tier purchases applied as a
  *   one-time Stripe coupon, with a 12-month expiration window
- * - Situation Room ($9,997) requires a prior paid War Room order (prerequisite gate)
+ * - Situation Room ($9,997): no prerequisite gate — pipeline delivers tiers sequentially
  * - Consent checkbox required server-side for tiers >= $2,497 (legal risk mitigation)
  * - Redirect URLs sourced from NEXT_PUBLIC_SITE_URL env var, never from the request
  *   Origin header, to prevent open-redirect attacks
@@ -154,35 +154,6 @@ export async function POST(req: NextRequest) {
       if (refundedOrder) {
         upgradeCreditVoided = true;
       }
-    }
-
-    // =========================================================================
-    // 5. SITUATION ROOM PREREQUISITE GATE
-    // The Situation Room ($9,997) requires a prior paid War Room ($4,997) order.
-    // This is a "soft gate" -- we don't block the purchase, but flag it in the
-    // Stripe session metadata (prerequisite_skipped: "true") and add a note to
-    // the line item description. The operator can then follow up manually.
-    // Without an email, we can't verify the prerequisite, so it's auto-skipped.
-    // =========================================================================
-    let prerequisiteSkipped = false;
-    if (tier === "situation-room" && normalizedEmail) {
-      const { data: warRoomOrder, error: warRoomError } = await supabase
-        .from("orders")
-        .select("id")
-        .eq("email", normalizedEmail)
-        .eq("tier", "war-room")
-        .eq("status", "paid")
-        .limit(1)
-        .maybeSingle();
-
-      if (warRoomError) {
-        console.error("[Checkout] War Room prerequisite check error:", warRoomError);
-      }
-      if (!warRoomOrder) {
-        prerequisiteSkipped = true;
-      }
-    } else if (tier === "situation-room" && !normalizedEmail) {
-      prerequisiteSkipped = true;
     }
 
     // =========================================================================
@@ -395,9 +366,7 @@ export async function POST(req: NextRequest) {
           currency: "usd",
           product_data: {
             name: tierConfig.name,
-            description: prerequisiteSkipped
-              ? `Delivery: ${tierConfig.delivery} | Note: War Room prerequisite not confirmed`
-              : `Delivery: ${tierConfig.delivery}`,
+            description: `Delivery: ${tierConfig.delivery}`,
           },
           unit_amount: tierConfig.price,
         },
@@ -563,7 +532,6 @@ export async function POST(req: NextRequest) {
         tier,
         product_name: tierConfig.name,
         ...(tierConfig.isDigitalProduct && { product_type: "digital-product" }),
-        ...(prerequisiteSkipped && { prerequisite_skipped: "true" }),
         ...(upgradeCreditVoided && { upgrade_credit_voided: "true" }),
         ...(consent && { consent_timestamp: new Date().toISOString() }),
         ...(priorityDelivery && { priority_delivery: "true" }),
