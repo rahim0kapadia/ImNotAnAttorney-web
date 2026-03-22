@@ -332,3 +332,30 @@ export async function sendEmailWithOperatorAlert(
   }, logContext ? { category: "operator-alert", case_id: logContext.case_id, metadata: { original_category: logContext.category, error: retry.error } } : undefined);
   return retry;
 }
+
+// ============================================================
+// CUSTOMER MAGIC LINK EMAIL
+// ============================================================
+
+/**
+ * Sends a magic link email to a customer for portal login.
+ *
+ * @param email - Customer's email address.
+ * @param magicLinkUrl - Full URL including the token fragment.
+ * @returns Result indicating success or failure.
+ */
+export async function sendCustomerMagicLinkEmail(
+  email: string,
+  magicLinkUrl: string
+): Promise<EmailResult> {
+  return sendEmail({
+    to: email,
+    subject: "Your ImNotAnAttorney Login Link",
+    html: `
+      <h1 style="font-size: 24px; margin-bottom: 16px; color: #FAFAF9;">Access Your Cases</h1>
+      <p style="color: #A8A29E; margin-bottom: 24px;">Click the button below to log in to your case portal. This link expires in 15 minutes.</p>
+      <a href="${magicLinkUrl}" style="display: inline-block; background: #F59E0B; color: #0C0A09; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">Log In to My Cases</a>
+      <p style="color: #78716C; font-size: 14px; margin-top: 24px;">If you didn't request this link, you can safely ignore this email.</p>
+    `,
+  });
+}
