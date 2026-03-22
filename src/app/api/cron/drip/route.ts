@@ -1905,12 +1905,15 @@ export async function GET(req: NextRequest) {
       .in("status", weeklyStatuses);
 
     if (weeklyCases && weeklyCases.length > 0) {
-      // Compute week number (ISO week of year) for dedup key
+      // Compute week number (ISO 8601) for dedup key
+      function getISOWeek(date: Date): number {
+        const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+        d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+        const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+        return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+      }
       const now = new Date();
-      const startOfYear = new Date(now.getFullYear(), 0, 1);
-      const weekNumber = Math.ceil(
-        ((now.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24) + startOfYear.getDay() + 1) / 7
-      );
+      const weekNumber = getISOWeek(now);
 
       for (const wCase of weeklyCases) {
         const emailKey = `weekly-progress-${wCase.id}-w${weekNumber}`;
