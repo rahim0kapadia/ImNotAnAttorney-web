@@ -114,6 +114,27 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // ── Customer API routes (/api/customer/*) ──────────────────
+  // Cookie-exists check only (no DB call in Edge). Route handlers do the
+  // actual session validation via validateCustomerSession() in Node runtime.
+  if (pathname.startsWith("/api/customer/")) {
+    // Public routes — no auth needed
+    if (
+      pathname === "/api/customer/magic-link" ||
+      pathname === "/api/customer/magic-link/verify" ||
+      pathname === "/api/customer/logout"
+    ) {
+      return NextResponse.next();
+    }
+    // All other customer routes — check cookie exists
+    // Must match CUSTOMER_SESSION_COOKIE in src/lib/customer-auth.ts (can't import — Edge Runtime)
+    const session = req.cookies.get("customer-session");
+    if (!session?.value) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    return NextResponse.next();
+  }
+
   // ── Nonce-based CSP for page routes ──────────────────────────
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
 
@@ -162,5 +183,6 @@ export const config = {
     "/api/evaluate/:path*",
     "/api/deliver",
     "/api/partner/:path*",
+    "/api/customer/:path*",
   ],
 };
