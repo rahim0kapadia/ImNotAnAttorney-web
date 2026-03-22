@@ -58,14 +58,14 @@ export async function POST(req: NextRequest) {
     // This intentionally avoids strict RFC 5322 validation which would reject
     // edge-case-valid addresses. The real validation happens when we try to send.
     // =========================================================================
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    const normalizedEmail = typeof email === "string" ? email.toLowerCase().trim() : "";
+
+    if (!normalizedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
       return NextResponse.json(
         { error: "Valid email required" },
         { status: 400 }
       );
     }
-
-    const normalizedEmail = email.toLowerCase().trim();
 
     // =========================================================================
     // 2. SUBSCRIBER UPSERT

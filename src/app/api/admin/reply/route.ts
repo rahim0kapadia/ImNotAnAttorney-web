@@ -106,13 +106,13 @@ export async function POST(req: NextRequest) {
       const errData = await res.json().catch(() => ({}));
       console.error("[Admin Reply] Resend error:", errData);
       return NextResponse.json(
-        { error: errData.message || "Failed to send" },
+        { error: "Failed to send email" },
         { status: 502 }
       );
     }
 
     const result = await res.json();
-    console.log(`[Admin Reply] Sent reply to ${to} — ${result.id}`);
+    console.log(`[Admin Reply] Sent reply — id: ${result.id}`);
     return NextResponse.json({ ok: true, id: result.id });
   } catch (err) {
     console.error("[Admin Reply] Send error:", err);

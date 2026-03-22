@@ -6,19 +6,8 @@ import {
   useOperatorPassword,
   operatorHeaders,
 } from "@/components/OperatorShell";
+import { formatCurrency } from "@/lib/format";
 import type { CaseMetrics } from "@/lib/types/operator";
-
-// ============================================================
-// Helpers
-// ============================================================
-
-function formatCurrency(cents: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-  }).format(cents / 100);
-}
 
 // ============================================================
 // Page entry

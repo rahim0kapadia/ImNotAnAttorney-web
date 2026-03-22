@@ -8,21 +8,8 @@ import {
   operatorHeaders,
 } from "@/components/OperatorShell";
 import { StatusBadge } from "@/components/StatusBadge";
+import { formatDateTime as formatDate } from "@/lib/format";
 import type { ProcessingJobRow } from "@/lib/types/operator";
-
-// ============================================================
-// Helpers
-// ============================================================
-
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
-}
 
 // ============================================================
 // Status badge

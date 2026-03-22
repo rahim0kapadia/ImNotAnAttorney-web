@@ -8,6 +8,7 @@ import {
   operatorHeaders,
 } from "@/components/OperatorShell";
 import { StatusBadge } from "@/components/StatusBadge";
+import { formatDate, formatCurrency } from "@/lib/format";
 import type {
   CaseMetrics,
   CaseListItem,
@@ -19,21 +20,7 @@ import type {
 // Helpers
 // ============================================================
 
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-}
-
-function formatCurrency(cents: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-  }).format(cents / 100);
-}
+// formatDate, formatCurrency imported from @/lib/format
 
 function timeAgo(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();

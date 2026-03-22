@@ -61,9 +61,22 @@ export function ChargeTypeSelector() {
               key={charge.id}
               role="radio"
               aria-checked={isSelected}
+              tabIndex={isSelected || (!selected && charge.id === charges[0].id) ? 0 : -1}
               onClick={() =>
                 setSelected(isSelected ? null : charge.id)
               }
+              onKeyDown={(e) => {
+                const ids = charges.map((c) => c.id);
+                const idx = ids.indexOf(charge.id);
+                let next = -1;
+                if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (idx + 1) % ids.length;
+                if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (idx - 1 + ids.length) % ids.length;
+                if (next >= 0) {
+                  e.preventDefault();
+                  setSelected(ids[next]);
+                  (e.currentTarget.parentElement?.children[next] as HTMLElement)?.focus();
+                }
+              }}
               className={`rounded-lg border px-4 py-2 text-sm font-semibold transition-all cursor-pointer ${
                 isSelected
                   ? "border-amber-500 bg-amber-500/5 text-amber-400"

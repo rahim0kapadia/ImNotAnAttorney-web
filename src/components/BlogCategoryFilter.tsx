@@ -29,6 +29,7 @@ export function BlogCategoryFilter() {
         <button
           key={cat.value}
           onClick={() => handleFilter(cat.value)}
+          aria-pressed={current === cat.value}
           className={`rounded-full px-4 py-1.5 text-xs font-medium transition-colors ${
             current === cat.value
               ? "bg-amber-500 text-black"

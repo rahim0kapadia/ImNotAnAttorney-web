@@ -304,7 +304,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
         if (sentKeys?.has(`researching_nudge_${stuck.id}`)) continue;
       }
 
-      await sendEmail({
+      const nudgeResult = await sendEmail({
         to: ctx.operatorEmail,
         subject: `REMINDER: IB judge research pending for ${hoursStuck}+ hours — ${stuck.email}`,
         html: `<h1 style="color: #F59E0B;">Intelligence Brief Awaiting Judge Research</h1>
@@ -316,11 +316,21 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
           <p><strong>Action:</strong> Enter judge research data via the judge-research endpoint to trigger Phase B.</p>`,
       }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-researching", hours: hoursStuck } });
 
-      if (existingSub?.id) {
-        await ctx.supabase.from("drip_emails").upsert(
-          { subscriber_id: existingSub.id, email_key: `researching_nudge_${stuck.id}` },
-          { onConflict: "subscriber_id,email_key" }
-        );
+      if (nudgeResult.success) {
+        let subId = existingSub?.id;
+        if (!subId) {
+          const { data: newSub } = await ctx.supabase
+            .from("subscribers")
+            .upsert({ email: stuck.email.toLowerCase(), source: "system" }, { onConflict: "email" })
+            .select("id").single();
+          subId = newSub?.id;
+        }
+        if (subId) {
+          await ctx.supabase.from("drip_emails").upsert(
+            { subscriber_id: subId, email_key: `researching_nudge_${stuck.id}` },
+            { onConflict: "subscriber_id,email_key" }
+          );
+        }
       }
     }
   }
@@ -348,7 +358,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
         if (sentKeys?.has(`researching_escalation_${stuck.id}`)) continue;
       }
 
-      await sendEmail({
+      const escResult = await sendEmail({
         to: ctx.operatorEmail,
         subject: `URGENT: Judge research pending ${hoursStuck}+ hours — customer waiting — ${stuck.email}`,
         html: `<h1 style="color: #EF4444;">Intelligence Brief Blocked — Judge Research Overdue</h1>
@@ -361,11 +371,21 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
           <p><strong>Action:</strong> Submit judge research immediately or contact the customer about the delay.</p>`,
       }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "researching-escalation", hours: hoursStuck } });
 
-      if (escSub?.id) {
-        await ctx.supabase.from("drip_emails").insert({
-          subscriber_id: escSub.id,
-          email_key: `researching_escalation_${stuck.id}`,
-        });
+      if (escResult.success) {
+        let subId = escSub?.id;
+        if (!subId) {
+          const { data: newSub } = await ctx.supabase
+            .from("subscribers")
+            .upsert({ email: stuck.email.toLowerCase(), source: "system" }, { onConflict: "email" })
+            .select("id").single();
+          subId = newSub?.id;
+        }
+        if (subId) {
+          await ctx.supabase.from("drip_emails").insert({
+            subscriber_id: subId,
+            email_key: `researching_escalation_${stuck.id}`,
+          });
+        }
       }
     }
   }

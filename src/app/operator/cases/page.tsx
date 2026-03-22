@@ -8,19 +8,8 @@ import {
   operatorHeaders,
 } from "@/components/OperatorShell";
 import { StatusBadge } from "@/components/StatusBadge";
+import { formatDate } from "@/lib/format";
 import type { CaseListItem } from "@/lib/types/operator";
-
-// ============================================================
-// Helpers
-// ============================================================
-
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-}
 
 // ============================================================
 // Status badge
