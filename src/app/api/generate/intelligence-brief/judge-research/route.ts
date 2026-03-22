@@ -22,19 +22,15 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { requireOperatorSecret } from "@/lib/auth/guards";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 export async function POST(req: NextRequest) {
-  // ── AUTH ────────────────────────────────────────────────────
-  const authHeader = req.headers.get("authorization");
-  if (
-    !process.env.OPERATOR_SECRET ||
-    authHeader !== `Bearer ${process.env.OPERATOR_SECRET}`
-  ) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  // ── AUTH (timing-safe via guard library) ─────────────────────
+  const auth = requireOperatorSecret(req);
+  if (!auth.authorized) return auth.error;
 
   // ── INPUT VALIDATION ───────────────────────────────────────
   const body = await req.json();

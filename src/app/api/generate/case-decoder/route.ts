@@ -30,6 +30,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email";
 import { caseThreadId } from "@/lib/site";
+import { requireOperatorSecret } from "@/lib/auth/guards";
 
 /**
  * Thin dispatcher — validates auth + idempotency, then fires off
@@ -42,19 +43,10 @@ const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
-  // AUTH: Bearer token validation with undefined-env-var guard
+  // AUTH: Bearer token validation (timing-safe via guard library)
   // ──────────────────────────────────────────────────────────────
-  // If OPERATOR_SECRET is undefined, the check `!process.env.OPERATOR_SECRET`
-  // short-circuits to true and rejects the request. This prevents the scenario
-  // where both the header and env var are "undefined" (string), which would
-  // otherwise pass the equality check and grant unauthorized access.
-  const authHeader = req.headers.get("authorization");
-  if (
-    !process.env.OPERATOR_SECRET ||
-    authHeader !== `Bearer ${process.env.OPERATOR_SECRET}`
-  ) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const auth = requireOperatorSecret(req);
+  if (!auth.authorized) return auth.error;
 
   // ──────────────────────────────────────────────────────────────
   // INPUT VALIDATION
