@@ -1,0 +1,351 @@
+/**
+ * @file Part 2 — Post-purchase emails (customers who bought)
+ *
+ * Sends tier-specific follow-up emails after purchase/delivery.
+ * Skips refunded orders (status != "paid") and unsubscribed customers.
+ * Supports three timing modes:
+ *   - Relative to purchase (delayDays from paid_at)
+ *   - Relative to delivery (delayDays from delivered_at)
+ *   - Relative to submission (delayDays from case submission)
+ *
+ * N+1 FIX: Batch-fetches subscribers, drip_emails, and cases upfront
+ * instead of per-order queries.
+ */
+
+import { sendEmailWithRetry } from "@/lib/email";
+import { getPostPurchaseEmails, personalizeEmailHtml } from "@/lib/drip-emails";
+import type { DripEmail, DripPersonalizationData } from "@/lib/drip-emails";
+import { caseThreadId } from "@/lib/site";
+import type { CronContext, CronResult } from "./types";
+import { emptyResult } from "./types";
+
+export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResult> {
+  const result = emptyResult();
+
+  const thirtyDaysAgo = new Date(ctx.now);
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+  // Only fetch orders with status "paid" — refunded orders are excluded.
+  const { data: orders, error: orderError } = await ctx.supabase
+    .from("orders")
+    .select("id, email, tier, paid_at")
+    .eq("status", "paid")
+    .gte("paid_at", thirtyDaysAgo.toISOString())
+    .order("paid_at", { ascending: true })
+    .limit(200);
+
+  if (orderError) {
+    console.error("[Drip Cron] Orders query error:", orderError);
+    result.errors++;
+  }
+
+  if (!orders || orders.length === 0) return result;
+
+  // ── N+1 FIX: Batch-fetch all subscribers for order emails ──
+  const orderEmails = [...new Set(orders.map((o) => o.email.toLowerCase()))];
+  const { data: allSubscribers } = await ctx.supabase
+    .from("subscribers")
+    .select("id, email, unsubscribed_at")
+    .in("email", orderEmails);
+
+  const subscriberByEmail = new Map<string, { id: string; unsubscribed_at: string | null }>();
+  for (const sub of allSubscribers ?? []) {
+    subscriberByEmail.set(sub.email.toLowerCase(), sub);
+  }
+
+  // ── N+1 FIX: Batch-fetch all drip_emails for those subscriber IDs ──
+  const subscriberIds = (allSubscribers ?? []).map((s) => s.id);
+  const { data: allDripEmails } = subscriberIds.length > 0
+    ? await ctx.supabase
+        .from("drip_emails")
+        .select("subscriber_id, email_key")
+        .in("subscriber_id", subscriberIds)
+    : { data: [] as { subscriber_id: string; email_key: string }[] };
+
+  const sentBySubscriber = new Map<string, Set<string>>();
+  for (const row of allDripEmails ?? []) {
+    if (!sentBySubscriber.has(row.subscriber_id)) {
+      sentBySubscriber.set(row.subscriber_id, new Set());
+    }
+    sentBySubscriber.get(row.subscriber_id)!.add(row.email_key);
+  }
+
+  // ── N+1 FIX: Batch-fetch all cases for those emails ──
+  const { data: allCases } = await ctx.supabase
+    .from("cases")
+    .select("id, email, tier, intake_id, report_token, status, delivered_at, updated_at, file_urls, created_at")
+    .in("email", orderEmails);
+
+  // Group cases by email+tier for lookup (most recent first)
+  const casesByEmailTier = new Map<string, NonNullable<typeof allCases>>();
+  for (const c of allCases ?? []) {
+    const key = `${c.email.toLowerCase()}:${c.tier}`;
+    if (!casesByEmailTier.has(key)) {
+      casesByEmailTier.set(key, []);
+    }
+    casesByEmailTier.get(key)!.push(c);
+  }
+  // Sort each group by created_at descending (most recent first)
+  for (const [, cases] of casesByEmailTier) {
+    cases.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  }
+
+  for (const order of orders) {
+    try {
+      const paidAt = new Date(order.paid_at);
+      const daysSincePurchase = Math.floor(
+        (ctx.now.getTime() - paidAt.getTime()) / (1000 * 60 * 60 * 24)
+      );
+
+      const tierEmails = getPostPurchaseEmails(order.tier);
+      if (tierEmails.length === 0) {
+        result.skipped++;
+        continue;
+      }
+
+      // ── SUBSCRIBER LOOKUP + CAN-SPAM CHECK (from batch) ──
+      const subMatch = subscriberByEmail.get(order.email.toLowerCase()) ?? null;
+      const subscriberId = subMatch?.id;
+
+      if (subMatch?.unsubscribed_at) {
+        result.skipped++;
+        continue;
+      }
+
+      // ── DEDUP CHECK (from batch) ──
+      const sentKeys = subscriberId
+        ? sentBySubscriber.get(subscriberId) ?? new Set<string>()
+        : new Set<string>();
+
+      // ── SKIP UPSELL FOR INCLUDED DELIVERABLES ──
+      let skipUpsell = false;
+      if (order.tier === "case-decoder") {
+        const { data: higherOrder } = await ctx.supabase
+          .from("orders")
+          .select("id")
+          .eq("email", order.email.toLowerCase())
+          .eq("status", "paid")
+          .neq("tier", "case-decoder")
+          .neq("tier", "extra-witness")
+          .neq("tier", "witness-pack")
+          .limit(1)
+          .maybeSingle();
+        if (higherOrder) skipUpsell = true;
+      }
+
+      // ── FIND NEXT UNSENT POST-PURCHASE EMAIL ──
+      let nextEmail: DripEmail | null = null;
+      for (const email of tierEmails) {
+        if (email.delayDays === 0) continue;
+        if (email.relativeToMeeting) continue;
+        if (skipUpsell && email.key.includes("upsell")) continue;
+
+        // ── RELATIVE-TO-SUBMISSION TIMING ──
+        if (email.relativeToSubmission) {
+          const caseKey = `${order.email.toLowerCase()}:${order.tier}`;
+          const cases = casesByEmailTier.get(caseKey) ?? [];
+          const submittedCase = cases.find((c) =>
+            ["submitted", "processing", "review"].includes(c.status)
+          );
+
+          if (!submittedCase?.updated_at) continue;
+          if (["delivered", "refunded"].includes(submittedCase.status)) continue;
+
+          const submittedAt = new Date(submittedCase.updated_at);
+          const daysSinceSubmission = Math.floor(
+            (ctx.now.getTime() - submittedAt.getTime()) / (1000 * 60 * 60 * 24)
+          );
+
+          if (daysSinceSubmission >= email.delayDays && !sentKeys.has(email.key)) {
+            nextEmail = email;
+            break;
+          }
+          continue;
+        }
+
+        // ── RELATIVE-TO-DELIVERY TIMING ──
+        if (email.relativeToDelivery) {
+          const caseKey = `${order.email.toLowerCase()}:${order.tier}`;
+          const cases = casesByEmailTier.get(caseKey) ?? [];
+          const deliveredCase = cases.find(
+            (c) => c.status === "delivered" && c.delivered_at
+          );
+
+          if (!deliveredCase?.delivered_at) continue;
+
+          const deliveredAt = new Date(deliveredCase.delivered_at);
+          const daysSinceDelivery = Math.floor(
+            (ctx.now.getTime() - deliveredAt.getTime()) / (1000 * 60 * 60 * 24)
+          );
+
+          if (daysSinceDelivery >= email.delayDays && !sentKeys.has(email.key)) {
+            nextEmail = email;
+            break;
+          }
+          continue;
+        }
+
+        // ── RELATIVE-TO-PURCHASE TIMING (default) ──
+        if (daysSincePurchase >= email.delayDays && !sentKeys.has(email.key)) {
+          nextEmail = email;
+          break;
+        }
+      }
+
+      if (!nextEmail) {
+        result.skipped++;
+        continue;
+      }
+
+      // ── LINKED CASE (for threading + placeholder resolution) ──
+      const caseKey = `${order.email.toLowerCase()}:${order.tier}`;
+      const linkedCases = casesByEmailTier.get(caseKey) ?? [];
+      const linkedCase = linkedCases[0] ?? null;
+
+      // ── INTAKE DATA (for email personalization) ──
+      let intakeData: DripPersonalizationData | null = null;
+      if (linkedCase?.intake_id) {
+        const { data } = await ctx.supabase
+          .from("intakes")
+          .select("filled_out_by, case_stage, employment_industry, first_name")
+          .eq("id", linkedCase.intake_id)
+          .single();
+        intakeData = data;
+      }
+
+      // ── GUARD: Intake reminders only send if intake hasn't been submitted ──
+      if (nextEmail.key.endsWith("_intake_reminder") && linkedCase) {
+        if (linkedCase.status !== "awaiting-intake") {
+          result.skipped++;
+          continue;
+        }
+      }
+
+      // ── GUARD: Upload reminder only sends if customer hasn't uploaded yet ──
+      if (nextEmail.key.endsWith("_upload_reminder") && linkedCase) {
+        const uploadedStatuses = ["submitted", "processing", "review", "delivered", "refunded"];
+        const hasUploads = (linkedCase.file_urls?.length || 0) > 0;
+        const pastUpload = uploadedStatuses.includes(linkedCase.status);
+        if (hasUploads || pastUpload) {
+          result.skipped++;
+          continue;
+        }
+      }
+
+      // ── GUARD: IB Phase 2 reminder only sends if Phase 2 intake hasn't been submitted ──
+      if (nextEmail.key === "post_intelligence_brief_phase2_reminder") {
+        const ibCases = casesByEmailTier.get(
+          `${order.email.toLowerCase()}:intelligence-brief`
+        ) ?? [];
+        const ibCase = ibCases[0] ?? null;
+
+        if (!ibCase || ibCase.status !== "intake") {
+          result.skipped++;
+          continue;
+        }
+      }
+
+      // ── GUARD: Status update emails only send after upload submission ──
+      if (nextEmail.key.includes("status_update") && linkedCase) {
+        const submittedStatuses = ["submitted", "generating", "review", "delivered"];
+        if (!submittedStatuses.includes(linkedCase.status)) {
+          result.skipped++;
+          continue;
+        }
+      }
+
+      // ── RESOLVE PLACEHOLDERS ──
+      let emailHtml = nextEmail.html;
+      if (
+        emailHtml.includes("{{CASE_ID}}") ||
+        emailHtml.includes("{{EMAIL}}") ||
+        emailHtml.includes("{{REPORT_URL}}")
+      ) {
+        const reportOrigin = ctx.siteUrl;
+        const reportUrl = linkedCase?.report_token
+          ? `${reportOrigin}/report/${linkedCase.report_token}`
+          : `${reportOrigin}/services`;
+        emailHtml = emailHtml
+          .split("{{CASE_ID}}").join(linkedCase?.id || "")
+          .split("{{EMAIL}}").join(encodeURIComponent(order.email))
+          .split("{{REPORT_URL}}").join(reportUrl);
+      }
+
+      // ── RESOLVE DOCUMENT COUNT (for active-wait emails) ──
+      if (emailHtml.includes("{{DOCUMENT_COUNT}}") && linkedCase) {
+        const docCount = linkedCase.file_urls?.length || 0;
+        emailHtml = emailHtml.split("{{DOCUMENT_COUNT}}").join(String(docCount));
+      }
+
+      // ── PERSONALIZE ──
+      if (intakeData) {
+        emailHtml = personalizeEmailHtml(emailHtml, nextEmail.key, intakeData);
+      }
+
+      // ── SEND + RECORD ──
+      const sendResult = await sendEmailWithRetry(
+        {
+          to: order.email,
+          subject: nextEmail.subject,
+          html: emailHtml,
+          unsubscribeEmail: order.email,
+          ...(linkedCase?.id && {
+            threadingHeaders: {
+              inReplyTo: caseThreadId(linkedCase.id),
+              references: caseThreadId(linkedCase.id),
+            },
+          }),
+        },
+        {
+          category: "drip-post-purchase",
+          email_key: nextEmail.key,
+          case_id: linkedCase?.id,
+          metadata: { tier: order.tier },
+        }
+      );
+
+      if (sendResult.success) {
+        if (subscriberId) {
+          await ctx.supabase.from("drip_emails").insert({
+            subscriber_id: subscriberId,
+            email_key: nextEmail.key,
+          });
+        } else {
+          const { data: newSub } = await ctx.supabase
+            .from("subscribers")
+            .upsert(
+              {
+                email: order.email.toLowerCase(),
+                source: `purchase-${order.tier}`,
+              },
+              { onConflict: "email" }
+            )
+            .select("id")
+            .single();
+
+          if (newSub?.id) {
+            await ctx.supabase.from("drip_emails").insert({
+              subscriber_id: newSub.id,
+              email_key: nextEmail.key,
+            });
+          }
+        }
+        result.sent++;
+      } else {
+        console.error(
+          `[Drip Cron] Failed to send ${nextEmail.key} to ${order.email}:`,
+          sendResult.error
+        );
+        result.errors++;
+      }
+    } catch (err) {
+      console.error(
+        `[Drip Cron] Error processing order ${order.id}:`,
+        err
+      );
+      result.errors++;
+    }
+  }
+
+  return result;
+}
