@@ -126,7 +126,8 @@ export async function checkPipelineCompletion(ctx: CronContext): Promise<CronRes
     const { data: batchJobs } = await ctx.supabase
       .from("processing_jobs")
       .select("case_id, status")
-      .in("case_id", caseIds);
+      .in("case_id", caseIds)
+      .limit(5000);
 
     const jobsByCaseId = new Map<string, { case_id: string; status: string }[]>();
     for (const job of batchJobs ?? []) {
