@@ -54,10 +54,10 @@ export async function reconcileStripePayments(ctx: CronContext): Promise<CronRes
         const tier = session.metadata!.tier;
         const amount = session.amount_total || 0;
 
-        // Auto-create the missing order
+        // Auto-create the missing order (upsert to prevent duplicates if webhook fires concurrently)
         const { data: recoveredOrder } = await ctx.supabase
           .from("orders")
-          .insert({
+          .upsert({
             email,
             tier,
             amount,
@@ -65,7 +65,7 @@ export async function reconcileStripePayments(ctx: CronContext): Promise<CronRes
             stripe_session_id: session.id,
             stripe_payment_intent_id: typeof session.payment_intent === "string" ? session.payment_intent : null,
             paid_at: new Date(session.created * 1000).toISOString(),
-          })
+          }, { onConflict: "stripe_session_id", ignoreDuplicates: true })
           .select("id")
           .single();
 

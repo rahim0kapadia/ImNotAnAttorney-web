@@ -8,6 +8,7 @@ import {
   useOperatorPassword,
   operatorHeaders,
 } from "@/components/OperatorShell";
+import { StatusBadge } from "@/components/StatusBadge";
 import type {
   CaseDetail,
   DocumentRow,
@@ -50,20 +51,7 @@ function formatBytes(bytes: number): string {
 // Badges
 // ============================================================
 
-function StatusBadge({ status }: { status: string }) {
-  let cls = "bg-zinc-800 text-zinc-400 border border-zinc-700";
-  if (status === "delivered" || status === "completed" || status === "verified")
-    cls = "bg-green-500/10 text-green-400 border border-green-500/20";
-  else if (status === "review" || status === "processing" || status === "in_progress" || status === "running")
-    cls = "bg-amber-500/10 text-amber-400 border border-amber-500/20";
-  else if (status === "failed" || status === "generation-failed" || status === "refunded")
-    cls = "bg-red-500/10 text-red-400 border border-red-500/20";
-  return (
-    <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${cls}`}>
-      {status}
-    </span>
-  );
-}
+// StatusBadge imported from @/components/StatusBadge
 
 function SeverityBadge({ severity }: { severity: string }) {
   let cls = "bg-zinc-800 text-zinc-400 border border-zinc-700";

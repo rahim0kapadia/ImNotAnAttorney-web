@@ -36,8 +36,11 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
   const { id, action, promoted_to_charge_type, promoted_to_pain_point, notes } = body;
-  if (!id || !action) {
-    return NextResponse.json({ error: "id and action (promote|dismiss) required" }, { status: 400 });
+  if (!id || typeof id !== "string" || !action || typeof action !== "string") {
+    return NextResponse.json({ error: "id (string) and action (string: promote|dismiss) required" }, { status: 400 });
+  }
+  if (notes !== undefined && typeof notes !== "string") {
+    return NextResponse.json({ error: "notes must be a string" }, { status: 400 });
   }
 
   if (!["promote", "dismiss"].includes(action)) {

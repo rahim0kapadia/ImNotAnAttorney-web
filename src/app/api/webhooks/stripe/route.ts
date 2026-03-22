@@ -299,6 +299,8 @@ export async function POST(req: NextRequest) {
           } else {
             console.log(`[Webhook] Referral tracked: partner=${partner.name}, commission=$${(commissionAmount / 100).toFixed(2)}`);
           }
+          // Only attribute to the first matching partner — prevent double-attribution
+          break;
         }
       } catch (refTrackErr) {
         // Non-blocking — referral tracking failure should not break order processing
@@ -942,7 +944,8 @@ export async function POST(req: NextRequest) {
                     .from("referrals")
                     .update({ commission_amount: 0, commission_paid: true })
                     .eq("id", referral.id);
-                  // Best-effort decrement — read first, validate, then write
+                  // Optimistic-locking decrement — read, compute, write with WHERE guard
+                  // to prevent concurrent refunds from over-decrementing totals
                   const { data: partnerData } = await supabase
                     .from("partners")
                     .select("total_referrals, total_commission")
@@ -952,14 +955,20 @@ export async function POST(req: NextRequest) {
                   if (!partnerData) {
                     console.error("[Webhook] Could not read partner data for commission reversal:", referral.partner_id);
                   } else {
-                    await supabase
+                    const { count } = await supabase
                       .from("partners")
                       .update({
                         total_referrals: Math.max(0, (partnerData.total_referrals || 0) - 1),
                         total_commission: Math.max(0, (partnerData.total_commission || 0) - referral.commission_amount),
                         updated_at: new Date().toISOString(),
                       })
-                      .eq("id", referral.partner_id);
+                      .eq("id", referral.partner_id)
+                      .eq("total_commission", partnerData.total_commission)
+                      .eq("total_referrals", partnerData.total_referrals);
+
+                    if (count === 0) {
+                      console.warn("[Webhook] Commission reversal skipped — concurrent modification detected for partner:", referral.partner_id);
+                    }
                   }
                 }
               });

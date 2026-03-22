@@ -69,7 +69,8 @@ export async function detectStuckJobs(ctx: CronContext): Promise<CronResult> {
     .from("processing_jobs")
     .select("id, case_id, job_type, job_subtype, started_at, worker_id")
     .eq("status", "processing")
-    .lt("started_at", thirtyMinutesAgo.toISOString());
+    .lt("started_at", thirtyMinutesAgo.toISOString())
+    .limit(100);
 
   if (stuckJobs && stuckJobs.length > 0) {
     for (const job of stuckJobs) {
@@ -116,20 +117,31 @@ export async function checkPipelineCompletion(ctx: CronContext): Promise<CronRes
     .from("cases")
     .select("id, email, tier, charge_type, document_count, finding_count, witness_count, discovery_health_score, defense_opportunity_index")
     .eq("status", "processing")
-    .in("tier", discoveryTiers);
+    .in("tier", discoveryTiers)
+    .limit(100);
 
   if (processingCases && processingCases.length > 0) {
+    // ── N+1 FIX: Batch-fetch all processing jobs for all cases ──
+    const caseIds = processingCases.map((pc) => pc.id);
+    const { data: batchJobs } = await ctx.supabase
+      .from("processing_jobs")
+      .select("case_id, status")
+      .in("case_id", caseIds);
+
+    const jobsByCaseId = new Map<string, { case_id: string; status: string }[]>();
+    for (const job of batchJobs ?? []) {
+      if (!jobsByCaseId.has(job.case_id)) jobsByCaseId.set(job.case_id, []);
+      jobsByCaseId.get(job.case_id)!.push(job);
+    }
+
     for (const pc of processingCases) {
-      const { data: allJobs } = await ctx.supabase
-        .from("processing_jobs")
-        .select("id, status")
-        .eq("case_id", pc.id);
+      const caseJobs = jobsByCaseId.get(pc.id);
 
-      if (!allJobs || allJobs.length === 0) continue;
+      if (!caseJobs || caseJobs.length === 0) continue;
 
-      const totalJobs = allJobs.length;
-      const completedJobs = allJobs.filter((j) => j.status === "completed").length;
-      const failedJobs = allJobs.filter((j) => j.status === "failed").length;
+      const totalJobs = caseJobs.length;
+      const completedJobs = caseJobs.filter((j) => j.status === "completed").length;
+      const failedJobs = caseJobs.filter((j) => j.status === "failed").length;
       const doneJobs = completedJobs + failedJobs;
 
       if (doneJobs >= totalJobs) {

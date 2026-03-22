@@ -8,6 +8,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { StatusBadge } from "@/components/StatusBadge";
 
 /** Tier slug → human-readable name for display. */
 const TIER_DISPLAY: Record<string, string> = {
@@ -51,24 +52,7 @@ function formatAmount(cents: number): string {
   return `$${(cents / 100).toFixed(2)}`;
 }
 
-function StatusBadge({ status }: { status: string }) {
-  const colors: Record<string, string> = {
-    paid: "bg-green-900/50 text-green-300 border-green-700",
-    refunded: "bg-red-900/50 text-red-300 border-red-700",
-    delivered: "bg-green-900/50 text-green-300 border-green-700",
-    processing: "bg-amber-900/50 text-amber-300 border-amber-700",
-    pending: "bg-zinc-800 text-zinc-300 border-zinc-600",
-    intake: "bg-blue-900/50 text-blue-300 border-blue-700",
-    generating: "bg-amber-900/50 text-amber-300 border-amber-700",
-    review: "bg-purple-900/50 text-purple-300 border-purple-700",
-  };
-  const cls = colors[status] || "bg-zinc-800 text-zinc-300 border-zinc-600";
-  return (
-    <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded-full border ${cls}`}>
-      {status}
-    </span>
-  );
-}
+// StatusBadge imported from @/components/StatusBadge
 
 export default function MyCasesPage() {
   const [orders, setOrders] = useState<Order[]>([]);

@@ -41,8 +41,11 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
   const { id, status, notes } = body;
-  if (!id || !status) {
-    return NextResponse.json({ error: "id and status required" }, { status: 400 });
+  if (!id || typeof id !== "string" || !status || typeof status !== "string") {
+    return NextResponse.json({ error: "id (string) and status (string) required" }, { status: 400 });
+  }
+  if (notes !== undefined && typeof notes !== "string") {
+    return NextResponse.json({ error: "notes must be a string" }, { status: 400 });
   }
 
   const allowed = ["identified", "queued", "in-progress", "published", "declined"];

@@ -273,25 +273,35 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
     .eq("status", "researching")
     .lt("updated_at", researchThreshold.toISOString());
 
+  // ── N+1 FIX: Batch-fetch subscribers + dedup records for researching cases ──
+  const researchEmails = [...new Set((stuckResearching ?? []).map((c) => c.email.toLowerCase()))];
+  const { data: resSubs } = researchEmails.length > 0
+    ? await ctx.supabase.from("subscribers").select("id, email").in("email", researchEmails)
+    : { data: [] as { id: string; email: string }[] };
+  const resSubByEmail = new Map(
+    (resSubs ?? []).map((s) => [s.email.toLowerCase(), { id: s.id }])
+  );
+  const resSubIds = (resSubs ?? []).map((s) => s.id);
+  const { data: resDripEmails } = resSubIds.length > 0
+    ? await ctx.supabase.from("drip_emails").select("subscriber_id, email_key")
+        .in("subscriber_id", resSubIds).like("email_key", "researching_%")
+    : { data: [] as { subscriber_id: string; email_key: string }[] };
+  const resSentKeys = new Map<string, Set<string>>();
+  for (const d of resDripEmails ?? []) {
+    if (!resSentKeys.has(d.subscriber_id)) resSentKeys.set(d.subscriber_id, new Set());
+    resSentKeys.get(d.subscriber_id)!.add(d.email_key);
+  }
+
   if (stuckResearching && stuckResearching.length > 0) {
     for (const stuck of stuckResearching) {
       const hoursStuck = Math.round(
         (ctx.now.getTime() - new Date(stuck.updated_at).getTime()) / (1000 * 60 * 60)
       );
-      const { data: existingSub } = await ctx.supabase
-        .from("subscribers")
-        .select("id")
-        .eq("email", stuck.email.toLowerCase())
-        .maybeSingle();
+      const existingSub = resSubByEmail.get(stuck.email.toLowerCase()) ?? null;
 
       if (existingSub?.id) {
-        const { data: alreadySent } = await ctx.supabase
-          .from("drip_emails")
-          .select("id")
-          .eq("subscriber_id", existingSub.id)
-          .eq("email_key", `researching_nudge_${stuck.id}`)
-          .maybeSingle();
-        if (alreadySent) continue;
+        const sentKeys = resSentKeys.get(existingSub.id);
+        if (sentKeys?.has(`researching_nudge_${stuck.id}`)) continue;
       }
 
       await sendEmail({
@@ -330,20 +340,12 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
         (ctx.now.getTime() - new Date(stuck.updated_at).getTime()) / (1000 * 60 * 60)
       );
 
-      const { data: escSub } = await ctx.supabase
-        .from("subscribers")
-        .select("id")
-        .eq("email", stuck.email.toLowerCase())
-        .maybeSingle();
+      // ── N+1 FIX: Use batch-fetched subscriber data ──
+      const escSub = resSubByEmail.get(stuck.email.toLowerCase()) ?? null;
 
       if (escSub?.id) {
-        const { data: alreadyEscalated } = await ctx.supabase
-          .from("drip_emails")
-          .select("id")
-          .eq("subscriber_id", escSub.id)
-          .eq("email_key", `researching_escalation_${stuck.id}`)
-          .maybeSingle();
-        if (alreadyEscalated) continue;
+        const sentKeys = resSentKeys.get(escSub.id);
+        if (sentKeys?.has(`researching_escalation_${stuck.id}`)) continue;
       }
 
       await sendEmail({
@@ -389,38 +391,50 @@ export async function sendPhase2IntakeReminders(ctx: CronContext): Promise<CronR
     .lt("updated_at", fortyEightHoursAgo.toISOString());
 
   if (ibWaitingPhase2 && ibWaitingPhase2.length > 0) {
-    for (const ibCase of ibWaitingPhase2) {
-      // Verify Phase 2 hasn't been submitted yet
-      if (ibCase.intake_id) {
-        const { data: intake } = await ctx.supabase
-          .from("intakes")
-          .select("phase2_data")
-          .eq("id", ibCase.intake_id)
-          .maybeSingle();
+    // ── N+1 FIX: Batch-fetch intakes + subscribers + dedup records ──
+    const ibIntakeIds = ibWaitingPhase2.filter((c) => c.intake_id).map((c) => c.intake_id!);
+    const { data: ibIntakes } = ibIntakeIds.length > 0
+      ? await ctx.supabase.from("intakes").select("id, phase2_data").in("id", ibIntakeIds)
+      : { data: [] as { id: string; phase2_data: unknown }[] };
+    const ibIntakeById = new Map(
+      (ibIntakes ?? []).map((i) => [i.id, i])
+    );
 
+    const ibEmails = [...new Set(ibWaitingPhase2.map((c) => c.email.toLowerCase()))];
+    const { data: ibSubs } = await ctx.supabase
+      .from("subscribers").select("id, email").in("email", ibEmails);
+    const ibSubByEmail = new Map(
+      (ibSubs ?? []).map((s) => [s.email.toLowerCase(), { id: s.id }])
+    );
+    const ibSubIds = (ibSubs ?? []).map((s) => s.id);
+    const { data: ibDripEmails } = ibSubIds.length > 0
+      ? await ctx.supabase.from("drip_emails").select("subscriber_id, email_key")
+          .in("subscriber_id", ibSubIds).like("email_key", "phase2_%")
+      : { data: [] as { subscriber_id: string; email_key: string }[] };
+    const ibSentKeys = new Map<string, Set<string>>();
+    for (const d of ibDripEmails ?? []) {
+      if (!ibSentKeys.has(d.subscriber_id)) ibSentKeys.set(d.subscriber_id, new Set());
+      ibSentKeys.get(d.subscriber_id)!.add(d.email_key);
+    }
+
+    for (const ibCase of ibWaitingPhase2) {
+      // Verify Phase 2 hasn't been submitted yet (from batch)
+      if (ibCase.intake_id) {
+        const intake = ibIntakeById.get(ibCase.intake_id);
         if (intake?.phase2_data) continue;
       }
 
       const caseAge = ctx.now.getTime() - new Date(ibCase.updated_at).getTime();
       const isSevenDayEscalation = caseAge > 7 * 24 * 60 * 60 * 1000;
 
-      const { data: p2Sub } = await ctx.supabase
-        .from("subscribers")
-        .select("id")
-        .eq("email", ibCase.email.toLowerCase())
-        .maybeSingle();
+      const p2Sub = ibSubByEmail.get(ibCase.email.toLowerCase()) ?? null;
 
       if (isSevenDayEscalation) {
         // 7-day operator escalation
         const escalationKey = `phase2_escalation_7d_${ibCase.id}`;
         if (p2Sub?.id) {
-          const { data: alreadyEscalated } = await ctx.supabase
-            .from("drip_emails")
-            .select("id")
-            .eq("subscriber_id", p2Sub.id)
-            .eq("email_key", escalationKey)
-            .maybeSingle();
-          if (alreadyEscalated) continue;
+          const sentKeys = ibSentKeys.get(p2Sub.id);
+          if (sentKeys?.has(escalationKey)) continue;
         }
 
         const daysSinceUpdate = Math.round(caseAge / (1000 * 60 * 60 * 24));
@@ -446,13 +460,8 @@ export async function sendPhase2IntakeReminders(ctx: CronContext): Promise<CronR
         // 48-hour customer reminder
         const reminderKey = `phase2_reminder_${ibCase.id}`;
         if (p2Sub?.id) {
-          const { data: alreadySent } = await ctx.supabase
-            .from("drip_emails")
-            .select("id")
-            .eq("subscriber_id", p2Sub.id)
-            .eq("email_key", reminderKey)
-            .maybeSingle();
-          if (alreadySent) continue;
+          const sentKeys = ibSentKeys.get(p2Sub.id);
+          if (sentKeys?.has(reminderKey)) continue;
         }
 
         const phase2Token = signPhase2Token(ibCase.id);
@@ -504,22 +513,30 @@ export async function sendAwaitingIntakeReminders(ctx: CronContext): Promise<Cro
     .lt("created_at", twentyFourHoursAgo.toISOString());
 
   if (awaitingIntakes && awaitingIntakes.length > 0) {
+    // ── N+1 FIX: Batch-fetch subscribers + dedup records ──
+    const awEmails = [...new Set(awaitingIntakes.map((c) => c.email.toLowerCase()))];
+    const { data: awSubs } = await ctx.supabase
+      .from("subscribers").select("id, email").in("email", awEmails);
+    const awSubByEmail = new Map(
+      (awSubs ?? []).map((s) => [s.email.toLowerCase(), { id: s.id }])
+    );
+    const awSubIds = (awSubs ?? []).map((s) => s.id);
+    const { data: awDripEmails } = awSubIds.length > 0
+      ? await ctx.supabase.from("drip_emails").select("subscriber_id, email_key")
+          .in("subscriber_id", awSubIds).like("email_key", "intake_reminder_%")
+      : { data: [] as { subscriber_id: string; email_key: string }[] };
+    const awSentKeys = new Map<string, Set<string>>();
+    for (const d of awDripEmails ?? []) {
+      if (!awSentKeys.has(d.subscriber_id)) awSentKeys.set(d.subscriber_id, new Set());
+      awSentKeys.get(d.subscriber_id)!.add(d.email_key);
+    }
+
     for (const awCase of awaitingIntakes) {
-      const { data: existingSub } = await ctx.supabase
-        .from("subscribers")
-        .select("id")
-        .eq("email", awCase.email.toLowerCase())
-        .maybeSingle();
+      const existingSub = awSubByEmail.get(awCase.email.toLowerCase()) ?? null;
 
       if (existingSub?.id) {
-        const { data: alreadySent } = await ctx.supabase
-          .from("drip_emails")
-          .select("id")
-          .eq("subscriber_id", existingSub.id)
-          .eq("email_key", `intake_reminder_${awCase.id}`)
-          .maybeSingle();
-
-        if (alreadySent) continue;
+        const sentKeys = awSentKeys.get(existingSub.id);
+        if (sentKeys?.has(`intake_reminder_${awCase.id}`)) continue;
       }
 
       const sendResult = await sendEmailWithRetry({
@@ -576,6 +593,24 @@ export async function escalateStuckIntakes(ctx: CronContext): Promise<CronResult
     .lt("created_at", seventyTwoHoursAgo.toISOString());
 
   if (escalationCases && escalationCases.length > 0) {
+    // ── N+1 FIX: Batch-fetch subscribers + dedup records ──
+    const escEmails = [...new Set(escalationCases.map((c) => c.email.toLowerCase()))];
+    const { data: escSubsBatch } = await ctx.supabase
+      .from("subscribers").select("id, email").in("email", escEmails);
+    const escSubByEmail = new Map(
+      (escSubsBatch ?? []).map((s) => [s.email.toLowerCase(), { id: s.id }])
+    );
+    const escSubIds = (escSubsBatch ?? []).map((s) => s.id);
+    const { data: escDripEmails } = escSubIds.length > 0
+      ? await ctx.supabase.from("drip_emails").select("subscriber_id, email_key")
+          .in("subscriber_id", escSubIds).like("email_key", "intake_escalation_%")
+      : { data: [] as { subscriber_id: string; email_key: string }[] };
+    const escSentKeys = new Map<string, Set<string>>();
+    for (const d of escDripEmails ?? []) {
+      if (!escSentKeys.has(d.subscriber_id)) escSentKeys.set(d.subscriber_id, new Set());
+      escSentKeys.get(d.subscriber_id)!.add(d.email_key);
+    }
+
     for (const escCase of escalationCases) {
       const caseAge = ctx.now.getTime() - new Date(escCase.created_at).getTime();
       const daysSincePaid = Math.round(caseAge / (1000 * 60 * 60 * 24));
@@ -584,21 +619,11 @@ export async function escalateStuckIntakes(ctx: CronContext): Promise<CronResult
         ? `intake_escalation_7d_${escCase.id}`
         : `intake_escalation_72h_${escCase.id}`;
 
-      const { data: escSub } = await ctx.supabase
-        .from("subscribers")
-        .select("id")
-        .eq("email", escCase.email.toLowerCase())
-        .maybeSingle();
+      const escSub = escSubByEmail.get(escCase.email.toLowerCase()) ?? null;
 
       if (escSub?.id) {
-        const { data: alreadyEscalated } = await ctx.supabase
-          .from("drip_emails")
-          .select("id")
-          .eq("subscriber_id", escSub.id)
-          .eq("email_key", escalationKey)
-          .maybeSingle();
-
-        if (alreadyEscalated) continue;
+        const sentKeys = escSentKeys.get(escSub.id);
+        if (sentKeys?.has(escalationKey)) continue;
       }
 
       await sendEmail({

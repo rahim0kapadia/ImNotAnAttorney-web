@@ -90,6 +90,36 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
     cases.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   }
 
+  // ── N+1 FIX: Batch-fetch higher-tier orders for upsell skip ──
+  const caseDecoderEmails = [...new Set(
+    orders.filter((o) => o.tier === "case-decoder").map((o) => o.email.toLowerCase())
+  )];
+  const { data: higherTierOrders } = caseDecoderEmails.length > 0
+    ? await ctx.supabase
+        .from("orders")
+        .select("email")
+        .in("email", caseDecoderEmails)
+        .eq("status", "paid")
+        .not("tier", "in", '("case-decoder","extra-witness","witness-pack")')
+    : { data: [] as { email: string }[] };
+  const emailsWithHigherTier = new Set(
+    (higherTierOrders ?? []).map((o) => o.email.toLowerCase())
+  );
+
+  // ── N+1 FIX: Batch-fetch intakes for personalization ──
+  const intakeIds = [...new Set(
+    (allCases ?? []).filter((c) => c.intake_id).map((c) => c.intake_id!)
+  )];
+  const { data: allIntakes } = intakeIds.length > 0
+    ? await ctx.supabase
+        .from("intakes")
+        .select("id, filled_out_by, case_stage, employment_industry, first_name")
+        .in("id", intakeIds)
+    : { data: [] as { id: string; filled_out_by: string | null; case_stage: string | null; employment_industry: string | null; first_name: string | null }[] };
+  const intakeById = new Map(
+    (allIntakes ?? []).map((i) => [i.id, i])
+  );
+
   for (const order of orders) {
     try {
       const paidAt = new Date(order.paid_at);
@@ -117,20 +147,10 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
         ? sentBySubscriber.get(subscriberId) ?? new Set<string>()
         : new Set<string>();
 
-      // ── SKIP UPSELL FOR INCLUDED DELIVERABLES ──
+      // ── SKIP UPSELL FOR INCLUDED DELIVERABLES (from batch) ──
       let skipUpsell = false;
       if (order.tier === "case-decoder") {
-        const { data: higherOrder } = await ctx.supabase
-          .from("orders")
-          .select("id")
-          .eq("email", order.email.toLowerCase())
-          .eq("status", "paid")
-          .neq("tier", "case-decoder")
-          .neq("tier", "extra-witness")
-          .neq("tier", "witness-pack")
-          .limit(1)
-          .maybeSingle();
-        if (higherOrder) skipUpsell = true;
+        if (emailsWithHigherTier.has(order.email.toLowerCase())) skipUpsell = true;
       }
 
       // ── FIND NEXT UNSENT POST-PURCHASE EMAIL ──
@@ -149,7 +169,6 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
           );
 
           if (!submittedCase?.updated_at) continue;
-          if (["delivered", "refunded"].includes(submittedCase.status)) continue;
 
           const submittedAt = new Date(submittedCase.updated_at);
           const daysSinceSubmission = Math.floor(
@@ -202,15 +221,10 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
       const linkedCases = casesByEmailTier.get(caseKey) ?? [];
       const linkedCase = linkedCases[0] ?? null;
 
-      // ── INTAKE DATA (for email personalization) ──
+      // ── INTAKE DATA (for email personalization, from batch) ──
       let intakeData: DripPersonalizationData | null = null;
       if (linkedCase?.intake_id) {
-        const { data } = await ctx.supabase
-          .from("intakes")
-          .select("filled_out_by, case_stage, employment_industry, first_name")
-          .eq("id", linkedCase.intake_id)
-          .single();
-        intakeData = data;
+        intakeData = intakeById.get(linkedCase.intake_id) ?? null;
       }
 
       // ── GUARD: Intake reminders only send if intake hasn't been submitted ──

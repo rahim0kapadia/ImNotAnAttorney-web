@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
 
   let query = supabase
     .from("operator_tasks")
-    .select("*", { count: "exact" })
+    .select("id, case_id, task_type, title, description, status, priority, priority_rank, notes, due_at, sla_breach, started_at, completed_at, created_at", { count: "exact" })
     .order("priority_rank", { ascending: true })
     .order("due_at", { ascending: true, nullsFirst: false })
     .range(offset, offset + limit - 1);
@@ -110,6 +110,9 @@ export async function PATCH(req: NextRequest) {
   }
 
   if (body.notes !== undefined) {
+    if (typeof body.notes !== "string" || body.notes.length > 5000) {
+      return NextResponse.json({ error: "notes must be a string (max 5000 chars)" }, { status: 400 });
+    }
     updateObj.notes = body.notes;
   }
 

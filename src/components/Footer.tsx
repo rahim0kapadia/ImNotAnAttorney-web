@@ -16,7 +16,7 @@
  *
  * Copyright year is dynamically generated via `new Date().getFullYear()`.
  */
-"use client";
+// Server component — no client-side interactivity needed
 
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";

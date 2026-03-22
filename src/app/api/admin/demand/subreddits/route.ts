@@ -36,8 +36,8 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
   const { id, action } = body;
-  if (!id || !action) {
-    return NextResponse.json({ error: "id and action (approve|reject) required" }, { status: 400 });
+  if (!id || typeof id !== "string" || !action || typeof action !== "string") {
+    return NextResponse.json({ error: "id (string) and action (string: approve|reject) required" }, { status: 400 });
   }
 
   if (!["approve", "reject"].includes(action)) {

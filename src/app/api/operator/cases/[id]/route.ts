@@ -100,14 +100,14 @@ export async function GET(req: NextRequest, { params }: RouteContext) {
     // 7. Jobs
     supabase
       .from("processing_jobs")
-      .select("*")
+      .select("id, case_id, job_type, job_subtype, status, priority, worker_id, started_at, completed_at, error_message, progress, retry_count, max_retries, items_produced, created_at")
       .eq("case_id", id)
       .order("created_at", { ascending: false }),
 
     // 8. Tasks
     supabase
       .from("operator_tasks")
-      .select("*")
+      .select("id, case_id, task_type, title, description, status, priority, priority_rank, notes, due_at, sla_breach, started_at, completed_at, created_at")
       .eq("case_id", id)
       .order("priority_rank")
       .order("created_at", { ascending: false }),

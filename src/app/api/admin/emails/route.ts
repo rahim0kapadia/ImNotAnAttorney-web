@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 
   let query = supabase
     .from("inbound_emails")
-    .select("id, from_email, from_name, to_email, subject, body_text, body_html, message_id, read, created_at", { count: "exact" })
+    .select("id, from_email, from_name, to_email, subject, body_text, message_id, read, created_at", { count: "exact" })
     .order("created_at", { ascending: false })
     .range(offset, offset + limit - 1);
 
@@ -49,8 +49,8 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
   const { id, read } = body;
-  if (!id || typeof read !== "boolean") {
-    return NextResponse.json({ error: "id and read (boolean) required" }, { status: 400 });
+  if (!id || typeof id !== "string" || typeof read !== "boolean") {
+    return NextResponse.json({ error: "id (string) and read (boolean) required" }, { status: 400 });
   }
 
   const supabase = createAdminClient();

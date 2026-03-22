@@ -23,7 +23,8 @@ export async function detectSLABreaches(ctx: CronContext): Promise<CronResult> {
     .from("cases")
     .select("id, email, tier, delivery_due_at")
     .lt("delivery_due_at", ctx.now.toISOString())
-    .not("status", "in", '("delivered","refunded")');
+    .not("status", "in", '("delivered","refunded")')
+    .limit(200);
 
   if (slaCases && slaCases.length > 0) {
     for (const slaCase of slaCases) {
@@ -98,7 +99,8 @@ export async function sendWeeklyProgressEmails(ctx: CronContext): Promise<CronRe
     .from("cases")
     .select("id, email, tier, report_token, document_count, finding_count, witness_count, discovery_health_score")
     .in("tier", weeklyTiers)
-    .in("status", weeklyStatuses);
+    .in("status", weeklyStatuses)
+    .limit(200);
 
   if (weeklyCases && weeklyCases.length > 0) {
     const weekNumber = getISOWeek(ctx.now);

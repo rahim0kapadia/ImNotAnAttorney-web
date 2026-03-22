@@ -20,10 +20,29 @@ export async function GET(req: NextRequest) {
 
   const supabase = createAdminClient();
 
+  // Status and tier values for count-based aggregation (avoids full table scans)
+  const CASE_STATUSES = [
+    "awaiting-intake", "intake", "intake-stalled", "pending", "submitted",
+    "generating", "auto-generating", "compiling", "researching",
+    "generation-failed", "processing", "review", "delivered", "refunded", "cancelled",
+  ] as const;
+
+  // Build parallel count queries for status/tier breakdowns instead of fetching all rows
+  const statusCountQueries = CASE_STATUSES.map((s) =>
+    supabase.from("cases").select("id", { count: "exact", head: true })
+      .in("tier", [...DISCOVERY_TIERS]).eq("status", s)
+      .then((r) => ({ status: s, count: r.count ?? 0 }))
+  );
+  const tierCountQueries = [...DISCOVERY_TIERS].map((t) =>
+    supabase.from("cases").select("id", { count: "exact", head: true })
+      .eq("tier", t)
+      .then((r) => ({ tier: t, count: r.count ?? 0 }))
+  );
+
   const [
     totalCasesResult,
-    casesByStatusResult,
-    casesByTierResult,
+    statusCounts,
+    tierCounts,
     revenueResult,
     activeJobsResult,
     failedJobsResult,
@@ -37,23 +56,18 @@ export async function GET(req: NextRequest) {
       .select("id", { count: "exact", head: true })
       .in("tier", [...DISCOVERY_TIERS]),
 
-    // 2. Cases by status (discovery tiers)
-    supabase
-      .from("cases")
-      .select("status")
-      .in("tier", [...DISCOVERY_TIERS]),
+    // 2. Cases by status (individual count queries — no full table scan)
+    Promise.all(statusCountQueries),
 
-    // 3. Cases by tier (discovery tiers)
-    supabase
-      .from("cases")
-      .select("tier")
-      .in("tier", [...DISCOVERY_TIERS]),
+    // 3. Cases by tier (individual count queries — no full table scan)
+    Promise.all(tierCountQueries),
 
-    // 4. Total revenue from paid orders
+    // 4. Total revenue from paid orders (limited to prevent unbounded fetch)
     supabase
       .from("orders")
       .select("amount_cents")
-      .eq("status", "paid"),
+      .eq("status", "paid")
+      .limit(10000),
 
     // 5. Active jobs (currently processing)
     supabase
@@ -74,12 +88,14 @@ export async function GET(req: NextRequest) {
       .lt("delivery_due_at", new Date().toISOString())
       .not("status", "in", "(delivered,refunded)"),
 
-    // 8. Delivery times for avg calculation
+    // 8. Delivery times for avg calculation (limited to recent 500)
     supabase
       .from("cases")
       .select("created_at, delivered_at")
       .eq("status", "delivered")
-      .not("delivered_at", "is", null),
+      .not("delivered_at", "is", null)
+      .order("delivered_at", { ascending: false })
+      .limit(500),
 
     // 9. Open tasks
     supabase
@@ -88,22 +104,16 @@ export async function GET(req: NextRequest) {
       .in("status", ["open", "in_progress"]),
   ]);
 
-  // Reduce cases by status
+  // Build status breakdown from count queries
   const casesByStatus: Record<string, number> = {};
-  if (casesByStatusResult.data) {
-    for (const row of casesByStatusResult.data) {
-      const s = row.status as string;
-      casesByStatus[s] = (casesByStatus[s] || 0) + 1;
-    }
+  for (const { status, count } of statusCounts) {
+    if (count > 0) casesByStatus[status] = count;
   }
 
-  // Reduce cases by tier
+  // Build tier breakdown from count queries
   const casesByTier: Record<string, number> = {};
-  if (casesByTierResult.data) {
-    for (const row of casesByTierResult.data) {
-      const t = row.tier as string;
-      casesByTier[t] = (casesByTier[t] || 0) + 1;
-    }
+  for (const { tier, count } of tierCounts) {
+    if (count > 0) casesByTier[tier] = count;
   }
 
   // Sum revenue

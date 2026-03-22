@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
 
   let query = supabase
     .from("processing_jobs")
-    .select("*", { count: "exact" })
+    .select("id, case_id, job_type, job_subtype, status, priority, worker_id, progress, retry_count, max_retries, items_produced, started_at, completed_at, error_message, created_at", { count: "exact" })
     .order("priority", { ascending: true })
     .order("created_at", { ascending: false })
     .range(offset, offset + limit - 1);

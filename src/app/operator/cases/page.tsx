@@ -7,6 +7,7 @@ import {
   useOperatorPassword,
   operatorHeaders,
 } from "@/components/OperatorShell";
+import { StatusBadge } from "@/components/StatusBadge";
 import type { CaseListItem } from "@/lib/types/operator";
 
 // ============================================================
@@ -25,25 +26,7 @@ function formatDate(iso: string): string {
 // Status badge
 // ============================================================
 
-const STATUS_STYLES: Record<string, string> = {
-  delivered: "bg-green-500/10 text-green-400 border border-green-500/20",
-  review: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
-  processing: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
-  failed: "bg-red-500/10 text-red-400 border border-red-500/20",
-  "generation-failed": "bg-red-500/10 text-red-400 border border-red-500/20",
-  refunded: "bg-red-500/10 text-red-400 border border-red-500/20",
-};
-
-function StatusBadge({ status }: { status: string }) {
-  const cls =
-    STATUS_STYLES[status] ??
-    "bg-zinc-800 text-zinc-400 border border-zinc-700";
-  return (
-    <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${cls}`}>
-      {status}
-    </span>
-  );
-}
+// StatusBadge imported from @/components/StatusBadge
 
 // ============================================================
 // Constants
