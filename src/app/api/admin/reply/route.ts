@@ -18,7 +18,11 @@ export async function POST(req: NextRequest) {
   const auth = requireAdmin(req);
   if (!auth.authorized) return auth.error;
 
-  const { to, subject, text, message_id } = await req.json();
+  let body;
+  try { body = await req.json(); } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+  const { to, subject, text, message_id } = body;
 
   if (!to || !text) {
     return NextResponse.json(

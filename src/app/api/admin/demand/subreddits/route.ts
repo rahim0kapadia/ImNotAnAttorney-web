@@ -31,7 +31,11 @@ export async function PATCH(req: NextRequest) {
   const auth = requireAdmin(req);
   if (!auth.authorized) return auth.error;
 
-  const { id, action } = await req.json();
+  let body;
+  try { body = await req.json(); } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+  const { id, action } = body;
   if (!id || !action) {
     return NextResponse.json({ error: "id and action (approve|reject) required" }, { status: 400 });
   }
