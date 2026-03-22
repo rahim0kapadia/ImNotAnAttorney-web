@@ -312,6 +312,7 @@ export async function POST(req: NextRequest) {
         upgradeCreditCents += priorOrders
           .filter(
             (o: { amount: number; tier: string }) =>
+              tierOrder.indexOf(o.tier) >= 0 && // Exclude digital products (not in tierOrder)
               tierOrder.indexOf(o.tier) < currentTierIndex
           )
           .reduce(

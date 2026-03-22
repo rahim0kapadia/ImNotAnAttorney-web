@@ -95,23 +95,27 @@ export async function POST(req: NextRequest) {
     }
 
     // Store Phase 2 data — either update existing intake or create new one
+    // Cap all fields to prevent oversized payloads (matches main intake pattern)
+    const cap = (v: unknown, max: number) =>
+      typeof v === "string" ? v.slice(0, max) : null;
+
     const phase2Data = {
-      judge_name: formData.judgeName,
-      county: formData.county || null,
-      case_number: formData.caseNumber || null,
-      attorney_name: formData.attorneyName,
-      attorney_firm: formData.attorneyFirm || null,
-      next_court_date: formData.nextCourtDate || null,
-      hearing_type: formData.hearingType || null,
-      attorney_communication: formData.attorneyCommunication || null,
-      what_attorney_told: formData.whatAttorneyTold || null,
-      biggest_concern: formData.biggestConcern || null,
-      employment: formData.employment || null,
-      dependents: formData.dependents || null,
-      immigration_status: formData.immigrationStatus || null,
-      prior_convictions: formData.priorConvictions || null,
-      on_probation_parole: formData.onProbationParole || null,
-      co_defendant_details: formData.coDefendantDetails || null,
+      judge_name: cap(formData.judgeName, 200),
+      county: cap(formData.county, 100),
+      case_number: cap(formData.caseNumber, 50),
+      attorney_name: cap(formData.attorneyName, 200),
+      attorney_firm: cap(formData.attorneyFirm, 200),
+      next_court_date: cap(formData.nextCourtDate, 20),
+      hearing_type: cap(formData.hearingType, 100),
+      attorney_communication: cap(formData.attorneyCommunication, 500),
+      what_attorney_told: cap(formData.whatAttorneyTold, 2000),
+      biggest_concern: cap(formData.biggestConcern, 2000),
+      employment: cap(formData.employment, 200),
+      dependents: cap(formData.dependents, 200),
+      immigration_status: cap(formData.immigrationStatus, 100),
+      prior_convictions: cap(formData.priorConvictions, 500),
+      on_probation_parole: cap(formData.onProbationParole, 100),
+      co_defendant_details: cap(formData.coDefendantDetails, 500),
     };
 
     if (caseData.intake_id) {

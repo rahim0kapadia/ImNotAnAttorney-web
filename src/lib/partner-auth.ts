@@ -93,6 +93,9 @@ export async function createPartnerSession(partnerId: string): Promise<string | 
   const sessionToken = crypto.randomBytes(32).toString("hex");
   const expiresAt = new Date(Date.now() + SESSION_EXPIRY_DAYS * 24 * 60 * 60 * 1000);
 
+  // Invalidate all existing sessions for this partner (matches customer auth pattern)
+  await supabase.from("partner_sessions").delete().eq("partner_id", partnerId);
+
   const { error } = await supabase.from("partner_sessions").insert({
     partner_id: partnerId,
     session_token_hash: hashToken(sessionToken),

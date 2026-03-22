@@ -39,7 +39,7 @@ export async function sendReviewReminders(ctx: CronContext): Promise<CronResult>
         (ctx.now.getTime() - new Date(staleCase.generated_at).getTime()) / (1000 * 60 * 60)
       );
 
-      await sendEmail({
+      const sendResult = await sendEmail({
         to: ctx.operatorEmail,
         subject: `REMINDER: ${tierDisplayName(staleCase.tier)} awaiting review (${hoursAgo}+ hours)`,
         html: `<h1 style="color: #F59E0B;">Report Awaiting Review</h1>
@@ -56,10 +56,15 @@ export async function sendReviewReminders(ctx: CronContext): Promise<CronResult>
           <p style="color: #71717A; font-size: 12px;">This link expires in 24 hours.</p>`,
       }, { category: "operator-review-reminder", case_id: staleCase.id });
 
-      await ctx.supabase
-        .from("cases")
-        .update({ review_reminder_sent: true })
-        .eq("id", staleCase.id);
+      if (sendResult.success) {
+        await ctx.supabase
+          .from("cases")
+          .update({ review_reminder_sent: true })
+          .eq("id", staleCase.id);
+        result.sent++;
+      } else {
+        result.errors++;
+      }
     }
   }
 
@@ -89,7 +94,7 @@ export async function detectStuckIntakes(ctx: CronContext): Promise<CronResult> 
       const hoursStuck = Math.round(
         (ctx.now.getTime() - new Date(stuck.updated_at).getTime()) / (1000 * 60 * 60)
       );
-      await sendEmail({
+      const sendResult = await sendEmail({
         to: ctx.operatorEmail,
         subject: `ALERT: Case stuck in intake for ${hoursStuck}+ hours — ${escapeHtml(stuck.email)}`,
         html: `<h1 style="color: #EF4444;">Case Stuck — Generation May Have Failed</h1>
@@ -105,10 +110,15 @@ export async function detectStuckIntakes(ctx: CronContext): Promise<CronResult> 
           <code>Header: Authorization: Bearer [OPERATOR_SECRET]</code>`,
       }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-intake", hours: hoursStuck } });
 
-      await ctx.supabase
-        .from("cases")
-        .update({ status: "intake-stalled", updated_at: new Date().toISOString() })
-        .eq("id", stuck.id);
+      if (sendResult.success) {
+        await ctx.supabase
+          .from("cases")
+          .update({ status: "intake-stalled", updated_at: ctx.now.toISOString() })
+          .eq("id", stuck.id);
+        result.sent++;
+      } else {
+        result.errors++;
+      }
     }
   }
 
@@ -136,7 +146,7 @@ export async function detectStuckGenerating(ctx: CronContext): Promise<CronResul
       const minutesStuck = Math.round(
         (ctx.now.getTime() - new Date(stuck.updated_at).getTime()) / (1000 * 60)
       );
-      await sendEmail({
+      const sendResult = await sendEmail({
         to: ctx.operatorEmail,
         subject: `ALERT: Report generation stuck for ${minutesStuck}+ min — ${escapeHtml(stuck.email)}`,
         html: `<h1 style="color: #EF4444;">Report Generation Stuck</h1>
@@ -150,13 +160,19 @@ export async function detectStuckGenerating(ctx: CronContext): Promise<CronResul
           <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${ctx.siteUrl}/api/generate/${stuck.tier === 'intelligence-brief' ? 'intelligence-brief' : 'case-decoder'} -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${stuck.id}","force":true}'</code>`,
       }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-generation", minutes: minutesStuck } });
 
-      await ctx.supabase
-        .from("cases")
-        .update({
-          status: "generation-failed",
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", stuck.id);
+      // Only transition status if alert was actually sent
+      if (sendResult.success) {
+        await ctx.supabase
+          .from("cases")
+          .update({
+            status: "generation-failed",
+            updated_at: ctx.now.toISOString(),
+          })
+          .eq("id", stuck.id);
+        result.sent++;
+      } else {
+        result.errors++;
+      }
     }
   }
 
@@ -185,7 +201,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
       const minutesStuck = Math.round(
         (ctx.now.getTime() - new Date(stuck.updated_at).getTime()) / (1000 * 60)
       );
-      await sendEmail({
+      const sendResult = await sendEmail({
         to: ctx.operatorEmail,
         subject: `ALERT: IB Phase A stuck for ${minutesStuck}+ min — ${escapeHtml(stuck.email)}`,
         html: `<h1 style="color: #EF4444;">Intelligence Brief Phase A Stuck</h1>
@@ -199,10 +215,15 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
           <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${ctx.siteUrl}/api/generate/intelligence-brief -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${stuck.id}","force":true}'</code>`,
       }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-auto-generating", minutes: minutesStuck } });
 
-      await ctx.supabase
-        .from("cases")
-        .update({ status: "generation-failed", updated_at: new Date().toISOString() })
-        .eq("id", stuck.id);
+      if (sendResult.success) {
+        await ctx.supabase
+          .from("cases")
+          .update({ status: "generation-failed", updated_at: ctx.now.toISOString() })
+          .eq("id", stuck.id);
+        result.sent++;
+      } else {
+        result.errors++;
+      }
     }
   }
 
@@ -218,7 +239,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
       const minutesStuck = Math.round(
         (ctx.now.getTime() - new Date(stuck.updated_at).getTime()) / (1000 * 60)
       );
-      await sendEmail({
+      const compileResult = await sendEmail({
         to: ctx.operatorEmail,
         subject: `ALERT: IB Phase B stuck for ${minutesStuck}+ min — ${escapeHtml(stuck.email)}`,
         html: `<h1 style="color: #EF4444;">Intelligence Brief Phase B Stuck</h1>
@@ -231,10 +252,15 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
           <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${ctx.siteUrl}/api/generate/intelligence-brief/judge-research -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${stuck.id}","judgeResearch":{},"force":true}'</code>`,
       }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-compiling", minutes: minutesStuck } });
 
-      await ctx.supabase
-        .from("cases")
-        .update({ status: "generation-failed", updated_at: new Date().toISOString() })
-        .eq("id", stuck.id);
+      if (compileResult.success) {
+        await ctx.supabase
+          .from("cases")
+          .update({ status: "generation-failed", updated_at: ctx.now.toISOString() })
+          .eq("id", stuck.id);
+        result.sent++;
+      } else {
+        result.errors++;
+      }
     }
   }
 

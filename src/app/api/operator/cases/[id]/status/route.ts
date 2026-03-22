@@ -21,8 +21,8 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
   if (!auth.authorized) return auth.error;
 
   const { id } = await params;
-  if (!id) {
-    return NextResponse.json({ error: "Missing case id" }, { status: 400 });
+  if (!id || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+    return NextResponse.json({ error: "Invalid case id" }, { status: 400 });
   }
 
   let body: { status?: string };

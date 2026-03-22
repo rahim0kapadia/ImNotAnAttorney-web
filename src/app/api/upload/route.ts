@@ -135,6 +135,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Validate caseId is a UUID to prevent path traversal in storage paths
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(caseId)) {
+      return NextResponse.json({ error: "Invalid case ID format" }, { status: 400 });
+    }
+
     // Email is mandatory for the ownership check below -- without it, we cannot
     // verify the uploader actually owns the case.
     if (!email) {

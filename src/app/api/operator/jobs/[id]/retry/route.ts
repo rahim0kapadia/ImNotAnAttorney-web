@@ -19,8 +19,8 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
   if (!auth.authorized) return auth.error;
 
   const { id } = await params;
-  if (!id) {
-    return NextResponse.json({ error: "Missing job id" }, { status: 400 });
+  if (!id || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+    return NextResponse.json({ error: "Invalid job id" }, { status: 400 });
   }
 
   const supabase = createAdminClient();
@@ -58,7 +58,8 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
     );
   }
 
-  const { error: updateError } = await supabase
+  // Atomic conditional update — prevents race condition when two operators retry simultaneously
+  const { data: updated, error: updateError } = await supabase
     .from("processing_jobs")
     .update({
       status: "queued",
@@ -69,10 +70,16 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
       completed_at: null,
       progress: 0,
     })
-    .eq("id", id);
+    .eq("id", id)
+    .eq("status", "failed") // Guard: only update if still in "failed" state
+    .select("id")
+    .single();
 
-  if (updateError) {
-    console.error("[Operator/JobRetry] Update failed:", updateError.message);
+  if (updateError || !updated) {
+    if (updateError?.code === "PGRST116") {
+      return NextResponse.json({ error: "Job already retried by another operator" }, { status: 409 });
+    }
+    console.error("[Operator/JobRetry] Update failed:", updateError?.message);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 

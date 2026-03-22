@@ -169,11 +169,11 @@ export async function POST(req: NextRequest) {
       state: cap(body.state, 50),
       has_attorney: cap(body.hasAttorney, 50),
       has_discovery: cap(body.hasDiscovery, 50),
-      services: Array.isArray(body.services) ? body.services.slice(0, 10) : [],
+      services: Array.isArray(body.services) ? body.services.filter((s: unknown) => typeof s === "string").slice(0, 10) : [],
       situation: cap(body.situation, 5000),
       // Extended intake fields (added in conversion optimization round)
       time_since_arrest: cap(body.timeSinceArrest, 50),
-      arrest_circumstances: Array.isArray(body.arrestCircumstances) ? body.arrestCircumstances.slice(0, 10) : [],
+      arrest_circumstances: Array.isArray(body.arrestCircumstances) ? body.arrestCircumstances.filter((s: unknown) => typeof s === "string").slice(0, 10) : [],
       incident_location: cap(body.incidentLocation, 100),
       co_defendants: cap(body.coDefendants, 200),
       attorney_strategy: cap(body.attorneyStrategy, 200),
@@ -185,7 +185,7 @@ export async function POST(req: NextRequest) {
       communication_frequency: cap(body.communicationFrequency, 50),
       last_attorney_contact: cap(body.lastAttorneyContact, 100),
       arrest_date: cap(body.arrestDate, 20),
-      evidence_type: Array.isArray(body.evidenceType) ? body.evidenceType.slice(0, 15) : [],
+      evidence_type: Array.isArray(body.evidenceType) ? body.evidenceType.filter((s: unknown) => typeof s === "string").slice(0, 15) : [],
       // New fields: charge-specific intake data + jurisdiction level
       charge_specific_data: chargeSpecificData,
       jurisdiction_level: jurisdictionLevel,

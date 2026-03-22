@@ -78,14 +78,26 @@ export async function cleanupDripEmailLogs(ctx: CronContext): Promise<CronResult
   const dripCutoff = new Date(ctx.now);
   dripCutoff.setDate(dripCutoff.getDate() - 90);
 
-  const { count: dripPurged } = await ctx.supabase
-    .from("drip_emails")
-    .delete({ count: "exact" })
-    .lt("created_at", dripCutoff.toISOString());
+  // Only purge dedup records for unsubscribed subscribers to preserve
+  // idempotency for active ones. Without this guard, active subscribers
+  // would get day-1 emails re-sent after 90 days.
+  const { data: unsubscribedSubs } = await ctx.supabase
+    .from("subscribers")
+    .select("id")
+    .not("unsubscribed_at", "is", null);
 
-  if (dripPurged && dripPurged > 0) {
-    console.log(`[Drip Cron] Part 13: Purged ${dripPurged} old drip_emails records`);
-    result.cleaned += dripPurged;
+  if (unsubscribedSubs && unsubscribedSubs.length > 0) {
+    const unsubIds = unsubscribedSubs.map((s: { id: string }) => s.id);
+    const { count: dripPurged } = await ctx.supabase
+      .from("drip_emails")
+      .delete({ count: "exact" })
+      .lt("created_at", dripCutoff.toISOString())
+      .in("subscriber_id", unsubIds);
+
+    if (dripPurged && dripPurged > 0) {
+      console.log(`[Drip Cron] Part 13: Purged ${dripPurged} old drip_emails records (unsubscribed only)`);
+      result.cleaned += dripPurged;
+    }
   }
 
   return result;

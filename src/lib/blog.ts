@@ -102,6 +102,9 @@ export function getAllPosts(): BlogPost[] {
  * @returns The parsed blog post, or null if the file does not exist.
  */
 export function getPostBySlug(slug: string): BlogPost | null {
+  // Validate slug to prevent path traversal
+  if (!/^[a-z0-9][a-z0-9-]*[a-z0-9]$/.test(slug) && !/^[a-z0-9]$/.test(slug)) return null;
+
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
 
   if (!fs.existsSync(filePath)) return null;

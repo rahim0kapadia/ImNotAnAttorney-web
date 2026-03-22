@@ -69,6 +69,12 @@ export async function GET(req: NextRequest) {
       }
     }
 
+    // Reject test-mode sessions in production — test sessions are trivially
+    // created with test card numbers and should never verify as paid.
+    if (process.env.NODE_ENV === "production" && !session.livemode) {
+      return NextResponse.json({ verified: false });
+    }
+
     // Only treat "paid" as verified. Stripe sessions can also be "unpaid"
     // (abandoned) or "no_payment_required" (100% coupon). We require "paid"
     // because all our tiers have a non-zero price after any applicable credit.

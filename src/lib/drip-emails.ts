@@ -324,7 +324,7 @@ export const SCORE_CRISIS_EMAILS: DripEmail[] = [
     subject: "Still here",
     html: `
       <h1 style="color: #F59E0B;">Still Here</h1>
-      <p>You scored your defense ${new Date().toLocaleDateString("en-US", { month: "long" })}. We sent you a question to ask your attorney and followed up once.</p>
+      <p>You scored your defense recently. We sent you a question to ask your attorney and followed up once.</p>
       <p>That's the end of the urgent sequence. From here, you'll hear from us once a week or less — practical information about defense milestones, real case examples, and the questions defendants wish they'd asked sooner.</p>
       <p>If your situation has changed since you scored — new charges, new information, a court date approaching — the Case Decoder is built for exactly that moment.</p>
       ${cta(`Case Decoder — ${TIER_CORE["case-decoder"].priceDisplay}`, "/checkout?tier=case-decoder")}

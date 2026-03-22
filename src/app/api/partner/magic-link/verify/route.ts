@@ -34,8 +34,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  if (!token) {
-    return NextResponse.json({ error: "Missing token" }, { status: 400 });
+  if (!token || !/^[0-9a-f]{64}$/.test(token)) {
+    return NextResponse.json({ error: "Invalid token format" }, { status: 400 });
   }
 
   const partnerId = await verifyMagicLink(token);

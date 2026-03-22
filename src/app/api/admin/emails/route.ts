@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   if (!auth.authorized) return auth.error;
 
   const supabase = createAdminClient();
-  const page = parseInt(req.nextUrl.searchParams.get("page") || "1", 10);
+  const page = Math.max(1, parseInt(req.nextUrl.searchParams.get("page") || "1", 10) || 1);
   const limit = 25;
   const offset = (page - 1) * limit;
   const unreadOnly = req.nextUrl.searchParams.get("unread") === "true";

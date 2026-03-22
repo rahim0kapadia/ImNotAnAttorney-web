@@ -36,7 +36,12 @@ export async function POST(req: NextRequest) {
   if (!auth.authorized) return auth.error;
 
   // ── INPUT VALIDATION ───────────────────────────────────────
-  const body = await req.json();
+  let body;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
   const { caseId, force } = body;
   if (!caseId) {
     return NextResponse.json({ error: "caseId required" }, { status: 400 });

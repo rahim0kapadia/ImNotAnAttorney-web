@@ -136,7 +136,7 @@ export async function checkPipelineCompletion(ctx: CronContext): Promise<CronRes
         // All jobs are done — transition to review
         await ctx.supabase
           .from("cases")
-          .update({ status: "review", updated_at: new Date().toISOString() })
+          .update({ status: "review", updated_at: ctx.now.toISOString() })
           .eq("id", pc.id)
           .eq("status", "processing"); // Atomic guard
 

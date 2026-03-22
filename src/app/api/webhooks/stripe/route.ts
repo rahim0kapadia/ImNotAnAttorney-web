@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
       amount = session.amount_total ?? 0;
     }
 
-    if (!tier || !email || amount == null) {
+    if (!tier || !email || amount == null || amount < 50) {
       console.error("[Stripe Webhook] Missing metadata:", { tier, email, amount });
       await sendEmail({
         to: OPERATOR_EMAIL,
@@ -941,16 +941,25 @@ export async function POST(req: NextRequest) {
                     .from("referrals")
                     .update({ commission_amount: 0, commission_paid: true })
                     .eq("id", referral.id);
-                  // Best-effort decrement — can't use GREATEST without RPC, but
-                  // negative values are unlikely since we only reverse once per refund
-                  await supabase
+                  // Best-effort decrement — read first, validate, then write
+                  const { data: partnerData } = await supabase
                     .from("partners")
-                    .update({
-                      total_referrals: Math.max(0, (await supabase.from("partners").select("total_referrals").eq("id", referral.partner_id).single()).data?.total_referrals - 1 || 0),
-                      total_commission: Math.max(0, (await supabase.from("partners").select("total_commission").eq("id", referral.partner_id).single()).data?.total_commission - referral.commission_amount || 0),
-                      updated_at: new Date().toISOString(),
-                    })
-                    .eq("id", referral.partner_id);
+                    .select("total_referrals, total_commission")
+                    .eq("id", referral.partner_id)
+                    .single();
+
+                  if (!partnerData) {
+                    console.error("[Webhook] Could not read partner data for commission reversal:", referral.partner_id);
+                  } else {
+                    await supabase
+                      .from("partners")
+                      .update({
+                        total_referrals: Math.max(0, (partnerData.total_referrals || 0) - 1),
+                        total_commission: Math.max(0, (partnerData.total_commission || 0) - referral.commission_amount),
+                        updated_at: new Date().toISOString(),
+                      })
+                      .eq("id", referral.partner_id);
+                  }
                 }
               });
 
