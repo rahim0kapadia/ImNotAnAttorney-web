@@ -4,7 +4,7 @@
  * Pipeline position: Entry point for all payment events. This is where
  * paid cases are born and refunded cases are terminated.
  *
- * Handles two event types:
+ * Handles these event types:
  *
  * 1. `checkout.session.completed` — Customer just paid
  *    Flow: Create order → Create case → Link intake (if exists) → Trigger generation (case-decoder)
@@ -18,6 +18,13 @@
  *    Business rules:
  *      - Full refund: order.status → "refunded", case.status → "refunded", report access revoked
  *      - Partial refund: order stays "paid", only refunded_at timestamp logged for audit
+ *      - Commission reversal: referral commission zeroed + partner totals decremented
+ *
+ * 3. `charge.refund.updated` — Refund bounce detection
+ *    Flow: Alert operator when refund fails or requires action
+ *
+ * 4. `invoice.payment_failed` — Installment payment failure
+ *    Flow: Alert operator when a subscription invoice payment fails (e.g., second installment)
  *
  * Key patterns:
  *   - Duplicate webhook handling via Postgres unique constraint (error code 23505)
@@ -105,9 +112,18 @@ export async function POST(req: NextRequest) {
     const rawEmail = session.customer_email || session.customer_details?.email;
     const email = rawEmail ? normalizeEmail(rawEmail) : null;
     const isInstallment = session.metadata?.payment_plan === "2x";
-    const amount = isInstallment && session.metadata?.full_price
-      ? parseInt(session.metadata.full_price, 10)
-      : session.amount_total;
+    let amount: number;
+    if (isInstallment && session.metadata?.full_price) {
+      const parsedAmount = parseInt(session.metadata.full_price, 10);
+      if (isNaN(parsedAmount) || parsedAmount <= 0) {
+        console.error("[Webhook] Invalid full_price in installment metadata:", session.metadata?.full_price);
+        // Don't block the webhook — fall back to session.amount_total
+        // (which is the first installment amount, better than NaN)
+      }
+      amount = isNaN(parsedAmount) || parsedAmount <= 0 ? (session.amount_total || 0) : parsedAmount;
+    } else {
+      amount = session.amount_total ?? 0;
+    }
 
     if (!tier || !email || amount == null) {
       console.error("[Stripe Webhook] Missing metadata:", { tier, email, amount });
@@ -122,7 +138,7 @@ export async function POST(req: NextRequest) {
           <p><strong>Amount:</strong> ${amount != null ? String(amount) : "MISSING"}</p>
           <p><strong>Action:</strong> Check Stripe dashboard for session ${escapeHtml(session.id)} and manually create the order if payment was collected.</p>`,
       });
-      return NextResponse.json({ received: true });
+      return NextResponse.json({ error: "Missing required metadata" }, { status: 500 });
     }
 
     const productName = session.metadata?.product_name || tier;
@@ -258,7 +274,8 @@ export async function POST(req: NextRequest) {
           if (!partner || partner.status !== "approved") continue;
 
           const discountAmount = item.amount; // cents
-          const saleAmount = amount - discountAmount; // what customer actually paid
+          // amount_total is post-discount for one-time; full_price is pre-discount for installments
+          const saleAmount = isInstallment ? amount - discountAmount : amount;
           const commissionAmount = calculateCommission(saleAmount, partner.commission_rate);
 
           // Atomic: insert referral + increment partner totals in one transaction
@@ -895,6 +912,54 @@ export async function POST(req: NextRequest) {
               updated_at: new Date().toISOString(),
             })
             .eq("order_id", refundedOrder.id);
+
+          // ── REVERSE REFERRAL COMMISSION ──
+          // If this order had a partner referral, reverse the commission:
+          //   1. Zero out the commission on the referral record
+          //   2. Decrement the partner's running totals
+          // The referrals table has no "status" column, so we zero the
+          // commission_amount and mark commission_paid=true to exclude it
+          // from future payout calculations.
+          try {
+            const { data: referral } = await supabase
+              .from("referrals")
+              .select("id, partner_id, commission_amount")
+              .eq("order_id", refundedOrder.id)
+              .maybeSingle();
+
+            if (referral && referral.commission_amount > 0) {
+              // Decrement partner totals by the original commission
+              await supabase.rpc("reverse_referral_commission", {
+                p_referral_id: referral.id,
+                p_partner_id: referral.partner_id,
+                p_commission_amount: referral.commission_amount,
+              }).then(async (rpcResult) => {
+                if (rpcResult.error) {
+                  // RPC may not exist yet — fall back to manual updates
+                  console.warn("[Webhook] reverse_referral_commission RPC not available, using manual update:", rpcResult.error.message);
+                  await supabase
+                    .from("referrals")
+                    .update({ commission_amount: 0, commission_paid: true })
+                    .eq("id", referral.id);
+                  // Best-effort decrement — can't use GREATEST without RPC, but
+                  // negative values are unlikely since we only reverse once per refund
+                  await supabase
+                    .from("partners")
+                    .update({
+                      total_referrals: Math.max(0, (await supabase.from("partners").select("total_referrals").eq("id", referral.partner_id).single()).data?.total_referrals - 1 || 0),
+                      total_commission: Math.max(0, (await supabase.from("partners").select("total_commission").eq("id", referral.partner_id).single()).data?.total_commission - referral.commission_amount || 0),
+                      updated_at: new Date().toISOString(),
+                    })
+                    .eq("id", referral.partner_id);
+                }
+              });
+
+              console.log(`[Webhook] Reversed referral ${referral.id} (commission: $${(referral.commission_amount / 100).toFixed(2)}) for refunded order ${refundedOrder.id}`);
+            }
+          } catch (refReversalErr) {
+            // Non-blocking — commission reversal failure should not break refund processing
+            console.error("[Webhook] Referral commission reversal error:", refReversalErr);
+          }
         }
 
         // ── CUSTOMER NOTIFICATION (partial refunds only) ──
@@ -955,6 +1020,37 @@ export async function POST(req: NextRequest) {
           <p><strong>Action:</strong> Check Stripe dashboard and resolve manually.</p>`,
       }, { category: "operator-alert", metadata: { reason: "refund-bounce", refund_id: refund.id, refund_status: refund.status } });
     }
+  }
+
+  // ================================================================
+  // EVENT: invoice.payment_failed — Installment payment failure
+  // ================================================================
+  // Fires when a subscription invoice payment fails (e.g., card declined
+  // on the second installment). Alerts the operator to follow up with
+  // the customer or consider revoking access.
+  if (event.type === "invoice.payment_failed") {
+    const invoice = event.data.object as any;
+    const subscriptionId = typeof invoice.subscription === "string"
+      ? invoice.subscription
+      : invoice.subscription?.id;
+
+    if (subscriptionId) {
+      console.error("[Webhook] Installment payment failed for subscription:", subscriptionId);
+      await sendEmail({
+        to: OPERATOR_EMAIL,
+        subject: "ALERT: Installment Payment Failed",
+        html: `<div style="font-family: system-ui; padding: 16px;">
+          <h2 style="color: #EF4444;">Installment Payment Failed</h2>
+          <p><strong>Subscription:</strong> ${escapeHtml(subscriptionId)}</p>
+          <p><strong>Amount due:</strong> $${((invoice.amount_due || 0) / 100).toFixed(2)}</p>
+          <p><strong>Customer email:</strong> ${invoice.customer_email ? escapeHtml(invoice.customer_email) : "unknown"}</p>
+          <p><strong>Attempt:</strong> ${invoice.attempt_count || "unknown"}</p>
+          <p>Action needed: Follow up with customer or consider revoking access.</p>
+        </div>`,
+      }, { category: "operator-alert", metadata: { reason: "installment-payment-failed", subscription_id: subscriptionId, amount_due: invoice.amount_due } });
+    }
+
+    return NextResponse.json({ received: true });
   }
 
   // ──────────────────────────────────────────────────────────────
