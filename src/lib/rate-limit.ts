@@ -17,6 +17,12 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 
 // ── In-memory fallback when Supabase is unavailable ─────────────────
+// LIMITATION: On serverless platforms (Vercel), each isolate has its own
+// in-memory Map. Requests distributed across N warm instances get N
+// independent rate limit counters, so the effective limit is
+// MEMORY_MAX_REQUESTS * N. The conservative limit (3) and short window
+// mitigate this, but for guaranteed rate limiting under Supabase outage,
+// consider Vercel KV or Upstash Redis as a more durable fallback.
 const memoryStore = new Map<string, number[]>();
 const MEMORY_WINDOW_MS = 60_000; // 1 minute
 const MEMORY_MAX_REQUESTS = 3; // conservative — mirrors tightest DB limit (3/hr for magic links)

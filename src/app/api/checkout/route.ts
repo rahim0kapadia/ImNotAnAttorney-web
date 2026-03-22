@@ -473,14 +473,44 @@ export async function POST(req: NextRequest) {
     // Creates a subscription with 2 monthly payments instead of a one-time
     // charge. The webhook sets cancel_at on the subscription after creation
     // so it auto-terminates after 2 billing cycles.
+    //
+    // Coupon handling: One-time coupons only discount the first invoice of a
+    // subscription. For installments, we re-create as repeating/2-month so
+    // the discount is split evenly across both payments.
     // =========================================================================
     if (paymentPlan === true && tierConfig.isDigitalProduct) {
       const installmentAmount = Math.ceil(tierConfig.price / 2);
       const tierStripeInstallment = stripeForTier(tier);
 
+      // Convert one-time coupons to repeating for installment plans
+      let installmentDiscountConfig = discountConfig;
+      if (stripeCouponId && discountConfig.discounts?.length) {
+        try {
+          const origCoupon = await tierStripeInstallment.coupons.retrieve(stripeCouponId);
+          if (origCoupon.duration === "once" && origCoupon.amount_off) {
+            const perInstallment = Math.ceil(origCoupon.amount_off / 2);
+            const repeatingCoupon = await tierStripeInstallment.coupons.create({
+              amount_off: perInstallment,
+              currency: "usd",
+              duration: "repeating",
+              duration_in_months: 2,
+              name: origCoupon.name || "Installment Discount",
+            });
+            await tierStripeInstallment.coupons.del(stripeCouponId).catch(() => {});
+            cleanupCouponId = repeatingCoupon.id;
+            installmentDiscountConfig = { discounts: [{ coupon: repeatingCoupon.id }] };
+          }
+        } catch {
+          // Coupon conversion failed — proceed with original config
+        }
+      }
+
       const installmentSession = await tierStripeInstallment.checkout.sessions.create({
         mode: "subscription",
         payment_method_types: ["card"],
+        // NOTE: customer_email (not customer) is intentional — creates a fresh
+        // Stripe Customer per session for privacy isolation. Criminal defense
+        // clients should not see saved payment methods from prior purchases.
         customer_email: normalizedEmail || undefined,
         line_items: [{
           price_data: {
@@ -494,7 +524,7 @@ export async function POST(req: NextRequest) {
           },
           quantity: 1,
         }],
-        ...discountConfig,
+        ...installmentDiscountConfig,
         subscription_data: {
           metadata: {
             payment_plan: "2x",
@@ -535,6 +565,7 @@ export async function POST(req: NextRequest) {
     const session = await tierStripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
+      // customer_email (not customer) — see installment path comment for rationale
       customer_email: normalizedEmail || undefined,
       line_items: lineItems,
       ...discountConfig,

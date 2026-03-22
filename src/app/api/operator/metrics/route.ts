@@ -62,12 +62,16 @@ export async function GET(req: NextRequest) {
     // 3. Cases by tier (individual count queries — no full table scan)
     Promise.all(tierCountQueries),
 
-    // 4. Total revenue from paid orders (limited to prevent unbounded fetch)
+    // 4. Total revenue from paid orders
+    // NOTE: Fetches all rows to sum client-side. When order volume exceeds
+    // PostgREST max_rows (default 1000), migrate to a Supabase RPC:
+    //   CREATE FUNCTION sum_paid_revenue() RETURNS bigint AS $$
+    //     SELECT COALESCE(SUM(amount_cents), 0) FROM orders WHERE status = 'paid';
+    //   $$ LANGUAGE sql STABLE;
     supabase
       .from("orders")
       .select("amount_cents")
-      .eq("status", "paid")
-      .limit(10000),
+      .eq("status", "paid"),
 
     // 5. Active jobs (currently processing)
     supabase

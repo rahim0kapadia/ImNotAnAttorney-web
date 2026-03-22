@@ -99,7 +99,32 @@ function validateMagicBytes(buffer: Buffer, claimedMime: string): boolean {
   if (!sig) return false;
 
   if (buffer.length < sig.bytes.length) return false;
-  return sig.bytes.every((byte, i) => buffer[i] === byte);
+  if (!sig.bytes.every((byte, i) => buffer[i] === byte)) return false;
+
+  // Sub-format validation for shared magic byte signatures
+  if (claimedMime === "image/webp" && buffer.length >= 12) {
+    // RIFF....WEBP — bytes 8-11 must be "WEBP"
+    const subFormat = String.fromCharCode(buffer[8], buffer[9], buffer[10], buffer[11]);
+    return subFormat === "WEBP";
+  }
+  if (claimedMime === "audio/wav" && buffer.length >= 12) {
+    // RIFF....WAVE — bytes 8-11 must be "WAVE"
+    const subFormat = String.fromCharCode(buffer[8], buffer[9], buffer[10], buffer[11]);
+    return subFormat === "WAVE";
+  }
+  if (claimedMime === "video/mp4" && buffer.length >= 8) {
+    // ftyp box marker at bytes 4-7
+    const ftyp = String.fromCharCode(buffer[4], buffer[5], buffer[6], buffer[7]);
+    return ftyp === "ftyp";
+  }
+  if (claimedMime === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" && buffer.length >= 30) {
+    // PK header is shared with all ZIP-based formats — verify OOXML content
+    // Check for [Content_Types].xml or word/ directory in the ZIP central directory
+    const header = buffer.subarray(0, Math.min(200, buffer.length)).toString("ascii");
+    return header.includes("[Content_Types]") || header.includes("word/");
+  }
+
+  return true;
 }
 
 /**

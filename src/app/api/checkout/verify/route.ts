@@ -55,17 +55,20 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ verified: false });
   }
   try {
-    // Try test client first, then live client. Sessions created with one mode
-    // cannot be retrieved by the other — ensures verify works for all tiers
-    // regardless of their live/test mode.
+    // Try the matching Stripe client based on session ID prefix to avoid
+    // double-latency. cs_live_ sessions can only be retrieved by the live
+    // client, cs_test_ by the test client.
     let session;
+    const isLiveSession = sessionId.startsWith("cs_live_");
+    const primaryClient = isLiveSession && stripeLive ? stripeLive : stripeTest;
+    const fallbackClient = isLiveSession ? stripeTest : stripeLive;
     try {
-      session = await stripeTest.checkout.sessions.retrieve(sessionId);
+      session = await primaryClient.checkout.sessions.retrieve(sessionId);
     } catch {
-      if (stripeLive) {
-        session = await stripeLive.checkout.sessions.retrieve(sessionId);
+      if (fallbackClient) {
+        session = await fallbackClient.checkout.sessions.retrieve(sessionId);
       } else {
-        throw new Error("Session not found in test mode and no live client configured");
+        throw new Error("Session not found and no fallback Stripe client configured");
       }
     }
 
