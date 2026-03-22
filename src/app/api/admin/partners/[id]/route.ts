@@ -1,7 +1,7 @@
 /**
  * @file /api/admin/partners/[id] — Partner detail, update, and payout.
  *
- * Auth: X-Admin-Password header (enforced by middleware).
+ * Auth: X-Admin-Password header (middleware + defense-in-depth guard).
  *
  * GET   — Partner detail + referral history
  * PATCH — Update status, notes, commission rate
@@ -11,6 +11,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { VALID_PAYMENT_METHODS, computeUnpaidCommission } from "@/lib/partner-data";
+import { requireAdmin } from "@/lib/auth/guards";
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -19,9 +20,12 @@ interface RouteContext {
 }
 
 export async function GET(
-  _req: NextRequest,
+  req: NextRequest,
   context: RouteContext
 ) {
+  const auth = requireAdmin(req);
+  if (!auth.authorized) return auth.error;
+
   const { id } = await context.params;
   if (!UUID_RE.test(id)) {
     return NextResponse.json({ error: "Invalid partner ID" }, { status: 400 });
@@ -63,6 +67,9 @@ export async function PATCH(
   req: NextRequest,
   context: RouteContext
 ) {
+  const auth = requireAdmin(req);
+  if (!auth.authorized) return auth.error;
+
   const { id } = await context.params;
   if (!UUID_RE.test(id)) {
     return NextResponse.json({ error: "Invalid partner ID" }, { status: 400 });
@@ -123,6 +130,9 @@ export async function POST(
   req: NextRequest,
   context: RouteContext
 ) {
+  const auth = requireAdmin(req);
+  if (!auth.authorized) return auth.error;
+
   const { id } = await context.params;
   if (!UUID_RE.test(id)) {
     return NextResponse.json({ error: "Invalid partner ID" }, { status: 400 });

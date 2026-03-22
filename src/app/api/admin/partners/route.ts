@@ -1,7 +1,7 @@
 /**
  * @file /api/admin/partners — List and create bondsman partners.
  *
- * Auth: X-Admin-Password header (enforced by middleware).
+ * Auth: X-Admin-Password header (middleware + defense-in-depth guard).
  *
  * GET  — Returns all partners with stats, ordered by most recent.
  * POST — Creates a new partner, generates a Stripe promotion code,
@@ -13,13 +13,17 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { createPartnerPromoCode } from "@/lib/referral";
 import { normalizeEmail, isValidEmail } from "@/lib/site";
 import { computeUnpaidCommission } from "@/lib/partner-data";
+import { requireAdmin } from "@/lib/auth/guards";
 
 /** Strip non-alphanumeric chars and uppercase. */
 function sanitizePromoCode(s: string): string {
   return s.toUpperCase().split("").filter(c => (c >= "A" && c <= "Z") || (c >= "0" && c <= "9")).join("");
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const auth = requireAdmin(req);
+  if (!auth.authorized) return auth.error;
+
   const supabase = createAdminClient();
 
   const { data, error } = await supabase
@@ -42,6 +46,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const auth = requireAdmin(req);
+  if (!auth.authorized) return auth.error;
+
   let body;
   try {
     body = await req.json();
