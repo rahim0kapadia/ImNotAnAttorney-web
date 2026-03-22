@@ -479,14 +479,14 @@ export async function POST(req: NextRequest) {
     for (const field of required) {
       if (!body[field]) {
         return NextResponse.json(
-          { error: `Missing required field: ${field}` },
+          { error: "Missing required fields" },
           { status: 400 }
         );
       }
       // Allowlist validation: reject any value not in the predefined set
       if (ALLOWED_VALUES[field] && !ALLOWED_VALUES[field].includes(body[field])) {
         return NextResponse.json(
-          { error: `Invalid value for ${field}: ${body[field]}` },
+          { error: "Invalid input value" },
           { status: 400 }
         );
       }

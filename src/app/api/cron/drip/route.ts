@@ -96,6 +96,7 @@ import { timingSafeEqual } from "crypto";
 import { signOperatorToken, signPhase2Token, SITE_URL, caseThreadId } from "@/lib/site";
 import { stripe } from "@/lib/stripe";
 import { TIER_CORE, tierDisplayName } from "@/lib/tiers";
+import { requireCron } from "@/lib/auth/guards";
 
 /**
  * Vercel Cron handler — runs daily at 9AM EST (14:00 UTC).
@@ -103,8 +104,12 @@ import { TIER_CORE, tierDisplayName } from "@/lib/tiers";
  * Protected by CRON_SECRET env var.
  */
 export async function GET(req: NextRequest) {
+  // Defense-in-depth: requireCron guard (timing-safe HMAC comparison)
+  const auth = requireCron(req);
+  if (!auth.authorized) return auth.error;
+
   // ──────────────────────────────────────────────────────────────
-  // AUTH: Verify Vercel cron secret
+  // AUTH: Verify Vercel cron secret (legacy inline check — kept for belt-and-suspenders)
   // ──────────────────────────────────────────────────────────────
   // Vercel automatically sends this header for cron jobs.
   // Without this check, anyone could trigger the cron by hitting the URL.
