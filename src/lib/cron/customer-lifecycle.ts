@@ -109,27 +109,32 @@ export async function sendAbandonedCheckoutEmails(ctx: CronContext): Promise<Cro
     .is("unsubscribed_at", null);
 
   if (abandonedSubs && abandonedSubs.length > 0) {
+    // Batch-fetch paid orders and dedup records to avoid N+1 queries
+    const abEmails = abandonedSubs.map((s: { email: string }) => s.email.toLowerCase());
+    const abSubIds = abandonedSubs.map((s: { id: string }) => s.id);
+
+    const { data: paidOrders } = await ctx.supabase
+      .from("orders")
+      .select("email")
+      .in("email", abEmails)
+      .eq("status", "paid");
+    const paidEmailSet = new Set(
+      (paidOrders ?? []).map((o: { email: string }) => o.email.toLowerCase())
+    );
+
+    const dedupKeys = abSubIds.map((id: string) => `abandoned_checkout_${id}`);
+    const { data: sentRecords } = await ctx.supabase
+      .from("drip_emails")
+      .select("subscriber_id, email_key")
+      .in("subscriber_id", abSubIds)
+      .in("email_key", dedupKeys);
+    const sentSet = new Set(
+      (sentRecords ?? []).map((r: { subscriber_id: string; email_key: string }) => `${r.subscriber_id}:${r.email_key}`)
+    );
+
     for (const abSub of abandonedSubs) {
-      // Check if they actually completed a purchase
-      const { data: hasPaidOrder } = await ctx.supabase
-        .from("orders")
-        .select("id")
-        .eq("email", abSub.email.toLowerCase())
-        .eq("status", "paid")
-        .limit(1)
-        .maybeSingle();
-
-      if (hasPaidOrder) continue; // They bought — skip
-
-      // Dedup
-      const { data: alreadySent } = await ctx.supabase
-        .from("drip_emails")
-        .select("id")
-        .eq("subscriber_id", abSub.id)
-        .eq("email_key", `abandoned_checkout_${abSub.id}`)
-        .maybeSingle();
-
-      if (alreadySent) continue;
+      if (paidEmailSet.has(abSub.email.toLowerCase())) continue; // They bought — skip
+      if (sentSet.has(`${abSub.id}:abandoned_checkout_${abSub.id}`)) continue; // Already sent
 
       const sendResult = await sendEmailWithRetry({
         to: abSub.email,

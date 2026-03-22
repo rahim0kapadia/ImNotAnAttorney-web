@@ -103,38 +103,44 @@ export async function sendWeeklyProgressEmails(ctx: CronContext): Promise<CronRe
   if (weeklyCases && weeklyCases.length > 0) {
     const weekNumber = getISOWeek(ctx.now);
 
+    // Batch-fetch subscribers and dedup records to avoid N+1 queries
+    const weeklyEmails = weeklyCases.map((c: { email: string }) => c.email.toLowerCase());
+    const { data: weeklySubs } = await ctx.supabase
+      .from("subscribers")
+      .select("id, email, unsubscribed_at")
+      .in("email", weeklyEmails);
+    const subByEmail = new Map(
+      (weeklySubs ?? []).map((s: { id: string; email: string; unsubscribed_at: string | null }) => [s.email.toLowerCase(), s])
+    );
+
+    // Batch-fetch dedup records for all weekly cases
+    const weeklySubIds = (weeklySubs ?? []).map((s: { id: string }) => s.id);
+    const weeklyDedupKeys = weeklyCases.map(
+      (c: { id: string }) => `weekly-progress-${c.id}-${ctx.now.getFullYear()}-w${weekNumber}`
+    );
+    const { data: weeklyDedups } = weeklySubIds.length > 0
+      ? await ctx.supabase
+          .from("drip_emails")
+          .select("subscriber_id, email_key")
+          .in("subscriber_id", weeklySubIds)
+          .in("email_key", weeklyDedupKeys)
+      : { data: [] };
+    const weeklyDedupSet = new Set(
+      (weeklyDedups ?? []).map((r: { subscriber_id: string; email_key: string }) => `${r.subscriber_id}:${r.email_key}`)
+    );
+
     for (const wCase of weeklyCases) {
       const emailKey = `weekly-progress-${wCase.id}-${ctx.now.getFullYear()}-w${weekNumber}`;
-
-      // Need subscriber for dedup
-      const { data: wSub } = await ctx.supabase
-        .from("subscribers")
-        .select("id")
-        .eq("email", wCase.email.toLowerCase())
-        .maybeSingle();
-
-      if (wSub?.id) {
-        const { data: alreadySent } = await ctx.supabase
-          .from("drip_emails")
-          .select("id")
-          .eq("subscriber_id", wSub.id)
-          .eq("email_key", emailKey)
-          .maybeSingle();
-
-        if (alreadySent) continue;
-      }
+      const wSub = subByEmail.get(wCase.email.toLowerCase());
 
       // Check unsubscribe status
-      const { data: unsubCheck } = await ctx.supabase
-        .from("subscribers")
-        .select("unsubscribed_at")
-        .eq("email", wCase.email.toLowerCase())
-        .maybeSingle();
-
-      if (unsubCheck?.unsubscribed_at) {
+      if (wSub?.unsubscribed_at) {
         result.skipped++;
         continue;
       }
+
+      // Check dedup
+      if (wSub?.id && weeklyDedupSet.has(`${wSub.id}:${emailKey}`)) continue;
 
       const tierLabel = tierDisplayName(wCase.tier);
       const portalUrl = wCase.report_token

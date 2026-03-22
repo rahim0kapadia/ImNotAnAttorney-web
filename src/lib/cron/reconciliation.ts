@@ -30,20 +30,28 @@ export async function reconcileStripePayments(ctx: CronContext): Promise<CronRes
       created: { gte: twoHoursAgoEpoch },
     });
 
-    for (const session of sessions.data) {
-      if (session.payment_status !== "paid") continue;
-      if (!session.metadata?.tier) continue;
+    // Batch-fetch existing orders for all session IDs to avoid N+1 queries
+    const paidSessions = sessions.data.filter(
+      (s) => s.payment_status === "paid" && s.metadata?.tier
+    );
+    const sessionIds = paidSessions.map((s) => s.id);
+    const { data: existingOrders } = sessionIds.length > 0
+      ? await ctx.supabase
+          .from("orders")
+          .select("id, stripe_session_id")
+          .in("stripe_session_id", sessionIds)
+      : { data: [] };
+    const existingSessionIds = new Set(
+      (existingOrders ?? []).map((o: { stripe_session_id: string }) => o.stripe_session_id)
+    );
 
-      const { data: existingOrder } = await ctx.supabase
-        .from("orders")
-        .select("id")
-        .eq("stripe_session_id", session.id)
-        .maybeSingle();
+    for (const session of paidSessions) {
+      if (existingSessionIds.has(session.id)) continue;
 
-      if (!existingOrder) {
+      {
         // Missing order — webhook never fired or failed
         const email = (session.customer_email || session.customer_details?.email || "").toLowerCase().trim();
-        const tier = session.metadata.tier;
+        const tier = session.metadata!.tier;
         const amount = session.amount_total || 0;
 
         // Auto-create the missing order
