@@ -11,7 +11,9 @@ export async function GET(req: NextRequest) {
   if (!auth.authorized) return auth.error;
 
   const supabase = createAdminClient();
-  const window = req.nextUrl.searchParams.get("window") || "all-time";
+  const ALLOWED_WINDOWS = ["7d", "30d", "all-time"];
+  const rawWindow = req.nextUrl.searchParams.get("window") || "all-time";
+  const window = ALLOWED_WINDOWS.includes(rawWindow) ? rawWindow : "all-time";
 
   const { data, error } = await supabase
     .from("content_performance")
@@ -21,7 +23,7 @@ export async function GET(req: NextRequest) {
     .limit(50);
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 
   return NextResponse.json({ performance: data });

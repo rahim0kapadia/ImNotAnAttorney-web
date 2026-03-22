@@ -22,7 +22,7 @@
  * the order, case, and trigger downstream emails without re-querying business logic.
  */
 import { NextRequest, NextResponse } from "next/server";
-import { stripe, stripeForTier, TIERS, isValidTier } from "@/lib/stripe";
+import { stripe, stripeForTier, TIERS, isValidTier, type TierSlug } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { normalizeEmail } from "@/lib/site";
@@ -41,6 +41,9 @@ import { getClientIp } from "@/lib/request";
  * --> { "url": "https://checkout.stripe.com/c/pay/..." }
  */
 export async function POST(req: NextRequest) {
+  // Track coupon and tier for cleanup on failure (must be outside try block)
+  let cleanupCouponId: string | undefined;
+  let cleanupTier: TierSlug | undefined;
   try {
     const ip = getClientIp(req);
     const { limited } = await checkRateLimit(createAdminClient(), `checkout:${ip}`, 10, 300);
@@ -59,6 +62,7 @@ export async function POST(req: NextRequest) {
     if (!tier || !isValidTier(tier)) {
       return NextResponse.json({ error: "Invalid tier" }, { status: 400 });
     }
+    cleanupTier = tier; // Track for coupon cleanup on failure (after validation)
 
     const tierConfig = TIERS[tier];
 
@@ -346,6 +350,7 @@ export async function POST(req: NextRequest) {
             name: "Upgrade Credit",
           });
           stripeCouponId = coupon.id;
+          cleanupCouponId = coupon.id;
         }
       }
     }
@@ -437,6 +442,9 @@ export async function POST(req: NextRequest) {
       const sessionTotal = tierConfig.price + (priorityDelivery && tierConfig.priorityPrice ? tierConfig.priorityPrice : 0);
       const cappedCombined = Math.min(combinedAmount, Math.max(sessionTotal - 50, 0));
 
+      // Delete the original upgrade coupon — it's replaced by the combined one
+      await stripeForDiscount.coupons.del(stripeCouponId).catch(() => {});
+
       if (cappedCombined > 0) {
         const combinedCoupon = await stripeForDiscount.coupons.create({
           amount_off: cappedCombined,
@@ -444,8 +452,12 @@ export async function POST(req: NextRequest) {
           duration: "once",
           name: "Referral + Upgrade Credit",
         });
+        stripeCouponId = combinedCoupon.id;
+        cleanupCouponId = combinedCoupon.id; // Track for cleanup on failure
         discountConfig = { discounts: [{ coupon: combinedCoupon.id }] };
       } else {
+        stripeCouponId = undefined;
+        cleanupCouponId = undefined; // No coupon to clean up
         discountConfig = { allow_promotion_codes: true };
       }
     } else if (referralStripePromoId) {
@@ -557,6 +569,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ url: session.url });
   } catch (error) {
     console.error("[Checkout] Error:", error);
+    // Clean up any orphaned Stripe coupons created before the failure
+    if (cleanupCouponId && cleanupTier) {
+      const cleanupStripe = stripeForTier(cleanupTier);
+      await cleanupStripe.coupons.del(cleanupCouponId).catch(() => {});
+    }
     return NextResponse.json(
       { error: "Failed to create checkout session" },
       { status: 500 }

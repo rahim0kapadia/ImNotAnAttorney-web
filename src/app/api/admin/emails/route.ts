@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
   const { data, error, count } = await query;
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 
   return NextResponse.json({ emails: data, total: count, page, limit });
@@ -60,7 +60,7 @@ export async function PATCH(req: NextRequest) {
     .eq("id", id);
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true });

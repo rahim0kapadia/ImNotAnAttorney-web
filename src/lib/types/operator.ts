@@ -31,7 +31,7 @@ export interface CaseListItem {
 /** Full case detail with all related data (joins). */
 export interface CaseDetail extends CaseListItem {
   phase_started_at: string | null;
-  report_html: string | null;
+  has_report: boolean;
   operator_notes: string | null;
   data_retention_until: string | null;
   upgrade_order_ids: string[] | null;

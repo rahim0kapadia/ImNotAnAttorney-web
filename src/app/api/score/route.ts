@@ -22,8 +22,8 @@
  *   Critical (0-30), Concerning (31-50), Average (51-70), Adequate (71-85), Excellent (86-100)
  *
  * Privacy-first design:
- * - NO data is stored -- the score is computed and returned in the response only
- * - No Supabase client is created, no database writes occur
+ * - Anonymous aggregate counters are incremented (total completions and
+ *   charge-type breakdowns). No individual answers, scores, or PII are stored.
  * - No email is collected (email capture is handled by the frontend separately)
  * - No cookies or session tracking
  *

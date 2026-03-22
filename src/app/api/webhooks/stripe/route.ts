@@ -273,8 +273,9 @@ export async function POST(req: NextRequest) {
 
           if (!partner || partner.status !== "approved") continue;
 
-          const discountAmount = item.amount; // cents
-          // amount_total is post-discount for one-time; full_price is pre-discount for installments
+          const discountAmount = item.amount; // cents — total discount (duration:"once" = applied to first invoice only)
+          // For installments: amount = full_price, discount applied once → revenue = full_price - discount
+          // For one-time: amount = amount_total (already post-discount), so saleAmount = amount
           const saleAmount = isInstallment ? amount - discountAmount : amount;
           const commissionAmount = calculateCommission(saleAmount, partner.commission_rate);
 

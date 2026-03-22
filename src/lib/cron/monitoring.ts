@@ -104,7 +104,7 @@ export async function sendWeeklyProgressEmails(ctx: CronContext): Promise<CronRe
     const weekNumber = getISOWeek(ctx.now);
 
     for (const wCase of weeklyCases) {
-      const emailKey = `weekly-progress-${wCase.id}-w${weekNumber}`;
+      const emailKey = `weekly-progress-${wCase.id}-${ctx.now.getFullYear()}-w${weekNumber}`;
 
       // Need subscriber for dedup
       const { data: wSub } = await ctx.supabase

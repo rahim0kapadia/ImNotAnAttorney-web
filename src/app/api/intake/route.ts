@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
     // ──────────────────────────────────────────────────────────────
     // Required fields: the minimum information needed to create a
     // useful intake record and send a confirmation email.
-    if (!firstName || !email || !chargeType) {
+    if (!firstName || typeof firstName !== "string" || !email || typeof email !== "string" || !chargeType) {
       return NextResponse.json(
         { error: "Required fields missing" },
         { status: 400 }
@@ -250,6 +250,13 @@ export async function POST(req: NextRequest) {
         // case-decoder tier gets auto-triggered (both standalone and included).
         // Higher tiers require discovery documents or manual operator action.
         if (pendingCase.tier === "case-decoder") {
+          // Set status to 'generating' before triggering so the stuck-generating
+          // cron can detect failures (fire-and-forget loses errors silently)
+          await supabase
+            .from("cases")
+            .update({ status: "generating", updated_at: new Date().toISOString() })
+            .eq("id", pendingCase.id);
+
           fetch(`${origin}/api/generate/case-decoder`, {
             method: "POST",
             headers: {

@@ -48,7 +48,8 @@ export async function GET(
     .from("referrals")
     .select("id, tier, sale_amount, discount_amount, commission_amount, commission_paid, paid_at, created_at")
     .eq("partner_id", id)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .limit(500);
 
   if (refError) {
     console.error("[Admin Partners] Referrals fetch error:", refError);

@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
     .select("*")
     .order("flag_key");
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   return NextResponse.json({ flags: data });
 }
 
@@ -53,7 +53,7 @@ export async function PATCH(req: NextRequest) {
     .eq("flag_key", flagKey)
     .select("id");
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   if (!data || data.length === 0) {
     return NextResponse.json({ error: "Flag not found" }, { status: 404 });
   }

@@ -11,6 +11,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import sanitizeHtml from "sanitize-html";
 
 const RESEND_API = "https://api.resend.com";
 
@@ -46,8 +47,29 @@ export async function POST(req: NextRequest) {
     const sig = await crypto.subtle.sign("HMAC", key, encoder.encode(signedContent));
     const expectedSig = `v1,${btoa(String.fromCharCode(...new Uint8Array(sig)))}`;
 
+    // Constant-time comparison to prevent timing side-channel attacks
     const signatures = svixSignature.split(" ");
-    if (!signatures.includes(expectedSig)) {
+    const expectedBytes = new TextEncoder().encode(expectedSig);
+    let valid = false;
+    for (const candidate of signatures) {
+      const candidateBytes = new TextEncoder().encode(candidate);
+      if (candidateBytes.length !== expectedBytes.length) continue;
+      const cmpKey = await crypto.subtle.importKey(
+        "raw", new TextEncoder().encode("webhook-cmp"), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+      );
+      const [hmacA, hmacB] = await Promise.all([
+        crypto.subtle.sign("HMAC", cmpKey, expectedBytes),
+        crypto.subtle.sign("HMAC", cmpKey, candidateBytes),
+      ]);
+      const a = new Uint8Array(hmacA);
+      const b = new Uint8Array(hmacB);
+      let match = true;
+      for (let i = 0; i < a.length; i++) {
+        if (a[i] !== b[i]) match = false;
+      }
+      if (match) valid = true;
+    }
+    if (!valid) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
   } else {
@@ -106,7 +128,10 @@ export async function POST(req: NextRequest) {
     to_email: (emailData.to || data.to)?.[0] || "help@imnotanattorney.com",
     subject: emailData.subject || data.subject || "(no subject)",
     body_text: emailData.text || null,
-    body_html: emailData.html || null,
+    body_html: emailData.html ? sanitizeHtml(emailData.html, {
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
+      allowedAttributes: { ...sanitizeHtml.defaults.allowedAttributes, img: ["src", "alt", "width", "height"] },
+    }) : null,
     message_id: emailData.message_id || null,
     headers: emailData.headers || null,
     raw_payload: { webhook: data, email: emailData },

@@ -19,7 +19,7 @@ import { SupabaseClient } from "@supabase/supabase-js";
 // ── In-memory fallback when Supabase is unavailable ─────────────────
 const memoryStore = new Map<string, number[]>();
 const MEMORY_WINDOW_MS = 60_000; // 1 minute
-const MEMORY_MAX_REQUESTS = 10; // conservative default per window
+const MEMORY_MAX_REQUESTS = 3; // conservative — mirrors tightest DB limit (3/hr for magic links)
 const MEMORY_MAX_KEYS = 10_000; // cap to prevent unbounded growth
 let lastCleanup = Date.now();
 

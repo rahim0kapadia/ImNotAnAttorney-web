@@ -49,9 +49,30 @@ export async function POST(req: NextRequest) {
     const sig = await crypto.subtle.sign("HMAC", key, encoder.encode(signedContent));
     const expectedSig = `v1,${btoa(String.fromCharCode(...new Uint8Array(sig)))}`;
 
-    // Svix sends multiple signatures separated by spaces
+    // Svix sends multiple signatures separated by spaces — use constant-time comparison
     const signatures = svixSignature.split(" ");
-    if (!signatures.includes(expectedSig)) {
+    const expectedBytes = new TextEncoder().encode(expectedSig);
+    let valid = false;
+    for (const candidate of signatures) {
+      const candidateBytes = new TextEncoder().encode(candidate);
+      if (candidateBytes.length !== expectedBytes.length) continue;
+      // HMAC both sides with a fixed key for constant-time comparison
+      const cmpKey = await crypto.subtle.importKey(
+        "raw", new TextEncoder().encode("webhook-cmp"), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+      );
+      const [hmacA, hmacB] = await Promise.all([
+        crypto.subtle.sign("HMAC", cmpKey, expectedBytes),
+        crypto.subtle.sign("HMAC", cmpKey, candidateBytes),
+      ]);
+      const a = new Uint8Array(hmacA);
+      const b = new Uint8Array(hmacB);
+      let match = true;
+      for (let i = 0; i < a.length; i++) {
+        if (a[i] !== b[i]) match = false; // no early return — constant time
+      }
+      if (match) valid = true;
+    }
+    if (!valid) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
   } else {

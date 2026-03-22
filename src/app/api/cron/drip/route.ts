@@ -81,10 +81,17 @@ export async function GET(req: NextRequest) {
 
   const supabase = createAdminClient();
 
-  // ── Advisory lock (prevent concurrent runs) ──
+  // ── Concurrency guard (prevent concurrent runs) ──
+  // NOTE: pg_try_advisory_lock is session-scoped, but Supabase REST uses
+  // connection pooling — the lock may be acquired/released on different
+  // connections. As a defense-in-depth layer, we keep the RPC call but
+  // return 409 (not 200) so Vercel Cron logs it as a failure if it fires.
   const { data: lockAcquired } = await supabase.rpc("acquire_cron_lock", { lock_key: 1 });
   if (!lockAcquired) {
-    return NextResponse.json({ message: "Cron already running (lock not acquired)" });
+    return NextResponse.json(
+      { message: "Cron already running (lock not acquired)" },
+      { status: 409 }
+    );
   }
 
   const now = new Date();

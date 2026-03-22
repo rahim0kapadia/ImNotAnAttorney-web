@@ -182,7 +182,7 @@ export async function GET(req: NextRequest, { params }: RouteContext) {
     defense_opportunity_index: caseData.defense_opportunity_index,
     report_token: caseData.report_token,
     phase_started_at: caseData.phase_started_at,
-    report_html: caseData.report_html,
+    has_report: !!caseData.report_html,
     operator_notes: caseData.notes ?? null,
     data_retention_until: caseData.data_retention_until,
     upgrade_order_ids: caseData.upgrade_order_ids,

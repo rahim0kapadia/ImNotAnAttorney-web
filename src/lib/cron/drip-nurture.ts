@@ -65,10 +65,13 @@ export async function sendNurtureEmails(ctx: CronContext): Promise<CronResult> {
   }
 
   // ── Batch-fetch emails that have orders (for win-back suppression) ──
+  // Scoped to subscriber emails to avoid fetching entire orders table
+  const subscriberEmails = subscribers.map((s: { email: string }) => s.email.toLowerCase().trim());
   const { data: orderEmails } = await ctx.supabase
     .from("orders")
     .select("email")
-    .in("status", ["paid", "delivered"]);
+    .in("status", ["paid", "delivered"])
+    .in("email", subscriberEmails);
   const purchasedEmails = new Set(
     (orderEmails ?? []).map((o: { email: string }) => o.email.toLowerCase().trim())
   );

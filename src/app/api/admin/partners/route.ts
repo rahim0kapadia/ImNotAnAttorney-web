@@ -29,7 +29,8 @@ export async function GET(req: NextRequest) {
   const { data, error } = await supabase
     .from("partners")
     .select("id, name, company, email, phone, region, status, commission_rate, promo_code, stripe_promo_code_id, notes, total_referrals, total_commission, total_paid_out, created_at")
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .limit(200);
 
   if (error) {
     console.error("[Admin Partners] List error:", error);

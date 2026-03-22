@@ -142,7 +142,7 @@ export function Footer() {
                 {TIER_CORE["war-room"].name} ({TIER_CORE["war-room"].priceDisplay})
               </Link>
               <Link
-                href="/checkout?tier=situation-room"
+                href="/intake?interest=situation-room"
                 className="text-sm text-zinc-400 hover:text-white"
               >
                 {TIER_CORE["situation-room"].name} ({TIER_CORE["situation-room"].priceDisplay})

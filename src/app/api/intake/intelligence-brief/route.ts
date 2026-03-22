@@ -199,6 +199,12 @@ export async function POST(req: NextRequest) {
       unsubscribeEmail: caseData.email,
     }, { category: "phase2-intake-confirmation", case_id: caseId });
 
+    // Set auto-generating status before fire-and-forget so the stuck-IB cron can detect failures
+    await supabase
+      .from("cases")
+      .update({ status: "auto-generating", updated_at: new Date().toISOString() })
+      .eq("id", caseId);
+
     // Fire-and-forget: trigger Phase A generation
     const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
     fetch(`${origin}/api/generate/intelligence-brief`, {

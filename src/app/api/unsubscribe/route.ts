@@ -32,6 +32,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { escapeHtml } from "@/lib/email";
 
 /**
  * Decodes a base64-encoded email parameter and validates it.
@@ -103,7 +104,7 @@ export async function GET(req: NextRequest) {
     <p>Are you sure you want to unsubscribe?</p>
     <p style="color: #A1A1AA; font-size: 14px;">You will stop receiving emails from ImNotAnAttorney.</p>
     <form method="POST" action="${origin}/api/unsubscribe">
-      <input type="hidden" name="email" value="${emailParam}" />
+      <input type="hidden" name="email" value="${escapeHtml(emailParam)}" />
       <button type="submit" style="margin-top: 16px; padding: 12px 32px; background: #EF4444; color: white; font-weight: bold; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">
         Confirm Unsubscribe
       </button>
