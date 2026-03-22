@@ -100,6 +100,9 @@ export async function createCustomerSession(email: string): Promise<string | nul
   const sessionToken = crypto.randomBytes(32).toString("hex");
   const expiresAt = new Date(Date.now() + SESSION_EXPIRY_DAYS * 24 * 60 * 60 * 1000);
 
+  // Invalidate all existing sessions for this email
+  await supabase.from("customer_sessions").delete().eq("email", email);
+
   const { error } = await supabase.from("customer_sessions").insert({
     email,
     session_token_hash: hashToken(sessionToken),

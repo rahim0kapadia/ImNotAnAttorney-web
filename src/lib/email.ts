@@ -354,7 +354,7 @@ export async function sendCustomerMagicLinkEmail(
     html: `
       <h1 style="font-size: 24px; margin-bottom: 16px; color: #FAFAF9;">Access Your Cases</h1>
       <p style="color: #A8A29E; margin-bottom: 24px;">Click the button below to log in to your case portal. This link expires in 15 minutes.</p>
-      <a href="${magicLinkUrl}" style="display: inline-block; background: #F59E0B; color: #0C0A09; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">Log In to My Cases</a>
+      <a href="${escapeHtml(magicLinkUrl)}" style="display: inline-block; background: #F59E0B; color: #0C0A09; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">Log In to My Cases</a>
       <p style="color: #78716C; font-size: 14px; margin-top: 24px;">If you didn't request this link, you can safely ignore this email.</p>
     `,
   });
