@@ -27,17 +27,20 @@ export async function detectSLABreaches(ctx: CronContext): Promise<CronResult> {
     .limit(200);
 
   if (slaCases && slaCases.length > 0) {
-    for (const slaCase of slaCases) {
-      // Dedup: check if an open sla_breach task already exists for this case
-      const { data: existingTask } = await ctx.supabase
-        .from("operator_tasks")
-        .select("id")
-        .eq("case_id", slaCase.id)
-        .eq("task_type", "sla_breach")
-        .in("status", ["open", "in_progress"])
-        .maybeSingle();
+    // ── N+1 FIX: Batch-fetch existing SLA breach tasks for all cases ──
+    const slaCaseIds = slaCases.map((c) => c.id);
+    const { data: existingTasks } = await ctx.supabase
+      .from("operator_tasks")
+      .select("case_id")
+      .in("case_id", slaCaseIds)
+      .eq("task_type", "sla_breach")
+      .in("status", ["open", "in_progress"]);
+    const casesWithSlaTask = new Set(
+      (existingTasks ?? []).map((t) => t.case_id)
+    );
 
-      if (existingTask) continue;
+    for (const slaCase of slaCases) {
+      if (casesWithSlaTask.has(slaCase.id)) continue;
 
       const hoursOverdue = Math.round(
         (ctx.now.getTime() - new Date(slaCase.delivery_due_at!).getTime()) / (1000 * 60 * 60)
@@ -57,7 +60,7 @@ export async function detectSLABreaches(ctx: CronContext): Promise<CronResult> {
 
       await sendEmail({
         to: ctx.operatorEmail,
-        subject: `SLA BREACH: ${tierLabel} overdue by ${hoursOverdue} hours — ${escapeHtml(slaCase.email)}`,
+        subject: `SLA BREACH: ${tierLabel} overdue by ${hoursOverdue} hours — ${slaCase.email}`,
         html: `<h1 style="color: #EF4444;">SLA Breach — Delivery Overdue</h1>
           <p>This case has exceeded its delivery deadline by <strong style="color: #EF4444;">${hoursOverdue} hours</strong>.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">

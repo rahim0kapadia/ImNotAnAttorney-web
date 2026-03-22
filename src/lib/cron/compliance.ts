@@ -25,7 +25,8 @@ export async function cleanupAbandonedIntakes(ctx: CronContext): Promise<CronRes
   const { data: oldIntakes } = await ctx.supabase
     .from("intakes")
     .select("id, email")
-    .lt("created_at", ninetyDaysAgo.toISOString());
+    .lt("created_at", ninetyDaysAgo.toISOString())
+    .limit(500);
 
   if (oldIntakes && oldIntakes.length > 0) {
     // N+1 FIX: Batch-fetch all cases for these intake emails
@@ -84,7 +85,8 @@ export async function cleanupDripEmailLogs(ctx: CronContext): Promise<CronResult
   const { data: unsubscribedSubs } = await ctx.supabase
     .from("subscribers")
     .select("id")
-    .not("unsubscribed_at", "is", null);
+    .not("unsubscribed_at", "is", null)
+    .limit(500);
 
   if (unsubscribedSubs && unsubscribedSubs.length > 0) {
     const unsubIds = unsubscribedSubs.map((s: { id: string }) => s.id);
@@ -118,7 +120,8 @@ export async function cleanupDiscoveryDocuments(ctx: CronContext): Promise<CronR
     .select("id, file_urls")
     .eq("status", "delivered")
     .lt("delivered_at", ninetyDaysAgo.toISOString())
-    .not("file_urls", "eq", "{}");
+    .not("file_urls", "eq", "{}")
+    .limit(50);
 
   if (expiredDiscovery && expiredDiscovery.length > 0) {
     for (const c of expiredDiscovery) {

@@ -83,6 +83,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Tier check — Phase 2 intake is only valid for intelligence-brief cases
+    if (caseData.tier !== "intelligence-brief") {
+      return NextResponse.json(
+        { error: "This form is only for Intelligence Brief cases." },
+        { status: 400 }
+      );
+    }
+
     // Explicit refund check — customer sees a clear message instead of generic 409
     if (caseData.status === "refunded") {
       return NextResponse.json(
@@ -219,6 +227,8 @@ export async function POST(req: NextRequest) {
         Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
       },
       body: JSON.stringify({ caseId }),
+    }).then((res) => {
+      if (res && !res.ok) console.error(`[Phase2] Phase A trigger HTTP error: ${res.status}`);
     }).catch((err) => console.error("[Phase2] Phase A trigger error:", err));
 
     return NextResponse.json({ success: true });

@@ -12,7 +12,7 @@
  */
 
 import { sendEmail, escapeHtml } from "@/lib/email";
-import { stripe } from "@/lib/stripe";
+import { stripe, stripeLive } from "@/lib/stripe";
 import type { CronContext, CronResult } from "./types";
 import { emptyResult } from "./types";
 
@@ -25,13 +25,15 @@ export async function reconcileStripePayments(ctx: CronContext): Promise<CronRes
 
   try {
     const twoHoursAgoEpoch = Math.floor((ctx.now.getTime() - 2 * 60 * 60 * 1000) / 1000);
-    const sessions = await stripe.checkout.sessions.list({
-      limit: 50,
-      created: { gte: twoHoursAgoEpoch },
-    });
+
+    // Check BOTH test and live Stripe instances for missed payments
+    const testSessions = await stripe.checkout.sessions.list({ limit: 50, created: { gte: twoHoursAgoEpoch } });
+    const liveSessions = stripeLive
+      ? await stripeLive.checkout.sessions.list({ limit: 50, created: { gte: twoHoursAgoEpoch } })
+      : { data: [] as typeof testSessions.data };
 
     // Batch-fetch existing orders for all session IDs to avoid N+1 queries
-    const paidSessions = sessions.data.filter(
+    const paidSessions = [...testSessions.data, ...liveSessions.data].filter(
       (s) => s.payment_status === "paid" && s.metadata?.tier
     );
     const sessionIds = paidSessions.map((s) => s.id);
@@ -123,20 +125,26 @@ export async function detectOrphanOrders(ctx: CronContext): Promise<CronResult> 
       .select("id, email, tier, amount")
       .eq("status", "paid")
       .lt("created_at", oneHourAgo.toISOString())
-      .gte("created_at", new Date(ctx.now.getTime() - 24 * 60 * 60 * 1000).toISOString());
+      .gte("created_at", new Date(ctx.now.getTime() - 24 * 60 * 60 * 1000).toISOString())
+      .limit(500);
 
     if (recentOrders) {
-      for (const order of recentOrders) {
-        // Use .limit(1) instead of .maybeSingle() — multi-case orders
-        // (IB+) create multiple cases per order, and .maybeSingle()
-        // throws when more than one row matches.
-        const { data: linkedCases } = await ctx.supabase
-          .from("cases")
-          .select("id")
-          .eq("order_id", order.id)
-          .limit(1);
+      // ── N+1 FIX: Batch-fetch all cases for recent order IDs ──
+      const orderIds = recentOrders.map((o) => o.id);
+      const { data: linkedCasesBatch } = orderIds.length > 0
+        ? await ctx.supabase
+            .from("cases")
+            .select("order_id")
+            .in("order_id", orderIds)
+        : { data: [] as { order_id: string }[] };
+      const orderIdsWithCases = new Set(
+        (linkedCasesBatch ?? []).map((c) => c.order_id)
+      );
 
-        if (!linkedCases || linkedCases.length === 0) {
+      for (const order of recentOrders) {
+        if (orderIdsWithCases.has(order.id)) continue;
+
+        {
           // Orphan order — create case and alert
           const caseId = crypto.randomUUID();
           await ctx.supabase.from("cases").insert({

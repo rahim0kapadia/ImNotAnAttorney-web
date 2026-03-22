@@ -141,9 +141,10 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
 
-    if (source === "score-page" && scoreBand && scoreValue !== null) {
+    const VALID_BANDS = ["Critical", "Concerning", "Average", "Adequate", "Excellent"];
+    if (source === "score-page" && scoreBand && VALID_BANDS.includes(scoreBand) && scoreValue !== null) {
       // ── SCORE ARTIFACT EMAIL — immediate, trust-building, no CTA ──
-      const bandLabel = scoreBand as string;
+      const bandLabel = scoreBand;
       const bandColors: Record<string, string> = {
         Critical: "#EF4444",
         Concerning: "#F97316",

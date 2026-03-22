@@ -96,7 +96,7 @@ export async function detectStuckIntakes(ctx: CronContext): Promise<CronResult> 
       );
       const sendResult = await sendEmail({
         to: ctx.operatorEmail,
-        subject: `ALERT: Case stuck in intake for ${hoursStuck}+ hours — ${escapeHtml(stuck.email)}`,
+        subject: `ALERT: Case stuck in intake for ${hoursStuck}+ hours — ${stuck.email}`,
         html: `<h1 style="color: #EF4444;">Case Stuck — Generation May Have Failed</h1>
           <p>Case has been in "intake" status for <strong>${hoursStuck} hours</strong>. Report generation may have been silently dropped.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
@@ -148,7 +148,7 @@ export async function detectStuckGenerating(ctx: CronContext): Promise<CronResul
       );
       const sendResult = await sendEmail({
         to: ctx.operatorEmail,
-        subject: `ALERT: Report generation stuck for ${minutesStuck}+ min — ${escapeHtml(stuck.email)}`,
+        subject: `ALERT: Report generation stuck for ${minutesStuck}+ min — ${stuck.email}`,
         html: `<h1 style="color: #EF4444;">Report Generation Stuck</h1>
           <p>Case has been in "generating" status for <strong>${minutesStuck} minutes</strong>. The edge function likely crashed or timed out.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
@@ -203,7 +203,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
       );
       const sendResult = await sendEmail({
         to: ctx.operatorEmail,
-        subject: `ALERT: IB Phase A stuck for ${minutesStuck}+ min — ${escapeHtml(stuck.email)}`,
+        subject: `ALERT: IB Phase A stuck for ${minutesStuck}+ min — ${stuck.email}`,
         html: `<h1 style="color: #EF4444;">Intelligence Brief Phase A Stuck</h1>
           <p>Case has been in "auto-generating" status for <strong>${minutesStuck} minutes</strong>. Phase A likely crashed or timed out.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
@@ -241,7 +241,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
       );
       const compileResult = await sendEmail({
         to: ctx.operatorEmail,
-        subject: `ALERT: IB Phase B stuck for ${minutesStuck}+ min — ${escapeHtml(stuck.email)}`,
+        subject: `ALERT: IB Phase B stuck for ${minutesStuck}+ min — ${stuck.email}`,
         html: `<h1 style="color: #EF4444;">Intelligence Brief Phase B Stuck</h1>
           <p>Case has been in "compiling" status for <strong>${minutesStuck} minutes</strong>. Phase B likely crashed or timed out.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
@@ -306,7 +306,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
 
       await sendEmail({
         to: ctx.operatorEmail,
-        subject: `REMINDER: IB judge research pending for ${hoursStuck}+ hours — ${escapeHtml(stuck.email)}`,
+        subject: `REMINDER: IB judge research pending for ${hoursStuck}+ hours — ${stuck.email}`,
         html: `<h1 style="color: #F59E0B;">Intelligence Brief Awaiting Judge Research</h1>
           <p>Phase A completed ${hoursStuck} hours ago. Judge research data is needed to proceed with Phase B.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
@@ -350,7 +350,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
 
       await sendEmail({
         to: ctx.operatorEmail,
-        subject: `URGENT: Judge research pending ${hoursStuck}+ hours — customer waiting — ${escapeHtml(stuck.email)}`,
+        subject: `URGENT: Judge research pending ${hoursStuck}+ hours — customer waiting — ${stuck.email}`,
         html: `<h1 style="color: #EF4444;">Intelligence Brief Blocked — Judge Research Overdue</h1>
           <p>Phase A completed <strong>${hoursStuck} hours ago</strong> (${Math.round(hoursStuck / 24)} days). The customer is waiting for their Intelligence Brief but judge research hasn't been submitted.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
@@ -440,7 +440,7 @@ export async function sendPhase2IntakeReminders(ctx: CronContext): Promise<CronR
         const daysSinceUpdate = Math.round(caseAge / (1000 * 60 * 60 * 24));
         await sendEmail({
           to: ctx.operatorEmail,
-          subject: `URGENT: IB Phase 2 pending ${daysSinceUpdate}+ days — ${escapeHtml(ibCase.email)}`,
+          subject: `URGENT: IB Phase 2 pending ${daysSinceUpdate}+ days — ${ibCase.email}`,
           html: `<h1 style="color: #EF4444;">Intelligence Brief Waiting for Phase 2</h1>
             <p>Customer received their Case Decoder <strong>${daysSinceUpdate} days ago</strong> but has not submitted their Intelligence Brief details.</p>
             <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">

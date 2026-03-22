@@ -272,6 +272,8 @@ export async function POST(req: NextRequest) {
               Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
             },
             body: JSON.stringify({ caseId: pendingCase.id }),
+          }).then((res) => {
+            if (res && !res.ok) console.error(`[Intake] Auto-trigger report generation HTTP error: ${res.status}`);
           }).catch((err) => console.error("[Intake] Auto-trigger report generation failed:", err));
         }
       }
@@ -361,7 +363,7 @@ export async function POST(req: NextRequest) {
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Has Discovery:</strong> ${escapeHtml(body.hasDiscovery || "Not specified")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Arrested/Charged:</strong> ${escapeHtml(body.timeSinceArrest || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Location:</strong> ${escapeHtml(body.incidentLocation || "Not provided")}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">How LE Involved:</strong> ${(body.arrestCircumstances || []).map((s: string) => escapeHtml(s)).join(", ") || "Not provided"}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">How LE Involved:</strong> ${(body.arrestCircumstances || []).filter((s: unknown) => typeof s === "string").map((s: string) => escapeHtml(s)).join(", ") || "Not provided"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Co-Defendants:</strong> ${escapeHtml(body.coDefendants || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Attorney Strategy:</strong> ${escapeHtml(body.attorneyStrategy || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case Number:</strong> ${escapeHtml(body.caseNumber || "Not provided")}</p>
@@ -371,8 +373,8 @@ export async function POST(req: NextRequest) {
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Communication:</strong> ${escapeHtml(body.communicationFrequency || "Not specified")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Last Attorney Contact:</strong> ${escapeHtml(body.lastAttorneyContact || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Arrest Date:</strong> ${escapeHtml(body.arrestDate || "Not provided")}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Evidence Types:</strong> ${(body.evidenceType || []).map((s: string) => escapeHtml(s)).join(", ") || "Not specified"}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Services:</strong> ${(body.services || []).map((s: string) => escapeHtml(s)).join(", ") || "None selected"}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Evidence Types:</strong> ${(body.evidenceType || []).filter((s: unknown) => typeof s === "string").map((s: string) => escapeHtml(s)).join(", ") || "Not specified"}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Services:</strong> ${(body.services || []).filter((s: unknown) => typeof s === "string").map((s: string) => escapeHtml(s)).join(", ") || "None selected"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Criminal History:</strong> ${escapeHtml(body.criminalHistory || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Employment:</strong> ${escapeHtml(body.employmentStatus || "Not provided")}${body.employmentIndustry ? ` — ${escapeHtml(body.employmentIndustry)}` : ""}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case Stage:</strong> ${escapeHtml(body.caseStage || "Not provided")}</p>

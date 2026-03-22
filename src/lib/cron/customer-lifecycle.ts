@@ -27,28 +27,37 @@ export async function sendReportExpiryWarnings(ctx: CronContext): Promise<CronRe
     .select("id, email, tier, report_token, report_token_expires_at")
     .eq("status", "delivered")
     .gte("report_token_expires_at", thirtyDaysFromNow.toISOString())
-    .lt("report_token_expires_at", thirtyOneDaysFromNow.toISOString());
+    .lt("report_token_expires_at", thirtyOneDaysFromNow.toISOString())
+    .limit(200);
 
   if (expiringCases && expiringCases.length > 0) {
+    // ── N+1 FIX: Batch-fetch subscribers + dedup records ──
+    const expEmails = [...new Set(expiringCases.map((c) => c.email.toLowerCase()))];
+    const { data: expSubs } = await ctx.supabase
+      .from("subscribers").select("id, email").in("email", expEmails);
+    const expSubByEmail = new Map(
+      (expSubs ?? []).map((s) => [s.email.toLowerCase(), { id: s.id }])
+    );
+    const expSubIds = (expSubs ?? []).map((s) => s.id);
+    const { data: expDripEmails } = expSubIds.length > 0
+      ? await ctx.supabase.from("drip_emails").select("subscriber_id, email_key")
+          .in("subscriber_id", expSubIds).like("email_key", "report_expiry_warning_%")
+      : { data: [] as { subscriber_id: string; email_key: string }[] };
+    const expSentKeys = new Map<string, Set<string>>();
+    for (const d of expDripEmails ?? []) {
+      if (!expSentKeys.has(d.subscriber_id)) expSentKeys.set(d.subscriber_id, new Set());
+      expSentKeys.get(d.subscriber_id)!.add(d.email_key);
+    }
+
     for (const expCase of expiringCases) {
       if (!expCase.report_token) continue;
 
-      // Dedup via drip_emails
-      const { data: expSub } = await ctx.supabase
-        .from("subscribers")
-        .select("id")
-        .eq("email", expCase.email.toLowerCase())
-        .maybeSingle();
+      // Dedup via batch-fetched data
+      const expSub = expSubByEmail.get(expCase.email.toLowerCase()) ?? null;
 
       if (expSub?.id) {
-        const { data: alreadySent } = await ctx.supabase
-          .from("drip_emails")
-          .select("id")
-          .eq("subscriber_id", expSub.id)
-          .eq("email_key", `report_expiry_warning_${expCase.id}`)
-          .maybeSingle();
-
-        if (alreadySent) continue;
+        const sentKeys = expSentKeys.get(expSub.id);
+        if (sentKeys?.has(`report_expiry_warning_${expCase.id}`)) continue;
       }
 
       const sendResult = await sendEmailWithRetry({
@@ -106,7 +115,8 @@ export async function sendAbandonedCheckoutEmails(ctx: CronContext): Promise<Cro
     .eq("source", "checkout")
     .gte("created_at", abandonedStart.toISOString())
     .lt("created_at", abandonedEnd.toISOString())
-    .is("unsubscribed_at", null);
+    .is("unsubscribed_at", null)
+    .limit(200);
 
   if (abandonedSubs && abandonedSubs.length > 0) {
     // Batch-fetch paid orders and dedup records to avoid N+1 queries

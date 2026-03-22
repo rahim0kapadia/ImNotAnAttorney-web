@@ -211,8 +211,8 @@ export async function POST(req: NextRequest) {
           <p><strong>Error:</strong> ${escapeHtml(orderError.message)}</p>
           <p><strong>Action:</strong> Manually create order record in Supabase.</p>`,
       }, { category: "operator-alert", metadata: { reason: "order-insert-failed", tier, amount } });
-      // Stop processing — no order record exists, cannot proceed with case creation or emails
-      return NextResponse.json({ received: true });
+      // Return 500 so Stripe retries — transient DB failures can recover on retry
+      return NextResponse.json({ error: "Order insert failed" }, { status: 500 });
     }
 
     // ──────────────────────────────────────────────────────────────
@@ -955,7 +955,7 @@ export async function POST(req: NextRequest) {
                   if (!partnerData) {
                     console.error("[Webhook] Could not read partner data for commission reversal:", referral.partner_id);
                   } else {
-                    const { count } = await supabase
+                    const { data: updatedRows } = await supabase
                       .from("partners")
                       .update({
                         total_referrals: Math.max(0, (partnerData.total_referrals || 0) - 1),
@@ -964,9 +964,10 @@ export async function POST(req: NextRequest) {
                       })
                       .eq("id", referral.partner_id)
                       .eq("total_commission", partnerData.total_commission)
-                      .eq("total_referrals", partnerData.total_referrals);
+                      .eq("total_referrals", partnerData.total_referrals)
+                      .select("id");
 
-                    if (count === 0) {
+                    if (!updatedRows || updatedRows.length === 0) {
                       console.warn("[Webhook] Commission reversal skipped — concurrent modification detected for partner:", referral.partner_id);
                     }
                   }
