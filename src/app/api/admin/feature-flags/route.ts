@@ -33,18 +33,30 @@ export async function PATCH(req: NextRequest) {
   const auth = requireAdmin(req);
   if (!auth.authorized) return auth.error;
 
-  const { flagKey, isEnabled } = await req.json();
-  if (!flagKey || typeof isEnabled !== "boolean") {
-    return NextResponse.json({ error: "flagKey and isEnabled required" }, { status: 400 });
+  let body;
+  try { body = await req.json(); } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+  const { flagKey, isEnabled } = body;
+
+  if (!flagKey || typeof flagKey !== "string" || flagKey.length > 100) {
+    return NextResponse.json({ error: "Invalid flagKey" }, { status: 400 });
+  }
+  if (typeof isEnabled !== "boolean") {
+    return NextResponse.json({ error: "isEnabled must be boolean" }, { status: 400 });
   }
 
   const supabase = createAdminClient();
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("feature_flags")
     .update({ is_enabled: isEnabled, updated_at: new Date().toISOString() })
-    .eq("flag_key", flagKey);
+    .eq("flag_key", flagKey)
+    .select("id");
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (!data || data.length === 0) {
+    return NextResponse.json({ error: "Flag not found" }, { status: 404 });
+  }
 
   clearFeatureFlagCache();
   return NextResponse.json({ success: true });
