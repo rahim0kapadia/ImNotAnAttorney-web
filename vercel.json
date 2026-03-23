@@ -8,6 +8,12 @@
   "functions": {
     "src/app/api/cron/drip/route.ts": {
       "maxDuration": 300
+    },
+    "src/app/api/cron/engine/route.ts": {
+      "maxDuration": 10
+    },
+    "src/app/api/cron/generate-backup/route.ts": {
+      "maxDuration": 10
     }
   }
 }

@@ -4,15 +4,12 @@ name: Generate Case Decoder Report
 # The Supabase Edge Function (primary path) has a 150s timeout — Opus 4.6 sometimes
 # takes 250-294s. This worker catches timeout cases with no timeout constraint.
 #
-# Minutes budget (private repo, 2,000/month free):
-#   No-work runs: checkout + curl check ≈ 10s → ~1,469 min/month
-#   Generation runs: ~6 min × ~30/month → ~180 min/month
-#   Total: ~1,649 min/month (within 2,000 limit)
+# Schedule trigger REMOVED — GitHub suspended account for excessive cron usage.
+# Now triggered by cron-job.org -> Vercel /api/cron/generate-backup -> workflow_dispatch.
+# See src/app/api/cron/generate-backup/route.ts for the dispatch route.
 
 on:
-  schedule:
-    - cron: '*/5 * * * *'  # Every 5 minutes
-  workflow_dispatch: {}      # Manual trigger for testing
+  workflow_dispatch: {}      # Triggered by cron-job.org via Vercel dispatch route
 
 jobs:
   generate:
