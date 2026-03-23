@@ -16,7 +16,8 @@
  *
  * All component-level styling is done via Tailwind utility classes, not this file.
  */
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+@source "../**/*.{js,ts,jsx,tsx,mdx}";
 
 @theme inline {
   --color-background: #0a0a0a;
