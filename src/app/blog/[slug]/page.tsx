@@ -38,7 +38,6 @@ import { SITE_URL } from "@/lib/site";
 import { getArticleAboutEntities, getArticleCitations } from "@/lib/schema";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import type { Metadata } from "next";
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -93,7 +92,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* Header */}
         <div className="mb-8">
           <div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-zinc-400">
-            <span>By <Link href="/about" className="text-zinc-300 underline decoration-zinc-600 underline-offset-2 hover:text-amber-400">Rahim Kapadia</Link>, Founder</span>
+            <span>By ImNotAnAttorney Research Team</span>
             <span>&bull;</span>
             <time dateTime={new Date(post.date).toISOString()}>{post.date}</time>
             {post.lastModified && post.lastModified !== post.date && (
@@ -170,11 +169,10 @@ export default async function BlogPostPage({ params }: PageProps) {
                 "@id": `${SITE_URL}/blog/${slug}`,
               },
               author: {
-                "@type": "Person",
-                name: "Rahim Kapadia",
-                url: `${SITE_URL}/about`,
-                jobTitle: "Founder, ImNotAnAttorney",
-                sameAs: [`${SITE_URL}/about`],
+                "@type": "Organization",
+                "@id": `${SITE_URL}/#organization`,
+                name: "ImNotAnAttorney",
+                url: SITE_URL,
               },
               publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
               wordCount: post.content.split(/\s+/).length,

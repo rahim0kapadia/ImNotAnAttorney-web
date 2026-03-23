@@ -123,24 +123,23 @@ export default async function RootLayout({
             __html: JSON.stringify([
               {
                 "@context": "https://schema.org",
-                "@type": ["Organization", "LegalService"],
+                "@type": ["Organization", "ProfessionalService"],
                 "@id": `${SITE_URL}/#organization`,
                 name: "ImNotAnAttorney",
                 url: SITE_URL,
                 description: "Defendant preparation intelligence — case-specific research and accountability questions for criminal defendants. Legal information, not legal advice.",
                 logo: { "@type": "ImageObject", url: `${SITE_URL}/icon` },
-                // sameAs: [] — add social profile URLs when Twitter/X account is created
                 foundingDate: "2026",
-                founder: {
-                  "@type": "Person",
-                  name: "Rahim Kapadia",
-                  jobTitle: "Founder",
-                  url: `${SITE_URL}/about`,
-                },
                 knowsAbout: [
                   "Criminal Defense",
                   "DUI Defense",
                   "Drug Trafficking Defense",
+                  "Drug Possession Defense",
+                  "White Collar Defense",
+                  "Federal Criminal Defense",
+                  "Self-Defense Claims",
+                  "Sex Offense Defense",
+                  "Probation Violations",
                   "Defendant Preparation Intelligence",
                   "Legal Research",
                 ],

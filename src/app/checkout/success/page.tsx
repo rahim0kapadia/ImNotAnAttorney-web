@@ -321,6 +321,9 @@ function SuccessContent() {
         <h1 className="text-2xl font-bold text-white">
           Payment Confirmed
         </h1>
+        <p className="mt-3 text-sm text-zinc-300">
+          You&apos;re one of the defendants who fights back. Your report is being prepared now.
+        </p>
 
         {info ? (
           <>

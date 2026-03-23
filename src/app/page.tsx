@@ -231,6 +231,11 @@ export default function Home() {
               <span className="text-amber-400">We Find Them. You Ask the Questions.</span>
             </h1>
           </FadeInUp>
+          <FadeInUp delay={0.15}>
+            <p className="mx-auto mt-4 max-w-2xl text-lg font-semibold text-zinc-300">
+              Built by defendants who went through it. We know what it&apos;s like when your attorney won&apos;t call back.
+            </p>
+          </FadeInUp>
           <FadeInUp delay={0.2}>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300">
               I was on page 347 of my 500-page discovery file when I found it.
@@ -273,9 +278,11 @@ export default function Home() {
             </p>
           </FadeInUp>
           <FadeInUp delay={0.35}>
-            <p className="mt-3 text-sm font-semibold text-amber-500">
-              Built by Rahim — a trafficking defendant who found 68.3g of missing
-              evidence his attorney never mentioned. &middot; We Research. You Ask.
+            <p className="mt-3 text-sm text-zinc-400">
+              For defendants and the people who love them.
+            </p>
+            <p className="mt-1 text-sm font-semibold text-amber-500">
+              We Research. You Ask.
             </p>
           </FadeInUp>
           {/* DUI checklist link demoted from hero per Laja: 14 CTAs → 6-8 */}
@@ -302,7 +309,7 @@ export default function Home() {
                 everything about my case. My attorney never mentioned any of them.
               </p>
               <footer className="mt-4 text-sm text-amber-400 font-semibold">
-                &mdash; Rahim, Founder
+                &mdash; ImNotAnAttorney Founder
               </footer>
             </blockquote>
           </FadeInUp>

@@ -65,25 +65,18 @@ export default function AboutPage() {
           }),
         }}
       />
-      {/* Person JSON-LD for founder (Barnard: entity establishment) */}
+      {/* Organization JSON-LD for about page (Barnard: entity establishment) */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Person",
-            "@id": `${SITE_URL}/about#founder`,
-            name: "Rahim Kapadia",
-            jobTitle: "Founder",
-            url: `${SITE_URL}/about`,
-            worksFor: { "@id": `${SITE_URL}/#organization` },
-            sameAs: [`${SITE_URL}/about`],
-            knowsAbout: [
-              "Criminal Defense Research",
-              "Drug Trafficking Defense",
-              "Defendant Preparation Intelligence",
-              "Legal Information Services",
-            ],
+            "@type": "Organization",
+            "@id": `${SITE_URL}/#organization`,
+            name: "ImNotAnAttorney",
+            url: SITE_URL,
+            description: "Built by defendants who experienced the criminal justice system firsthand. We research what's in your case file so you can ask the right questions.",
+            foundingDate: "2026",
           }),
         }}
       />
@@ -105,6 +98,12 @@ export default function AboutPage() {
           He paid thousands for an attorney. The attorney told him to trust the process.
           So he trusted. For months. No motions filed. No calls returned. No
           explanation of what was in his own discovery.
+        </p>
+        </FadeInUp>
+
+        <FadeInUp delay={0.15}>
+        <p className="mt-6 text-lg leading-relaxed text-zinc-300 italic">
+          We don&apos;t use our names. We know what the system can do with names. What matters isn&apos;t who we are &mdash; it&apos;s what we found in our own cases, and what we can find in yours.
         </p>
         </FadeInUp>
 

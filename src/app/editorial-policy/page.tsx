@@ -59,7 +59,7 @@ export default function EditorialPolicyPage() {
                 <strong className="text-zinc-300">Academic sources:</strong> Law school clinics (.edu), legal aid organizations, Department of Justice research publications
               </li>
               <li>
-                <strong className="text-zinc-300">Lived experience:</strong> Our founder&apos;s firsthand experience as a defendant who reviewed 500+ pages of discovery and identified critical discrepancies his attorney missed
+                <strong className="text-zinc-300">Lived experience:</strong> Our team&apos;s firsthand experience as defendants who reviewed 500+ pages of discovery and identified critical discrepancies their attorneys missed
               </li>
             </ul>
           </section>
@@ -111,22 +111,22 @@ export default function EditorialPolicyPage() {
                 <strong className="text-zinc-300">We do not guarantee outcomes.</strong> Criminal cases are complex. Better questions lead to better defense, but no one can guarantee results.
               </li>
               <li>
-                <strong className="text-zinc-300">We do not practice law.</strong> ImNotAnAttorney is not a law firm. Our founder is not an attorney. Our team members are not attorneys. We are defendants who learned to research.
+                <strong className="text-zinc-300">We do not practice law.</strong> ImNotAnAttorney is not a law firm. Our team members are not attorneys. We are defendants who learned to research.
               </li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white">About the Author</h2>
+            <h2 className="text-xl font-bold text-white">About the Team</h2>
             <p className="mt-3 leading-relaxed">
-              All content on ImNotAnAttorney is created by{" "}
+              All content on ImNotAnAttorney is created by the{" "}
               <Link href="/about" className="text-amber-400 underline underline-offset-2 hover:text-amber-300">
-                Rahim Kapadia
+                ImNotAnAttorney research team
               </Link>
-              , founder of ImNotAnAttorney. Rahim&apos;s expertise comes from lived experience as a criminal defendant who discovered critical discrepancies in his own case — including 68.3 grams of missing evidence, a confidential informant phone with dual attribution issues, and a drug type mismatch — that his paid attorney never raised.
+              . Our expertise comes from lived experience as criminal defendants who discovered critical discrepancies in our own cases — including 68.3 grams of missing evidence, a confidential informant phone with dual attribution issues, and a drug type mismatch — that our paid attorneys never raised.
             </p>
             <p className="mt-3 leading-relaxed">
-              Rahim built ImNotAnAttorney by studying the published methodologies of 40+ elite criminal defense attorneys and translating their frameworks into tools any defendant can use.
+              ImNotAnAttorney was built by studying the published methodologies of 40+ elite criminal defense attorneys and translating their frameworks into tools any defendant can use.
             </p>
           </section>
 
