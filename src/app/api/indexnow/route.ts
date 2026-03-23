@@ -9,13 +9,17 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { SITE_URL } from "@/lib/site";
+import crypto from "crypto";
 
 const INDEXNOW_KEY = process.env.INDEXNOW_KEY || "e4052ae08a6601d2550172f078562c00";
 const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
 
 export async function POST(req: NextRequest) {
-  const secret = req.headers.get("authorization")?.replace("Bearer ", "");
-  if (!secret || secret !== process.env.CRON_SECRET) {
+  const secret = req.headers.get("authorization")?.replace("Bearer ", "") ?? "";
+  const expected = process.env.CRON_SECRET ?? "";
+  const secretBuf = Buffer.from(secret);
+  const expectedBuf = Buffer.from(expected);
+  if (!secret || !expected || secretBuf.length !== expectedBuf.length || !crypto.timingSafeEqual(secretBuf, expectedBuf)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

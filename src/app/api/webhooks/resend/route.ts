@@ -22,8 +22,13 @@ export async function POST(req: NextRequest) {
   const webhookSecret = process.env.RESEND_WEBHOOK_SECRET;
 
   // ── SIGNATURE VERIFICATION ──
-  // Resend uses Svix for webhook signing. Verify if secret is configured.
-  if (webhookSecret) {
+  // Resend uses Svix for webhook signing. REJECT if secret is not configured
+  // to prevent forged webhooks (e.g., mass-unsubscribe attacks).
+  if (!webhookSecret) {
+    console.error("[Resend Webhook] RESEND_WEBHOOK_SECRET not configured — rejecting request");
+    return NextResponse.json({ error: "Webhook verification not configured" }, { status: 500 });
+  }
+  {
     const svixId = req.headers.get("svix-id");
     const svixTimestamp = req.headers.get("svix-timestamp");
     const svixSignature = req.headers.get("svix-signature");
@@ -75,9 +80,6 @@ export async function POST(req: NextRequest) {
     if (!valid) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
-  } else {
-    console.error("[Resend Webhook] RESEND_WEBHOOK_SECRET not set — rejecting request");
-    return NextResponse.json({ error: "Webhook secret not configured" }, { status: 500 });
   }
 
   let event;
