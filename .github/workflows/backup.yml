@@ -1,0 +1,45 @@
+name: Daily Database Backup
+
+on:
+  workflow_dispatch:
+    # Triggered by cron-job.org — NO schedule: trigger per CLAUDE.md global rule
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Install PostgreSQL client
+        run: sudo apt-get install -y postgresql-client
+
+      - name: Run pg_dump
+        env:
+          DATABASE_URL: ${{ secrets.INNA_DATABASE_URL }}
+        run: |
+          pg_dump "$DATABASE_URL" --no-owner --no-acl > backup.sql
+          echo "Backup size: $(wc -c < backup.sql) bytes"
+
+      - name: Commit to backup repo
+        env:
+          BACKUP_PAT: ${{ secrets.BACKUP_REPO_PAT }}
+        run: |
+          STAMP=$(date +%Y-%m-%d)
+          git clone https://x-access-token:${BACKUP_PAT}@github.com/rahim0kapadia/db-backups.git
+          cd db-backups
+          mkdir -p inna
+          mv ../backup.sql inna/${STAMP}.sql
+          git config user.name "Backup Bot"
+          git config user.email "noreply@backups"
+          git add .
+          git commit -m "backup: inna ${STAMP}" || echo "No changes"
+          git push
+
+      - name: Prune old backups
+        env:
+          BACKUP_PAT: ${{ secrets.BACKUP_REPO_PAT }}
+        run: |
+          cd db-backups/inna
+          ls -t *.sql | tail -n +8 | xargs -r git rm
+          git commit -m "prune: keep last 7 backups" || echo "Nothing to prune"
+          git push
