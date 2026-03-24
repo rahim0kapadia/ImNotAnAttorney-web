@@ -274,6 +274,20 @@ export async function POST(req: NextRequest) {
           if (!partner || partner.status !== "approved") continue;
 
           const discountAmount = item.amount; // cents — total discount (duration:"once" = applied to first invoice only)
+
+          // Defensive: warn if non-once coupon used on installment subscription
+          if (isInstallment && discountAmount > 0) {
+            const couponDuration = (fullSession.total_details?.breakdown as { discounts?: Array<{ discount: { coupon?: { duration?: string } }; amount: number }> })?.discounts?.[0]?.discount?.coupon?.duration;
+            if (couponDuration && couponDuration !== "once") {
+              console.warn(`[Webhook] Non-once coupon "${couponDuration}" on installment ${session.subscription}`);
+              await sendEmail({
+                to: OPERATOR_EMAIL,
+                subject: "Warning: Unexpected coupon duration on installment",
+                html: `<p>Subscription ${escapeHtml(String(session.subscription))} has a "${escapeHtml(couponDuration)}" coupon instead of "once". Commission assumes one-time discount.</p>`,
+              }, { category: "operator-alert" });
+            }
+          }
+
           // For installments: amount = full_price, discount applied once → revenue = full_price - discount
           // For one-time: amount = amount_total (already post-discount), so saleAmount = amount
           const saleAmount = isInstallment ? amount - discountAmount : amount;
