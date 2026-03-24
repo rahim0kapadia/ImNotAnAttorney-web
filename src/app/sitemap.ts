@@ -67,6 +67,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...playbookEntries,
     {
+      url: `${SITE_URL}/playbooks`,
+      lastModified: new Date("2026-03-24"),
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+    {
       url: `${SITE_URL}/services`,
       lastModified: new Date("2026-03-11"),
       changeFrequency: "monthly",

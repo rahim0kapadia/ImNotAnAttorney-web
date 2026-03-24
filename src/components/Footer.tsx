@@ -58,6 +58,12 @@ export function Footer() {
                 Services
               </Link>
               <Link
+                href="/playbooks"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Playbooks
+              </Link>
+              <Link
                 href="/resources"
                 className="text-sm text-zinc-400 hover:text-white"
               >
@@ -78,35 +84,26 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Categories */}
+          {/* Playbooks */}
           <div>
             <h2 className="mb-3 text-sm font-semibold text-zinc-300">
-              Blog Topics
+              Playbooks
             </h2>
             <div className="flex flex-col gap-2">
-              <Link
-                href="/blog?category=dui"
-                className="text-sm text-zinc-400 hover:text-white"
-              >
+              <Link href="/playbooks" className="text-sm text-amber-400 hover:text-amber-300">
+                View All Playbooks →
+              </Link>
+              <Link href="/playbook/dui-first-offense" className="text-sm text-zinc-400 hover:text-white">
                 DUI Defense
               </Link>
-              <Link
-                href="/blog?category=drug-cases"
-                className="text-sm text-zinc-400 hover:text-white"
-              >
-                Drug Cases
+              <Link href="/playbook/drug-possession" className="text-sm text-zinc-400 hover:text-white">
+                Drug Possession
               </Link>
-              <Link
-                href="/blog?category=white-collar"
-                className="text-sm text-zinc-400 hover:text-white"
-              >
-                White Collar
+              <Link href="/playbook/drug-trafficking" className="text-sm text-zinc-400 hover:text-white">
+                Drug Trafficking
               </Link>
-              <Link
-                href="/blog?category=general-defense"
-                className="text-sm text-zinc-400 hover:text-white"
-              >
-                General Defense
+              <Link href="/playbook/probation-violation" className="text-sm text-zinc-400 hover:text-white">
+                Probation Violation
               </Link>
             </div>
           </div>

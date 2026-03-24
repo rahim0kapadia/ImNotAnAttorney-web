@@ -80,6 +80,7 @@ export function Header() {
         <nav aria-label="Main navigation" className="hidden items-center gap-8 md:flex">
           {[
             { href: "/blog", label: "Blog" },
+            { href: "/playbooks", label: "Playbooks" },
             { href: "/services", label: "Services" },
             { href: "/resources", label: "Resources" },
             { href: "/about", label: "About" },
@@ -156,6 +157,7 @@ export function Header() {
           <div className="flex flex-col gap-4 px-4 py-4">
             {[
               { href: "/blog", label: "Blog" },
+              { href: "/playbooks", label: "Playbooks" },
               { href: "/services", label: "Services" },
               { href: "/resources", label: "Resources" },
               { href: "/about", label: "About" },
