@@ -38,7 +38,7 @@ LANGUAGE sql
 STABLE
 SECURITY DEFINER
 AS $$
-  SELECT COALESCE(SUM(amount_cents), 0)::bigint FROM orders WHERE status = 'paid';
+  SELECT COALESCE(SUM(amount), 0)::bigint FROM orders WHERE status = 'paid';
 $$;
 
 REVOKE ALL ON FUNCTION sum_paid_revenue() FROM public;
