@@ -11,7 +11,11 @@ export async function GET(req: NextRequest) {
   if (!auth.authorized) return auth.error;
 
   const supabase = createAdminClient();
+  const VALID_STATUSES = ["detected", "promoted", "dismissed"];
   const status = req.nextUrl.searchParams.get("status") || "detected";
+  if (!VALID_STATUSES.includes(status)) {
+    return NextResponse.json({ error: "Invalid status" }, { status: 400 });
+  }
 
   const { data, error } = await supabase
     .from("emerging_topics")

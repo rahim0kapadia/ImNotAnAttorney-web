@@ -11,7 +11,11 @@ export async function GET(req: NextRequest) {
   if (!auth.authorized) return auth.error;
 
   const supabase = createAdminClient();
+  const VALID_STATUSES = ["identified", "queued", "in-progress", "published", "declined"];
   const status = req.nextUrl.searchParams.get("status") || null;
+  if (status && !VALID_STATUSES.includes(status)) {
+    return NextResponse.json({ error: "Invalid status" }, { status: 400 });
+  }
 
   let query = supabase
     .from("content_gaps")

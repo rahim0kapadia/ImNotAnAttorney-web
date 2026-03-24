@@ -15,6 +15,8 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "@/lib/auth/guards";
 import type { OperatorTaskRow } from "@/lib/types/operator";
 
+const VALID_TASK_STATUSES = ["open", "in_progress", "completed", "dismissed"];
+
 export async function GET(req: NextRequest) {
   const auth = requireAdmin(req);
   if (!auth.authorized) return auth.error;
@@ -26,7 +28,11 @@ export async function GET(req: NextRequest) {
   const limit = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") || "50", 10)));
   const offset = (page - 1) * limit;
 
-  const status = searchParams.get("status");
+  const statusParam = searchParams.get("status");
+  if (statusParam && !VALID_TASK_STATUSES.includes(statusParam)) {
+    return NextResponse.json({ error: "Invalid status" }, { status: 400 });
+  }
+  const status = statusParam;
   const caseId = searchParams.get("case_id");
 
   let query = supabase
@@ -83,8 +89,6 @@ export async function PATCH(req: NextRequest) {
       { status: 400 }
     );
   }
-
-  const VALID_TASK_STATUSES = ["open", "in_progress", "completed", "dismissed"];
 
   if (body.status !== undefined && !VALID_TASK_STATUSES.includes(body.status)) {
     return NextResponse.json(
