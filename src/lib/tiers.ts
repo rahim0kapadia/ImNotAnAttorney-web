@@ -41,7 +41,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true, // LIVE — accepting real payments as of 2026-03-19
+    live: false as boolean, // Switched back to test mode — no STRIPE_SECRET_KEY_LIVE configured yet
   },
   "drug-possession": {
     name: "Drug Possession Defense Playbook",
@@ -56,7 +56,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true,
+    live: false as boolean,
   },
   "probation-violation": {
     name: "Probation Violation Defense Playbook",
@@ -71,7 +71,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true,
+    live: false as boolean,
   },
   "white-collar": {
     name: "White Collar Defense Playbook",
@@ -86,7 +86,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true,
+    live: false as boolean,
   },
   "sex-offense": {
     name: "Sex Offense Defense Playbook",
@@ -101,7 +101,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true,
+    live: false as boolean,
   },
   "federal-criminal": {
     name: "Federal Criminal Defense Playbook",
@@ -116,7 +116,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true,
+    live: false as boolean,
   },
   "drug-trafficking": {
     name: "Drug Trafficking Defense Playbook",
@@ -131,7 +131,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true,
+    live: false as boolean,
   },
   "self-defense": {
     name: "Self-Defense / Justifiable Force Defense Playbook",
@@ -146,7 +146,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true,
+    live: false as boolean,
   },
   "case-decoder": {
     name: "Case Decoder",
@@ -161,7 +161,7 @@ export const TIER_CORE = {
     priorityPrice: 9700,
     priorityDelivery: "Same-day (4 hours)",
     includesTiers: [] as readonly string[],
-    live: false,
+    live: false as boolean,
   },
   "intelligence-brief": {
     name: "Case Intelligence Brief",
@@ -176,7 +176,7 @@ export const TIER_CORE = {
     priorityPrice: 29700,
     priorityDelivery: "24 hours",
     includesTiers: ["case-decoder"] as readonly string[],
-    live: false,
+    live: false as boolean,
   },
   "x-ray": {
     name: "The X-Ray",
@@ -191,7 +191,7 @@ export const TIER_CORE = {
     priorityPrice: 49700,
     priorityDelivery: "5 business days",
     includesTiers: ["case-decoder", "intelligence-brief"] as readonly string[],
-    live: false,
+    live: false as boolean,
   },
   "war-room": {
     name: "The War Room",
@@ -206,7 +206,7 @@ export const TIER_CORE = {
     priorityPrice: 99700,
     priorityDelivery: "Expedited 20-day delivery",
     includesTiers: ["case-decoder", "intelligence-brief", "x-ray"] as readonly string[],
-    live: false,
+    live: false as boolean,
   },
   "situation-room": {
     name: "The Situation Room",
@@ -221,7 +221,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: ["case-decoder", "intelligence-brief", "x-ray", "war-room"] as readonly string[],
-    live: false,
+    live: false as boolean,
   },
   "extra-witness": {
     name: "Extra Witness Intel",
@@ -236,7 +236,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false,
+    live: false as boolean,
   },
   "witness-pack": {
     name: "Standalone Witness Pack",
@@ -251,7 +251,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false,
+    live: false as boolean,
   },
 } as const;
 
