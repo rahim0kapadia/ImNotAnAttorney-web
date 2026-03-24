@@ -56,7 +56,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false,
+    live: true,
   },
   "probation-violation": {
     name: "Probation Violation Defense Playbook",
@@ -71,7 +71,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false,
+    live: true,
   },
   "white-collar": {
     name: "White Collar Defense Playbook",
@@ -86,7 +86,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false,
+    live: true,
   },
   "sex-offense": {
     name: "Sex Offense Defense Playbook",
@@ -101,7 +101,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false,
+    live: true,
   },
   "federal-criminal": {
     name: "Federal Criminal Defense Playbook",
@@ -131,7 +131,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false,
+    live: true,
   },
   "self-defense": {
     name: "Self-Defense / Justifiable Force Defense Playbook",
@@ -146,7 +146,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false,
+    live: true,
   },
   "case-decoder": {
     name: "Case Decoder",
