@@ -116,7 +116,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false,
+    live: true,
   },
   "drug-trafficking": {
     name: "Drug Trafficking Defense Playbook",
