@@ -178,7 +178,7 @@ async function callCheckout(tier, email, opts = {}) {
   if (!res.ok) return { ok: false, status: res.status, error: data.error };
 
   // Extract session ID from the Stripe checkout URL
-  const sessionId = data.url?.match(/cs_test_[a-zA-Z0-9]+/)?.[0] || null;
+  const sessionId = data.url?.match(/cs_(?:test|live)_[a-zA-Z0-9]+/)?.[0] || null;
   return { ok: true, url: data.url, sessionId };
 }
 
