@@ -41,7 +41,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // Switched back to test mode — no STRIPE_SECRET_KEY_LIVE configured yet
+    live: true as boolean, // LIVE — real payments enabled 2026-03-24
   },
   "drug-possession": {
     name: "Drug Possession Defense Playbook",
