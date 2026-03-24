@@ -62,16 +62,8 @@ export async function GET(req: NextRequest) {
     // 3. Cases by tier (individual count queries — no full table scan)
     Promise.all(tierCountQueries),
 
-    // 4. Total revenue from paid orders
-    // NOTE: Fetches all rows to sum client-side. When order volume exceeds
-    // PostgREST max_rows (default 1000), migrate to a Supabase RPC:
-    //   CREATE FUNCTION sum_paid_revenue() RETURNS bigint AS $$
-    //     SELECT COALESCE(SUM(amount_cents), 0) FROM orders WHERE status = 'paid';
-    //   $$ LANGUAGE sql STABLE;
-    supabase
-      .from("orders")
-      .select("amount_cents")
-      .eq("status", "paid"),
+    // 4. Total revenue from paid orders (atomic RPC — no row limit)
+    supabase.rpc("sum_paid_revenue"),
 
     // 5. Active jobs (currently processing)
     supabase
@@ -120,13 +112,7 @@ export async function GET(req: NextRequest) {
     if (count > 0) casesByTier[tier] = count;
   }
 
-  // Sum revenue
-  let totalRevenueCents = 0;
-  if (revenueResult.data) {
-    for (const row of revenueResult.data) {
-      totalRevenueCents += (row.amount_cents as number) || 0;
-    }
-  }
+  const totalRevenueCents = revenueResult.data ?? 0;
 
   // Compute average delivery hours
   let avgDeliveryHours: number | null = null;
