@@ -908,7 +908,7 @@ export async function POST(req: NextRequest) {
       // ── LOOKUP REFUNDED ORDER for case linking + operator notification ──
       const { data: refundedOrder } = await supabase
         .from("orders")
-        .select("id, email, tier, amount")
+        .select("id, email, tier, amount, case_id")
         .eq("stripe_payment_intent_id", paymentIntentId)
         .single();
 
@@ -952,39 +952,16 @@ export async function POST(req: NextRequest) {
                 p_commission_amount: referral.commission_amount,
               }).then(async (rpcResult) => {
                 if (rpcResult.error) {
-                  // RPC may not exist yet — fall back to manual updates
-                  console.warn("[Webhook] reverse_referral_commission RPC not available, using manual update:", rpcResult.error.message);
-                  await supabase
-                    .from("referrals")
-                    .update({ commission_amount: 0, commission_paid: true })
-                    .eq("id", referral.id);
-                  // Optimistic-locking decrement — read, compute, write with WHERE guard
-                  // to prevent concurrent refunds from over-decrementing totals
-                  const { data: partnerData } = await supabase
-                    .from("partners")
-                    .select("total_referrals, total_commission")
-                    .eq("id", referral.partner_id)
-                    .single();
-
-                  if (!partnerData) {
-                    console.error("[Webhook] Could not read partner data for commission reversal:", referral.partner_id);
-                  } else {
-                    const { data: updatedRows } = await supabase
-                      .from("partners")
-                      .update({
-                        total_referrals: Math.max(0, (partnerData.total_referrals || 0) - 1),
-                        total_commission: Math.max(0, (partnerData.total_commission || 0) - referral.commission_amount),
-                        updated_at: new Date().toISOString(),
-                      })
-                      .eq("id", referral.partner_id)
-                      .eq("total_commission", partnerData.total_commission)
-                      .eq("total_referrals", partnerData.total_referrals)
-                      .select("id");
-
-                    if (!updatedRows || updatedRows.length === 0) {
-                      console.warn("[Webhook] Commission reversal skipped — concurrent modification detected for partner:", referral.partner_id);
-                    }
-                  }
+                  console.error("[Webhook] Commission reversal RPC failed:", rpcResult.error.message);
+                  // Create operator task for manual follow-up instead of non-atomic fallback
+                  await supabase.from("operator_tasks").insert({
+                    case_id: refundedOrder.case_id,
+                    task_type: "commission_reversal_failed",
+                    title: `Commission reversal failed for referral ${referral.id}`,
+                    description: `RPC reverse_referral_commission failed: ${rpcResult.error.message}. Partner: ${referral.partner_id}, Amount: $${(referral.commission_amount / 100).toFixed(2)}`,
+                    priority: "HIGH",
+                    priority_rank: 2,
+                  });
                 }
               });
 
