@@ -765,7 +765,7 @@ export default function ServicesPage() {
                 </div>
                 <p className="mt-2 text-sm text-zinc-400">{ct.tiers[4].desc}</p>
                 <p className="mt-2 text-xs text-amber-400/80">
-                  Includes all tiers ($14,685 value) — $9,997
+                  Includes all tiers ($18,685 value) — $9,997
                 </p>
                 {ct.tiers[4].discovery && (
                   <p className="mt-2 text-xs text-zinc-400">
