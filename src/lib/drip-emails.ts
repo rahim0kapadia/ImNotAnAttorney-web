@@ -825,21 +825,14 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     key: "post_case_decoder_upsell",
     delayDays: 7,
     tier: "case-decoder",
-    subject: "Ready to go deeper?",
+    subject: "There are questions your Case Decoder can't answer",
     html: `
-      <h1 style="color: #F59E0B;">Ready to Go Deeper?</h1>
-      <p>Your Case Decoder gave you the foundation — charges explained, 15 calibrated questions, and a 7-day action plan.</p>
-      <p>The <strong style="color: white;">${TIER_CORE["intelligence-brief"].name} (${TIER_CORE["intelligence-brief"].priceDisplay})</strong> goes deeper:</p>
-      <ul style="padding-left: 20px;">
-        <li>Your judge's actual sentencing patterns</li>
-        <li>Jurisdiction-specific plea statistics</li>
-        <li>Motion landscape report</li>
-        <li>10-15 targeted questions</li>
-        <li>Judge Intelligence Card — one-page print reference for hearings</li>
-        <li>Plea Decision Checklist</li>
-      </ul>
-      <p><strong style="color: white;">Your ${TIER_CORE["case-decoder"].priceDisplay} is already credited.</strong> Upgrade for just ${upgradePrice("case-decoder")}.</p>
-      ${cta(`Upgrade to ${TIER_CORE["intelligence-brief"].name} — ${upgradePrice("case-decoder")} →`, "/checkout?tier=intelligence-brief")}
+      <h1 style="color: #F59E0B;">There Are Questions Your Case Decoder Can't Answer</h1>
+      <p>Your report identified areas that need your judge's actual patterns and your prosecutor's track record to answer properly. Your Case Decoder can't provide that — it was built from what you told us, not from jurisdiction data.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The X-Ray costs ${upgradeCostBetween("case-decoder", "x-ray")}.</strong></p>
+      ${cta("Get the X-Ray", "/checkout?tier=x-ray")}
+      <p style="margin-top: 16px; color: #A1A1AA;">Motion deadlines, evidence preservation windows, and plea negotiation leverage all erode with time.</p>
+      <p style="margin-top: 16px; color: #71717A;">If budget is a factor, the ${TIER_CORE["intelligence-brief"].name} covers jurisdiction patterns for ${upgradeCostBetween("case-decoder", "intelligence-brief")}. ${link("Learn more", "/services#intelligence-brief")}</p>
     `,
   },
 
@@ -1880,17 +1873,17 @@ export function personalizeEmailHtml(
     case "post_case_decoder_upsell":
       if (isFamilyBuyer && industry) {
         return html + calloutBox(`
-          <p style="color: #D4D4D8; margin: 0;">You did the research for ${name}. The Intelligence Brief ($997) goes deeper — including how these charges could affect ${escapeHtml(industry)} licensing and what protective steps to take now. Your $197 is fully credited.</p>
+          <p style="color: #D4D4D8; margin: 0;">You did the research for ${name}. The X-Ray reads every page of the discovery — including how these charges could affect ${escapeHtml(industry)} licensing. You have already paid $197.</p>
         `);
       }
       if (isFamilyBuyer) {
         return html + calloutBox(`
-          <p style="color: #D4D4D8; margin: 0;">You did the research for ${name}. The Intelligence Brief ($997) builds on everything in the Case Decoder with a full outcome map, defense theories, and a 14-day action plan. Your $197 is fully credited.</p>
+          <p style="color: #D4D4D8; margin: 0;">You did the research for ${name}. The X-Ray picks up where the Case Decoder left off — reading the actual discovery documents for contradictions, missing evidence, and defense angles. You have already paid $197.</p>
         `);
       }
       if (industry) {
         return html + calloutBox(`
-          <p style="color: #D4D4D8; margin: 0;">The Intelligence Brief ($997) includes career-specific analysis — how these charges could affect ${escapeHtml(industry)} licensing and what protective steps to consider now. Your $197 is fully credited.</p>
+          <p style="color: #D4D4D8; margin: 0;">The X-Ray includes career-specific analysis — how your discovery evidence relates to ${escapeHtml(industry)} licensing exposure and what questions to raise with your attorney. You have already paid $197.</p>
         `);
       }
       return html;
