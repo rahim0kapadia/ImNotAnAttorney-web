@@ -931,6 +931,7 @@ function CheckoutContent() {
             />
             {emailError && <p className="mt-1 text-xs text-red-400">{emailError}</p>}
             <p className="mt-2 text-xs text-zinc-400">No spam — ever. Just your {info.isDigitalProduct ? "download link" : "report"} and delivery updates.</p>
+            <p className="mt-1 text-xs text-zinc-500">Responses within 4 hours &mdash; help@imnotanattorney.com</p>
           </div>
 
           {/* RETURNING CUSTOMER — For IB+ tiers, allow linking to existing CD. */}
