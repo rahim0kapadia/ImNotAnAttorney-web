@@ -1020,26 +1020,21 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
 
+  // --- IB Upsell Rewrite (loss framing, credit-as-hero, Covello CCO) ---
   {
     key: "post_intelligence_brief_upsell",
     delayDays: 10,
     tier: "intelligence-brief",
-    subject: "When you get discovery — we're ready",
+    relativeToDelivery: true,
+    subject: "There are questions your Intelligence Brief can't answer",
     html: `
-      <h1 style="color: #F59E0B;">When You Get Discovery</h1>
-      <p>Your Intelligence Brief covered charges, judge intel, and accountability. But the real power is in the discovery documents.</p>
-      <p>When you receive discovery, the <strong style="color: white;">${TIER_CORE["x-ray"].name} (${TIER_CORE["x-ray"].priceDisplay})</strong> analyzes every page:</p>
-      <ul style="padding-left: 20px;">
-        <li>Your Discovery Inventory — every document cataloged</li>
-        <li>The Official Record, Reconstructed — case timeline from the documents</li>
-        <li>Where the Documents Contradict Each Other — contradictions with page citations</li>
-        <li>Constitutional Issues and Missing Evidence</li>
-        <li>35-50 targeted questions for your attorney meeting</li>
-        <li>Discovery Strength Rating — completeness graded by category, rated out of 100</li>
-        <li>Prosecution Case Weakness Analysis — defense angles organized by charge</li>
-      </ul>
-      <p><strong style="color: white;">You have already paid ${TIER_CORE["intelligence-brief"].priceDisplay}. The X-Ray costs ${upgradePrice("intelligence-brief")}.</strong></p>
-      ${cta(`Get the X-Ray — ${upgradePrice("intelligence-brief")}`, "/checkout?tier=x-ray")}
+      <h1 style="color: #F59E0B;">There Are Questions Your Intelligence Brief Can&rsquo;t Answer</h1>
+      <p>Your Intelligence Brief gave you jurisdiction patterns, prosecution tendencies, and a picture of your judge. That intelligence is real. It changed the quality of your attorney conversations. But it was built from patterns — what typically happens in courts like yours, with charges like yours.</p>
+      <p>The questions it cannot answer are the ones that depend on your actual case documents: What does the police report say happened versus what the lab report shows? Where do the witness statements contradict each other? Is the evidence chain intact, or are there custody gaps your attorney hasn&rsquo;t flagged? Those answers are in your discovery — and they are different for every defendant, in ways that jurisdiction patterns cannot predict.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["intelligence-brief"].priceDisplay}. The X-Ray costs ${upgradeCostBetween("intelligence-brief", "x-ray")}.</strong> Every page of your discovery analyzed — contradictions flagged with page citations, chain-of-custody gaps documented, constitutional issues identified, 35-50 questions for your attorney based on what the documents actually show. Plus the Judge Intelligence Profile and Prosecutor Research Profile.</p>
+      <p style="color: #F59E0B; font-weight: bold;">Motion deadlines, evidence preservation windows, and witness memories erode with time. The sooner analysis begins, the more options remain.</p>
+      ${cta(`Get the X-Ray — ${upgradeCostBetween("intelligence-brief", "x-ray")} after credit`, "/checkout?tier=x-ray")}
+      <p style="color: #71717A; margin-top: 12px;">Discovery documents are typically received 30-90 days after arraignment.</p>
     `,
   },
 
@@ -1129,31 +1124,20 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       </p>
     `,
   },
-  // --- X-Ray Upsell to War Room (10 days after delivery) ---
+  // --- X-Ray Upsell Rewrite (loss framing, credit-as-hero, Witness Pack alt, Covello CCO) ---
   {
     key: "post_x_ray_upsell",
     delayDays: 10,
     tier: "x-ray",
     relativeToDelivery: true,
-    subject: "Your discovery revealed patterns — here's how to go deeper",
+    subject: "Your X-Ray found the gaps. Someone still has to exploit them.",
     html: `
-      <h1 style="color: #F59E0B;">Your Discovery Revealed Patterns — Here's How to Go Deeper</h1>
-      <p>Your X-Ray found red flags and contradictions. Those findings raise questions that need answers:</p>
-      <ul>
-        <li>Who are the witnesses behind these contradictions? What's their background?</li>
-        <li>Does the judge in your case tend to grant the types of motions your findings support?</li>
-        <li>Has the prosecutor handled similar cases? What's their pattern?</li>
-      </ul>
-      <p><strong style="color: white;">The ${TIER_CORE["war-room"].name} (${TIER_CORE["war-room"].priceDisplay})</strong> picks up where the X-Ray left off:</p>
-      <ul style="padding-left: 20px;">
-        <li>Deep research on up to 8 witnesses (backgrounds, testimony history, credibility challenges)</li>
-        <li>Judge intelligence (ruling patterns, tendencies, sentencing data)</li>
-        <li>Prosecution team profiles</li>
-        <li>Motion strategy and filing support</li>
-        <li>Weekly updates as your case evolves</li>
-      </ul>
-      <p><strong style="color: white;">You have already paid ${TIER_CORE["x-ray"].priceDisplay}. The War Room costs ${upgradePrice("x-ray")}.</strong></p>
-      ${cta(`Get the War Room — ${upgradePrice("x-ray")}`, "/services#war-room")}
+      <h1 style="color: #F59E0B;">Your X-Ray Found the Gaps. Someone Still Has to Exploit Them.</h1>
+      <p>Your X-Ray analysis is documented. The contradictions are on paper. The evidence gaps are named. The questions for your attorney are specific. You walked into that meeting with more information about your own case than most defendants ever see. That matters.</p>
+      <p>What the X-Ray cannot do is turn those findings into pressure. It cannot tell you whether the witnesses behind those contradictions have credibility problems that a competent cross-examination would expose. It cannot tell you whether your judge grants the type of suppression motions your chain-of-custody gaps might support — or whether they routinely deny them. Those questions require a different kind of research — specific, ongoing, and built around what your documents actually showed.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["x-ray"].priceDisplay}. The War Room costs ${upgradeCostBetween("x-ray", "war-room")}.</strong> That covers witness dossiers on up to 8 witnesses, a full judge intelligence dossier, prosecution team profiles, a motion landscape analysis, and weekly updates as your case evolves. Witnesses&rsquo; memories fade. Motion windows close. Discovery findings have a shelf life.</p>
+      ${cta(`Get the War Room — ${upgradeCostBetween("x-ray", "war-room")} after credit`, "/checkout?tier=war-room")}
+      <p style="color: #71717A; margin-top: 12px;">The Witness Pack is a different product for a different question — targeted witness credibility research only (up to 3 witnesses, $297, 3-5 business days). It does not include motion analysis, evidence chain review, or weekly case updates. One option if witness credibility is the most time-sensitive piece and your next hearing is soon. <a href="${getSiteUrl()}/checkout?tier=witness-pack" style="color: #A1A1AA;">Learn more</a></p>
     `,
   },
   // --- X-Ray Referral (14 days after delivery) ---
