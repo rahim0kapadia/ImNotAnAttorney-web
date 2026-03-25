@@ -435,26 +435,61 @@ function SuccessContent() {
                 </Link>
               </div>
             )}
+            {/* CD BUYER OTO — Tier-jump capable. Shows both IB and X-Ray.     */}
+            {/* Resequenced per Suby: timer > CTA/price > urgency > features. */}
+            {/* X-Ray as primary, IB as budget alternative.                   */}
             {timeLeft && timeLeft !== "Expired" && tier === "case-decoder" && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
                   Upgrade offer — <span className="animate-pulse">{timeLeft}</span> remaining
                 </p>
-                <p className="text-sm font-semibold text-amber-400">
-                  Upgrade to Intelligence Brief
+
+                {/* Credit headline — relief first (Covello) */}
+                <p className="text-lg font-bold text-white">
+                  You have already paid {TIER_CORE["case-decoder"].priceDisplay}.
                 </p>
-                <p className="mt-2 text-sm text-zinc-400">
-                  Your {TIER_CORE["case-decoder"].priceDisplay} is already credited. Get judge intelligence, jurisdiction profile, and 10-15 targeted questions.
+
+                {/* Primary CTA: X-Ray (before urgency copy per Suby) */}
+                <div className="mt-4 rounded-lg border border-amber-500/30 bg-zinc-900/50 p-4">
+                  <p className="text-sm font-semibold text-amber-400">
+                    The X-Ray — {upgradeCostBetween("case-decoder", "x-ray")} after credit
+                  </p>
+                  <p className="mt-1 text-sm text-zinc-400">
+                    Your judge, your prosecutor, your case documents — 35-50 specific questions. Delivered in 10 business days.
+                  </p>
+                  <Link
+                    href="/checkout?tier=x-ray"
+                    className="mt-3 inline-block rounded-lg bg-amber-500 px-6 py-2 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+                  >
+                    Get The X-Ray — {upgradeCostBetween("case-decoder", "x-ray")} &rarr;
+                  </Link>
+                </div>
+
+                {/* Budget alternative: Intelligence Brief */}
+                <div className="mt-3 rounded-lg border border-zinc-700 bg-zinc-900/50 p-4">
+                  <p className="text-sm font-semibold text-zinc-300">
+                    Intelligence Brief — {upgradeCostBetween("case-decoder", "intelligence-brief")} after credit
+                  </p>
+                  <p className="mt-1 text-sm text-zinc-400">
+                    Jurisdiction intelligence, judge patterns, prosecution tendencies. Delivered in 72 hours.
+                  </p>
+                  <Link
+                    href="/checkout?tier=intelligence-brief"
+                    className="mt-3 inline-block rounded-lg border border-zinc-600 px-6 py-2 text-sm font-semibold text-zinc-300 transition-colors hover:border-zinc-400"
+                  >
+                    Get Intelligence Brief — {upgradeCostBetween("case-decoder", "intelligence-brief")} &rarr;
+                  </Link>
+                </div>
+
+                {/* Urgency copy (below CTA per Suby "relief before threat") */}
+                <p className="mt-4 text-sm text-zinc-300">
+                  Your Case Decoder gives you the right questions. The X-Ray shows whether the answers match what is actually in your case documents.
                 </p>
-                <p className="mt-1 text-xs text-zinc-500">
-                  Adds: judge sentencing patterns, motion landscape report, attorney accountability timeline.
+
+                {/* Features below fold */}
+                <p className="mt-2 text-xs text-zinc-500">
+                  X-Ray adds: full discovery analysis, evidence chain audit, prosecution weakness analysis, 35-50 page-referenced questions, Attorney Delivery Package.
                 </p>
-                <Link
-                  href="/checkout?tier=intelligence-brief"
-                  className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
-                >
-                  Claim Your Upgrade Credit — {upgradeCostBetween("case-decoder", "intelligence-brief")} &rarr;
-                </Link>
               </div>
             )}
             {timeLeft && timeLeft !== "Expired" && tier === "intelligence-brief" && (
