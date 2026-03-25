@@ -56,7 +56,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-25
   },
   "probation-violation": {
     name: "Probation Violation Defense Playbook",
@@ -71,7 +71,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-25
   },
   "white-collar": {
     name: "White Collar Defense Playbook",
@@ -86,7 +86,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-25
   },
   "sex-offense": {
     name: "Sex Offense Defense Playbook",
@@ -101,7 +101,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-25
   },
   "federal-criminal": {
     name: "Federal Criminal Defense Playbook",
@@ -116,7 +116,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-25
   },
   "drug-trafficking": {
     name: "Drug Trafficking Defense Playbook",
@@ -131,7 +131,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-25
   },
   "self-defense": {
     name: "Self-Defense / Justifiable Force Defense Playbook",
@@ -146,7 +146,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-25
   },
   "case-decoder": {
     name: "Case Decoder",
