@@ -45,16 +45,16 @@ export function BlogCTA({ category }: { category?: string }) {
             </p>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row">
               <Link
-                href={`/checkout?tier=${playbookSlug}`}
+                href="/start"
                 className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
-                Get Your {tier.name} — {tier.priceDisplay} &rarr;
+                Get Started &mdash; {tier.priceDisplay}+ &rarr;
               </Link>
               <Link
-                href="/score"
+                href={`/checkout?tier=${playbookSlug}`}
                 className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] hover:border-amber-500"
               >
-                Check Your Score — Free
+                {tier.name} &mdash; {tier.priceDisplay}
               </Link>
             </div>
           </>

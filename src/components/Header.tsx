@@ -19,7 +19,7 @@ import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { TIER_CORE } from "@/lib/tiers";
+
 
 export function Header() {
   const pathname = usePathname();
@@ -100,10 +100,10 @@ export function Header() {
             </Link>
           ))}
           <Link
-            href="/checkout?tier=case-decoder"
+            href="/start"
             className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-black transition-all hover:bg-amber-400 hover:shadow-md hover:shadow-amber-500/30"
           >
-            Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay}
+            Get Started
           </Link>
         </nav>
 
@@ -178,11 +178,11 @@ export function Header() {
               </Link>
             ))}
             <Link
-              href="/checkout?tier=case-decoder"
+              href="/start"
               onClick={() => setMobileOpen(false)}
               className="rounded-lg bg-amber-500 px-4 py-2 text-center text-sm font-semibold text-black transition-colors hover:bg-amber-400"
             >
-              Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay}
+              Get Started
             </Link>
           </div>
         </motion.nav>
