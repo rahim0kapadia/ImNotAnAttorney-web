@@ -252,7 +252,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p><strong style="color: white;">${TIER_CORE["case-decoder"].priceDisplay}. ${TIER_CORE["case-decoder"].delivery}.</strong> The cost of not knowing is higher.</p>
       ${cta(`Find What's in My Case — ${TIER_CORE["case-decoder"].priceDisplay} →`, "/checkout?tier=case-decoder")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">DUI charges?</strong> Start with the ${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay} instant download. 26 questions + attorney scorecard. Your ${TIER_CORE["dui-first-offense"].priceDisplay} is credited toward any service tier. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
+        <strong style="color: white;">DUI charges?</strong> Start with the ${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay} instant download. 26 questions + attorney scorecard. The ${TIER_CORE["dui-first-offense"].priceDisplay} counts toward any service tier — you never pay it twice. ${link("Get the Playbook", "/playbook/dui-first-offense")}
       </p>
     `,
   },
@@ -538,7 +538,7 @@ export const DUI_72_HOUR_EMAILS: DripEmail[] = [
       <p><strong style="color: white;">2. You've met with your attorney</strong> and the answers were vague. "We're working on it." "Let's see what they offer." No specifics. That's information — and the DUI Defense Playbook (${TIER_CORE["dui-first-offense"].priceDisplay}) gives you 26 ways to get specifics.</p>
       <p><strong style="color: white;">3. You haven't met with your attorney yet.</strong> If your attorney hasn't made time for you in a week, that's a pattern worth noting.</p>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">Ready to go deeper?</strong> The ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}) generates 15 questions specific to YOUR charges, YOUR jurisdiction, and YOUR case stage — with a pre-written email template for your attorney. Delivered within 48 hours. Your Playbook purchase is fully credited.
+        <strong style="color: white;">You have already paid ${TIER_CORE["dui-first-offense"].priceDisplay}. The ${TIER_CORE["case-decoder"].name} costs ${upgradeCostBetween("dui-first-offense", "case-decoder")}.</strong> 15 questions specific to YOUR charges, YOUR jurisdiction, and YOUR case stage — with a pre-written email template for your attorney. Delivered within 48 hours.
       </p>
       ${cta("Get Case-Specific Questions \u2014 " + TIER_CORE["case-decoder"].priceDisplay, "/checkout?tier=case-decoder")}
       <p style="margin-top: 16px; color: #A1A1AA;">This is the last email in this sequence. If you ever need us, reply to any email — we read every response.</p>
@@ -982,8 +982,8 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li>Discovery Strength Rating — completeness graded by category, rated out of 100</li>
         <li>Prosecution Case Weakness Analysis — defense angles organized by charge</li>
       </ul>
-      <p><strong style="color: white;">Your ${TIER_CORE["intelligence-brief"].priceDisplay} is already credited.</strong> Upgrade for just ${upgradePrice("intelligence-brief")}.</p>
-      ${cta(`Upgrade to ${TIER_CORE["x-ray"].name} — ${upgradePrice("intelligence-brief")} →`, "/checkout?tier=x-ray")}
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["intelligence-brief"].priceDisplay}. The X-Ray costs ${upgradePrice("intelligence-brief")}.</strong></p>
+      ${cta(`Get the X-Ray — ${upgradePrice("intelligence-brief")}`, "/checkout?tier=x-ray")}
     `,
   },
 
@@ -1047,7 +1047,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p style="font-size: 18px; color: white;"><strong>Which finding surprised your attorney?</strong></p>
       <p>Just reply to this email. Your experience makes every future analysis better.</p>
       <p style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #333;">
-        <strong style="color: white;">Did your attorney ask about any of the witnesses?</strong> If they want deeper investigation — backgrounds, testimony history, credibility challenges — that's exactly what <a href="${getSiteUrl()}/services#war-room" style="color: #F59E0B;">The War Room</a> provides. Your ${TIER_CORE["x-ray"].priceDisplay} is fully credited toward the upgrade.
+        <strong style="color: white;">Did your attorney ask about any of the witnesses?</strong> If they want deeper investigation — backgrounds, testimony history, credibility challenges — that's exactly what <a href="${getSiteUrl()}/services#war-room" style="color: #F59E0B;">The War Room</a> provides. You have already paid ${TIER_CORE["x-ray"].priceDisplay}. The War Room costs ${upgradePrice("x-ray")}.
       </p>
     `,
   },
@@ -1096,8 +1096,8 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li>Motion strategy and filing support</li>
         <li>Weekly updates as your case evolves</li>
       </ul>
-      <p><strong style="color: white;">Your ${TIER_CORE["x-ray"].priceDisplay} is fully credited.</strong> The War Room upgrade is ${upgradePrice("x-ray")}.</p>
-      ${cta(`Learn About ${TIER_CORE["war-room"].name} →`, "/services#war-room")}
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["x-ray"].priceDisplay}. The War Room costs ${upgradePrice("x-ray")}.</strong></p>
+      ${cta(`Get the War Room — ${upgradePrice("x-ray")}`, "/services#war-room")}
     `,
   },
   // --- X-Ray Referral (14 days after delivery) ---
@@ -1393,9 +1393,9 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>In most states, you have <strong style="color: white;">10 days from your arrest</strong> to request a hearing to fight the automatic license suspension. If your attorney hasn't requested it, that window may already be closing.</p>
       <p>Open your Playbook to the <strong style="color: white;">Case Stage Roadmap</strong> section. The DMV deadline is the first item. If you haven't acted on it yet, today is the day.</p>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">Want case-specific research?</strong> Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}). We'll research YOUR judge, YOUR jurisdiction, and generate 15 questions specific to your case.
+        <strong style="color: white;">You have already paid ${TIER_CORE["dui-first-offense"].priceDisplay}. The ${TIER_CORE["case-decoder"].name} costs ${upgradeCostBetween("dui-first-offense", "case-decoder")}.</strong> We research YOUR judge, YOUR jurisdiction, and generate 15 questions specific to your case.
       </p>
-      ${cta(`Upgrade to ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween("dui-first-offense", "case-decoder")} →`, "/checkout?tier=case-decoder")}
+      ${cta(`Get the ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween("dui-first-offense", "case-decoder")}`, "/checkout?tier=case-decoder")}
     `,
   },
   {
@@ -1422,9 +1422,9 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>The difference: when your attorney hears a question from the Playbook, they know the answer. When they hear a question from your Case Decoder, they have to actually check the file.</p>
       <p><strong style="color: white;">That's the meeting that changes everything.</strong></p>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited. Upgrade for ${upgradeCostBetween("dui-first-offense", "case-decoder")}. ${TIER_CORE["case-decoder"].delivery} delivery.
+        <strong style="color: white;">You have already paid ${TIER_CORE["dui-first-offense"].priceDisplay}. The ${TIER_CORE["case-decoder"].name} costs ${upgradeCostBetween("dui-first-offense", "case-decoder")}.</strong> ${TIER_CORE["case-decoder"].delivery} delivery.
       </p>
-      ${cta(`Get Your ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween("dui-first-offense", "case-decoder")} →`, "/checkout?tier=case-decoder")}
+      ${cta(`Get the ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween("dui-first-offense", "case-decoder")}`, "/checkout?tier=case-decoder")}
     `,
   },
   {
@@ -1542,9 +1542,9 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li>35-50 targeted questions for your attorney meeting</li>
         <li>Discovery Strength Rating + Prosecution Case Weakness Analysis</li>
       </ul>
-      <p><strong style="color: white;">Your ${TIER_CORE["witness-pack"].priceDisplay} is already credited.</strong> Upgrade for ${upgradeCostBetween("witness-pack", "x-ray")}.</p>
-      ${cta(`Upgrade to ${TIER_CORE["x-ray"].name} — ${upgradeCostBetween("witness-pack", "x-ray")} →`, "/checkout?tier=x-ray")}
-      <p style="margin-top: 16px;">Or go deeper with <strong style="color: white;">${TIER_CORE["war-room"].name} (${TIER_CORE["war-room"].priceDisplay})</strong> — full intelligence operation with weekly updates. Your ${TIER_CORE["witness-pack"].priceDisplay} credit applies. ${link("Learn more →", "/services")}</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["witness-pack"].priceDisplay}. The X-Ray costs ${upgradeCostBetween("witness-pack", "x-ray")}.</strong></p>
+      ${cta(`Get the X-Ray — ${upgradeCostBetween("witness-pack", "x-ray")}`, "/checkout?tier=x-ray")}
+      <p style="margin-top: 16px;">Or go deeper with <strong style="color: white;">${TIER_CORE["war-room"].name} (${TIER_CORE["war-room"].priceDisplay})</strong> — full intelligence operation with weekly updates. You have already paid ${TIER_CORE["witness-pack"].priceDisplay}. ${link("Learn more", "/services")}</p>
     `,
   },
 
@@ -1940,7 +1940,7 @@ export function personalizeEmailHtml(
     case "post_intelligence_brief_upsell":
       if (stage === "discovery" || stage === "Discovery review") {
         return html + calloutBox(`
-          <p style="color: #D4D4D8; margin: 0;">You're in the discovery phase — this is exactly when The X-Ray ($2,497) delivers the most value. It analyzes your actual discovery evidence, not just what you've told us. Your $997 is fully credited, so it's $1,500.</p>
+          <p style="color: #D4D4D8; margin: 0;">You're in the discovery phase — this is exactly when The X-Ray delivers the most value. It analyzes your actual discovery evidence, not just what you've told us. You have already paid ${TIER_CORE["intelligence-brief"].priceDisplay}. The X-Ray costs ${upgradePrice("intelligence-brief")}.</p>
         `);
       }
       return html;
