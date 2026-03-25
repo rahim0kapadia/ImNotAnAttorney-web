@@ -88,9 +88,23 @@ Customer Journey:
 ## Deployment
 
 - **Production:** https://imnotanattorney.com
-- **Vercel project:** rahim-kapadias-projects/imnotanattorney
+- **Vercel account:** `rahim0kapadia-1967` (personal Hobby plan)
+- **Vercel team:** `rahim-kapadias-projects`
+- **Vercel project:** `imnotanattorney-web` (prj_fgx7OUbudHbS2WrfoaLKb07jJAnB)
+- **Domain:** `imnotanattorney.com` — Cloudflare DNS A records → Vercel (76.76.21.142 / 66.33.60.66). Domain is already configured and routed. Do NOT touch domain settings.
+- **Deploy method:** GitHub integration auto-deploys on push to `master`. Do NOT use `vercel deploy` CLI.
 - **GitHub:** github.com/rahim0kapadia/ImNotAnAttorney-web
 - **Supabase project:** jxjbjmgdukwkoclydqdr (Kapadia Labs org)
+
+### Deploy Rules (prevent past incidents)
+
+1. **NEVER deploy to `tastedrops-projects`** — that is TasteDrop's account, completely separate business
+2. **NEVER run `vercel deploy`** — deploys happen via `git push origin master` → GitHub integration
+3. **NEVER run `vercel env pull`** — it overwrites `.env.local` with only the vars in Vercel (missing local-only vars)
+4. **NEVER delete `.vercel/` directory** — it links the CLI to the correct project
+5. **NEVER touch domain settings** — `imnotanattorney.com` is routed via Cloudflare A records, already configured
+6. **Verify account before any Vercel CLI operation:** `npx vercel whoami` must show `rahim0kapadia-1967`
+7. **Env var changes:** Use `npx vercel env add` for new vars, then redeploy via `git commit --allow-empty -m "chore: trigger redeploy" && git push`
 
 ## Environment Variables
 
