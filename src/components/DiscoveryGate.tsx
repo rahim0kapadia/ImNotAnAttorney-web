@@ -11,62 +11,74 @@
  *
  * Per Dunford two-track model: Track A = pre-discovery (intake data only),
  * Track B = post-discovery (case documents required).
+ *
+ * Architecture: Uses React context instead of render-props so server
+ * components can pass JSX children (not functions) to this client component.
  */
 "use client";
 
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 export type TrackFilter = "all" | "pre-discovery" | "post-discovery";
 
+const FilterContext = createContext<TrackFilter>("all");
+
+/** Hook to read the current discovery filter from any client child. */
+export function useDiscoveryFilter(): TrackFilter {
+  return useContext(FilterContext);
+}
+
 interface DiscoveryGateProps {
-  children: (filter: TrackFilter) => React.ReactNode;
+  children: React.ReactNode;
 }
 
 export function DiscoveryGate({ children }: DiscoveryGateProps) {
   const [filter, setFilter] = useState<TrackFilter>("all");
 
   return (
-    <div>
-      {/* Interactive discovery gate */}
-      <div className="mt-8 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
-        <p className="text-sm font-bold text-white">
-          Have you received police reports or case documents?
-        </p>
-        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <button
-            onClick={() => setFilter(filter === "post-discovery" ? "all" : "post-discovery")}
-            className={`rounded-lg px-6 py-3 text-sm font-semibold transition-colors ${
-              filter === "post-discovery"
-                ? "bg-amber-500 text-black"
-                : "border border-zinc-700 text-white hover:border-amber-500/50"
-            }`}
-          >
-            Yes — I have documents
-          </button>
-          <button
-            onClick={() => setFilter(filter === "pre-discovery" ? "all" : "pre-discovery")}
-            className={`rounded-lg px-6 py-3 text-sm font-semibold transition-colors ${
-              filter === "pre-discovery"
-                ? "bg-amber-500 text-black"
-                : "border border-zinc-700 text-white hover:border-amber-500/50"
-            }`}
-          >
-            Not yet
-          </button>
+    <FilterContext.Provider value={filter}>
+      <div>
+        {/* Interactive discovery gate */}
+        <div className="mt-8 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
+          <p className="text-sm font-bold text-white">
+            Have you received police reports or case documents?
+          </p>
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <button
+              onClick={() => setFilter(filter === "post-discovery" ? "all" : "post-discovery")}
+              className={`rounded-lg px-6 py-3 text-sm font-semibold transition-colors ${
+                filter === "post-discovery"
+                  ? "bg-amber-500 text-black"
+                  : "border border-zinc-700 text-white hover:border-amber-500/50"
+              }`}
+            >
+              Yes — I have documents
+            </button>
+            <button
+              onClick={() => setFilter(filter === "pre-discovery" ? "all" : "pre-discovery")}
+              className={`rounded-lg px-6 py-3 text-sm font-semibold transition-colors ${
+                filter === "pre-discovery"
+                  ? "bg-amber-500 text-black"
+                  : "border border-zinc-700 text-white hover:border-amber-500/50"
+              }`}
+            >
+              Not yet
+            </button>
+          </div>
+          {filter !== "all" && (
+            <button
+              onClick={() => setFilter("all")}
+              className="mt-3 text-xs text-zinc-400 underline decoration-zinc-600 hover:text-zinc-300"
+            >
+              Show all services
+            </button>
+          )}
         </div>
-        {filter !== "all" && (
-          <button
-            onClick={() => setFilter("all")}
-            className="mt-3 text-xs text-zinc-400 underline decoration-zinc-600 hover:text-zinc-300"
-          >
-            Show all services
-          </button>
-        )}
-      </div>
 
-      {/* Render children with current filter */}
-      {children(filter)}
-    </div>
+        {/* Children rendered with filter available via useDiscoveryFilter() */}
+        {children}
+      </div>
+    </FilterContext.Provider>
   );
 }
 

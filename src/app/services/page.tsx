@@ -29,7 +29,8 @@
  *
  * SEO: FAQ schema (FAQPage) + ProfessionalService schema for rich snippets.
  */
-import { DiscoveryGate, TrackDivider } from "@/components/DiscoveryGate";
+import { DiscoveryGate } from "@/components/DiscoveryGate";
+import { TrackA, TrackB, FilteredTrackDivider } from "@/components/ServicesFilteredContent";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { LeadCapture } from "@/components/LeadCapture";
 import { FadeInUp } from "@/components/motion/FadeInUp";
@@ -421,12 +422,9 @@ export default function ServicesPage() {
         {/* Uses "police reports / case documents" not "discovery" per Covello.*/}
         {/* Wraps Instant Products + Case Type sections to control visibility.*/}
         <DiscoveryGate>
-          {(filter) => (
-            <>
-        {/* eslint-disable react/jsx-indent — render prop nesting */}
 
         {/* INSTANT PRODUCTS — Track A (pre-discovery). Hidden when post-discovery selected. */}
-        {filter !== "post-discovery" && (
+        <TrackA>
         <FadeInUp>
         <section className="mt-20">
           <div className="mb-8">
@@ -628,7 +626,7 @@ export default function ServicesPage() {
           </StaggerContainer>
         </section>
         </FadeInUp>
-        )}
+        </TrackA>
 
         {/* CASE TYPE SECTIONS — Track A (CD, IB) and Track B (X-Ray, WR)    */}
         {/* split by a divider. SR in separate section. Filter controls which */}
@@ -645,7 +643,7 @@ export default function ServicesPage() {
             </div>
 
             {/* Track A — Pre-discovery tiers (Case Decoder, Intelligence Brief) */}
-            {filter !== "post-discovery" && (
+            <TrackA>
             <div className="grid gap-4 md:grid-cols-2">
               {ct.tiers.slice(0, 2).map((tier) => (
                 <div
@@ -681,14 +679,13 @@ export default function ServicesPage() {
                 </div>
               ))}
             </div>
-            )}
+            </TrackA>
 
             {/* Track A/B Divider — only shown when both tracks visible */}
-            <TrackDivider visible={filter === "all"} />
+            <FilteredTrackDivider />
 
             {/* Track B — Post-discovery tiers (X-Ray, War Room) */}
-            {filter !== "pre-discovery" && (
-            <>
+            <TrackB>
             <div className="grid gap-4 md:grid-cols-2">
               {ct.tiers.slice(2, 4).map((tier) => (
                 <div
@@ -739,11 +736,9 @@ export default function ServicesPage() {
                 </div>
               ))}
             </div>
-            </>
-            )}
 
             {/* Situation Room — separated from main grid per Dunford */}
-            {filter !== "pre-discovery" && ct.tiers[4] && (
+            {ct.tiers[4] && (
             <div className="mt-8">
               <div className="mb-4 text-center">
                 <p className="text-sm font-semibold text-zinc-300">For defendants with a confirmed trial date</p>
@@ -781,12 +776,11 @@ export default function ServicesPage() {
               </div>
             </div>
             )}
+            </TrackB>
           </section>
           </FadeInUp>
         ))}
 
-            </>
-          )}
         </DiscoveryGate>
 
         {/* GUARANTEE — Per-tier delivery commitments with deadlines.          */}
