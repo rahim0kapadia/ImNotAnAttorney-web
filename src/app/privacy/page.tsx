@@ -147,9 +147,9 @@ export default function PrivacyPage() {
               3. AI Processing Disclosure
             </h2>
             <p>
-              Our analysis services use artificial intelligence (AI) to process
+              Our analysis services use automated processing technology to process
               your case information and generate reports. We believe in full
-              transparency about how your data is handled by AI systems:
+              transparency about how your data is handled:
             </p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
@@ -243,7 +243,7 @@ export default function PrivacyPage() {
               <li>
                 <strong className="text-zinc-300">Automatic deletion:</strong>{" "}
                 Discovery documents are automatically deleted 90 days after your
-                report is delivered. We recommend downloading and saving your
+                report is delivered. Consider downloading and saving your
                 report upon delivery. You may also request immediate deletion at
                 any time by contacting us — documents are removed within 5
                 business days of a deletion request.

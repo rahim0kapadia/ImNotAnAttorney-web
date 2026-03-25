@@ -77,7 +77,7 @@ export default function FamilyPage() {
             <p>
               The legal system doesn&apos;t come with instructions for family
               members. Nobody tells you what&apos;s normal, what&apos;s a red
-              flag, or when you should start asking hard questions about the
+              flag, or when it&apos;s worth asking hard questions about the
               defense strategy.
             </p>
             <p>

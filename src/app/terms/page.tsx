@@ -146,7 +146,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              4. Artificial Intelligence Disclosure
+              4. Technology &amp; Automated Processing Disclosure
             </h2>
             <p>
               Our reports are generated using Claude, a large language model
