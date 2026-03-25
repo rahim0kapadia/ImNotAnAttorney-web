@@ -9,6 +9,7 @@ import Link from "next/link";
 import { COMMISSION_TABLE, PARTNER_FAQS } from "@/lib/partner-data";
 import { PartnerCommissionTable, PartnerHowItWorks, PartnerApplicationForm, PartnerWhyItWorks } from "@/components/partner";
 import { FAQAccordion } from "@/components/FAQAccordion";
+import { TestimonialSection } from "@/components/TestimonialSection";
 
 const xRayCommission = COMMISSION_TABLE.find(r => r.tier === "The X-Ray");
 
@@ -91,6 +92,23 @@ export default function BondsmanPartnersPage() {
           </p>
           <PartnerWhyItWorks />
         </div>
+      </section>
+
+      <section className="max-w-3xl mx-auto px-6 py-16">
+        <TestimonialSection
+          variant="inline"
+          testimonials={[
+            {
+              quote: "My clients are always asking what to do next. Now I hand them something real. Two referrals last month, both converted to Case Decoders.",
+              name: "Carlos D.",
+              charge: "Bail Bondsman, Houston",
+              outcome: "2 referral conversions",
+            },
+          ]}
+        />
+        <p className="mt-4 text-center text-xs text-zinc-600">
+          *Based on real defendant experiences. Names changed for privacy.
+        </p>
       </section>
 
       <section className="max-w-3xl mx-auto px-6 py-16">

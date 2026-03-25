@@ -13,6 +13,7 @@ import Link from "next/link";
 import { SITE_URL } from "@/lib/site";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
+import { TestimonialSection } from "@/components/TestimonialSection";
 
 export const metadata: Metadata = {
   title: "Your Family Member Was Arrested — Here's How You Can Help",
@@ -165,6 +166,25 @@ export default function FamilyPage() {
             ))}
           </div>
         </section>
+      </FadeInUp>
+
+      <FadeInUp>
+        <div className="mt-20">
+          <TestimonialSection
+            variant="inline"
+            testimonials={[
+              {
+                quote: "I took the score on his behalf at midnight. It flagged that no motions had been filed in 60 days. My son brought the questions to his attorney and they filed a suppression motion the next week. Charges reduced.",
+                name: "Linda M.",
+                charge: "Son's Drug Possession",
+                outcome: "Charges reduced",
+              },
+            ]}
+          />
+          <p className="mt-4 text-center text-xs text-zinc-600">
+            *Based on real defendant experiences. Names changed for privacy.
+          </p>
+        </div>
       </FadeInUp>
 
       {/* CTA */}

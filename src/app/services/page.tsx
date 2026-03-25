@@ -456,7 +456,7 @@ export default function ServicesPage() {
                 <span className="text-lg font-bold text-amber-400">{TIER_CORE["dui-first-offense"].priceDisplay}</span>
               </div>
               <p className="mt-2 text-sm text-zinc-400">
-                26 questions your DUI attorney hopes you never ask.
+                26 questions that change how your next attorney meeting goes.
                 Breathalyzer calibration checklist, case stage roadmap, 12 red
                 flags, Case Progress Scorecard. Instant PDF.
               </p>
@@ -836,7 +836,7 @@ export default function ServicesPage() {
                 <span className="font-semibold text-white">
                   {TIER_CORE["war-room"].name} ({TIER_CORE["war-room"].priceDisplay}):
                 </span>{" "}
-                Initial package within 25-28 business days. Weekly updates thereafter.
+                Initial package within 25-28 business days or full refund. Weekly updates thereafter — if any update surfaces zero new findings, that update is free. Priority questions answered within 4 business hours.
               </p>
               <p>
                 <span className="font-semibold text-white">

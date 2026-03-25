@@ -40,7 +40,7 @@ export function BlogCTA({ category }: { category?: string }) {
               <span className="text-amber-400">Would you even know?</span>
             </h3>
             <p className="mt-2 text-sm text-zinc-400">
-              {tier.name}: 26 questions your attorney hopes you never ask.
+              {tier.name}: 26 questions that change how your next attorney meeting goes.
               Built from real case research. {tier.priceDisplay}, instant download.
             </p>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row">

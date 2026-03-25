@@ -94,9 +94,9 @@ export interface PlaybookConfig {
 
 export const DUI_FIRST_OFFENSE: PlaybookConfig = {
   slug: "dui-first-offense",
-  seoTitle: "26 questions your DUI attorney hopes you never ask. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download.",
+  seoTitle: "26 questions that change how your next attorney meeting goes. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download.",
   seoDescription:
-    "26 questions your DUI attorney hopes you never ask. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
     coverImage: "/covers/dui-first-offense/thumbnail.png",
     eyebrow: "DUI Defense Playbook",
@@ -162,7 +162,7 @@ export const DUI_FIRST_OFFENSE: PlaybookConfig = {
         value: "$297",
       },
       {
-        title: "26 Questions Your DUI Attorney Hopes You Never Ask",
+        title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
         value: "$197",
       },
@@ -252,9 +252,9 @@ export const DUI_FIRST_OFFENSE: PlaybookConfig = {
 export const DRUG_POSSESSION: PlaybookConfig = {
   slug: "drug-possession",
   seoTitle:
-    "26 questions your drug possession attorney hopes you never ask. Lab analysis checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Lab analysis checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download.",
   seoDescription:
-    "26 questions your drug possession attorney hopes you never ask. Lab analysis checklist, diversion programs, red flag checklist, attorney scorecard. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Lab analysis checklist, diversion programs, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
     coverImage: "/covers/drug-possession/thumbnail.png",
     eyebrow: "Drug Possession Defense Playbook",
@@ -321,7 +321,7 @@ export const DRUG_POSSESSION: PlaybookConfig = {
         value: "$297",
       },
       {
-        title: "26 Questions Your Drug Attorney Hopes You Never Ask",
+        title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
         value: "$197",
       },
@@ -417,9 +417,9 @@ export const DRUG_POSSESSION: PlaybookConfig = {
 export const PROBATION_VIOLATION: PlaybookConfig = {
   slug: "probation-violation",
   seoTitle:
-    "26 questions your probation violation attorney hopes you never ask. Revocation hearing guide, alternatives to revocation, red flag checklist, attorney scorecard. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Revocation hearing guide, alternatives to revocation, red flag checklist, attorney scorecard. Instant PDF download.",
   seoDescription:
-    "26 questions your probation violation attorney hopes you never ask. Revocation hearing guide, willfulness defense, state cap laws, red flag checklist. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Revocation hearing guide, willfulness defense, state cap laws, red flag checklist. Instant PDF download.",
   hero: {
     coverImage: "/covers/probation-violation/thumbnail.png",
     eyebrow: "Probation Violation Defense Playbook",
@@ -486,7 +486,7 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
         value: "$297",
       },
       {
-        title: "26 Questions Your Attorney Hopes You Never Ask",
+        title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from landmark case law and 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes.",
         value: "$197",
       },
@@ -582,9 +582,9 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
 export const WHITE_COLLAR: PlaybookConfig = {
   slug: "white-collar",
   seoTitle:
-    "26 questions your white collar attorney hopes you never ask. Loss calculation guide, sentencing guidelines, forfeiture defense, red flag checklist, attorney scorecard. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Loss calculation guide, sentencing guidelines, forfeiture defense, red flag checklist, attorney scorecard. Instant PDF download.",
   seoDescription:
-    "26 questions your white collar attorney hopes you never ask. Federal sentencing guidelines, loss calculation challenge, forfeiture defense, red flag checklist, attorney scorecard. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Federal sentencing guidelines, loss calculation challenge, forfeiture defense, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
     coverImage: "/covers/white-collar/thumbnail.png",
     eyebrow: "White Collar Defense Playbook",
@@ -651,7 +651,7 @@ export const WHITE_COLLAR: PlaybookConfig = {
         value: "$297",
       },
       {
-        title: "26 Questions Your White Collar Attorney Hopes You Never Ask",
+        title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
         value: "$197",
       },
@@ -747,9 +747,9 @@ export const WHITE_COLLAR: PlaybookConfig = {
 export const SEX_OFFENSE: PlaybookConfig = {
   slug: "sex-offense",
   seoTitle:
-    "26 questions your sex offense attorney hopes you never ask. Forensic evidence checklist, registration guide, red flag checklist, attorney scorecard. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Forensic evidence checklist, registration guide, red flag checklist, attorney scorecard. Instant PDF download.",
   seoDescription:
-    "26 questions your sex offense attorney hopes you never ask. Forensic interview challenges, SORNA registration tiers, collateral consequences, red flag checklist, attorney scorecard. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Forensic interview challenges, SORNA registration tiers, collateral consequences, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
     coverImage: "/covers/sex-offense/thumbnail.png",
     eyebrow: "Sex Offense Defense Playbook",
@@ -816,7 +816,7 @@ export const SEX_OFFENSE: PlaybookConfig = {
         value: "$297",
       },
       {
-        title: "26 Questions Your Sex Offense Attorney Hopes You Never Ask",
+        title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
         value: "$197",
       },
@@ -912,9 +912,9 @@ export const SEX_OFFENSE: PlaybookConfig = {
 export const FEDERAL_CRIMINAL: PlaybookConfig = {
   slug: "federal-criminal",
   seoTitle:
-    "26 questions your federal criminal attorney hopes you never ask. Sentencing guidelines calculator, cooperation decisions, BOP designation guide, red flag checklist. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Sentencing guidelines calculator, cooperation decisions, BOP designation guide, red flag checklist. Instant PDF download.",
   seoDescription:
-    "26 questions your federal criminal attorney hopes you never ask. Sentencing guidelines breakdown, cooperation strategy, BOP designation, mandatory minimums, red flag checklist, attorney scorecard. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Sentencing guidelines breakdown, cooperation strategy, BOP designation, mandatory minimums, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
     coverImage: "/covers/federal-criminal/thumbnail.png",
     eyebrow: "Federal Criminal Defense Playbook",
@@ -981,7 +981,7 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
         value: "$297",
       },
       {
-        title: "26 Questions Your Federal Attorney Hopes You Never Ask",
+        title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
         value: "$197",
       },
@@ -1077,9 +1077,9 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
 export const DRUG_TRAFFICKING: PlaybookConfig = {
   slug: "drug-trafficking",
   seoTitle:
-    "26 questions your drug trafficking attorney hopes you never ask. Mandatory minimums, informant challenges, quantity disputes, cooperation strategy, red flag checklist. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Mandatory minimums, informant challenges, quantity disputes, cooperation strategy, red flag checklist. Instant PDF download.",
   seoDescription:
-    "26 questions your drug trafficking attorney hopes you never ask. Federal mandatory minimums, confidential informant cross-examination, drug quantity challenges, cooperation decisions, red flag checklist, attorney scorecard. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Federal mandatory minimums, confidential informant cross-examination, drug quantity challenges, cooperation decisions, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
     coverImage: "/covers/drug-trafficking/thumbnail.png",
     eyebrow: "Drug Trafficking Defense Playbook",
@@ -1146,7 +1146,7 @@ export const DRUG_TRAFFICKING: PlaybookConfig = {
         value: "$297",
       },
       {
-        title: "26 Questions Your Drug Trafficking Attorney Hopes You Never Ask",
+        title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
         value: "$197",
       },
@@ -1244,7 +1244,7 @@ export const SELF_DEFENSE: PlaybookConfig = {
   seoTitle:
     "Self-Defense Playbook: 26 Questions for Murder, Assault & Justifiable Force Cases",
   seoDescription:
-    "26 questions your self-defense attorney hopes you never ask. Stand Your Ground checklist, five-element framework, immunity hearing guide, red flag checklist, attorney scorecard. Instant PDF download.",
+    "26 questions that change how your next attorney meeting goes. Stand Your Ground checklist, five-element framework, immunity hearing guide, red flag checklist, attorney scorecard. Instant PDF download.",
   hero: {
     coverImage: "/covers/self-defense/thumbnail.png",
     eyebrow: "Self-Defense / Justifiable Force Defense Playbook",

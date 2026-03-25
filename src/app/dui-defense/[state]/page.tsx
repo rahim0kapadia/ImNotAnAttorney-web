@@ -246,7 +246,7 @@ export default async function StateDuiPage({ params }: PageProps) {
             {duiPlaybook.name} &mdash; {duiPlaybook.priceDisplay}
           </p>
           <p className="mt-2 text-sm text-zinc-300">
-            26 questions your DUI attorney hopes you never ask, a case stage
+            26 questions that change how your next attorney meeting goes, a case stage
             roadmap, red flag checklist, and a case progress scorecard.
             Instant PDF download &mdash; calibrated for {data.name} DUI defendants.
           </p>

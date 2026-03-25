@@ -199,7 +199,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p>We found all of them in the discovery documents. We generated 15 specific questions — each traced to a documented winning method from attorneys like Barry Scheck, Jeffrey Lichtman, and Alan Dershowitz.</p>
       ${cta("See the full sample report →", "/sample")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">DUI charges?</strong> Get the ${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay}, instant download. 26 questions your attorney hopes you never ask + breathalyzer checklist + attorney scorecard. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
+        <strong style="color: white;">DUI charges?</strong> Get the ${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay}, instant download. 26 questions that change how your next attorney meeting goes + breathalyzer checklist + attorney scorecard. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
       </p>
     `,
   },

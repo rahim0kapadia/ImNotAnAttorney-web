@@ -120,7 +120,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     feltExperience: "It's 3 AM and you can't sleep. We've been there.",
     features: [
       "Charge Reality Report — DUI first offense explained in plain English",
-      "26 Questions Your DUI Attorney Hopes You Never Ask (6-part format)",
+      "26 Questions That Change How Your Next Attorney Meeting Goes (6-part format)",
       "DUI Case Stage Roadmap — arrest through resolution timeline",
       "Red Flag Checklist — 12 evidence and procedural red flags",
       "Case Progress Scorecard — rate your attorney on 10 behaviors",
@@ -153,7 +153,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     feltExperience: "You have questions your attorney isn't answering. That's why you're here.",
     features: [
       "Charge Reality Report — drug possession explained in plain English",
-      "26 Questions Your Drug Defense Attorney Hopes You Never Ask (6-part format)",
+      "26 Questions That Change How Your Next Attorney Meeting Goes (6-part format)",
       "Drug Case Stage Roadmap — arrest through resolution timeline",
       "Red Flag Checklist — 12 evidence and procedural red flags",
       "Case Progress Scorecard — rate your attorney on 10 behaviors",
@@ -186,7 +186,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     feltExperience: "You followed the rules and still ended up here. That matters.",
     features: [
       "Probation Violation Reality Report — technical vs. substantive violations explained in plain English",
-      "26 Questions Your Probation Violation Attorney Hopes You Never Ask (6-part format)",
+      "26 Questions That Change How Your Next Attorney Meeting Goes (6-part format)",
       "Revocation Hearing Roadmap — alleged violation through disposition timeline",
       "Red Flag Checklist — 12 procedural and evidence red flags",
       "Case Progress Scorecard — rate your attorney on 10 behaviors",
@@ -219,7 +219,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     feltExperience: "The investigation feels like it will never end. Understanding it is the first step.",
     features: [
       "Charge Reality Report — white collar offenses explained in plain English",
-      "26 Questions Your White Collar Attorney Hopes You Never Ask (6-part format)",
+      "26 Questions That Change How Your Next Attorney Meeting Goes (6-part format)",
       "Federal Case Stage Roadmap — pre-indictment through post-conviction timeline",
       "Red Flag Checklist — 12 evidence and procedural red flags",
       "Case Progress Scorecard — rate your attorney on 10 behaviors",
@@ -252,7 +252,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     feltExperience: "The accusation alone changes everything. Knowing the facts gives you ground to stand on.",
     features: [
       "Charge Reality Report — sex offense elements explained in plain English",
-      "26 Questions Your Sex Offense Attorney Hopes You Never Ask (6-part format)",
+      "26 Questions That Change How Your Next Attorney Meeting Goes (6-part format)",
       "Sex Offense Case Stage Roadmap — accusation through post-conviction timeline",
       "Red Flag Checklist — 12 forensic and procedural red flags",
       "Case Progress Scorecard — rate your attorney on 10 behaviors",
@@ -285,7 +285,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     feltExperience: "Federal cases move fast and hit hard. Understanding the system is your first defense.",
     features: [
       "Federal System Reality Report — how federal court actually works, explained in plain English",
-      "26 Questions Your Federal Attorney Hopes You Never Ask (6-part format)",
+      "26 Questions That Change How Your Next Attorney Meeting Goes (6-part format)",
       "Federal Case Stage Roadmap — target letter through post-conviction, 13 stages",
       "Red Flag Checklist — 12 guideline and procedural red flags",
       "Case Progress Scorecard — rate your attorney on 10 behaviors",
@@ -318,7 +318,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     feltExperience: "The numbers they're quoting feel impossible. That's worth questioning.",
     features: [
       "Trafficking Charge Reality Report — mandatory minimums, conspiracy liability, and quantity tables explained in plain English",
-      "26 Questions Your Drug Trafficking Attorney Hopes You Never Ask (6-part format)",
+      "26 Questions That Change How Your Next Attorney Meeting Goes (6-part format)",
       "Drug Trafficking Case Stage Roadmap — arrest through post-conviction, 12 stages",
       "Red Flag Checklist — 12 quantity, informant, and procedural red flags",
       "Case Progress Scorecard — rate your attorney on 10 behaviors",
@@ -351,7 +351,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     feltExperience: "You protected yourself or someone you love. Now you need to protect your freedom.",
     features: [
       "Charge Reality Report — self-defense elements and justifiable force explained in plain English",
-      "26 Questions Your Self-Defense Attorney Hopes You Never Ask (6-part format)",
+      "26 Questions That Change How Your Next Attorney Meeting Goes (6-part format)",
       "11-Stage Case Roadmap — incident through immunity hearing, trial, and appeal",
       "Red Flag Checklist — 12 evidence, expert, and procedural red flags",
       "Case Progress Scorecard — rate your attorney on 10 behaviors",
@@ -394,7 +394,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "Delivered within 48 hours with 15 calibrated questions + communication tools — or your money back.",
-    story: "In one real case, a defendant opened 500 pages of discovery and found four issues his attorney had never mentioned — a 73% weight discrepancy, a CI phone number attributed to two different people, a drug type mismatch, and 21 unmatched fingerprints. Discovery volumes routinely exceed what any single attorney can manually cross-reference — our systematic approach surfaces what manual review naturally misses. That's the kind of analysis we do for you.",
+    story: "A defendant's breathalyzer result was 0.09 — barely over the limit. Our analysis flagged that the device was 19 days past its calibration window and the officer's certification had lapsed 3 months prior. Two questions about calibration records and officer training changed the entire negotiation. Case details like these routinely go unchecked — our systematic approach surfaces what manual review naturally misses. That's the kind of analysis we do for you.",
     validation:
       "The right place to start. Understand exactly what you are facing before your next attorney meeting.",
     whyThisWorks:
@@ -458,7 +458,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "x-ray": {
     ...coreTier("x-ray"),
-    feltExperience: "Your discovery documents contain the truth about your case. We find it.",
+    feltExperience: "Everything above works from what you tell us. At this level, we read every page of your discovery — and that's where the real intelligence begins.",
     features: [
       "Your Intelligence Brief and Case Decoder arrive first — you're not waiting 10 days with nothing",
       "Every page of your discovery read and cross-referenced — police reports against lab reports, witness statements against each other",
@@ -495,7 +495,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "war-room": {
     ...coreTier("war-room"),
-    feltExperience: "Your case is complicated. You deserve a team that treats it that way.",
+    feltExperience: "The War Room isn't a bigger report. It's an ongoing intelligence operation — because cases that take months need a team that stays with you.",
     features: [
       "Includes Case Decoder + Intelligence Brief + X-Ray delivered progressively",
       "Everything in The X-Ray, plus:",
@@ -510,11 +510,12 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Witness Reliability Rankings — how trustworthy is each witness? Scored on 7 dimensions",
     ],
     guarantee:
-      "Initial package within 25-28 business days. Weekly updates every 7 days thereafter.",
+      "Three Guarantees: (1) The Intelligence Guarantee — if any weekly update fails to surface at least one new finding or actionable question, that update is free. (2) The Response Guarantee — priority questions answered within 4 business hours, or your next update is on us. (3) The Delivery Deadline — initial package within 25-28 business days. If we miss the deadline, full refund — no questions.",
     validation:
       "Ongoing intelligence from now through resolution. Most clients stay in this tier for the life of their case.",
     whyThisWorks:
       "Witness analysis using informant credibility methodology — proven in high-profile federal defense cases. Officer dossiers built on investigator accountability frameworks. Updated weekly as your case develops.",
+    story: "Three prosecution witnesses gave depositions placing the defendant in different locations at different times. Our weekly witness analysis cross-referenced all three accounts and identified 11 contradictions the prosecution would need to reconcile at trial. The defendant's attorney used those contradictions in cross-examination preparation. Two of the three witnesses were struck.",
     pullquote: {
       quote:
         "The cooperator is only as good as their handler lets them be.",
@@ -726,6 +727,9 @@ function CheckoutContent() {
           {info.feltExperience && (
             <p className="mt-2 text-sm text-zinc-400 italic">{info.feltExperience}</p>
           )}
+          <p className="mt-1 text-xs text-zinc-500 italic">
+            Buying this for someone you love? Everything works the same — the questions, the templates, the action plan. You&apos;re giving them a real advantage.
+          </p>
           {info.isDigitalProduct ? (
             <div className="mt-4 space-y-2">
               <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 p-3 transition-colors hover:border-zinc-600 has-[:checked]:border-amber-500/50 has-[:checked]:bg-amber-500/5">

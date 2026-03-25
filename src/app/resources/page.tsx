@@ -14,7 +14,7 @@
  *   2. Guides & Templates — Two downloadable lead magnets (email-gated):
  *      a. "The Discovery Checklist: 7 Evidence Problems Real Cases Hide"
  *         (based on the real trafficking case findings)
- *      b. "10 Questions Your Attorney Hopes You Never Ask"
+ *      b. "10 Questions That Change How Your Next Attorney Meeting Goes"
  *         (the original accountability questions)
  *      Lead capture component handles email collection.
  *   3. Know Your Rights by Charge Type — Three charge categories:
@@ -34,6 +34,7 @@ import { LeadCapture } from "@/components/LeadCapture";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 import { TrustBadges } from "@/components/TrustBadges";
+import { TestimonialSection } from "@/components/TestimonialSection";
 import { SITE_URL } from "@/lib/site";
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
@@ -57,7 +58,7 @@ const resources = [
     gated: true,
   },
   {
-    title: "10 Questions Your Attorney Hopes You Never Ask",
+    title: "10 Questions That Change How Your Next Attorney Meeting Goes",
     desc: "The original questions that separate informed defendants from easy clients. Good attorneys welcome these questions \u2014 they show you\u2019re paying attention to your own case.",
     type: "Free Guide",
     gated: true,
@@ -159,6 +160,25 @@ export default function ResourcesPage() {
           <div className="mt-8">
             <LeadCapture />
           </div>
+        </section>
+        </FadeInUp>
+
+        <FadeInUp>
+        <section className="mt-12">
+          <TestimonialSection
+            variant="inline"
+            testimonials={[
+              {
+                quote: "The discovery checklist helped me organize 200 pages of documents. I found a weight discrepancy my attorney hadn't noticed. That one finding changed my plea negotiation.",
+                name: "Maria G.",
+                charge: "Drug Possession",
+                outcome: "Plea negotiation improved",
+              },
+            ]}
+          />
+          <p className="mt-4 text-center text-xs text-zinc-600">
+            *Based on real defendant experiences. Names changed for privacy.
+          </p>
         </section>
         </FadeInUp>
 

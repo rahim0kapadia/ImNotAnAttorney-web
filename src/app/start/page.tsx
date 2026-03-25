@@ -28,6 +28,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
+import { TestimonialSection } from "@/components/TestimonialSection";
 import type { Metadata } from "next";
 
 /** Track which path the user selected, or null for initial state. */
@@ -217,6 +218,22 @@ export default function StartPage() {
                 Full refund if we don&apos;t deliver
               </p>
             </div>
+          </div>
+          <div className="mx-auto max-w-xl mt-8">
+            <TestimonialSection
+              variant="inline"
+              testimonials={[
+                {
+                  quote: "I filled out the intake at 2 AM the night I was arrested. Had my Case Decoder 36 hours later. The questions it gave me completely changed my next attorney meeting.",
+                  name: "Sarah K.",
+                  charge: "DUI",
+                  outcome: "Attorney meeting transformed",
+                },
+              ]}
+            />
+            <p className="mt-4 text-center text-xs text-zinc-600">
+              *Based on real defendant experiences. Names changed for privacy.
+            </p>
           </div>
         </div>
       </section>

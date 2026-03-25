@@ -16,7 +16,7 @@ export function PlaybookCTA() {
         DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay}
       </p>
       <h3 className="mt-2 text-lg font-bold text-white">
-        26 questions your DUI attorney hopes you never ask.
+        26 questions that change how your next attorney meeting goes.
       </h3>
       <p className="mt-2 text-sm text-zinc-400">
         Instant PDF download. Breathalyzer calibration checklist, case stage

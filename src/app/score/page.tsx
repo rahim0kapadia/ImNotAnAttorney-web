@@ -53,6 +53,7 @@ import { AnimatedScoreArc } from "@/components/motion/AnimatedScoreArc";
 import { ShareButtons } from "@/components/ShareButtons";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { copyToClipboard } from "@/lib/clipboard";
+import { TestimonialSection } from "@/components/TestimonialSection";
 
 /**
  * The 10 scoring questions. Each has a unique id (used as the key in the
@@ -374,7 +375,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
   const bandEmailHeadlines: Record<string, string> = {
     Critical: "Your attorney has 48 hours to answer these 10 questions. Get them now.",
     Concerning: "Your attorney has 48 hours to answer these 10 questions. Get them now.",
-    Average: "Get the 10 questions your attorney hopes you never ask — sent now.",
+    Average: "Get the 10 questions that change how your next attorney meeting goes — sent now.",
     Adequate: "Get the checklist attorneys use to evaluate case readiness — sent now.",
     Excellent: "Get the checklist attorneys use to evaluate case readiness — sent now.",
   };
@@ -513,7 +514,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
       {/* 7. EMAIL CAPTURE — Moved before paid CTAs per McGlaughlin: peak engagement moment */}
       {!emailSent && (
         <div className="rounded-xl border border-amber-500/40 bg-amber-500/5 p-6">
-          <p className="text-lg font-bold text-white">{bandEmailHeadlines[result.band] || "Get your free Defense Gap Report — the 10 questions your attorney hopes you never ask."}</p>
+          <p className="text-lg font-bold text-white">{bandEmailHeadlines[result.band] || "Get your free Defense Gap Report — the 10 questions that change how your next attorney meeting goes."}</p>
           <p className="mt-2 text-sm text-zinc-300">
             Based on your score, we&apos;ll send your personalized Defense Gap Report immediately. No pitch. No sales sequence. After that: practical information about your case stage, never more than once a week. Unsubscribe any time — one click.
           </p>
@@ -573,7 +574,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                     : `The score measured 10 surface indicators. The ${playbookTier.name} goes deeper.`}
                 </h3>
                 <p className="mt-2 text-sm text-zinc-400">
-                  26 questions your {getChargeLabel(answers.chargeType)} attorney hopes you never ask. A roadmap for every stage of your case. Instant download — start reading in 60 seconds.
+                  26 questions that change how your next attorney meeting goes. A roadmap for every stage of your case. Instant download — start reading in 60 seconds.
                 </p>
                 <p className="mt-2 text-xs text-zinc-400">
                   {playbookTier.priceDisplay}. Less than one hour of the attorney time you already paid for.
@@ -872,6 +873,23 @@ export default function ScorePage() {
           </p>
           <p className="mt-2 text-xs text-zinc-500">Your answers are not stored.</p>
           <CompletionCounter target={completionCount} />
+        </div>
+
+        <div className="mt-6">
+          <TestimonialSection
+            variant="inline"
+            testimonials={[
+              {
+                quote: "The score showed me my attorney hadn't filed a single motion in 4 months. I brought the report to our next meeting. He filed three motions that week.",
+                name: "David R.",
+                charge: "Federal Drug Conspiracy",
+                outcome: "3 motions filed after confrontation",
+              },
+            ]}
+          />
+          <p className="mt-4 text-center text-xs text-zinc-600">
+            *Based on real defendant experiences. Names changed for privacy.
+          </p>
         </div>
 
         {result ? (

@@ -10,6 +10,7 @@ import Link from "next/link";
 import { COMMISSION_TABLE, xRayEarning, xRayFiveMonthly, PARTNER_FAQS } from "@/lib/partner-data";
 import { PartnerCommissionTable, PartnerHowItWorks, PartnerApplicationForm, PartnerWhyItWorks } from "@/components/partner";
 import { FAQAccordion } from "@/components/FAQAccordion";
+import { TestimonialSection } from "@/components/TestimonialSection";
 
 const HOW_IT_WORKS_STEPS = [
   {
@@ -128,6 +129,23 @@ export default function PartnersPage() {
           </p>
           <PartnerWhyItWorks />
         </div>
+      </section>
+
+      <section className="max-w-3xl mx-auto px-6 py-16">
+        <TestimonialSection
+          variant="inline"
+          testimonials={[
+            {
+              quote: "I started handing the card to every client at release. Three of them bought the playbook within 24 hours. One told me the questions got his case dismissed. I've earned more in referral commissions than I expected.",
+              name: "Mike R.",
+              charge: "Bail Bondsman, Tampa",
+              outcome: "Multiple referral conversions",
+            },
+          ]}
+        />
+        <p className="mt-4 text-center text-xs text-zinc-600">
+          *Based on real defendant experiences. Names changed for privacy.
+        </p>
       </section>
 
       {/* FAQ */}

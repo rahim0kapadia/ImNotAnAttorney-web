@@ -118,7 +118,7 @@ const homeFaqs = [
   {
     question: "What's the Defense Playbook?",
     answer:
-      `The ${TIER_CORE["dui-first-offense"].name} (${TIER_CORE["dui-first-offense"].priceDisplay}) is an instant-download PDF with 26 questions your DUI attorney hopes you never ask, a breathalyzer calibration checklist, a case stage roadmap, 12 red flags, and a Case Progress Scorecard. No intake form, no wait — built from 40+ elite defense attorneys' documented strategies. Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} within 30 days.`,
+      `The ${TIER_CORE["dui-first-offense"].name} (${TIER_CORE["dui-first-offense"].priceDisplay}) is an instant-download PDF with 26 questions that change how your next attorney meeting goes, a breathalyzer calibration checklist, a case stage roadmap, 12 red flags, and a Case Progress Scorecard. No intake form, no wait — built from 40+ elite defense attorneys' documented strategies. Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} within 30 days.`,
   },
   {
     question: "What if I already bought a lower tier?",
@@ -239,7 +239,7 @@ export default function Home() {
           <FadeInUp delay={0.2}>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-zinc-300">
               Built by defendants who went through it. 40+ elite defense attorneys&apos; methodology.
-              26 questions your DUI attorney hopes you never ask.
+              26 questions that change how your next attorney meeting goes.
             </p>
           </FadeInUp>
           <FadeInUp delay={0.25}>
@@ -575,7 +575,7 @@ export default function Home() {
                 <div className="text-2xl font-bold text-amber-400">{TIER_CORE["dui-first-offense"].priceDisplay}</div>
                 <p className="mt-1 text-xs font-semibold text-zinc-500">DUI Defense Playbook. Instant download.</p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  26 questions your DUI attorney hopes you never ask.
+                  26 questions that change how your next attorney meeting goes.
                 </p>
               </div>
             </StaggerItem>
@@ -731,7 +731,7 @@ export default function Home() {
           <LeadCapture
             successUpsellHref="/checkout?tier=dui-first-offense"
             successUpsellLabel={`Ready to go deeper? Get Your DUI Defense Playbook \u2014 ${TIER_CORE["dui-first-offense"].priceDisplay}`}
-            successUpsellDescription="26 questions your DUI attorney hopes you never ask. Instant download."
+            successUpsellDescription="26 questions that change how your next attorney meeting goes. Instant download."
           />
           <p className="mt-6 text-center text-sm text-zinc-400">
             Want a quick answer?{" "}
