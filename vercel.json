@@ -1,13 +1,7 @@
 {
-  "crons": [
-    {
-      "path": "/api/cron/drip",
-      "schedule": "0 14 * * *"
-    }
-  ],
   "functions": {
     "src/app/api/cron/drip/route.ts": {
-      "maxDuration": 300
+      "maxDuration": 60
     },
     "src/app/api/cron/engine/route.ts": {
       "maxDuration": 10
