@@ -29,6 +29,7 @@
  *
  * SEO: FAQ schema (FAQPage) + ProfessionalService schema for rich snippets.
  */
+import { DiscoveryGate, TrackDivider } from "@/components/DiscoveryGate";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { LeadCapture } from "@/components/LeadCapture";
 import { FadeInUp } from "@/components/motion/FadeInUp";
@@ -416,47 +417,16 @@ export default function ServicesPage() {
           Whether you&apos;re the defendant or the person doing the research for someone you love — every product works the same way.
         </p>
 
-        {/* DECISION GUIDE — Routes visitors based on discovery status.       */}
-        {/* No discovery: {TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay}) or {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay}).  */}
-        {/* Has discovery: {TIER_CORE["x-ray"].name} ({TIER_CORE["x-ray"].priceDisplay}) recommended as starting point.     */}
-        {/* This reduces confusion from the 5-tier display below.            */}
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-            <p className="text-sm font-bold text-amber-400">
-              No discovery yet?
-            </p>
-            <p className="mt-2 text-sm text-zinc-400">
-              Start with the{" "}
-              <Link href="/checkout?tier=case-decoder" className="text-white underline">
-                {TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay})
-              </Link>{" "}
-              or{" "}
-              <Link href="/checkout?tier=intelligence-brief" className="text-white underline">
-                {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay})
-              </Link>
-              . Both work without discovery documents. Get charge analysis,
-              judge intel, and targeted questions for your next attorney meeting.
-            </p>
-          </div>
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-            <p className="text-sm font-bold text-amber-400">
-              You have discovery?
-            </p>
-            <p className="mt-2 text-sm text-zinc-400">
-              The{" "}
-              <Link href="/checkout?tier=x-ray" className="text-white underline">
-                {TIER_CORE["x-ray"].name} ({TIER_CORE["x-ray"].priceDisplay})
-              </Link>{" "}
-              is the most thorough starting point. Full discovery analysis —
-              every page, every discrepancy, every red flag mapped. 35+
-              case-specific questions.
-            </p>
-          </div>
-        </div>
+        {/* DISCOVERY GATE — Interactive two-button filter (Covello-compliant). */}
+        {/* Uses "police reports / case documents" not "discovery" per Covello.*/}
+        {/* Wraps Instant Products + Case Type sections to control visibility.*/}
+        <DiscoveryGate>
+          {(filter) => (
+            <>
+        {/* eslint-disable react/jsx-indent — render prop nesting */}
 
-        {/* INSTANT PRODUCTS — Charge-specific Playbooks for immediate help.  */}
-        {/* Pre-built PDFs, no intake form, instant delivery. Fills the gap */}
-        {/* between free content and the $197 Case Decoder.                 */}
+        {/* INSTANT PRODUCTS — Track A (pre-discovery). Hidden when post-discovery selected. */}
+        {filter !== "post-discovery" && (
         <FadeInUp>
         <section className="mt-20">
           <div className="mb-8">
@@ -658,11 +628,11 @@ export default function ServicesPage() {
           </StaggerContainer>
         </section>
         </FadeInUp>
+        )}
 
-        {/* CASE TYPE SECTIONS — One section per case type (Drug, DUI, WC).   */}
-        {/* Each renders all 5 tiers with case-type-specific descriptions.   */}
-        {/* First 3 tiers in 3-col grid, last 2 (War Room, Situation Room)  */}
-        {/* in a 2-col grid below — visual hierarchy emphasizes entry tiers. */}
+        {/* CASE TYPE SECTIONS — Track A (CD, IB) and Track B (X-Ray, WR)    */}
+        {/* split by a divider. SR in separate section. Filter controls which */}
+        {/* track is visible.                                                 */}
         {caseTypes.map((ct) => (
           <FadeInUp key={ct.title}>
           <section className="mt-20">
@@ -674,9 +644,53 @@ export default function ServicesPage() {
               <p className="mt-2 text-zinc-400">{ct.description}</p>
             </div>
 
-            {/* Tier cards */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {ct.tiers.slice(0, 3).map((tier) => (
+            {/* Track A — Pre-discovery tiers (Case Decoder, Intelligence Brief) */}
+            {filter !== "post-discovery" && (
+            <div className="grid gap-4 md:grid-cols-2">
+              {ct.tiers.slice(0, 2).map((tier) => (
+                <div
+                  key={tier.name}
+                  className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
+                >
+                  {tier.stageLabel && (
+                    <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                      {tier.stageLabel}
+                    </span>
+                  )}
+                  <div className="flex items-baseline justify-between">
+                    <h3 className="font-semibold text-white">{tier.name}</h3>
+                    <span className="text-lg font-bold text-amber-400">
+                      {tier.price}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm text-zinc-400">{tier.desc}</p>
+                  <Link
+                    href={`/checkout?tier=${tier.slug}`}
+                    className="mt-4 block rounded-lg border border-zinc-700 py-2 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
+                  >
+                    Get {tier.name}
+                  </Link>
+                  {tier.slug === "case-decoder" && (
+                    <Link
+                      href="/sample"
+                      className="mt-2 block text-center text-xs text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+                    >
+                      View Sample Report
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
+            )}
+
+            {/* Track A/B Divider — only shown when both tracks visible */}
+            <TrackDivider visible={filter === "all"} />
+
+            {/* Track B — Post-discovery tiers (X-Ray, War Room) */}
+            {filter !== "pre-discovery" && (
+            <>
+            <div className="grid gap-4 md:grid-cols-2">
+              {ct.tiers.slice(2, 4).map((tier) => (
                 <div
                   key={tier.name}
                   className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
@@ -703,20 +717,17 @@ export default function ServicesPage() {
                       Requires discovery documents
                     </p>
                   )}
+                  {tier.slug === "war-room" && (
+                    <p className="mt-2 text-xs text-amber-400/80">
+                      Includes Case Decoder + Intelligence Brief + X-Ray ($8,688 value) — $4,997
+                    </p>
+                  )}
                   <Link
                     href={`/checkout?tier=${tier.slug}`}
                     className="mt-4 block rounded-lg border border-zinc-700 py-2 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
                   >
                     Get {tier.name}
                   </Link>
-                  {tier.slug === "case-decoder" && (
-                    <Link
-                      href="/sample"
-                      className="mt-2 block text-center text-xs text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
-                    >
-                      View Sample Report
-                    </Link>
-                  )}
                   {tier.slug === "x-ray" && (
                     <Link
                       href="/sample-xray"
@@ -728,48 +739,55 @@ export default function ServicesPage() {
                 </div>
               ))}
             </div>
+            </>
+            )}
 
-            {/* Premium tiers */}
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
-              {ct.tiers.slice(3).map((tier) => (
-                <div
-                  key={tier.name}
-                  className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
-                >
-                  {tier.stageLabel && (
-                    <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
-                      {tier.stageLabel}
-                    </span>
-                  )}
-                  {(tier as { requiresWarRoom?: boolean }).requiresWarRoom && (
-                    <span className="ml-2 mb-2 inline-block rounded-full bg-zinc-800 px-2 py-0.5 text-xs font-semibold text-zinc-300">
-                      Requires War Room
-                    </span>
-                  )}
-                  <div className="flex items-baseline justify-between">
-                    <h3 className="font-semibold text-white">{tier.name}</h3>
-                    <span className="text-lg font-bold text-amber-400">
-                      {tier.price}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-sm text-zinc-400">{tier.desc}</p>
-                  {tier.discovery && (
-                    <p className="mt-2 text-xs text-zinc-400">
-                      Requires discovery documents
-                    </p>
-                  )}
-                  <Link
-                    href={`/checkout?tier=${tier.slug}`}
-                    className="mt-4 block rounded-lg border border-zinc-700 py-2 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
-                  >
-                    Get {tier.name}
-                  </Link>
+            {/* Situation Room — separated from main grid per Dunford */}
+            {filter !== "pre-discovery" && ct.tiers[4] && (
+            <div className="mt-8">
+              <div className="mb-4 text-center">
+                <p className="text-sm font-semibold text-zinc-300">For defendants with a confirmed trial date</p>
+              </div>
+              <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+                {ct.tiers[4].stageLabel && (
+                  <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                    {ct.tiers[4].stageLabel}
+                  </span>
+                )}
+                <span className="ml-2 mb-2 inline-block rounded-full bg-zinc-800 px-2 py-0.5 text-xs font-semibold text-zinc-300">
+                  By application — requires War Room
+                </span>
+                <div className="flex items-baseline justify-between">
+                  <h3 className="font-semibold text-white">{ct.tiers[4].name}</h3>
+                  <span className="text-lg font-bold text-amber-400">
+                    {ct.tiers[4].price}
+                  </span>
                 </div>
-              ))}
+                <p className="mt-2 text-sm text-zinc-400">{ct.tiers[4].desc}</p>
+                <p className="mt-2 text-xs text-amber-400/80">
+                  Includes all tiers ($14,685 value) — $9,997
+                </p>
+                {ct.tiers[4].discovery && (
+                  <p className="mt-2 text-xs text-zinc-400">
+                    Requires discovery documents
+                  </p>
+                )}
+                <Link
+                  href={`/checkout?tier=${ct.tiers[4].slug}`}
+                  className="mt-4 block rounded-lg border border-zinc-700 py-2 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
+                >
+                  Get {ct.tiers[4].name}
+                </Link>
+              </div>
             </div>
+            )}
           </section>
           </FadeInUp>
         ))}
+
+            </>
+          )}
+        </DiscoveryGate>
 
         {/* GUARANTEE — Per-tier delivery commitments with deadlines.          */}
         {/* Reinforces risk reversal at the point of maximum hesitation.      */}
