@@ -23,8 +23,7 @@
  *   8. Lead capture — Email opt-in fallback
  *
  * Conversion decisions:
- *   - Case Decoder marked "Best Starting Point" (popular=true) — lowest commitment
- *   - X-Ray marked "Best Value" (bestValue=true) — highest margin tier
+ *   - Each tier shows a case-stage label (stageLabel) — "First 30 days", "30-90 days in", etc.
  *   - Situation Room shows "Requires War Room" badge — application gate
  *   - Case Decoder cards include "View Sample Report" link to /sample
  *
@@ -56,8 +55,7 @@ export const metadata: Metadata = {
  * structure to speak differently to each audience.
  *
  * Tier flags:
- *   - popular: true -> "Best Starting Point" badge (Case Decoder)
- *   - bestValue: true -> "Best Value" badge (X-Ray)
+ *   - stageLabel: case-stage label (e.g., "First 30 days") shown above tier name
  *   - requiresWarRoom: true -> "Requires War Room" prerequisite badge
  *   - discovery: true -> shows "Requires discovery documents" note
  */
@@ -74,14 +72,15 @@ const caseTypes = [
         price: TIER_CORE["case-decoder"].priceDisplay,
         desc: "15 calibrated attorney questions, ready-to-send email templates, and a 7-day action plan — built from elite defense methodology for drug cases.",
         discovery: TIER_CORE["case-decoder"].requiresDiscovery,
-        popular: true,
+        stageLabel: "First 30 days",
       },
       {
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "Includes Case Decoder report (delivered within 48 hours). Judge intelligence for drug cases. How does your judge rule on suppression? What's the local plea pattern? 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
+        desc: "Fastest pre-discovery jurisdiction intelligence. Your judge's patterns, prosecution tendencies, and realistic outcome range — delivered in 72 hours.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
+        stageLabel: "30-90 days in",
       },
       {
         name: TIER_CORE["x-ray"].name,
@@ -89,7 +88,7 @@ const caseTypes = [
         price: TIER_CORE["x-ray"].priceDisplay,
         desc: "We read every page of your discovery looking for what doesn't add up — documents that contradict each other, evidence that's missing, rights that may have been violated. Every finding comes with page references and 35-50 specific questions to bring to your attorney, including what a solid answer looks like and what a red flag answer looks like. Includes your Intelligence Brief delivered first, Discovery Strength Rating, and Prosecution Case Weakness Analysis.",
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
-        bestValue: true,
+        stageLabel: "When you have your case documents",
       },
       {
         name: TIER_CORE["war-room"].name,
@@ -97,6 +96,7 @@ const caseTypes = [
         price: TIER_CORE["war-room"].priceDisplay,
         desc: "Everything above + officer dossiers, witness analysis (up to 8), motion timing questions for your attorney, case law package, weekly updates. Includes Evidence Chain Audit — was every piece of evidence handled properly? Every item traced through custody, gaps flagged. And Witness Reliability Rankings — how trustworthy is each witness? Scored across 7 credibility dimensions.",
         discovery: TIER_CORE["war-room"].requiresDiscovery,
+        stageLabel: "Building your defense",
       },
       {
         name: TIER_CORE["situation-room"].name,
@@ -105,6 +105,7 @@ const caseTypes = [
         desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on elite preparation standards, cross-examination design, and precision strike methodology — from attorneys who defined modern trial practice.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: true,
+        stageLabel: "Trial confirmed",
       },
     ],
   },
@@ -120,14 +121,15 @@ const caseTypes = [
         price: TIER_CORE["case-decoder"].priceDisplay,
         desc: "15 calibrated attorney questions, ready-to-send email templates, and a 7-day action plan — built from elite defense methodology for DUI cases.",
         discovery: TIER_CORE["case-decoder"].requiresDiscovery,
-        popular: true,
+        stageLabel: "First 30 days",
       },
       {
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "Includes Case Decoder report (delivered within 48 hours). Your judge's DUI sentencing patterns, local diversion programs, DMV hearing strategy. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
+        desc: "Fastest pre-discovery jurisdiction intelligence. Your judge's DUI sentencing patterns, local diversion programs, and realistic outcome range — delivered in 72 hours.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
+        stageLabel: "30-90 days in",
       },
       {
         name: TIER_CORE["x-ray"].name,
@@ -135,7 +137,7 @@ const caseTypes = [
         price: TIER_CORE["x-ray"].priceDisplay,
         desc: "We read every page of your discovery looking for what doesn't add up — documents that contradict each other, evidence that's missing, rights that may have been violated. Every finding comes with page references and 35-50 specific questions to bring to your attorney, including what a solid answer looks like and what a red flag answer looks like. Includes your Intelligence Brief delivered first, Discovery Strength Rating, and Prosecution Case Weakness Analysis.",
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
-        bestValue: true,
+        stageLabel: "When you have your case documents",
       },
       {
         name: TIER_CORE["war-room"].name,
@@ -143,6 +145,7 @@ const caseTypes = [
         price: TIER_CORE["war-room"].priceDisplay,
         desc: "Officer dossiers, expert witness challenges, motion timing questions for your attorney, case law package, weekly updates until resolution. Includes Evidence Chain Audit — was every piece of evidence handled properly? Every item traced through custody, gaps flagged. And Witness Reliability Rankings — how trustworthy is each witness? Scored across 7 credibility dimensions.",
         discovery: TIER_CORE["war-room"].requiresDiscovery,
+        stageLabel: "Building your defense",
       },
       {
         name: TIER_CORE["situation-room"].name,
@@ -151,6 +154,7 @@ const caseTypes = [
         desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. Officer research, expert credibility questions, jury selection research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on elite preparation standards, cross-examination design, and precision strike methodology — from attorneys who defined modern trial practice.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: true,
+        stageLabel: "Trial confirmed",
       },
     ],
   },
@@ -166,14 +170,15 @@ const caseTypes = [
         price: TIER_CORE["case-decoder"].priceDisplay,
         desc: "15 calibrated attorney questions, ready-to-send email templates, and a 7-day action plan — built from elite defense methodology for federal cases.",
         discovery: TIER_CORE["case-decoder"].requiresDiscovery,
-        popular: true,
+        stageLabel: "First 30 days",
       },
       {
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "Includes Case Decoder report (delivered within 48 hours). Judge sentencing patterns, AUSA profile — who the federal prosecutor is and their track record, guidelines calculation review — calculating your actual sentencing range, questions about the cooperation decision for your attorney. 10-15 targeted questions. Includes Prosecution Case Vulnerability Report — five realistic outcome scenarios informed by court records and sentencing trends in your jurisdiction, plus where the prosecution's case has exploitable gaps.",
+        desc: "Fastest pre-discovery jurisdiction intelligence. Your judge's sentencing patterns, AUSA profile and track record, guidelines calculation review, and cooperation decision questions — delivered in 72 hours.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
+        stageLabel: "30-90 days in",
       },
       {
         name: TIER_CORE["x-ray"].name,
@@ -181,7 +186,7 @@ const caseTypes = [
         price: TIER_CORE["x-ray"].priceDisplay,
         desc: "We read every page of your discovery looking for what doesn't add up — documents that contradict each other, evidence that's missing, rights that may have been violated. Every finding comes with page references and 35-50 specific questions to bring to your attorney, including what a solid answer looks like and what a red flag answer looks like. Includes your Intelligence Brief delivered first, Discovery Strength Rating, and Prosecution Case Weakness Analysis.",
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
-        bestValue: true,
+        stageLabel: "When you have your case documents",
       },
       {
         name: TIER_CORE["war-room"].name,
@@ -189,6 +194,7 @@ const caseTypes = [
         price: TIER_CORE["war-room"].priceDisplay,
         desc: "Full intelligence operation — AUSA dossier, cooperator analysis, sentencing guidelines deep dive, case law package, weekly updates. Includes Evidence Chain Audit — was every piece of evidence handled properly? Every item traced through custody, gaps flagged. And Witness Reliability Rankings — how trustworthy is each witness? Scored across 7 credibility dimensions.",
         discovery: TIER_CORE["war-room"].requiresDiscovery,
+        stageLabel: "Building your defense",
       },
       {
         name: TIER_CORE["situation-room"].name,
@@ -197,6 +203,7 @@ const caseTypes = [
         desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. Expert credibility research, cooperator background questions, guidelines research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on elite preparation standards, appellate frameworks, and precision methodology — from attorneys who defined modern trial practice.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: true,
+        stageLabel: "Trial confirmed",
       },
     ],
   },
@@ -672,20 +679,11 @@ export default function ServicesPage() {
               {ct.tiers.slice(0, 3).map((tier) => (
                 <div
                   key={tier.name}
-                  className={`rounded-xl border p-6 ${
-                    tier.popular
-                      ? "border-amber-500/50 bg-zinc-900"
-                      : "border-zinc-800 bg-zinc-900/50"
-                  }`}
+                  className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
                 >
-                  {tier.popular && (
+                  {tier.stageLabel && (
                     <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
-                      Best Starting Point
-                    </span>
-                  )}
-                  {(tier as { bestValue?: boolean }).bestValue && (
-                    <span className="mb-2 inline-block rounded-full bg-green-500/10 px-2 py-0.5 text-xs font-semibold text-green-400">
-                      Best Value
+                      {tier.stageLabel}
                     </span>
                   )}
                   <div className="flex items-baseline justify-between">
@@ -707,11 +705,7 @@ export default function ServicesPage() {
                   )}
                   <Link
                     href={`/checkout?tier=${tier.slug}`}
-                    className={`mt-4 block rounded-lg py-2 text-center text-sm font-semibold transition-colors ${
-                      tier.popular
-                        ? "bg-amber-500 text-black hover:bg-amber-400"
-                        : "border border-zinc-700 text-white hover:border-zinc-500"
-                    }`}
+                    className="mt-4 block rounded-lg border border-zinc-700 py-2 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
                   >
                     Get {tier.name}
                   </Link>
@@ -742,8 +736,13 @@ export default function ServicesPage() {
                   key={tier.name}
                   className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
                 >
+                  {tier.stageLabel && (
+                    <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                      {tier.stageLabel}
+                    </span>
+                  )}
                   {(tier as { requiresWarRoom?: boolean }).requiresWarRoom && (
-                    <span className="mb-2 inline-block rounded-full bg-zinc-800 px-2 py-0.5 text-xs font-semibold text-zinc-300">
+                    <span className="ml-2 mb-2 inline-block rounded-full bg-zinc-800 px-2 py-0.5 text-xs font-semibold text-zinc-300">
                       Requires War Room
                     </span>
                   )}
