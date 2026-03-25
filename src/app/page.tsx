@@ -226,66 +226,50 @@ export default function Home() {
           </FadeInUp>
           <FadeInUp delay={0.1}>
             <h1 className="font-display text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
-              Your Case File Has Answers Your Attorney Hasn&apos;t Mentioned.
+              Your Case File Has Answers.
               <br />
-              <span className="text-amber-400">We Find Them. You Ask the Questions.</span>
+              <span className="text-amber-400">We Find Them. You Ask.</span>
             </h1>
           </FadeInUp>
           <FadeInUp delay={0.15}>
-            <p className="mx-auto mt-4 max-w-2xl text-lg font-semibold text-zinc-300">
-              Built by defendants who went through it. We know what it&apos;s like when your attorney won&apos;t call back.
+            <p className="mx-auto mt-4 max-w-2xl text-lg font-semibold text-amber-400">
+              DUI Defense Playbook &mdash; {TIER_CORE["dui-first-offense"].priceDisplay}, instant download
             </p>
           </FadeInUp>
           <FadeInUp delay={0.2}>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300">
-              I was on page 347 of my 500-page discovery file when I found it.
-              68.3 grams the lab report said was there &mdash; but wasn&apos;t in the
-              evidence log. A CI phone attributed to two different people on the
-              same case. A drug type that didn&apos;t match what I was charged with.
-              My attorney &mdash; the one I paid $40,000 &mdash; never mentioned
-              any of it. So I built the tool I needed.
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-zinc-300">
+              Built by defendants who went through it. 40+ elite defense attorneys&apos; methodology.
+              26 questions your DUI attorney hopes you never ask.
             </p>
           </FadeInUp>
           <FadeInUp delay={0.25}>
-            <p className="mx-auto mt-4 max-w-2xl text-sm text-zinc-400">
-              If your attorney won&apos;t call back, the answers are probably in
-              your case file. We&apos;ll find them.
-            </p>
-          </FadeInUp>
-          <FadeInUp delay={0.28}>
-            <ChargeTypeSelector />
-          </FadeInUp>
-          <FadeInUp delay={0.3}>
-            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <div className="mt-8 flex flex-col items-center gap-4">
               <Link
                 href="/checkout?tier=dui-first-offense"
                 className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
                 Get Your DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} &rarr;
               </Link>
-              <Link
-                href="/sample"
-                className="rounded-lg border border-zinc-700 px-8 py-4 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:border-zinc-500 hover:shadow-lg"
-              >
-                See What We Found in a Real Case &rarr;
-              </Link>
+              <p className="text-sm text-zinc-300">
+                Find It or It&apos;s Free &mdash; if we don&apos;t find something your attorney hasn&apos;t raised, full refund.
+              </p>
             </div>
-            <p className="mt-3 text-sm text-zinc-400">
-              Or <Link href="/score" className="text-amber-500 underline underline-offset-2 hover:text-amber-400">check your Defense Milestone Score</Link> &mdash; free
-            </p>
-            <p className="mt-2 text-sm text-zinc-300">
-              Find It or It&apos;s Free &mdash; if we don&apos;t find something your attorney hasn&apos;t raised, full refund. No forms. No arguments.
-            </p>
           </FadeInUp>
-          <FadeInUp delay={0.35}>
-            <p className="mt-3 text-sm text-zinc-400">
+          <FadeInUp delay={0.3}>
+            <p className="mt-6 text-sm text-zinc-400">
               For defendants and the people who love them.
             </p>
             <p className="mt-1 text-sm font-semibold text-amber-500">
               We Research. You Ask.
             </p>
           </FadeInUp>
-          {/* DUI checklist link demoted from hero per Laja: 14 CTAs → 6-8 */}
+        </div>
+      </section>
+
+      {/* CHARGE TYPE SELECTOR — Moved below hero per Covello (one CTA per screen) */}
+      <section className="px-4 py-8">
+        <div className="mx-auto max-w-4xl">
+          <ChargeTypeSelector />
         </div>
       </section>
 
@@ -794,19 +778,16 @@ export default function Home() {
             <p className="mt-3 text-sm font-semibold text-zinc-300">
               Be the defendant your attorney wasn&apos;t expecting.
             </p>
-            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <div className="mt-8 flex flex-col items-center gap-4">
               <Link
                 href="/checkout?tier=dui-first-offense"
                 className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
                 Get Your DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} &rarr;
               </Link>
-              <Link
-                href="/sample"
-                className="rounded-lg border border-zinc-700 px-8 py-4 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:border-zinc-500 hover:shadow-lg"
-              >
-                See What We Found in a Real Case &rarr;
-              </Link>
+              <p className="text-sm text-zinc-300">
+                Find It or It&apos;s Free &mdash; full refund if we don&apos;t deliver.
+              </p>
             </div>
           </FadeInUp>
           <TrustBadges variant="compact" />
