@@ -492,70 +492,123 @@ function SuccessContent() {
                 </p>
               </div>
             )}
+            {/* IB BUYER OTO — X-Ray. Credit-as-hero, Suby sequencing, Covello CCO. */}
             {timeLeft && timeLeft !== "Expired" && tier === "intelligence-brief" && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
+                <p className="mb-1 text-sm text-zinc-400">
+                  Your Intelligence Brief is complete. Here&apos;s what it can&apos;t do on its own.
+                </p>
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
-                  Upgrade offer — <span className="animate-pulse">{timeLeft}</span> remaining
+                  One-time upgrade — <span className="animate-pulse">{timeLeft}</span> remaining
                 </p>
-                <p className="text-sm font-semibold text-amber-400">
-                  Upgrade to The X-Ray
+
+                <p className="text-lg font-bold text-white">
+                  You have already paid $997.
                 </p>
-                <p className="mt-2 text-sm text-zinc-400">
-                  Your {TIER_CORE["intelligence-brief"].priceDisplay} is already credited. Get full discovery analysis — every page, every discrepancy, every red flag mapped.
+                <p className="mt-1 text-sm text-zinc-400">
+                  The X-Ray costs {upgradeCostBetween("intelligence-brief", "x-ray")} more. That&apos;s it.
                 </p>
-                <p className="mt-1 text-xs text-zinc-500">
-                  Adds: discovery document index, comprehensive timeline, discrepancy report, 35+ case-specific questions.
-                </p>
+
                 <Link
                   href="/checkout?tier=x-ray"
-                  className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
+                  className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
                 >
-                  Claim Your Upgrade Credit — {upgradeCostBetween("intelligence-brief", "x-ray")} &rarr;
+                  Get The X-Ray — {upgradeCostBetween("intelligence-brief", "x-ray")} &rarr;
                 </Link>
+
+                <p className="mt-4 text-sm text-zinc-300">
+                  Your Intelligence Brief identifies patterns in how cases like yours are prosecuted. The X-Ray tests whether those patterns hold in your actual case documents — every police report, lab result, and witness statement, page by page.
+                </p>
+                <p className="mt-2 text-sm text-zinc-300">
+                  Discovery arrives on a timeline outside your control. When it does, the questions change from &ldquo;what typically happens&rdquo; to &ldquo;what is actually in here.&rdquo; One option is to have that analysis ready before your next attorney meeting.
+                </p>
+
+                <p className="mt-3 text-xs text-zinc-500">
+                  Adds: full discovery document index, chronological reconstruction, contradiction report, constitutional issues analysis, 35-50 page-referenced questions, Judge Intelligence Profile, Prosecutor Research Profile.
+                </p>
               </div>
             )}
+            {/* X-RAY BUYER OTO — War Room with single CTA + gray secondary. Covello CCO. */}
             {timeLeft && timeLeft !== "Expired" && tier === "x-ray" && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
+                <p className="mb-1 text-sm text-zinc-400">
+                  Your X-Ray analysis is complete and documented.
+                </p>
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
-                  Upgrade offer — <span className="animate-pulse">{timeLeft}</span> remaining
+                  One-time upgrade — <span className="animate-pulse">{timeLeft}</span> remaining
                 </p>
-                <p className="text-sm font-semibold text-amber-400">
-                  Upgrade to The War Room
+
+                <p className="text-lg font-bold text-white">
+                  You have already paid $2,497.
                 </p>
-                <p className="mt-2 text-sm text-zinc-400">
-                  Your {TIER_CORE["x-ray"].priceDisplay} is already credited. Get judge and prosecution dossiers, witness analysis, case law package, and weekly updates through resolution.
+
+                <p className="mt-2 text-sm text-zinc-300">
+                  Discovery findings have a shelf life. Witnesses&apos; memories fade. Motion windows close. The X-Ray maps what&apos;s there — the War Room tracks what changes and builds the case for your attorney while there is still time to act on it.
                 </p>
-                <p className="mt-1 text-xs text-zinc-500">
-                  Adds: witness analysis (up to 8), officer dossiers, motion timing questions for your attorney, weekly intelligence updates.
+
+                <div className="mt-4 rounded-lg border border-amber-500/30 bg-zinc-900/50 p-4">
+                  <p className="text-sm font-semibold text-amber-400">
+                    The War Room — {upgradeCostBetween("x-ray", "war-room")} after credit
+                  </p>
+                  <p className="mt-1 text-sm text-zinc-400">
+                    25-28 days of active intelligence work. Witness dossiers, motion landscape, case law package, weekly updates through resolution.
+                  </p>
+                  <Link
+                    href="/checkout?tier=war-room"
+                    className="mt-3 inline-block rounded-lg bg-amber-500 px-6 py-2 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+                  >
+                    Get The War Room — {upgradeCostBetween("x-ray", "war-room")} &rarr;
+                  </Link>
+                </div>
+
+                <p className="mt-3 text-sm text-zinc-500">
+                  War Room + Priority Delivery is also available at $3,497 after credit for defendants with an upcoming court date.{" "}
+                  <Link href="/checkout?tier=war-room&priority=1" className="text-zinc-400 underline decoration-zinc-600 hover:text-zinc-300">
+                    Learn more
+                  </Link>
                 </p>
-                <Link
-                  href="/checkout?tier=war-room"
-                  className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
-                >
-                  Claim Your Upgrade Credit — {upgradeCostBetween("x-ray", "war-room")} &rarr;
-                </Link>
+
+                <p className="mt-3 text-xs text-zinc-500">
+                  War Room adds: witness analysis (up to 8), officer dossiers, motion timing analysis, wave strategy overview, case law reference package, evidence chain audit, weekly intelligence updates, attorney delivery package.
+                </p>
               </div>
             )}
-            {timeLeft && timeLeft !== "Expired" && tier === "war-room" && (
-              <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
-                <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
-                  Upgrade offer — <span className="animate-pulse">{timeLeft}</span> remaining
-                </p>
+            {/* WAR ROOM BUYER — Value reinforcement, NO upgrade CTA. */}
+            {tier === "war-room" && (
+              <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
                 <p className="text-sm font-semibold text-amber-400">
-                  Upgrade to The Situation Room
+                  Your War Room engagement begins now.
                 </p>
-                <p className="mt-2 text-sm text-zinc-400">
-                  Your {TIER_CORE["war-room"].priceDisplay} is already credited. Get Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line.
+                <p className="mt-3 text-sm text-zinc-300">
+                  Here is what happens next, in order:
                 </p>
-                <p className="mt-1 text-xs text-zinc-500">
-                  Adds: Trial Intelligence Operations, witness impeachment research packages, Priority Response Line (2hr trial prep, 4hr trial), direct access channel.
+                <ol className="mt-3 space-y-2 text-sm text-zinc-400 text-left list-none">
+                  <li className="flex gap-2">
+                    <span className="text-amber-500 font-semibold shrink-0">1.</span>
+                    <span>Upload your discovery documents when you receive them. Instructions were sent to your email.</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-amber-500 font-semibold shrink-0">2.</span>
+                    <span>Your included Case Decoder and Intelligence Brief reports are delivered first, within 48-72 hours of intake submission.</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-amber-500 font-semibold shrink-0">3.</span>
+                    <span>After discovery upload, the full War Room operation begins — witness dossiers, motion landscape, case law package, and your attorney delivery package.</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-amber-500 font-semibold shrink-0">4.</span>
+                    <span>Weekly intelligence updates begin after initial delivery and continue through resolution.</span>
+                  </li>
+                </ol>
+                <p className="mt-4 text-sm text-zinc-400">
+                  Questions about your engagement? Email us — responses within 4 hours.
                 </p>
-                <Link
-                  href="/checkout?tier=situation-room"
-                  className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="mt-2 inline-block text-sm text-amber-400 underline decoration-amber-400/50"
                 >
-                  Claim Your Upgrade Credit — {upgradeCostBetween("war-room", "situation-room")} &rarr;
-                </Link>
+                  {CONTACT_EMAIL}
+                </a>
               </div>
             )}
           </>
