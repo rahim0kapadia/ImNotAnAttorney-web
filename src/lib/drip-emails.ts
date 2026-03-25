@@ -850,6 +850,43 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
 
+  // --- CD Discovery Check-In (30 days after delivery) ---
+  // Educational email — primes defendant for Day 45 conversion email.
+  // No urgency line. Soft CTA only.
+  {
+    key: "post_case_decoder_discovery_checkin",
+    delayDays: 30,
+    tier: "case-decoder",
+    relativeToDelivery: true,
+    subject: "Most defendants receive their case documents around now",
+    html: `
+      <h1 style="color: #F59E0B;">Most Defendants Receive Their Case Documents Around Now</h1>
+      <p>If you're thirty days past arraignment and your case feels like it has gone quiet — that's normal. Criminal cases move in bursts: the arrest, the arraignment, then a long period where hearings are scheduled, discovery is compiled, and attorneys file initial motions. The silence feels like nothing is happening. Usually, the opposite is true.</p>
+      <p>Somewhere in the next 30-60 days, your attorney should receive your discovery package — the police reports, lab results, witness statements, body camera logs, and phone records that make up the prosecution's case file. Some attorneys walk clients through every document. Most summarize it. A few don't mention it at all. When yours arrives, one question defendants often ask at this stage: <em>"Can I see a copy of the discovery?"</em> Defendants generally have a right to review the evidence compiled against them.</p>
+      <p>Your Case Decoder gave you questions to ask before discovery. Those questions get sharper once you can see the actual documents. When your case file arrives, there's a way to have every page read systematically — contradictions flagged, chain-of-custody gaps documented, rights violations identified. That analysis is available when you're ready.</p>
+      ${cta("Learn what discovery analysis finds", "/services#x-ray")}
+    `,
+  },
+
+  // --- CD Discovery-Arrival Conversion (45 days after delivery, CD -> X-Ray) ---
+  // Peak conversion email. Credit-as-hero. Real case example.
+  // NO budget note — Day 45 is peak conversion, no escape hatch (Covello audit).
+  {
+    key: "post_case_decoder_discovery_arrival",
+    delayDays: 45,
+    tier: "case-decoder",
+    relativeToDelivery: true,
+    subject: "When your case documents land, this is the hour that matters",
+    html: `
+      <h1 style="color: #F59E0B;">When Your Case Documents Land, This Is the Hour That Matters</h1>
+      <p>If your discovery package just arrived — or your attorney told you it is being compiled — that moment changes the texture of your case. For the first time, you can see what the prosecution actually has. That should feel like relief. For most defendants, it feels like the opposite: hundreds of pages of reports written in law enforcement shorthand, lab results with methodology codes nobody explains, witness statements that seem straightforward until you realize two of them describe the same event in ways that cannot both be true.</p>
+      <p>In a real trafficking case we analyzed: the police inventory showed 93.9 grams seized. The lab report showed 25.59 grams tested — a 68.3-gram discrepancy that the defendant's attorney had not raised. The charging document said "amphetamine." The lab confirmed MDMA. 21 fingerprints collected at the scene. Zero matched the defendant. None of these were flagged before the case was researched page by page. Discovery errors like these do not announce themselves. They are visible only if someone reads the documents with a specific methodology looking for them.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The X-Ray costs ${upgradeCostBetween("case-decoder", "x-ray")}.</strong> That covers every page of your discovery — contradictions flagged with page citations, chain-of-custody gaps documented, constitutional issues identified, 35-50 questions for your attorney based on what the documents actually show. Not patterns. Not jurisdiction estimates. Your specific documents.</p>
+      ${cta(`Get the X-Ray — ${upgradeCostBetween("case-decoder", "x-ray")} after credit`, "/checkout?tier=x-ray")}
+      <p style="margin-top: 16px; padding: 12px 16px; background: #1C1917; border-left: 3px solid #F59E0B; color: #F59E0B; font-weight: bold;">Motion deadlines and evidence preservation windows are calculated from arrest and arraignment dates — not from when you read your discovery. Some of those windows may already be closing. Analysis completed now preserves options that will not exist in 30 days.</p>
+    `,
+  },
+
   // --- Included Case Decoder (delivered as part of IB+ package) ---
   // When a customer buys IB or higher, a CD is auto-generated and delivered
   // within 48 hours. This drip is for that included delivery — no upsell
@@ -964,6 +1001,25 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p style="color: #71717A;">Every defendant deserves to know what's in their case.</p>
     `,
   },
+
+  // --- IB Discovery-Arrival (30 days after delivery, IB -> X-Ray) ---
+  // Bridges IB patterns to discovery evidence. Credit-as-hero.
+  {
+    key: "post_intelligence_brief_discovery_arrival",
+    delayDays: 30,
+    tier: "intelligence-brief",
+    relativeToDelivery: true,
+    subject: "Your Intelligence Brief identified patterns. Your discovery has the evidence.",
+    html: `
+      <h1 style="color: #F59E0B;">Your Intelligence Brief Identified Patterns. Your Discovery Has the Evidence.</h1>
+      <p>Your Intelligence Brief identified areas where jurisdiction patterns suggest your case may deviate from the norm. That analysis was built from how your court, your judge, and your prosecution team typically operate. It gave you questions your attorney was not expecting. But patterns are predictions — and predictions are only as useful as the evidence they are tested against.</p>
+      <p>Your case documents — the police reports, lab results, and witness statements the prosecution compiled — are either in your attorney's hands or arriving soon. Those documents are where prediction meets reality. The X-Ray reads every page and tests whether the patterns your Intelligence Brief identified hold up against what actually happened in your case. Contradictions between what should have happened and what the documents show are where the strongest questions live.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["intelligence-brief"].priceDisplay}. The X-Ray costs ${upgradeCostBetween("intelligence-brief", "x-ray")}.</strong> Every page of your discovery analyzed — contradictions, missing evidence, rights violations — plus the Judge Intelligence Profile and Prosecutor Research Profile. Your Intelligence Brief becomes the foundation. The X-Ray builds the case-specific layer on top.</p>
+      ${cta(`Get the X-Ray — ${upgradeCostBetween("intelligence-brief", "x-ray")} after credit`, "/checkout?tier=x-ray")}
+      <p style="margin-top: 16px; color: #A1A1AA;">Motion windows are calculated from arrest and arraignment dates. If your discovery has arrived, analysis completed now preserves options that may not exist at your next hearing.</p>
+    `,
+  },
+
   {
     key: "post_intelligence_brief_upsell",
     delayDays: 10,
@@ -1288,6 +1344,23 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p style="font-size: 18px; color: white;"><strong>Which part of your War Room package has been most useful so far?</strong></p>
       <p>Was it the witness dossiers? The prosecution analysis? The motion landscape? The case law references?</p>
       <p>Just reply to this email. One sentence is fine. Your experience at this level helps us build better intelligence for every defendant who comes after you.</p>
+    `,
+  },
+
+  // MANUAL TRIGGER ONLY — delayDays:9999 prevents cron auto-send.
+  // Send via operator action when trial date is confirmed. Do NOT reduce delayDays.
+  {
+    key: "post_war_room_trial_confirmed",
+    delayDays: 9999,
+    tier: "war-room",
+    subject: "Trial is set. The intelligence you need is different now.",
+    html: `
+      <h1 style="color: #F59E0B;">Trial Is Set. The Intelligence You Need Is Different Now.</h1>
+      <p>A trial date is a different kind of news than every other milestone in a criminal case. It is the point where preparation stops being theoretical. The witnesses your War Room analyzed become people who will testify under oath. The contradictions in your discovery become arguments your attorney has to make in a room where the outcome is binding. The weight of that is real.</p>
+      <p>Your War Room built the intelligence foundation: witness dossiers, judge patterns, prosecution profiles, motion landscape, weekly updates. What it does not build is trial weaponry. Cross-examination scripts that document the contradictions in the witnesses' own statements. A voir dire strategy for selecting jurors who respond to reasonable doubt as a concept. An opening framework. JOA motion framework covering the relevant standards for your charge type. Daily trial briefings.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["war-room"].priceDisplay}. The Situation Room costs ${upgradeCostBetween("war-room", "situation-room")}.</strong> Full trial preparation package plus priority response line (2-hour during prep, 4-hour during trial) and daily Trial Intelligence Operations from opening through verdict.</p>
+      ${cta(`Get the Situation Room — ${upgradeCostBetween("war-room", "situation-room")} after credit`, "/checkout?tier=situation-room")}
+      <p style="margin-top: 16px; color: #A1A1AA;"><strong style="color: white;">Trial preparation has a lead time.</strong> Cross-examination scripts require War Room dossiers as foundation — cannot be rushed without losing precision.</p>
     `,
   },
 
