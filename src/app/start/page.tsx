@@ -20,22 +20,100 @@
  * After selection: single card, single price, single CTA, guarantee, credit line.
  * Below fold: 3 trust items + $97 fallback + /services link.
  *
+ * Crisis mode (CRO13):
+ *   Activated via ?crisis=true, ?mode=crisis, or automatic time-of-day detection
+ *   (10 PM - 6 AM local time). Covello Mental Noise Model at full strength:
+ *   max 3 messages, one CTA, minimal cognitive load. Dismissible to reveal
+ *   the full page underneath.
+ *
  * Expert basis: Hormozi + Dunford (two-page architecture), Covello (Rule of 3),
  * Brunson (routing simplification), Suby (crisis conversion).
  */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
 import { TestimonialSection } from "@/components/TestimonialSection";
-import type { Metadata } from "next";
 
-/** Track which path the user selected, or null for initial state. */
 type DocumentState = null | "has-documents" | "no-documents";
 
-export default function StartPage() {
+function CrisisHero({ onDismiss }: { onDismiss: () => void }) {
+  return (
+    <main className="min-h-screen bg-zinc-950">
+      <section className="flex min-h-[100dvh] flex-col items-center justify-center px-6 py-16">
+        <div className="mx-auto w-full max-w-md text-center">
+          <h1 className="font-display text-4xl font-bold leading-snug tracking-tight text-white sm:text-5xl">
+            You were just arrested.
+            <br />
+            <span className="text-amber-400">
+              Here&apos;s what to do right now.
+            </span>
+          </h1>
+
+          <p className="mx-auto mt-8 max-w-sm text-lg leading-relaxed text-zinc-300">
+            Free. Anonymous. Takes 60 seconds.
+          </p>
+
+          <Link
+            href="/score"
+            className="mt-10 block w-full rounded-xl bg-amber-500 py-5 text-center text-lg font-bold text-black transition-colors hover:bg-amber-400"
+          >
+            Check Your Defense Position &rarr;
+          </Link>
+
+          <div className="mt-14 border-t border-zinc-800 pt-8">
+            <Link
+              href="/checkout?tier=dui-first-offense"
+              className="text-sm text-zinc-400 underline underline-offset-2 hover:text-amber-400"
+            >
+              {TIER_CORE["dui-first-offense"].priceDisplay} DUI Defense Playbook
+              &mdash; instant download
+            </Link>
+          </div>
+
+          <button
+            onClick={onDismiss}
+            className="mt-10 text-xs text-zinc-600 underline underline-offset-2 hover:text-zinc-400"
+          >
+            See all options
+          </button>
+        </div>
+      </section>
+
+      <div className="px-4 pb-8">
+        <p className="mx-auto max-w-xl text-center text-xs text-zinc-600">
+          ImNotAnAttorney provides legal information and research &mdash; not
+          legal advice. No attorney-client relationship is created.
+        </p>
+      </div>
+    </main>
+  );
+}
+
+function StartContent() {
+  const searchParams = useSearchParams();
   const [docState, setDocState] = useState<DocumentState>(null);
+  const [crisisDismissed, setCrisisDismissed] = useState(false);
+  const [isNightTime, setIsNightTime] = useState(false);
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    if (hour >= 22 || hour <= 6) {
+      setIsNightTime(true);
+    }
+  }, []);
+
+  const paramCrisis =
+    searchParams.get("crisis") === "true" ||
+    searchParams.get("mode") === "crisis";
+
+  const showCrisis = (paramCrisis || isNightTime) && !crisisDismissed;
+
+  if (showCrisis) {
+    return <CrisisHero onDismiss={() => setCrisisDismissed(true)} />;
+  }
 
   return (
     <main className="min-h-screen bg-zinc-950">
@@ -269,12 +347,26 @@ export default function StartPage() {
         </div>
       </section>
 
-      {/* UPL disclaimer */}
       <div className="px-4 pb-8">
         <p className="mx-auto max-w-xl text-center text-xs text-zinc-600">
-          ImNotAnAttorney provides legal information and research &mdash; not legal advice. No attorney-client relationship is created.
+          ImNotAnAttorney provides legal information and research &mdash; not
+          legal advice. No attorney-client relationship is created.
         </p>
       </div>
     </main>
+  );
+}
+
+export default function StartPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center bg-zinc-950">
+          <p className="text-zinc-500">Loading&hellip;</p>
+        </main>
+      }
+    >
+      <StartContent />
+    </Suspense>
   );
 }

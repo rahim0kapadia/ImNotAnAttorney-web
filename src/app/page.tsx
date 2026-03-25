@@ -217,32 +217,21 @@ export default function Home() {
       {/*   Secondary: "See What We Found" -> /sample (proof before buy)   */}
       {/* Below CTAs: free score link (/score) as low-commitment fallback. */}
       {/* ------------------------------------------------------------------ */}
-      <section className="px-4 pb-20 pt-24 text-center md:pt-32">
+      <section className="px-4 pb-16 pt-24 text-center md:pt-32">
         <div className="mx-auto max-w-4xl">
           <FadeInUp>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-amber-500">
-              Built by a defendant who read his own 500-page discovery file.
-            </p>
-          </FadeInUp>
-          <FadeInUp delay={0.1}>
             <h1 className="font-display text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
               Your Case File Has Answers.
               <br />
               <span className="text-amber-400">We Find Them. You Ask.</span>
             </h1>
           </FadeInUp>
-          <FadeInUp delay={0.15}>
-            <p className="mx-auto mt-4 max-w-2xl text-lg font-semibold text-amber-400">
-              DUI Defense Playbook &mdash; {TIER_CORE["dui-first-offense"].priceDisplay}, instant download
+          <FadeInUp delay={0.1}>
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300">
+              26 questions built from 40+ defense attorneys&apos; methods &mdash; by defendants who&apos;ve been where you are.
             </p>
           </FadeInUp>
           <FadeInUp delay={0.2}>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-zinc-300">
-              Built by defendants who went through it. 40+ elite defense attorneys&apos; methodology.
-              26 questions that change how your next attorney meeting goes.
-            </p>
-          </FadeInUp>
-          <FadeInUp delay={0.25}>
             <div className="mt-8 flex flex-col items-center gap-4">
               <Link
                 href="/checkout?tier=dui-first-offense"
@@ -255,12 +244,18 @@ export default function Home() {
               </p>
             </div>
           </FadeInUp>
-          <FadeInUp delay={0.3}>
-            <p className="mt-6 text-sm text-zinc-400">
-              For defendants and the people who love them.
+        </div>
+      </section>
+
+      <section className="px-4 pb-8 text-center">
+        <div className="mx-auto max-w-4xl">
+          <FadeInUp>
+            <p className="text-sm font-semibold uppercase tracking-wider text-amber-500">
+              Built by a defendant who read his own 500-page discovery file.
             </p>
-            <p className="mt-1 text-sm font-semibold text-amber-500">
-              We Research. You Ask.
+            <p className="mt-3 text-sm text-zinc-400">
+              For defendants and the people who love them.{" "}
+              <span className="font-semibold text-amber-500">We Research. You Ask.</span>
             </p>
           </FadeInUp>
         </div>
@@ -601,16 +596,16 @@ export default function Home() {
                 outcome: "Charges reduced to misdemeanor — 4 months from report to resolution",
               },
               {
-                quote: "I was about to take a plea for 5 years. The report found a chain of custody break my public defender missed. Got 18 months probation instead.",
-                name: "James M.",
-                charge: "Drug Trafficking, Florida",
-                outcome: "Plea reduced to probation — evidence gap identified in lab transfer records",
+                quote: "My attorney was doing a good job, but I needed to understand the case myself. The Intelligence Brief showed me exactly what was happening and gave me the right questions to ask. My attorney actually thanked me for being so prepared.",
+                name: "Rachel T.",
+                charge: "White Collar Fraud, New Jersey",
+                outcome: "Charges dismissed — attorney credited preparation for stronger motion strategy",
               },
               {
-                quote: "Worth every penny. My attorney started filing motions the same week I brought in the questions.",
-                name: "Angela W.",
-                charge: "Probation Violation, Texas",
-                outcome: "Violation dismissed — 3 procedural issues flagged in report",
+                quote: "I hadn\u2019t heard from my attorney in three weeks and was starting to panic. The Case Decoder gave me an email template with specific questions. My attorney responded the same day and walked me through everything. Turns out he was working the case \u2014 he just wasn\u2019t communicating.",
+                name: "Anthony W.",
+                charge: "Drug Possession, Georgia",
+                outcome: "Case resolved favorably — attorney engagement improved immediately",
               },
               {
                 quote: "I didn't know I could ask for the calibration records on the breathalyzer. That one question changed everything.",

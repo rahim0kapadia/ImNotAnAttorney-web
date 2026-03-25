@@ -352,19 +352,12 @@ export default function ServicesPage() {
             Walk into your next hearing{" "}
             <span className="text-amber-400">with the right questions</span>
           </h1>
-          <p className="mx-auto mt-3 max-w-xl text-lg text-zinc-300">
-            The research layer your defense has been missing.
-          </p>
-          <p className="mx-auto mt-4 max-w-2xl text-zinc-400">
-            For defendants who read their own discovery. Five tiers of defense
-            intelligence. Start at {TIER_CORE["case-decoder"].priceDisplay} — upgrade anytime with full credit.
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-zinc-300">
+            Five tiers of defense intelligence, from {TIER_CORE["case-decoder"].priceDisplay} to {TIER_CORE["situation-room"].priceDisplay}. Upgrade anytime with full credit.
           </p>
         </div>
         </FadeInUp>
 
-        {/* PRICING COMPARISON — Value framing: attorney retainer vs our cost. */}
-        {/* Shows 3 price tiers ($10K, $30K, $100K attorney) with our price  */}
-        {/* as a percentage. Makes even the $9,997 tier feel like 1-10%.     */}
         <FadeInUp>
         <div className="mt-16 rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 text-center">
           <h2 className="font-display text-lg font-bold text-white">
