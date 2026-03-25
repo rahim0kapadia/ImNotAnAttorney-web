@@ -792,6 +792,19 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     `,
   },
   {
+    key: "post_case_decoder_discovery_question",
+    delayDays: 4,
+    tier: "case-decoder",
+    relativeToDelivery: true,
+    subject: "Has anyone actually read your discovery?",
+    html: `
+      <h1 style="color: #F59E0B;">Has Anyone Actually Read Your Discovery?</h1>
+      <p>Your Case Decoder gave you 15 questions. But the answers depend on what is actually in your case file.</p>
+      <p>The X-Ray reads every page of your discovery — contradictions, missing evidence, rights violations. <strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The X-Ray costs ${upgradeCostBetween("case-decoder", "x-ray")}.</strong></p>
+      ${cta("Get the X-Ray", "/checkout?tier=x-ray")}
+    `,
+  },
+  {
     key: "post_case_decoder_story_harvest",
     delayDays: 5,
     tier: "case-decoder",
