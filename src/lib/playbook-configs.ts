@@ -102,7 +102,7 @@ export const DUI_FIRST_OFFENSE: PlaybookConfig = {
     eyebrow: "DUI Defense Playbook",
     headline: "The Breathalyzer Reading Is Not the Case.",
     subheadline:
-      "You made one mistake. Your attorney should be fighting like your life depends on it \u2014 because it does. 26 questions, case stage roadmap, red flag checklist, and scorecard.",
+      "One mistake doesn\u2019t define your future \u2014 but only if your defense covers every angle. 26 questions, case stage roadmap, red flag checklist, and scorecard.",
   },
   agitate: {
     headline: "You shouldn\u2019t have to figure this out from Reddit threads.",
@@ -260,7 +260,7 @@ export const DRUG_POSSESSION: PlaybookConfig = {
     eyebrow: "Drug Possession Defense Playbook",
     headline: "The Lab Report Is Not the Case.",
     subheadline:
-      "The drugs weren\u2019t yours? Your lawyer should be proving it, not just pushing a plea. 26 questions, case stage roadmap, red flag checklist, and scorecard.",
+      "The drugs weren\u2019t yours? 26 questions that make sure nothing gets missed in your defense. Case stage roadmap, red flag checklist, and scorecard.",
   },
   agitate: {
     headline:
@@ -425,7 +425,7 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
     eyebrow: "Probation Violation Defense Playbook",
     headline: "Missing a Meeting Is Not the Same as Committing a Crime.",
     subheadline:
-      "One missed meeting and you\u2019re back in the system. Your attorney should be fighting the violation \u2014 not just accepting it. 26 questions, revocation hearing roadmap, red flag checklist, and scorecard.",
+      "One missed meeting and you\u2019re back in the system. Know exactly what defenses apply to your situation. 26 questions, revocation hearing roadmap, red flag checklist, and scorecard.",
   },
   agitate: {
     headline:

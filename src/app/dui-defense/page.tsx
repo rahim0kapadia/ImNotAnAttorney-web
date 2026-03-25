@@ -89,11 +89,16 @@ export default function DuiDefenseHubPage() {
           DUI Defense Resources by State
         </h1>
         <p className="mt-4 text-lg text-zinc-400">
-          DUI laws vary significantly from state to state &mdash; BAC limits,
-          penalty ranges, DMV hearing deadlines, implied consent consequences,
-          and ignition interlock requirements are all different depending on
-          where you were charged. Select your state to see the specific laws,
-          penalties, and questions that apply to your case.
+          You were just arrested for DUI. The laws that affect your case
+          &mdash; penalties, deadlines, defense options &mdash; depend entirely
+          on where you were charged. Select your state below to see the
+          specific information that applies to your situation.
+        </p>
+        <p className="mt-3 text-sm text-zinc-500">
+          Over 1.5 million DUI arrests happen every year. You are not the
+          first person to go through this. Defense questions built on Lawrence
+          Taylor&rsquo;s systematic DUI defense framework and NHTSA field
+          sobriety test standards.
         </p>
       </FadeInUp>
 
@@ -119,6 +124,10 @@ export default function DuiDefenseHubPage() {
           <h2 className="font-display text-2xl font-bold text-white">
             Additional DUI Resources
           </h2>
+          <p className="mt-2 text-sm text-zinc-500">
+            Defense questions built on Lawrence Taylor&rsquo;s systematic DUI
+            defense framework and NHTSA field sobriety test standards.
+          </p>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <Link
               href="/score?charge=dui"
@@ -140,9 +149,10 @@ export default function DuiDefenseHubPage() {
                 DUI Defense Playbook &mdash; {TIER_CORE["dui-first-offense"].priceDisplay}
               </p>
               <p className="mt-2 text-sm text-zinc-400">
-                26 questions your DUI attorney hopes you never ask, a
-                breathalyzer calibration checklist, case stage roadmap, 12 red
-                flags, and a Case Progress Scorecard. Instant PDF download.
+                26 questions that change how your next DUI attorney meeting
+                goes, a breathalyzer calibration checklist, case stage roadmap,
+                12 red flags, and a Case Progress Scorecard. Instant PDF
+                download.
               </p>
             </Link>
           </div>
@@ -155,8 +165,8 @@ export default function DuiDefenseHubPage() {
           <p className="text-xs text-zinc-500">
             <strong>Important:</strong> This page provides general legal
             information about DUI laws across the United States. Laws change
-            frequently. This is not legal advice. Consult a licensed attorney in
-            your jurisdiction for guidance specific to your case.
+            frequently. This is not legal advice. Your attorney remains the
+            final authority on strategy decisions specific to your situation.
           </p>
         </div>
       </section>

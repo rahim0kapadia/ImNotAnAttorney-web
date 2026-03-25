@@ -849,6 +849,19 @@ export default function ServicesPage() {
         </section>
         </FadeInUp>
 
+        <div className="mt-10 text-center">
+          <p className="text-sm text-zinc-400">
+            Questions about which tier is right?{" "}
+            <a
+              href="mailto:help@imnotanattorney.com"
+              className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:decoration-amber-400"
+            >
+              help@imnotanattorney.com
+            </a>
+            {" "}&mdash; we respond within 4 hours.
+          </p>
+        </div>
+
         {/* FAQ — Service-specific questions rendered via FAQAccordion.        */}
         <FadeInUp>
         <section className="mt-20">

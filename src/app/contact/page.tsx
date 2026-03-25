@@ -55,8 +55,10 @@ export default function ContactPage() {
           Contact Us
         </h1>
         <p className="mt-3 text-zinc-400">
+          We know what it&apos;s like to have questions at 3 AM and nobody to ask. We&apos;re here.
+        </p>
+        <p className="mt-2 text-zinc-400">
           Have questions about our services or need help choosing the right tier?
-          We&apos;re here to help.
         </p>
 
         <div className="mt-10 space-y-8">
@@ -70,7 +72,21 @@ export default function ContactPage() {
               {CONTACT_EMAIL}
             </a>
             <p className="mt-2 text-sm text-zinc-400">
-              We respond within 24 hours on business days.
+              We respond within 4 hours.
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+            <h2 className="text-lg font-semibold text-white">Can&apos;t Wait?</h2>
+            <p className="mt-2 text-sm text-zinc-400">
+              Take the free{" "}
+              <Link
+                href="/score"
+                className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:decoration-amber-400"
+              >
+                Defense Milestone Score
+              </Link>
+              {" "}for immediate insight into your case &mdash; no sign-up required, results in 2 minutes.
             </p>
           </div>
 

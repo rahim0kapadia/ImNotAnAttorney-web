@@ -2,7 +2,7 @@
  * privacy/page.tsx -- Privacy Policy page.
  *
  * Comprehensive Privacy Policy covering: information collected, how info is
- * used, AI processing disclosure (Anthropic), discovery document handling,
+ * used, data processing disclosure (Anthropic), discovery document handling,
  * third-party services, data retention (specific periods), user rights and
  * CCPA compliance, cookies, security, children's privacy, data breach
  * notification, international data transfers, changes to policy, and contact.
@@ -110,8 +110,8 @@ export default function PrivacyPage() {
                 generation, question generation)
               </li>
               <li>
-                To process your case information through AI systems for the
-                purpose of generating your report (see Section 3)
+                To process your case information through our analysis systems
+                for the purpose of generating your report (see Section 3)
               </li>
               <li>
                 To communicate with you about your order, deliverables, and
@@ -144,7 +144,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              3. AI Processing Disclosure
+              3. Data Processing &amp; Analysis Technology
             </h2>
             <p>
               Our analysis services use automated processing technology to process
@@ -153,15 +153,17 @@ export default function PrivacyPage() {
             </p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
-                <strong className="text-zinc-300">AI provider:</strong> We use
-                Claude, a large language model developed by{" "}
+                <strong className="text-zinc-300">
+                  Analysis technology provider:
+                </strong>{" "}
+                We use automated analysis technology developed by{" "}
                 <a
                   href="https://www.anthropic.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-amber-400 underline"
                 >
-                  Anthropic
+                  Anthropic, Inc.
                 </a>
                 , headquartered in San Francisco, California
               </li>
@@ -173,13 +175,13 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <strong className="text-zinc-300">
-                  No training on your data:
+                  Your data is not used for training:
                 </strong>{" "}
                 Per Anthropic&apos;s commercial API terms, data sent through
-                their API is not used to train their AI models
+                their API is not used to train or improve their systems
               </li>
               <li>
-                <strong className="text-zinc-300">Retention by AI provider:</strong>{" "}
+                <strong className="text-zinc-300">Retention by technology provider:</strong>{" "}
                 Per Anthropic&apos;s current commercial API terms, they may
                 temporarily retain API inputs and outputs for up to 30 days for
                 abuse monitoring and safety purposes, after which they are
@@ -201,7 +203,7 @@ export default function PrivacyPage() {
                 Your case details (charges, jurisdiction, situation) are
                 combined with legal research frameworks to generate analysis
                 specific to your matter. This means your personal case
-                information directly shapes the AI output you receive
+                information directly shapes the analysis output you receive
               </li>
               <li>
                 <strong className="text-zinc-300">Our quality review:</strong>{" "}
@@ -237,7 +239,7 @@ export default function PrivacyPage() {
                 <strong className="text-zinc-300">Purpose limitation:</strong>{" "}
                 Documents are used solely for the purpose of generating your
                 purchased analysis. They are never shared with third parties
-                (other than AI processing as described in Section 3), sold,
+                (other than automated processing as described in Section 3), sold,
                 licensed, or used for any other purpose
               </li>
               <li>
@@ -265,7 +267,7 @@ export default function PrivacyPage() {
               purchasing our services and submitting case information or
               discovery documents, you consent to the processing of this
               sensitive personal information for the purpose of generating
-              your report, including processing through AI systems as
+              your report, including processing through our analysis systems as
               described in Section 3.
             </p>
           </section>
@@ -298,8 +300,9 @@ export default function PrivacyPage() {
                 uploaded documents. SOC 2 Type II compliant infrastructure
               </li>
               <li>
-                <strong className="text-zinc-300">Anthropic</strong> — AI
-                processing for report generation (see Section 3 for details)
+                <strong className="text-zinc-300">Anthropic</strong> — Automated
+                analysis processing for report generation (see Section 3 for
+                details)
               </li>
               <li>
                 <strong className="text-zinc-300">Resend</strong> —
@@ -499,7 +502,7 @@ export default function PrivacyPage() {
                 Categories disclosed to third parties:
               </strong>{" "}
               Identifiers (to Stripe for payment, to Resend for email delivery);
-              case information (to Anthropic for AI processing). No categories
+              case information (to Anthropic for automated analysis). No categories
               are sold.
             </p>
             <p className="mt-2">
@@ -662,8 +665,8 @@ export default function PrivacyPage() {
             </h2>
             <p>
               All data processing and storage occurs in the United States. Our
-              servers (Supabase, Vercel) are located in US data centers. AI
-              processing by Anthropic occurs in the United States. If you access
+              servers (Supabase, Vercel) are located in US data centers.
+              Analysis processing by Anthropic also occurs in the United States. If you access
               our services from outside the United States, you consent to the
               transfer of your data to the United States, which may have
               different data protection laws than your country of residence.

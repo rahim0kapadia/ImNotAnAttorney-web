@@ -66,11 +66,37 @@ export default async function BlogPage({
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Criminal Defense Blog — Questions Your Attorney Should Answer",
+            description:
+              "In-depth legal research and defense strategies for criminal defendants. DUI, drug cases, white collar — the questions your attorney should be answering but isn't.",
+            url: `${SITE_URL}/blog`,
+            isPartOf: { "@id": `${SITE_URL}/#website` },
+            author: {
+              "@type": "Organization",
+              name: "ImNotAnAttorney",
+              url: "https://imnotanattorney.com",
+              sameAs: [
+                "https://www.reddit.com/r/imnotanattorney/",
+                "https://twitter.com/imnotanattorney",
+              ],
+            },
+          }),
+        }}
+      />
       <div className="mx-auto max-w-4xl">
         <FadeInUp>
           <h1 className="font-display text-3xl font-bold text-white md:text-4xl">Criminal Defense Blog — Questions Your Attorney Should Answer</h1>
           <p className="mt-3 text-zinc-400">
             Legal information that actually helps. No jargon, no fluff.
+          </p>
+          <p className="mt-4 text-sm leading-relaxed text-zinc-400">
+            97% of criminal cases end in plea deals (Bureau of Justice Statistics). In most of those cases, the defendant never asked the questions that could have changed the outcome. We help you ask them. Every article below is built on documented defense methodologies from attorneys like Lawrence Taylor (DUI defense), Barry Scheck (forensic evidence), and Gerry Spence (jury persuasion) &mdash; applied to the situations defendants actually face.
           </p>
         </FadeInUp>
 

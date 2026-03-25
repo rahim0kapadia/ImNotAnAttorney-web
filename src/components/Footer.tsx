@@ -27,6 +27,18 @@ export function Footer() {
     <footer className="border-t border-zinc-800 bg-zinc-950">
       <FadeInUp>
       <div className="mx-auto max-w-6xl px-4 py-12">
+        <div className="mb-8 rounded-lg border border-amber-500/20 bg-amber-500/5 px-6 py-4 text-center">
+          <p className="text-sm text-zinc-300">
+            Questions?{" "}
+            <a
+              href="mailto:help@imnotanattorney.com"
+              className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:decoration-amber-400"
+            >
+              help@imnotanattorney.com
+            </a>
+            {" "}&mdash; We respond within 4 hours
+          </p>
+        </div>
         <div className="grid gap-8 md:grid-cols-5">
           {/* Brand */}
           <div className="md:col-span-1">

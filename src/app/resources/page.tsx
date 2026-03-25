@@ -52,13 +52,13 @@ export const metadata: Metadata = {
 const resources = [
   {
     title: "The Discovery Checklist: 7 Evidence Problems Real Cases Actually Hide",
-    desc: "Based on a real trafficking case we reviewed. 7 problems the attorney missed, the questions that expose each one, and a printable accountability checklist.",
+    desc: "Based on defense frameworks from attorneys who\u2019ve handled thousands of cases. 7 evidence problems real cases hide, the questions that expose each one, and a printable accountability checklist.",
     type: "Free Guide",
     gated: true,
   },
   {
     title: "10 Questions Your Attorney Hopes You Never Ask",
-    desc: "The original questions that separate informed defendants from easy clients. These force accountability.",
+    desc: "The original questions that separate informed defendants from easy clients. Good attorneys welcome these questions \u2014 they show you\u2019re paying attention to your own case.",
     type: "Free Guide",
     gated: true,
   },
@@ -259,8 +259,12 @@ export default function ResourcesPage() {
                   {TIER_CORE["dui-first-offense"].priceDisplay} &middot; Instant Download
                 </span>
                 <h3 className="mt-3 text-lg font-bold text-white">
-                  26 Questions Your Attorney Hopes You Never Ask
+                  26 Questions That Change How Your Next Attorney Meeting Goes
                 </h3>
+                <p className="mt-1 text-xs text-zinc-500">
+                  The best defense attorneys want informed clients. These
+                  questions help you be one.
+                </p>
                 <ul className="mt-3 space-y-1 text-sm text-zinc-300">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 text-amber-400">&#10003;</span>

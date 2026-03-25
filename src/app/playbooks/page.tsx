@@ -28,14 +28,14 @@ export const metadata: Metadata = {
   title:
     "Defense Playbooks — $97 Instant Download for Every Charge Type | ImNotAnAttorney",
   description:
-    "Choose your charge type and get an instant-download defense playbook: 26 attorney questions, case stage roadmap, red flag checklist, attorney scorecard, and emergency guide. $97.",
+    "Choose your charge type and get an instant-download defense playbook: 26 questions that change how your next attorney meeting goes, case stage roadmap, red flag checklist, attorney scorecard, and emergency guide. $97.",
   alternates: {
     canonical: `${SITE_URL}/playbooks`,
   },
   openGraph: {
     title: "Defense Playbooks — $97 Instant Download",
     description:
-      "Choose your charge type. Get 26 questions your attorney hopes you never ask, a case stage roadmap, red flag checklist, and attorney scorecard. Instant PDF download.",
+      "Choose your charge type. Get 26 questions that change how your next attorney meeting goes, a case stage roadmap, red flag checklist, and attorney scorecard. Instant PDF download.",
     url: `${SITE_URL}/playbooks`,
     type: "website",
   },
@@ -129,9 +129,14 @@ export default function PlaybooksCatalogPage() {
               Defense Playbooks
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-              Choose your charge type. Get 26 questions your attorney hopes you
-              never ask, a case stage roadmap, red flag checklist, attorney
-              scorecard, and emergency guide &mdash; delivered instantly.
+              Choose your charge type. Get 26 questions that change how your
+              next attorney meeting goes, a case stage roadmap, red flag
+              checklist, attorney scorecard, and emergency guide &mdash;
+              delivered instantly.
+            </p>
+            <p className="mx-auto mt-3 max-w-2xl text-sm text-zinc-500">
+              Join thousands of defendants who refused to go into court
+              unprepared.
             </p>
           </FadeInUp>
         </div>
@@ -207,7 +212,9 @@ export default function PlaybooksCatalogPage() {
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-center text-zinc-400">
               Built from methods developed by elite defense attorneys across
-              375+ exonerations and thousands of criminal cases.
+              375+ exonerations and thousands of criminal cases &mdash;
+              including Lawrence Taylor&rsquo;s DUI procedural challenge
+              framework and Barry Scheck&rsquo;s forensic evidence methodology.
             </p>
           </FadeInUp>
 

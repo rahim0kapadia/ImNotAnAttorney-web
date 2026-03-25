@@ -2,7 +2,7 @@
  * terms/page.tsx -- Terms of Service page.
  *
  * Comprehensive Terms of Service covering: acceptance, service description,
- * legal information disclaimer (UPL protection), AI processing disclosure,
+ * legal information disclaimer (UPL protection), technology processing disclosure,
  * payment terms, user responsibilities, intellectual property, limitation
  * of liability, document handling, indemnification, dispute resolution,
  * electronic communications, force majeure, severability, modifications,
@@ -95,7 +95,7 @@ export default function TermsPage() {
               <strong className="text-amber-400">
                 ImNotAnAttorney is NOT a law firm and does NOT practice law.
               </strong>{" "}
-              None of our employees, contractors, or AI systems are licensed
+              None of our employees, contractors, or team members are licensed
               attorneys, and no one at ImNotAnAttorney is authorized to provide
               legal advice, legal opinions, or legal representation in any
               jurisdiction.
@@ -138,9 +138,9 @@ export default function TermsPage() {
               information you provide. We don&apos;t have access to sealed court
               records, private conversations between attorneys and judges, or
               real-time courtroom dynamics — which means there are things your
-              attorney knows that we can&apos;t account for. AI-generated
-              content is reviewed for quality but is not verified by a licensed
-              attorney.
+              attorney knows that we can&apos;t account for. All content is
+              reviewed for quality before delivery but is not verified by a
+              licensed attorney.
             </p>
           </section>
 
@@ -149,22 +149,15 @@ export default function TermsPage() {
               4. Technology &amp; Automated Processing Disclosure
             </h2>
             <p>
-              Our reports are generated using Claude, a large language model
-              built by{" "}
-              <a
-                href="https://www.anthropic.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-amber-400 underline"
-              >
-                Anthropic
-              </a>
-              , one of the leading AI safety companies in the world. Your case
-              data is not used to train their models, and every report goes
-              through a quality review before delivery. Like any tool, AI has
-              limitations — it can miss nuance or produce errors, which is why
-              our reports are designed as a starting point for conversations with
-              your attorney, not a replacement for one. See our{" "}
+              Our reports are generated using proprietary analysis technology
+              combined with legal research frameworks developed from the
+              published work of 40+ criminal defense attorneys. Your case data
+              is not used to improve or train our analysis systems, and every
+              report goes through a quality review before delivery. Like any
+              analytical tool, our technology has limitations — it can miss
+              nuance or produce errors, which is why our reports are designed as
+              a starting point for conversations with your attorney, not a
+              replacement for one. See our{" "}
               <a href="/privacy" className="text-amber-400 underline">
                 Privacy Policy
               </a>{" "}
@@ -329,7 +322,7 @@ export default function TermsPage() {
               Discovery documents and case files you upload are stored securely
               and used solely for the purpose of providing your purchased
               service. We do not share your documents with third parties except
-              as necessary to process your order (e.g., AI processing as
+              as necessary to process your order (e.g., automated processing as
               described in Section 4). See our{" "}
               <a href="/privacy" className="text-amber-400 underline">
                 Privacy Policy

@@ -57,6 +57,9 @@ export default function StartPage() {
           <p className="mx-auto mt-6 max-w-md text-base text-zinc-400">
             40+ elite defense attorneys&apos; methodology. Applied to your specific charges.
           </p>
+          <p className="mx-auto mt-2 max-w-md text-xs text-zinc-500">
+            Research frameworks informed by defense pioneers including Lawrence Taylor, Barry Scheck, and Gerry Spence.
+          </p>
 
           {/* Binary routing — no "or", just two paths */}
           {docState === null && (

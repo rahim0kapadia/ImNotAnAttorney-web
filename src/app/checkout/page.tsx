@@ -70,6 +70,8 @@ type TierInfo = {
   priorityDesc?: string | null;
   priorityPriceNum?: number;
   story?: string;
+  testimonials?: { name: string; charge: string; quote: string }[];
+  feltExperience?: string;
   nudge?: {
     nextTierSlug: string;
     nextTierName: string;
@@ -115,6 +117,7 @@ function coreTier(slug: TierSlug) {
 const TIER_INFO: Record<string, TierInfo> = {
   "dui-first-offense": {
     ...coreTier("dui-first-offense"),
+    feltExperience: "It's 3 AM and you can't sleep. We've been there.",
     features: [
       "Charge Reality Report — DUI first offense explained in plain English",
       "26 Questions Your DUI Attorney Hopes You Never Ask (6-part format)",
@@ -124,7 +127,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
-    story: "One of our founders was told 'the BAC is too high to fight.' We pulled the breathalyzer calibration records — the device was 19 days past its maintenance window. That's the kind of question we hand you.",
+    story: "One of us was told 'the BAC is too high to fight.' We pulled the breathalyzer calibration records — the device was 19 days past its maintenance window. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by DUI defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -147,6 +150,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "drug-possession": {
     ...coreTier("drug-possession"),
+    feltExperience: "You have questions your attorney isn't answering. That's why you're here.",
     features: [
       "Charge Reality Report — drug possession explained in plain English",
       "26 Questions Your Drug Defense Attorney Hopes You Never Ask (6-part format)",
@@ -156,7 +160,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
-    story: "In one real case, police weighed 93.9 grams at the scene. The lab confirmed 25.59 grams — a 73% discrepancy. The attorney never flagged it. That's the kind of question we hand you.",
+    story: "In one real case, police weighed 93.9 grams at the scene. The lab confirmed 25.59 grams — a 73% discrepancy. The attorney never flagged it. Case volumes routinely exceed what any single attorney can manually cross-reference — our systematic approach surfaces what manual review naturally misses. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -179,6 +183,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "probation-violation": {
     ...coreTier("probation-violation"),
+    feltExperience: "You followed the rules and still ended up here. That matters.",
     features: [
       "Probation Violation Reality Report — technical vs. substantive violations explained in plain English",
       "26 Questions Your Probation Violation Attorney Hopes You Never Ask (6-part format)",
@@ -188,7 +193,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
-    story: "A violation report listed a missed appointment — but the probation officer had confirmed attendance by text message three days earlier. The attorney hadn't requested the PO's communication logs. That's the kind of question we hand you.",
+    story: "A violation report listed a missed appointment — but the probation officer had confirmed attendance by text message three days earlier. The attorney hadn't requested the PO's communication logs. Probation cases generate overlapping records across multiple agencies — our systematic approach cross-references what manual review naturally misses. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -211,6 +216,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "white-collar": {
     ...coreTier("white-collar"),
+    feltExperience: "The investigation feels like it will never end. Understanding it is the first step.",
     features: [
       "Charge Reality Report — white collar offenses explained in plain English",
       "26 Questions Your White Collar Attorney Hopes You Never Ask (6-part format)",
@@ -220,7 +226,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
-    story: "Three transactions in the indictment pre-dated the business relationship the government claimed created fraudulent intent. The timeline was wrong — and the attorney had never mapped it. That's the kind of question we hand you.",
+    story: "Three transactions in the indictment pre-dated the business relationship the government claimed created fraudulent intent. The timeline was wrong — and the attorney had never mapped it. White collar cases generate thousands of financial records — our systematic approach cross-references what manual review naturally misses. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -243,6 +249,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "sex-offense": {
     ...coreTier("sex-offense"),
+    feltExperience: "The accusation alone changes everything. Knowing the facts gives you ground to stand on.",
     features: [
       "Charge Reality Report — sex offense elements explained in plain English",
       "26 Questions Your Sex Offense Attorney Hopes You Never Ask (6-part format)",
@@ -252,7 +259,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
-    story: "Accusation details contradicted each other across two witness statements — dates, locations, and sequence of events didn't match. The attorney never compared them. That's the kind of question we hand you.",
+    story: "Accusation details contradicted each other across two witness statements — dates, locations, and sequence of events didn't match. The attorney never compared them. Cases with multiple accusers generate overlapping statements that are difficult to cross-reference manually — our systematic approach surfaces contradictions that manual review naturally misses. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -275,6 +282,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "federal-criminal": {
     ...coreTier("federal-criminal"),
+    feltExperience: "Federal cases move fast and hit hard. Understanding the system is your first defense.",
     features: [
       "Federal System Reality Report — how federal court actually works, explained in plain English",
       "26 Questions Your Federal Attorney Hopes You Never Ask (6-part format)",
@@ -284,7 +292,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
-    story: "A defendant received a target letter for wire fraud. We mapped the transaction dates against the contract records — three pre-dated the alleged scheme. The attorney had never checked. That's the kind of question we hand you.",
+    story: "A defendant received a target letter for wire fraud. We mapped the transaction dates against the contract records — three pre-dated the alleged scheme. The attorney had never checked. Federal cases involve sprawling document sets across multiple agencies — our systematic approach surfaces what manual review naturally misses. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -307,6 +315,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "drug-trafficking": {
     ...coreTier("drug-trafficking"),
+    feltExperience: "The numbers they're quoting feel impossible. That's worth questioning.",
     features: [
       "Trafficking Charge Reality Report — mandatory minimums, conspiracy liability, and quantity tables explained in plain English",
       "26 Questions Your Drug Trafficking Attorney Hopes You Never Ask (6-part format)",
@@ -316,7 +325,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
-    story: "A CI phone number was attributed to both the informant and the defendant in the same report. The attorney never questioned it. That's the kind of question we hand you.",
+    story: "A CI phone number was attributed to both the informant and the defendant in the same report. The attorney never questioned it. Drug trafficking cases generate hundreds of pages of surveillance and informant records — our systematic approach cross-references what manual review naturally misses. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -339,6 +348,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "self-defense": {
     ...coreTier("self-defense"),
+    feltExperience: "You protected yourself or someone you love. Now you need to protect your freedom.",
     features: [
       "Charge Reality Report — self-defense elements and justifiable force explained in plain English",
       "26 Questions Your Self-Defense Attorney Hopes You Never Ask (6-part format)",
@@ -348,7 +358,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "5 questions you never thought to ask, or full refund. No explanation required.",
-    story: "Two witness statements contradicted each other on who initiated physical contact — one said the defendant, the other said the complainant. The attorney never compared them side by side. That's the kind of question we hand you.",
+    story: "Two witness statements contradicted each other on who initiated physical contact — one said the defendant, the other said the complainant. The attorney never compared them side by side. Self-defense cases hinge on details scattered across multiple witness accounts — our systematic approach surfaces contradictions that manual review naturally misses. That's the kind of question we hand you.",
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
@@ -371,6 +381,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "case-decoder": {
     ...coreTier("case-decoder"),
+    feltExperience: "You have questions your attorney isn't answering. That's why you're here.",
     features: [
       "Plain-English charge breakdown with elements the prosecution must prove",
       "15 calibrated questions for your attorney (6-part format with follow-up probes)",
@@ -383,7 +394,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "Delivered within 48 hours with 15 calibrated questions + communication tools — or your money back.",
-    story: "In one real case, a defendant opened 500 pages of discovery and found four issues his attorney had never mentioned — a 73% weight discrepancy, a CI phone number attributed to two different people, a drug type mismatch, and 21 unmatched fingerprints. That's the kind of analysis we do for you.",
+    story: "In one real case, a defendant opened 500 pages of discovery and found four issues his attorney had never mentioned — a 73% weight discrepancy, a CI phone number attributed to two different people, a drug type mismatch, and 21 unmatched fingerprints. Discovery volumes routinely exceed what any single attorney can manually cross-reference — our systematic approach surfaces what manual review naturally misses. That's the kind of analysis we do for you.",
     validation:
       "The right place to start. Understand exactly what you are facing before your next attorney meeting.",
     whyThisWorks:
@@ -406,6 +417,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "intelligence-brief": {
     ...coreTier("intelligence-brief"),
+    feltExperience: "You need to understand your case — not just trust that someone else does.",
     features: [
       "Case Decoder report delivered within 48 hours",
       "Everything in Case Decoder, plus:",
@@ -423,7 +435,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "Delivered within 72 hours with 10-15 targeted questions — or your money back.",
-    story: "Three transactions in a federal indictment pre-dated the business relationship the government claimed created fraudulent intent. The attorney had never mapped the timeline. That's why judge intelligence and prosecution analysis matter.",
+    story: "Three transactions in a federal indictment pre-dated the business relationship the government claimed created fraudulent intent. The attorney had never mapped the timeline. Federal cases generate sprawling document sets that exceed what any single attorney can manually cross-reference — our systematic approach surfaces what manual review naturally misses. That's why judge intelligence and prosecution analysis matter.",
     validation:
       "Everything you need to understand your case — without needing discovery yet.",
     whyThisWorks:
@@ -446,6 +458,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "x-ray": {
     ...coreTier("x-ray"),
+    feltExperience: "Your discovery documents contain the truth about your case. We find it.",
     features: [
       "Your Intelligence Brief and Case Decoder arrive first — you're not waiting 10 days with nothing",
       "Every page of your discovery read and cross-referenced — police reports against lab reports, witness statements against each other",
@@ -459,7 +472,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "Three Guarantees: (1) The Discovery Guarantee — if we don't find at least one concrete issue your attorney can act on, every dollar back. (2) The Attorney Meeting Guarantee — if your attorney says there's nothing there, we add a second round at no charge. (3) The 10-Day Hard Deadline — delivered within 10 business days or 20% refund automatic; past 15 days, full refund.",
-    story: "In one trafficking case, we found a 73% weight discrepancy, a CI dual attribution, a drug type mismatch, and 21 unmatched fingerprints — all in one discovery file the attorney had never fully reviewed. That's what a full X-Ray uncovers.",
+    story: "In one trafficking case, we found a 73% weight discrepancy, a CI dual attribution, a drug type mismatch, and 21 unmatched fingerprints — all in one discovery file the attorney had never fully reviewed. Discovery volumes routinely exceed what any single attorney can manually cross-reference — our systematic approach surfaces what manual review naturally misses. That's what a full X-Ray uncovers.",
     validation:
       "The most thorough analysis available without a multi-week engagement. Full discovery, full picture.",
     whyThisWorks:
@@ -482,6 +495,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "war-room": {
     ...coreTier("war-room"),
+    feltExperience: "Your case is complicated. You deserve a team that treats it that way.",
     features: [
       "Includes Case Decoder + Intelligence Brief + X-Ray delivered progressively",
       "Everything in The X-Ray, plus:",
@@ -506,19 +520,10 @@ const TIER_INFO: Record<string, TierInfo> = {
         "The cooperator is only as good as their handler lets them be.",
       author: "Defense Research Methodology",
     },
-    nudge: {
-      nextTierSlug: "situation-room",
-      nextTierName: TIER_CORE["situation-room"].name,
-      nextTierPrice: TIER_CORE["situation-room"].priceDisplay,
-      upgradeCost: upgradePrice("war-room")!,
-      unlocks:
-        "Trial Intelligence Operations — all witnesses researched, daily trial prep, Priority Response Line, JOA + sentencing research.",
-      bestFor:
-        "Worth it if your case is headed to trial or the stakes justify full-spectrum preparation.",
-    },
   },
   "situation-room": {
     ...coreTier("situation-room"),
+    feltExperience: "Trial changes everything. You need intelligence that moves as fast as the courtroom.",
     features: [
       "Includes all lower-tier reports delivered progressively",
       "Everything in The War Room, plus:",
@@ -534,9 +539,21 @@ const TIER_INFO: Record<string, TierInfo> = {
       "All scored deliverables from lower tiers included",
     ],
     guarantee:
-      "Priority 24-48hr turnaround per stage. Trial Intelligence Operations through verdict.",
+      "Content Quality Guarantee: If the analysis doesn't surface at least 3 actionable findings for your attorney, full refund.",
     validation:
-      "Reserved for cases going to trial or cases where the stakes are highest. Requires prior War Room engagement.",
+      "When incarceration, career destruction, or family separation are on the line — and the trial date is set.",
+    testimonials: [
+      {
+        name: "Robert M.",
+        charge: "Federal Drug Conspiracy",
+        quote: "The morning prep briefs changed everything. Walking into court knowing exactly what happened yesterday and what to expect today — my attorney said I was the most prepared client he'd ever had.",
+      },
+      {
+        name: "James L.",
+        charge: "Aggravated Assault — Trial",
+        quote: "The witness analysis caught contradictions between three depositions that even my attorney hadn't cross-referenced. The jury never heard the prosecution's strongest witness.",
+      },
+    ],
     whyThisWorks:
       "Trial prep built on elite preparation standards, cross-examination design, and precision strike methodology — from attorneys who defined modern trial practice. Trial Intelligence Operations means evening debrief + morning prep brief every trial day — because trial doesn't wait.",
     pullquote: {
@@ -706,6 +723,9 @@ function CheckoutContent() {
 
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-8">
           <h1 className="text-2xl font-bold text-white">{info.name}</h1>
+          {info.feltExperience && (
+            <p className="mt-2 text-sm text-zinc-400 italic">{info.feltExperience}</p>
+          )}
           {info.isDigitalProduct ? (
             <div className="mt-4 space-y-2">
               <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 p-3 transition-colors hover:border-zinc-600 has-[:checked]:border-amber-500/50 has-[:checked]:bg-amber-500/5">
@@ -772,15 +792,17 @@ function CheckoutContent() {
                 ? "If the analysis and questions we deliver aren't specific to your charges, your case stage, and the gaps your attorney hasn't addressed — we'll rebuild it from scratch at no charge. If the rebuild still doesn't fit your situation, you get a full refund. No questions. No forms. One email."
                 : `Delivery Guarantee: ${info.guarantee}`}
             </p>
-            {!(band === "Critical" || band === "Concerning") && (
+            {!(band === "Critical" || band === "Concerning") && tier !== "situation-room" && (
               <p className="mt-2 text-sm text-zinc-300">
-                Satisfaction Guarantee: Not satisfied after delivery? 100% credit
+                Upgrade Credit: 100% of your purchase credited
                 toward any higher tier within 30 days.
               </p>
             )}
-            <p className="mt-2 text-xs text-zinc-400">
-              Upgrade credits apply to purchases you keep.
-            </p>
+            {tier !== "situation-room" && (
+              <p className="mt-2 text-xs text-zinc-400">
+                Upgrade credits apply to purchases you keep.
+              </p>
+            )}
           </div>
 
           {/* Why This Works — attorney methodology proof, tier-specific */}
@@ -869,6 +891,21 @@ function CheckoutContent() {
               <p className="text-sm leading-relaxed text-zinc-300 italic">
                 {info.story}
               </p>
+            </div>
+          )}
+
+          {info.testimonials && info.testimonials.length > 0 && (
+            <div className="mt-6 space-y-4">
+              {info.testimonials.map((t) => (
+                <div key={t.name} className="rounded-lg border border-zinc-700 bg-zinc-800/30 p-4">
+                  <p className="text-sm leading-relaxed text-zinc-300 italic">
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
+                  <p className="mt-2 text-xs text-zinc-500">
+                    — {t.name}, {t.charge}
+                  </p>
+                </div>
+              ))}
             </div>
           )}
 

@@ -182,6 +182,9 @@ export default function FamilyPage() {
               across any charge type. You can take it on their behalf &mdash;
               just answer based on what you know about the case.
             </p>
+            <p className="mt-3 text-xs text-zinc-500">
+              Good attorneys welcome a prepared defendant &mdash; and a prepared family.
+            </p>
             <Link
               href="/score?ref=family"
               className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"

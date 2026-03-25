@@ -54,8 +54,8 @@ export default function DuiChecklistPage() {
         {[
           {
             number: "1",
-            title: "Request your DMV hearing tonight",
-            desc: "Most states give you 7-10 days. Miss the window and your license is automatically suspended — even before your court date.",
+            title: "Check your state\u2019s DMV hearing deadline",
+            desc: "Some states give you as few as 7 days from arrest. Miss the window and your license is automatically suspended \u2014 even before your court date. Deadlines vary by state \u2014 verify the timeline in your jurisdiction.",
           },
           {
             number: "2",
@@ -65,7 +65,7 @@ export default function DuiChecklistPage() {
           {
             number: "3",
             title: "Know what to ask before you hire an attorney",
-            desc: "6 questions that separate DUI specialists from attorneys who just take your money. Ask these before you sign anything.",
+            desc: "6 questions that help you find a DUI specialist who\u2019s the right fit. Questions informed by Lawrence Taylor\u2019s DUI defense methodology. Ask these before you sign anything.",
           },
         ].map((item) => (
           <div
