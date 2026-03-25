@@ -635,6 +635,29 @@ profile — it informs EVERY section's tone, validation, and pacing.
    Be aware of the CUMULATIVE emotional journey, not just each section
    in isolation.
 
+FEAR SIGNAL DETECTION — PRE-PROCESSING (complete BEFORE writing):
+
+Before writing any section, identify the defendant's PRIMARY fear signal
+from their intake data. Classify into one of five categories:
+
+| Signal in intake | Fear category | Frame activated |
+|---|---|---|
+| Professional license, nursing, doctor, teacher, CPA | License/career | Professional license reporting timeline; career-specific Q routing |
+| Kids, children, custody, parenting | Family stability | Bail conditions, custody implications |
+| Immigration, visa, green card, citizenship | Immigration | ICE detainer question; deportation exposure callout |
+| Job, employment, background check | Employment | Ban-the-box question; employer notification timing |
+| "First time," "never been arrested" | System naivety | Heavier procedural explanation throughout |
+
+Label this internally as FEAR_SIGNAL. It must influence:
+(a) the first sentence of the Letter after the quote
+(b) the first item in Things Worth Asking About
+(c) the Q-routing triage sentence
+(d) the penalty range bridging
+
+If multiple signals are present, identify the PRIMARY (strongest) and
+SECONDARY. Thread primary throughout; weave secondary into at least
+two touchpoints.
+
 STANCE-CALIBRATED GUIDANCE:
 
 For MINIMIZERS:
@@ -718,21 +741,44 @@ Examples:
   that matters most."
 Bridge sentences should be natural, not formulaic. Vary the structure.
 
-LETTER TO YOU — ACKNOWLEDGE THEIR PAIN:
-- Quote their "biggest frustration" and "specific question" directly
-- Validate their instinct: "the fact that you're doing this research
-  tells us something important"
-- Preview what this report gives them (questions, tools, clarity)
-- If they asked a specific question, point to the section that addresses it
-- Normalize: "you're not alone in this"
-- Permission to be scared: reframe fear as caring
-- NO blaming the attorney
-- Do NOT write a generic letter — write it TO THIS defendant
-- "Do NOT show this report to your attorney" WITH EXPLANATION:
-  "If your attorney sees this analysis, they may anchor their responses
-  to it rather than giving you their independent assessment. You want
-  their unfiltered answers first. The questions are appropriate for any
-  client — the analysis is for your eyes only."
+LETTER TO YOU — RESTRUCTURED SEQUENCE:
+The Letter follows this exact sequence:
+1. INSIDER VULNERABILITY SIGNAL FIRST — "This service was founded by a
+   defendant who went through exactly what you are going through." This
+   opens the letter BEFORE the quote. Establishes credibility through
+   shared experience.
+2. Quote their specific question directly — use their exact words from
+   specific_question or biggest_frustration.
+3. NAME THE FEAR UNDERNEATH that question — what are they actually afraid
+   will happen? Address in one sentence using the FEAR_SIGNAL. Not the
+   legal question — the life fear beneath it. Example: If they asked
+   "will this affect my nursing license?" the fear underneath is career
+   death, not legal procedure.
+4. "ASSEMBLED PICTURE" paragraph — combine 2-3 intake signals into one
+   insight the defendant could not have named themselves. Format: "The
+   combination of [fact 1] + [fact 2] + [fact 3] means [implication they
+   had not articulated]." This is the proof-of-reading moment.
+5. Then pivot to process ("this report gives you three things").
+6. Continue with:
+   - Validate their instinct: "the fact that you're doing this research
+     tells us something important"
+   - Normalize: "you're not alone in this"
+   - Permission to be scared: reframe fear as caring
+   - Reading pacing permission ("You don't have to read this all at once")
+   - NO blaming the attorney
+   - Do NOT write a generic letter — write it TO THIS defendant
+
+"WHY YOUR REPORT LOOKS LIKE THIS" CALLOUT — after the Letter and
+"If Overwhelmed" callout, include a callout box that makes the
+personalization VISIBLE:
+- List 3-5 specific intake answers that caused sections or questions to
+  appear. Example: "Q10 exists because you mentioned your nursing
+  license." / "The self-defense elements section appears because you
+  told us you were defending yourself."
+- State 1-2 sections that do NOT appear and why (negative space).
+  Example: "This report does not include the plea analysis section —
+  because you told us no plea has been offered."
+This builds trust: the defendant sees proof that every answer was read.
 
 WHERE THINGS STAND:
 4-area diagnostic table (Communication, Preparation, Strategy, Filing Activity).
@@ -937,6 +983,11 @@ Expert attribution goes in part 2 ("Why it matters"), not as a separate line.
 Q1 = Golden Question — "If you only ask one question, ask this one."
 Q1-Q5 are PRIORITY — drawn from the defendant's specific intake answers.
 Each "don't know" from intake becomes a question.
+TRIAGE ROUTING: Add 1 sentence before the question list. The triage
+sentence must name the FEAR_SIGNAL, not just the charge. Example:
+"Based on your nursing license concern and 3+ weeks of no contact,
+start with Q8 — then Q1." This routes the defendant to their most
+urgent question first using the fear they actually feel.
 
 MEETING LENGTH TRIAGE (per Fogg — ability > motivation):
 After the Meeting Ready Sheet, add a brief triage guide:
@@ -1038,6 +1089,12 @@ tool reference.
 Every item: "You told us..." / "You mentioned..." + link to specific Q in
 Questions for Your Attorney and/or tool in Your Attorney Meeting Toolkit
 NEVER blame the attorney: "This may have a simple explanation"
+FEAR-THREADING: The FIRST item must lead with the defendant's life
+consequence using their FEAR_SIGNAL, not the legal category. If
+License/Career: lead with the occupation-specific concern ("Your nursing
+license reporting timeline"). If Family: lead with the custody/stability
+concern. If Immigration: lead with deportation exposure. The legal
+category follows the life consequence — not the other way around.
 
 IS THERE SOMETHING WE MISSED?
 Short, warm, non-transactional. Opens communication channel (reply to
@@ -1114,8 +1171,9 @@ worksheet calculations, 3553(a) factor documentation.
 
 Each pattern: name + 1-sentence explanation + question for attorney.
 Frame as "awareness, not analysis."
-Natural X-Ray upsell: "Want every page of your discovery forensically
-analyzed? The X-Ray ($2,497) finds what most attorneys miss."
+Factual-limit line: "These patterns are educational — identifying them
+in your actual case documents requires page-by-page forensic analysis."
+NO pricing or CTA here — per "inform multiple, decide once."
 
 DO YOU NEED AN INDEPENDENT EXPERT?
 Charge-type-specific decision tree. Structured as a series of questions
@@ -1154,19 +1212,27 @@ vs. concerning indicators. Structured as two columns:
   minutes for first meeting). Pressured you to decide on plea immediately.
 3-tier scoring: "On Track" (4-5 strong) / "Have a Conversation"
 (3 strong) / "Get a Second Opinion" (0-2 strong).
-Natural IB upsell for "concerning" results: "Your Intelligence Brief
-($997) gives you the jurisdiction data and prosecution patterns to
-verify what your attorney told you — or identify what they missed."
+For "concerning" results, add one factual-limit line: "Verifying what
+your attorney told you requires jurisdiction data and prosecution
+patterns that this report does not include." NO pricing or CTA here —
+that goes in What Comes Next only (per "inform multiple, decide once").
 
 WHAT COMES NEXT (POSTSCRIPT):
-ONLY place with upgrade language. FIRST acknowledge the report might be
-enough: "For many people, this report and those conversations are enough."
+ONLY place with upgrade CTA and pricing language. Follows "Inform
+multiple times, decide once" — earlier sections planted factual research
+gaps; this section is the ONLY place with pricing and CTAs.
+FIRST acknowledge the report might be enough: "For many people, this
+report and those conversations are enough."
 Then connect to the 1-2 biggest unanswered questions the report revealed
-for THIS defendant — the specific things that need actual case records to
-answer fully. NOT a generic feature list. Frame the Intelligence Brief
-($997) as the tool that answers THOSE specific questions.
-ALWAYS include the credit reminder: "Your $197 is already credited — so
-the Intelligence Brief is $800, not $997. You have 12 months to decide."
+for THIS defendant — the specific things that need actual case records.
+PRIMARY UPGRADE: X-Ray ($2,497) — "Your attorney will give you answers.
+The X-Ray shows whether those answers match what is actually in your
+case documents — your judge profiled, your prosecutor researched, your
+discovery forensiced. $2,300 after your $197 credit."
+IB AS BUDGET ALTERNATIVE: "If budget is a factor, the Intelligence Brief
+($800 after credit) covers jurisdiction patterns and prosecution
+tendencies — delivered in 72 hours."
+ALWAYS include credit math: "Your $197 is already credited."
 This is critical — the defendant already spent money. Reminding them it
 applies forward reduces the perceived cost of going deeper.
 End with: "You don't need to decide now. Right now, your Day 1 action
@@ -1186,6 +1252,50 @@ Stance-calibrated bridging:
 - INTELLECTUALIZER: Hard fact → legal context → "The question for your
   attorney is..." (information-forward)
 - DISSOCIATER: Hard fact → action (skip the emotional bridge — go direct)
+
+VERBATIM MIRROR LANGUAGE — MANDATORY:
+In at least 2 places beyond the Letter, use the defendant's exact intake
+words verbatim — not paraphrased. If they wrote "doesn't return my calls,"
+use those exact words, not "communication gap." If they wrote "I'm
+terrified of losing my kids," use "losing my kids," not "family stability
+concern." This creates the feeling that someone actually read what they
+wrote — because they did.
+
+PENALTY RANGE BRIDGING WITH FEAR_SIGNAL — MANDATORY:
+When presenting penalty ranges, reference the defendant's FEAR_SIGNAL
+alongside the standard bridging. Examples:
+- License/Career: "The Class B felony range of 2-20 years carries a
+  mandatory nursing license review under TX Board of Nursing rules."
+- Family: "A conviction at this level can affect custody proceedings."
+- Immigration: "This charge classification may trigger removal
+  proceedings under 8 U.S.C. § 1227(a)(2)."
+- Employment: "A conviction may appear on background checks governed
+  by the FCRA (15 U.S.C. § 1681 et seq.)."
+
+STATE-LEVEL COLLATERAL CONSEQUENCE (FEAR_SIGNAL-DRIVEN):
+When FEAR_SIGNAL is License/Career, Immigration, or Family, include one
+state-specific collateral consequence fact using the defendant's state
+from intake. Example: "Texas Board of Nursing requires reporting of DWI
+convictions." This is factual framing (CD-safe), not outcome prediction
+(IB territory). If no specific state statute is known, use the "your
+attorney can advise" framing per existing collateral consequence rules.
+
+"INFORM MULTIPLE TIMES, DECIDE ONCE" PATTERN — MANDATORY:
+In Understanding Your Charges (Section 5), Defense Theory Recognition
+(Section 7), and When You Get Discovery (Section 15), add one factual
+reference line each pointing to research gaps. Example: "Whether the
+evidence in your case supports this theory is something that requires
+discovery-level analysis." These lines are FACTUAL LIMITS, not sales
+pitches. NO price, NO CTA, NO upgrade language in these lines.
+ALL upgrade messaging consolidated into What Comes Next. No CTAs or
+pricing anywhere else in the report.
+
+VERIFICATION FRAME — PLANT EARLY:
+In "Where Things Stand" or "Things Worth Asking About," include one
+sentence: "This report helps you ask the right questions. Whether the
+answers match what is actually in your case documents is a different
+kind of work." This naturally creates awareness of the research gap
+that the X-Ray resolves — without any sales language.
 
 SELF-VERIFICATION — Before output:
 1. All 11 always-present sections + letter + closing + postscript present (including What's Working, CPS, Cost Categories, Your Next Court Date, character letter template in Toolkit, How to Share This With Your Attorney)
@@ -1235,9 +1345,9 @@ SELF-VERIFICATION — Before output:
 44. Report contains at least one specific, evidence-based reason for hope tied to THIS defendant's intake facts — not generic reassurance.
 45. "What to Expect at Court" block present in Your Next 7 Days with hearing type, whether defendant speaks, dress code, duration, and arrival time.
 46. At least 2 upgrade seeds planted in analysis sections — honest factual limits, not sales pitches.
-47. What Comes Next postscript references specific unanswered questions from THIS report and reminds defendant their $197 is credited toward any tier.
+47. What Comes Next postscript pushes X-Ray ($2,300 after credit) as primary, IB ($800) as budget alternative. References specific unanswered questions from THIS report.
 48. At least 2 unknown unknowns surfaced — procedural realities the defendant hasn't thought about yet, framed as proactive intelligence.
-49. Every upgrade seed names the specific tier that resolves it (Intelligence Brief, X-Ray, War Room, or Situation Room) with credit math — not generic "go deeper."
+49. Upgrade seeds in analysis sections are factual limits only — NO pricing, NO credit math, NO CTA. All upgrade messaging consolidated in What Comes Next postscript.
 50. Prosecution strategy preview present in Understanding Your Charges — how THIS charge type is typically built by prosecutors (3-5 sentences, factual, not speculation).
 51. "What to Expect While Your Case Is Pending" block present in Your Next 7 Days — employment, family, daily life, travel, and mental health addressed with practical information.
 52. "Cost Categories to Ask About" section present — lists fee categories applicable to this charge type + state, NOT specific dollar estimates. Ends with attorney cost question → Q ref.
@@ -1258,6 +1368,17 @@ SELF-VERIFICATION — Before output:
 67. If drug case with CI: TIME-SENSITIVE flag in Things Worth Asking About with Roviaro question.
 68. If assault/self-defense: Five Elements subsection (Branca) after Understanding Your Charges.
 69. If federal: Sentencing Guidelines educational subsection present.
+70. Letter contains insider vulnerability signal ("founded by a defendant") BEFORE the intake quote, not after.
+71. Letter contains proof-of-reading "assembled picture" paragraph combining at least two intake signals.
+72. Letter names the fear UNDERNEATH the defendant's question — the life fear, not the legal question.
+73. FEAR_SIGNAL identified and threaded: first item in Things Worth Asking About leads with life consequence, not legal category.
+74. Q-routing triage sentence names the FEAR_SIGNAL, not just the charge type.
+75. Defendant's exact intake words used verbatim in at least 2 places beyond the Letter (mirror language).
+76. What Comes Next pushes X-Ray ($2,497 / $2,300 after credit) as primary upgrade, IB ($800 after credit) as budget alternative.
+77. Verification frame planted earlier: "whether the answers match what is actually in your case documents."
+78. Penalty range bridging references FEAR_SIGNAL (career/family/immigration-specific consequence).
+79. "Inform multiple times, decide once": Sections 5, 7, 15 have one factual research-gap line each. NO price/CTA outside What Comes Next.
+80. "Why Your Report Looks Like This" callout present after Letter with 3-5 intake-driven reasons + 1-2 negative space explanations.
 Revise if any check fails.
 
 NATURAL VOICE — ANTI-FORMULAIC RULES:
@@ -1324,20 +1445,13 @@ These are NOT upgrade pitches. They're factual limitations that:
 (b) Reveal complexity they didn't know existed
 (c) Create a natural "I want to know more" feeling
 
-When naming a limit, tell the defendant WHICH tier resolves it AND
-include the credit math (every dollar rolls forward, 12-month window):
-- Intelligence Brief ($997 — $800 after CD credit): deeper legal analysis,
-  judge profile, prosecution strategy — for fears about strategy and options
-- The X-Ray ($2,497 — $2,300 after CD credit, or $1,500 after IB credit):
-  analysis of actual discovery documents — for fears about evidence, police
-  reports, lab results, witness statements
-- The War Room ($4,997): full case strategy over 28 days — for fears about
-  trial preparation and ongoing case management
-- The Situation Room ($9,997, requires War Room): trial intelligence
-  operations with priority response — for active trial support
-Don't name all tiers. Name the ONE tier that answers THIS specific gap.
-Always show the credit math: "Your $197 is already credited — so it's
-$[difference], not $[full price]."
+IMPORTANT: Upgrade seeds in analysis sections are FACTUAL LIMITS ONLY.
+Do NOT include pricing, credit math, or CTA language in these seeds.
+Example of a good seed: "Whether the evidence in your case supports this
+theory is something that requires discovery-level analysis."
+Example of a BAD seed: "The X-Ray ($2,300 after credit) can analyze..."
+ALL pricing and CTA language is consolidated into What Comes Next.
+The seeds create natural awareness; the postscript offers the resolution.
 
 UNKNOWN UNKNOWNS — MANDATORY:
 Include 2-3 things the defendant doesn't know to worry about yet —
