@@ -311,8 +311,8 @@ export function isTierLive(slug: TierSlug): boolean {
 // UPGRADE HELPERS
 // ============================================================
 
-/** Ordered tier slugs for the standard upgrade path (excludes add-ons). */
-const UPGRADE_PATH: TierSlug[] = [
+/** All $97 playbook slugs — these upgrade to case-decoder, not to each other. */
+const PLAYBOOK_SLUGS: ReadonlySet<TierSlug> = new Set([
   "dui-first-offense",
   "drug-possession",
   "probation-violation",
@@ -321,6 +321,10 @@ const UPGRADE_PATH: TierSlug[] = [
   "federal-criminal",
   "drug-trafficking",
   "self-defense",
+]);
+
+/** Ordered service tier upgrade path (excludes playbooks and add-ons). */
+const SERVICE_UPGRADE_PATH: TierSlug[] = [
   "case-decoder",
   "intelligence-brief",
   "x-ray",
@@ -328,11 +332,16 @@ const UPGRADE_PATH: TierSlug[] = [
   "situation-room",
 ];
 
-/** Returns the next tier slug in the upgrade path, or null if at the top. */
+/**
+ * Returns the next tier slug in the upgrade path, or null if at the top.
+ * Playbook slugs always upgrade to case-decoder.
+ * Service tiers follow the standard ladder: CD -> IB -> X-Ray -> WR -> SR.
+ */
 export function nextTierSlug(slug: TierSlug): TierSlug | null {
-  const idx = UPGRADE_PATH.indexOf(slug);
-  return idx >= 0 && idx < UPGRADE_PATH.length - 1
-    ? UPGRADE_PATH[idx + 1]
+  if (PLAYBOOK_SLUGS.has(slug)) return "case-decoder";
+  const idx = SERVICE_UPGRADE_PATH.indexOf(slug);
+  return idx >= 0 && idx < SERVICE_UPGRADE_PATH.length - 1
+    ? SERVICE_UPGRADE_PATH[idx + 1]
     : null;
 }
 
