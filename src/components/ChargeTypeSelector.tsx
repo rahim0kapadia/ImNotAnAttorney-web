@@ -13,54 +13,54 @@ import type { TierSlug } from "@/lib/tiers";
 
 const charges = [
   {
-    id: "dui-first-offense" as TierSlug,
+    id: "dui-first-offense",
     label: "DUI",
     oneLiner:
       "Your DMV hearing deadline may be 7 days away. We\u2019ve found breathalyzer calibration gaps, field sobriety test failures, and chain of custody breaks in DUI cases.",
   },
   {
-    id: "drug-possession" as TierSlug,
+    id: "drug-possession",
     label: "Drug Possession",
     oneLiner:
       "We\u2019ve found weight discrepancies, substance misidentification, and chain of custody breaks in drug possession cases. 48-hour decision window.",
   },
   {
-    id: "drug-trafficking" as TierSlug,
+    id: "drug-trafficking",
     label: "Drug Trafficking",
     oneLiner:
       "Trafficking cases hinge on weight thresholds, informant credibility, and surveillance protocols. We analyze every link in the chain.",
   },
   {
-    id: "probation-violation" as TierSlug,
+    id: "probation-violation",
     label: "Probation Violation",
     oneLiner:
       "Violation hearings move fast \u2014 often within 2 weeks. We identify procedural gaps, officer inconsistencies, and conditions that may have been misapplied.",
   },
   {
-    id: "white-collar" as TierSlug,
+    id: "white-collar",
     label: "White Collar",
     oneLiner:
       "Financial cases generate thousands of pages of discovery. We trace document inconsistencies, identify overreach, and generate questions about forensic accounting methods.",
   },
   {
-    id: "sex-offense" as TierSlug,
+    id: "sex-offense",
     label: "Sex Offense",
     oneLiner:
       "These cases carry the highest stakes and the most complexity. We analyze forensic evidence, witness credibility, and investigation protocols.",
   },
   {
-    id: "federal-criminal" as TierSlug,
+    id: "federal-criminal",
     label: "Federal Criminal",
     oneLiner:
       "Federal cases move fast. We analyze discovery, identify Brady violations, and generate questions about informant credibility and surveillance protocols.",
   },
   {
-    id: "self-defense" as TierSlug,
+    id: "self-defense",
     label: "Self-Defense",
     oneLiner:
       "Justifiable force cases depend on timeline reconstruction, witness statements, and proportionality analysis. We research the legal standards in your jurisdiction.",
   },
-] as const;
+] as const satisfies ReadonlyArray<{ id: TierSlug; label: string; oneLiner: string }>;
 
 interface ChargeTypeSelectorProps {
   onSelect?: (slug: TierSlug | null) => void;
