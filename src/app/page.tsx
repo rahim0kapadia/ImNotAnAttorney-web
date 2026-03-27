@@ -41,6 +41,7 @@ import { RecentPurchaseNotification } from "@/components/RecentPurchaseNotificat
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { DiscoveryReveal } from "@/components/motion/DiscoveryReveal";
 import { HomepageHero } from "@/components/HomepageHero";
+import { getPlaybookConfig, allPlaybookSlugs } from "@/lib/playbook-configs";
 import { SITE_URL } from "@/lib/site";
 import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
@@ -165,6 +166,16 @@ export default function Home() {
               "Case-specific research and accountability questions for criminal defendants",
             provider: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
             areaServed: { "@type": "Country", name: "United States" },
+            knowsAbout: [
+              "DUI Defense",
+              "Drug Possession Defense",
+              "Drug Trafficking Defense",
+              "Probation Violation",
+              "White Collar Criminal Defense",
+              "Sex Offense Defense",
+              "Federal Criminal Defense",
+              "Self-Defense Cases",
+            ],
             speakable: {
               "@type": "SpeakableSpecification",
               cssSelector: ["#how-it-works", ".font-display"],
@@ -560,6 +571,46 @@ export default function Home() {
           <p className="mt-4 text-center text-xs text-zinc-600">
             *Based on real defendant experiences. Names changed for privacy. Jurisdictions, timelines, and specific findings vary by case. Past results do not guarantee future outcomes.
           </p>
+        </div>
+      </section>
+
+      {/* PLAYBOOK CATALOG — 8 charge-type cards for SEO + routing */}
+      <section className="border-t border-zinc-800 px-4 py-20 section-alt">
+        <div className="mx-auto max-w-5xl">
+          <FadeInUp>
+            <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
+              Defense Playbooks by Charge Type
+            </h2>
+          </FadeInUp>
+          <p className="mt-3 text-center text-zinc-400">
+            Charge-specific questions and research &mdash; instant download, $97 each.
+          </p>
+          <StaggerContainer className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {allPlaybookSlugs().map((slug) => {
+              const config = getPlaybookConfig(slug);
+              if (!config) return null;
+              return (
+                <StaggerItem key={slug}>
+                  <Link
+                    href={`/checkout?tier=${slug}`}
+                    className="group block rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 transition-all hover:border-amber-500/50 h-full"
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">
+                      {config.hero.eyebrow}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+                      {config.proof.methods[0].insight.length > 120
+                        ? config.proof.methods[0].insight.slice(0, 120) + "\u2026"
+                        : config.proof.methods[0].insight}
+                    </p>
+                    <p className="mt-3 text-sm font-bold text-amber-400 group-hover:text-amber-300">
+                      $97 &mdash; Instant Download &rarr;
+                    </p>
+                  </Link>
+                </StaggerItem>
+              );
+            })}
+          </StaggerContainer>
         </div>
       </section>
 
