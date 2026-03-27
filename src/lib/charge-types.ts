@@ -9,6 +9,40 @@
  *
  * When adding a new charge type, add it HERE — both routes import from this file.
  */
+/**
+ * Map legacy charge slugs to new common_charge slugs.
+ * Pure function — no DB needed. Uses hardcoded map from spec.
+ */
+const LEGACY_SLUG_MAP: Record<string, string> = {
+  "dui": "dui-dwi",
+  "dui-first": "dui-first-offense",
+  "dui-repeat": "dui-repeat-offense",
+  "assault": "simple-assault",
+  "domestic-violence": "domestic-violence",
+  "theft": "theft-larceny",
+  "robbery": "robbery",
+  "burglary": "burglary",
+  "fraud": "fraud-general",
+  "white-collar": "fraud-general",
+  "drug-possession": "drug-possession",
+  "drug-trafficking": "drug-trafficking",
+  "drug": "drug-possession",
+  "sex-offense": "sex-offense-contact",
+  "sex-offense-contact": "sex-offense-contact",
+  "sex-offense-digital": "sex-offense-digital",
+  "weapons": "weapons-possession",
+  "federal": "federal-other",
+  "probation-violation": "probation-violation",
+  "self-defense": "self-defense",
+  "other": "other",
+  "other-felony": "other",
+  "other-misdemeanor": "other",
+};
+
+export function resolveLegacyChargeSlug(slug: string): string {
+  return LEGACY_SLUG_MAP[slug] ?? slug;
+}
+
 export const ALLOWED_CHARGE_TYPES = [
   // Current intake form values (hierarchical flow)
   "drug-possession",

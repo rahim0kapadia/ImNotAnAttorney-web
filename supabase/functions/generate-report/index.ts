@@ -1677,6 +1677,39 @@ function resolveChargeSlug(raw: string): string {
 }
 
 /**
+ * Enhanced charge slug resolution — tries new taxonomy tables first.
+ * Falls back to the existing pattern-based resolveChargeSlug() if not found.
+ */
+async function resolveChargeSlugEnhanced(
+  raw: string,
+  url: string,
+  key: string
+): Promise<string> {
+  const legacyResolved = resolveChargeSlug(raw);
+
+  // Try to find this slug in common_charges (direct match)
+  try {
+    const directMatch = await supabaseSelect(url, key, "common_charges",
+      `slug=eq.${encodeURIComponent(legacyResolved)}&active=eq.true&limit=1&select=slug`);
+    if ((directMatch as Array<{slug: string}>).length > 0) {
+      return (directMatch as Array<{slug: string}>)[0].slug;
+    }
+  } catch { /* fall through */ }
+
+  // Try legacy_slugs array contains lookup
+  try {
+    const legacyMatch = await supabaseSelect(url, key, "common_charges",
+      `legacy_slugs=cs.${encodeURIComponent(`{"${legacyResolved}"}`)}&limit=1&select=slug`);
+    if ((legacyMatch as Array<{slug: string}>).length > 0) {
+      return (legacyMatch as Array<{slug: string}>)[0].slug;
+    }
+  } catch { /* fall through */ }
+
+  // Return the original pattern-resolved slug
+  return legacyResolved;
+}
+
+/**
  * Formats the charge-specific intake data block for the prompt.
  * Shared by both dynamic and fallback getChargeContext functions.
  */
@@ -1709,8 +1742,52 @@ async function getChargeContext(
 ): Promise<string> {
   const csBlock = formatChargeSpecificData(chargeSpecificData);
   const jur = jurisdictionLevel === "federal" ? "FEDERAL" : jurisdictionLevel === "state" ? "STATE" : "UNKNOWN JURISDICTION";
-  const slug = resolveChargeSlug(chargeType);
+  const slug = await resolveChargeSlugEnhanced(chargeType, url, key);
 
+  // ── NEW: Try enriched context from taxonomy tables ──
+  try {
+    // Get common charge
+    const ccRows = await supabaseSelect(url, key, "common_charges",
+      `slug=eq.${encodeURIComponent(slug)}&active=eq.true&limit=1`);
+    const commonCharge = (ccRows as Array<Record<string, unknown>>)[0];
+
+    if (commonCharge) {
+      // Get experts for this common charge
+      const expertRows = await supabaseSelect(url, key, "experts",
+        `common_charge_slugs=cs.${encodeURIComponent(`{"${slug}"}`)}&select=id,name,why_elite,key_framework&limit=3`);
+      const experts = expertRows as Array<{id: string; name: string; why_elite: string; key_framework: string}>;
+
+      if (experts.length > 0) {
+        // Build enriched context block
+        const chargeLines: string[] = [];
+        chargeLines.push(`- Charge: ${commonCharge.label}`);
+        if (commonCharge.severity_range) {
+          chargeLines.push(`- Severity: ${commonCharge.severity_range}`);
+        }
+
+        let result = `\nCHARGE-SPECIFIC CONTEXT — ${commonCharge.label} (${jur}):\n`;
+        result += `CHARGE CONTEXT:\n${chargeLines.join("\n")}\n`;
+
+        const expertLines = experts.map((e, i) =>
+          `${i + 1}. ${e.name} — ${e.why_elite}. Methodology: ${e.key_framework}.`
+        ).join("\n");
+        result += `\nGOD MODE EXPERTS (triangulated — use their methodology):\n${expertLines}`;
+
+        if (commonCharge.description) {
+          result += `\nFocus: ${commonCharge.description}`;
+        }
+
+        result += csBlock;
+
+        console.log(`[generate-report] Enriched context from taxonomy for "${slug}"`);
+        return result;
+      }
+    }
+  } catch (err) {
+    console.log(`[generate-report] Taxonomy lookup failed for "${slug}", trying legacy:`, err);
+  }
+
+  // ── EXISTING: Legacy charge_types + experts lookup ──
   try {
     // Step 1: Get charge type with prompt_label, focus_areas, expert_slugs
     const cts = await supabaseSelect(url, key, "charge_types",
