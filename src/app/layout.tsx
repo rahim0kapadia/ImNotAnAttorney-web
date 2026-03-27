@@ -145,6 +145,9 @@ export default async function RootLayout({
                 ],
                 areaServed: { "@type": "Country", name: "United States" },
                 serviceType: "Legal Information Research",
+                sameAs: [
+                  "https://x.com/ImNotAnAttorney",
+                ],
               },
               {
                 "@context": "https://schema.org",

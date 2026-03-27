@@ -41,7 +41,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment 
 - Vercel account: `rahim0kapadia-1967` / team: `rahim-kapadias-projects`
 - Deploy: `git push origin master` → auto-deploy. NEVER `vercel deploy`, `vercel env pull`, or `vercel domains` commands
 - Domain: imnotanattorney.com — Cloudflare A records → Vercel. Already configured. DO NOT touch domain settings.
-- Twitter: @ImNotAnAttorney (not yet created)
+- Twitter: @ImNotAnAttorney (live: https://x.com/ImNotAnAttorney)
 
 <important if="Rahim says run CV or you are doing verification or continuous verification">
 

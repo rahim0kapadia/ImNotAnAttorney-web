@@ -202,6 +202,14 @@ export function Footer() {
               >
                 Sitemap
               </Link>
+              <a
+                href="https://x.com/ImNotAnAttorney"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                X (Twitter)
+              </a>
             </div>
             <p className="mt-4 text-xs text-zinc-400">
               195 Dr MLK Jr St N
