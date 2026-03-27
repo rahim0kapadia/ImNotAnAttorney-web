@@ -85,7 +85,6 @@ export async function detectStuckIntakes(ctx: CronContext): Promise<CronResult> 
     .from("cases")
     .select("id, email, charge_type, tier, updated_at")
     .eq("status", "intake")
-    .eq("tier", "case-decoder")
     .eq("is_included_deliverable", false)
     .lt("updated_at", twoHoursAgo.toISOString());
 
@@ -146,6 +145,11 @@ export async function detectStuckGenerating(ctx: CronContext): Promise<CronResul
       const minutesStuck = Math.round(
         (ctx.now.getTime() - new Date(stuck.updated_at).getTime()) / (1000 * 60)
       );
+      const endpoint = stuck.tier === 'intelligence-brief' ? 'intelligence-brief'
+        : stuck.tier === 'x-ray' ? 'x-ray'
+        : stuck.tier === 'war-room' ? 'war-room'
+        : stuck.tier === 'situation-room' ? 'situation-room'
+        : 'case-decoder';
       const sendResult = await sendEmail({
         to: ctx.operatorEmail,
         subject: `ALERT: Report generation stuck for ${minutesStuck}+ min — ${stuck.email}`,
@@ -157,7 +161,7 @@ export async function detectStuckGenerating(ctx: CronContext): Promise<CronResul
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${stuck.id}</p>
           </div>
           <p><strong>Retry command:</strong></p>
-          <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${ctx.siteUrl}/api/generate/${stuck.tier === 'intelligence-brief' ? 'intelligence-brief' : 'case-decoder'} -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${stuck.id}","force":true}'</code>`,
+          <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${ctx.siteUrl}/api/generate/${endpoint} -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${stuck.id}","force":true}'</code>`,
       }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-generation", minutes: minutesStuck } });
 
       // Only transition status if alert was actually sent

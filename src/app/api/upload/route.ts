@@ -223,6 +223,19 @@ export async function POST(req: NextRequest) {
     }
 
     // =========================================================================
+    // 3a. TIER GUARD
+    // Only tiers that include discovery document analysis may upload files.
+    // Reject early so we don't process or store files for ineligible tiers.
+    // =========================================================================
+    const DISCOVERY_TIERS = new Set(["x-ray", "war-room", "situation-room", "witness-pack"]);
+    if (!DISCOVERY_TIERS.has(caseRecord.tier)) {
+      return NextResponse.json(
+        { error: "This case type does not accept document uploads" },
+        { status: 403 }
+      );
+    }
+
+    // =========================================================================
     // 4. FILE SIZE VALIDATION
     // Enforced after ownership check so we don't waste time validating files
     // for unauthorized requests. The 50MB limit is generous enough for scanned

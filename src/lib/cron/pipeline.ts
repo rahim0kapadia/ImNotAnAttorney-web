@@ -23,7 +23,7 @@ export async function retriggerMissedEvaluations(ctx: CronContext): Promise<Cron
   const fifteenMinAgo = new Date(ctx.now.getTime() - 15 * 60 * 1000).toISOString();
   const { data: missingEvals } = await ctx.supabase
     .from("cases")
-    .select("id")
+    .select("id, tier")
     .eq("status", "review")
     .is("eval_results", null)
     .lt("generated_at", fifteenMinAgo)
@@ -32,7 +32,7 @@ export async function retriggerMissedEvaluations(ctx: CronContext): Promise<Cron
   if (missingEvals && missingEvals.length > 0) {
     for (const c of missingEvals) {
       try {
-        const res = await fetch(`${ctx.siteUrl}/api/evaluate/case-decoder`, {
+        const res = await fetch(`${ctx.siteUrl}/api/evaluate/${c.tier}`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${ctx.operatorSecret}`,

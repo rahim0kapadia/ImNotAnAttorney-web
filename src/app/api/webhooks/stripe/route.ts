@@ -656,6 +656,20 @@ export async function POST(req: NextRequest) {
 
           if (includedCaseError) {
             console.error(`[Webhook] Included case insert error (${includedTier}):`, includedCaseError);
+            sendEmail({
+              to: OPERATOR_EMAIL,
+              subject: `URGENT: Included case creation failed — ${escapeHtml(includedTier)} for ${escapeHtml(email)}`,
+              html: `<h1 style="color: #EF4444;">Included Case Creation Failed</h1>
+                <p>A case record for an included deliverable could not be inserted. The customer will NOT receive this tier automatically.</p>
+                <p><strong>Customer:</strong> ${escapeHtml(email)}</p>
+                <p><strong>Primary Tier:</strong> ${escapeHtml(tier)}</p>
+                <p><strong>Missing Included Tier:</strong> ${escapeHtml(includedTier)}</p>
+                <p><strong>Order ID:</strong> ${escapeHtml(orderData.id)}</p>
+                <p><strong>Error:</strong> ${escapeHtml(includedCaseError.message)}</p>
+                <p><strong>Action:</strong> Manually create a case record in Supabase for tier <code>${escapeHtml(includedTier)}</code> linked to order <code>${escapeHtml(orderData.id)}</code>.</p>`,
+            }, { category: "operator-alert", metadata: { reason: "included-case-insert-failed", tier: includedTier, primary_tier: tier, order_id: orderData.id } }).catch((emailErr) => {
+              console.error("[Webhook] Failed to send operator alert for included case insert failure:", emailErr);
+            });
             continue;
           }
 
@@ -721,7 +735,7 @@ export async function POST(req: NextRequest) {
             <h1 style="color: #F59E0B;">Your Upgrade is Active</h1>
             <p>Since you already have your Case Decoder report, we can start building your ${escapeHtml(productName)} right away.</p>
             <p>We just need a few additional details about your judge, your attorney, and your case situation:</p>
-            <a href="${origin}/intake/intelligence-brief?case=${caseId}&token=${phase2Token}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Intelligence Brief Details</a>
+            <a href="${origin}/intake/${escapeHtml(tier)}?case=${caseId}&token=${phase2Token}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete ${escapeHtml(productName)} Details</a>
             <p style="color: #A1A1AA;">This takes about 5 minutes. Your ${escapeHtml(productName)} will be delivered within 72 hours after you submit.</p>
           `,
         }, `phase 2 intake for upgrade ${email} (${tier})`, { category: "phase2-intake", case_id: caseId!, metadata: { tier } });

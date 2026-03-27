@@ -23,7 +23,7 @@ export async function detectSLABreaches(ctx: CronContext): Promise<CronResult> {
     .from("cases")
     .select("id, email, tier, delivery_due_at")
     .lt("delivery_due_at", ctx.now.toISOString())
-    .not("status", "in", '("delivered","refunded")')
+    .not("status", "in", '("delivered","refunded","cancelled","generation-failed","intake-stalled")')
     .limit(200);
 
   if (slaCases && slaCases.length > 0) {

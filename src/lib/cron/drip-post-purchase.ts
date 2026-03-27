@@ -23,7 +23,7 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
   const result = emptyResult();
 
   const thirtyDaysAgo = new Date(ctx.now);
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 90);
 
   // Only fetch orders with status "paid" — refunded orders are excluded.
   const { data: orders, error: orderError } = await ctx.supabase

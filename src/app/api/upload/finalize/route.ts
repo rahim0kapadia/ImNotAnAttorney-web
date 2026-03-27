@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
     // beyond "submitted" (e.g., into processing, review, delivered), re-finalization
     // would regress the status and break the pipeline.
     // =========================================================================
-    const FINALIZABLE_STATUSES = ["uploaded", "pending", "awaiting-intake"];
+    const FINALIZABLE_STATUSES = ["uploaded", "pending"];
     if (caseRecord.status === "submitted") {
       // Idempotent: already submitted, return success without re-processing.
       // Handles double-clicks, page refreshes, retry logic, and network retries.

@@ -206,7 +206,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
   {
     key: "nurture_day7",
     delayDays: 7,
-    subject: "10 questions, $197, 48 hours — here's exactly what you get",
+    subject: `10 questions, ${TIER_CORE["case-decoder"].priceDisplay}, 48 hours — here's exactly what you get`,
     html: `
       <h1 style="color: #F59E0B;">Here's What a Case Decoder Includes</h1>
       <ul style="padding-left: 20px;">

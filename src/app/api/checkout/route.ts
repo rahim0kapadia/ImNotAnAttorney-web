@@ -303,6 +303,12 @@ export async function POST(req: NextRequest) {
       }
 
       if (priorOrders && priorOrders.length > 0) {
+        // POLICY: Upgrade credits use base tier price, not amount actually paid.
+        // A customer who bought CD ($197) then upgraded to IB (paying $800 after $197 credit)
+        // gets $997 credit toward X-Ray — the full IB base price, not the $800 they paid.
+        // This incentivizes the upgrade ladder by making each next tier more attractive.
+        // Confirmed as correct business behavior 2026-03-27.
+        //
         // Tier ordering from lowest to highest price. indexOf() returns the
         // position; only orders with a lower index than the current tier qualify.
         const tierOrder = [
