@@ -233,7 +233,40 @@ export interface PortalCaseView {
 // STATUS + TRANSITION TYPES
 // ============================================================
 
-/** Valid discovery-tier case statuses. */
+/** Valid case statuses across all tiers.
+ *
+ * CD/IB pipeline:    awaiting-intake → intake → generating → delivered
+ * X-Ray pipeline:    awaiting-intake → intake → pending → processing → intelligence → strategy → packaging → delivered
+ * War Room pipeline: (same as X-Ray) → monitoring  (ongoing weekly updates after delivery)
+ * Situation Room:    (same as War Room, priority flag set on case record)
+ *
+ * Terminal statuses: delivered, refunded, cancelled
+ */
+export type CaseStatus =
+  // Pre-intake
+  | "awaiting-intake"
+  | "intake"
+  // CD/IB specific
+  | "generating"
+  // Discovery upload states
+  | "pending"
+  | "uploaded"
+  | "submitted"
+  // Engine pipeline phases (X-Ray+)
+  | "processing"
+  | "intelligence"
+  | "strategy"
+  | "packaging"
+  // Review / delivery
+  | "review"
+  | "delivered"
+  // War Room ongoing updates
+  | "monitoring"
+  // Terminal
+  | "refunded"
+  | "cancelled";
+
+/** @deprecated Use CaseStatus instead. Kept for backward compatibility. */
 export type DiscoveryStatus =
   | "pending"
   | "uploaded"
@@ -245,9 +278,22 @@ export type DiscoveryStatus =
 
 /** Allowed manual status transitions (operator can trigger). */
 export const ALLOWED_TRANSITIONS: Record<string, string[]> = {
+  // Pre-intake
+  "awaiting-intake": ["intake"],
+  // CD/IB path
+  intake: ["generating", "pending"],
+  generating: ["review"],
+  // Discovery upload path
   pending: ["uploaded"],
   uploaded: ["submitted"],
   submitted: ["processing"],
-  processing: ["review", "submitted"], // back to submitted if issues found
+  // Engine pipeline phases
+  processing: ["intelligence", "review", "submitted"], // back to submitted if issues found
+  intelligence: ["strategy", "processing"],
+  strategy: ["packaging", "intelligence"],
+  packaging: ["review", "strategy"],
+  // Review / delivery
   review: ["delivered", "processing"], // back to processing if more work needed
+  // War Room post-delivery monitoring
+  delivered: ["monitoring"],
 };

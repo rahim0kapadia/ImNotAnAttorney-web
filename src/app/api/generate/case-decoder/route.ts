@@ -15,10 +15,22 @@
  *     3. Fire off the Supabase Edge Function (150s timeout) without awaiting the response
  *     4. Return immediately to the caller
  *
- * Status flow: intake → generating → review (on success) / generation-failed (on timeout)
+ * Status flow:
+ *   Default (operator review): intake → generating → review (on success) / generation-failed (on timeout)
+ *   Auto-delivery path:        intake → generating → delivered (skips operator review)
+ *
  *   - This endpoint handles: intake → generating
  *   - The Edge Function handles: generating → review (or generation-failed)
+ *   - When auto_deliver is set, after() polls case status and calls /api/deliver when review is reached
  *   - The cron (/api/cron/drip Part 5) detects stuck "generating" and marks generation-failed
+ *
+ * Auto-delivery (auto_deliver: true):
+ *   Pass auto_deliver:true to skip operator review and deliver directly to the customer.
+ *   Uses Next.js after() to schedule a background poll that watches for status:"review",
+ *   then calls /api/deliver internally with OPERATOR_SECRET to transition to "delivered"
+ *   and send the customer their report link.
+ *   Poll interval: 15s, max attempts: 20 (~5 minutes). If poll times out, the case stays
+ *   in "review" and the operator receives the standard review email for manual approval.
  *
  * Security: OPERATOR_SECRET bearer token required. The guard explicitly checks that
  * OPERATOR_SECRET is defined — if the env var is missing/undefined, ALL requests are
@@ -26,10 +38,10 @@
  * missing env var.
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email";
-import { caseThreadId } from "@/lib/site";
+import { caseThreadId, signOperatorToken } from "@/lib/site";
 import { requireOperatorSecret } from "@/lib/auth/guards";
 
 /**
@@ -40,6 +52,89 @@ import { requireOperatorSecret } from "@/lib/auth/guards";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+// ──────────────────────────────────────────────────────────────
+// AUTO-DELIVERY BACKGROUND POLL
+// ──────────────────────────────────────────────────────────────
+// Runs inside after() — post-response background work.
+// Polls the case status every 15s until it reaches "review",
+// then calls /api/deliver to transition to "delivered" and email
+// the customer. Max 20 attempts (~5 minutes). Falls back gracefully
+// to operator-review flow if generation times out.
+//
+// Why poll instead of a callback: The Edge Function is Deno-based
+// with no Node/Next.js imports. A poll in after() is the cleanest
+// integration without modifying the Edge Function contract.
+async function scheduleAutoDelivery(caseId: string): Promise<void> {
+  const POLL_INTERVAL_MS = 15_000;
+  const MAX_ATTEMPTS = 20;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+  const operatorSecret = process.env.OPERATOR_SECRET;
+
+  if (!operatorSecret) {
+    console.error("[CD-AutoDeliver] OPERATOR_SECRET not set — auto-delivery skipped");
+    return;
+  }
+
+  const supabase = createAdminClient();
+
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+
+    const { data } = await supabase
+      .from("cases")
+      .select("status")
+      .eq("id", caseId)
+      .single();
+
+    const status = data?.status;
+    console.log(`[CD-AutoDeliver] Poll ${attempt}/${MAX_ATTEMPTS} — case ${caseId} status: ${status}`);
+
+    if (status === "delivered") {
+      console.log(`[CD-AutoDeliver] Case ${caseId} already delivered — stopping poll`);
+      return;
+    }
+
+    if (status === "generation-failed") {
+      console.error(`[CD-AutoDeliver] Case ${caseId} generation failed — auto-delivery aborted`);
+      return;
+    }
+
+    if (status === "review") {
+      // Report is ready — call /api/deliver with operator token
+      // Using signed HMAC token (not raw secret) for security
+      let deliverToken: string;
+      try {
+        deliverToken = signOperatorToken(caseId);
+      } catch (err) {
+        console.error("[CD-AutoDeliver] Failed to sign operator token:", err);
+        return;
+      }
+
+      try {
+        const deliverRes = await fetch(`${siteUrl}/api/deliver`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: deliverToken, case: caseId }),
+        });
+
+        if (deliverRes.ok) {
+          console.log(`[CD-AutoDeliver] Case ${caseId} delivered successfully`);
+        } else {
+          const text = await deliverRes.text().catch(() => "(no body)");
+          console.error(`[CD-AutoDeliver] /api/deliver returned ${deliverRes.status}: ${text}`);
+        }
+      } catch (err) {
+        console.error("[CD-AutoDeliver] Failed to call /api/deliver:", err);
+      }
+      return;
+    }
+
+    // Still generating — continue polling
+  }
+
+  console.warn(`[CD-AutoDeliver] Case ${caseId} did not reach 'review' after ${MAX_ATTEMPTS} attempts — operator review email already sent`);
+}
 
 export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
@@ -57,7 +152,7 @@ export async function POST(req: NextRequest) {
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
-  const { caseId, force } = body;
+  const { caseId, force, auto_deliver } = body;
   if (!caseId) {
     return NextResponse.json({ error: "caseId required" }, { status: 400 });
   }
@@ -152,6 +247,16 @@ export async function POST(req: NextRequest) {
   );
 
   // ──────────────────────────────────────────────────────────────
+  // AUTO-DELIVERY: Schedule background poll (when auto_deliver=true)
+  // ──────────────────────────────────────────────────────────────
+  // after() runs post-response, GC-safe on Vercel. The poll watches for
+  // status:"review" then fires /api/deliver to skip operator review and
+  // deliver directly to the customer.
+  if (auto_deliver) {
+    after(scheduleAutoDelivery(caseId));
+  }
+
+  // ──────────────────────────────────────────────────────────────
   // "WE'VE STARTED" TRANSACTIONAL EMAIL
   // ──────────────────────────────────────────────────────────────
   // Let the customer know their CD is being generated. Same pattern as IB route.
@@ -197,6 +302,9 @@ export async function POST(req: NextRequest) {
     success: true,
     caseId,
     status: "generating",
-    message: "Report generation started. Check case status for updates.",
+    auto_deliver: auto_deliver ? true : false,
+    message: auto_deliver
+      ? "Report generation started. Auto-delivery scheduled — customer will receive report directly."
+      : "Report generation started. Check case status for updates.",
   });
 }

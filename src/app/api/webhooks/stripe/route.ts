@@ -556,6 +556,25 @@ export async function POST(req: NextRequest) {
       }
 
       // ──────────────────────────────────────────────────────────────
+      // SITUATION ROOM PRIORITY FLAG
+      // ──────────────────────────────────────────────────────────────
+      // Situation Room ($9,997) cases get priority = 1 so the engine
+      // queue and operator dashboard surface them above all other cases.
+      // Lower number = higher priority; null = standard queue position.
+      if (caseId && tier === "situation-room") {
+        const { error: priorityError } = await supabase
+          .from("cases")
+          .update({ priority: 1 })
+          .eq("id", caseId);
+        if (priorityError) {
+          // Non-blocking — priority is an operational convenience, not business-critical
+          console.error("[Webhook] Failed to set situation-room priority:", priorityError);
+        } else {
+          console.log(`[Webhook] Set priority=1 on situation-room case ${caseId}`);
+        }
+      }
+
+      // ──────────────────────────────────────────────────────────────
       // INCLUDED-TIER CASE CREATION (tier inclusion model)
       // ──────────────────────────────────────────────────────────────
       // When a customer buys IB ($997), they also get a Case Decoder
@@ -811,11 +830,30 @@ export async function POST(req: NextRequest) {
       `,
     }, `payment confirmation for ${email}`, { category: "payment-confirmation", case_id: caseId || undefined, order_id: orderData?.id, metadata: { tier, amount } });
 
-    // NOTE: Drip recording was intentionally removed from this webhook.
-    // Previously, we recorded post_{tier}_delivery here at payment time, which
-    // caused the actual delivery drip email to be skipped (it thought it was
-    // already sent). Delivery drip is now recorded in /api/deliver after the
-    // report is actually delivered to the customer.
+    // ──────────────────────────────────────────────────────────────
+    // DRIP: Upsert subscriber record at purchase time
+    // ──────────────────────────────────────────────────────────────
+    // We upsert a subscriber record here so the drip cron can track
+    // dedup state for this customer. We do NOT record any drip key —
+    // that would cause the actual delivery email to be skipped later.
+    // The delivery drip key (post_{tier}_delivery) is recorded in
+    // /api/webhooks/engine/delivery after the report reaches the customer.
+    //
+    // Without this upsert, drip cron sends all emails but cannot record
+    // "sent" state — causing duplicate emails on re-runs.
+    if (orderData) {
+      try {
+        await supabase
+          .from("subscribers")
+          .upsert(
+            { email: email.toLowerCase(), source: `purchase-${tier}` },
+            { onConflict: "email" }
+          );
+      } catch (dripUpsertErr) {
+        // Non-critical — log but do not block the webhook response
+        console.error("[Webhook] Subscriber upsert for drip failed:", dripUpsertErr);
+      }
+    }
 
     // ──────────────────────────────────────────────────────────────
     // OPERATOR NOTIFICATION EMAIL

@@ -9,7 +9,9 @@ const STATUS_STYLES: Record<string, string> = {
   completed: "bg-green-500/10 text-green-400 border border-green-500/20",
   verified: "bg-green-500/10 text-green-400 border border-green-500/20",
   paid: "bg-green-500/10 text-green-400 border border-green-500/20",
-  // Amber — in-progress / warning states
+  // Teal — ongoing monitoring (War Room weekly updates)
+  monitoring: "bg-teal-500/10 text-teal-400 border border-teal-500/20",
+  // Amber — in-progress / pipeline phases
   review: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
   processing: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
   generating: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
@@ -18,9 +20,16 @@ const STATUS_STYLES: Record<string, string> = {
   in_progress: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
   running: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
   queued: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
+  // Purple — deep engine pipeline phases (X-Ray+)
+  intelligence: "bg-purple-500/10 text-purple-400 border border-purple-500/20",
+  strategy: "bg-purple-500/10 text-purple-400 border border-purple-500/20",
+  packaging: "bg-purple-500/10 text-purple-400 border border-purple-500/20",
   // Blue — intake / pending states
   intake: "bg-blue-500/10 text-blue-400 border border-blue-500/20",
   "awaiting-intake": "bg-blue-500/10 text-blue-400 border border-blue-500/20",
+  pending: "bg-blue-500/10 text-blue-400 border border-blue-500/20",
+  uploaded: "bg-blue-500/10 text-blue-400 border border-blue-500/20",
+  submitted: "bg-blue-500/10 text-blue-400 border border-blue-500/20",
   // Red — error / terminal states
   failed: "bg-red-500/10 text-red-400 border border-red-500/20",
   "generation-failed": "bg-red-500/10 text-red-400 border border-red-500/20",
