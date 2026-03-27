@@ -93,17 +93,28 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const indexTsPath = path.join(__dirname, "..", "supabase", "functions", "generate-report", "index.ts");
 let SYSTEM_PROMPT;
+let ANTI_HALLUCINATION_BLOCK;
 
 try {
   const indexTs = fs.readFileSync(indexTsPath, "utf-8");
+
+  // Extract SYSTEM_PROMPT
   const sysStart = indexTs.indexOf("const SYSTEM_PROMPT = `");
   if (sysStart === -1) throw new Error("Could not find SYSTEM_PROMPT in index.ts");
   const sysEnd = indexTs.indexOf("`;", sysStart + 22);
   if (sysEnd === -1) throw new Error("Could not find closing backtick for SYSTEM_PROMPT");
   SYSTEM_PROMPT = indexTs.slice(sysStart + 22, sysEnd);
   console.log(`[worker] Extracted SYSTEM_PROMPT (${SYSTEM_PROMPT.length} chars)`);
+
+  // Extract ANTI_HALLUCINATION_BLOCK (was missing — bug fix)
+  const ahStart = indexTs.indexOf("const ANTI_HALLUCINATION_BLOCK = `");
+  if (ahStart === -1) throw new Error("Could not find ANTI_HALLUCINATION_BLOCK in index.ts");
+  const ahEnd = indexTs.indexOf("`;", ahStart + 33);
+  if (ahEnd === -1) throw new Error("Could not find closing backtick for ANTI_HALLUCINATION_BLOCK");
+  ANTI_HALLUCINATION_BLOCK = indexTs.slice(ahStart + 33, ahEnd);
+  console.log(`[worker] Extracted ANTI_HALLUCINATION_BLOCK (${ANTI_HALLUCINATION_BLOCK.length} chars)`);
 } catch (err) {
-  console.error(`[worker] Failed to extract SYSTEM_PROMPT from ${indexTsPath}:`, err.message);
+  console.error(`[worker] Failed to extract prompts from ${indexTsPath}:`, err.message);
   process.exit(1);
 }
 
@@ -698,8 +709,9 @@ async function main() {
 
   const { data: stuckCases, error: queryErr } = await supabase
     .from("cases")
-    .select("id, email, intake_id, tier, status, updated_at")
+    .select("id, email, intake_id, tier, status, updated_at, batch_id")
     .eq("status", "generating")
+    .is("batch_id", null)
     .lt("updated_at", threeMinAgo)
     .order("updated_at", { ascending: true })
     .limit(1);
@@ -768,15 +780,16 @@ async function main() {
   const userPrompt = await buildUserPrompt(intake);
   console.log(`[worker] Prompt built (${userPrompt.length} chars), calling Claude API...`);
 
-  // Step 4: Call Claude API with retry on 529
+  // Step 4: Submit batch request (poller handles result processing)
+  const fullSystemPrompt = SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK;
+  console.log(`[worker] Full system prompt: ${fullSystemPrompt.length} chars`);
+
   const MAX_RETRIES = 3;
-  let markdown = null;
-  let usage = null;
+  let batchId = null;
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
-      const apiStart = Date.now();
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch("https://api.anthropic.com/v1/messages/batches", {
         method: "POST",
         headers: {
           "x-api-key": ANTHROPIC_API_KEY,
@@ -784,206 +797,73 @@ async function main() {
           "content-type": "application/json",
         },
         body: JSON.stringify({
-          model: "claude-opus-4-6",
-          max_tokens: 32000,
-          thinking: { type: "enabled", budget_tokens: 16000 },
-          system: SYSTEM_PROMPT,
-          messages: [{ role: "user", content: userPrompt }],
+          requests: [{
+            custom_id: `cd-${caseData.id}`,
+            params: {
+              model: "claude-opus-4-6",
+              max_tokens: 32000,
+              thinking: { type: "adaptive" },
+              output_config: { effort: "high" },
+              system: [{
+                type: "text",
+                text: fullSystemPrompt,
+                cache_control: { type: "ephemeral", ttl: "1h" },
+              }],
+              messages: [{ role: "user", content: userPrompt }],
+            },
+          }],
         }),
       });
 
       if (response.status === 529 && attempt < MAX_RETRIES) {
         const backoff = attempt * 5;
-        console.log(`[worker] Claude API overloaded (attempt ${attempt}/${MAX_RETRIES}), retrying in ${backoff}s...`);
+        console.log(`[worker] Batch API overloaded (attempt ${attempt}/${MAX_RETRIES}), retrying in ${backoff}s...`);
         await new Promise((r) => setTimeout(r, backoff * 1000));
         continue;
       }
 
       if (!response.ok) {
         const errText = await response.text();
-        throw new Error(`Claude API error (${response.status}): ${errText}`);
+        throw new Error(`Batch API error (${response.status}): ${errText}`);
       }
 
-      const result = await response.json();
-      usage = result.usage;
-
-      // Extract text blocks (filter out thinking blocks)
-      const textBlocks = (result.content || []).filter((b) => b.type === "text");
-      const text = textBlocks.map((b) => b.text).join("") || "";
-
-      const apiDuration = ((Date.now() - apiStart) / 1000).toFixed(1);
-      console.log(`[worker] Claude API completed in ${apiDuration}s — input: ${usage?.input_tokens}, output: ${usage?.output_tokens}, stop: ${result.stop_reason}`);
-
-      // Opus can nondeterministically produce a thinking-only response (all
-      // output tokens go to the thinking block, zero text). Retry — next attempt
-      // almost always succeeds.
-      if (!text.trim()) {
-        if (attempt < MAX_RETRIES) {
-          console.warn(`[worker] Empty text response (${usage?.output_tokens} output tokens were all thinking). Retrying (attempt ${attempt}/${MAX_RETRIES})...`);
-          continue;
-        }
-        throw new Error(`Empty response from Claude API after ${MAX_RETRIES} attempts (${usage?.output_tokens} output tokens were all thinking)`);
-      }
-
-      markdown = text;
+      const batch = await response.json();
+      batchId = batch.id;
+      console.log(`[worker] Batch submitted: ${batchId} (expires: ${batch.expires_at})`);
       break;
     } catch (err) {
-      if (attempt === MAX_RETRIES) {
-        // All retries exhausted — set status to generation-failed and alert operator
-        console.error(`[worker] Claude API failed after ${MAX_RETRIES} attempts:`, err.message);
-
+      if (attempt >= MAX_RETRIES) {
+        console.error(`[worker] Batch submission failed after ${MAX_RETRIES} attempts:`, err.message);
         await supabase
           .from("cases")
           .update({ status: "generation-failed", updated_at: new Date().toISOString() })
           .eq("id", caseData.id);
-
         await sendEmail({
           to: OPERATOR_EMAIL,
-          subject: `[Worker] URGENT: Report generation failed for ${escapeHtml(intake.first_name)}`,
-          html: `<h1 style="color: #EF4444;">Report Generation Failed (Backup Worker)</h1>
-            <p>Case ID: ${caseData.id}</p><p>Customer: ${caseData.email}</p>
-            <p>Charge: ${escapeHtml(intake.charge_type)}</p>
-            <p>Error: ${escapeHtml(err.message)}</p>
-            <p>Attempts: ${MAX_RETRIES}</p>
-            <p style="margin-top: 16px;"><strong>Retry command:</strong></p>
-            <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${SITE_URL}/api/generate/case-decoder -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${caseData.id}"}'</code>
-            <p style="color: #71717A; font-size: 12px;">Generated by backup worker</p>`,
+          subject: `[Worker] Batch submission failed: ${caseData.email}`,
+          html: `<h1 style="color: #EF4444;">Batch Submission Failed</h1>
+            <p>Case ID: ${caseData.id}</p><p>Error: ${err.message}</p>`,
         });
-
         process.exit(1);
       }
-      console.error(`[worker] Claude API attempt ${attempt} failed:`, err.message);
       const backoff = attempt * 5;
-      console.log(`[worker] Retrying in ${backoff}s...`);
+      console.log(`[worker] Attempt ${attempt} failed, retrying in ${backoff}s...`);
       await new Promise((r) => setTimeout(r, backoff * 1000));
     }
   }
 
-  console.log(`[worker] Claude done (${markdown.length} chars), rendering HTML...`);
-
-  // Strip model-generated methodology note (system injects the official one)
-  markdown = stripModelMethodologyNote(markdown);
-
-  // Post-generation validation (soft — log but don't block)
-  const validation = validateReportContent(markdown);
-  if (!validation.valid) {
-    console.warn(`[worker] Validation warnings (${validation.violations.length}):`,
-      validation.violations.join("; "));
-  }
-
-  // Extract expert names from charge context for methodology note
-  // Re-call getChargeContext (cheap, idempotent) since chargeBlock is scoped inside buildUserPrompt
-  const chargeContextForExperts = await getChargeContext(
-    intake.charge_type,
-    intake.jurisdiction_level || "unknown",
-    intake.charge_specific_data || {}
-  );
-  const expertNames = extractExpertNames(chargeContextForExperts);
-
-  // Step 5: Render HTML
-  const reportToken = crypto.randomUUID();
-  const reportDate = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-
-  let daysSinceArrest = null;
-  if (intake.arrest_date) {
-    const arrestDate = new Date(intake.arrest_date);
-    if (!isNaN(arrestDate.getTime())) {
-      daysSinceArrest = Math.floor((Date.now() - arrestDate.getTime()) / (1000 * 60 * 60 * 24));
-    }
-  }
-
-  const reportHtml = renderReportHtml(markdown, {
-    firstName: intake.first_name,
-    charges: intake.charge_type,
-    jurisdiction: `${intake.state || ""}${intake.incident_location ? ` / ${intake.incident_location}` : ""}`.trim() || "Not specified",
-    reportDate,
-    reportId: reportToken.slice(0, 8).toUpperCase(),
-    caseNumber: intake.case_number || undefined,
-    courtDate: intake.court_date || undefined,
-    daysSinceArrest,
-    expertNames: expertNames || undefined,
-    chargeType: intake.charge_type,
-  });
-
-  // Step 6: Save to Supabase
-  const tokenExpiry = new Date();
-  tokenExpiry.setFullYear(tokenExpiry.getFullYear() + 1);
-
-  const { error: updateErr } = await supabase
+  // Step 5: Save batch_id and exit — cron poller handles result processing
+  await supabase
     .from("cases")
-    .update({
-      report_html: reportHtml,
-      report_token: reportToken,
-      generated_at: new Date().toISOString(),
-      status: "review",
-      charge_type: intake.charge_type,
-      updated_at: new Date().toISOString(),
-      report_token_expires_at: tokenExpiry.toISOString(),
-    })
+    .update({ batch_id: batchId, updated_at: new Date().toISOString() })
     .eq("id", caseData.id);
 
-  if (updateErr) {
-    console.error("[worker] Failed to save report to Supabase:", updateErr.message);
-    // Don't exit — still try to send operator email
-  } else {
-    console.log(`[worker] Report saved to DB (token: ${reportToken.slice(0, 8)}...)`);
-  }
-
-  // Step 7: Send operator review email
-  const approveToken = OPERATOR_SECRET ? signOperatorToken(caseData.id, OPERATOR_SECRET) : null;
-
-  await sendEmail({
-    to: OPERATOR_EMAIL,
-    subject: `[Worker] Review Report: ${escapeHtml(intake.charge_type)} — ${escapeHtml(intake.first_name)}`,
-    html: `
-      <h1 style="color: #F59E0B;">Case Decoder Report Ready for Review</h1>
-      <p style="color: #71717A; font-size: 12px; margin-bottom: 16px;">Generated by backup worker (Edge Function timed out)</p>
-      <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
-        <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(intake.first_name)} ${escapeHtml(intake.last_name || "")}</p>
-        <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Email:</strong> ${escapeHtml(caseData.email)}</p>
-        <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(intake.charge_type)}</p>
-        <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">State:</strong> ${escapeHtml(intake.state || "Not provided")}</p>
-        <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseData.id}</p>
-        <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Generated:</strong> ${reportDate}</p>
-      </div>
-      ${!validation.valid ? `<div style="background: #422006; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #EF4444;">
-        <p style="margin: 0 0 8px; color: #FDE68A; font-weight: bold;">VALIDATION WARNINGS (${validation.violations.length})</p>
-        ${validation.violations.map(v => `<p style="margin: 4px 0; color: #D4D4D8; font-size: 13px;">• ${escapeHtml(v)}</p>`).join("")}
-      </div>` : ""}
-      <div style="margin: 24px 0; display: flex; gap: 12px;">
-        ${approveToken
-          ? `<a href="${SITE_URL}/api/deliver?token=${approveToken}&case=${caseData.id}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Approve &amp; Deliver</a>`
-          : `<p style="color: #EF4444;">OPERATOR_SECRET not configured — approve via dashboard</p>`
-        }
-        <a href="${SITE_URL}/report/${reportToken}" style="display: inline-block; padding: 14px 28px; background: #3B82F6; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Preview Report</a>
-      </div>
-    `,
-  });
-
-  // Step 8: Fire-and-forget — trigger evaluate-report Edge Function
-  try {
-    fetch(`${SUPABASE_URL}/functions/v1/evaluate-report`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${SUPABASE_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ caseId: caseData.id }),
-    }).catch((err) => console.error("[worker] Eval trigger failed:", err.message));
-  } catch {
-    // Silently ignore — cron safety net will catch missed evaluations
-  }
-
-  // Step 9: Log final stats
-  const totalDuration = ((Date.now() - startTime) / 1000).toFixed(1);
-  console.log(`[worker] Complete! Case ${caseData.id} -> review`);
-  console.log(`[worker] Stats: ${totalDuration}s total, ${markdown.length} chars, input=${usage?.input_tokens || "?"}, output=${usage?.output_tokens || "?"}`);
-
+  const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+  console.log(`[worker] Batch ${batchId} saved to case ${caseData.id}. Exiting (${elapsed}s). Cron poller will process results.`);
   process.exit(0);
 }
 
-// Run
 main().catch((err) => {
-  console.error("[worker] Unhandled error:", err);
+  console.error("[worker] Fatal:", err);
   process.exit(1);
 });
