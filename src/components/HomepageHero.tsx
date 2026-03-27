@@ -14,16 +14,28 @@ import type { TierSlug } from "@/lib/tiers";
  * can drive CTA state. When no charge is selected, defaults to Case Decoder
  * ($197) as primary CTA. When a charge is selected, swaps to that playbook.
  */
+/** Maps category slugs (from ChargeTypeSelector) to playbook TierSlugs */
+const CATEGORY_TO_PLAYBOOK: Record<string, string> = {
+  "dui-driving": "dui-first-offense",
+  "drug-offenses": "drug-possession",
+  "sex-offenses": "sex-offense",
+  "federal-specific": "federal-criminal",
+  "probation-parole": "probation-violation",
+  "fraud-financial": "white-collar",
+};
+
 export function HomepageHero() {
-  const [selectedSlug, setSelectedSlug] = useState<TierSlug | null>(null);
+  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+
+  // Resolve category slug → playbook slug (null when category has no matching playbook)
+  const playbookSlug = selectedSlug ? CATEGORY_TO_PLAYBOOK[selectedSlug] ?? null : null;
 
   // CTA config based on selection state
-  const primaryHref = selectedSlug
-    ? `/checkout?tier=${selectedSlug}`
-    : "/start";
-  const primaryLabel = selectedSlug
-    ? `Get Your ${TIER_CORE[selectedSlug].name} \u2014 ${TIER_CORE[selectedSlug].priceDisplay}`
-    : `Start Your Case Research \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`;
+  const primaryHref = playbookSlug ? `/checkout?tier=${playbookSlug}` : "/start";
+  const primaryLabel =
+    playbookSlug && TIER_CORE[playbookSlug as TierSlug]
+      ? `Get Your ${TIER_CORE[playbookSlug as TierSlug].name} \u2014 ${TIER_CORE[playbookSlug as TierSlug].priceDisplay}`
+      : `Start Your Case Research \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`;
 
   const secondaryHref = selectedSlug ? "/start" : "/playbooks";
   const secondaryLabel = selectedSlug
