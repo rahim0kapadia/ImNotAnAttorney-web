@@ -40,7 +40,7 @@ import { TestimonialSection } from "@/components/TestimonialSection";
 import { RecentPurchaseNotification } from "@/components/RecentPurchaseNotification";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { DiscoveryReveal } from "@/components/motion/DiscoveryReveal";
-import { ChargeTypeSelector } from "@/components/ChargeTypeSelector";
+import { HomepageHero } from "@/components/HomepageHero";
 import { SITE_URL } from "@/lib/site";
 import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
@@ -50,7 +50,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "ImNotAnAttorney — Your Case File Has Answers. We Find Them.",
   description:
-    `Your attorney hasn't called back. Your court date is approaching. We research your charges and hand you the exact questions — DUI Defense Playbook ${TIER_CORE["dui-first-offense"].priceDisplay}, instant download.`,
+    `Your attorney hasn't called back. Your court date is approaching. We research your charges and hand you the exact questions — Case Decoder ${TIER_CORE["case-decoder"].priceDisplay}, 48-hour delivery.`,
   alternates: {
     canonical: SITE_URL,
   },
@@ -207,66 +207,7 @@ export default function Home() {
         }}
       />
 
-      {/* ------------------------------------------------------------------ */}
-      {/* HERO SECTION                                                      */}
-      {/* H1 leads with the #1 defendant pain (attorney won't call back)   */}
-      {/* per VoC research — verbatim from r/legaladvice and Avvo.         */}
-      {/* Subheadline mirrors emotional vocabulary: scared, confused,       */}
-      {/* nobody's explaining. Fear → empowerment transition (Wolf).        */}
-      {/*   Primary: CTA -> /checkout                                      */}
-      {/*   Secondary: "See What We Found" -> /sample (proof before buy)   */}
-      {/* Below CTAs: free score link (/score) as low-commitment fallback. */}
-      {/* ------------------------------------------------------------------ */}
-      <section className="px-4 pb-16 pt-24 text-center md:pt-32">
-        <div className="mx-auto max-w-4xl">
-          <FadeInUp>
-            <h1 className="font-display text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
-              Your Case File Has Answers.
-              <br />
-              <span className="text-amber-400">We Find Them. You Ask.</span>
-            </h1>
-          </FadeInUp>
-          <FadeInUp delay={0.1}>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300">
-              26 questions built from 40+ defense attorneys&apos; methods &mdash; by defendants who&apos;ve been where you are.
-            </p>
-          </FadeInUp>
-          <FadeInUp delay={0.2}>
-            <div className="mt-8 flex flex-col items-center gap-4">
-              <Link
-                href="/checkout?tier=dui-first-offense"
-                className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
-              >
-                Get Your DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} &rarr;
-              </Link>
-              <p className="text-sm text-zinc-300">
-                Find It or It&apos;s Free &mdash; if we don&apos;t find something your attorney hasn&apos;t raised, full refund.
-              </p>
-            </div>
-          </FadeInUp>
-        </div>
-      </section>
-
-      <section className="px-4 pb-8 text-center">
-        <div className="mx-auto max-w-4xl">
-          <FadeInUp>
-            <p className="text-sm font-semibold uppercase tracking-wider text-amber-500">
-              Built by a defendant who read his own 500-page discovery file.
-            </p>
-            <p className="mt-3 text-sm text-zinc-400">
-              For defendants and the people who love them.{" "}
-              <span className="font-semibold text-amber-500">We Research. You Ask.</span>
-            </p>
-          </FadeInUp>
-        </div>
-      </section>
-
-      {/* CHARGE TYPE SELECTOR — Moved below hero per Covello (one CTA per screen) */}
-      <section className="px-4 py-8">
-        <div className="mx-auto max-w-4xl">
-          <ChargeTypeSelector />
-        </div>
-      </section>
+      <HomepageHero />
 
       {/* ------------------------------------------------------------------ */}
       {/* PROOF SECTION — PCSO-Authentic Discovery Document Reveal          */}
@@ -299,10 +240,11 @@ export default function Home() {
       {/* without being manipulative (suppression motions genuinely expire). */}
       <section className="border-y border-amber-500/20 bg-amber-500/5 px-4 py-4">
         <p className="text-center text-sm text-amber-400">
-          Three deadlines are running right now, and your attorney may not have
+          Deadlines are running right now, and your attorney may not have
           calendared them. <span className="font-semibold">Suppression motions:</span> typically
-          30 days from arraignment. <span className="font-semibold">DMV administrative hearing (DUI):</span> 7-10
-          days from arrest. <span className="font-semibold">Brady material requests:</span> the
+          30 days from arraignment. <span className="font-semibold">DMV hearing (DUI):</span> 7-10
+          days from arrest. <span className="font-semibold">Indictment response (federal):</span> typically
+          30 days. <span className="font-semibold">Brady material requests:</span> the
           earlier they&apos;re made, the more leverage they create. Once these
           windows close, they do not reopen.
         </p>
@@ -567,10 +509,10 @@ export default function Home() {
             </StaggerItem>
             <StaggerItem>
               <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
-                <div className="text-2xl font-bold text-amber-400">{TIER_CORE["dui-first-offense"].priceDisplay}</div>
-                <p className="mt-1 text-xs font-semibold text-zinc-500">DUI Defense Playbook. Instant download.</p>
+                <div className="text-2xl font-bold text-amber-400">{TIER_CORE["case-decoder"].priceDisplay}</div>
+                <p className="mt-1 text-xs font-semibold text-zinc-500">Case Decoder. 48 hours. Your case specifically.</p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  26 questions that change how your next attorney meeting goes.
+                  10-15 case-specific questions based on your charges, your judge, your discovery.
                 </p>
               </div>
             </StaggerItem>
@@ -724,9 +666,9 @@ export default function Home() {
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-2xl">
           <LeadCapture
-            successUpsellHref="/checkout?tier=dui-first-offense"
-            successUpsellLabel={`Ready to go deeper? Get Your DUI Defense Playbook \u2014 ${TIER_CORE["dui-first-offense"].priceDisplay}`}
-            successUpsellDescription="26 questions that change how your next attorney meeting goes. Instant download."
+            successUpsellHref="/start"
+            successUpsellLabel={`Ready to go deeper? Get your Case Decoder \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`}
+            successUpsellDescription="Case-specific research with 10-15 targeted questions. 48-hour delivery. Every dollar credited toward higher tiers."
           />
           <p className="mt-6 text-center text-sm text-zinc-400">
             Want a quick answer?{" "}
@@ -775,10 +717,10 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-col items-center gap-4">
               <Link
-                href="/checkout?tier=dui-first-offense"
+                href="/start"
                 className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
-                Get Your DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} &rarr;
+                Start Your Case Research &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
               </Link>
               <p className="text-sm text-zinc-300">
                 Find It or It&apos;s Free &mdash; full refund if we don&apos;t deliver.
