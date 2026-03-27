@@ -356,9 +356,31 @@ export default function PlaybookSalesPage({ config }: Props) {
           <span className="text-amber-400">{tier.priceDisplay}</span>.
         </p>
         <p className="mt-2 text-sm text-zinc-400">{config.summaryLine}</p>
+        {/* MONEY-BACK GUARANTEE BADGE — placed above CTA for risk removal */}
+        <div className="mt-6 inline-flex items-start gap-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-5 py-3 text-left max-w-md">
+          <svg
+            className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400"
+            aria-hidden="true"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+            />
+          </svg>
+          <p className="text-sm text-zinc-300">
+            <span className="font-semibold text-emerald-400">100% Money-Back Guarantee</span>
+            {" \u2014 "}
+            If you read the Playbook and don&apos;t feel more prepared for your attorney meeting, email us within 30 days for a full refund. No questions asked.
+          </p>
+        </div>
         <Link
           href={checkoutUrl}
-          className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+          className="mt-4 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
         >
           Get Instant Access &mdash; {tier.priceDisplay}
         </Link>
