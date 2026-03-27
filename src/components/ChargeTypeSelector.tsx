@@ -1,48 +1,80 @@
 "use client";
 
 import { useState } from "react";
+import type { TierSlug } from "@/lib/tiers";
 
 /**
- * ChargeTypeSelector — Hero personalization by charge type
+ * ChargeTypeSelector — Homepage charge-type router
  *
- * Four buttons (DUI / Drug Charge / Federal Case / Other) that reveal
- * charge-specific urgency copy when clicked. Placed in the hero section
- * below the subheadline to personalize the first impression.
- *
- * Expert source: Brunson — "A DUI defendant and a federal wire fraud
- * defendant are in completely different emotional states."
+ * Eight buttons matching all playbook configs. When a charge is selected,
+ * fires onSelect with the tier slug so the parent can update CTAs.
+ * Keeps the one-liner reveal for urgency context.
  */
 
 const charges = [
   {
-    id: "dui",
+    id: "dui-first-offense" as TierSlug,
     label: "DUI",
     oneLiner:
       "Your DMV hearing deadline may be 7 days away. We\u2019ve found breathalyzer calibration gaps, field sobriety test failures, and chain of custody breaks in DUI cases.",
   },
   {
-    id: "drug",
-    label: "Drug Charge",
+    id: "drug-possession" as TierSlug,
+    label: "Drug Possession",
     oneLiner:
-      "We\u2019ve found weight discrepancies, substance misidentification, and chain of custody breaks in drug cases. 48-hour decision window.",
+      "We\u2019ve found weight discrepancies, substance misidentification, and chain of custody breaks in drug possession cases. 48-hour decision window.",
   },
   {
-    id: "federal",
-    label: "Federal Case",
+    id: "drug-trafficking" as TierSlug,
+    label: "Drug Trafficking",
+    oneLiner:
+      "Trafficking cases hinge on weight thresholds, informant credibility, and surveillance protocols. We analyze every link in the chain.",
+  },
+  {
+    id: "probation-violation" as TierSlug,
+    label: "Probation Violation",
+    oneLiner:
+      "Violation hearings move fast \u2014 often within 2 weeks. We identify procedural gaps, officer inconsistencies, and conditions that may have been misapplied.",
+  },
+  {
+    id: "white-collar" as TierSlug,
+    label: "White Collar",
+    oneLiner:
+      "Financial cases generate thousands of pages of discovery. We trace document inconsistencies, identify overreach, and generate questions about forensic accounting methods.",
+  },
+  {
+    id: "sex-offense" as TierSlug,
+    label: "Sex Offense",
+    oneLiner:
+      "These cases carry the highest stakes and the most complexity. We analyze forensic evidence, witness credibility, and investigation protocols.",
+  },
+  {
+    id: "federal-criminal" as TierSlug,
+    label: "Federal Criminal",
     oneLiner:
       "Federal cases move fast. We analyze discovery, identify Brady violations, and generate questions about informant credibility and surveillance protocols.",
   },
   {
-    id: "other",
-    label: "Other",
+    id: "self-defense" as TierSlug,
+    label: "Self-Defense",
     oneLiner:
-      "From probation violations to white collar charges \u2014 we research every case type and find what your attorney may have missed.",
+      "Justifiable force cases depend on timeline reconstruction, witness statements, and proportionality analysis. We research the legal standards in your jurisdiction.",
   },
 ] as const;
 
-export function ChargeTypeSelector() {
-  const [selected, setSelected] = useState<string | null>(null);
+interface ChargeTypeSelectorProps {
+  onSelect?: (slug: TierSlug | null) => void;
+}
+
+export function ChargeTypeSelector({ onSelect }: ChargeTypeSelectorProps) {
+  const [selected, setSelected] = useState<TierSlug | null>(null);
   const selectedCharge = charges.find((c) => c.id === selected);
+
+  function handleSelect(id: TierSlug) {
+    const next = selected === id ? null : id;
+    setSelected(next);
+    onSelect?.(next);
+  }
 
   return (
     <div className="mt-6">
@@ -50,34 +82,34 @@ export function ChargeTypeSelector() {
         What are you facing?
       </p>
       <div
-        className="flex flex-wrap justify-center gap-3"
+        className="grid grid-cols-2 gap-2 sm:grid-cols-4"
         role="radiogroup"
         aria-label="Select your charge type"
       >
-        {charges.map((charge) => {
+        {charges.map((charge, idx) => {
           const isSelected = selected === charge.id;
           return (
             <button
               key={charge.id}
               role="radio"
               aria-checked={isSelected}
-              tabIndex={isSelected || (!selected && charge.id === charges[0].id) ? 0 : -1}
-              onClick={() =>
-                setSelected(isSelected ? null : charge.id)
-              }
+              tabIndex={isSelected || (!selected && idx === 0) ? 0 : -1}
+              onClick={() => handleSelect(charge.id)}
               onKeyDown={(e) => {
-                const ids = charges.map((c) => c.id);
-                const idx = ids.indexOf(charge.id);
                 let next = -1;
-                if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (idx + 1) % ids.length;
-                if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (idx - 1 + ids.length) % ids.length;
+                if (e.key === "ArrowRight" || e.key === "ArrowDown")
+                  next = (idx + 1) % charges.length;
+                if (e.key === "ArrowLeft" || e.key === "ArrowUp")
+                  next = (idx - 1 + charges.length) % charges.length;
                 if (next >= 0) {
                   e.preventDefault();
-                  setSelected(ids[next]);
-                  (e.currentTarget.parentElement?.children[next] as HTMLElement)?.focus();
+                  handleSelect(charges[next].id);
+                  (
+                    e.currentTarget.parentElement?.children[next] as HTMLElement
+                  )?.focus();
                 }
               }}
-              className={`rounded-lg border px-4 py-2 text-sm font-semibold transition-all cursor-pointer ${
+              className={`rounded-lg border px-3 py-2 text-sm font-semibold transition-all cursor-pointer ${
                 isSelected
                   ? "border-amber-500 bg-amber-500/5 text-amber-400"
                   : "border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:border-zinc-600"
