@@ -412,6 +412,15 @@ export async function POST(req: NextRequest) {
   //
   // The UPDATE is placed BEFORE the email send so that duplicate
   // requests are rejected before any emails go out.
+  // B11: Validate report_token is a UUID before interpolating into HTML
+  const reportToken = caseData.report_token;
+  if (!reportToken || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(reportToken)) {
+    return new NextResponse(
+      "<h1>Invalid report token</h1><p>Case has no valid report token.</p>",
+      { status: 400, headers: { "Content-Type": "text/html" } }
+    );
+  }
+
   // E3: Set report token expiry to 12 months from now
   const expiresAt = new Date();
   expiresAt.setFullYear(expiresAt.getFullYear() + 1);
@@ -433,24 +442,21 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (!deliverGuard) {
-    // Case was not in "review" status — either already delivered or not ready
-    if (caseData.status === "delivered") {
+    // Atomic guard failed — re-fetch current status to avoid stale read
+    const { data: freshCase } = await supabase
+      .from("cases")
+      .select("status, email")
+      .eq("id", caseId)
+      .single();
+    const currentStatus = freshCase?.status || caseData.status;
+    if (currentStatus === "delivered") {
       return new NextResponse(
-        `<h1>Already Delivered</h1><p>This case was already delivered to ${escapeHtml(caseData.email)}.</p>`,
+        `<h1>Already Delivered</h1><p>This case was already delivered to ${escapeHtml(freshCase?.email || caseData.email)}.</p>`,
         { status: 200, headers: { "Content-Type": "text/html" } }
       );
     }
     return new NextResponse(
-      `<h1>Case not in review status</h1><p>Current status: ${escapeHtml(caseData.status)}</p>`,
-      { status: 400, headers: { "Content-Type": "text/html" } }
-    );
-  }
-
-  // B11: Validate report_token is a UUID before interpolating into HTML
-  const reportToken = caseData.report_token;
-  if (!reportToken || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(reportToken)) {
-    return new NextResponse(
-      "<h1>Invalid report token</h1><p>Case has no valid report token.</p>",
+      `<h1>Case not in review status</h1><p>Current status: ${escapeHtml(currentStatus)}</p>`,
       { status: 400, headers: { "Content-Type": "text/html" } }
     );
   }

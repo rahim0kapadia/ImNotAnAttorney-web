@@ -82,8 +82,11 @@ export async function POST(req: NextRequest) {
     try {
       event = stripe.webhooks.constructEvent(body, signature, secret);
       break; // Verified successfully
-    } catch {
-      // This secret didn't match — try the next one
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      if (!msg.includes("No signatures found matching the expected signature")) {
+        console.error("[Stripe Webhook] constructEvent error:", msg);
+      }
     }
   }
 
@@ -931,9 +934,14 @@ export async function POST(req: NextRequest) {
 
         if (refundError) {
           console.error("[Stripe Webhook] Refund update error:", refundError);
-          // DB update failed — don't send "refund processed" notification
-          // because the refund wasn't actually recorded. Return early.
-          return NextResponse.json({ received: true });
+          await sendEmail({
+            to: OPERATOR_EMAIL,
+            subject: `URGENT: Refund DB update failed — PI ${paymentIntentId}`,
+            html: `<p>Stripe processed a full refund but Supabase update failed. Order still shows &quot;paid&quot;. Manual intervention required.</p>
+                   <p><strong>payment_intent_id:</strong> ${escapeHtml(paymentIntentId || "unknown")}</p>
+                   <p><strong>Error:</strong> ${escapeHtml(refundError.message || "unknown")}</p>`,
+          }).catch((emailErr: unknown) => console.error("[Stripe Webhook] Refund alert email failed:", emailErr));
+          return NextResponse.json({ error: "Refund recording failed" }, { status: 500 });
         }
       } else {
         // ── PARTIAL REFUND: Log timestamp for audit, keep order active ──

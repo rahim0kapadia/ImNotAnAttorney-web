@@ -161,7 +161,7 @@ export const TIER_CORE = {
     priorityPrice: 9700,
     priorityDelivery: "Same-day (4 hours)",
     includesTiers: [] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-27
   },
   "intelligence-brief": {
     name: "Case Intelligence Brief",

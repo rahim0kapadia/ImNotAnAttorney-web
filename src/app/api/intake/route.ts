@@ -263,7 +263,8 @@ export async function POST(req: NextRequest) {
           await supabase
             .from("cases")
             .update({ status: "generating", updated_at: new Date().toISOString() })
-            .eq("id", pendingCase.id);
+            .eq("id", pendingCase.id)
+            .eq("status", "awaiting-intake");
 
           fetch(`${origin}/api/generate/case-decoder`, {
             method: "POST",
