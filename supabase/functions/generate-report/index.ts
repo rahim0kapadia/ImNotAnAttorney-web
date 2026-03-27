@@ -3034,7 +3034,8 @@ async function submitCDBatch(
         params: {
           model: "claude-opus-4-6",
           max_tokens: 32000,
-          thinking: { type: "enabled", budget_tokens: 16000 },
+          thinking: { type: "adaptive" },
+          output_config: { effort: "high" },
           system: [{
             type: "text",
             text: fullSystemPrompt,
