@@ -17,15 +17,12 @@ import type { TierSlug } from "@/lib/tiers";
 export function HomepageHero() {
   const [selectedSlug, setSelectedSlug] = useState<TierSlug | null>(null);
 
-  const selectedTier = selectedSlug ? TIER_CORE[selectedSlug] : null;
-  const isPlaybook = selectedTier?.isDigitalProduct ?? false;
-
   // CTA config based on selection state
   const primaryHref = selectedSlug
     ? `/checkout?tier=${selectedSlug}`
     : "/start";
   const primaryLabel = selectedSlug
-    ? `Get Your ${selectedTier!.name} \u2014 ${selectedTier!.priceDisplay}`
+    ? `Get Your ${TIER_CORE[selectedSlug].name} \u2014 ${TIER_CORE[selectedSlug].priceDisplay}`
     : `Start Your Case Research \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`;
 
   const secondaryHref = selectedSlug ? "/start" : "/playbooks";
