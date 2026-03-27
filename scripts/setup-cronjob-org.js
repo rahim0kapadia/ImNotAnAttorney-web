@@ -72,6 +72,15 @@ const CRON_JOBS = [
     timeout: 30,
     description: 'Dispatch backup report generator (stuck Case Decoder recovery)',
   },
+  {
+    name: 'batch-poll',
+    schedule: {
+      minutes: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55],
+      hours: [-1],
+    },
+    timeout: 30,
+    description: 'Poll Anthropic Batch API results — processes completed CD + IB Phase A batches',
+  },
 ];
 
 async function createCronJob(job) {
