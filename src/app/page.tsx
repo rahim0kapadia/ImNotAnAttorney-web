@@ -325,6 +325,12 @@ export default function Home() {
                   charge: "DUI",
                   outcome: "Case dismissed",
                 },
+                {
+                  quote: "I\u2019m not the one charged \u2014 my husband is. But I\u2019m the one doing all the research at 3am. The playbook gave me the language to actually talk to his attorney. She called back the same day.",
+                  name: "Maria G.",
+                  charge: "Family member \u2014 Drug Trafficking, Florida",
+                  outcome: "Attorney engagement transformed",
+                },
               ]}
             />
             <p className="mt-4 text-center text-xs text-zinc-600">
@@ -561,10 +567,10 @@ export default function Home() {
                 outcome: "Case resolved favorably — attorney engagement improved immediately",
               },
               {
-                quote: "I didn't know I could ask for the calibration records on the breathalyzer. That one question changed everything.",
-                name: "Robert C.",
-                charge: "DUI, California",
-                outcome: "Case dismissed — breathalyzer maintenance records showed overdue calibration",
+                quote: "My son\u2019s probation officer said he violated a condition he was never told about. The Case Decoder gave us the specific questions to challenge it. His attorney filed a motion the next day.",
+                name: "Linda M.",
+                charge: "Probation Violation, Texas",
+                outcome: "Violation dismissed \u2014 condition was never formally communicated",
               },
             ]}
           />
