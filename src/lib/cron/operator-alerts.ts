@@ -125,20 +125,20 @@ export async function detectStuckIntakes(ctx: CronContext): Promise<CronResult> 
 }
 
 // ============================================================
-// PART 5: STUCK "GENERATING" DETECTION
+// PART 5: STUCK "GENERATING" DETECTION (2h threshold — accounts for Batch API latency)
 // ============================================================
 
 export async function detectStuckGenerating(ctx: CronContext): Promise<CronResult> {
   const result = emptyResult();
 
-  const thirtyMinAgo = new Date(ctx.now);
-  thirtyMinAgo.setMinutes(thirtyMinAgo.getMinutes() - 30);
+  const twoHoursAgo = new Date(ctx.now);
+  twoHoursAgo.setHours(twoHoursAgo.getHours() - 2);
 
   const { data: stuckGenerating } = await ctx.supabase
     .from("cases")
-    .select("id, email, charge_type, tier, updated_at")
+    .select("id, email, charge_type, tier, batch_id, updated_at")
     .eq("status", "generating")
-    .lt("updated_at", thirtyMinAgo.toISOString());
+    .lt("updated_at", twoHoursAgo.toISOString());
 
   if (stuckGenerating && stuckGenerating.length > 0) {
     for (const stuck of stuckGenerating) {
@@ -190,15 +190,15 @@ export async function detectStuckGenerating(ctx: CronContext): Promise<CronResul
 export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronResult> {
   const result = emptyResult();
 
-  const thirtyMinAgo = new Date(ctx.now);
-  thirtyMinAgo.setMinutes(thirtyMinAgo.getMinutes() - 30);
+  const twoHoursAgo = new Date(ctx.now);
+  twoHoursAgo.setHours(twoHoursAgo.getHours() - 2);
 
-  // Stuck auto-generating (Phase A timeout — >30 min)
+  // Stuck auto-generating (Phase A timeout — >2h, accounts for Batch API latency)
   const { data: stuckAutoGen } = await ctx.supabase
     .from("cases")
-    .select("id, email, charge_type, tier, updated_at")
+    .select("id, email, charge_type, tier, batch_id, updated_at")
     .eq("status", "auto-generating")
-    .lt("updated_at", thirtyMinAgo.toISOString());
+    .lt("updated_at", twoHoursAgo.toISOString());
 
   if (stuckAutoGen && stuckAutoGen.length > 0) {
     for (const stuck of stuckAutoGen) {
@@ -231,12 +231,12 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
     }
   }
 
-  // Stuck compiling (Phase B timeout — >30 min)
+  // Stuck compiling (Phase B timeout — >2h, accounts for Batch API latency)
   const { data: stuckCompiling } = await ctx.supabase
     .from("cases")
-    .select("id, email, charge_type, tier, updated_at")
+    .select("id, email, charge_type, tier, batch_id, updated_at")
     .eq("status", "compiling")
-    .lt("updated_at", thirtyMinAgo.toISOString());
+    .lt("updated_at", twoHoursAgo.toISOString());
 
   if (stuckCompiling && stuckCompiling.length > 0) {
     for (const stuck of stuckCompiling) {

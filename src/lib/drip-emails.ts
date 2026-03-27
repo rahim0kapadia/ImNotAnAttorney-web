@@ -781,7 +781,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">How to Prepare for Your Attorney Meeting</h1>
       <p>Your Case Decoder report includes a <strong style="color: white;">Meeting Ready Sheet</strong> and an <strong style="color: white;">email template</strong> you can send before your meeting. Here's how to use them:</p>
       <ol>
-        <li><strong style="color: white;">Print the Meeting Ready Sheet</strong> — it's in Section 10 of your report. Bring it to the meeting.</li>
+        <li><strong style="color: white;">Print the Meeting Ready Sheet</strong> — it's in the "Your Next 7 Days" section of your report. Bring it to the meeting.</li>
         <li><strong style="color: white;">Pick your top 5 questions</strong> — start with the Golden Question (the one that matters most for YOUR case).</li>
         <li><strong style="color: white;">Read them out loud once</strong> — hearing yourself say the question makes it easier to say in the room.</li>
         <li><strong style="color: white;">Send the pre-meeting email</strong> — the template is ready to copy-paste. Your attorney will come prepared.</li>
@@ -796,12 +796,12 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     delayDays: 4,
     tier: "case-decoder",
     relativeToDelivery: true,
-    subject: "Has anyone actually read your discovery?",
+    subject: "Your questions are good — but there's context they're missing",
     html: `
-      <h1 style="color: #F59E0B;">Has Anyone Actually Read Your Discovery?</h1>
-      <p>Your Case Decoder gave you 15 questions. But the answers depend on what is actually in your case file.</p>
-      <p>The X-Ray reads every page of your discovery — contradictions, missing evidence, rights violations. <strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The X-Ray costs ${upgradeCostBetween("case-decoder", "x-ray")}.</strong></p>
-      ${cta("Get the X-Ray", "/checkout?tier=x-ray")}
+      <h1 style="color: #F59E0B;">Your Questions Are Good — But There's Context They're Missing</h1>
+      <p>Your Case Decoder gave you 15 questions built from what you told us. The Intelligence Brief adds what you <em>can't</em> tell us — your judge's actual patterns, your prosecutor's track record, and jurisdiction-specific leverage points.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("case-decoder", "intelligence-brief")}.</strong></p>
+      ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
     `,
   },
   {
@@ -829,10 +829,10 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">There Are Questions Your Case Decoder Can't Answer</h1>
       <p>Your report identified areas that need your judge's actual patterns and your prosecutor's track record to answer properly. Your Case Decoder can't provide that — it was built from what you told us, not from jurisdiction data.</p>
-      <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The X-Ray costs ${upgradeCostBetween("case-decoder", "x-ray")}.</strong></p>
-      ${cta("Get the X-Ray", "/checkout?tier=x-ray")}
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("case-decoder", "intelligence-brief")}.</strong></p>
+      ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
       <p style="margin-top: 16px; color: #A1A1AA;">Motion deadlines, evidence preservation windows, and plea negotiation leverage all erode with time.</p>
-      <p style="margin-top: 16px; color: #71717A;">If budget is a factor, the ${TIER_CORE["intelligence-brief"].name} covers jurisdiction patterns for ${upgradeCostBetween("case-decoder", "intelligence-brief")}. ${link("Learn more", "/services#intelligence-brief")}</p>
+      <p style="margin-top: 16px; color: #71717A;">If budget is a factor and you want the full picture later, you can always upgrade from the Intelligence Brief to the X-Ray — your payment applies as credit. ${link("Compare tiers", "/services")}</p>
     `,
   },
 

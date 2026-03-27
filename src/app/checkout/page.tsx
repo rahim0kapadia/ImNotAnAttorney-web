@@ -386,7 +386,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Plain-English charge breakdown with elements the prosecution must prove",
       "15 calibrated questions for your attorney (6-part format with follow-up probes)",
       "Ready-to-send email template + phone script + follow-up template",
-      "Your Advocacy Steps — 8-step communication playbook",
+      "Your Advocacy Steps — 5-step communication playbook",
       "Where Things Stand — 4-area diagnostic of what you know vs. what to ask about",
       "Your Next 7 Days — one action per day, with Meeting Ready Sheet to print and bring",
       "Expert methodology from elite defense attorneys (3 per charge type)",

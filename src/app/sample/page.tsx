@@ -413,7 +413,7 @@ export default function SamplePage() {
               </div>
               <p className="mt-3 text-xs text-zinc-500">
                 Your full report includes a phone script, follow-up template,
-                and 8-step communication playbook.
+                and 5-step communication playbook.
               </p>
             </div>
           </section>
