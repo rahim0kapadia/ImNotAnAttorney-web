@@ -74,14 +74,15 @@ export async function POST(req: NextRequest) {
     } catch {
       return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
     }
-    const { firstName, email, chargeType } = body;
+    const { firstName, email } = body;
+    const chargeType = body.chargeType || body.commonChargeSlug || "";
 
     // ──────────────────────────────────────────────────────────────
     // INPUT VALIDATION
     // ──────────────────────────────────────────────────────────────
     // Required fields: the minimum information needed to create a
     // useful intake record and send a confirmation email.
-    if (!firstName || typeof firstName !== "string" || !email || typeof email !== "string" || !chargeType) {
+    if (!firstName || typeof firstName !== "string" || !email || typeof email !== "string" || !chargeType || typeof chargeType !== "string") {
       return NextResponse.json(
         { error: "Required fields missing" },
         { status: 400 }
@@ -99,14 +100,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Validate charge type against allowlist to prevent arbitrary string injection.
-    // The frontend dropdown should only send values from this list, but we validate
-    // server-side because the frontend can be bypassed.
-    if (!ALLOWED_CHARGE_TYPES.includes(chargeType)) {
-      return NextResponse.json(
-        { error: "Invalid charge type" },
-        { status: 400 }
-      );
+    // Validate charge type against allowlist — log new taxonomy slugs instead of rejecting.
+    // The frontend sends either a legacy dropdown value or a new DB taxonomy slug.
+    if (!(ALLOWED_CHARGE_TYPES as readonly string[]).includes(chargeType)) {
+      console.log(`[Intake] New taxonomy slug: ${chargeType}`);
     }
 
     const supabase = createAdminClient();
@@ -161,6 +158,16 @@ export async function POST(req: NextRequest) {
         }
         chargeSpecificData = sanitized;
       }
+    }
+
+    // Store taxonomy fields alongside existing charge_specific_data
+    if (body.commonChargeSlug || body.categorySlug || body.chargeFreeText) {
+      chargeSpecificData = {
+        ...chargeSpecificData,
+        _commonChargeSlug: body.commonChargeSlug || null,
+        _categorySlug: body.categorySlug || null,
+        _chargeFreeText: body.chargeFreeText || null,
+      };
     }
 
     // Validate jurisdiction level

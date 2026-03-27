@@ -50,11 +50,14 @@
  */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
 import { TIER_CORE } from "@/lib/tiers";
+import { IntakeChargeCategories } from "@/components/IntakeChargeCategories";
+import { IntakeChargeSelector } from "@/components/IntakeChargeSelector";
+import IntakeChargeQuestions from "@/components/IntakeChargeQuestions";
 
 // ============================================================
 // JURISDICTION + CHARGE TYPE CONFIGURATION
@@ -550,6 +553,22 @@ function getChargeTypesForJurisdiction(jurisdictionLevel: string) {
   return allChargeTypes;
 }
 
+const STATE_ABBR: Record<string, string> = {
+  "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
+  "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
+  "District of Columbia": "DC", "Florida": "FL", "Georgia": "GA", "Hawaii": "HI",
+  "Idaho": "ID", "Illinois": "IL", "Indiana": "IN", "Iowa": "IA",
+  "Kansas": "KS", "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME",
+  "Maryland": "MD", "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN",
+  "Mississippi": "MS", "Missouri": "MO", "Montana": "MT", "Nebraska": "NE",
+  "Nevada": "NV", "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM",
+  "New York": "NY", "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH",
+  "Oklahoma": "OK", "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI",
+  "South Carolina": "SC", "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX",
+  "Utah": "UT", "Vermont": "VT", "Virginia": "VA", "Washington": "WA",
+  "West Virginia": "WV", "Wisconsin": "WI", "Wyoming": "WY",
+};
+
 /**
  * IntakeForm — multi-step wizard component.
  * Reads URL params for pre-fill (interest, email, tier) and manages
@@ -608,10 +627,31 @@ function IntakeForm() {
     employmentStatus: "",
     employmentIndustry: "",
     mentalHealthRelevant: "",
+    categorySlug: "",
+    commonChargeSlug: "",
+    chargeFreeText: "",
   });
 
   // Charge-specific answers stored separately to avoid polluting the flat form
   const [chargeSpecific, setChargeSpecific] = useState<Record<string, string>>({});
+
+  // DB-driven taxonomy state
+  const [categories, setCategories] = useState<Array<{slug: string; label: string; description: string | null; icon_name: string | null}>>([]);
+  const [commonCharges, setCommonCharges] = useState<Array<{slug: string; label: string; description: string | null; statute_number?: string | null; offense_class?: string | null}>>([]);
+  const [dbQuestions, setDbQuestions] = useState<Array<{question_id: string; label: string; options: string[]}>>([]);
+  const [taxonomyLoaded, setTaxonomyLoaded] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/charge-taxonomy/categories")
+      .then(r => r.ok ? r.json() : [])
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setCategories(data);
+          setTaxonomyLoaded(true);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   function setField(name: string, value: string | string[]) {
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -638,8 +678,11 @@ function IntakeForm() {
     form.chargeType === "sex-offense" && form.jurisdictionLevel !== "federal";
 
   // Step validation gates — each step's "Continue" button is disabled until these are met
+  const hasChargeSelection = taxonomyLoaded
+    ? !!(form.commonChargeSlug || form.chargeFreeText)
+    : !!form.chargeType;
   const canProceedStep1 =
-    form.firstName && form.email && form.chargeType && form.state && form.timeSinceArrest
+    form.firstName && form.email && hasChargeSelection && form.state && form.timeSinceArrest
     && form.caseNumber
     && (form.jurisdictionLevel !== "state" || form.county);
   const canProceedStep2 = form.hasAttorney;
@@ -657,9 +700,14 @@ function IntakeForm() {
           chargeSpecificData: chargeSpecific,
           jurisdictionLevel: form.jurisdictionLevel || "unknown",
           // If sex offense sub-type was selected, use that as the effective charge type
-          chargeType: effectiveChargeType === "sex-offense-contact" || effectiveChargeType === "sex-offense-digital"
-            ? effectiveChargeType
-            : form.chargeType,
+          chargeType: form.commonChargeSlug || (
+            effectiveChargeType === "sex-offense-contact" || effectiveChargeType === "sex-offense-digital"
+              ? effectiveChargeType
+              : form.chargeType
+          ) || "other",
+          commonChargeSlug: form.commonChargeSlug || null,
+          categorySlug: form.categorySlug || null,
+          chargeFreeText: form.chargeFreeText || null,
         }),
       });
       if (res.ok) {
@@ -821,60 +869,138 @@ function IntakeForm() {
                   )}
                 </div>
 
-                {/* Charge type — filtered by jurisdiction */}
-                {form.jurisdictionLevel && (
-                  <div className="mt-4">
-                    <label htmlFor="chargeType" className={labelClass}>Type of Charges <span className="text-red-400">*</span></label>
-                    <select id="chargeType" required value={form.chargeType as string}
-                      onChange={(e) => {
-                        setField("chargeType", e.target.value);
-                        setField("sexOffenseSubType", "");
-                        setChargeSpecific({});
-                      }}
-                      className={selectClass}>
-                      <option value="">Select charge type</option>
-                      {availableChargeTypes.map((ct) => <option key={ct.value} value={ct.value}>{ct.label}</option>)}
-                    </select>
-                  </div>
-                )}
-
-                {/* Sex offense sub-routing */}
-                {showSexOffenseSubRouting && (
-                  <div className="mt-4">
-                    <label htmlFor="sexOffenseSubType" className={labelClass}>Which best describes the allegation?</label>
-                    <select id="sexOffenseSubType" value={form.sexOffenseSubType as string}
-                      onChange={(e) => {
-                        setField("sexOffenseSubType", e.target.value);
-                        setChargeSpecific({});
-                      }}
-                      className={selectClass}>
-                      <option value="">Select</option>
-                      {sexOffenseSubTypes.map((st) => <option key={st.value} value={st.value}>{st.label}</option>)}
-                    </select>
-                  </div>
-                )}
-
-                {/* Charge-specific questions — appear after charge type selection */}
-                {currentChargeQuestions.length > 0 && (
-                  <div className="mt-6 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
-                    <p className="mb-3 text-xs font-semibold text-amber-500">
-                      A few questions specific to your charge type
-                    </p>
-                    <div className="space-y-4">
-                      {currentChargeQuestions.map((q) => (
-                        <div key={q.id}>
-                          <label htmlFor={`cs-${q.id}`} className={labelClass}>{q.label}</label>
-                          <select id={`cs-${q.id}`}
-                            value={chargeSpecific[q.id] || ""}
-                            onChange={(e) => setChargeField(q.id, e.target.value)}
-                            className={selectClass}>
-                            <option value="">Select</option>
-                            {q.options.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
-                          </select>
-                        </div>
-                      ))}
+                {/* DB-driven 3-screen progressive narrowing (active when taxonomy loaded) */}
+                {taxonomyLoaded && form.jurisdictionLevel && (
+                  <div className="mt-4 space-y-4">
+                    <div>
+                      <p className={labelClass + " mb-2"}>Type of Charges <span className="text-red-400">*</span></p>
+                      <IntakeChargeCategories
+                        categories={categories}
+                        selectedSlug={form.categorySlug as string || null}
+                        onSelect={(slug) => {
+                          setField("categorySlug", slug || "");
+                          setField("commonChargeSlug", "");
+                          setField("chargeType", "");
+                          setField("chargeFreeText", "");
+                          setChargeSpecific({});
+                          setCommonCharges([]);
+                          setDbQuestions([]);
+                          if (slug) {
+                            const jCode = form.jurisdictionLevel === "state" && form.state
+                              ? STATE_ABBR[form.state as string] ?? null
+                              : form.jurisdictionLevel === "federal" ? "federal" : null;
+                            fetch(`/api/charge-taxonomy/charges?category=${slug}${jCode ? `&jurisdiction=${jCode}` : ""}`)
+                              .then(r => r.ok ? r.json() : [])
+                              .then(setCommonCharges)
+                              .catch(() => setCommonCharges([]));
+                          }
+                        }}
+                      />
                     </div>
+
+                    {(form.categorySlug as string) && commonCharges.length > 0 && (
+                      <div>
+                        <p className={labelClass + " mb-2"}>Specific Charge <span className="text-red-400">*</span></p>
+                        <IntakeChargeSelector
+                          charges={commonCharges}
+                          jurisdiction={
+                            form.jurisdictionLevel === "state" && form.state
+                              ? STATE_ABBR[form.state as string] ?? null
+                              : form.jurisdictionLevel === "federal" ? "federal" : null
+                          }
+                          selectedSlug={form.commonChargeSlug as string || null}
+                          onSelect={(slug) => {
+                            setField("commonChargeSlug", slug || "");
+                            setField("chargeFreeText", "");
+                            setField("chargeType", slug || "");
+                            setChargeSpecific({});
+                            if (slug) {
+                              fetch(`/api/charge-taxonomy/questions?charge=${slug}`)
+                                .then(r => r.ok ? r.json() : [])
+                                .then(setDbQuestions)
+                                .catch(() => setDbQuestions([]));
+                            } else {
+                              setDbQuestions([]);
+                            }
+                          }}
+                          onFreeText={(text) => {
+                            setField("chargeFreeText", text);
+                            setField("commonChargeSlug", "");
+                            setField("chargeType", "other");
+                          }}
+                        />
+                      </div>
+                    )}
+
+                    {dbQuestions.length > 0 && (
+                      <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+                        <p className="mb-3 text-xs font-semibold text-amber-500">
+                          A few questions specific to your charge type
+                        </p>
+                        <IntakeChargeQuestions
+                          questions={dbQuestions}
+                          answers={chargeSpecific}
+                          onChange={setChargeSpecific}
+                        />
+                      </div>
+                    )}
                   </div>
+                )}
+
+                {/* Fallback: legacy hardcoded dropdowns (shown when taxonomy DB is empty) */}
+                {!taxonomyLoaded && form.jurisdictionLevel && (
+                  <>
+                    <div className="mt-4">
+                      <label htmlFor="chargeType" className={labelClass}>Type of Charges <span className="text-red-400">*</span></label>
+                      <select id="chargeType" required value={form.chargeType as string}
+                        onChange={(e) => {
+                          setField("chargeType", e.target.value);
+                          setField("sexOffenseSubType", "");
+                          setChargeSpecific({});
+                        }}
+                        className={selectClass}>
+                        <option value="">Select charge type</option>
+                        {availableChargeTypes.map((ct) => <option key={ct.value} value={ct.value}>{ct.label}</option>)}
+                      </select>
+                    </div>
+
+                    {showSexOffenseSubRouting && (
+                      <div className="mt-4">
+                        <label htmlFor="sexOffenseSubType" className={labelClass}>Which best describes the allegation?</label>
+                        <select id="sexOffenseSubType" value={form.sexOffenseSubType as string}
+                          onChange={(e) => {
+                            setField("sexOffenseSubType", e.target.value);
+                            setChargeSpecific({});
+                          }}
+                          className={selectClass}>
+                          <option value="">Select</option>
+                          {sexOffenseSubTypes.map((st) => <option key={st.value} value={st.value}>{st.label}</option>)}
+                        </select>
+                      </div>
+                    )}
+
+                    {currentChargeQuestions.length > 0 && (
+                      <div className="mt-6 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+                        <p className="mb-3 text-xs font-semibold text-amber-500">
+                          A few questions specific to your charge type
+                        </p>
+                        <div className="space-y-4">
+                          {currentChargeQuestions.map((q) => (
+                            <div key={q.id}>
+                              <label htmlFor={`cs-${q.id}`} className={labelClass}>{q.label}</label>
+                              <select id={`cs-${q.id}`}
+                                value={chargeSpecific[q.id] || ""}
+                                onChange={(e) => setChargeField(q.id, e.target.value)}
+                                className={selectClass}>
+                                <option value="">Select</option>
+                                {q.options.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                              </select>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </>
                 )}
 
                 <div className="mt-4">
