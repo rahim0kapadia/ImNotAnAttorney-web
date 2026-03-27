@@ -11,13 +11,17 @@
  *   Called by Vercel /api/generate/case-decoder via HTTP POST (fire-and-forget).
  *   The Vercel route returns 202 immediately; this function runs async.
  *
- * FLOW:
+ * FLOW (Case Decoder — Batch API):
  *   1. Fetch case record from Supabase (with idempotency check)
  *   2. Find linked intake record (by intake_id or email fallback)
- *   3. Call Claude API (Opus 4.6 with adaptive thinking) to generate the 7 + 0-2 conditional section report
- *   4. Render markdown to branded HTML
- *   5. Save report_html + report_token to Supabase
- *   6. Email operator with review/approve links
+ *   3. Submit Batch API request to Anthropic (returns batch_id in <1s)
+ *   4. Save batch_id to case record
+ *   5. Return immediately — cron poller handles result processing
+ *   (Rendering, validation, save, eval, and operator email are handled
+ *   by the batch poller in /api/cron/batch-poller)
+ *
+ * FLOW (Intelligence Brief — synchronous, Phase B):
+ *   Uses callClaudeAPI() directly — synchronous generation path preserved
  *
  * ZERO EXTERNAL IMPORTS:
  *   This function has NO npm/esm.sh imports. Why: importing
@@ -2480,13 +2484,13 @@ analysis." Without it, the report jumps from empathy to data too fast.
 Preview what this report gives: "This report gives you three things:
 a clear picture of where things stand, 15 questions that will get you
 real answers from your attorney, and tools to start the conversation."
-Include "Do NOT show this report to your attorney" WITH this
-explanation: "If your attorney sees this analysis, they may anchor
-their responses to it rather than giving you their independent
-assessment. You want their unfiltered answers first. The questions are
-appropriate for any client — the analysis is for your eyes only."
-"The Meeting Ready Sheet in Your Next 7 Days is designed to be safe
-if your attorney sees it — it contains only questions, not analysis."
+Include an informational note about report sharing: "This report is
+designed to help you prepare for conversations with your attorney —
+sharing it is entirely your choice. Some defendants find that reviewing
+this analysis privately first helps them get unfiltered answers, since
+attorneys may anchor their responses to analysis they've already seen.
+The Meeting Ready Sheet in Your Next 7 Days contains only questions
+and is designed to be shared freely."
 
 ORIGIN STORY (1 sentence): "This report was built by ImNotAnAttorney.com
 — founded by a defendant who went through exactly what you're going
@@ -2673,9 +2677,11 @@ ${intake.filled_out_by && intake.filled_out_by !== "self" ? `NOTE: This intake w
 <section id="s3" title="Your Attorney Meeting Toolkit" max_words="1400">
 Use ONLY the section title as the heading — never prefix with internal id.
 
-**1. DO NOT SHOW WARNING:**
-"Do NOT show this report to your attorney" with anchoring bias explanation.
-The Meeting Ready Sheet in Your Next 7 Days is safe if attorney sees it.
+**1. REPORT SHARING NOTE:**
+Informational note about reviewing the report privately before attorney
+meetings, with anchoring bias explanation (why attorneys may anchor to
+analysis they've seen). Frame as the defendant's choice, not a directive.
+The Meeting Ready Sheet in Your Next 7 Days is designed to be shared freely.
 
 **2. READY-TO-SEND EMAIL:**
 Copy-paste ready. Personalized: case # in subject line, court date reference, defendant name signoff.
@@ -2999,6 +3005,55 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: st
   }
 
   throw new Error("Claude API exhausted all retries");
+}
+
+/**
+ * Submit a Case Decoder report as a Batch API request.
+ * Returns the batch ID. Cron poller handles result processing.
+ */
+async function submitCDBatch(
+  intake: IntakeData,
+  apiKey: string,
+  supabaseUrl: string,
+  supabaseKey: string,
+  caseId: string
+): Promise<string> {
+  const userPrompt = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
+  const fullSystemPrompt = SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK;
+
+  const response = await fetch("https://api.anthropic.com/v1/messages/batches", {
+    method: "POST",
+    headers: {
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      requests: [{
+        custom_id: `cd-${caseId}`,
+        params: {
+          model: "claude-opus-4-6",
+          max_tokens: 32000,
+          thinking: { type: "enabled", budget_tokens: 16000 },
+          system: [{
+            type: "text",
+            text: fullSystemPrompt,
+            cache_control: { type: "ephemeral" },
+          }],
+          messages: [{ role: "user", content: userPrompt }],
+        },
+      }],
+    }),
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error(`Batch API error (${response.status}): ${err}`);
+  }
+
+  const batch = await response.json();
+  console.log(`[generate-report] Batch submitted: ${batch.id}`);
+  return batch.id;
 }
 
 // ============================================================
@@ -4984,17 +5039,29 @@ Deno.serve(async (req: Request) => {
     }
     // ─── CASE DECODER FLOW (default) ────────────────────────────
 
-    console.log(`[generate-report] Intake found, calling Claude API...`);
+    console.log(`[generate-report] Intake found, submitting CD batch...`);
 
-    // --- Generate report ---
-    // Single attempt with no retry: retrying a 40-90s Claude call would risk
-    // exceeding the 150s timeout. On failure, we set status to "generation-failed"
-    // and email the operator a retry curl command for manual recovery.
-    let markdown: string;
+    // --- Submit batch and exit — cron poller handles result processing ---
+    // Batch submission takes <1s (vs 60-294s synchronous), eliminating the
+    // 150s timeout constraint entirely. The cron poller (Task 4) picks up
+    // completed batches and runs rendering, validation, save, and eval.
     try {
-      markdown = await callClaudeAPI(intake, anthropicKey, supabaseUrl, supabaseKey, caseId);
+      const batchId = await submitCDBatch(intake, anthropicKey, supabaseUrl, supabaseKey, caseId);
+
+      // Save batch_id to case record so the poller can find it
+      await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
+        batch_id: batchId,
+        updated_at: new Date().toISOString(),
+      });
+
+      console.log(`[generate-report] Batch ${batchId} submitted for case ${caseId}, returning immediately`);
+
+      return new Response(
+        JSON.stringify({ success: true, batchId, message: "Batch submitted — poller will process results" }),
+        { status: 200, headers }
+      );
     } catch (err) {
-      console.error("[generate-report] Claude API failed:", err);
+      console.error("[generate-report] Batch submission failed:", err);
 
       await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
         status: "generation-failed", updated_at: new Date().toISOString(),
@@ -5003,8 +5070,8 @@ Deno.serve(async (req: Request) => {
       if (resendKey) {
         await sendEmail({
           to: operatorEmail,
-          subject: `URGENT: Report generation failed for ${escapeHtml(intake.first_name)}`,
-          html: `<h1 style="color: #EF4444;">Report Generation Failed</h1>
+          subject: `URGENT: Batch submission failed for ${escapeHtml(intake.first_name)}`,
+          html: `<h1 style="color: #EF4444;">Batch Submission Failed</h1>
             <p>Case ID: ${caseId}</p><p>Customer: ${caseData.email}</p>
             <p>Charge: ${escapeHtml(intake.charge_type)}</p>
             <p>Error: ${escapeHtml(err instanceof Error ? err.message : String(err))}</p>
@@ -5014,175 +5081,8 @@ Deno.serve(async (req: Request) => {
         });
       }
 
-      return new Response(JSON.stringify({ error: "Report generation failed" }), { status: 500, headers });
+      return new Response(JSON.stringify({ error: "Batch submission failed" }), { status: 500, headers });
     }
-
-    console.log(`[generate-report] Claude done (${markdown.length} chars), rendering HTML...`);
-
-    // --- Strip model-generated methodology note (system injects the official one) ---
-    // The prompt tells Claude not to generate one, but ~5% of the time it does anyway.
-    // This regex matches a blockquote starting with "> **METHODOLOGY" through all
-    // continuation lines (lines starting with ">"), plus any trailing "---" separator.
-    markdown = markdown.replace(
-      /^>[ \t]*\*{0,2}METHODOLOGY[^\n]*(?:\n>[ \t]*[^\n]*)*/im,
-      ""
-    ).replace(/^\s*---\s*$/m, "").trim();
-
-    // --- Post-generation validation (hard gate for critical UPL violations) ---
-    const validation = validateReportContent(markdown);
-    if (!validation.valid) {
-      const criticalViolations = validation.violations.filter((v: string) => v.startsWith("[CRITICAL]"));
-      if (criticalViolations.length > 0) {
-        throw new Error(`Report failed UPL gate (${criticalViolations.length} critical violation(s)): ${criticalViolations.join("; ")}`);
-      }
-      console.warn(`[generate-report] Validation warnings (${validation.violations.length}):`,
-        validation.violations.join("; "));
-    }
-
-    // --- Extract expert names for hardcoded methodology note ---
-    let expertNames = "";
-    try {
-      const slug = resolveChargeSlug(intake.charge_type);
-      const cts = await supabaseSelect(supabaseUrl, supabaseKey, "charge_types",
-        `slug=eq.${encodeURIComponent(slug)}&select=expert_slugs`);
-      // deno-lint-ignore no-explicit-any
-      const ct = (cts as any[])[0];
-      if (ct?.expert_slugs?.length) {
-        const expertIds = ct.expert_slugs.slice(0, 3);
-        const experts = await supabaseSelect(supabaseUrl, supabaseKey, "experts",
-          `id=in.(${expertIds.map(encodeURIComponent).join(",")})&select=id,name`);
-        // deno-lint-ignore no-explicit-any
-        const sorted = expertIds.map((s: string) => (experts as any[]).find(e => e.id === s)).filter(Boolean);
-        // deno-lint-ignore no-explicit-any
-        expertNames = sorted.map((e: any) => e.name).join(", ");
-      }
-    } catch (err) {
-      console.warn("[generate-report] Could not fetch expert names for methodology note:", err);
-    }
-
-    // --- Render HTML ---
-    const reportToken = crypto.randomUUID();
-    const reportDate = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-
-    let daysSinceArrest: number | null = null;
-    if (intake.arrest_date) {
-      const arrestDate = new Date(intake.arrest_date);
-      if (!isNaN(arrestDate.getTime())) {
-        daysSinceArrest = Math.floor((Date.now() - arrestDate.getTime()) / (1000 * 60 * 60 * 24));
-      }
-    }
-
-    const reportHtml = renderReportHtml(markdown, {
-      firstName: intake.first_name,
-      charges: intake.charge_type,
-      jurisdiction: `${intake.state || ""}${intake.incident_location ? ` / ${intake.incident_location}` : ""}`.trim() || "Not specified",
-      reportDate,
-      reportId: reportToken.slice(0, 8).toUpperCase(),
-      caseNumber: intake.case_number || undefined,
-      courtDate: intake.court_date || undefined,
-      daysSinceArrest,
-      expertNames: expertNames || undefined,
-      chargeType: intake.charge_type,
-    });
-
-    // --- Save to Supabase ---
-    // E3: Set initial report token expiry to 12 months from generation
-    const tokenExpiry = new Date();
-    tokenExpiry.setFullYear(tokenExpiry.getFullYear() + 1);
-
-    await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
-      report_html: reportHtml,
-      report_token: reportToken,
-      generated_at: new Date().toISOString(),
-      status: "review",
-      charge_type: intake.charge_type,
-      updated_at: new Date().toISOString(),
-      report_token_expires_at: tokenExpiry.toISOString(),
-    });
-
-    console.log(`[generate-report] Saved to DB, sending operator email...`);
-
-    // --- Operator review email ---
-    if (resendKey) {
-      // Check if this is a priority delivery order
-      let isPriorityDelivery = false;
-      if (caseData.order_id) {
-        try {
-          const orderRows = await supabaseSelect(supabaseUrl, supabaseKey, "orders", `id=eq.${caseData.order_id}&select=priority_delivery`);
-          isPriorityDelivery = orderRows?.[0]?.priority_delivery === true;
-        } catch { /* non-critical — badge just won't show */ }
-      }
-
-      const priorityBadge = isPriorityDelivery
-        ? `<div style="background: #7C2D12; padding: 8px 16px; border-radius: 8px; margin: 8px 0; border-left: 4px solid #F59E0B;">
-             <p style="margin: 0; color: #FDE68A; font-weight: bold;">⚡ PRIORITY — Same-day delivery guaranteed</p>
-           </div>`
-        : "";
-
-      const inclusionBadge = caseData.is_included_deliverable
-        ? `<div style="background: #422006; padding: 8px 16px; border-radius: 8px; margin: 8px 0; border-left: 4px solid #F59E0B;">
-             <p style="margin: 0; color: #FDE68A; font-weight: bold;">INCLUDED DELIVERABLE</p>
-             <p style="margin: 4px 0 0; color: #D4D4D8; font-size: 13px;">Auto-generated as part of a higher-tier purchase (Order: ${caseData.parent_order_id || "unknown"})</p>
-           </div>`
-        : "";
-
-      await sendEmail({
-        to: operatorEmail,
-        subject: `${isPriorityDelivery ? "⚡ PRIORITY — " : ""}Review Report: ${escapeHtml(intake.charge_type)} — ${escapeHtml(intake.first_name)}${caseData.is_included_deliverable ? " (Included)" : ""}`,
-        html: `
-          <h1 style="color: #F59E0B;">Case Decoder Report Ready for Review</h1>
-          ${priorityBadge}
-          <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
-            <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(intake.first_name)} ${escapeHtml(intake.last_name || "")}</p>
-            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Email:</strong> ${escapeHtml(caseData.email)}</p>
-            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Charge Type:</strong> ${escapeHtml(intake.charge_type)}</p>
-            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">State:</strong> ${escapeHtml(intake.state || "Not provided")}</p>
-            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>
-            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Generated:</strong> ${reportDate}</p>
-          </div>
-          ${inclusionBadge}
-          ${!validation.valid ? `<div style="background: #451A03; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #EF4444;">
-            <p style="margin: 0 0 8px; color: #FCA5A5; font-weight: bold;">VALIDATION WARNINGS (${validation.violations.length})</p>
-            <ul style="margin: 0; padding-left: 20px; color: #D4D4D8; font-size: 13px;">
-              ${validation.violations.map(v => `<li>${escapeHtml(v)}</li>`).join("")}
-            </ul>
-            <p style="margin: 8px 0 0; color: #A1A1AA; font-size: 12px;">Review before approving. These may need manual edits in the report HTML.</p>
-          </div>` : ""}
-          <div style="margin: 24px 0; display: flex; gap: 12px;">
-            ${operatorSecret
-              ? `<a href="${siteUrl}/api/deliver?token=${await signOperatorTokenDeno(caseId, operatorSecret)}&case=${caseId}" style="display: inline-block; padding: 14px 28px; background: #22C55E; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Approve &amp; Deliver</a>`
-              : `<p style="color: #EF4444;">OPERATOR_SECRET not configured — approve via dashboard</p>`
-            }
-            <a href="${siteUrl}/report/${reportToken}" style="display: inline-block; padding: 14px 28px; background: #3B82F6; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Preview Report</a>
-          </div>
-        `,
-        resendKey, fromEmail: resendFrom, operatorEmail,
-      });
-    }
-
-    // --- Fire-and-forget: trigger evaluation ---
-    // The evaluate-report Edge Function runs UPL + Psych evaluation asynchronously.
-    // Non-awaited — if this fails silently, the cron safety net catches cases with
-    // NULL eval_results after 15 minutes and re-triggers evaluation.
-    try {
-      fetch(`${supabaseUrl}/functions/v1/evaluate-report`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${supabaseKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ caseId }),
-      }).catch((err) => console.error("[generate-report] Eval trigger failed:", err));
-    } catch {
-      // Silently ignore — cron safety net will catch missed evaluations
-    }
-
-    console.log(`[generate-report] Complete! Case ${caseId} → review (eval triggered)`);
-
-    return new Response(
-      JSON.stringify({ success: true, caseId, reportToken, status: "review" }),
-      { headers }
-    );
   } catch (error) {
     console.error("[generate-report] Unhandled error:", error);
     return new Response(
