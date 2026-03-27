@@ -1,77 +1,103 @@
 "use client";
 
 import { useState } from "react";
-import type { TierSlug } from "@/lib/tiers";
 
 /**
  * ChargeTypeSelector — Homepage charge-type router
  *
- * Eight buttons matching all playbook configs. When a charge is selected,
- * fires onSelect with the tier slug so the parent can update CTAs.
- * Keeps the one-liner reveal for urgency context.
+ * Twelve category buttons matching all charge_categories in the DB. When a
+ * category is selected, fires onSelect with the category slug so the parent
+ * can update CTAs. Keeps the one-liner reveal for urgency context.
  */
 
-const charges = [
+const categories = [
   {
-    id: "dui-first-offense",
-    label: "DUI",
+    slug: "dui-driving",
+    label: "DUI & Driving",
     oneLiner:
-      "Your DMV hearing deadline may be 7 days away. We\u2019ve found breathalyzer calibration gaps, field sobriety test failures, and chain of custody breaks in DUI cases.",
+      "DMV deadlines, breathalyzer gaps, field sobriety failures, and chain of custody breaks.",
   },
   {
-    id: "drug-possession",
-    label: "Drug Possession",
+    slug: "drug-offenses",
+    label: "Drug Offenses",
     oneLiner:
-      "We\u2019ve found weight discrepancies, substance misidentification, and chain of custody breaks in drug possession cases. 48-hour decision window.",
+      "Weight discrepancies, substance misidentification, informant credibility, and search legality.",
   },
   {
-    id: "drug-trafficking",
-    label: "Drug Trafficking",
+    slug: "violent-crimes",
+    label: "Violent Crimes",
     oneLiner:
-      "Trafficking cases hinge on weight thresholds, informant credibility, and surveillance protocols. We analyze every link in the chain.",
+      "Self-defense analysis, witness credibility, force proportionality, and injury documentation.",
   },
   {
-    id: "probation-violation",
-    label: "Probation Violation",
+    slug: "property-crimes",
+    label: "Property Crimes",
     oneLiner:
-      "Violation hearings move fast \u2014 often within 2 weeks. We identify procedural gaps, officer inconsistencies, and conditions that may have been misapplied.",
+      "Identity evidence reliability, intent elements, value thresholds, and alibi evidence.",
   },
   {
-    id: "white-collar",
-    label: "White Collar",
+    slug: "domestic-family",
+    label: "Domestic & Family",
     oneLiner:
-      "Financial cases generate thousands of pages of discovery. We trace document inconsistencies, identify overreach, and generate questions about forensic accounting methods.",
+      "Protective order implications, primary aggressor determination, and false allegation indicators.",
   },
   {
-    id: "sex-offense",
-    label: "Sex Offense",
+    slug: "weapons",
+    label: "Weapons",
     oneLiner:
-      "These cases carry the highest stakes and the most complexity. We analyze forensic evidence, witness credibility, and investigation protocols.",
+      "Search legality, Second Amendment analysis, constructive possession, and enhancement exposure.",
   },
   {
-    id: "federal-criminal",
-    label: "Federal Criminal",
+    slug: "fraud-financial",
+    label: "Fraud & Financial",
     oneLiner:
-      "Federal cases move fast. We analyze discovery, identify Brady violations, and generate questions about informant credibility and surveillance protocols.",
+      "Document privilege, cooperation strategy, loss calculation, and asset forfeiture defense.",
   },
   {
-    id: "self-defense",
-    label: "Self-Defense",
+    slug: "sex-offenses",
+    label: "Sex Offenses",
     oneLiner:
-      "Justifiable force cases depend on timeline reconstruction, witness statements, and proportionality analysis. We research the legal standards in your jurisdiction.",
+      "Forensic evidence, witness credibility, investigation protocols, and registration consequences.",
   },
-] as const satisfies ReadonlyArray<{ id: TierSlug; label: string; oneLiner: string }>;
+  {
+    slug: "public-order",
+    label: "Public Order",
+    oneLiner:
+      "Resisting arrest defenses, contempt procedures, and disorderly conduct standards.",
+  },
+  {
+    slug: "probation-parole",
+    label: "Probation Violations",
+    oneLiner:
+      "Violation classification, graduated sanctions, compliance documentation, and revocation alternatives.",
+  },
+  {
+    slug: "federal-specific",
+    label: "Federal",
+    oneLiner:
+      "Sentencing guidelines, cooperation strategy, mandatory minimums, and federal discovery rules.",
+  },
+  {
+    slug: "other",
+    label: "Other",
+    oneLiner: "We research any criminal charge. Tell us what you\u2019re facing.",
+  },
+] as const satisfies ReadonlyArray<{
+  slug: string;
+  label: string;
+  oneLiner: string;
+}>;
 
 interface ChargeTypeSelectorProps {
-  onSelect?: (slug: TierSlug | null) => void;
+  onSelect?: (slug: string | null) => void;
 }
 
 export function ChargeTypeSelector({ onSelect }: ChargeTypeSelectorProps) {
-  const [selected, setSelected] = useState<TierSlug | null>(null);
-  const selectedCharge = charges.find((c) => c.id === selected);
+  const [selected, setSelected] = useState<string | null>(null);
+  const selectedCategory = categories.find((c) => c.slug === selected);
 
-  function handleSelect(id: TierSlug) {
-    const next = selected === id ? null : id;
+  function handleSelect(slug: string) {
+    const next = selected === slug ? null : slug;
     setSelected(next);
     onSelect?.(next);
   }
@@ -86,24 +112,24 @@ export function ChargeTypeSelector({ onSelect }: ChargeTypeSelectorProps) {
         role="radiogroup"
         aria-label="Select your charge type"
       >
-        {charges.map((charge, idx) => {
-          const isSelected = selected === charge.id;
+        {categories.map((category, idx) => {
+          const isSelected = selected === category.slug;
           return (
             <button
-              key={charge.id}
+              key={category.slug}
               role="radio"
               aria-checked={isSelected}
               tabIndex={isSelected || (!selected && idx === 0) ? 0 : -1}
-              onClick={() => handleSelect(charge.id)}
+              onClick={() => handleSelect(category.slug)}
               onKeyDown={(e) => {
                 let next = -1;
                 if (e.key === "ArrowRight" || e.key === "ArrowDown")
-                  next = (idx + 1) % charges.length;
+                  next = (idx + 1) % categories.length;
                 if (e.key === "ArrowLeft" || e.key === "ArrowUp")
-                  next = (idx - 1 + charges.length) % charges.length;
+                  next = (idx - 1 + categories.length) % categories.length;
                 if (next >= 0) {
                   e.preventDefault();
-                  handleSelect(charges[next].id);
+                  handleSelect(categories[next].slug);
                   (
                     e.currentTarget.parentElement?.children[next] as HTMLElement
                   )?.focus();
@@ -115,17 +141,17 @@ export function ChargeTypeSelector({ onSelect }: ChargeTypeSelectorProps) {
                   : "border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:border-zinc-600"
               }`}
             >
-              {charge.label}
+              {category.label}
             </button>
           );
         })}
       </div>
-      {selectedCharge && (
+      {selectedCategory && (
         <p
           className="mx-auto mt-3 max-w-xl text-sm text-zinc-400 transition-opacity"
-          key={selectedCharge.id}
+          key={selectedCategory.slug}
         >
-          {selectedCharge.oneLiner}
+          {selectedCategory.oneLiner}
         </p>
       )}
     </div>
