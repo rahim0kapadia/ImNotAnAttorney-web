@@ -3789,127 +3789,50 @@ async function handleIBPhaseA(
     { key: "court-prep", system: buildIBPrompt("court-prep", v).system, user: buildIBPrompt("court-prep", v).user, model: "claude-sonnet-4-6", temp: 0.3, max: 2000 },
   ];
 
-  console.log(`[IB-Phase-A] Running ${phaseASections.length} parallel Sonnet calls...`);
+  // --- Submit Phase A as a single 5-request batch ---
+  // Batch submission takes <1s (vs 60s+ for 5 parallel calls), eliminating the
+  // 150s timeout constraint. The cron poller (Task 4) picks up completed batches,
+  // saves section_outputs, and auto-triggers Phase B.
+  console.log(`[IB-Phase-A] Submitting ${phaseASections.length} sections as batch...`);
 
-  const results = await Promise.allSettled(
-    phaseASections.map(async (s) => {
-      const text = await callClaudeForSection(s.system, s.user, s.model, s.temp, s.max, apiKey);
-      return { key: s.key, text };
-    })
-  );
+  const batchRequests = phaseASections.map((s) => ({
+    custom_id: `ib-a-${s.key}`,
+    params: {
+      model: s.model,
+      max_tokens: s.max,
+      temperature: s.temp,
+      system: s.system + ANTI_HALLUCINATION_BLOCK,
+      messages: [{ role: "user" as const, content: s.user }],
+    },
+  }));
 
-  // Collect outputs, retry failures once
-  const sectionOutputs: Record<string, string> = {};
-  const failures: string[] = [];
+  const batchResponse = await fetch("https://api.anthropic.com/v1/messages/batches", {
+    method: "POST",
+    headers: {
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ requests: batchRequests }),
+  });
 
-  for (const result of results) {
-    if (result.status === "fulfilled") {
-      sectionOutputs[result.value.key] = result.value.text;
-    } else {
-      const section = phaseASections[results.indexOf(result)];
-      console.error(`[IB-Phase-A] Section ${section.key} failed:`, result.reason);
-
-      // One retry for failed sections
-      try {
-        const retryText = await callClaudeForSection(section.system, section.user, section.model, section.temp, section.max, apiKey);
-        sectionOutputs[section.key] = retryText;
-      } catch (retryErr) {
-        console.error(`[IB-Phase-A] Section ${section.key} retry failed:`, retryErr);
-        failures.push(section.key);
-        sectionOutputs[section.key] = `[Section generation failed — will be regenerated]`;
-      }
-    }
+  if (!batchResponse.ok) {
+    const err = await batchResponse.text();
+    throw new Error(`IB Phase A batch submission failed (${batchResponse.status}): ${err}`);
   }
 
-  // Failure threshold — if 4+ of 5 sections failed, abort
-  if (failures.length >= 4) {
-    console.error(`[IB-Phase-A] ABORT: ${failures.length}/5 sections failed — ${failures.join(", ")}`);
-    await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
-      status: "generation-failed",
-      section_outputs: sectionOutputs,
-      updated_at: new Date().toISOString(),
-    });
-    if (resendKey) {
-      await sendEmail({
-        to: operatorEmail,
-        subject: `IB Phase A FAILED: ${failures.length}/5 sections — ${escapeHtml(intake.first_name)}`,
-        html: `<h1 style="color: #EF4444;">Intelligence Brief Phase A Failed</h1>
-          <p><strong>${failures.length} of 5</strong> sections failed (${failures.join(", ")}). Case set to generation-failed.</p>
-          <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
-            <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(caseData.email)}</p>
-            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>
-          </div>
-          <p><strong>Action:</strong> Check Edge Function logs, then retry:</p>
-          <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${siteUrl}/functions/v1/generate-report -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" -H "Content-Type: application/json" -d '{"caseId":"${caseId}","tier":"intelligence-brief","phase":"A","force":true}'</code>`,
-        resendKey, fromEmail: resendFrom, operatorEmail,
-      });
-    }
-    return new Response(JSON.stringify({ error: "Phase A: too many section failures", failures }), { status: 500, headers });
-  }
+  const batch = await batchResponse.json();
+  console.log(`[IB-Phase-A] Batch submitted: ${batch.id} (${phaseASections.length} sections)`);
 
-  // Save section outputs and transition to compiling (v4: auto-fire Phase B, no operator gate)
+  // Save batch_id — cron poller handles result processing + Phase B trigger
   await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
-    section_outputs: sectionOutputs,
-    status: "compiling",
-    phase_a_completed_at: new Date().toISOString(),
+    batch_id: batch.id,
     updated_at: new Date().toISOString(),
   });
 
-  console.log(`[IB-Phase-A] Complete! ${Object.keys(sectionOutputs).length} sections saved, ${failures.length} failures. Auto-triggering Phase B.`);
-
-  // Auto-trigger Phase B (fire-and-forget — new Edge Function invocation, own 150s budget)
-  // v4: Judge research removed from IB tier (moved to X-Ray). Phase B runs immediately
-  // using jurisdiction-level patterns instead of specific judge data.
-  const edgeFnUrl = `${supabaseUrl}/functions/v1/generate-report`;
-  fetch(edgeFnUrl, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${supabaseKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ caseId, tier: "intelligence-brief", phase: "B" }),
-  }).catch((err) => console.error("[IB-Phase-A] Phase B auto-trigger failed:", err));
-
-  // Operator notification (informational — no action required)
-  if (resendKey) {
-    await sendEmail({
-      to: operatorEmail,
-      subject: `IB Phase A Complete — Phase B Auto-Triggered: ${escapeHtml(intake.first_name)}`,
-      html: `<h1 style="color: #F59E0B;">Intelligence Brief Phase A Complete</h1>
-        <p>${Object.keys(sectionOutputs).length} of 5 sections generated successfully${failures.length > 0 ? ` (${failures.join(", ")} failed)` : ""}.</p>
-        <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
-          <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(caseData.email)}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Judge:</strong> ${escapeHtml(phase2.judge_name)}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">County:</strong> ${escapeHtml(phase2.county || "Not specified")}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>
-        </div>
-        <p><strong style="color: #22C55E;">Phase B auto-triggered.</strong> No operator action needed. Report will auto-compile and move to review.</p>
-        <p style="color: #A1A1AA;">If you have specific judge research for ${escapeHtml(phase2.judge_name)}, you can optionally submit it via the judge-research endpoint to enrich the report.</p>`,
-      resendKey, fromEmail: resendFrom, operatorEmail,
-    });
-  }
-
-  // Customer micro-delivery email
-  if (resendKey) {
-    await sendEmail({
-      to: caseData.email,
-      subject: "Your Intelligence Brief is in Progress",
-      html: `<h1 style="color: #F59E0B;">Your Intelligence Brief Has Begun</h1>
-        <p>Hi ${escapeHtml(intake.first_name)},</p>
-        <p>We've started analyzing your case. Here's where things stand:</p>
-        <ul style="color: #D4D4D8; padding-left: 20px;">
-          <li>Your case roadmap and legal options analysis are complete</li>
-          <li>We're now compiling your jurisdiction intelligence and prosecution patterns</li>
-          <li>Your full Intelligence Brief will be ready within 72 hours</li>
-        </ul>
-        <p style="color: #A1A1AA;">No action needed from you — we'll email you when your complete report is ready.</p>`,
-      resendKey, fromEmail: resendFrom, operatorEmail,
-    });
-  }
-
   return new Response(
-    JSON.stringify({ success: true, caseId, status: "compiling", sections: Object.keys(sectionOutputs), failures }),
-    { headers }
+    JSON.stringify({ success: true, batchId: batch.id, phase: "A", message: "Phase A batch submitted — poller will process results" }),
+    { status: 200, headers }
   );
 }
 
