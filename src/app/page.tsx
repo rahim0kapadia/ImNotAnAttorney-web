@@ -42,6 +42,7 @@ import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { DiscoveryReveal } from "@/components/motion/DiscoveryReveal";
 import { HomepageHero } from "@/components/HomepageHero";
 import { SITE_URL } from "@/lib/site";
+import { generateDefinedTermSet } from "@/lib/schema";
 import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -221,6 +222,14 @@ export default function Home() {
         }}
       />
 
+      {/* DefinedTermSet Schema — Legal Glossary for AI/Entity SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateDefinedTermSet()),
+        }}
+      />
+
       <HomepageHero />
 
       {/* ------------------------------------------------------------------ */}
@@ -338,17 +347,6 @@ export default function Home() {
             />
             <p className="mt-4 text-center text-xs text-zinc-600">
               *Based on real defendant experiences. Names changed for privacy. Jurisdictions, timelines, and specific findings vary by case.
-            </p>
-          </div>
-          <div className="mt-8 text-center">
-            <p className="text-sm text-zinc-400">
-              Not ready to commit?{" "}
-              <Link
-                href="/score"
-                className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
-              >
-                Check your attorney&apos;s score — free, no email required &rarr;
-              </Link>
             </p>
           </div>
         </div>

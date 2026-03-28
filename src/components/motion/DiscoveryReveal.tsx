@@ -158,18 +158,12 @@ export function DiscoveryReveal() {
             We find them in yours.
           </span>
         </p>
-        <div className="mt-6 flex flex-col items-center gap-2">
+        <div className="mt-6 text-center">
           <Link
             href="/sample"
             className="text-sm font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
           >
             See the full sample report from this case &rarr;
-          </Link>
-          <Link
-            href="/about"
-            className="text-xs text-zinc-500 underline decoration-zinc-500/50 hover:text-zinc-400"
-          >
-            Read the full story &rarr;
           </Link>
         </div>
       </div>
