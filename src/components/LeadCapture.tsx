@@ -150,8 +150,7 @@ export function LeadCapture({
         <p role="alert" className="mt-2 text-xs text-red-400">Something went wrong. Try again.</p>
       )}
       <p className="mt-3 text-xs text-zinc-400">
-        No spam. Unsubscribe anytime. We&apos;re too busy researching your case to
-        send junk mail.
+        No spam. No selling your email. Unsubscribe anytime.
       </p>
     </div>
     </FadeInUp>

@@ -384,7 +384,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     feltExperience: "You have questions your attorney isn't answering. That's why you're here.",
     features: [
       "Plain-English charge breakdown with elements the prosecution must prove",
-      "15 calibrated questions for your attorney (6-part format with follow-up probes)",
+      "15 calibrated questions for your attorney (multi-part format with follow-up probes)",
       "Ready-to-send email template + phone script + follow-up template",
       "Your Advocacy Steps — 5-step communication playbook",
       "Where Things Stand — 4-area diagnostic of what you know vs. what to ask about",
@@ -471,7 +471,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Prosecution Case Weakness Analysis — the defense angles in your case, organized by charge, so nothing gets missed",
     ],
     guarantee:
-      "Three Guarantees: (1) The Discovery Guarantee — if we don't find at least one concrete issue your attorney can act on, every dollar back. (2) The Attorney Meeting Guarantee — if your attorney says there's nothing there, we add a second round at no charge. (3) The 10-Day Hard Deadline — delivered within 10 business days or 20% refund automatic; past 15 days, full refund.",
+      "Three Guarantees: (1) The Discovery Guarantee — if we don't find at least one concrete issue your attorney can act on, every dollar back. (2) The Attorney Meeting Guarantee — if your attorney says there's nothing there, we add a second round at no charge. (3) The Delivery Commitment — delivered within 10 business days or 20% refund automatic; past 15 days, full refund.",
     story: "In one trafficking case, we found a 73% weight discrepancy, a CI dual attribution, a drug type mismatch, and 21 unmatched fingerprints — all in one discovery file the attorney had never fully reviewed. Discovery volumes routinely exceed what any single attorney can manually cross-reference — our systematic approach surfaces what manual review naturally misses. That's what a full X-Ray uncovers.",
     validation:
       "The most thorough analysis available without a multi-week engagement. Full discovery, full picture.",
@@ -540,7 +540,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "All scored deliverables from lower tiers included",
     ],
     guarantee:
-      "Content Quality Guarantee: If the analysis doesn't surface at least 3 actionable findings for your attorney, full refund.",
+      "Three Guarantees: (1) The Trial Intelligence Guarantee — if any daily trial brief fails to surface at least one new finding or actionable question, that brief is free. (2) The Response Guarantee — priority questions answered within 2 business hours during trial, 4 hours during prep, or your next brief is on us. (3) The Methodology Guarantee — every finding traceable to a named defense framework and specific case document, or full refund.",
     validation:
       "When incarceration, career destruction, or family separation are on the line — and the trial date is set.",
     testimonials: [

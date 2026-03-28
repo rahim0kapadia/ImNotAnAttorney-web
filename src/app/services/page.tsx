@@ -804,7 +804,7 @@ export default function ServicesPage() {
                 </p>
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-5">
-                <p className="font-semibold text-white mb-2">The 10-Day Hard Deadline</p>
+                <p className="font-semibold text-white mb-2">The Delivery Commitment</p>
                 <p className="text-sm text-zinc-400">
                   Delivered within 10 business days of document receipt or you receive a 20% refund automatically — no request required. Past 15 business days for any reason: full refund. Your case moves on a schedule. So do we.
                 </p>

@@ -626,9 +626,9 @@ export default function SamplePage() {
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 2
                     </td>
-                    <td className="py-2 pr-4">Your 5 priority questions — already marked in order</td>
+                    <td className="py-2 pr-4">Your 5 priority questions are already marked in order</td>
                     <td className="py-2 text-zinc-400">
-                      Read the 5 Priority Questions. Highlight what matters most.
+                      They&apos;re highlighted and numbered — just skim when you&apos;re ready.
                     </td>
                   </tr>
                   <tr className="border-b border-zinc-800">
@@ -644,9 +644,9 @@ export default function SamplePage() {
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 4
                     </td>
-                    <td className="py-2 pr-4">Your What to Bring checklist is in the report</td>
+                    <td className="py-2 pr-4">Your What to Bring checklist is already in the report</td>
                     <td className="py-2 text-zinc-400">
-                      Use the What to Bring checklist.
+                      Everything you need for the meeting is on one page.
                     </td>
                   </tr>
                   <tr className="border-b border-zinc-800">

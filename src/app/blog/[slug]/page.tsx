@@ -92,7 +92,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* Header */}
         <div className="mb-8">
           <div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-zinc-400">
-            <span>By ImNotAnAttorney Research Team</span>
+            <span>By ImNotAnAttorney</span>
             <span>&bull;</span>
             <time dateTime={new Date(post.date).toISOString()}>{post.date}</time>
             {post.lastModified && post.lastModified !== post.date && (

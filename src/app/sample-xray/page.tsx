@@ -662,9 +662,11 @@ export default function SampleXRayPage() {
             <h2 className="text-lg font-bold text-white">How Every X-Ray Is Built</h2>
             <p className="mt-3 text-sm leading-relaxed text-zinc-400">
               Every X-Ray is built the same way: document-by-document analysis using
-              7 defense methodologies and 15 forensic detection patterns. Every
-              report is reviewed by the operator before delivery. No finding ships
-              without a specific document citation.
+              defense methodologies including Scheck evidence integrity protocols,
+              Chapman II drug forensic analysis, and MacCarthy suppression methodology —
+              plus 15 forensic detection patterns. Every report is reviewed by the
+              operator before delivery. No finding ships without a specific document
+              citation.
             </p>
           </section>
         </FadeInUp>
@@ -772,7 +774,7 @@ export default function SampleXRayPage() {
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4">
                 <p className="text-sm font-semibold text-white">
-                  The 10-Day Hard Deadline
+                  The Delivery Commitment
                 </p>
                 <p className="mt-1 text-xs text-zinc-400">
                   Delivered within 10 business days of document receipt or 20%
