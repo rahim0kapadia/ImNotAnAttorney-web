@@ -19,7 +19,7 @@ export async function GET() {
       .single(),
     supabase
       .from("score_aggregates")
-      .select("charge_type, metric, value"),
+      .select("charge_type, metric, count"),
   ]);
 
   const totalCompletions = counterResult.data?.value ?? 0;
@@ -27,7 +27,7 @@ export async function GET() {
   const byCharge: Record<string, Record<string, number>> = {};
   for (const row of aggregateResult.data ?? []) {
     if (!byCharge[row.charge_type]) byCharge[row.charge_type] = {};
-    byCharge[row.charge_type][row.metric] = row.value;
+    byCharge[row.charge_type][row.metric] = row.count;
   }
 
   let totalNoMotions = 0;
@@ -35,16 +35,31 @@ export async function GET() {
   let totalNoComm = 0;
   let totalByCharge = 0;
 
+  const bandTotals: Record<string, number> = {};
+
   for (const charge of Object.values(byCharge)) {
     totalByCharge += charge.total_by_charge ?? 0;
     totalNoMotions += charge.no_motions_filed ?? 0;
     totalNeverDiscovery += charge.never_seen_discovery ?? 0;
     totalNoComm += charge.communication_never ?? 0;
+
+    for (const [metric, count] of Object.entries(charge)) {
+      if (metric.startsWith("band_")) {
+        const band = metric.slice(5);
+        bandTotals[band] = (bandTotals[band] ?? 0) + count;
+      }
+    }
   }
 
   const pctNoMotions = totalByCharge > 0 ? Math.round((totalNoMotions / totalByCharge) * 100) : null;
   const pctNeverDiscovery = totalByCharge > 0 ? Math.round((totalNeverDiscovery / totalByCharge) * 100) : null;
   const pctNoComm = totalByCharge > 0 ? Math.round((totalNoComm / totalByCharge) * 100) : null;
+
+  const bandDistribution: Record<string, number> | null = totalByCharge > 0
+    ? Object.fromEntries(
+        Object.entries(bandTotals).map(([band, n]) => [band, Math.round((n / totalByCharge) * 100)])
+      )
+    : null;
 
   return NextResponse.json({
     totalCompletions,
@@ -53,5 +68,6 @@ export async function GET() {
       pctNeverDiscovery,
       pctNoComm,
     },
+    bandDistribution,
   });
 }

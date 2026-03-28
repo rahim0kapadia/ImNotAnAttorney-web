@@ -2274,7 +2274,7 @@ async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabase
 
   const comm = intake.communication_frequency;
   const commInstruction = comm === "Rarely" || comm === "Never returned calls"
-    ? `\nCommunication has been poor (${comm}). Emphasize urgency in the email template and include the follow-up template. Include all 8 Advocacy Steps with emphasis on Steps 1-3 for immediate action.`
+    ? `\nCommunication has been poor (${comm}). Emphasize urgency in the email template and include the follow-up template. Include all 5 Advocacy Steps with emphasis on Steps 1-3 for immediate action.`
     : `\nAttorney communication frequency: ${comm || "Not specified"}.`;
 
   // Conditional section flags

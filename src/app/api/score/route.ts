@@ -496,24 +496,29 @@ export async function POST(req: NextRequest) {
     const result = calculateScore(body as ScoreInput);
 
     // Fire-and-forget: increment counters and anonymous aggregates
-    // Supabase failures do NOT break the score response
+    // Supabase failures do NOT break the score response but ARE logged
     const supabase = createAdminClient();
-    supabase.rpc("increment_counter", { p_id: "score_completions" }).then(() => {}, () => {});
+    const input = body as ScoreInput;
+    const ct = input.chargeType;
+    const rpcLog = (label: string) => (err: unknown) =>
+      console.error(`[Score] RPC ${label} failed:`, err);
+
+    supabase.rpc("increment_counter", { p_id: "score_completions" }).then(null, rpcLog("increment_counter"));
 
     // Anonymous aggregate tracking — NO individual answers stored
-    const input = body as ScoreInput;
-    supabase.rpc("increment_score_aggregate", { p_charge_type: input.chargeType, p_metric: "total_by_charge" }).then(() => {}, () => {});
+    supabase.rpc("increment_score_aggregate", { p_charge_type: ct, p_metric: "total_by_charge" }).then(null, rpcLog("total_by_charge"));
+    supabase.rpc("increment_score_aggregate", { p_charge_type: ct, p_metric: `band_${result.band.toLowerCase()}` }).then(null, rpcLog("band"));
     if (input.motionsFiled === "no") {
-      supabase.rpc("increment_score_aggregate", { p_charge_type: input.chargeType, p_metric: "no_motions_filed" }).then(() => {}, () => {});
+      supabase.rpc("increment_score_aggregate", { p_charge_type: ct, p_metric: "no_motions_filed" }).then(null, rpcLog("no_motions_filed"));
     }
     if (input.hasDiscovery === "no") {
-      supabase.rpc("increment_score_aggregate", { p_charge_type: input.chargeType, p_metric: "never_seen_discovery" }).then(() => {}, () => {});
+      supabase.rpc("increment_score_aggregate", { p_charge_type: ct, p_metric: "never_seen_discovery" }).then(null, rpcLog("never_seen_discovery"));
     }
     if (input.communicationFrequency === "never") {
-      supabase.rpc("increment_score_aggregate", { p_charge_type: input.chargeType, p_metric: "communication_never" }).then(() => {}, () => {});
+      supabase.rpc("increment_score_aggregate", { p_charge_type: ct, p_metric: "communication_never" }).then(null, rpcLog("communication_never"));
     }
     if (input.strategyDiscussed === "no") {
-      supabase.rpc("increment_score_aggregate", { p_charge_type: input.chargeType, p_metric: "no_strategy_discussion" }).then(() => {}, () => {});
+      supabase.rpc("increment_score_aggregate", { p_charge_type: ct, p_metric: "no_strategy_discussion" }).then(null, rpcLog("no_strategy_discussion"));
     }
 
     return NextResponse.json(result);
