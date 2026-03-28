@@ -48,9 +48,11 @@ export async function POST(req: NextRequest) {
     const source = ALLOWED_SOURCES.includes(body.source) ? body.source : "lead-capture";
 
     // Score page passes additional context for segmented nurture sequences
-    const scoreBand = typeof body.scoreBand === "string" ? body.scoreBand : null;
-    const scoreValue = typeof body.scoreValue === "number" ? body.scoreValue : null;
-    const chargeType = typeof body.chargeType === "string" ? body.chargeType : null;
+    const VALID_BANDS = ["Critical", "Concerning", "Average", "Adequate", "Excellent"];
+    const VALID_CHARGES = ["drug", "dui", "white-collar", "other-felony", "other-misdemeanor"];
+    const scoreBand = typeof body.scoreBand === "string" && VALID_BANDS.includes(body.scoreBand) ? body.scoreBand : null;
+    const scoreValue = typeof body.scoreValue === "number" && body.scoreValue >= 0 && body.scoreValue <= 100 ? body.scoreValue : null;
+    const chargeType = typeof body.chargeType === "string" && VALID_CHARGES.includes(body.chargeType) ? body.chargeType : null;
 
     // =========================================================================
     // 1. EMAIL VALIDATION
@@ -141,8 +143,7 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
 
-    const VALID_BANDS = ["Critical", "Concerning", "Average", "Adequate", "Excellent"];
-    if (source === "score-page" && scoreBand && VALID_BANDS.includes(scoreBand) && scoreValue !== null) {
+    if (source === "score-page" && scoreBand && scoreValue !== null) {
       // ── SCORE ARTIFACT EMAIL — immediate, trust-building, no CTA ──
       const bandLabel = scoreBand;
       const bandColors: Record<string, string> = {

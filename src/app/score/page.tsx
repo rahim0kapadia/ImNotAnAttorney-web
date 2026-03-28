@@ -373,11 +373,11 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
 
   // Band-specific email capture headlines (Godin + Chaperon)
   const bandEmailHeadlines: Record<string, string> = {
-    Critical: "Get the 10 questions your attorney needs to answer — based on your score.",
-    Concerning: "Get the 10 questions your attorney needs to answer — based on your score.",
+    Critical: "Get the 10 questions your attorney needs to answer — before your next court date.",
+    Concerning: "Get the 10 questions that close the gaps your score just flagged — sent now.",
     Average: "Get the 10 questions that change how your next attorney meeting goes — sent now.",
-    Adequate: "Get the checklist attorneys use to evaluate case readiness — sent now.",
-    Excellent: "Get the checklist attorneys use to evaluate case readiness — sent now.",
+    Adequate: "Get the advanced checklist — the gaps that matter most don\u2019t show up in 10 questions.",
+    Excellent: "Get the verification checklist elite attorneys use to confirm case readiness — sent now.",
   };
 
   /** Build the copy-paste attorney email text */
