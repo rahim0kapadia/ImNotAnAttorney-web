@@ -2147,6 +2147,8 @@ async function fetchLegalResearchData(
   url: string,
   key: string,
   judgeName?: string,
+  chargeType?: string,
+  state?: string,
 ): Promise<LegalResearchData> {
   const result: LegalResearchData = {
     jurisdictionProfile: null,
@@ -2173,6 +2175,36 @@ async function fetchLegalResearchData(
     if (rows.length > 0) result.preResearchedCases = rows as any[];
   } catch (err) {
     console.log(`[legal-research] case_law_references fetch skipped:`, err instanceof Error ? err.message : err);
+  }
+
+  // 2b. Fallback: statute-level case law from research skill (Level 1)
+  // If no case-specific case law exists, pull from statute_case_law
+  // via jurisdiction_statutes (charge_slug + jurisdiction match).
+  if (result.preResearchedCases.length === 0 && chargeType && state) {
+    try {
+      const stateCode = STATE_TO_CODE[state] || (state.length === 2 ? state.toUpperCase() : null);
+      const jurisdictionCode = stateCode || "federal";
+      const slug = await resolveChargeSlugEnhanced(chargeType, url, key);
+
+      // Find the jurisdiction_statute ID for this charge + state
+      const jsRows = await supabaseSelect(url, key, "jurisdiction_statutes",
+        `common_charge_slug=eq.${encodeURIComponent(slug)}&jurisdiction=eq.${encodeURIComponent(jurisdictionCode)}&active=eq.true&select=id&limit=1`);
+      if (jsRows.length > 0) {
+        // deno-lint-ignore no-explicit-any
+        const jsId = (jsRows as any[])[0].id;
+        const clRows = await supabaseSelect(url, key, "statute_case_law",
+          `jurisdiction_statute_id=eq.${jsId}&select=case_name,citation,court,year,holding,relevance&order=confidence_score.desc&limit=10`);
+        // deno-lint-ignore no-explicit-any
+        if (clRows.length > 0) {
+          result.preResearchedCases = (clRows as any[]).filter(
+            (r: Record<string, unknown>) => r.citation && typeof r.citation === "string" && (r.citation as string).length > 3
+          );
+          console.log(`[legal-research] statute_case_law fallback: ${result.preResearchedCases.length} cases for ${slug}/${jurisdictionCode}`);
+        }
+      }
+    } catch (err) {
+      console.log(`[legal-research] statute_case_law fallback skipped:`, err instanceof Error ? err.message : err);
+    }
   }
 
   // 3. Wex definitions from case metadata (JSONB column on cases table)
@@ -2323,7 +2355,7 @@ async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabase
   // is IB-only (not included for CD). If no data exists (no legal-research
   // or jurisdiction-profile worker has run), legalDataBlock is empty and
   // the prompt is unchanged from before this feature was added.
-  const legalResearchData = await fetchLegalResearchData(caseId, supabaseUrl, supabaseKey);
+  const legalResearchData = await fetchLegalResearchData(caseId, supabaseUrl, supabaseKey, undefined, intake.charge_type, intake.state);
   const legalDataBlock = formatLegalDataBlock(legalResearchData, false);
   if (legalDataBlock) {
     console.log(`[generate-report] Legal research data injected: jurisdiction=${!!legalResearchData.jurisdictionProfile}, cases=${legalResearchData.preResearchedCases.length}, wex=${!!legalResearchData.wexDefinitions}`);
@@ -3905,7 +3937,7 @@ async function handleIBPhaseA(
   // ── Legal research data injection (Wave 5.2) ──────────────
   // IB Phase A gets jurisdiction + case law + wex + judge profile.
   // Judge profile uses the judge name from phase2 intake data.
-  const ibLegalData = await fetchLegalResearchData(caseId, supabaseUrl, supabaseKey, phase2.judge_name);
+  const ibLegalData = await fetchLegalResearchData(caseId, supabaseUrl, supabaseKey, phase2.judge_name, intake.charge_type, intake.state);
   const ibLegalDataBlock = formatLegalDataBlock(ibLegalData, true);
   if (ibLegalDataBlock) {
     console.log(`[IB-Phase-A] Legal research data injected: jurisdiction=${!!ibLegalData.jurisdictionProfile}, cases=${ibLegalData.preResearchedCases.length}, wex=${!!ibLegalData.wexDefinitions}, judge=${!!ibLegalData.judgeProfile}`);
@@ -4036,7 +4068,7 @@ async function handleIBPhaseB(
   // ── Legal research data injection (Wave 5.2) ──────────────
   // Phase B re-fetches legal data (same as Phase A) to ensure the latest
   // pre-researched data is available. Judge profile included.
-  const ibBLegalData = await fetchLegalResearchData(caseId, supabaseUrl, supabaseKey, phase2.judge_name);
+  const ibBLegalData = await fetchLegalResearchData(caseId, supabaseUrl, supabaseKey, phase2.judge_name, intake.charge_type, intake.state);
   const ibBLegalDataBlock = formatLegalDataBlock(ibBLegalData, true);
   if (ibBLegalDataBlock) {
     console.log(`[IB-Phase-B] Legal research data injected: jurisdiction=${!!ibBLegalData.jurisdictionProfile}, cases=${ibBLegalData.preResearchedCases.length}, wex=${!!ibBLegalData.wexDefinitions}, judge=${!!ibBLegalData.judgeProfile}`);
