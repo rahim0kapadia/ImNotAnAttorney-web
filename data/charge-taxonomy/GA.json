@@ -1,0 +1,2093 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "O.C.G.A. § 40-6-391",
+    "statute_title": "Driving Under the Influence of Alcohol or Drugs",
+    "offense_class": "Misdemeanor (1st/2nd offense); Felony (3rd+ within 10 years)",
+    "penalty_min": "24 hours imprisonment (1st offense)",
+    "penalty_max": "12 months (misdemeanor); 5 years (3rd offense felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Drove or was in actual physical control of a moving vehicle",
+      "On a public road, highway, or private property open to the public",
+      "While under the influence of alcohol or drugs to the extent it was less safe to drive",
+      "OR with BAC of 0.08% or more (0.04% for CDL holders; 0.02% for drivers under 21)"
+    ],
+    "mandatory_minimum": "24 hours jail (1st); 72 hours jail (2nd); 15 days jail (3rd felony)",
+    "enhancements": [
+      "Child under 14 in vehicle: additional misdemeanor under O.C.G.A. § 40-6-391(l)",
+      "BAC 0.15% or higher: mandatory ignition interlock device",
+      "3rd offense within 10 years: felony classification",
+      "4th+ offense: felony regardless of look-back period"
+    ],
+    "notes": "Administrative license suspension (ALS) separate from criminal penalties. Implied consent under § 40-5-55 requires chemical test."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "O.C.G.A. § 40-6-391",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "24 hours imprisonment",
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "First DUI conviction within 10-year look-back period",
+      "Drove or was in actual physical control of a moving vehicle",
+      "Under influence to extent less safe to drive OR BAC 0.08%+"
+    ],
+    "mandatory_minimum": "24 hours jail; 40 hours community service; 12 months probation; DUI Risk Reduction Program",
+    "enhancements": [
+      "BAC 0.15%+: ignition interlock device required",
+      "Child passenger under 14: child endangerment charge added"
+    ],
+    "notes": "License suspended 1 year. Minimum 24 hours must be served; balance may be probated. Clinical evaluation required."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "O.C.G.A. § 40-6-391",
+    "statute_title": "DUI — Repeat Offense",
+    "offense_class": "Misdemeanor (2nd); Felony (3rd+ within 10 years)",
+    "penalty_min": "72 hours mandatory (2nd); 15 days mandatory (3rd felony)",
+    "penalty_max": "12 months (2nd misdemeanor); 5 years (3rd felony)",
+    "fine_max": "$1,000 (2nd); $5,000 (3rd+)",
+    "elements": [
+      "Prior DUI conviction(s) within applicable look-back period",
+      "Drove or was in actual physical control of a moving vehicle",
+      "Under influence to extent less safe OR BAC 0.08%+"
+    ],
+    "mandatory_minimum": "72 hours mandatory jail (2nd); 15 days mandatory jail (3rd felony)",
+    "enhancements": [
+      "Habitual violator designation possible on 3rd offense",
+      "Ignition interlock mandatory on 2nd+ offense",
+      "5-year license revocation on habitual violator designation"
+    ],
+    "notes": "10-year look-back period for felony classification on 3rd offense. 4th offense is always felony."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "O.C.G.A. § 40-6-391(a)(2)-(6)",
+    "statute_title": "DUI — Under the Influence of Drugs",
+    "offense_class": "Misdemeanor (1st/2nd); Felony (3rd+)",
+    "penalty_min": "24 hours imprisonment",
+    "penalty_max": "12 months (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Drove or was in actual physical control of a moving vehicle",
+      "Under the influence of any controlled substance, marijuana, or other drug",
+      "To the extent it was less safe to drive",
+      "OR per se: blood or urine shows presence of Schedule I-IV controlled substance under § 40-6-391(a)(6)"
+    ],
+    "mandatory_minimum": "24 hours jail (1st offense)",
+    "enhancements": [
+      "Any prior DUI within 10 years elevates penalties",
+      "Drug paraphernalia in vehicle: additional charges"
+    ],
+    "notes": "Per se DUI-drugs: any detectable amount of Schedule I-IV substance in blood/urine — no impairment proof required."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "O.C.G.A. § 40-6-390",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant operated a vehicle",
+      "On a public road, highway, or private property open to the public",
+      "In reckless disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting serious injury or death: vehicular homicide charges under § 40-6-393",
+      "Repeat offense: points accumulation leads to license suspension"
+    ],
+    "notes": "4 points assessed on driver's license. Frequently charged alongside DUI."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "O.C.G.A. § 40-6-270",
+    "statute_title": "Duty to Stop at or Return to Scene of Accident",
+    "offense_class": "Felony (injury/death); Misdemeanor (property damage only)",
+    "penalty_min": "1 year (felony with injury)",
+    "penalty_max": "5 years (felony); 12 months (misdemeanor)",
+    "fine_max": "$5,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant was operating a vehicle involved in an accident",
+      "Accident resulted in injury, death, or property damage",
+      "Defendant failed to immediately stop at or return to the scene",
+      "Defendant failed to provide identifying information and render reasonable aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death resulting: minimum 3 years imprisonment",
+      "Serious injury: minimum 1 year imprisonment"
+    ],
+    "notes": "Duty to stop, render aid, and exchange information. Property-damage-only hit-and-run is misdemeanor."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "O.C.G.A. § 40-6-393",
+    "statute_title": "Homicide by Vehicle",
+    "offense_class": "Felony (1st degree); Misdemeanor (2nd degree)",
+    "penalty_min": "3 years (1st degree felony)",
+    "penalty_max": "15 years (1st degree felony); 12 months (2nd degree misdemeanor)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "In violation of O.C.G.A. § 40-6-391 (DUI), racing, or fleeing statute",
+      "Such violation was the proximate cause of death of another person"
+    ],
+    "mandatory_minimum": "3 years for 1st degree",
+    "enhancements": [
+      "Multiple deaths: consecutive sentences possible",
+      "DUI-related: mandatory minimum 3 years"
+    ],
+    "notes": "1st degree requires underlying DUI, racing, or fleeing as predicate. 2nd degree involves other traffic violations."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "O.C.G.A. § 40-6-393(b)",
+    "statute_title": "Homicide by Vehicle in the Second Degree",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "In violation of a traffic law other than DUI, racing, or fleeing",
+      "Such violation was the proximate cause of death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Reckless driving as predicate: potential 1st degree elevation"
+    ],
+    "notes": "Second-degree homicide by vehicle covers negligent or traffic-violation-related deaths that don't involve DUI or racing."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "O.C.G.A. § 40-5-121",
+    "statute_title": "Driving on Suspended or Revoked License",
+    "offense_class": "Misdemeanor (1st/2nd); Felony (3rd+)",
+    "penalty_min": "2 days mandatory (1st offense)",
+    "penalty_max": "12 months (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant drove a motor vehicle on a public road",
+      "Defendant's driver's license or privilege to drive was suspended or revoked",
+      "Defendant had actual or constructive knowledge of the suspension"
+    ],
+    "mandatory_minimum": "2 days jail (1st); 10 days (2nd); felony 3rd offense",
+    "enhancements": [
+      "Habitual violator under § 40-5-58: felony with 5-year revocation",
+      "Driving during DUI-related suspension: aggravated penalty"
+    ],
+    "notes": "Habitual violator: 3rd major violation within 5 years = 5-year revocation and felony charge."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "O.C.G.A. § 40-6-395",
+    "statute_title": "Fleeing or Attempting to Elude a Police Officer",
+    "offense_class": "Misdemeanor (basic); Felony (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 5 years (felony)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Law enforcement officer gave a visible or audible signal to stop",
+      "Officer was in uniform or marked vehicle",
+      "Defendant willfully failed or refused to stop or fled"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "High-speed chase endangering others: felony under § 40-6-395(b)",
+      "Serious injury or death: vehicular homicide charges added"
+    ],
+    "notes": "Aggravated form charged when driver travels 30+ mph over limit, enters oncoming traffic, or runs traffic control devices."
+  },
+  {
+    "common_charge_slug": "open-container",
+    "statute_number": "O.C.G.A. § 40-6-253",
+    "statute_title": "Open Container of Alcoholic Beverage in Motor Vehicle",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$200",
+    "elements": [
+      "Defendant operated or was a passenger in a moving vehicle on a public highway",
+      "An open container of alcohol was possessed or accessible in the passenger area",
+      "Container had been opened or had broken seal or partially removed contents"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Locked trunk or locked glove box exempted. Does not apply to passengers in chartered buses, taxis, or limousines."
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "statute_number": "O.C.G.A. § 40-5-67.1",
+    "statute_title": "Refusal of Chemical Test — Implied Consent",
+    "offense_class": "Administrative (license suspension); refusal admissible at trial",
+    "penalty_min": null,
+    "penalty_max": "1-year license suspension (1st refusal); 3-year suspension (2nd refusal within 5 years)",
+    "fine_max": null,
+    "elements": [
+      "Defendant was lawfully arrested for DUI",
+      "Law enforcement officer read the Georgia Implied Consent Notice",
+      "Defendant refused to submit to the designated chemical test"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "2nd refusal within 5 years: 3-year license suspension"
+    ],
+    "notes": "Refusal admissible as evidence of consciousness of guilt at trial. No standalone criminal charge; triggers administrative ALS."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "O.C.G.A. § 16-13-30(a)",
+    "statute_title": "Possession of Controlled Substance",
+    "offense_class": "Felony (Schedule I-IV); Misdemeanor (Schedule V)",
+    "penalty_min": null,
+    "penalty_max": "15 years (Schedule I-II, 1st offense); 30 years (2nd offense); 5 years (Schedule III-V)",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly and willfully possessed a controlled substance",
+      "Substance was listed on the Georgia controlled substance schedule",
+      "Defendant had actual or constructive possession"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near school, park, or public housing within 1,000 feet: mandatory 2-year add-on",
+      "Large quantity: trafficking presumption under § 16-13-31",
+      "Prior drug conviction: enhanced maximum"
+    ],
+    "notes": "Marijuana treated separately under § 16-13-2. Trafficking thresholds trigger mandatory minimums under § 16-13-31."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "O.C.G.A. § 16-13-2",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Misdemeanor (1 oz or less); Felony (more than 1 oz)",
+    "penalty_min": null,
+    "penalty_max": "12 months (1 oz or less); 10 years (1 oz to 10 lbs)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant possessed marijuana",
+      "Amount was 1 oz or less (misdemeanor) or more than 1 oz (felony)",
+      "Possession was knowing and willful"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "More than 10 lbs: trafficking under § 16-13-31 with mandatory minimums",
+      "Near drug-free school zone: enhanced penalty"
+    ],
+    "notes": "Medical marijuana oil (low-THC cannabis oil) permitted under § 16-12-191 with valid Low THC Oil Registry card."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "O.C.G.A. § 16-13-30(a)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years (1st offense); 30 years (2nd offense)",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly possessed cocaine (Schedule II controlled substance)",
+      "Amount was below 28g trafficking threshold",
+      "Possession was actual or constructive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "28g or more: cocaine trafficking under § 16-13-31 with mandatory 10-year minimum",
+      "Near drug-free school zone: 2-year mandatory add-on"
+    ],
+    "notes": "Trafficking thresholds: 28g+ = 10 yrs mandatory; 200g+ = 15 yrs mandatory; 400g+ = 25 yrs mandatory."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "O.C.G.A. § 16-13-30(a)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years (1st offense); 30 years (2nd offense)",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly possessed methamphetamine (Schedule II)",
+      "Amount was below 28g trafficking threshold",
+      "Possession was actual or constructive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "28g or more: meth trafficking mandatory minimum 10 years",
+      "200g or more: 15-year mandatory minimum",
+      "400g or more: 25-year mandatory minimum"
+    ],
+    "notes": "Meth trafficking under § 16-13-31(e). Children present at meth lab triggers child endangerment charge."
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "statute_number": "O.C.G.A. § 16-13-30(a)",
+    "statute_title": "Possession of Opioids or Narcotics",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years (1st offense); 30 years (2nd offense)",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly possessed an opioid narcotic controlled substance (Schedule I-II)",
+      "No valid prescription or prescription was fraudulently obtained",
+      "Possession was actual or constructive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "4g or more heroin: trafficking mandatory minimum 5 years",
+      "14g+ heroin: 10-year mandatory minimum",
+      "28g+ heroin: 25-year mandatory minimum"
+    ],
+    "notes": "Fentanyl treated as Schedule II. Distribution causing death may support felony murder under § 16-5-1(b)."
+  },
+  {
+    "common_charge_slug": "drug-possession-prescription",
+    "statute_number": "O.C.G.A. § 16-13-30(a); § 16-13-72",
+    "statute_title": "Possession of Prescription Drug Without Valid Prescription",
+    "offense_class": "Felony (Schedule II-IV); Misdemeanor (Schedule V)",
+    "penalty_min": null,
+    "penalty_max": "15 years (Schedule II); 5 years (Schedule III-IV)",
+    "fine_max": null,
+    "elements": [
+      "Defendant possessed a prescription controlled substance",
+      "Defendant lacked a valid, current prescription for the substance",
+      "Substance was on Georgia's controlled substance schedule"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Forged or altered prescription: fraud charges under § 16-13-73",
+      "Large quantity: trafficking presumption"
+    ],
+    "notes": "Prescription Drug Monitoring Program (PDMP) data under § 16-13-57 frequently used as evidence."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "O.C.G.A. § 16-13-31",
+    "statute_title": "Drug Trafficking",
+    "offense_class": "Felony",
+    "penalty_min": "5 years (cocaine 28g+); 10 years (meth 28g+); 5 years (heroin 4g+)",
+    "penalty_max": "30 years",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "Defendant knowingly possessed, sold, delivered, or manufactured a controlled substance",
+      "Quantity met or exceeded the statutory trafficking threshold for the specific substance",
+      "Defendant had knowledge of the nature of the substance"
+    ],
+    "mandatory_minimum": "5-25 years depending on substance and quantity; no parole, probation, or suspended sentence on mandatory term",
+    "enhancements": [
+      "Trafficking within drug-free zone: additional mandatory time",
+      "Leadership role: enhanced sentence"
+    ],
+    "notes": "No parole, probation, or suspended sentence on the mandatory minimum portion. Thresholds vary by substance."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "O.C.G.A. § 16-13-30(b)",
+    "statute_title": "Distribution or Sale of Controlled Substance",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "30 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant sold, delivered, distributed, or dispensed a controlled substance",
+      "Substance was on the controlled substance schedule",
+      "Defendant acted knowingly and intentionally"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Distribution within 1,000 feet of school, park, or public housing: mandatory additional 2-year term",
+      "Distribution to a minor: enhanced penalty",
+      "Prior distribution conviction: enhanced maximum"
+    ],
+    "notes": "Drug-free zone enhancement under § 16-13-32.4 adds mandatory 2 years consecutive."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "O.C.G.A. § 16-13-30(b)",
+    "statute_title": "Manufacturing Controlled Substance",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "30 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant manufactured, produced, prepared, or processed a controlled substance",
+      "Substance was listed on the controlled substance schedule",
+      "Acts were knowing and intentional"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Meth lab with children present: child endangerment added under § 16-12-1",
+      "Trafficking quantity manufactured: trafficking charges"
+    ],
+    "notes": "Meth lab cleanup costs may be assessed against defendant under GA environmental statutes."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "O.C.G.A. § 16-13-32.2",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant possessed an object defined as drug paraphernalia (pipes, syringes, scales, etc.)",
+      "Defendant intended to use paraphernalia in connection with a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sale of paraphernalia to minor: felony under § 16-13-32.1"
+    ],
+    "notes": "Intent inferred from proximity to drugs, residue, and circumstantial evidence."
+  },
+  {
+    "common_charge_slug": "prescription-fraud",
+    "statute_number": "O.C.G.A. § 16-13-73",
+    "statute_title": "Fraudulent Prescription for Controlled Substance",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant obtained or attempted to obtain a controlled substance by fraud",
+      "Methods included forged prescription, false name, false statement to practitioner, or doctor-shopping",
+      "Defendant acted with knowledge of the fraudulent nature of the act"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Healthcare provider fraud: professional license revocation",
+      "Multiple fraudulent prescriptions: charges may stack per occurrence"
+    ],
+    "notes": "PDMP enrollment required for Schedule II-IV dispensing; patterns are reportable to law enforcement."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "O.C.G.A. § 16-13-30(b)",
+    "statute_title": "Possession of Controlled Substance with Intent to Distribute",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "30 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "Defendant intended to distribute, sell, or deliver the substance",
+      "Intent inferred from quantity, packaging, scales, cash, or other circumstantial evidence"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Near school, park, or public housing: additional 2-year mandatory term",
+      "With firearm: additional weapons charges",
+      "Trafficking quantity: trafficking threshold charges"
+    ],
+    "notes": "Intent proven circumstantially — scales, individual baggies, large cash, and cell phone records all relevant."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "O.C.G.A. § 16-5-1(a)",
+    "statute_title": "Murder — Malice Murder",
+    "offense_class": "Felony",
+    "penalty_min": "Life imprisonment",
+    "penalty_max": "Death penalty or life without parole",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another human being",
+      "With malice aforethought, either express or implied",
+      "The killing was unlawful"
+    ],
+    "mandatory_minimum": "Life imprisonment",
+    "enhancements": [
+      "Statutory aggravating circumstances: death penalty eligible",
+      "Law enforcement officer victim: aggravated sentence",
+      "Multiple victims: consecutive life sentences"
+    ],
+    "notes": "Georgia has the death penalty. Felony murder under § 16-5-1(b) charged when death occurs during commission of a felony."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "O.C.G.A. § 16-5-1(c)",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "30 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another person",
+      "During commission of cruelty to children in the second degree under § 16-5-70(b)",
+      "Without malice aforethought"
+    ],
+    "mandatory_minimum": "10 years",
+    "enhancements": [],
+    "notes": "Georgia second-degree murder is limited to child cruelty as predicate. General felony murder is § 16-5-1(b)."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "O.C.G.A. § 16-5-2",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another person",
+      "While in a sudden, violent, and irresistible passion",
+      "Resulting from serious provocation sufficient to excite such passion in a reasonable person",
+      "No cooling-off period elapsed between provocation and killing"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [],
+    "notes": "Heat-of-passion reduces murder to voluntary manslaughter. Provocation must be legally sufficient under GA case law."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "O.C.G.A. § 16-5-3",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "Felony (during commission of unlawful act); Misdemeanor (lawful act in unlawful manner)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 12 months (misdemeanor)",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another person",
+      "Without malice or intent to kill",
+      "During commission of an unlawful act other than a felony (felony version)",
+      "OR during a lawful act performed in an unlawful manner lacking due caution (misdemeanor version)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Vehicular manslaughter charged separately as Homicide by Vehicle under § 40-6-393."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "O.C.G.A. § 16-5-21",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant attempted to commit a violent injury upon another person, or committed an act placing another in reasonable apprehension of immediately receiving violent injury",
+      "With a deadly weapon or object likely to or actually resulting in serious bodily injury",
+      "OR with intent to rob, rape, or murder",
+      "OR by discharging a firearm from a motor vehicle toward a person or occupied building"
+    ],
+    "mandatory_minimum": "3 years if firearm used; 5 years if victim is public safety officer",
+    "enhancements": [
+      "Victim is law enforcement officer: mandatory minimum 5 years no parole",
+      "Family violence context: family violence felony designation",
+      "Gang-related: RICO enhancement under § 16-14-4"
+    ],
+    "notes": "Mandatory 3 years if victim is public safety officer or crime committed at public transit station under § 16-5-21(b)."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "O.C.G.A. § 16-5-20",
+    "statute_title": "Simple Assault",
+    "offense_class": "Misdemeanor; High and Aggravated Misdemeanor (certain circumstances)",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$5,000 (high and aggravated misdemeanor)",
+    "elements": [
+      "Defendant attempted to commit a violent injury to another person",
+      "OR committed an act placing another in reasonable apprehension of immediately receiving a violent injury",
+      "Defendant had apparent present ability to carry out the act"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is elder (65+): high and aggravated misdemeanor",
+      "Victim is pregnant and defendant knew: high and aggravated misdemeanor",
+      "Committed on public transit: high and aggravated misdemeanor"
+    ],
+    "notes": "No physical contact required — apprehension of injury alone is sufficient for assault in Georgia."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "O.C.G.A. § 16-5-23.1",
+    "statute_title": "Battery",
+    "offense_class": "Misdemeanor (1st offense); Felony (2nd+ offense against same victim)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 5 years (felony 2nd offense same victim)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant intentionally caused substantial physical harm to another person",
+      "OR intentionally made physical contact of an insulting or provoking nature with another person",
+      "Act was knowing and intentional"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second battery conviction against same victim: felony",
+      "High and aggravated misdemeanor if against elder, pregnant woman, or committed on public transit"
+    ],
+    "notes": "Simple battery under § 16-5-23 requires only insulting physical contact. Battery § 16-5-23.1 requires substantial physical harm."
+  },
+  {
+    "common_charge_slug": "aggravated-battery",
+    "statute_number": "O.C.G.A. § 16-5-24",
+    "statute_title": "Aggravated Battery",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant maliciously caused bodily harm to another person",
+      "By depriving them of a member of the body",
+      "OR by rendering a member of the body useless",
+      "OR by seriously disfiguring the body or a member thereof"
+    ],
+    "mandatory_minimum": "5 years if victim is a public safety officer",
+    "enhancements": [
+      "Victim is law enforcement or public safety officer: mandatory minimum 5 years",
+      "Use of caustic substance: enhanced penalty"
+    ],
+    "notes": "Serious disfigurement includes permanent scarring. Permanent loss of use of a limb qualifies."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "O.C.G.A. § 16-8-40",
+    "statute_title": "Robbery",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant took property of another",
+      "From the person or immediately from the presence of another",
+      "By use of force, intimidation, threat, or placing the victim in fear",
+      "With intent to commit theft"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim 65 or older: mandatory minimum 5 years",
+      "Armed robbery: enhanced charge under § 16-8-41"
+    ],
+    "notes": "Distinct from theft — requires taking from person or presence with force or fear. Sudden snatching charged separately under § 16-8-40(b)."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "O.C.G.A. § 16-8-41",
+    "statute_title": "Armed Robbery",
+    "offense_class": "Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "20 years or life",
+    "fine_max": null,
+    "elements": [
+      "Defendant took property of another",
+      "From the person or immediately from the presence of another",
+      "By use of an offensive weapon or any replica having the appearance of such a weapon",
+      "With intent to commit theft"
+    ],
+    "mandatory_minimum": "10 years mandatory; no parole, probation, or suspended sentence on the mandatory portion",
+    "enhancements": [
+      "Firearm used: no parole or early release on minimum term",
+      "Victim 65 or older: additional mandatory time",
+      "Multiple victims: consecutive sentences"
+    ],
+    "notes": "Imitation or replica firearm qualifies as offensive weapon. Home invasion robbery treated as armed robbery."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "O.C.G.A. § 16-5-40",
+    "statute_title": "Kidnapping",
+    "offense_class": "Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "20 years; life if victim is child under 14 and unrelated to defendant",
+    "fine_max": null,
+    "elements": [
+      "Defendant abducted or stole away any person without lawful authority",
+      "Held such person against their will",
+      "Act involved movement of the victim (asportation)"
+    ],
+    "mandatory_minimum": "10 years; life if victim is child under 14 and defendant is not a parent",
+    "enhancements": [
+      "Ransom demand: mandatory life imprisonment",
+      "Sexual assault during kidnapping: consecutive charges"
+    ],
+    "notes": "Slight movement (asportation) sufficient. Parental kidnapping charged separately under § 16-5-45."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "O.C.G.A. § 16-7-60",
+    "statute_title": "Arson in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly damaged by fire or explosive",
+      "Any building, structure, or dwelling",
+      "Without consent of the owner OR with intent to defraud insurer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Person endangered or harmed: enhanced penalty",
+      "Insurance fraud motive: fraud charges added",
+      "Second-degree arson (§ 16-7-61): non-dwelling property, 1-10 years"
+    ],
+    "notes": "Second-degree arson covers vehicles and personal property. Third-degree (§ 16-7-62) covers woodland and brush fires."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "O.C.G.A. § 16-4-1; § 16-5-1",
+    "statute_title": "Attempted Murder",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "30 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant took a substantial step toward committing murder",
+      "With the specific intent to commit murder",
+      "The act was beyond mere preparation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Firearm used: mandatory additional time under § 17-10-6.1",
+      "Victim is law enforcement: enhanced penalty",
+      "Gang-related: RICO enhancements"
+    ],
+    "notes": "Attempted felony punishable by 1-30 years. Courts impose substantial sentences for attempted murder."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "O.C.G.A. § 16-5-21(a)(2)",
+    "statute_title": "Aggravated Assault with a Deadly Weapon",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed an assault on another person",
+      "With a deadly weapon or any object which, when used offensively, is likely to or actually does result in serious bodily injury"
+    ],
+    "mandatory_minimum": "3 years if a firearm was used; 5 years if victim is a public safety officer",
+    "enhancements": [
+      "Firearm used: mandatory minimum 3 years no parole",
+      "Victim is law enforcement: mandatory minimum 5 years no parole",
+      "Vehicle used as deadly weapon: qualifies"
+    ],
+    "notes": "Vehicle can constitute a deadly weapon when used to strike a person."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "O.C.G.A. § 16-8-2",
+    "statute_title": "Theft by Taking",
+    "offense_class": "Felony (value $1,500+); Misdemeanor (value under $1,500)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 12 months (misdemeanor)",
+    "fine_max": "$1,000 (misdemeanor)",
+    "elements": [
+      "Defendant unlawfully took or appropriated property belonging to another person",
+      "With intention of depriving the owner of the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $5,000-$24,999: 1-5 years felony range",
+      "Value $25,000+: 2-10 years felony range",
+      "Theft from elder: aggravating factor"
+    ],
+    "notes": "GA felony threshold is $1,500. Multiple items may be aggregated if part of a common scheme."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "O.C.G.A. § 16-8-2",
+    "statute_title": "Theft by Taking — Felony Amount",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant unlawfully took property of another",
+      "Property value was $1,500 or more",
+      "With intent to deprive owner permanently"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $25,000+: 2-10 years mandatory range",
+      "Theft from elder: enhanced sentencing"
+    ],
+    "notes": "Georgia does not use 'grand theft' as a formal label — this is felony theft by taking under § 16-8-2."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "O.C.G.A. § 16-8-2",
+    "statute_title": "Theft by Taking — Misdemeanor Amount",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant unlawfully took property of another",
+      "Property value was under $1,500",
+      "With intent to deprive owner permanently"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior theft convictions: aggregate charges may reach felony threshold"
+    ],
+    "notes": "Georgia does not use 'petty theft' as a formal label — this is misdemeanor theft by taking."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "O.C.G.A. § 16-8-14",
+    "statute_title": "Shoplifting",
+    "offense_class": "Misdemeanor (under $500, 1st/2nd offense); Felony ($500+ or 3rd+ offense)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 10 years (felony)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant concealed or took possession of merchandise of a retail establishment",
+      "OR altered or transferred a price tag or moved merchandise between containers",
+      "With intent to deprive the merchant of possession or full retail value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized retail crime with 3+ participants: felony regardless of value",
+      "3rd conviction within 5 years: felony",
+      "Booster bag or electronic shielding device used: enhanced charge"
+    ],
+    "notes": "Civil demand statute allows merchants separate recovery. Merchant detention privilege under § 16-8-14(d)."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "O.C.G.A. § 16-7-1",
+    "statute_title": "Burglary",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant entered or remained within a building, structure, vehicle, railroad car, watercraft, or aircraft",
+      "Without authority",
+      "With intent to commit a felony or theft therein"
+    ],
+    "mandatory_minimum": "1 year (1st degree residential); 2 years (2nd offense)",
+    "enhancements": [
+      "Residential dwelling (1st degree): minimum 1 year mandatory",
+      "Prior burglary conviction: 2-year minimum",
+      "Armed during burglary: additional weapons charges"
+    ],
+    "notes": "No breaking-and-entering required — unlawful remaining with felonious intent is sufficient."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "O.C.G.A. § 16-7-1(b)",
+    "statute_title": "Burglary in the First Degree — Residential",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant entered or remained in a dwelling house of another",
+      "Without authority",
+      "With intent to commit a felony or theft therein"
+    ],
+    "mandatory_minimum": "1 year mandatory",
+    "enhancements": [
+      "Victim present in dwelling at time of burglary: significant sentencing enhancement",
+      "2nd burglary offense: 2-year minimum"
+    ],
+    "notes": "Dwelling must be used for habitation. Unoccupied vacation home still qualifies as a dwelling."
+  },
+  {
+    "common_charge_slug": "commercial-burglary",
+    "statute_number": "O.C.G.A. § 16-7-1(c)",
+    "statute_title": "Burglary in the Second Degree — Commercial",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant entered or remained within a building or structure other than a dwelling",
+      "Without authority",
+      "With intent to commit a felony or theft therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior burglary: enhanced sentence",
+      "Weapon possessed: additional charges"
+    ],
+    "notes": "Second-degree burglary covers commercial structures. Carries lesser penalty than residential burglary."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "O.C.G.A. § 16-8-2; § 40-4-20",
+    "statute_title": "Theft of Motor Vehicle",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant unlawfully took or appropriated a motor vehicle belonging to another person",
+      "With intent to permanently deprive the owner of possession"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Carjacking (vehicle taken from person by force): armed robbery charges",
+      "Vehicle used in commission of another felony: additional charges"
+    ],
+    "notes": "Joyriding without intent to permanently deprive is lesser offense of theft by conversion under § 16-8-7."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "O.C.G.A. § 16-8-7",
+    "statute_title": "Theft by Receiving Stolen Property",
+    "offense_class": "Felony ($1,500+); Misdemeanor (under $1,500)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 12 months (misdemeanor)",
+    "fine_max": null,
+    "elements": [
+      "Defendant received, disposed of, or retained stolen property",
+      "Defendant knew or should have known the property was stolen",
+      "Intent to deprive the rightful owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $25,000: enhanced felony sentence",
+      "Motor vehicle: automatic felony regardless of value"
+    ],
+    "notes": "Knowledge inferred from suspicious circumstances. Recent possession of stolen property creates an inference."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "O.C.G.A. § 16-7-22; § 16-7-23",
+    "statute_title": "Criminal Damage to Property",
+    "offense_class": "Felony (1st degree, $500+ or reckless safety disregard); Misdemeanor (2nd degree, under $500)",
+    "penalty_min": null,
+    "penalty_max": "10 years (1st degree felony); 12 months (2nd degree misdemeanor)",
+    "fine_max": null,
+    "elements": [
+      "Defendant intentionally or knowingly caused damage to property of another",
+      "Without consent of the owner",
+      "Damage equaled $500 or more (1st degree) OR defendant acted with reckless disregard for safety"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public utility or critical infrastructure: enhanced penalty",
+      "Religious institution: potential hate crime enhancement under § 17-10-17"
+    ],
+    "notes": "First-degree under § 16-7-22 requires $500+ damage or reckless endangerment. Second-degree under § 16-7-23."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "O.C.G.A. § 16-7-21",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant entered the land or premises of another person",
+      "For an unlawful purpose OR without being invited, licensed, or privileged to do so",
+      "OR remained on property after being asked to leave by an authorized person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Critical infrastructure trespass: felony under § 16-7-23.3"
+    ],
+    "notes": "Notice may be posted signs, verbal notice, or prior written notice. Physical force or breaking not required."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "O.C.G.A. § 16-7-22; § 16-7-23",
+    "statute_title": "Criminal Damage to Property (Criminal Mischief)",
+    "offense_class": "Felony or Misdemeanor depending on damage amount",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 12 months (misdemeanor)",
+    "fine_max": null,
+    "elements": [
+      "Defendant intentionally damaged property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Georgia uses 'criminal damage to property' rather than 'criminal mischief.' Damage amount determines classification."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "O.C.G.A. § 16-5-23.1; § 19-13-1",
+    "statute_title": "Family Violence Battery",
+    "offense_class": "Misdemeanor (1st offense); Felony (2nd+ offense against any family or household member)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant committed battery against a family member or household member",
+      "Victim was spouse, former spouse, parent, child, person sharing same household, or person having child in common",
+      "Act was intentional and caused substantial physical harm or physical contact of insulting or provoking nature"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "2nd+ family violence conviction: felony classification",
+      "Aggravated assault or aggravated battery in family violence: felony on first offense"
+    ],
+    "notes": "Mandatory arrest policy in many GA jurisdictions. State may proceed without victim cooperation."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "O.C.G.A. § 16-5-23.1(f)",
+    "statute_title": "Family Violence Battery (Domestic Battery)",
+    "offense_class": "Misdemeanor (1st offense); Felony (2nd+ offense)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant intentionally caused substantial physical harm or made provoking contact",
+      "Against a family or household member as defined in the Family Violence Act"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violation of TPO concurrent: additional charge",
+      "Child witness: aggravating sentencing factor"
+    ],
+    "notes": "Family violence designation triggers federal firearms prohibition under 18 U.S.C. § 922(g)(9)."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "O.C.G.A. § 16-12-1",
+    "statute_title": "Contributing to the Delinquency or Deprivation of a Minor",
+    "offense_class": "Misdemeanor; Felony if serious injury or death results",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 20 years (felony with serious injury or death)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant caused or encouraged a minor to violate any law",
+      "OR committed acts causing or likely to cause a minor to become delinquent, unruly, or deprived",
+      "Victim was a child under 18"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI with child under 14 in vehicle: additional misdemeanor under § 40-6-391(l)",
+      "Serious injury or death resulting: felony charges"
+    ],
+    "notes": "Child cruelty under § 16-5-70 more appropriate when physical abuse is involved."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "O.C.G.A. § 16-5-70",
+    "statute_title": "Cruelty to Children",
+    "offense_class": "Felony",
+    "penalty_min": "5 years (1st degree)",
+    "penalty_max": "20 years (1st degree); 10 years (2nd degree)",
+    "fine_max": null,
+    "elements": [
+      "Defendant maliciously caused a child under 18 cruel or excessive physical or mental pain (1st degree)",
+      "OR parent or guardian willfully deprived a child of necessary sustenance to the extent health was jeopardized (2nd degree)",
+      "Act was knowing and intentional"
+    ],
+    "mandatory_minimum": "5 years (1st degree cruelty to children)",
+    "enhancements": [
+      "Death resulting from abuse: murder or felony murder charges",
+      "Pattern of repeated abuse: aggravating sentencing factor"
+    ],
+    "notes": "1st degree requires malicious intent. 2nd degree under § 16-5-70(b) involves willful deprivation."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "O.C.G.A. § 16-5-95",
+    "statute_title": "Violation of Protective Order",
+    "offense_class": "Misdemeanor (1st offense); High and Aggravated Misdemeanor (2nd offense); Felony (3rd+ offense)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); $5,000 fine (aggravated); 5 years (felony)",
+    "fine_max": "$5,000",
+    "elements": [
+      "A valid protective order or temporary protective order had been issued against the defendant",
+      "Defendant had actual knowledge of the order",
+      "Defendant willfully violated specific terms of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violence committed during violation: additional assault or battery charges",
+      "3rd violation: felony classification"
+    ],
+    "notes": "Order must be properly served, or defendant must have actual knowledge. Constructive knowledge insufficient in Georgia."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "O.C.G.A. § 16-5-90",
+    "statute_title": "Stalking",
+    "offense_class": "Misdemeanor (1st offense); Felony (2nd+ offense or aggravated)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 10 years (felony)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant followed, placed under surveillance, or contacted another person",
+      "Without consent and for the purpose of harassing and intimidating that person",
+      "Contact occurred at or near their home, workplace, school, or location they regularly frequent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "2nd conviction: felony",
+      "Aggravated stalking (§ 16-5-91) — violation of court order: felony, 1-10 years"
+    ],
+    "notes": "Aggravated stalking charged when defendant violates bond, protective order, or probation/parole condition."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "O.C.G.A. § 16-11-39.1",
+    "statute_title": "Harassing Communications",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant made telephonic, electronic, or written contact with another person",
+      "With intent to harass, annoy, or alarm that person",
+      "Contact was unwanted"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat of violence included: terroristic threats charge under § 16-11-37",
+      "2nd offense: enhanced misdemeanor"
+    ],
+    "notes": "Separate from stalking which requires a surveillance or following pattern."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "O.C.G.A. § 16-5-102",
+    "statute_title": "Exploitation of Elder Person or Disabled Adult",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly and willfully exploited, abused, or neglected an elder person (65+) or disabled adult",
+      "OR a caretaker neglected the basic needs of a person in their care",
+      "Act caused physical or financial harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Caregiver in position of trust: enhanced sentencing",
+      "Financial exploitation over $1,500: felony theft charges added"
+    ],
+    "notes": "Mandatory reporting required for healthcare workers and care facilities."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "O.C.G.A. § 16-11-127; § 16-11-127.1",
+    "statute_title": "Carrying Weapon in Unauthorized Location",
+    "offense_class": "Misdemeanor or Felony depending on location",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 5 years (felony — school zone)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant carried or possessed a firearm or weapon",
+      "In a location where carrying is prohibited (schools, government buildings, courts, polling places)",
+      "With knowledge of possession"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Carrying in school safety zone: felony under § 16-11-127.1",
+      "Armed during commission of felony: mandatory add-on under § 17-10-6.1"
+    ],
+    "notes": "Georgia enacted permitless carry (HB 218, April 2022) for eligible persons. Prohibited locations still constitute offenses."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "O.C.G.A. § 16-11-131",
+    "statute_title": "Possession of Firearm or Knife by Convicted Felon",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant was convicted of a felony",
+      "Defendant received, possessed, or transported any firearm or knife with blade 3 inches or more",
+      "Defendant had actual or constructive possession with knowledge"
+    ],
+    "mandatory_minimum": "1 year mandatory; 5 years if prior conviction was a violent felony",
+    "enhancements": [
+      "Prior violent felony: mandatory 5 years no probation",
+      "Federal concurrent: 18 U.S.C. § 922(g)(1)"
+    ],
+    "notes": "Rights restoration possible only through full pardon. Also applies to certain family violence misdemeanants."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "O.C.G.A. § 16-11-127",
+    "statute_title": "Carrying in Prohibited Location — Weapons Carry License Context",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant carried a weapon in a location prohibited by statute",
+      "Location included courthouse, polling place, government building, or school zone",
+      "Defendant had knowledge of the prohibited status of the location"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "School zone: felony under § 16-11-127.1"
+    ],
+    "notes": "Georgia permits constitutional/permitless carry since April 2022. Carrying in specific prohibited locations remains an offense."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "O.C.G.A. § 16-11-103",
+    "statute_title": "Discharge of Firearm Near Public Highway or Street",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant discharged a firearm",
+      "On or within 50 yards of a public road or highway",
+      "Across, into, or upon the road or right-of-way"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Shooting from a vehicle toward another: aggravated assault charges",
+      "Injury to another: battery or aggravated battery charges"
+    ],
+    "notes": "Separate provisions for discharge in incorporated areas. Reckless discharge covered under O.C.G.A. § 16-11-104."
+  },
+  {
+    "common_charge_slug": "weapons-trafficking",
+    "statute_number": "O.C.G.A. § 16-11-126; Federal: 18 U.S.C. § 922",
+    "statute_title": "Trafficking in Firearms",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years (state); enhanced federal penalties",
+    "fine_max": null,
+    "elements": [
+      "Defendant transferred, sold, or disposed of a firearm to a person known to be a prohibited possessor",
+      "OR engaged in unlicensed dealing in firearms as a business",
+      "With knowledge of the prohibited nature of the transaction"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Straw purchase for felon: federal charges",
+      "Ghost guns or untraceable firearms: enhanced federal penalty"
+    ],
+    "notes": "Large-scale firearms trafficking typically prosecuted federally under 18 U.S.C. § 922."
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "statute_number": "O.C.G.A. § 16-11-121; § 16-11-123",
+    "statute_title": "Possession of Machine Gun, Sawed-Off Firearm, or Silencer",
+    "offense_class": "Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant possessed a machine gun, sawed-off rifle, sawed-off shotgun, or silencer",
+      "Weapon was not properly registered under the National Firearms Act",
+      "Defendant had actual or constructive possession with knowledge"
+    ],
+    "mandatory_minimum": "2 years",
+    "enhancements": [
+      "Use in commission of a crime: additional charges",
+      "Federal NFA violation: concurrent federal felony charges"
+    ],
+    "notes": "NFA-registered weapons are legal. State felony applies to unregistered NFA items."
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "statute_number": "O.C.G.A. § 16-9-93; Federal: 18 U.S.C. § 1343",
+    "statute_title": "Computer Fraud / Wire Fraud",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "15 years (state); 20 years (federal)",
+    "fine_max": null,
+    "elements": [
+      "Defendant used a computer or telecommunications device",
+      "To obtain money, property, or services through fraudulent means",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Financial institution victim: enhanced federal penalties",
+      "Large monetary amount: enhanced sentence",
+      "Identity theft component: additional charges"
+    ],
+    "notes": "GA Computer Systems Protection Act under § 16-9-90 et seq. Federal wire fraud typically prosecuted in federal court."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "O.C.G.A. § 16-9-121",
+    "statute_title": "Financial Identity Fraud",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant used the identifying information of another person",
+      "Without that person's consent",
+      "With intent to defraud",
+      "To obtain credit, goods, services, money, or to commit any felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "10 or more victims: enhanced felony penalty",
+      "Elder victim (65+): enhanced penalty"
+    ],
+    "notes": "§ 16-9-121 covers financial identity fraud. § 16-9-122 covers identity fraud for non-financial purposes."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "O.C.G.A. § 16-8-4",
+    "statute_title": "Theft by Conversion (Embezzlement)",
+    "offense_class": "Felony ($1,500+); Misdemeanor (under $1,500)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 12 months (misdemeanor)",
+    "fine_max": null,
+    "elements": [
+      "Defendant lawfully obtained funds or property entrusted to them by another",
+      "Defendant converted the property to their own use",
+      "With intent to defraud the owner",
+      "Defendant was in a position of trust with respect to the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public official or fiduciary: enhanced sentencing",
+      "Large amounts: enhanced felony tier"
+    ],
+    "notes": "Trust relationship distinguishes embezzlement from ordinary theft."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "O.C.G.A. § 16-9-1",
+    "statute_title": "Forgery",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant made, altered, or possessed a writing",
+      "With intent to defraud",
+      "Writing appeared to be made by another person, or was falsely dated or fraudulently made to represent a different transaction"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Currency or government documents: enhanced penalty",
+      "Identity theft connected: additional charges"
+    ],
+    "notes": "First-degree forgery (§ 16-9-1): checks, credit cards, government IDs. Second-degree (§ 16-9-2): other commercial documents."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "O.C.G.A. § 16-9-1; Federal: 18 U.S.C. § 471",
+    "statute_title": "Counterfeiting",
+    "offense_class": "Felony",
+    "penalty_min": "1 year (state)",
+    "penalty_max": "15 years (state); 20 years (federal currency counterfeiting)",
+    "fine_max": null,
+    "elements": [
+      "Defendant made, possessed, or uttered counterfeit currency, securities, or other instruments",
+      "With intent to defraud",
+      "Items resembled genuine currency, securities, or instruments"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Federal currency counterfeiting: exclusive federal jurisdiction",
+      "Large amounts: enhanced federal penalty"
+    ],
+    "notes": "Currency counterfeiting is primarily a federal offense. State forgery statute covers counterfeit checks and documents."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "O.C.G.A. § 16-9-20",
+    "statute_title": "Deposit Account Fraud (Bad Checks)",
+    "offense_class": "Misdemeanor (under $1,500); Felony ($1,500+)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 10 years (felony)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drew, made, uttered, or delivered a check or draft",
+      "Defendant knew at the time of issuance there were insufficient funds or no account",
+      "With intent to defraud the recipient"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple returned checks: aggregated value may reach felony threshold"
+    ],
+    "notes": "10-day notice provision: payment within 10 days of returned check notice may negate criminal intent."
+  },
+  {
+    "common_charge_slug": "tax-fraud",
+    "statute_number": "O.C.G.A. § 48-7-2; Federal: 26 U.S.C. § 7201",
+    "statute_title": "Tax Fraud / Tax Evasion",
+    "offense_class": "Felony (state); Felony (federal)",
+    "penalty_min": "1 year (state)",
+    "penalty_max": "5 years (state); 5 years (federal tax evasion)",
+    "fine_max": "$100,000 (state); $250,000 (federal)",
+    "elements": [
+      "Defendant willfully failed to file a required tax return or pay taxes owed",
+      "OR willfully made false or fraudulent statements on a tax return",
+      "Act was knowing and intentional"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Large amount evaded: enhanced sentencing",
+      "Federal concurrent prosecution: 26 U.S.C. § 7201",
+      "Money laundering of tax proceeds: additional charge"
+    ],
+    "notes": "GA Department of Revenue enforces state tax crimes. IRS handles federal tax evasion."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "O.C.G.A. § 33-1-9",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Felony (claim over $1,000); Misdemeanor (claim under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 12 months (misdemeanor)",
+    "fine_max": "$10,000 (felony)",
+    "elements": [
+      "Defendant presented or caused to be presented a false or fraudulent claim to an insurer",
+      "OR made false statements in connection with an insurance application or claim",
+      "With intent to defraud the insurer",
+      "Claim was material to the insurance decision"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Healthcare insurance fraud: enhanced penalties",
+      "Organized fraud ring: RICO charges possible",
+      "Arson for insurance: additional arson charges"
+    ],
+    "notes": "Georgia Insurance Fraud Prevention Act under § 33-1-9. Insurance Commissioner investigates."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "O.C.G.A. § 16-9-33",
+    "statute_title": "Credit Card Fraud",
+    "offense_class": "Felony (over $100 or 2+ transactions within 6 months)",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant used a credit card or credit card number without the cardholder's authorization",
+      "With intent to defraud the cardholder or issuer",
+      "Obtained goods, services, or money thereby"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Identity theft component: additional charges",
+      "Card skimming device used: enhanced penalty"
+    ],
+    "notes": "Georgia Credit Card Crime Law at § 16-9-31 et seq. covers manufacture, use, and trafficking in fraudulent cards."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "O.C.G.A. § 7-1-922",
+    "statute_title": "Money Laundering",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years or twice the value laundered, whichever is greater",
+    "fine_max": "$250,000 or twice the amount laundered",
+    "elements": [
+      "Defendant conducted a financial transaction involving proceeds of specified unlawful activity",
+      "Defendant knew the proceeds were derived from unlawful activity",
+      "With intent to promote unlawful activity OR to conceal the nature or source of the proceeds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "RICO connection: additional charges",
+      "Drug trafficking proceeds: federal parallel prosecution under 18 U.S.C. § 1956"
+    ],
+    "notes": "GA Banking and Finance Code § 7-1-922 is the state provision. Large cases typically prosecuted federally."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "O.C.G.A. § 16-8-3",
+    "statute_title": "Theft by Deception",
+    "offense_class": "Felony ($1,500+); Misdemeanor (under $1,500)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 12 months (misdemeanor)",
+    "fine_max": null,
+    "elements": [
+      "Defendant obtained property of another by deceit",
+      "Defendant created or confirmed a false impression as to a past or present fact",
+      "Victim relied on the deception",
+      "Defendant intended to deprive victim of the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Elder victim (65+): enhanced penalty",
+      "Internet or wire used: computer fraud charges may be added"
+    ],
+    "notes": "Theft by deception under § 16-8-3. Covers false pretenses and fraudulent misrepresentation."
+  },
+  {
+    "common_charge_slug": "bank-fraud",
+    "statute_number": "O.C.G.A. § 16-9-1; Federal: 18 U.S.C. § 1344",
+    "statute_title": "Bank Fraud",
+    "offense_class": "Felony",
+    "penalty_min": "1 year (state)",
+    "penalty_max": "15 years (state); 30 years (federal)",
+    "fine_max": "$1,000,000 (federal)",
+    "elements": [
+      "Defendant knowingly executed or attempted to execute a scheme to defraud a financial institution",
+      "OR to obtain moneys or property owned by a financial institution by means of false pretenses",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "During financial crisis or emergency: enhanced federal penalty",
+      "Identity theft component: additional charges"
+    ],
+    "notes": "Bank fraud typically prosecuted federally under 18 U.S.C. § 1344. State charges used for local institution cases."
+  },
+  {
+    "common_charge_slug": "securities-fraud",
+    "statute_number": "O.C.G.A. § 10-5-51; Federal: 15 U.S.C. § 78j",
+    "statute_title": "Securities Fraud",
+    "offense_class": "Felony",
+    "penalty_min": "1 year (state)",
+    "penalty_max": "10 years (state); 20 years (federal)",
+    "fine_max": "$5,000,000 (federal)",
+    "elements": [
+      "Defendant made an untrue statement of a material fact or omitted a material fact",
+      "In connection with the offer, purchase, or sale of a security",
+      "With intent to deceive and defraud investors"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Ponzi scheme: enhanced federal charges",
+      "Large number of victims: enhanced penalty"
+    ],
+    "notes": "Georgia Securities Act of 2008 governs state securities fraud. SEC handles federal securities fraud."
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "statute_number": "O.C.G.A. § 16-6-22.1",
+    "statute_title": "Sexual Battery",
+    "offense_class": "Misdemeanor (1st offense); Felony (subsequent offense or victim under 16)",
+    "penalty_min": null,
+    "penalty_max": "12 months (1st misdemeanor); 1-25 years (felony)",
+    "fine_max": null,
+    "elements": [
+      "Defendant intentionally made physical contact with the intimate parts of another person",
+      "Without the consent of that person"
+    ],
+    "mandatory_minimum": "25 years if victim is under 16 (aggravated form); sex offender registration required",
+    "enhancements": [
+      "Victim under 16: mandatory sex offender registration",
+      "Prior sex offense: enhanced mandatory sentence"
+    ],
+    "notes": "Sexual battery (§ 16-6-22.1) is misdemeanor for first offense. Aggravated sexual battery (§ 16-6-22.2) — object penetration — always felony."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "O.C.G.A. § 16-6-22.2",
+    "statute_title": "Aggravated Sexual Battery",
+    "offense_class": "Felony",
+    "penalty_min": "25 years if victim under 16",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant intentionally penetrated the sexual organ or anus of another person with a foreign object",
+      "Without the consent of that person"
+    ],
+    "mandatory_minimum": "25 years mandatory minimum if victim is under 16; lifetime sex offender registration",
+    "enhancements": [
+      "Prior sex offense: life imprisonment",
+      "Victim under 10: mandatory life"
+    ],
+    "notes": "Aggravated sexual battery covers penetration with a foreign object. Rape (§ 16-6-1) covers penile penetration."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "O.C.G.A. § 16-6-1",
+    "statute_title": "Rape",
+    "offense_class": "Felony",
+    "penalty_min": "25 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant had carnal knowledge of a female",
+      "Forcibly and against her will",
+      "OR victim was under 10 years of age (per se regardless of consent)"
+    ],
+    "mandatory_minimum": "25 years mandatory; lifetime sex offender registration",
+    "enhancements": [
+      "Victim under 16: life imprisonment possible",
+      "Prior rape conviction: mandatory life imprisonment"
+    ],
+    "notes": "GA rape statute covers penile-vaginal penetration. Other penetration offenses covered by aggravated sexual battery (§ 16-6-22.2)."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "O.C.G.A. § 16-6-8",
+    "statute_title": "Public Indecency",
+    "offense_class": "Misdemeanor (1st/2nd offense); Felony (3rd+ offense)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 5 years (3rd+ offense felony)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant performed an act of sexual intercourse or exposed genitals in a lewd and lascivious manner",
+      "In a public place",
+      "In the presence of or likely to be observed by another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "3rd conviction: felony and sex offender registration may be required",
+      "Exposure to a minor: enhanced charges"
+    ],
+    "notes": "Third conviction may trigger sex offender registration under § 42-1-12."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "O.C.G.A. § 16-6-9; § 16-6-10; § 16-6-11",
+    "statute_title": "Prostitution, Pimping, and Pandering",
+    "offense_class": "Misdemeanor (prostitution/solicitation); Felony (pimping, pandering by compulsion)",
+    "penalty_min": null,
+    "penalty_max": "12 months (prostitution/solicitation); 10 years (pandering by compulsion)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant performed or offered to perform sexual acts for money or other consideration (prostitution)",
+      "OR solicited another person to perform sexual acts for money (solicitation)",
+      "Exchange of consideration was part of the transaction"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Minor victim: trafficking in persons charges under § 16-5-46",
+      "Promoting prostitution or pimping: felony"
+    ],
+    "notes": "Sex trafficking of minors charged as trafficking in persons under § 16-5-46 regardless of force or coercion."
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "statute_number": "O.C.G.A. § 16-6-22.2; § 16-12-100.2",
+    "statute_title": "Aggravated Sexual Battery / Computer or Electronic Pornography",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "25 years (aggravated sexual battery); 20 years (child exploitation via digital means)",
+    "fine_max": null,
+    "elements": [
+      "Defendant used electronic or digital means to engage in or facilitate a sexual offense",
+      "OR digitally penetrated a victim without consent",
+      "Acts were knowing and intentional"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Child victim: child exploitation statutes apply",
+      "Online solicitation of minor: O.C.G.A. § 16-12-100.2"
+    ],
+    "notes": "Online solicitation of a child for sexual purposes under § 16-12-100.2 — separate statute."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "O.C.G.A. § 16-12-100",
+    "statute_title": "Sexual Exploitation of Children",
+    "offense_class": "Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "20 years per count",
+    "fine_max": null,
+    "elements": [
+      "Defendant employed, used, persuaded, or coerced a minor to engage in sexually explicit conduct for visual depiction",
+      "OR knowingly possessed, distributed, or transmitted visual depictions of minors in sexually explicit conduct",
+      "Minor was under 18 years of age"
+    ],
+    "mandatory_minimum": "5 years mandatory; lifetime sex offender registration",
+    "enhancements": [
+      "Production: higher sentencing range than possession",
+      "Large quantity: each image or video may be a separate count",
+      "Federal concurrent: 18 U.S.C. § 2252"
+    ],
+    "notes": "Federal charges typically concurrent. Internet transmission explicitly covered."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "O.C.G.A. § 42-1-12",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "30 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant was required to register as a sex offender under Georgia law",
+      "Defendant failed to register or failed to update registration within required time",
+      "Defendant had actual notice of the registration requirement"
+    ],
+    "mandatory_minimum": "1 year; 5-year minimum for 2nd offense",
+    "enhancements": [
+      "2nd offense: mandatory minimum 5 years",
+      "Absconding from supervision jurisdiction: 10-year minimum"
+    ],
+    "notes": "Residency restrictions under § 42-1-15 also apply (school, church, park proximity)."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "O.C.G.A. § 16-6-3",
+    "statute_title": "Statutory Rape",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years; life if defendant is 21+ and victim is under 14",
+    "fine_max": null,
+    "elements": [
+      "Defendant had sexual intercourse with another person under 16 years of age",
+      "Consent is not a defense",
+      "Defendant was 21 or older (for enhanced mandatory minimum)"
+    ],
+    "mandatory_minimum": "10 years mandatory if defendant is 21+ and victim is under 14",
+    "enhancements": [
+      "Defendant 21+ with victim under 14: 10-year mandatory minimum",
+      "Position of trust or authority: aggravating factor"
+    ],
+    "notes": "No close-in-age exemption in GA. Any sexual intercourse with a person under 16 is statutory rape regardless of defendant's age."
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "statute_number": "O.C.G.A. § 16-6-22.1",
+    "statute_title": "Sexual Battery",
+    "offense_class": "Misdemeanor (1st offense against adult); Felony (subsequent offense or victim under 16)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 1-25 years (felony)",
+    "fine_max": null,
+    "elements": [
+      "Defendant intentionally made physical contact with the intimate parts of another person",
+      "Without the consent of that person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 16: felony with possible mandatory registration",
+      "Position of authority over victim: aggravating factor"
+    ],
+    "notes": "Intimate parts defined as genitals, buttocks, groin, inner thighs, or female breasts."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "O.C.G.A. § 16-11-39",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant acted in a violent, tumultuous, or boisterous manner",
+      "OR used obscene language in the presence of a minor causing reasonable fear of injury",
+      "OR acted in a manner creating loud and unreasonable noise disturbing the tranquility of others",
+      "OR used fighting words likely to provoke an immediate breach of peace"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Must be applied carefully to avoid First Amendment violations. Fighting words doctrine governs speech-based charges."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "O.C.G.A. § 16-10-24",
+    "statute_title": "Obstruction of a Law Enforcement Officer",
+    "offense_class": "Misdemeanor (non-violent obstruction); Felony (violent obstruction)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 5 years (felony violent)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly and willfully obstructed or hindered a law enforcement officer",
+      "In the lawful discharge of the officer's official duties",
+      "By act or omission"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violence against officer: felony, 1-5 years",
+      "Injury caused to officer: aggravated penalty"
+    ],
+    "notes": "Providing a false name to an officer also constitutes obstruction. Non-violent refusal may still qualify as misdemeanor obstruction."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "O.C.G.A. § 16-10-24; § 16-10-32",
+    "statute_title": "Obstruction of Justice",
+    "offense_class": "Misdemeanor or Felony depending on conduct",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 12 months (misdemeanor)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant obstructed, hindered, or opposed a law enforcement officer or judicial proceeding",
+      "Act was knowing and intentional",
+      "Officer or proceeding was lawful"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Evidence tampering under § 16-10-94: separate felony",
+      "Witness intimidation under § 16-10-93: felony"
+    ],
+    "notes": "False statements to officers during investigation covered under § 16-10-20."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "O.C.G.A. § 15-1-4",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "20 days imprisonment (criminal contempt) per occurrence",
+    "fine_max": "$500 per occurrence",
+    "elements": [
+      "Defendant was subject to a valid court order",
+      "Defendant willfully failed to comply or engaged in conduct disrupting judicial proceedings",
+      "Court had jurisdiction to issue the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Repeated contempt: consecutive penalties"
+    ],
+    "notes": "Direct contempt (in court) vs. indirect contempt (outside court). Criminal contempt requires proof beyond reasonable doubt."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "O.C.G.A. § 16-11-41",
+    "statute_title": "Public Drunkenness",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant appeared in a public place in an intoxicated condition caused by alcohol or drugs",
+      "Intoxication manifested by boisterous or indecent conduct, or loud and profane discourse"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Simple intoxication in public is not a crime in GA without the disorderly conduct element."
+  },
+  {
+    "common_charge_slug": "loitering",
+    "statute_number": "O.C.G.A. § 16-11-36",
+    "statute_title": "Loitering or Prowling",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant loitered or prowled in a place, at a time, or in a manner not usual for law-abiding individuals",
+      "Under circumstances that warranted alarm for the safety of persons or property in the vicinity",
+      "Defendant refused to identify themselves and explain their presence when requested by an officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Officer must request identification before arrest. Defendant must have opportunity to explain before being arrested."
+  },
+  {
+    "common_charge_slug": "disturbing-peace",
+    "statute_number": "O.C.G.A. § 16-11-34",
+    "statute_title": "Unlawful Assembly / Disturbing the Peace",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant, together with others, engaged in tumultuous conduct",
+      "OR incited others to engage in tumultuous or unlawful conduct",
+      "Conduct created a public disturbance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Riot charges under § 16-11-33 for 2+ persons using force or violence. Incitement to riot under § 16-11-31."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "O.C.G.A. § 17-6-12; § 16-10-51",
+    "statute_title": "Failure to Appear",
+    "offense_class": "Misdemeanor (misdemeanor underlying charge); Felony (felony underlying charge)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor underlying); 5 years (felony underlying)",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on bail or bond for a pending criminal matter",
+      "Defendant had notice of the scheduled court appearance",
+      "Defendant failed to appear without lawful excuse"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Flight across state lines: federal failure to appear under 18 U.S.C. § 3146"
+    ],
+    "notes": "Criminal FTA is a standalone offense. Bench warrant issued upon failure to appear."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "O.C.G.A. § 16-10-26",
+    "statute_title": "False Report of a Crime",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant made a report to law enforcement or emergency services",
+      "Defendant knew the report was false",
+      "Report described a crime or emergency that did not occur"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Swatting: enhanced penalty under § 16-10-26.1 (added 2019)"
+    ],
+    "notes": "False fire or bomb threats charged separately under § 16-10-33."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "O.C.G.A. § 16-11-37",
+    "statute_title": "Terroristic Threats and Acts",
+    "offense_class": "Felony (threat of violence); Misdemeanor (threat to property)",
+    "penalty_min": "1 year (felony)",
+    "penalty_max": "5 years (felony); 12 months (misdemeanor)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant threatened to commit a crime of violence against another person or group",
+      "OR threatened to release a hazardous substance with intent to terrorize",
+      "Threat placed victim in reasonable apprehension of serious bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat against a school: enhanced penalty",
+      "Electronic transmission: cyberstalking or cyberterrorism enhancement"
+    ],
+    "notes": "Threats of violence are felony under § 16-11-37(b). Bomb threats may be misdemeanor."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "O.C.G.A. § 42-8-38",
+    "statute_title": "Probation Revocation",
+    "offense_class": "Depends on original underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Balance of original suspended sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was lawfully placed on probation",
+      "Defendant violated a condition of probation",
+      "Violation was willful"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense while on probation: revocation plus new charges"
+    ],
+    "notes": "Court may modify, continue, or revoke. Preponderance of evidence standard at revocation hearing."
+  },
+  {
+    "common_charge_slug": "probation-violation-technical",
+    "statute_number": "O.C.G.A. § 42-8-38",
+    "statute_title": "Technical Probation Violation",
+    "offense_class": "Administrative — probation revocation",
+    "penalty_min": null,
+    "penalty_max": "Revocation of remaining probated sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on probation",
+      "Defendant failed to comply with a non-criminal technical condition such as failure to report, failure to pay fines, or positive drug test"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "GA reformed technical violations to limit revocation for non-criminal violations. Short confinement periods may apply."
+  },
+  {
+    "common_charge_slug": "probation-violation-substantive",
+    "statute_number": "O.C.G.A. § 42-8-38",
+    "statute_title": "Substantive Probation Violation — New Criminal Offense",
+    "offense_class": "Probation revocation plus new criminal charge",
+    "penalty_min": null,
+    "penalty_max": "Balance of original sentence + new sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on probation",
+      "Defendant committed a new criminal offense while on probation",
+      "New offense constitutes a violation of probation conditions"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Revocation hearing uses preponderance standard. New criminal charge uses beyond reasonable doubt standard."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "O.C.G.A. § 42-9-51",
+    "statute_title": "Parole Revocation",
+    "offense_class": "Administrative — parole revocation",
+    "penalty_min": null,
+    "penalty_max": "Return to prison for remainder of original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on parole",
+      "Defendant violated conditions of parole",
+      "Georgia Board of Pardons and Paroles determined violation warranted revocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "GA Board of Pardons and Paroles has exclusive authority over parole revocation."
+  },
+  {
+    "common_charge_slug": "community-control-violation",
+    "statute_number": "O.C.G.A. § 42-8-34.1",
+    "statute_title": "Violation of Special Probation / Intensive Probation",
+    "offense_class": "Depends on original offense",
+    "penalty_min": null,
+    "penalty_max": "Revocation of remaining sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on intensive probation or special conditions probation",
+      "Defendant violated specific conditions of the intensive supervision program",
+      "Violation was willful"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Georgia uses intensive probation supervision (IPS) for high-risk offenders. Violation triggers revocation hearing."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "O.C.G.A. § 16-4-8",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "Same felony class as target offense; Misdemeanor if target offense is misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "Same maximum as completed target offense",
+    "fine_max": null,
+    "elements": [
+      "Two or more persons agreed to commit an offense",
+      "Defendant was a party to the agreement",
+      "At least one overt act was committed in furtherance of the conspiracy",
+      "Defendant had specific intent to carry out the objective"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Drug trafficking conspiracy: mandatory minimums of underlying trafficking statute apply",
+      "RICO predicate: gang statute enhancement under § 16-14-4"
+    ],
+    "notes": "Overt act required in Georgia. Each co-conspirator liable for acts of others in furtherance. Withdrawal is an affirmative defense."
+  },
+  {
+    "common_charge_slug": "rico",
+    "statute_number": "O.C.G.A. § 16-14-4",
+    "statute_title": "Georgia RICO — Racketeer Influenced and Corrupt Organizations",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years",
+    "fine_max": "$25,000 or three times the proceeds derived",
+    "elements": [
+      "Defendant was associated with an enterprise",
+      "Defendant conducted or participated in the affairs of the enterprise through a pattern of racketeering activity",
+      "Pattern consisted of at least two predicate acts within a 4-year period",
+      "Predicate acts were defined criminal offenses under § 16-14-3"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Gang activity as enterprise: concurrent street gang terrorism charges under § 16-15-4",
+      "Murder as predicate: life imprisonment possible",
+      "Asset forfeiture: mandatory"
+    ],
+    "notes": "Georgia RICO is broader than federal RICO. Widely used in gang prosecutions. Asset forfeiture available."
+  },
+  {
+    "common_charge_slug": "self-defense",
+    "statute_number": "O.C.G.A. § 16-3-21; § 16-3-23; § 16-3-23.1",
+    "statute_title": "Justification — Self-Defense / Stand Your Ground",
+    "offense_class": "Affirmative defense — not an offense",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": null,
+    "elements": [
+      "Defendant used force against another person",
+      "Defendant reasonably believed force was necessary to defend against imminent unlawful force",
+      "Defendant was not the initial aggressor",
+      "Under Stand Your Ground: no duty to retreat if defendant is in any place they have a legal right to be"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Georgia has a broad Stand Your Ground law. Immunity hearing available before trial under § 16-3-24.2. Castle Doctrine under § 16-3-23 provides additional protection inside the home."
+  },
+  {
+    "common_charge_slug": "other",
+    "statute_number": "Various O.C.G.A. provisions",
+    "statute_title": "Miscellaneous Georgia Criminal Offenses",
+    "offense_class": "Varies",
+    "penalty_min": null,
+    "penalty_max": "Varies by specific offense",
+    "fine_max": null,
+    "elements": [
+      "Elements specific to each offense as defined under the Georgia Official Code Annotated"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Catch-all for Georgia offenses not otherwise enumerated. Consult the specific O.C.G.A. section for elements, penalties, and defenses."
+  }
+]

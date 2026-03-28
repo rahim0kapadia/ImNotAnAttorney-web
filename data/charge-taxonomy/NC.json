@@ -1,0 +1,1926 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "N.C.G.S. § 20-138.1",
+    "statute_title": "Impaired Driving (DWI)",
+    "offense_class": "Misdemeanor (Levels I-V based on grossly aggravating/aggravating/mitigating factors); Felony (Habitual DWI)",
+    "penalty_min": "24 hours (Level V)",
+    "penalty_max": "3 years (Level I aggravated); 6 years (Aggravated Level 1)",
+    "fine_max": "$10,000 (Level I); $4,000 (Level II)",
+    "elements": [
+      "Defendant drove a vehicle on any highway, street, or public vehicular area",
+      "While under the influence of an impairing substance",
+      "OR with BAC of 0.08% or more (0.04% CDL holders; 0.00% under age 21 on limited permit)"
+    ],
+    "mandatory_minimum": "Level I: 30 days jail (active); Aggravated Level 1: 12 months active minimum",
+    "enhancements": [
+      "Grossly aggravating factors: prior DWI within 7 years, serious injury accident, child passenger, driving on revoked license for DWI",
+      "Aggravated Level 1: two or more grossly aggravating factors — mandatory 12 months minimum active",
+      "Child under 18 in vehicle: grossly aggravating factor"
+    ],
+    "notes": "NC uses a tiered sentencing structure (Levels 1-5 plus Aggravated Level 1) based on aggravating and mitigating factors under § 20-179. Habitual DWI is a Class F felony."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "N.C.G.S. § 20-138.1",
+    "statute_title": "Impaired Driving — First Offense",
+    "offense_class": "Misdemeanor (Level II-V typically for first offense with no aggravating factors)",
+    "penalty_min": "24 hours (Level V)",
+    "penalty_max": "12 months (Level II)",
+    "fine_max": "$2,000 (Level II); $1,000 (Level III-V)",
+    "elements": [
+      "First DWI within 7-year look-back for sentencing purposes",
+      "Drove a vehicle on highway, street, or public vehicular area",
+      "While under influence or with BAC 0.08%+"
+    ],
+    "mandatory_minimum": "24 hours jail (Level V minimum); 7 days (Level III)",
+    "enhancements": [
+      "BAC 0.15% or higher: mandatory continuous alcohol monitoring (CAM)",
+      "Child passenger: grossly aggravating factor — elevates to Level I or Aggravated Level 1"
+    ],
+    "notes": "Most first offenses without aggravating factors are sentenced at Level V or IV. Ignition interlock required on restoration."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "N.C.G.S. § 20-138.1; § 20-138.5",
+    "statute_title": "Impaired Driving — Repeat Offense / Habitual DWI",
+    "offense_class": "Misdemeanor (2nd within 7 years: Level I); Felony (Habitual DWI: Class F)",
+    "penalty_min": "30 days active (Level I)",
+    "penalty_max": "12 months (Level I misdemeanor); 41 months (Class F felony Habitual DWI)",
+    "fine_max": "$4,000 (Level I)",
+    "elements": [
+      "Defendant has 3 or more prior DWI convictions within 10 years (Habitual DWI)",
+      "OR prior DWI within 7 years (grossly aggravating factor for Level I sentencing)",
+      "Drove while impaired as defined under § 20-138.1"
+    ],
+    "mandatory_minimum": "Level I: 30 days active minimum; Habitual DWI: 12 months active minimum",
+    "enhancements": [
+      "Habitual DWI (Class F felony): mandatory 12 months active no suspension",
+      "Vehicle forfeiture possible on Habitual DWI",
+      "Permanent license revocation after Habitual DWI conviction"
+    ],
+    "notes": "4th DWI within 10 years = Habitual DWI (Class F felony) under § 20-138.5. Permanent revocation possible."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "N.C.G.S. § 20-138.1(a)(3)",
+    "statute_title": "Impaired Driving — Drug Impairment",
+    "offense_class": "Misdemeanor (same tiers as alcohol DWI); Felony (Habitual DWI)",
+    "penalty_min": "24 hours (Level V)",
+    "penalty_max": "3 years (Level I aggravated)",
+    "fine_max": "$4,000 (Level I)",
+    "elements": [
+      "Defendant drove a vehicle",
+      "With any amount of a Schedule I controlled substance in their blood or urine",
+      "OR while impaired by any impairing substance including prescription or OTC drugs"
+    ],
+    "mandatory_minimum": "Same as alcohol DWI tiers",
+    "enhancements": [
+      "Schedule I substance per se: no impairment proof required",
+      "Drug paraphernalia in vehicle: additional charge under § 90-113.22"
+    ],
+    "notes": "Per se provision under § 20-138.1(a)(3): any Schedule I substance in blood/urine = per se DWI. Covers marijuana metabolites."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "N.C.G.S. § 20-140",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Class 2 Misdemeanor (basic); Class 1 Misdemeanor (reckless endangering property)",
+    "penalty_min": null,
+    "penalty_max": "60 days (Class 2); 120 days (Class 1)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove a vehicle on a highway or public vehicular area",
+      "In a careless and heedless manner in willful or wanton disregard for the rights or safety of others",
+      "OR in a manner so as to endanger or be likely to endanger any person or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting injury or death: felony death by vehicle or serious injury by vehicle charges"
+    ],
+    "notes": "4 DMV points. Two types: willful/wanton disregard (§ 20-140(a)) and endangerment (§ 20-140(b))."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "N.C.G.S. § 20-166",
+    "statute_title": "Duty to Stop in Event of Accident — Hit and Run",
+    "offense_class": "Class F Felony (death or serious injury); Class H Felony (injury); Class 1 Misdemeanor (property only)",
+    "penalty_min": null,
+    "penalty_max": "41 months (Class F); 25 months (Class H); 120 days (Class 1 misdemeanor)",
+    "fine_max": null,
+    "elements": [
+      "Defendant was driving a vehicle involved in an accident",
+      "Accident resulted in death, injury, or property damage",
+      "Defendant failed to immediately stop at the scene, give information, or render aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI concurrent: aggravated sentence",
+      "Death resulting: Class F felony",
+      "Serious injury: Class H felony"
+    ],
+    "notes": "Under § 20-166, driver must stop, remain, give information, and render aid. Property damage only is Class 1 misdemeanor."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "N.C.G.S. § 20-141.4",
+    "statute_title": "Felony Death by Vehicle",
+    "offense_class": "Class D Felony (impaired driving); Class E Felony (reckless); Class F Felony (other moving violation)",
+    "penalty_min": null,
+    "penalty_max": "204 months (Class D); 88 months (Class E); 41 months (Class F)",
+    "fine_max": null,
+    "elements": [
+      "Defendant unintentionally caused the death of another person",
+      "While violating N.C.G.S. § 20-138.1 (impaired driving) or other specified traffic law",
+      "Violation was a proximate cause of death"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DWI as predicate: Class D felony with enhanced punishment",
+      "Multiple deaths: consecutive sentences"
+    ],
+    "notes": "Aggravated felony death by vehicle under § 20-141.4(a1) applies when defendant has prior DWI within 7 years."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "N.C.G.S. § 20-141.4(a2)",
+    "statute_title": "Misdemeanor Death by Vehicle",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "120 days imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant unintentionally caused the death of another person",
+      "While committing a moving traffic violation other than impaired driving"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Elevation to felony if defendant has prior DWI"
+    ],
+    "notes": "Misdemeanor death by vehicle under § 20-141.4(a2). Moving violation as predicate."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "N.C.G.S. § 20-28",
+    "statute_title": "Driving While License Revoked",
+    "offense_class": "Class 3 Misdemeanor (basic); Class 1 Misdemeanor or Class I Felony (revoked for DWI)",
+    "penalty_min": null,
+    "penalty_max": "20 days (Class 3); 120 days (Class 1); 24 months (Class I felony)",
+    "fine_max": "$200 (Class 3); $1,000 (Class 1)",
+    "elements": [
+      "Defendant drove a motor vehicle on any street or highway",
+      "While defendant's license was revoked, suspended, or cancelled",
+      "Defendant had knowledge of the revocation or suspension"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "License revoked for DWI: Class 1 misdemeanor or Class I felony depending on circumstances",
+      "Impaired driving while revoked for DWI: vehicle forfeiture possible"
+    ],
+    "notes": "If license was revoked because of an impaired driving offense, enhanced penalties apply under § 20-28(a1)."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "N.C.G.S. § 20-141.5",
+    "statute_title": "Speeding to Elude Arrest",
+    "offense_class": "Class H Felony; Class F Felony (if aggravating factors present)",
+    "penalty_min": null,
+    "penalty_max": "39 months (Class H); 41 months (Class F)",
+    "fine_max": null,
+    "elements": [
+      "Defendant operated a motor vehicle on a street, highway, or public vehicular area",
+      "While fleeing or attempting to elude a law enforcement officer",
+      "After the officer gave a visible or audible signal to stop"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Endangering others or exceeding speed by 15+ mph: Class F felony",
+      "Death or serious injury: additional charges",
+      "Two or more aggravating factors: Class E felony"
+    ],
+    "notes": "Class F felony when two or more aggravating factors (reckless driving, speed 15+ mph over limit, endangering persons). Class H felony baseline."
+  },
+  {
+    "common_charge_slug": "open-container",
+    "statute_number": "N.C.G.S. § 20-138.7",
+    "statute_title": "Open Container of Alcoholic Beverage in Passenger Area",
+    "offense_class": "Class 3 Misdemeanor (driver); Class 3 Misdemeanor (passenger)",
+    "penalty_min": null,
+    "penalty_max": "20 days imprisonment",
+    "fine_max": "$200",
+    "elements": [
+      "Defendant consumed alcohol or had in the passenger area an open container of alcohol",
+      "While driving a motor vehicle on a highway or public vehicular area",
+      "Container had been opened or had broken seal"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Passengers also subject to charge. Vehicles for hire and recreational vehicles may have exceptions."
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "statute_number": "N.C.G.S. § 20-16.2",
+    "statute_title": "Refusal of Chemical Analysis — Implied Consent",
+    "offense_class": "Administrative (license revocation); civil penalty",
+    "penalty_min": null,
+    "penalty_max": "1-year civil license revocation (1st refusal); permanent revocation (4th+)",
+    "fine_max": null,
+    "elements": [
+      "Defendant was lawfully arrested for impaired driving",
+      "Law enforcement officer informed defendant of implied consent rights",
+      "Defendant willfully refused to submit to chemical analysis"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "2nd refusal within 7 years: 4-year revocation",
+      "3rd or subsequent refusal: permanent revocation"
+    ],
+    "notes": "Refusal admissible at trial. NC requires Willful refusal — inadvertent or medical inability is not a refusal."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "N.C.G.S. § 90-95(a)(3); § 90-95(d)",
+    "statute_title": "Possession of Controlled Substance",
+    "offense_class": "Class I Felony (Schedule I-II); Class 1 Misdemeanor (Schedule III-VI under threshold)",
+    "penalty_min": null,
+    "penalty_max": "24 months (Class I felony); 120 days (Class 1 misdemeanor)",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly possessed a controlled substance",
+      "Substance was listed on North Carolina's controlled substance schedules",
+      "Defendant had actual or constructive possession"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near school, childcare center, or public park: Class E felony enhancement",
+      "Large quantity: trafficking threshold under § 90-95(h)",
+      "Prior drug felony: elevated class"
+    ],
+    "notes": "Marijuana possession of 0.5 oz or less is Class 3 misdemeanor. Over 0.5 oz: Class 1 misdemeanor. Over 1.5 oz: Class I felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "N.C.G.S. § 90-95(d)(4)",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Class 3 Misdemeanor (0.5 oz or less); Class 1 Misdemeanor (0.5-1.5 oz); Class I Felony (over 1.5 oz)",
+    "penalty_min": null,
+    "penalty_max": "20 days (Class 3); 120 days (Class 1); 24 months (Class I felony)",
+    "fine_max": "$200 (Class 3); $1,000 (Class 1)",
+    "elements": [
+      "Defendant possessed marijuana",
+      "Amount determined classification",
+      "Possession was knowing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Over 10 lbs: marijuana trafficking — Class H or higher felony with mandatory minimums",
+      "Near school or park: Class E felony enhancement"
+    ],
+    "notes": "Marijuana remains a controlled substance in NC (Schedule VI). No medical or recreational marijuana program as of 2026."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "N.C.G.S. § 90-95(d)(2)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Class I Felony",
+    "penalty_min": null,
+    "penalty_max": "24 months (Class I felony)",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly possessed cocaine (Schedule II)",
+      "Amount was below 28g trafficking threshold",
+      "Possession was actual or constructive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "28g or more: cocaine trafficking — Class G felony, mandatory 35 months minimum",
+      "Near school: Class E felony enhancement"
+    ],
+    "notes": "Cocaine trafficking under § 90-95(h)(3): 28g-200g = Class G (35 mo. min.); 200g-400g = Class F (70 mo. min.); 400g+ = Class D (175 mo. min.)."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "N.C.G.S. § 90-95(d)(2)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Class I Felony",
+    "penalty_min": null,
+    "penalty_max": "24 months (Class I felony)",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly possessed methamphetamine (Schedule II)",
+      "Amount below 28g trafficking threshold",
+      "Possession was actual or constructive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "28g or more: meth trafficking — Class F felony, mandatory 70 months minimum",
+      "200g+ meth: Class D felony mandatory 175 months"
+    ],
+    "notes": "Meth trafficking thresholds: 28g-200g = Class F; 200g-400g = Class E; 400g+ = Class C under § 90-95(h)(3b)."
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "statute_number": "N.C.G.S. § 90-95(d)(1)-(2)",
+    "statute_title": "Possession of Opioids or Narcotics",
+    "offense_class": "Class I Felony (Schedule I or II opiate)",
+    "penalty_min": null,
+    "penalty_max": "24 months (Class I felony)",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly possessed an opioid or opiate controlled substance",
+      "No valid prescription or prescription was fraudulently obtained",
+      "Possession was actual or constructive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "4g or more opium/heroin: trafficking — Class F mandatory 70 months",
+      "14g+ opium: Class E mandatory 90 months",
+      "28g+: Class D mandatory 175 months"
+    ],
+    "notes": "Heroin/opium trafficking under § 90-95(h)(4). Fentanyl treated as Schedule II. Distribution causing death may support murder."
+  },
+  {
+    "common_charge_slug": "drug-possession-prescription",
+    "statute_number": "N.C.G.S. § 90-95(d)(2)-(3)",
+    "statute_title": "Possession of Prescription Drug Without Valid Prescription",
+    "offense_class": "Class I Felony (Schedule II-III); Class 1 Misdemeanor (Schedule IV-VI)",
+    "penalty_min": null,
+    "penalty_max": "24 months (Class I); 120 days (Class 1 misdemeanor)",
+    "fine_max": null,
+    "elements": [
+      "Defendant possessed a prescription controlled substance",
+      "Defendant lacked a valid, current prescription",
+      "Substance was on NC controlled substance schedule"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Doctor shopping or forged prescription: prescription fraud charge under § 90-108"
+    ],
+    "notes": "NC Controlled Substance Reporting System (CSRS) data used as evidence."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "N.C.G.S. § 90-95(h)",
+    "statute_title": "Drug Trafficking",
+    "offense_class": "Class G, F, E, D, or C Felony depending on substance and quantity",
+    "penalty_min": "35 months (cocaine 28g+, Class G); 70 months (cocaine 200g+, Class F)",
+    "penalty_max": "Class C: 231 months+",
+    "fine_max": "$500,000 (large quantity)",
+    "elements": [
+      "Defendant sold, manufactured, delivered, transported, or possessed with intent to sell or deliver a controlled substance",
+      "OR possessed any amount of a controlled substance in the trafficking quantity",
+      "Quantity met or exceeded the statutory trafficking threshold for the specific substance"
+    ],
+    "mandatory_minimum": "Mandatory minimum active sentence varies by substance and quantity; no probation permitted on mandatory term",
+    "enhancements": [
+      "Prior drug trafficking conviction: enhanced mandatory minimum",
+      "Conspiracy to traffic: same penalties as completed trafficking",
+      "Leadership or organizer role: enhanced sentencing"
+    ],
+    "notes": "Trafficking quantities and classes vary by substance under § 90-95(h)(1)-(4). Mandatory active sentences; probation not available."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "N.C.G.S. § 90-95(a)(1)",
+    "statute_title": "Sale or Delivery of Controlled Substance",
+    "offense_class": "Class G Felony (Schedule I-II); Class H Felony (Schedule III-IV); Class I Felony (Schedule V-VI)",
+    "penalty_min": null,
+    "penalty_max": "47 months (Class G); 39 months (Class H); 24 months (Class I)",
+    "fine_max": null,
+    "elements": [
+      "Defendant sold or delivered a controlled substance",
+      "Substance was on the controlled substance schedule",
+      "Defendant acted knowingly and intentionally"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sale within 1,000 feet of school: two-class enhancement (e.g., Class G becomes Class E)",
+      "Sale to minor: enhanced penalty",
+      "Sale to pregnant woman: enhanced penalty"
+    ],
+    "notes": "School enhancement under § 90-95(e)(8) elevates offense two felony classes."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "N.C.G.S. § 90-95(a)(1)",
+    "statute_title": "Manufacturing Controlled Substance",
+    "offense_class": "Class H Felony (most drugs); Class D Felony (methamphetamine using precursors)",
+    "penalty_min": null,
+    "penalty_max": "39 months (Class H); 204 months (Class D meth)",
+    "fine_max": null,
+    "elements": [
+      "Defendant manufactured, produced, or processed a controlled substance",
+      "Substance was on the controlled substance schedule",
+      "Acts were knowing and intentional"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Meth manufacturing using precursors: elevated to Class D felony under § 90-95(b1)",
+      "Children present at meth lab: child endangerment charges",
+      "Trafficking quantity: trafficking charges"
+    ],
+    "notes": "Manufacturing meth with precursor chemicals triggers Class D felony elevation under § 90-95(b1)."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "N.C.G.S. § 90-113.22",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "120 days imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "Defendant intended to use the paraphernalia to plant, propagate, cultivate, grow, harvest, manufacture, compound, convert, produce, process, prepare, test, analyze, pack, repack, store, contain, conceal, inject, ingest, inhale, or otherwise introduce a controlled substance into the human body"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sale of paraphernalia to minor: Class I felony under § 90-113.22A"
+    ],
+    "notes": "Intent element is critical. Mere possession of an item without drug residue or proximity to drugs may be contested."
+  },
+  {
+    "common_charge_slug": "prescription-fraud",
+    "statute_number": "N.C.G.S. § 90-108(a)(10); § 90-113.11",
+    "statute_title": "Fraudulent Prescription / Obtaining a Controlled Substance by Fraud",
+    "offense_class": "Class I Felony",
+    "penalty_min": null,
+    "penalty_max": "24 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant obtained or attempted to obtain a controlled substance by forgery, fraud, or deception",
+      "OR defendant used a forged or altered prescription",
+      "OR defendant used a false name or address with a practitioner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Healthcare provider committing fraud: license revocation",
+      "Multiple fraudulent prescriptions: charges may stack"
+    ],
+    "notes": "NC Controlled Substance Reporting System (CSRS) tracks prescription patterns. Doctor-shopping prosecuted under § 90-108(a)(10)."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "N.C.G.S. § 90-95(a)(1)",
+    "statute_title": "Possession with Intent to Sell or Deliver",
+    "offense_class": "Class G Felony (Schedule I-II); Class H Felony (Schedule III-IV); Class I Felony (Schedule V-VI)",
+    "penalty_min": null,
+    "penalty_max": "47 months (Class G); 39 months (Class H); 24 months (Class I)",
+    "fine_max": null,
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "With intent to sell or deliver",
+      "Intent inferred from quantity, packaging, scales, currency, or other evidence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near school or childcare center: two-class felony enhancement",
+      "With firearm: additional weapons charges",
+      "Trafficking quantity: trafficking charges"
+    ],
+    "notes": "Intent proven circumstantially. Quantity alone, without other indicators, generally insufficient for intent charge."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "N.C.G.S. § 14-17",
+    "statute_title": "First Degree Murder",
+    "offense_class": "Class A Felony",
+    "penalty_min": "Life without parole",
+    "penalty_max": "Death penalty or life without parole",
+    "fine_max": null,
+    "elements": [
+      "Defendant killed another human being",
+      "With malice, premeditation, and deliberation",
+      "OR by means of poison, lying in wait, imprisonment, starving, or torture",
+      "OR in the perpetration or attempted perpetration of a specified felony (felony murder)"
+    ],
+    "mandatory_minimum": "Life without parole (mandatory for Class A felony)",
+    "enhancements": [
+      "Aggravating circumstances: death penalty eligible",
+      "Law enforcement officer victim: death penalty eligible aggravating circumstance",
+      "Especially heinous, atrocious, or cruel: aggravating circumstance"
+    ],
+    "notes": "NC has the death penalty. Felony murder covers killings during arson, rape, robbery, kidnapping, burglary, and other enumerated felonies."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "N.C.G.S. § 14-17(b)",
+    "statute_title": "Second Degree Murder",
+    "offense_class": "Class B1 Felony (malice without premeditation); Class B2 Felony (inherently dangerous act with malice)",
+    "penalty_min": null,
+    "penalty_max": "Class B1: 484 months+; Class B2: 393 months+",
+    "fine_max": null,
+    "elements": [
+      "Defendant killed another human being",
+      "With malice",
+      "But without premeditation and deliberation",
+      "OR committed an act inherently dangerous to human life in wanton disregard of consequences"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Defendant had prior murder conviction: enhanced sentence",
+      "Drug distribution causing death: second-degree murder possible"
+    ],
+    "notes": "Class B1 felony — malice without premeditation. Class B2 — inherently dangerous act with reckless disregard."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "N.C.G.S. § 14-18",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "204 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant killed another human being",
+      "With malice but in the heat of passion",
+      "Upon adequate provocation that would cause a reasonable person to lose self-control",
+      "No cooling-off period had elapsed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Heat-of-passion defense reduces murder to voluntary manslaughter (Class D felony). Imperfect self-defense may also result in voluntary manslaughter."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "N.C.G.S. § 14-18",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "Class F Felony",
+    "penalty_min": null,
+    "penalty_max": "41 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant killed another human being",
+      "Without malice or intent to kill",
+      "During commission of an unlawful act not amounting to a felony",
+      "OR during a lawful act performed in a culpably negligent manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Culpable negligence — greater than ordinary negligence. Vehicular deaths also charged under § 20-141.4."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "N.C.G.S. § 14-32; § 14-32.4",
+    "statute_title": "Assault with a Deadly Weapon Inflicting Serious Injury / Assault Inflicting Serious Bodily Injury",
+    "offense_class": "Class C Felony (deadly weapon + intent to kill + serious injury); Class E Felony (serious bodily injury)",
+    "penalty_min": null,
+    "penalty_max": "231 months (Class C); 88 months (Class E)",
+    "fine_max": null,
+    "elements": [
+      "Defendant assaulted another person",
+      "With a deadly weapon with intent to kill",
+      "Inflicting serious injury (Class C felony)",
+      "OR inflicted serious bodily injury without deadly weapon (Class E felony)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Law enforcement officer victim: Class F felony (assault on officer) or higher",
+      "Strangulation: Class H felony under § 14-32.4(b)",
+      "Domestic violence context: additional charges"
+    ],
+    "notes": "Multiple assault statutes in NC. § 14-32 covers assault with deadly weapon. § 14-32.4 covers assault inflicting serious bodily injury."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "N.C.G.S. § 14-33",
+    "statute_title": "Simple Assault",
+    "offense_class": "Class 2 Misdemeanor (basic); Class A1 Misdemeanor (certain victims)",
+    "penalty_min": null,
+    "penalty_max": "60 days (Class 2); 150 days (Class A1)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant committed a simple assault on another person",
+      "Either by an overt act creating reasonable apprehension of immediate bodily harm",
+      "OR by an actual physical act constituting battery"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is female and defendant is male: Class A1 misdemeanor under § 14-33(c)(2)",
+      "Victim is child under 12: Class A1 misdemeanor",
+      "Victim is officer, teacher, healthcare worker: Class A1 misdemeanor",
+      "Domestic relationship: Class A1 misdemeanor"
+    ],
+    "notes": "NC combines assault and battery into one offense. Simple assault/battery is Class 2; assault on a female or child is Class A1."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "N.C.G.S. § 14-33",
+    "statute_title": "Simple Assault and Battery",
+    "offense_class": "Class 2 Misdemeanor (basic); Class A1 Misdemeanor (certain circumstances)",
+    "penalty_min": null,
+    "penalty_max": "60 days (Class 2); 150 days (Class A1)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant intentionally made offensive, harmful, or provoking physical contact with another person",
+      "Without consent of the other person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury inflicted: Class E or C felony depending on circumstances",
+      "Domestic relationship: Class A1 misdemeanor"
+    ],
+    "notes": "NC treats assault and battery as the same offense under § 14-33. Battery requires physical contact; assault may be apprehension only."
+  },
+  {
+    "common_charge_slug": "aggravated-battery",
+    "statute_number": "N.C.G.S. § 14-32.4",
+    "statute_title": "Assault Inflicting Serious Bodily Injury",
+    "offense_class": "Class E Felony",
+    "penalty_min": null,
+    "penalty_max": "88 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant assaulted another person",
+      "And inflicted serious bodily injury",
+      "Serious bodily injury means injury creating substantial risk of death or causing permanent disfigurement or protracted loss or impairment of function"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Deadly weapon used: potential elevation to Class C felony",
+      "Strangulation: Class H felony under § 14-32.4(b)",
+      "Victim is officer: Class F felony"
+    ],
+    "notes": "Strangulation causing physical injury separately classified as Class H felony under § 14-32.4(b)."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "N.C.G.S. § 14-87.1",
+    "statute_title": "Common Law Robbery",
+    "offense_class": "Class G Felony",
+    "penalty_min": null,
+    "penalty_max": "47 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant took property from another person or their presence",
+      "By use of force or intimidation",
+      "Without consent and with intent to permanently deprive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed robbery: elevated to Class D felony under § 14-87"
+    ],
+    "notes": "Common law robbery under § 14-87.1 is Class G felony. Armed robbery (dangerous weapon) is Class D felony under § 14-87."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "N.C.G.S. § 14-87",
+    "statute_title": "Robbery with a Dangerous Weapon",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "204 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant took property from another person or their presence",
+      "By use of or threatened use of a firearm or other dangerous weapon",
+      "Victim was endangered or threatened",
+      "Defendant intended to permanently deprive the victim of the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious injury inflicted: enhanced sentence",
+      "Multiple victims: consecutive sentences"
+    ],
+    "notes": "Class D felony with presumptive active sentence. Dangerous weapon includes firearms, knives, and any object capable of threatening life."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "N.C.G.S. § 14-39",
+    "statute_title": "Kidnapping",
+    "offense_class": "Class C Felony (1st degree — victim not released in safe place, or serious injury/sexual assault); Class E Felony (2nd degree)",
+    "penalty_min": null,
+    "penalty_max": "231 months (Class C); 88 months (Class E)",
+    "fine_max": null,
+    "elements": [
+      "Defendant unlawfully confined, restrained, or removed from one place to another any person under 16, or any person by force, threat, or deception",
+      "Without consent of the victim (or parent/guardian if minor)",
+      "For purpose of holding for ransom, facilitating felony, doing serious harm, or terrorizing victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim not released in a safe place: 1st degree (Class C)",
+      "Sexual assault or serious injury during kidnapping: 1st degree",
+      "Ransom demand: Class C"
+    ],
+    "notes": "1st degree (Class C) vs. 2nd degree (Class E) based on whether victim was released safely and whether sexual assault or serious injury occurred."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "N.C.G.S. § 14-58; § 14-58.1",
+    "statute_title": "Arson",
+    "offense_class": "Class D Felony (1st degree — occupied dwelling); Class G Felony (2nd degree — unoccupied or other structure)",
+    "penalty_min": null,
+    "penalty_max": "204 months (Class D); 47 months (Class G)",
+    "fine_max": null,
+    "elements": [
+      "Defendant willfully and maliciously set fire to or burned a dwelling house or other structure",
+      "Dwelling was occupied by any person (1st degree)",
+      "OR structure was not an occupied dwelling (2nd degree)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Person present and in danger: 1st degree",
+      "Insurance fraud motive: insurance fraud charges added",
+      "Burning school, government building: enhanced under § 14-49 et seq."
+    ],
+    "notes": "Common law arson definitions used. Burning of non-dwelling structures covered under § 14-62 et seq."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "N.C.G.S. § 14-17; § 14-2.5",
+    "statute_title": "Attempted First or Second Degree Murder",
+    "offense_class": "Class B1 Felony (attempted 1st degree murder); Class C Felony (attempted 2nd degree murder)",
+    "penalty_min": null,
+    "penalty_max": "Class B1: 484 months+; Class C: 231 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant took a substantial step toward committing murder",
+      "With the specific intent to kill",
+      "Act was beyond mere preparation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Firearm used: enhanced sentencing",
+      "Victim is law enforcement: aggravating factor"
+    ],
+    "notes": "NC penalizes attempt at one class below the completed offense under § 14-2.5. Attempted 1st degree murder is Class B1 (same as 2nd degree murder)."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "N.C.G.S. § 14-32(b)",
+    "statute_title": "Assault with a Deadly Weapon",
+    "offense_class": "Class E Felony (deadly weapon + serious injury); Class A1 Misdemeanor (deadly weapon without serious injury)",
+    "penalty_min": null,
+    "penalty_max": "88 months (Class E felony); 150 days (Class A1 misdemeanor)",
+    "fine_max": null,
+    "elements": [
+      "Defendant assaulted another person",
+      "With a deadly weapon",
+      "Inflicting serious injury (felony) OR not inflicting serious injury (misdemeanor)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "With intent to kill and serious injury: Class C felony",
+      "Law enforcement victim: enhanced charge"
+    ],
+    "notes": "Deadly weapon with serious injury = Class E. Deadly weapon + intent to kill + serious injury = Class C under § 14-32(a)."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "N.C.G.S. § 14-72",
+    "statute_title": "Larceny",
+    "offense_class": "Class I Felony ($1,000+); Class 1 Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "24 months (Class I felony); 120 days (Class 1 misdemeanor)",
+    "fine_max": null,
+    "elements": [
+      "Defendant took and carried away the personal property of another",
+      "Without consent",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $100,000+: Class C felony under § 14-72(b)(5)",
+      "From person or from fire or natural disaster victim: Class H felony",
+      "Theft of firearm: Class H felony regardless of value"
+    ],
+    "notes": "Felony larceny threshold is $1,000. Larceny from the person (Class H) does not require force — that would be robbery."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "N.C.G.S. § 14-72",
+    "statute_title": "Felony Larceny",
+    "offense_class": "Class I Felony ($1,000+); Class H Felony (larceny from person, firearm, or other specified circumstances)",
+    "penalty_min": null,
+    "penalty_max": "39 months (Class H); 24 months (Class I)",
+    "fine_max": null,
+    "elements": [
+      "Defendant took and carried away personal property of another",
+      "Without consent",
+      "Property value was $1,000 or more OR circumstances elevated to felony",
+      "Intent to permanently deprive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Theft from person: Class H",
+      "Theft of firearm: Class H",
+      "Value $100,000+: Class C"
+    ],
+    "notes": "NC uses 'larceny' not 'theft.' Felony threshold is $1,000."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "N.C.G.S. § 14-72(a)",
+    "statute_title": "Misdemeanor Larceny",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "120 days imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant took and carried away personal property of another",
+      "Without consent and with intent to permanently deprive",
+      "Property value was under $1,000"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior larceny convictions: potential elevation to felony for repeat offenders under § 14-72(b)(3)"
+    ],
+    "notes": "Third conviction for misdemeanor larceny is a Class I felony under § 14-72(b)(3)."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "N.C.G.S. § 14-72.1",
+    "statute_title": "Concealment of Merchandise",
+    "offense_class": "Class 3 Misdemeanor (1st offense); Class 2 Misdemeanor (2nd offense); Class 1 Misdemeanor (3rd offense); Class I Felony (4th+ or value over $2,000)",
+    "penalty_min": null,
+    "penalty_max": "24 months (Class I felony for 4th+ offense)",
+    "fine_max": "$200 (Class 3); $1,000 (Class 1)",
+    "elements": [
+      "Defendant concealed merchandise on the premises of a retail merchant",
+      "With intent to take possession of the merchandise without paying the merchant's stated price",
+      "Merchandise was not yet purchased"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "4th or subsequent offense: Class I felony",
+      "Value over $2,000: Class I felony regardless of prior record",
+      "Organized retail theft: Class H felony under § 14-72.12"
+    ],
+    "notes": "Escalating classification for repeat offenders. Merchant detention privilege under § 14-72.1(c)."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "N.C.G.S. § 14-51",
+    "statute_title": "First Degree Burglary",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "204 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant broke and entered a dwelling house or sleeping apartment",
+      "Dwelling was actually occupied at the time",
+      "In the nighttime",
+      "With intent to commit a felony or larceny therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Person present and in danger: enhanced sentence",
+      "Armed during burglary: additional weapons charges"
+    ],
+    "notes": "1st degree burglary (Class D) requires occupied dwelling and nighttime. 2nd degree (Class G) under § 14-51 covers daytime or unoccupied dwelling."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "N.C.G.S. § 14-51",
+    "statute_title": "Burglary — Residential",
+    "offense_class": "Class D Felony (1st degree, occupied nighttime); Class G Felony (2nd degree)",
+    "penalty_min": null,
+    "penalty_max": "204 months (Class D); 47 months (Class G)",
+    "fine_max": null,
+    "elements": [
+      "Defendant broke and entered a dwelling house",
+      "With intent to commit a felony or larceny therein",
+      "1st degree: dwelling occupied and crime committed in nighttime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim present: significant sentencing factor",
+      "Prior burglary: enhanced sentence"
+    ],
+    "notes": "North Carolina common law requirements for breaking and entering apply. Uninvited entry through open door may still constitute breaking."
+  },
+  {
+    "common_charge_slug": "commercial-burglary",
+    "statute_number": "N.C.G.S. § 14-54",
+    "statute_title": "Breaking or Entering a Building",
+    "offense_class": "Class H Felony (felonious intent); Class 1 Misdemeanor (without felonious intent)",
+    "penalty_min": null,
+    "penalty_max": "39 months (Class H felony); 120 days (Class 1 misdemeanor)",
+    "fine_max": null,
+    "elements": [
+      "Defendant broke or entered a building",
+      "With intent to commit any felony or larceny therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Person present: sentencing enhancement",
+      "Weapon possessed: additional charges"
+    ],
+    "notes": "Broader than common law burglary — covers non-dwelling structures, daytime, and does not require both breaking and entering."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "N.C.G.S. § 20-106",
+    "statute_title": "Receiving or Transferring Stolen Vehicles",
+    "offense_class": "Class I Felony",
+    "penalty_min": null,
+    "penalty_max": "24 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant received, transferred, possessed, concealed, or was found operating a motor vehicle",
+      "Knowing the motor vehicle was stolen",
+      "Without consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Carjacking: robbery or armed robbery charges",
+      "Vehicle used in commission of crime: additional charges"
+    ],
+    "notes": "Vehicle larceny also prosecuted under general larceny statute § 14-72. Motor vehicle theft is Class I felony."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "N.C.G.S. § 14-71",
+    "statute_title": "Receiving Stolen Goods",
+    "offense_class": "Class I Felony (value $1,000+); Class 1 Misdemeanor (value under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "24 months (Class I); 120 days (Class 1)",
+    "fine_max": null,
+    "elements": [
+      "Defendant received or possessed stolen goods",
+      "Defendant knew or had reasonable grounds to believe the goods were stolen",
+      "Intent to dishonestly retain the goods"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Motor vehicle: enhanced charges under § 20-106",
+      "Value over $100,000: Class C felony"
+    ],
+    "notes": "Same felony threshold as larceny: $1,000. Knowledge element — reasonable grounds to believe is an objective standard."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "N.C.G.S. § 14-127",
+    "statute_title": "Willful and Wanton Injury to Real Property",
+    "offense_class": "Class 1 Misdemeanor (value under $200); Class I Felony (value $200+) under § 14-127",
+    "penalty_min": null,
+    "penalty_max": "120 days (Class 1 misdemeanor); 24 months (Class I felony)",
+    "fine_max": null,
+    "elements": [
+      "Defendant willfully and wantonly damaged or destroyed real property of another",
+      "Without authority or justification",
+      "Act was intentional"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Religious or educational institution: enhanced under § 14-49.1",
+      "Hate crime motivation: enhanced under § 14-3(c)"
+    ],
+    "notes": "Also see § 14-159.4 (injury to personal property). Damage to railroad property under § 14-138. Hate crime enhancement doubles maximum under § 14-3(c)."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "N.C.G.S. § 14-159.12; § 14-159.13",
+    "statute_title": "First and Second Degree Trespass",
+    "offense_class": "Class 2 Misdemeanor (1st degree); Class 3 Misdemeanor (2nd degree)",
+    "penalty_min": null,
+    "penalty_max": "60 days (Class 2); 20 days (Class 3)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant entered or remained on the premises of another person",
+      "Without authorization after being notified not to enter or remain",
+      "OR entered an enclosed or posted property (1st degree: with intent to damage property or after notice; 2nd degree: without notice but enclosed/posted)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Critical infrastructure trespass: Class I felony under § 14-159.12(b)",
+      "Operating chemical facility: enhanced felony"
+    ],
+    "notes": "1st degree (Class 2) requires notice or intent to damage. 2nd degree (Class 3) covers trespass on enclosed/posted property without notice."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "N.C.G.S. § 14-127; § 14-159.4",
+    "statute_title": "Willful Injury to Real or Personal Property",
+    "offense_class": "Class 1 Misdemeanor (under $200 real property); Class I Felony (over $200); Class 2 Misdemeanor (personal property under $200)",
+    "penalty_min": null,
+    "penalty_max": "24 months (Class I felony)",
+    "fine_max": null,
+    "elements": [
+      "Defendant willfully and wantonly injured, damaged, or destroyed property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "NC uses 'willful injury to property' rather than 'criminal mischief.' Classification depends on value and type of property."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "N.C.G.S. § 50B-1; § 14-33(c)(2)",
+    "statute_title": "Domestic Violence — Assault on a Female / Domestic Violence Assault",
+    "offense_class": "Class A1 Misdemeanor; Felony if serious injury",
+    "penalty_min": null,
+    "penalty_max": "150 days (Class A1); up to 88 months (Class E felony with serious injury)",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed an assault on a current or former intimate partner, household member, or person with whom they have a child",
+      "OR defendant committed assault on a female if defendant is male (§ 14-33(c)(2))",
+      "Act was intentional"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior conviction of assault on female or crime of domestic violence: Class A1 misdemeanor at minimum",
+      "Strangulation: Class H felony under § 14-32.4(b)",
+      "Serious injury: escalated felony class"
+    ],
+    "notes": "Domestic violence covered under Chapter 50B civil protective orders and criminal assault statutes. Strangulation is separately Class H felony."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "N.C.G.S. § 14-33(c)(2); § 14-32.4",
+    "statute_title": "Assault on a Female / Domestic Battery",
+    "offense_class": "Class A1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "150 days imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant is male",
+      "Defendant assaulted a female",
+      "Acts were intentional"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury: Class E felony under § 14-32.4",
+      "Strangulation: Class H felony under § 14-32.4(b)"
+    ],
+    "notes": "Assault on a female under § 14-33(c)(2) requires defendant to be male and victim female. Gender-neutral serious assault under § 14-32.4."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "N.C.G.S. § 14-318.2; § 14-318.4",
+    "statute_title": "Child Abuse / Contributing to the Delinquency of a Minor",
+    "offense_class": "Class 1 Misdemeanor (contributing); Class A1 Misdemeanor (child abuse by parent); Class C or D Felony (serious injury or sexual abuse)",
+    "penalty_min": null,
+    "penalty_max": "231 months (Class C); 150 days (Class A1)",
+    "fine_max": null,
+    "elements": [
+      "Defendant is a parent, legal guardian, or caretaker of a juvenile under 16",
+      "Defendant inflicted or allowed infliction of physical injury upon the juvenile",
+      "OR defendant committed, permitted, or encouraged acts constituting child abuse"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury: Class D felony",
+      "Sexual abuse of child under 13: Class C felony with mandatory registration"
+    ],
+    "notes": "Child abuse with serious injury is Class D felony under § 14-318.4(a3). Sexual abuse is Class C felony."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "N.C.G.S. § 14-318.4",
+    "statute_title": "Felony Child Abuse",
+    "offense_class": "Class D Felony (serious physical injury); Class C Felony (sexual abuse, child under 13)",
+    "penalty_min": null,
+    "penalty_max": "204 months (Class D); 231 months (Class C)",
+    "fine_max": null,
+    "elements": [
+      "Defendant is a parent, legal guardian, or caretaker of a child under 16",
+      "Defendant inflicted or allowed infliction of serious physical injury upon the child",
+      "OR committed sexual abuse upon a child under 13"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Pattern of abuse: aggravating factor",
+      "Death resulting: murder charges"
+    ],
+    "notes": "Felony child abuse under § 14-318.4 for parents and caretakers. Strangers may be charged under assault statutes."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "N.C.G.S. § 50B-4.1",
+    "statute_title": "Violation of Domestic Violence Protective Order",
+    "offense_class": "Class A1 Misdemeanor (1st offense); Class H Felony (2nd+ violation or violation with assault)",
+    "penalty_min": null,
+    "penalty_max": "150 days (Class A1); 39 months (Class H felony)",
+    "fine_max": null,
+    "elements": [
+      "A valid domestic violence protective order under Chapter 50B had been issued",
+      "Defendant had knowledge of the order",
+      "Defendant violated the specific terms of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "2nd or subsequent violation: Class H felony",
+      "Assault during violation: Class H felony on 1st offense"
+    ],
+    "notes": "Violations involving assault are Class H felony on first offense. Federal firearm prohibition applies under 18 U.S.C. § 922(g)(8)."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "N.C.G.S. § 14-277.3A",
+    "statute_title": "Stalking",
+    "offense_class": "Class A1 Misdemeanor (1st offense); Class F Felony (2nd+ offense or violation of protective order)",
+    "penalty_min": null,
+    "penalty_max": "150 days (Class A1); 41 months (Class F felony)",
+    "fine_max": null,
+    "elements": [
+      "Defendant followed, was in the presence of, or contacted another person on at least two occasions",
+      "Without consent",
+      "Causing that person to reasonably fear for their safety, a family member's safety, or to suffer substantial emotional distress",
+      "Defendant knew or should have known the conduct would cause fear or distress"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "2nd conviction or violation of protective order: Class F felony",
+      "Use of electronic means: cyberstalking enhancement"
+    ],
+    "notes": "Cyberstalking under § 14-196.3 separately covers electronic harassment. Two separate incidents required."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "N.C.G.S. § 14-196",
+    "statute_title": "Harassing Phone Calls / Electronic Communications",
+    "offense_class": "Class 2 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant made telephone calls or electronic communications to another person",
+      "With intent to harass, annoy, or embarrass",
+      "OR used repeated calls with no purpose of communication"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Cyberstalking: elevated charges under § 14-196.3",
+      "Threatening communications: terroristic threat charges"
+    ],
+    "notes": "Cyberstalking under § 14-196.3 covers electronic harassment intended to cause fear or emotional distress."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "N.C.G.S. § 14-32.3",
+    "statute_title": "Domestic Abuse, Neglect, and Exploitation of Disabled or Elder Adult",
+    "offense_class": "Class H Felony (abuse/neglect); Class I Felony (exploitation)",
+    "penalty_min": null,
+    "penalty_max": "39 months (Class H); 24 months (Class I)",
+    "fine_max": null,
+    "elements": [
+      "Defendant was a caregiver or person responsible for a disabled or elder adult (65+)",
+      "Defendant abused, neglected, or exploited the person in their care",
+      "OR financially exploited the elder or disabled adult"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury: Class G or higher felony",
+      "Death resulting: murder or manslaughter charges"
+    ],
+    "notes": "Financial exploitation separately addressed under § 14-32.3(b). Adult Protective Services mandatory reporting required."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "N.C.G.S. § 14-269",
+    "statute_title": "Carrying Concealed Weapon",
+    "offense_class": "Class 2 Misdemeanor (1st offense); Class H Felony (2nd+ offense or concealed handgun without permit)",
+    "penalty_min": null,
+    "penalty_max": "60 days (Class 2); 39 months (Class H felony)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant carried a concealed deadly weapon off their own premises",
+      "Without a valid concealed carry permit",
+      "With knowledge of possession"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "2nd offense: Class H felony",
+      "Carrying on school premises: Class I felony under § 14-269.2",
+      "Armed during commission of felony: additional charges"
+    ],
+    "notes": "NC has shall-issue CHP. Carrying without permit is Class 2 misdemeanor first offense. School property carrying is Class I felony."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "N.C.G.S. § 14-415.1",
+    "statute_title": "Possession of Firearm by Felon",
+    "offense_class": "Class G Felony",
+    "penalty_min": null,
+    "penalty_max": "47 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant was convicted of a felony",
+      "Defendant purchased, owned, possessed, or had in custody, care, or control a firearm",
+      "With knowledge of possession"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of firearm in commission of a crime: additional charges",
+      "Federal concurrent: 18 U.S.C. § 922(g)(1)",
+      "Prior violent felony: enhanced sentence"
+    ],
+    "notes": "Class G felony. Rights restoration possible through pardon or expungement of underlying felony."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "N.C.G.S. § 14-269(a1)",
+    "statute_title": "Carrying Concealed Handgun Without Valid Permit",
+    "offense_class": "Class 2 Misdemeanor (1st offense); Class H Felony (2nd+ offense)",
+    "penalty_min": null,
+    "penalty_max": "60 days (Class 2); 39 months (Class H)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant carried a concealed handgun off their own premises",
+      "Without a valid concealed handgun permit"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "2nd offense: elevated to Class H felony"
+    ],
+    "notes": "Handgun carry without permit escalates to Class H felony on 2nd offense. CHP available to qualifying residents."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "N.C.G.S. § 14-34.1",
+    "statute_title": "Discharging a Barreled Weapon Into Occupied Property",
+    "offense_class": "Class D Felony (into occupied property); Class E Felony (into property not reasonably believed occupied)",
+    "penalty_min": null,
+    "penalty_max": "204 months (Class D); 88 months (Class E)",
+    "fine_max": null,
+    "elements": [
+      "Defendant willfully or wantonly discharged a firearm, barreled weapon, or other deadly weapon",
+      "Into any building, structure, or vehicle",
+      "When the property was occupied or defendant had reasonable cause to believe it was occupied"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Person injured or killed: additional charges",
+      "School or government building: enhanced sentence"
+    ],
+    "notes": "Class D felony for discharge into occupied property. Reckless discharge otherwise charged under assault statutes."
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "statute_number": "N.C.G.S. § 14-288.8; § 14-409",
+    "statute_title": "Possession of Machine Gun or Sawed-Off Shotgun",
+    "offense_class": "Class I Felony",
+    "penalty_min": null,
+    "penalty_max": "24 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant possessed, sold, or transferred a machine gun, sawed-off shotgun, or sawed-off rifle",
+      "Without NFA registration",
+      "With knowledge of the nature of the weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use in commission of a crime: additional charges",
+      "Federal NFA violation: concurrent federal charges"
+    ],
+    "notes": "NFA-registered weapons are legal with proper registration. State crime for unregistered NFA items."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "N.C.G.S. § 14-113.20",
+    "statute_title": "Identity Theft",
+    "offense_class": "Class G Felony",
+    "penalty_min": null,
+    "penalty_max": "47 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly obtained, possessed, or used identifying information of another person",
+      "Without that person's consent",
+      "With intent to fraudulently represent themselves as that person",
+      "For any unlawful purpose"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "More than 3 victims: Class F felony",
+      "Elder victim (65+): enhanced penalty",
+      "Use of internet or electronic means: additional charges"
+    ],
+    "notes": "Multiple victims enhancement under § 14-113.20A. Aggravated identity theft (3+ victims or financial institution) is Class F felony."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "N.C.G.S. § 14-90",
+    "statute_title": "Embezzlement",
+    "offense_class": "Class H Felony (value under $100,000); Class C Felony (value $100,000+)",
+    "penalty_min": null,
+    "penalty_max": "39 months (Class H); 231 months (Class C)",
+    "fine_max": null,
+    "elements": [
+      "Defendant was entrusted with or had access to property belonging to another",
+      "Defendant fraudulently appropriated the property",
+      "To defendant's own use or the use of another person not entitled to the property",
+      "With intent to defraud the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public official embezzlement: enhanced penalties",
+      "Value $100,000+: Class C felony"
+    ],
+    "notes": "Embezzlement by public official may be a Class F felony under § 14-92. Financial institution embezzlement carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "N.C.G.S. § 14-119",
+    "statute_title": "Forgery of Instruments",
+    "offense_class": "Class I Felony",
+    "penalty_min": null,
+    "penalty_max": "24 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant forged or counterfeited an instrument",
+      "With intent to defraud",
+      "Instrument could affect legal rights (checks, deeds, contracts, etc.)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public official's signature forged: Class H felony",
+      "Multiple forgeries: charges may stack"
+    ],
+    "notes": "Uttering forged instrument separately charged under § 14-120. Both can be charged together."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "N.C.G.S. § 14-107",
+    "statute_title": "Worthless Checks",
+    "offense_class": "Class 3 Misdemeanor (under $2,000); Class 1 Misdemeanor ($2,000-$9,999); Class I Felony ($10,000+)",
+    "penalty_min": null,
+    "penalty_max": "20 days (Class 3); 120 days (Class 1); 24 months (Class I felony)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drew, made, or delivered a check, draft, or order",
+      "Defendant knew at time of delivery that funds were insufficient or no account existed",
+      "Payee was defrauded"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount aggregated over multiple bad checks: may reach felony threshold"
+    ],
+    "notes": "10-day grace period after notice allows payment and avoids prosecution. Three-tier classification based on amount."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "N.C.G.S. § 14-100",
+    "statute_title": "Obtaining Property by False Pretenses",
+    "offense_class": "Class H Felony (value under $100,000); Class C Felony (value $100,000+)",
+    "penalty_min": null,
+    "penalty_max": "39 months (Class H); 231 months (Class C)",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly and designedly, by false pretense, obtained or attempted to obtain",
+      "From another person, property, money, valuable consideration, or other thing",
+      "With intent to cheat and defraud",
+      "The false pretense was the operating cause of the transfer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Elder victim (65+): enhanced penalty",
+      "Internet or wire used: additional charges",
+      "Value $100,000+: Class C felony"
+    ],
+    "notes": "Common fraud vehicle in NC. Represents the historical false pretenses offense."
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "statute_number": "N.C.G.S. § 14-113.20; Federal: 18 U.S.C. § 1343",
+    "statute_title": "Identity Theft / Wire Fraud",
+    "offense_class": "Class G Felony (state); Federal felony",
+    "penalty_min": null,
+    "penalty_max": "47 months (state); 20 years (federal)",
+    "fine_max": null,
+    "elements": [
+      "Defendant used wire, radio, or television communications in interstate or foreign commerce",
+      "To execute a scheme to defraud",
+      "OR to obtain money or property by means of false pretenses or representations"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Financial institution victim: enhanced federal penalty",
+      "Large monetary loss: enhanced sentence"
+    ],
+    "notes": "Wire fraud primarily prosecuted federally. NC state fraud charges typically used for local transactions."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "N.C.G.S. § 58-2-161",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class H Felony",
+    "penalty_min": null,
+    "penalty_max": "39 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly presented false, incomplete, or misleading information to an insurer",
+      "In connection with an insurance claim, application, or transaction",
+      "With intent to defraud the insurer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Healthcare insurance fraud: enhanced penalties under specific healthcare fraud statutes",
+      "Organized fraud ring: conspiracy charges"
+    ],
+    "notes": "NC Department of Insurance investigates insurance fraud. Workers' comp fraud separately addressed."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "N.C.G.S. § 14-294; Federal: 18 U.S.C. § 1956",
+    "statute_title": "Money Laundering",
+    "offense_class": "Class H Felony (state)",
+    "penalty_min": null,
+    "penalty_max": "39 months (state); 20 years (federal)",
+    "fine_max": null,
+    "elements": [
+      "Defendant conducted a financial transaction involving proceeds of unlawful activity",
+      "With knowledge that the property was the proceeds of unlawful activity",
+      "With intent to promote or conceal the unlawful activity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Federal parallel prosecution: 18 U.S.C. § 1956",
+      "Drug trafficking proceeds: enhanced"
+    ],
+    "notes": "Most money laundering cases prosecuted federally. NC Class H felony for state prosecutions."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "N.C.G.S. § 14-132; § 14-288.4",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Class 2 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant acted in such a manner as to be reasonably likely to provoke a violent response from another person",
+      "OR disturbed the peace by making a loud and raucous noise",
+      "OR disrupted the orderly conduct of a lawful meeting, gathering, or procession"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Disorderly conduct in a public place under § 14-132 (Class 2). Emergency management-related disorderly conduct under § 14-288.4."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "N.C.G.S. § 14-223",
+    "statute_title": "Resisting, Delaying, or Obstructing a Public Officer",
+    "offense_class": "Class 2 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant willfully and unlawfully resisted, delayed, or obstructed a public officer",
+      "Officer was discharging or attempting to discharge a duty of the officer's office",
+      "Defendant knew or had reasonable grounds to know the person was a public officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Assault on officer during resistance: Class F or higher felony",
+      "Injury to officer: Class E felony"
+    ],
+    "notes": "Misdemeanor for resistance alone. Assaulting an officer is separate and more serious charge under § 14-34.2."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "N.C.G.S. § 14-221.1; § 14-223",
+    "statute_title": "Obstruction of Justice",
+    "offense_class": "Class H Felony (obstruction of justice); Class 2 Misdemeanor (obstructing officer)",
+    "penalty_min": null,
+    "penalty_max": "39 months (Class H felony)",
+    "fine_max": null,
+    "elements": [
+      "Defendant intentionally obstructed, impeded, or hindered an official proceeding or criminal investigation",
+      "Act was knowing and intentional",
+      "Act was not authorized or justified"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Evidence tampering: additional charges",
+      "Witness intimidation or retaliation: Class F or G felony under § 14-226"
+    ],
+    "notes": "Obstruction of justice is a common law offense in NC, codified as Class H felony. Witness intimidation separately classified."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "N.C.G.S. § 5A-11; § 5A-12",
+    "statute_title": "Criminal Contempt of Court",
+    "offense_class": "Class 1 Misdemeanor (simple criminal contempt); more severe depending on conduct",
+    "penalty_min": null,
+    "penalty_max": "30 days imprisonment per occurrence (simple); 120 days (Class 1 misdemeanor)",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant willfully disobeyed a lawful court order",
+      "OR engaged in conduct that disrupted, impaired, or obstructed the administration of justice",
+      "Conduct was directly or indirectly contrary to a specific order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Repeated contempt: consecutive penalties",
+      "Domestic violence order violation: Class A1 misdemeanor or Class H felony"
+    ],
+    "notes": "Summary contempt may be imposed by judge without separate hearing for conduct in the courtroom."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "N.C.G.S. § 14-443",
+    "statute_title": "Intoxicated and Disruptive in Public",
+    "offense_class": "Class 3 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "20 days imprisonment",
+    "fine_max": "$200",
+    "elements": [
+      "Defendant appeared in a public place",
+      "In an intoxicated condition",
+      "And was disruptive as indicated by boisterous and noisy conduct, threatening or fighting, or creating a hazard"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Simple intoxication in public is not a crime in NC — disruptive element required. Protective custody available as alternative."
+  },
+  {
+    "common_charge_slug": "loitering",
+    "statute_number": "N.C.G.S. § 14-132(a)(8)",
+    "statute_title": "Loitering in Public",
+    "offense_class": "Class 2 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant remained in a public place",
+      "For the purpose of engaging in unlawful activity or soliciting",
+      "After being asked to move along by an officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "NC loitering statutes must be applied carefully to avoid First Amendment concerns. Specific purpose element required."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "N.C.G.S. § 15A-543",
+    "statute_title": "Failure to Appear",
+    "offense_class": "Class I Felony (felony underlying charge); Class 2 Misdemeanor (misdemeanor underlying charge)",
+    "penalty_min": null,
+    "penalty_max": "24 months (Class I felony); 60 days (Class 2 misdemeanor)",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released from custody pursuant to a written promise to appear",
+      "Defendant had notice of the appearance date",
+      "Defendant failed to appear as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying charge is violent felony: enhanced sentence",
+      "Bond forfeiture: civil consequences for surety"
+    ],
+    "notes": "Order for arrest issued upon FTA. Written promise to appear required for criminal FTA charge."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "N.C.G.S. § 14-225",
+    "statute_title": "Filing False Police Report",
+    "offense_class": "Class 2 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant made a statement or report to a law enforcement officer",
+      "Defendant knew the statement was false",
+      "Statement was made in connection with a criminal investigation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Swatting: Class H felony or Class F felony if injury results",
+      "False report causing death: enhanced charges"
+    ],
+    "notes": "Separate from perjury or false swearing. Swatting addressed under § 14-225.1 as Class H felony, Class F if injury results."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "N.C.G.S. § 14-277.1",
+    "statute_title": "Communicating Threats",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "120 days imprisonment",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant threatened to physically injure another person or their family members, household members, or property",
+      "The threat was communicated to that person",
+      "Defendant had the ability to carry out the threat",
+      "Recipient believed the defendant would carry out the threat"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat related to judicial proceedings: obstruction of justice",
+      "Bomb threat or weapon of mass destruction: Class H felony under § 14-277.1A"
+    ],
+    "notes": "Bomb threats or threats involving nuclear, biological, chemical, or radiological agents: Class H or Class F felony under § 14-277.1A."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "N.C.G.S. § 15A-1344",
+    "statute_title": "Probation Revocation",
+    "offense_class": "Depends on original underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Active sentence up to the original maximum",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on probation",
+      "Defendant violated a condition of probation",
+      "Violation was willful or without lawful excuse"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense: revocation plus new charges",
+      "Absconding: violation of condition warranting revocation"
+    ],
+    "notes": "NC JRA (2011) limits technical revocations to 90-day jail terms on first two technical violations. Active sentence only on third violation or new offense."
+  },
+  {
+    "common_charge_slug": "probation-violation-technical",
+    "statute_number": "N.C.G.S. § 15A-1344(d2)",
+    "statute_title": "Technical Probation Violation",
+    "offense_class": "Administrative — limited confinement",
+    "penalty_min": null,
+    "penalty_max": "90 days confinement (1st technical); 90 days (2nd); active sentence (3rd)",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on probation",
+      "Defendant violated a non-criminal technical condition (failure to report, failure to pay fees, positive drug test)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "NC JRA 2011 limits technical revocations: 90 days for 1st and 2nd technical violations; active sentence only on 3rd or for absconding/new offense."
+  },
+  {
+    "common_charge_slug": "probation-violation-substantive",
+    "statute_number": "N.C.G.S. § 15A-1344",
+    "statute_title": "Substantive Probation Violation — New Criminal Offense",
+    "offense_class": "Probation revocation plus new criminal charges",
+    "penalty_min": null,
+    "penalty_max": "Active sentence balance + new sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on probation",
+      "Defendant committed a new criminal offense while on probation",
+      "New offense constitutes a violation of probation conditions"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "New offense on probation triggers full revocation hearing. Court may impose active sentence up to original maximum."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "N.C.G.S. § 15A-1371",
+    "statute_title": "Post-Release Supervision Violation / Parole Revocation",
+    "offense_class": "Administrative — return to prison",
+    "penalty_min": null,
+    "penalty_max": "Return to custody; re-incarceration for balance of sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on post-release supervision or parole",
+      "Defendant violated conditions of supervision",
+      "Post-Release Supervision and Parole Commission determined violation warranted revocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New felony conviction while on supervision: mandatory revocation"
+    ],
+    "notes": "NC Post-Release Supervision Commission handles revocations. Structured sentencing affects parole eligibility."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "N.C.G.S. § 14-2.4",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "One class below target offense felony; Class 1 Misdemeanor (if target is misdemeanor)",
+    "penalty_min": null,
+    "penalty_max": "One class below the completed target offense",
+    "fine_max": null,
+    "elements": [
+      "Two or more persons agreed to commit an offense",
+      "Defendant was a party to the agreement",
+      "Each party had the intent to carry out the agreement",
+      "An overt act in furtherance not required in NC"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Drug trafficking conspiracy: same mandatory minimums as completed trafficking under § 90-95(h)",
+      "RICO-type conduct: potential enterprise liability"
+    ],
+    "notes": "NC conspiracy is one class below the target offense under § 14-2.4. No overt act required. Drug trafficking conspiracy treated same as completed trafficking."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "N.C.G.S. § 14-27.21; § 14-27.22",
+    "statute_title": "First Degree Rape / Second Degree Rape",
+    "offense_class": "Class B1 Felony (1st degree); Class C Felony (2nd degree)",
+    "penalty_min": null,
+    "penalty_max": "Class B1: 484 months+; Class C: 231 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in vaginal intercourse with a victim",
+      "By force and against the will of the victim (2nd degree)",
+      "OR victim was under 13 and defendant is 12+ and at least 4 years older (1st degree)",
+      "OR defendant used or displayed a dangerous weapon, or aided by another person, or inflicted serious injury (1st degree)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 13: mandatory sex offender registration for life",
+      "Prior sex offense: aggravated sentence"
+    ],
+    "notes": "NC overhauled sexual assault statutes effective December 1, 2023. New statutes use 'rape' for vaginal intercourse; sexual assault for other acts."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "N.C.G.S. § 14-27.26; § 14-27.27",
+    "statute_title": "First Degree Sexual Assault / Second Degree Sexual Assault",
+    "offense_class": "Class B1 Felony (1st degree); Class C Felony (2nd degree)",
+    "penalty_min": null,
+    "penalty_max": "Class B1: 484 months+; Class C: 231 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in sexual act with another person",
+      "By force and against the will of the victim (2nd degree)",
+      "OR victim was under 13 and defendant is 12+ and at least 4 years older (1st degree)",
+      "Sexual act means oral or anal sex, or penetration by object"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of dangerous weapon: 1st degree classification",
+      "Multiple attackers: 1st degree",
+      "Victim under 13: mandatory lifetime registration"
+    ],
+    "notes": "2023 NC statutory revision replaced 'sexual offense' with 'sexual assault' for clarity. Covers all sexual acts other than vaginal intercourse."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "N.C.G.S. § 14-190.9",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Class 2 Misdemeanor (1st offense); Class H Felony (in presence of minor under 16)",
+    "penalty_min": null,
+    "penalty_max": "60 days (Class 2); 39 months (Class H felony)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant willfully exposed the private parts of their person",
+      "In any public place in the presence of any person other than the defendant",
+      "In a lewd and lascivious manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exposure in presence of minor under 16: Class H felony",
+      "On school premises: enhanced charges"
+    ],
+    "notes": "Exposure in presence of minor under 16 is automatically Class H felony with sex offender registration possible."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "N.C.G.S. § 14-27.23; § 14-27.24; § 14-27.25",
+    "statute_title": "Statutory Rape",
+    "offense_class": "Class B1 Felony (victim under 13, defendant 12+, 4 yrs older); Class C Felony (defendant 22+, victim 15 or younger); Class C Felony (defendant 18+, victim 13-15)",
+    "penalty_min": null,
+    "penalty_max": "Class B1: 484 months+; Class C: 231 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in vaginal intercourse with a person of a specific age",
+      "Defendant was the specified number of years older than the victim",
+      "Consent is not a defense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "NC has tiered statutory rape: § 14-27.23 (Class B1, victim under 13); § 14-27.24 (Class C, victim 13-15, defendant 18+); § 14-27.25 (defendant 22+). Close-in-age exemption: 4-6 years depending on section."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "N.C.G.S. § 14-190.13; § 14-190.17",
+    "statute_title": "Sexual Exploitation of a Minor",
+    "offense_class": "Class C Felony (1st degree — production); Class E Felony (2nd degree — distribution/possession for distribution); Class H Felony (3rd degree — possession)",
+    "penalty_min": null,
+    "penalty_max": "231 months (Class C); 88 months (Class E); 39 months (Class H)",
+    "fine_max": null,
+    "elements": [
+      "Defendant used a minor to engage in sexual activity for a visual depiction",
+      "OR distributed, transported, exhibited, received, sold, purchased, or possessed visual depictions of minors in sexual activity",
+      "Minor was under 18"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Production: Class C felony",
+      "Distribution for profit: enhanced",
+      "Federal concurrent: 18 U.S.C. § 2252"
+    ],
+    "notes": "Three-tier classification: production (Class C), distribution (Class E), possession (Class H) under § 14-190.13 et seq."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "N.C.G.S. § 14-208.11",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Class F Felony",
+    "penalty_min": null,
+    "penalty_max": "41 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant was required to register as a sex offender under N.C.G.S. Chapter 14 Article 27A",
+      "Defendant failed to register, update registration, or comply with verification requirements",
+      "Defendant had actual knowledge of the registration requirement"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior registration violation: enhanced sentence",
+      "Absconding from jurisdiction: additional charges"
+    ],
+    "notes": "Sex offender registration under N.C.G.S. Chapter 14, Article 27A. Lifetime registration for certain offenses."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "N.C.G.S. § 14-204",
+    "statute_title": "Prostitution and Related Offenses",
+    "offense_class": "Class 1 Misdemeanor (prostitution/solicitation); Class G Felony (promoting/facilitating)",
+    "penalty_min": null,
+    "penalty_max": "120 days (Class 1); 47 months (Class G)",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in sexual activity for hire or solicited another person to engage in sexual activity for hire",
+      "Exchange of consideration was part of the transaction"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Minor victim: sex trafficking charges under § 14-43.11",
+      "Promoting or facilitating: Class G felony",
+      "Trafficking for sexual exploitation: Class B2 to E felony under § 14-43.11"
+    ],
+    "notes": "Human trafficking for sexual exploitation under § 14-43.11 is separate and carries Class B2-E felony charges."
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "statute_number": "N.C.G.S. § 14-27.26; § 14-190.15",
+    "statute_title": "Sexual Exploitation Using Electronic Means",
+    "offense_class": "Class H Felony to Class B1 Felony depending on nature",
+    "penalty_min": null,
+    "penalty_max": "Class B1: 484 months; Class H: 39 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in or facilitated a sexual act or exploitation through electronic or digital means",
+      "OR used the internet to solicit or entice a minor to engage in sexual activity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Solicitation of minor: Class H felony under § 14-202.3"
+    ],
+    "notes": "Solicitation of a child by computer under § 14-202.3 is Class H or Class G felony depending on minor's age."
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "statute_number": "N.C.G.S. § 14-27.33",
+    "statute_title": "Sexual Battery",
+    "offense_class": "Class A1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "150 days imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in sexual contact with another person",
+      "By force and against the will of the other person",
+      "OR victim was mentally disabled or physically helpless"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Repeat offense: potential felony escalation",
+      "Victim under 13: more serious felony charge"
+    ],
+    "notes": "Sexual battery under § 14-27.33 is the lowest-level sexual offense in NC. Class A1 misdemeanor."
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "statute_number": "N.C.G.S. § 14-27.31; § 14-27.32",
+    "statute_title": "First and Second Degree Sexual Exploitation / Statutory Sexual Offense",
+    "offense_class": "Class B1 Felony (1st degree); Class C Felony (2nd degree)",
+    "penalty_min": null,
+    "penalty_max": "Class B1: 484 months+; Class C: 231 months",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in a sexual act with a person",
+      "By force and against the will of the person (2nd degree)",
+      "OR victim was under 13 and defendant was 12+ and at least 4 years older (1st degree)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "NC 2023 reform renamed these offenses. Covers sexual acts (non-vaginal-intercourse) paralleling rape statutes."
+  },
+  {
+    "common_charge_slug": "self-defense",
+    "statute_number": "N.C.G.S. § 14-51.3; § 14-51.2",
+    "statute_title": "Defense of Self / Castle Doctrine",
+    "offense_class": "Affirmative defense — not an offense",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": null,
+    "elements": [
+      "Defendant used force against another person",
+      "Defendant reasonably believed the force was necessary to prevent imminent death or serious bodily harm",
+      "Defendant was not the aggressor",
+      "Under Castle Doctrine (§ 14-51.2): presumption of reasonable fear when intruder enters home, motor vehicle, or workplace unlawfully"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "NC has a Castle Doctrine (§ 14-51.2) with a rebuttable presumption of reasonable fear for home intrusions. No general Stand Your Ground statute (duty to retreat eliminated inside home). Outside home, duty to retreat still applies unless Castle Doctrine triggers."
+  },
+  {
+    "common_charge_slug": "other",
+    "statute_number": "Various N.C.G.S. provisions",
+    "statute_title": "Miscellaneous North Carolina Criminal Offenses",
+    "offense_class": "Varies",
+    "penalty_min": null,
+    "penalty_max": "Varies by specific offense and class",
+    "fine_max": null,
+    "elements": [
+      "Elements specific to each offense as defined under the North Carolina General Statutes"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "NC uses structured sentencing under the Fair Sentencing Act. Offense class and prior record level determine the sentencing range. Consult the specific N.C.G.S. section for elements, penalties, and prior record calculations."
+  }
+]

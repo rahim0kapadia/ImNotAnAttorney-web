@@ -1,0 +1,1096 @@
+[
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "18 U.S.C. § 371",
+    "statute_title": "Conspiracy to Commit Offense or to Defraud United States",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years imprisonment",
+    "fine_max": "$250,000",
+    "elements": [
+      "Agreement between two or more persons to commit a federal offense or defraud the United States",
+      "Defendant knowingly and voluntarily joined the conspiracy",
+      "At least one overt act committed in furtherance of the conspiracy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "If object offense carries higher penalty, conspiracy may carry same maximum",
+      "Sentencing Guidelines consider underlying offense level (USSG § 2X1.1)",
+      "Leadership role enhancement (+2 to +4 levels, USSG § 3B1.1)",
+      "Obstruction enhancement (+2 levels, USSG § 3C1.1)"
+    ],
+    "notes": "Most versatile federal charging tool. Statute of limitations: 5 years. Pinkerton liability allows co-conspirators to be liable for substantive offenses of other members. No overt act required for drug conspiracies under 21 U.S.C. § 846."
+  },
+  {
+    "common_charge_slug": "rico",
+    "statute_number": "18 U.S.C. § 1962",
+    "statute_title": "Racketeer Influenced and Corrupt Organizations (RICO)",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years imprisonment; life if predicate involves murder or kidnapping",
+    "fine_max": "$25,000 per count or twice the proceeds of the offense",
+    "elements": [
+      "Enterprise affecting interstate or foreign commerce",
+      "Defendant associated with or employed by the enterprise",
+      "Defendant participated in a pattern of racketeering activity",
+      "Pattern: at least two predicate acts within 10 years",
+      "Relationship and continuity between predicate acts"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Civil forfeiture of all interests in enterprise",
+      "Criminal forfeiture of proceeds and instrumentalities",
+      "Civil RICO treble damages available to victims",
+      "USSG § 2E1.1 — base offense level is 19 or underlying offense level, whichever is greater",
+      "Leadership role enhancements (USSG § 3B1.1)"
+    ],
+    "notes": "Predicate acts include mail fraud, wire fraud, extortion, drug trafficking, murder, kidnapping, bribery, and 35+ other offenses. Statute of limitations: 5 years from last predicate act. Both § 1962(c) (participation) and § 1962(d) (conspiracy) commonly charged."
+  },
+  {
+    "common_charge_slug": "federal-drug-trafficking",
+    "statute_number": "21 U.S.C. § 841(a)(1)",
+    "statute_title": "Manufacture, Distribution, or Possession with Intent to Distribute Controlled Substances",
+    "offense_class": "Federal Felony",
+    "penalty_min": "5 years (threshold quantities); 10 years (higher quantities)",
+    "penalty_max": "40 years (threshold quantities); life (higher quantities or prior felony)",
+    "fine_max": "$5,000,000 individual / $25,000,000 organization",
+    "elements": [
+      "Defendant knowingly or intentionally manufactured, distributed, dispensed, or possessed with intent to distribute",
+      "A controlled substance",
+      "The substance is the type and quantity alleged"
+    ],
+    "mandatory_minimum": "5 years for Schedule I/II threshold quantities (e.g., 500g+ cocaine, 28g+ crack, 100g+ heroin, 1kg+ meth mixture); 10 years for higher quantities",
+    "enhancements": [
+      "§ 851 prior felony drug conviction doubles mandatory minimum",
+      "Death or serious bodily injury results: 20-year mandatory minimum",
+      "Distribution to persons under 21: doubles penalties (§ 859)",
+      "Distribution near school/playground: doubles penalties (§ 860)",
+      "Use of minor in drug operation: additional 1 year consecutive (§ 861)",
+      "§ 924(c) firearm enhancement if weapon involved: +5 to 10+ years consecutive",
+      "Career offender designation under USSG § 4B1.1",
+      "Continuing criminal enterprise (CCE) under § 848: 20 years to life"
+    ],
+    "notes": "Drug quantity is an element under Apprendi — must be charged and proven to jury. Safety valve (§ 3553(f)) may allow below-mandatory-minimum sentence for first-time, non-violent offenders who cooperate. Schedule I/II drugs carry the highest penalties."
+  },
+  {
+    "common_charge_slug": "federal-firearms",
+    "statute_number": "18 U.S.C. § 922(g)",
+    "statute_title": "Unlawful Possession of a Firearm by Prohibited Person",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years imprisonment (general); mandatory minimums under ACCA",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant possessed a firearm or ammunition",
+      "The firearm or ammunition was in or affecting interstate commerce",
+      "Defendant knew they were a prohibited person at the time of possession",
+      "Defendant's prohibited status (felon, domestic violence misdemeanant, drug user, illegal alien, etc.)"
+    ],
+    "mandatory_minimum": "15 years under Armed Career Criminal Act (ACCA, 18 U.S.C. § 924(e)) if 3+ prior violent felony or serious drug offense convictions",
+    "enhancements": [
+      "ACCA enhancement: 15-year mandatory minimum for armed career criminals",
+      "§ 924(c): additional 5 years consecutive if firearm used/carried in drug crime or crime of violence",
+      "§ 924(c) second conviction: 25 years consecutive",
+      "USSG § 2K2.1 enhancements for prior convictions, number of firearms, stolen firearms, trafficking",
+      "Obliterated serial number: +2 levels (USSG § 2K2.1(b)(4))"
+    ],
+    "notes": "Rehaif v. United States (2019) requires proof defendant knew of prohibited status — critical for defense. Prohibitions apply to: convicted felons, fugitives, controlled substance users, mental health adjudicatees, illegal aliens, domestic violence misdemeanants, persons under indictment. Constructive possession is sufficient."
+  },
+  {
+    "common_charge_slug": "tax-evasion",
+    "statute_number": "26 U.S.C. § 7201",
+    "statute_title": "Attempt to Evade or Defeat Tax",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years imprisonment",
+    "fine_max": "$250,000 individual / $500,000 corporation",
+    "elements": [
+      "Existence of a tax deficiency (unpaid tax)",
+      "Willful attempt to evade or defeat the tax",
+      "Affirmative act of evasion (beyond mere failure to file)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sophisticated means enhancement (USSG § 2T1.1(b)(2)): +2 levels",
+      "Tax loss determines base offense level (USSG § 2T4.1 table)",
+      "Role in offense enhancements apply",
+      "Money laundering charges commonly added when proceeds concealed",
+      "Restitution mandatory for all victims"
+    ],
+    "notes": "Distinct from § 7203 (failure to file, misdemeanor) and § 7206 (filing false return). Willfulness requires specific intent to violate a known legal duty. Statute of limitations: 6 years. Civil tax liability and IRS penalties are separate from criminal exposure."
+  },
+  {
+    "common_charge_slug": "immigration-offense",
+    "statute_number": "8 U.S.C. §§ 1325, 1326",
+    "statute_title": "Illegal Entry / Reentry of Removed Alien",
+    "offense_class": "Federal Misdemeanor (§ 1325 first offense) / Federal Felony (§ 1326)",
+    "penalty_min": null,
+    "penalty_max": "6 months (§ 1325 first offense); 2 years (§ 1325 second); 2 years (§ 1326 base); 10 years (prior felony removal); 20 years (prior aggravated felony removal)",
+    "fine_max": "$250,000",
+    "elements": [
+      "§ 1325: Alien entered or attempted to enter U.S. at unauthorized time or place, or eluded examination by immigration officers, or entered by willful misrepresentation",
+      "§ 1326: Alien was previously removed or departed while removal order pending; alien entered, attempted to enter, or was found in U.S. without permission"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior aggravated felony removal: 20-year maximum (§ 1326(b)(2))",
+      "Prior felony (3+ years) removal: 10-year maximum (§ 1326(b)(1))",
+      "USSG § 2L1.2: base level 8, +4 if prior felony removal, higher levels for aggravated felonies",
+      "Fast-track departures available in many districts reducing sentence",
+      "Prior § 1326 convictions may be used as aggravating factors"
+    ],
+    "notes": "§ 1325 was misdemeanor-ized in 2021 DOJ policy but statute unchanged. Collateral consequences include permanent bar to legal status. USSG § 2L1.2 fast-track programs reduce sentences in border districts."
+  },
+  {
+    "common_charge_slug": "mail-fraud",
+    "statute_number": "18 U.S.C. § 1341",
+    "statute_title": "Mail Fraud",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years imprisonment; 30 years if financial institution or federal disaster relief involved",
+    "fine_max": "$250,000 individual / $500,000 organization",
+    "elements": [
+      "Defendant devised or participated in a scheme to defraud or obtain money/property by false pretenses",
+      "Defendant acted with intent to defraud",
+      "Defendant used the U.S. mail (or private carrier) in furtherance of the scheme",
+      "The mailing was for the purpose of executing or attempting to execute the scheme"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "USSG § 2B1.1: loss amount drives offense level (see loss table)",
+      "10+ victims: +2 levels; 50+ victims: +4 levels",
+      "Sophisticated means: +2 levels",
+      "Vulnerable victim: +2 levels (USSG § 3A1.1)",
+      "Often charged with wire fraud, bank fraud, money laundering as a package",
+      "Forfeiture of proceeds mandatory"
+    ],
+    "notes": "Extremely broad — each mailing is a separate count. No requirement that victim actually be defrauded (attempt sufficient). Private mail carriers (FedEx, UPS) covered. Honest services fraud (§ 1346) is a subset. Statute of limitations: 5 years (10 years for financial institution fraud)."
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "statute_number": "18 U.S.C. § 1343",
+    "statute_title": "Wire Fraud",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years imprisonment; 30 years if financial institution or federal disaster relief involved",
+    "fine_max": "$250,000 individual / $500,000 organization",
+    "elements": [
+      "Defendant devised or participated in a scheme to defraud or obtain money/property by false or fraudulent pretenses",
+      "Defendant acted with intent to defraud",
+      "Defendant used interstate wire communications (phone, email, internet) in furtherance of the scheme",
+      "The wire transmission was for the purpose of executing or attempting to execute the scheme"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "USSG § 2B1.1: loss amount drives guideline range",
+      "10+ victims: +2 levels; 50+ victims: +4 levels; 250+ victims: +6 levels",
+      "Sophisticated means: +2 levels (USSG § 2B1.1(b)(10))",
+      "Abuse of position of trust: +2 levels (USSG § 3B1.3)",
+      "Often charged alongside mail fraud, bank fraud, money laundering",
+      "Healthcare wire fraud under § 1347: up to 10 years (20 if serious bodily injury, life if death results)"
+    ],
+    "notes": "Modern workhorse federal fraud statute. Each email, phone call, or wire transmission is a separate count. Honest services wire fraud (§ 1346) covers breach of fiduciary duty. Statute of limitations: 5 years (10 years if financial institution)."
+  },
+  {
+    "common_charge_slug": "bank-fraud",
+    "statute_number": "18 U.S.C. § 1344",
+    "statute_title": "Bank Fraud",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years imprisonment",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "Defendant executed or attempted to execute a scheme to defraud a federally insured financial institution",
+      "OR defendant executed a scheme to obtain money, funds, or property under the custody of a financial institution by false or fraudulent pretenses",
+      "Defendant acted with intent to defraud",
+      "The scheme involved a federally chartered or insured institution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "USSG § 2B1.1: loss table drives base offense level",
+      "Sophisticated means: +2 levels",
+      "Mass marketing fraud: +2 levels",
+      "Identity theft aggravated: +2 levels (USSG § 2B1.1(b)(11))",
+      "Mandatory restitution to financial institutions",
+      "Often accompanies money laundering (§ 1956) and aggravated identity theft (§ 1028A)"
+    ],
+    "notes": "Covers virtually all federally insured banks, credit unions, and savings associations. Mortgage fraud, check kiting, loan fraud, and credit card fraud schemes all qualify. Statute of limitations: 10 years. No requirement that the institution actually lose money — attempt sufficient."
+  },
+  {
+    "common_charge_slug": "securities-fraud",
+    "statute_number": "15 U.S.C. § 78j(b) / 18 U.S.C. § 1348",
+    "statute_title": "Securities Fraud / Securities Exchange Act Fraud",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years imprisonment (§ 1348 Sarbanes-Oxley provision); 25 years for corporate fraud (§ 1350)",
+    "fine_max": "$5,000,000 individual / $25,000,000 entity",
+    "elements": [
+      "In connection with the purchase or sale of securities",
+      "Defendant employed a device, scheme, or artifice to defraud, OR made materially false statements or omissions, OR engaged in any act constituting fraud or deceit",
+      "Intent to defraud",
+      "Use of interstate commerce, mail, or a national securities exchange"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "USSG § 2B1.1: loss amount determines base offense level",
+      "Securities offense enhancement: +4 levels (USSG § 2B1.1(b)(20))",
+      "Sophisticated means: +2 levels",
+      "250+ victims: +6 levels",
+      "Obstruction of SEC investigation: +2 levels",
+      "Civil SEC disgorgement and penalties are separate from criminal exposure",
+      "SEC may also pursue administrative bar from securities industry"
+    ],
+    "notes": "Rule 10b-5 (17 C.F.R. § 240.10b-5) is the primary implementing regulation. Insider trading charged under this provision. Statute of limitations: 5 years from offense. Both DOJ (criminal) and SEC (civil) may prosecute — parallel proceedings common."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "18 U.S.C. § 1956",
+    "statute_title": "Laundering of Monetary Instruments",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years imprisonment",
+    "fine_max": "$500,000 or twice the amount laundered, whichever is greater",
+    "elements": [
+      "Defendant conducted or attempted a financial transaction",
+      "The transaction involved the proceeds of specified unlawful activity (SUA)",
+      "Defendant knew the property represented proceeds of some unlawful activity",
+      "Defendant acted with intent to promote the SUA, OR knew the transaction was designed to conceal the nature, location, source, ownership, or control of the proceeds, OR transaction was designed to evade reporting requirements"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "§ 1956(h) conspiracy: same 20-year maximum",
+      "§ 1957 (transactions in criminally derived property over $10,000): additional 10 years",
+      "USSG § 2S1.1: offense level from underlying offense + 1 level; conviction under § 1956: +2 levels",
+      "Sophisticated laundering: +2 levels",
+      "Forfeiture of all laundered funds and facilitating property mandatory (§ 982)",
+      "Multiple counts: each transaction is a separate offense"
+    ],
+    "notes": "Three theories: (1) promotion, (2) concealment, (3) sting. Over 250 predicate 'specified unlawful activities.' § 1957 (spending criminally derived funds) has lower intent requirement. Extraterritorial jurisdiction for international transactions."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "18 U.S.C. § 922(g)(1)",
+    "statute_title": "Felon in Possession of Firearm or Ammunition",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years imprisonment; 15-year mandatory minimum under ACCA",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant was previously convicted of a crime punishable by imprisonment for more than one year",
+      "Defendant knowingly possessed a firearm or ammunition",
+      "The firearm or ammunition had previously moved in or affected interstate commerce",
+      "Defendant knew of their prior conviction at the time of possession (Rehaif requirement)"
+    ],
+    "mandatory_minimum": "15 years under ACCA (18 U.S.C. § 924(e)) for defendants with 3+ prior violent felony or serious drug offense convictions",
+    "enhancements": [
+      "ACCA: 15-year mandatory minimum for 3+ qualifying prior convictions",
+      "§ 924(c): consecutive 5-30 years if firearm used in crime of violence or drug trafficking",
+      "USSG § 2K2.1: prior convictions, stolen firearm, number of firearms, trafficking",
+      "Career offender (USSG § 4B1.1) if prior violent felony or drug trafficking conviction"
+    ],
+    "notes": "Rehaif v. United States, 139 S. Ct. 2191 (2019): government must prove defendant knew of disqualifying status. Constructive and joint possession both cognizable. Expunged state convictions may still qualify under § 922(g)."
+  },
+  {
+    "common_charge_slug": "weapons-trafficking",
+    "statute_number": "18 U.S.C. §§ 922(a), 933",
+    "statute_title": "Illegal Firearms Trafficking / Dealing Without License",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years (unlicensed dealing); 15 years (firearms trafficking under § 933)",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant engaged in the business of dealing firearms",
+      "Without a Federal Firearms License (FFL)",
+      "OR transferred firearms to prohibited persons (straw purchases, § 932)",
+      "OR transported or received firearms with intent to transfer to prohibited persons",
+      "Knowledge or willfulness requirement depending on subsection"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "USSG § 2K2.1(b)(5): +4 levels for trafficking 3+ firearms",
+      "§ 2K2.1(b)(6): +4 levels if firearm used/intended for another felony",
+      "Stolen firearms: +2 levels (§ 2K2.1(b)(4))",
+      "§ 933 firearms trafficking (Bipartisan Safer Communities Act 2022): up to 15 years",
+      "§ 932 straw purchasing: up to 15 years",
+      "Number of firearms directly affects offense level"
+    ],
+    "notes": "Bipartisan Safer Communities Act (2022) added § 932 (straw purchasing) and § 933 (firearms trafficking) as standalone felonies. Ghost guns (unserialized) increasingly charged. ATF Form 4473 false statements: § 922(a)(6), up to 10 years."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "18 U.S.C. § 2252",
+    "statute_title": "Certain Activities Relating to Material Involving Sexual Exploitation of Minors",
+    "offense_class": "Federal Felony",
+    "penalty_min": "5 years (possession first offense); 10 years (distribution/receipt first offense)",
+    "penalty_max": "20 years (possession); 20 years (distribution/receipt); 40 years (repeat offender)",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant knowingly transported, shipped, received, distributed, reproduced, or possessed",
+      "Visual depiction",
+      "Depicting a minor (under 18) engaged in sexually explicit conduct",
+      "Using any means or facility of interstate or foreign commerce, or affecting interstate commerce",
+      "Defendant knew the material contained a visual depiction of a minor in sexually explicit conduct"
+    ],
+    "mandatory_minimum": "5 years (possession); 10 years (production under § 2251); 15 years (distribution with prior)",
+    "enhancements": [
+      "§ 2252A covers child pornography involving digital/computer content",
+      "USSG § 2G2.2: numerous specific offense characteristics",
+      "Sadomasochistic or infant images: +4 levels",
+      "Distribution for value: +5 levels",
+      "Images depicting violence: +4 levels",
+      "Pattern of sexual abuse: +5 levels",
+      "Use of computer: +2 levels",
+      "100-999 images: +2; 300-599: +3; 600+: +4 levels",
+      "Sex Offender Registration (SORNA) mandatory — lifetime in many states"
+    ],
+    "notes": "§ 2252A is the broader provision covering digital content. Production under § 2251 carries mandatory 15-30 year minimums. PROTECT Act (2003) eliminated certain defenses. Affirmative defense available for possessors who promptly reported to law enforcement."
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "statute_number": "18 U.S.C. § 2422",
+    "statute_title": "Coercion and Enticement of Minors",
+    "offense_class": "Federal Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant knowingly persuaded, induced, enticed, or coerced",
+      "A minor (under 18) to engage in any sexual activity",
+      "Using the mail, any facility of interstate or foreign commerce, or any means or facility of interstate commerce",
+      "The sexual activity would constitute a criminal offense under federal, state, or local law"
+    ],
+    "mandatory_minimum": "10 years",
+    "enhancements": [
+      "§ 2422(b) attempt: same 10-year mandatory minimum applies",
+      "USSG § 2G1.3: prior sex offense conviction, use of computer, vulnerable victim",
+      "Use of computer or internet: +2 levels",
+      "Unduly influencing minor: +2 levels",
+      "Pattern of activity: +5 levels",
+      "Sex Offender Registration (SORNA) mandatory",
+      "Often charged alongside § 2252 (child pornography) and § 2423 (travel with intent)"
+    ],
+    "notes": "§ 2422(b) (inducing minor via internet) is the primary online enticement statute. Government need not prove actual minor involved — adult decoy in sting operation sufficient. Travel to commit sexual act with minor charged under § 2423."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "21 U.S.C. § 841(b)",
+    "statute_title": "Controlled Substance Trafficking — Penalty Provisions",
+    "offense_class": "Federal Felony",
+    "penalty_min": "5 years (threshold quantities)",
+    "penalty_max": "Life imprisonment (large quantities or death results)",
+    "fine_max": "$10,000,000 individual / $50,000,000 organization",
+    "elements": [
+      "Defendant knowingly or intentionally distributed, dispensed, or possessed with intent to distribute",
+      "A controlled substance",
+      "Quantity meets or exceeds the threshold for enhanced penalties",
+      "Type of controlled substance as alleged"
+    ],
+    "mandatory_minimum": "5 years for Schedule I/II threshold quantities; 10 years for high-quantity thresholds (e.g., 5kg+ cocaine, 280g+ crack, 1kg+ heroin, 5g+ pure meth, 1000kg+ marijuana)",
+    "enhancements": [
+      "Prior felony drug conviction (§ 851 notice): doubles mandatory minimums",
+      "Two or more prior felony drug convictions: mandatory life",
+      "Death or serious bodily injury results: 20-year mandatory minimum",
+      "Drug kingpin (§ 848 CCE): 20 years to life, $4M fine",
+      "§ 924(c) firearm: consecutive 5-10 years",
+      "School zone (§ 860): doubles penalties",
+      "Importation: additional penalties under § 952",
+      "Leader/organizer: +4 levels (USSG § 3B1.1)"
+    ],
+    "notes": "Drug type and quantity are elements under Apprendi/Alleyne — must be submitted to jury and proven beyond reasonable doubt. Safety valve (USSG § 5C1.2) available only for first-time, nonviolent offenders with limited criminal history who cooperate. Fentanyl enhancements significantly increased post-2018."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "21 U.S.C. § 844",
+    "statute_title": "Simple Possession of Controlled Substance",
+    "offense_class": "Federal Misdemeanor (first offense) / Federal Felony (repeat)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first offense misdemeanor); 2 years (if prior drug offense); up to 3 years for cocaine base",
+    "fine_max": "$1,000 (individual first offense) to $5,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed",
+      "A controlled substance",
+      "Without a valid prescription or legal authorization"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior drug conviction: elevated to felony with 2-year maximum",
+      "Two+ prior drug convictions: 3-year maximum",
+      "Special cocaine base provision: up to 3 years regardless of prior history",
+      "USSG § 2D2.1: base level 4-8 depending on substance",
+      "Deferred prosecution/diversion available for first offenders (§ 844(b))"
+    ],
+    "notes": "First Offense Act (§ 3607) allows probation and expungement for first offenders. Federal simple possession charges are relatively rare — most federal drug cases involve trafficking. The FIRST STEP Act (2018) reduced sentencing disparities for crack cocaine."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "21 U.S.C. § 841(a)(1)",
+    "statute_title": "Manufacture of Controlled Substance",
+    "offense_class": "Federal Felony",
+    "penalty_min": "5 years if threshold quantity involved",
+    "penalty_max": "Life imprisonment for large quantities",
+    "fine_max": "$10,000,000 individual",
+    "elements": [
+      "Defendant knowingly or intentionally manufactured",
+      "A controlled substance",
+      "The type and quantity alleged in the indictment"
+    ],
+    "mandatory_minimum": "Same as distribution: 5 years for threshold quantities under § 841(b)(1)(A) and (B)",
+    "enhancements": [
+      "Methamphetamine lab: chemical disposal costs recoverable",
+      "Endangering human life while manufacturing: additional 10 years (§ 858)",
+      "Manufacturing near schools or playgrounds: doubles penalties (§ 860)",
+      "§ 924(c) if firearm present at manufacturing site",
+      "Precursor chemical offenses under §§ 841(c), 843"
+    ],
+    "notes": "Manufacture, distribute, and possess-with-intent all charge under § 841(a)(1) — penalties identical. Precursor chemical tracking under Combat Methamphetamine Epidemic Act (2005). 'Manufacturing' includes producing, preparing, propagating, and processing."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "21 U.S.C. § 841(a)(1)",
+    "statute_title": "Possession with Intent to Distribute Controlled Substance",
+    "offense_class": "Federal Felony",
+    "penalty_min": "5 years for threshold quantities",
+    "penalty_max": "Life imprisonment for large quantities or repeat offenders",
+    "fine_max": "$10,000,000 individual",
+    "elements": [
+      "Defendant knowingly or intentionally possessed",
+      "A controlled substance",
+      "With intent to distribute it",
+      "Type and quantity of substance as alleged"
+    ],
+    "mandatory_minimum": "Same mandatory minimums as distribution: 5-10 years depending on drug type and quantity",
+    "enhancements": [
+      "§ 851 prior conviction notice doubles mandatory minimum",
+      "§ 924(c) if firearm present: consecutive 5-10 years",
+      "Drug quantity above thresholds triggers § 841(b)(1)(A) or (B) enhancements",
+      "Multiple packaging consistent with distribution: circumstantial evidence of intent",
+      "Scales, cutting agents, large cash: used to prove intent",
+      "Safety valve: available for qualifying first offenders"
+    ],
+    "notes": "Intent to distribute proven circumstantially through quantity, packaging, scales, ledgers, communications, and cash. Constructive possession sufficient. Drug type and quantity must be charged in indictment and proven to jury under Apprendi. Often charged alongside § 846 conspiracy."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "18 U.S.C. § 1201",
+    "statute_title": "Kidnapping (Federal)",
+    "offense_class": "Federal Felony",
+    "penalty_min": "20 years if victim under 18 and not parent",
+    "penalty_max": "Life imprisonment; death if victim dies",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant unlawfully seized, confined, inveigled, decoyed, kidnapped, abducted, or carried away",
+      "Another person",
+      "Held for ransom, reward, or otherwise",
+      "Using interstate or foreign commerce, or the victim was transported across state lines or international borders, OR defendant is a federal employee/official, OR victim is a federal employee/official"
+    ],
+    "mandatory_minimum": "20 years if victim is under 18 and perpetrator is not the parent",
+    "enhancements": [
+      "Death results: life imprisonment or death penalty",
+      "Victim under 18: 20-year mandatory minimum",
+      "Sexual abuse of victim during kidnapping: additional charges and enhancements",
+      "Use of firearm: § 924(c) consecutive term",
+      "USSG § 2A4.1: starts at level 32 with numerous specific offense characteristics"
+    ],
+    "notes": "Federal jurisdiction triggered by interstate transportation OR 24-hour presumption (Lindbergh Law). Parental kidnapping is a separate offense under § 1204. Hostage taking (§ 1203) and carjacking (§ 2119) are related charges. FBI has primary jurisdiction."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "18 U.S.C. § 844(f),(h),(i)",
+    "statute_title": "Federal Arson",
+    "offense_class": "Federal Felony",
+    "penalty_min": "5 years (§ 844(f)); 7 years minimum for § 844(h) (using fire in violent crime)",
+    "penalty_max": "20 years; 40 years if serious bodily injury; life if death results",
+    "fine_max": "$250,000",
+    "elements": [
+      "§ 844(f): Maliciously damaged or destroyed by fire or explosive any building or property owned/possessed/used by the U.S. government or a federally-funded organization",
+      "§ 844(i): Maliciously damaged or destroyed, or attempted to damage or destroy, by means of fire or explosives, any building or property used in interstate commerce or in activity affecting interstate commerce",
+      "Defendant acted with malice (intentionally or recklessly)"
+    ],
+    "mandatory_minimum": "5 years (§ 844(f) government property); 7 years consecutive (§ 844(h) use of fire to commit felony)",
+    "enhancements": [
+      "§ 844(h): using fire or explosive to commit any federal felony: additional 10 years consecutive",
+      "Serious bodily injury results: 7-40 years",
+      "Death results: 20 years to life",
+      "§ 844(o): civil rights arson (church burning): enhanced penalties",
+      "USSG § 2K1.4: base level varies 2-24 based on circumstances"
+    ],
+    "notes": "§ 844(i) has broad interstate commerce nexus — virtually any commercial building qualifies (Russell v. United States). § 844(h) consecutive term for using fire/explosive to commit another federal felony creates powerful prosecutorial leverage. State arson charges often run parallel."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "18 U.S.C. § 1951",
+    "statute_title": "Interference with Commerce by Robbery (Hobbs Act Robbery)",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years imprisonment",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant obstructed, delayed, or affected commerce",
+      "By robbery or extortion, or attempted or conspired to do so",
+      "Robbery: unlawful taking or obtaining of property from person or presence of another by actual or threatened force, violence, or fear of injury",
+      "The robbery had at least a de minimis effect on interstate commerce"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "§ 924(c): 7 years consecutive if firearm brandished; 10 years if discharged",
+      "§ 924(c) second count: mandatory 25 years consecutive",
+      "USSG § 2B3.1: robbery base level 20 with numerous enhancements",
+      "Injury to victim: +2 to +6 levels",
+      "Carjacking (§ 2119): 15-25 years minimum if death results",
+      "Bank robbery (§ 2113): separate statute, up to 20 years"
+    ],
+    "notes": "De minimis commerce nexus required — courts have found nexus from a single convenience store robbery. Hobbs Act extortion and robbery are distinct theories under § 1951. § 924(c) stacking with Hobbs Act robberies is a major sentencing driver."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "18 U.S.C. § 1028A",
+    "statute_title": "Aggravated Identity Theft",
+    "offense_class": "Federal Felony",
+    "penalty_min": "2 years consecutive (general offenses); 5 years consecutive (terrorism-related offenses)",
+    "penalty_max": "2 years consecutive (added to underlying offense); 5 years consecutive for terrorism",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant knowingly transferred, possessed, or used",
+      "Without lawful authority",
+      "A means of identification of another person",
+      "During and in relation to a predicate felony enumerated in § 1028A(c)"
+    ],
+    "mandatory_minimum": "2 years consecutive to any other term of imprisonment",
+    "enhancements": [
+      "Sentence CANNOT run concurrently — always 2 years consecutive (Flores-Figueroa v. United States, 2009)",
+      "Multiple counts: each use of different victims' identity is a separate count",
+      "§ 1028 (identity document fraud): up to 15 years for underlying identity document crime",
+      "USSG § 2B1.6: offense level = level from underlying predicate offense",
+      "Terrorism-related: 5 years consecutive"
+    ],
+    "notes": "Flores-Figueroa v. United States (2009): government must prove defendant knew the means of identification belonged to a real, actual person. § 1028A(c) lists over 50 predicate offenses. Restitution to victims mandatory. Distinct from § 1028 (fraud related to identity documents)."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "18 U.S.C. § 471",
+    "statute_title": "Counterfeiting Obligations or Securities of the United States",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years imprisonment",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant falsely made, forged, counterfeited, or altered",
+      "Any obligation or other security of the United States",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "§ 472: passing/uttering counterfeit obligations: up to 20 years",
+      "§ 473: dealing in counterfeit obligations: up to 20 years",
+      "§ 474: plates/stones used for counterfeiting: up to 25 years",
+      "USSG § 2B5.1: counterfeit value determines offense level",
+      "Secret Service has primary investigative jurisdiction"
+    ],
+    "notes": "Covers currency, bonds, Treasury securities, postage stamps, and other government obligations. § 510 covers counterfeit U.S. government checks. Counterfeit access devices (credit cards): § 1029. Secret Service and Treasury have primary jurisdiction."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "18 U.S.C. § 1503",
+    "statute_title": "Influencing or Injuring Officer or Juror Generally (Obstruction of Justice)",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years imprisonment; life if obstruction related to murder or attempted murder",
+    "fine_max": "$250,000",
+    "elements": [
+      "There was a pending federal judicial proceeding",
+      "Defendant knew of the proceeding",
+      "Defendant corruptly endeavored to influence, obstruct, or impede the due administration of justice"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "§ 1512 (tampering with witnesses): up to 30 years if involving killing/attempted killing",
+      "§ 1519 (destruction of records): up to 20 years — covers document shredding during investigation",
+      "§ 1001 (false statements to federal agents): up to 5 years",
+      "USSG § 3C1.1: +2 levels for obstruction of this case being sentenced",
+      "§ 1512(c)(2): broader corrupt obstruction provision",
+      "Martha Stewart rule: lying to federal investigators is a separate federal crime under § 1001"
+    ],
+    "notes": "Omnibus clause of § 1503 broadly covers corrupt influence of any judicial proceeding. § 1519 (Sarbanes-Oxley) covers document destruction even before formal proceedings begin. Each obstructive act can be a separate count."
+  },
+  {
+    "common_charge_slug": "supervised-release-violation",
+    "statute_number": "18 U.S.C. § 3583(e)",
+    "statute_title": "Supervised Release Violation",
+    "offense_class": "Federal (administrative hearing, results in imprisonment)",
+    "penalty_min": null,
+    "penalty_max": "Revocation: Class A felony: up to 5 years; Class B: up to 3 years; Class C/D: up to 2 years; Class E/misdemeanor: up to 1 year",
+    "fine_max": null,
+    "elements": [
+      "Defendant was serving a term of supervised release",
+      "Defendant violated a condition of supervised release",
+      "Violation proven by preponderance of the evidence (not beyond reasonable doubt)",
+      "Court determines appropriate response: modification, continued supervision, or revocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Mandatory revocation for: possession of controlled substance, possession of dangerous weapon, new felony conviction",
+      "Grade A violation (new felony with 1+ year sentence): revocation mandatory",
+      "Grade B violation (other new felony or high-level misdemeanor): court discretion",
+      "Grade C violation (low-level misdemeanor or technical): modification usually preferred",
+      "Prior revocations: USSG Chapter 7 increases revocation sentence",
+      "New federal crime during supervision: prosecution for new offense PLUS revocation"
+    ],
+    "notes": "Supervised release imposed at sentencing under § 3583(a) — mandatory for felonies. Violation hearings under Fed. R. Crim. P. 32.1 — lower burden than trial. USSG Chapter 7 provides policy statements (not binding guidelines). Modification, termination, or revocation are all options."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "18 U.S.C. § 401",
+    "statute_title": "Power of Court — Contempt",
+    "offense_class": "Federal (summary or criminal contempt — no fixed offense class)",
+    "penalty_min": null,
+    "penalty_max": "No statutory maximum for criminal contempt (judge's discretion); 6 months for petty contempt",
+    "fine_max": "Court's discretion",
+    "elements": [
+      "A lawful court order existed",
+      "Defendant had knowledge of the order",
+      "Defendant willfully violated or disobeyed the order, or misbehaved in presence of court, or disobeyed process"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Civil contempt: coercive (continues until compliance) — different from criminal contempt",
+      "Criminal contempt: punitive (fixed punishment for past violation)",
+      "Summary contempt (§ 401(1)): immediate for in-court behavior",
+      "Indirect contempt requires notice and hearing (Fed. R. Crim. P. 42)",
+      "Jury trial right for sentences of 6+ months"
+    ],
+    "notes": "§ 401 governs criminal contempt of federal court. Civil contempt is not § 401 — it is coercive via court's equitable power. Failure to comply with grand jury subpoena charged as contempt. § 401 sentences run independently from other criminal sentences."
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "statute_number": "26 U.S.C. § 5861",
+    "statute_title": "Prohibited Acts — National Firearms Act (NFA) Violations",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years imprisonment",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant possessed, transferred, or made",
+      "A firearm as defined under the National Firearms Act (machine gun, silencer/suppressor, short-barreled rifle/shotgun, destructive device, 'any other weapon')",
+      "Without proper NFA registration or in violation of NFA tax requirements",
+      "The NFA requires a $200 tax, registration, and ATF approval for all NFA items"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "§ 924(c): additional consecutive sentence if NFA weapon used in crime of violence or drug trafficking",
+      "USSG § 2K2.1: higher base offense level for NFA weapons (level 18 for silencer/machine gun)",
+      "Machine gun conversion: automatic weapon conversion device carries same penalties",
+      "§ 922(o): separate prohibition on machine gun transfers/possession",
+      "Criminal forfeiture of any property used to facilitate offense"
+    ],
+    "notes": "NFA (26 U.S.C. § 5801 et seq.) regulates machine guns, suppressors, short-barreled rifles (barrel under 16 inches), short-barreled shotguns (barrel under 18 inches), destructive devices, and 'any other weapons.' Garland v. Cargill (2024): bump stocks are NOT machine guns. Glock auto switches (machine gun conversion devices) are a major enforcement priority."
+  },
+  {
+    "common_charge_slug": "healthcare-fraud",
+    "statute_number": "18 U.S.C. § 1347",
+    "statute_title": "Healthcare Fraud",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years; 20 years if serious bodily injury results; life or death penalty if death results",
+    "fine_max": "$250,000 individual / $500,000 organization",
+    "elements": [
+      "Defendant knowingly and willfully executed or attempted to execute a scheme or artifice",
+      "To defraud any healthcare benefit program",
+      "OR to obtain money or property from a healthcare benefit program by false or fraudulent pretenses, representations, or promises",
+      "In connection with the delivery of or payment for healthcare benefits, items, or services"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Anti-Kickback Statute (42 U.S.C. § 1320a-7b): up to 10 years for kickbacks for Medicare/Medicaid referrals",
+      "False Claims Act civil liability: treble damages plus $15,000+ per claim",
+      "USSG § 2B1.1: loss amount drives offense level",
+      "OIG mandatory exclusion from federal healthcare programs",
+      "Often charged alongside wire fraud (§ 1343) and money laundering (§ 1956)"
+    ],
+    "notes": "False billing, upcoding, unbundling, phantom billing, kickbacks for referrals, and unnecessary procedures all qualify. HHS-OIG/FBI/DOJ Medicare Fraud Strike Force actively prosecutes."
+  },
+  {
+    "common_charge_slug": "false-statement",
+    "statute_number": "18 U.S.C. § 1001",
+    "statute_title": "False Statements to Federal Officials",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years imprisonment (general); 8 years if related to terrorism or sex offense",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant made a false statement, representation, or certification",
+      "OR concealed or covered up a material fact",
+      "In a matter within the jurisdiction of any branch of the U.S. government",
+      "The statement was material (capable of influencing the government's action)",
+      "Defendant acted knowingly and willfully"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Terrorism connection: 8-year maximum",
+      "Often charged alongside conspiracy (§ 371) for making false statements in furtherance of scheme",
+      "USSG § 3C1.1 obstruction enhancement may apply to underlying offense",
+      "Each individual false statement may be charged as a separate count"
+    ],
+    "notes": "Brogan v. United States (1998): no 'exculpatory no' doctrine — simple denial to federal agent is a federal crime. No requirement that government be actually deceived. Covers false statements to any agency (FBI, IRS, DHS, EPA, etc.). Famous use: Martha Stewart, Michael Flynn, Roger Stone prosecutions."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "18 U.S.C. § 1621",
+    "statute_title": "Perjury",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years imprisonment",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant took an oath to testify truthfully before a competent tribunal or officer",
+      "Defendant willfully stated as true something they believed to be false",
+      "The false statement was material to the proceeding"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "§ 1623 (false declarations before grand jury/court): same penalty, but two-witness rule does not apply",
+      "§ 1622 (subornation of perjury): inducing another to commit perjury: same 5-year maximum",
+      "Often charged alongside obstruction of justice (§ 1503) and false statements (§ 1001)",
+      "USSG § 2J1.3: base level 14 for perjury",
+      "Recantation defense: § 1623(d) — false statement retracted before it substantially affects the proceeding"
+    ],
+    "notes": "Two-witness rule under § 1621: the falsity must be proven by two witnesses or one witness plus corroborating evidence. § 1623 eliminates the two-witness rule. Materiality is an element under United States v. Gaudin (1995) — must go to jury."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "18 U.S.C. § 201",
+    "statute_title": "Bribery of Public Officials",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years imprisonment (bribery); 2 years (illegal gratuity)",
+    "fine_max": "Three times the monetary equivalent of the thing of value / $250,000",
+    "elements": [
+      "§ 201(b) Bribery: Defendant directly or indirectly gave, offered, or promised a thing of value",
+      "To a public official (or one selected to be an official)",
+      "With intent to influence an official act, cause the official to act contrary to duty, or induce the official to commit fraud on the United States",
+      "§ 201(c) Illegal Gratuity: Thing of value given for or because of official act (no quid pro quo required)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "USSG § 2C1.1: offense level 12 base; numerous enhancements for value of bribes, role",
+      "More than one bribe: +2 levels",
+      "High-level official: +4 levels",
+      "Honest services fraud (§ 1346) commonly charged alongside § 201",
+      "Hobbs Act extortion (§ 1951) for extortion under color of official right",
+      "Forfeiture of bribe proceeds mandatory"
+    ],
+    "notes": "McDonnell v. United States (2016) narrowed 'official act' — must be formal exercise of official power, not mere meetings or calls. Federal program bribery under § 666 covers recipients of $10K+ in federal funds. Foreign Corrupt Practices Act (15 U.S.C. § 78dd-1) covers bribing foreign officials."
+  },
+  {
+    "common_charge_slug": "extortion",
+    "statute_number": "18 U.S.C. § 875 / § 1951",
+    "statute_title": "Interstate Extortion / Hobbs Act Extortion",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "2 years (§ 875 threatening communications); 20 years (Hobbs Act § 1951)",
+    "fine_max": "$250,000",
+    "elements": [
+      "§ 875: Defendant transmitted in interstate commerce a communication containing a threat to kidnap, injure, or demand ransom, with intent to extort money or valuable consideration",
+      "§ 1951 (Hobbs Act): Defendant induced victim to part with property",
+      "Using actual or threatened force, violence, fear of injury, OR under color of official right",
+      "Affecting interstate commerce"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "§ 879: threatening the President/Vice President: up to 5 years",
+      "Hobbs Act conspiracy (§ 1951(a)): same 20-year maximum",
+      "USSG § 2B3.2: base level 18 for extortion; numerous victim harm enhancements",
+      "§ 924(c) if firearm involved in Hobbs Act",
+      "Often charged with wire fraud when electronic communications used"
+    ],
+    "notes": "Hobbs Act extortion under color of official right is the primary mechanism for prosecuting public corruption involving payment demands. § 875 targets threatening communications including email and social media."
+  },
+  {
+    "common_charge_slug": "cybercrime",
+    "statute_number": "18 U.S.C. § 1030",
+    "statute_title": "Computer Fraud and Abuse Act (CFAA)",
+    "offense_class": "Federal Felony / Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year (simple unauthorized access misdemeanor); 5 years (first felony offense); 10 years (second offense); 20 years if reckless damage; life if death results",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant intentionally or knowingly accessed a protected computer",
+      "Without authorization OR exceeding authorized access",
+      "With intent to defraud, obtain information, cause damage, or extort (depending on subsection charged)",
+      "Protected computer: any computer used in interstate commerce, connected to internet, or used by U.S. government/financial institution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "National security or government computers: enhanced penalties",
+      "Financial damage exceeding $5,000 triggers felony threshold",
+      "Conspiracy under § 1030(b): same penalties as underlying offense",
+      "USSG § 2B1.1 or § 2M3.2 depending on computer type accessed",
+      "Civil cause of action under § 1030(g) for victims"
+    ],
+    "notes": "Van Buren v. United States (2021) narrowly construed 'exceeds authorized access.' § 1030(a)(2) (obtaining information), § 1030(a)(4) (fraud), § 1030(a)(5) (damage) are most common. Ransomware attacks prosecuted under § 1030."
+  },
+  {
+    "common_charge_slug": "human-trafficking",
+    "statute_number": "18 U.S.C. § 1591",
+    "statute_title": "Sex Trafficking of Children or by Force, Fraud, or Coercion",
+    "offense_class": "Federal Felony",
+    "penalty_min": "10 years; 15 years if victim 14-17; mandatory life if victim under 14",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$250,000 or more",
+    "elements": [
+      "Defendant knowingly recruited, enticed, harbored, transported, provided, obtained, advertised, maintained, patronized, or solicited",
+      "Another person",
+      "Knowing or in reckless disregard of the fact that the person would be caused to engage in a commercial sex act",
+      "By force, fraud, or coercion, OR victim was under 18 years of age"
+    ],
+    "mandatory_minimum": "10 years (adult victim); 15 years (victim 14-17); life (victim under 14)",
+    "enhancements": [
+      "§ 1589 (forced labor trafficking): up to 20 years; life if death or kidnapping occurs",
+      "§ 1592 (document servitude): up to 5 years",
+      "TVPA civil cause of action for victims (§ 1595)",
+      "Restitution mandatory to all victims",
+      "SORNA sex offender registration for sex trafficking convictions",
+      "USSG § 2G1.1: offense level 34 base for sex trafficking"
+    ],
+    "notes": "Trafficking Victims Protection Act (TVPA). Strict liability as to victim's age if victim is under 18. FOSTA-SESTA (2018) added § 2421A prohibiting internet promotion of prostitution."
+  },
+  {
+    "common_charge_slug": "carjacking",
+    "statute_number": "18 U.S.C. § 2119",
+    "statute_title": "Motor Vehicle Theft (Carjacking)",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years; 25 years if serious bodily injury; life or death if death results or kidnapping occurs",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant took a motor vehicle",
+      "From the person or presence of another person",
+      "By force and violence or by intimidation",
+      "With intent to cause death or serious bodily harm",
+      "The motor vehicle had been transported, shipped, or received in interstate commerce"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "§ 924(c) firearm: additional 7 years consecutive if firearm brandished",
+      "§ 924(c): 10 years consecutive if firearm discharged",
+      "Serious bodily injury to victim: up to 25 years",
+      "Death or kidnapping: life or death penalty",
+      "USSG § 2B3.1: base level 20 with carjacking-specific enhancements",
+      "Injury enhancements: +1 to +6 levels depending on severity"
+    ],
+    "notes": "Federal jurisdiction requires the vehicle to have moved in interstate commerce (virtually all modern vehicles qualify). Holloway v. United States (1999): conditional intent to use force if victim resists satisfies the intent element. Often charged alongside § 924(c) for armed carjacking."
+  },
+  {
+    "common_charge_slug": "drug-conspiracy",
+    "statute_number": "21 U.S.C. § 846",
+    "statute_title": "Attempt and Conspiracy to Distribute Controlled Substances",
+    "offense_class": "Federal Felony",
+    "penalty_min": "Same as underlying completed offense",
+    "penalty_max": "Same maximum as underlying completed offense under § 841",
+    "fine_max": "Same as underlying completed offense",
+    "elements": [
+      "Agreement between two or more persons to violate federal drug laws",
+      "Defendant knowingly and voluntarily joined the conspiracy",
+      "NOTE: No overt act required for drug conspiracies (unlike general conspiracy under § 371)"
+    ],
+    "mandatory_minimum": "Same mandatory minimums as substantive offense (5-10 years for threshold quantities)",
+    "enhancements": [
+      "§ 851 prior drug conviction: doubles mandatory minimums",
+      "Same enhancements as § 841(b) apply based on drug type and quantity",
+      "Leader/organizer of conspiracy: +4 levels",
+      "Pinkerton liability: co-conspirators liable for foreseeable acts of other members",
+      "Safety valve: available for qualifying first-time offenders",
+      "Continuing criminal enterprise (§ 848): 20 years to life if supervisor of 5+ persons"
+    ],
+    "notes": "Unlike § 371 (general conspiracy), § 846 does not require an overt act — the agreement itself is the crime. Drug quantity attributed based on reasonably foreseeable quantities handled by entire conspiracy (USSG § 1B1.3). Withdrawal defense: must take affirmative steps to withdraw and communicate to co-conspirators before arrest."
+  },
+  {
+    "common_charge_slug": "environmental-crime",
+    "statute_number": "33 U.S.C. § 1319 / 42 U.S.C. § 6928",
+    "statute_title": "Clean Water Act / RCRA Criminal Violations",
+    "offense_class": "Federal Felony / Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3-6 years (negligent violations); 3-15 years (knowing violations); 15-35 years (knowing endangerment)",
+    "fine_max": "$10,000 to $50,000 per day of violation; $250,000 individual / $1,000,000 organization",
+    "elements": [
+      "Defendant discharged pollutants into waters of the U.S. (CWA) OR disposed of hazardous waste (RCRA)",
+      "Without a permit or in violation of a permit",
+      "Negligently, knowingly, or with knowing endangerment",
+      "The substance qualifies as a pollutant or regulated hazardous waste"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Knowing endangerment: highest tier, up to 15 years under CWA",
+      "Second offense: doubled penalties",
+      "False statements in permit applications: § 1001 charges",
+      "Civil EPA penalties run parallel to criminal prosecution",
+      "Responsible corporate officer doctrine: executives personally liable without direct knowledge",
+      "USSG § 2Q1.2 (hazardous waste) and § 2Q1.3 (environmental permitting)"
+    ],
+    "notes": "Responsible Corporate Officer (RCO) doctrine (United States v. Park, 1975): executives can be convicted without proof of direct involvement if they had authority to prevent violations. Clean Air Act (42 U.S.C. § 7413) and CERCLA have parallel criminal provisions."
+  },
+  {
+    "common_charge_slug": "public-corruption",
+    "statute_number": "18 U.S.C. § 666",
+    "statute_title": "Theft or Bribery Concerning Programs Receiving Federal Funds",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years imprisonment",
+    "fine_max": "$250,000",
+    "elements": [
+      "Agent of an organization or state/local government receiving more than $10,000 in federal benefits in a one-year period",
+      "Defendant embezzled, stole, or obtained by fraud $5,000 or more in property",
+      "OR defendant intentionally misapplied $5,000 or more of funds of the organization",
+      "OR defendant corruptly solicited/accepted something of value intending to be influenced in connection with a transaction worth $5,000 or more"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Often charged alongside honest services fraud (§ 1346 / §§ 1341/1343)",
+      "§ 201 federal bribery charges may be added if federal official",
+      "USSG § 2C1.1: offense level based on value of bribes/misappropriated funds",
+      "Fiduciary/position of trust enhancement: +2 levels",
+      "Forfeiture of proceeds"
+    ],
+    "notes": "Extremely broad — covers virtually all state and local government officials due to federal grant funding. Salinas v. United States (1997): § 666 does not require proof of connection between bribe and federal funds. Often paired with honest services wire/mail fraud in public corruption cases."
+  },
+  {
+    "common_charge_slug": "mortgage-fraud",
+    "statute_number": "18 U.S.C. § 1344 / § 1014",
+    "statute_title": "Mortgage Fraud / False Statements to Financial Institution",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years (§ 1344 bank fraud); 30 years (§ 1014 false statements to FDIC-insured institution)",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "§ 1014: Defendant knowingly made a false statement or report for the purpose of influencing the action of any federally insured financial institution",
+      "In connection with a loan, credit, or other extension of credit",
+      "§ 1344: Defendant executed or attempted to execute a scheme to defraud or obtain money from a federally insured financial institution under false pretenses"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Often charged in conjunction with wire fraud (§ 1343) and mail fraud (§ 1341)",
+      "Aggravated identity theft (§ 1028A): additional 2 years consecutive",
+      "Money laundering (§ 1956) charges if proceeds concealed",
+      "USSG § 2B1.1: loss amount drives offense level",
+      "Financial industry insider: potential abuse of trust enhancement"
+    ],
+    "notes": "FBI and HUD-OIG have primary jurisdiction. Mortgage fraud includes straw buyer schemes, appraisal fraud, loan application fraud, property flipping with inflated appraisals, and builder bailout schemes. 10-year statute of limitations. Restitution to lenders mandatory."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "18 U.S.C. § 666 / § 641",
+    "statute_title": "Embezzlement of Government Funds / Theft of Federal Property",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years (§ 666 federal program funds); 10 years (§ 641 property over $1,000); 1 year (§ 641 property under $1,000)",
+    "fine_max": "$250,000",
+    "elements": [
+      "§ 641: Defendant embezzled, stole, purloined, or knowingly converted to their use",
+      "Money, property, or records belonging to the United States or any U.S. agency",
+      "OR received, concealed, or retained such property knowing it to be stolen",
+      "Value of property determines felony/misdemeanor classification"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "§ 666: federal program funds over $5,000 in organizations receiving $10,000+ federal funds",
+      "Position of trust: +2 levels (USSG § 3B1.3)",
+      "Amount stolen drives offense level under USSG § 2B1.1",
+      "Restitution mandatory",
+      "Often charged alongside money laundering when proceeds laundered"
+    ],
+    "notes": "§ 641 covers theft of any federal government property. § 666 covers embezzlement from any organization receiving federal funding (states, cities, universities, nonprofits). Bank employee embezzlement: § 656 (up to 30 years for federally insured institution)."
+  },
+  {
+    "common_charge_slug": "witness-tampering",
+    "statute_number": "18 U.S.C. § 1512",
+    "statute_title": "Tampering with a Witness, Victim, or Informant",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years (if killing or attempting to kill witness); 20 years (if using force/threats); 10 years (if harassing or intimidating); 3 years (corrupt persuasion)",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant knowingly used intimidation, threats, corrupt persuasion, or misleading conduct",
+      "Toward another person",
+      "With intent to influence, delay, or prevent the testimony of the person in an official proceeding",
+      "OR with intent to cause the person to withhold testimony, records, or documents"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "§ 1512(a): killing or attempting to kill to prevent testimony: up to 30 years",
+      "§ 1512(b): threats and corrupt persuasion: up to 20 years",
+      "§ 1512(c)(2): corrupt obstruction of official proceeding (broad): up to 20 years",
+      "§ 1513 (retaliating against witness): additional charges, up to 30 years if killing",
+      "USSG § 3C1.1: +2 levels for obstruction in current case",
+      "No requirement that official proceeding be pending — 'contemplated' proceedings covered"
+    ],
+    "notes": "§ 1512(c)(2) was used in January 6 prosecutions. United States v. Fischer (2024) narrowed § 1512(c)(2) to require evidence impairment. § 1512 has no pending proceeding requirement — covers actions taken before any formal proceeding begins."
+  },
+  {
+    "common_charge_slug": "drug-import-export",
+    "statute_number": "21 U.S.C. § 952 / § 960",
+    "statute_title": "Importation / Exportation of Controlled Substances",
+    "offense_class": "Federal Felony",
+    "penalty_min": "5 years for threshold quantities; 10 years for higher quantities",
+    "penalty_max": "Life imprisonment for large quantities",
+    "fine_max": "$10,000,000 individual",
+    "elements": [
+      "Defendant knowingly or intentionally imported or exported",
+      "A controlled substance",
+      "Into or out of the United States",
+      "Without legal authorization",
+      "Drug type and quantity as alleged"
+    ],
+    "mandatory_minimum": "Same tiered structure as § 841(b): 5 years for threshold quantities, 10 years for higher quantities",
+    "enhancements": [
+      "§ 851 prior drug conviction doubles mandatory minimum",
+      "Death or serious bodily injury: 20-year mandatory minimum",
+      "§ 963 conspiracy to import/export: same penalties as underlying offense",
+      "Organizational leaders: +4 levels",
+      "§ 960a: drug offenses benefiting terrorist organizations: 20 years to life"
+    ],
+    "notes": "DEA and CBP have joint jurisdiction. § 963 drug importation conspiracy does not require an overt act. Fentanyl importation is a top enforcement priority. Constructive importation when defendant knew contraband was in shipment they controlled."
+  },
+  {
+    "common_charge_slug": "money-laundering-conspiracy",
+    "statute_number": "18 U.S.C. § 1956(h)",
+    "statute_title": "Conspiracy to Launder Money",
+    "offense_class": "Federal Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years imprisonment",
+    "fine_max": "$500,000 or twice the amount laundered, whichever is greater",
+    "elements": [
+      "Agreement between two or more persons to commit money laundering under §§ 1956 or 1957",
+      "Defendant knowingly and intentionally joined the conspiracy",
+      "NOTE: No overt act required for § 1956(h) money laundering conspiracy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "No overt act required — the agreement itself constitutes the offense",
+      "USSG § 2S1.1: same as substantive money laundering; +2 levels for § 1956 conviction",
+      "Underlying specified unlawful activity drives base offense level",
+      "Forfeiture of all funds involved in the conspiracy",
+      "Often charged with underlying predicate crimes (drug trafficking, fraud, etc.)"
+    ],
+    "notes": "§ 1956(h) conspiracy does not require an overt act — broader than § 371 conspiracy. Enormously powerful because it sweeps in financial institutions and their employees. Kingpin-style prosecutions routinely add § 1956(h) alongside § 846 drug conspiracy. Statute of limitations: 5 years."
+  },
+  {
+    "common_charge_slug": "federal-other",
+    "statute_number": "Various",
+    "statute_title": "Other Federal Offenses",
+    "offense_class": "Federal Felony or Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "Varies by statute",
+    "fine_max": "Varies by statute",
+    "elements": [
+      "Varies by specific charge",
+      "Must be a federal crime with a federal nexus (interstate commerce, federal property, federal official, etc.)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Varies by specific offense",
+      "U.S. Sentencing Guidelines apply to all federal felony and Class A misdemeanor offenses",
+      "Recidivism enhancements under USSG Chapter 4",
+      "Role in offense adjustments under USSG Chapter 3B"
+    ],
+    "notes": "Catch-all category for federal offenses not listed above. Common examples: Title 18 civil rights violations (§ 241, § 242), Espionage Act (§ 793), Foreign Agents Registration Act (§ 612), election interference offenses (§ 594-611), food and drug misbranding (21 U.S.C. § 333), bankruptcy fraud (§ 157), market manipulation. Consult federal statutory index for specific statutes."
+  }
+]

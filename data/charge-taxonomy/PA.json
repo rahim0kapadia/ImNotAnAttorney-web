@@ -1,0 +1,1928 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "75 Pa.C.S. § 3802",
+    "statute_title": "Driving Under Influence of Alcohol or Controlled Substance",
+    "offense_class": "Summary (1st/2nd, Tier 1); Misdemeanor 1 (high BAC or 3rd offense); Felony 3 (4th+)",
+    "penalty_min": null,
+    "penalty_max": "90 days (summary); 2 years (M1); 7 years (F3)",
+    "fine_max": "$300 (summary); $5,000 (M1); $15,000 (F3)",
+    "elements": [
+      "Operated a vehicle on a highway or trafficway in this Commonwealth",
+      "While the individual's alcohol concentration was at or above the legal limit",
+      "OR while under the influence of alcohol or controlled substance that impaired ability to safely drive"
+    ],
+    "mandatory_minimum": "72 hours (1st offense, General Impairment); 5 days (1st offense, High BAC); 10 days (1st offense, Highest BAC or drugs)",
+    "enhancements": [
+      "Three-tier BAC system: General (0.08-0.099%), High (0.10-0.159%), Highest (0.16%+) with escalating penalties",
+      "Felony 3 for 4th+ DUI offense within 10 years",
+      "Mandatory ignition interlock for 1 year on all convictions",
+      "ARD (Accelerated Rehabilitative Disposition) available for first offenders"
+    ],
+    "notes": "Pennsylvania uses a three-tier BAC system. Refusal to submit to blood alcohol testing is treated as Highest BAC tier. ARD program is unique to PA and allows first offenders to avoid conviction."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "75 Pa.C.S. § 3802",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Summary (General Impairment Tier 1); Misdemeanor 1 (High or Highest BAC)",
+    "penalty_min": null,
+    "penalty_max": "90 days (summary); 6 months (M1 High); 6 months (M1 Highest)",
+    "fine_max": "$300 (summary); $2,500 (High); $5,000 (Highest)",
+    "elements": [
+      "First DUI offense within 10-year look-back period",
+      "Operated vehicle while impaired"
+    ],
+    "mandatory_minimum": "72 hours (General); 48 hours (High); 72 hours (Highest)",
+    "enhancements": [
+      "ARD program available for eligible first offenders: charges dismissed upon completion",
+      "License suspension 12 months for Highest BAC or drug DUI first offense"
+    ],
+    "notes": "Pennsylvania's 10-year look-back period applies for repeat offense enhancements. General Impairment (0.08-0.099%) first offense is a summary offense, not a misdemeanor."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "75 Pa.C.S. § 3802",
+    "statute_title": "DUI — Repeat Offense",
+    "offense_class": "Misdemeanor 1 (2nd offense); Felony 3 (4th+ offense within 10 years)",
+    "penalty_min": "5 days (2nd, General); 30 days (2nd, High/Highest)",
+    "penalty_max": "6 months (2nd, M1); 5 years (F2 if accident causing injury); 7 years (F3 4th+)",
+    "fine_max": "$2,500 (2nd); $15,000 (F3)",
+    "elements": [
+      "Prior DUI conviction or ARD within 10-year look-back period",
+      "Current DUI offense proven under 75 Pa.C.S. § 3802"
+    ],
+    "mandatory_minimum": "5 days (2nd offense General); 30 days (2nd offense High BAC); 90 days (3rd offense)",
+    "enhancements": [
+      "Felony 3: 4th+ offense within 10 years",
+      "Felony 2: DUI causing serious bodily injury on 2nd+ offense",
+      "18-month license revocation for 2nd offense"
+    ],
+    "notes": "Pennsylvania uses a 10-year look-back period for DUI priors, unlike Illinois which has lifetime look-back."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "75 Pa.C.S. § 3802(d)",
+    "statute_title": "DUI — Controlled Substance",
+    "offense_class": "Misdemeanor 1 (1st offense); Felony 3 (4th+)",
+    "penalty_min": "72 hours (1st offense)",
+    "penalty_max": "6 months (M1); 7 years (F3)",
+    "fine_max": "$5,000 (M1)",
+    "elements": [
+      "Operated a vehicle",
+      "While there was in the individual's blood any amount of a Schedule I controlled substance",
+      "OR a metabolite of a Schedule I controlled substance",
+      "OR while under the influence of any drug that impaired ability to drive"
+    ],
+    "mandatory_minimum": "72 hours (1st offense)",
+    "enhancements": [
+      "Schedule I drugs: zero-tolerance, any detectable amount triggers highest-tier penalties",
+      "Prescription drug DUI: must be impaired, not merely presence of prescribed drug"
+    ],
+    "notes": "Pennsylvania drug DUI is treated at Highest BAC tier regardless of impairment level for Schedule I substances."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "75 Pa.C.S. § 3736",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Summary",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$200",
+    "elements": [
+      "Drove a vehicle on a highway or trafficway",
+      "In willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Misdemeanor 2 if reckless driving causes death or serious bodily injury (separate charge under 75 Pa.C.S. § 3732)"
+    ],
+    "notes": "Pennsylvania reckless driving is only a summary offense. Serious injury or death during reckless driving is charged as homicide by vehicle."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "75 Pa.C.S. § 3742",
+    "statute_title": "Accidents Involving Death or Personal Injury — Duty to Stop",
+    "offense_class": "Felony 3 (injury); Felony 2 (death)",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3); 10 years (F2)",
+    "fine_max": "$15,000",
+    "elements": [
+      "Driver of vehicle involved in accident resulting in injury, death, or damage to attended vehicle",
+      "Failed to immediately stop vehicle at scene",
+      "Failed to provide name, address, and vehicle registration information",
+      "Failed to render reasonable assistance to injured persons"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 2 if accident resulted in death",
+      "Mandatory license revocation",
+      "Property damage only hit and run: 75 Pa.C.S. § 3743, Misdemeanor 3"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "75 Pa.C.S. § 3732",
+    "statute_title": "Homicide by Vehicle",
+    "offense_class": "Felony 3",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Operating a vehicle in reckless disregard for the safety of persons or property",
+      "Caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated Assault by Vehicle (75 Pa.C.S. § 3732.1): Felony 2 for serious bodily injury",
+      "DUI-related vehicular death charged as Homicide by Vehicle While DUI (75 Pa.C.S. § 3735): Felony 2, 3-year mandatory minimum"
+    ],
+    "notes": "Pennsylvania separately titles DUI-related vehicular homicide as 'Homicide by Vehicle While DUI' (F2) with mandatory minimum."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "75 Pa.C.S. § 3732",
+    "statute_title": "Homicide by Vehicle",
+    "offense_class": "Felony 3",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Operating a vehicle in reckless disregard for the safety of persons or property",
+      "Caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Homicide by Vehicle While DUI (75 Pa.C.S. § 3735): Felony 2 with 3-year mandatory minimum"
+    ],
+    "notes": "Pennsylvania does not use the term 'vehicular manslaughter' — the equivalent offense is Homicide by Vehicle under 75 Pa.C.S. § 3732."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "75 Pa.C.S. § 1543",
+    "statute_title": "Driving While Operating Privilege is Suspended or Revoked",
+    "offense_class": "Summary (1st); Misdemeanor 3 (subsequent or DUI-related suspension)",
+    "penalty_min": null,
+    "penalty_max": "90 days (summary); 1 year (M3)",
+    "fine_max": "$500 (summary); $2,500 (M3)",
+    "elements": [
+      "Operated a motor vehicle on a highway or trafficway",
+      "While operating privilege was suspended or revoked"
+    ],
+    "mandatory_minimum": "60-day additional suspension; 90-day imprisonment if license suspended for DUI (M3)",
+    "enhancements": [
+      "Misdemeanor 3 if license was suspended for DUI with mandatory 90-day minimum sentence",
+      "Additional suspension period added"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "75 Pa.C.S. § 3733",
+    "statute_title": "Fleeing or Attempting to Elude Police Officer",
+    "offense_class": "Misdemeanor 2 (basic); Felony 3 (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "2 years (M2); 7 years (F3)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Driver of a motor vehicle",
+      "Willfully failed or refused to bring vehicle to a stop",
+      "When given a visual or audible signal to stop by a uniformed police officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3: crosses state line, involves accident, involves injury, driver has prior conviction"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "open-container",
+    "statute_number": "75 Pa.C.S. § 3809",
+    "statute_title": "Restriction on Alcoholic Beverages",
+    "offense_class": "Summary",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$500",
+    "elements": [
+      "While operating a motor vehicle on a highway",
+      "Consumed an alcoholic beverage",
+      "OR had an open alcoholic beverage container in an accessible area of the vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "statute_number": "75 Pa.C.S. § 1547",
+    "statute_title": "Chemical Testing to Determine Amount of Alcohol or Controlled Substance — Refusal",
+    "offense_class": "Summary (civil/administrative consequence)",
+    "penalty_min": null,
+    "penalty_max": "Administrative license suspension",
+    "fine_max": "$500",
+    "elements": [
+      "Arrested for DUI",
+      "Refused to submit to chemical testing after being advised of consequences"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "1-year license suspension for first refusal",
+      "18-month suspension for second refusal",
+      "Refusal treated as Highest BAC tier for sentencing purposes in criminal DUI case"
+    ],
+    "notes": "Pennsylvania treats refusal as equivalent to Highest BAC DUI tier for purposes of grading and penalties."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "35 P.S. § 780-113(a)(16)",
+    "statute_title": "Possession of Controlled Substance",
+    "offense_class": "Misdemeanor 1",
+    "penalty_min": null,
+    "penalty_max": "1 year (small amount); 3 years (subsequent offense)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Knowingly or intentionally possessed a controlled substance",
+      "Without a valid prescription or other lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3: possession within 1,000 feet of school (35 P.S. § 780-113(a)(30))",
+      "Subsequent offenses escalate penalties",
+      "PA recently enacted 35 P.S. § 780-113.1 for possession with enhanced penalties near schools"
+    ],
+    "notes": "Pennsylvania does not use the Illinois felony class structure. Drug possession is a Misdemeanor 1 regardless of substance type unless enhanced."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "35 P.S. § 780-113(a)(31)",
+    "statute_title": "Possession of Small Amount of Marijuana",
+    "offense_class": "Misdemeanor (30g or less); Misdemeanor 1 (over 30g)",
+    "penalty_min": null,
+    "penalty_max": "30 days (small amount); 1 year (M1)",
+    "fine_max": "$500 (small amount); $5,000 (M1)",
+    "elements": [
+      "Possessed marijuana",
+      "Without lawful authority under Pennsylvania law"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3 if in drug-free school zone",
+      "Possession with intent to deliver escalates to Felony 3"
+    ],
+    "notes": "Pennsylvania has not legalized recreational marijuana as of 2026. Medical marijuana is legal under the Medical Marijuana Act (Act 16 of 2016). Small amount (30g or less) is a separate lower-graded misdemeanor."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "35 P.S. § 780-113(a)(16)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Misdemeanor 1",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$5,000",
+    "elements": [
+      "Knowingly or intentionally possessed cocaine",
+      "Without a valid prescription or lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3 for possession in school zone",
+      "Trafficking amounts elevate to Felony 3 or higher under 35 P.S. § 780-113(a)(30)"
+    ],
+    "notes": "Pennsylvania treats all Schedule II possession as Misdemeanor 1 regardless of weight, unlike Illinois which escalates based on grams."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "35 P.S. § 780-113(a)(16)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Misdemeanor 1",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$5,000",
+    "elements": [
+      "Knowingly or intentionally possessed methamphetamine",
+      "Without a valid prescription or lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3 for possession in school zone or with intent to deliver"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "statute_number": "35 P.S. § 780-113(a)(16)",
+    "statute_title": "Possession of Heroin or Opioid Controlled Substance",
+    "offense_class": "Misdemeanor 1",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$5,000",
+    "elements": [
+      "Knowingly or intentionally possessed heroin, fentanyl, or opioid controlled substance",
+      "Without a valid prescription or lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery causing death: Felony 1 under 35 P.S. § 780-113.1 (Act 57 of 2014)",
+      "Fentanyl delivery causing death: Felony 1"
+    ],
+    "notes": "Pennsylvania has enacted specific legislation targeting fentanyl trafficking given the overdose crisis."
+  },
+  {
+    "common_charge_slug": "drug-possession-prescription",
+    "statute_number": "35 P.S. § 780-113(a)(14),(16)",
+    "statute_title": "Acquisition of Controlled Substance by Fraud or Without Prescription",
+    "offense_class": "Misdemeanor 1",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$5,000",
+    "elements": [
+      "Possessed a prescription controlled substance",
+      "Without a valid prescription issued in the defendant's name",
+      "OR obtained by fraud, misrepresentation, or deception"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "35 P.S. § 780-113(a)(30)",
+    "statute_title": "Manufacture, Delivery, or Possession with Intent to Deliver",
+    "offense_class": "Felony 3 (small amounts); Felony 2 (larger amounts); Felony 1 (largest amounts or school zone)",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3); 10 years (F2); 20 years (F1)",
+    "fine_max": "$15,000 (F3); $25,000 (F2); $250,000 (F1)",
+    "elements": [
+      "Manufactured, delivered, or possessed with intent to deliver a controlled substance",
+      "OR created, delivered, or possessed a counterfeit controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 1: delivery within 1,000 feet of school, delivery to minor, delivery causing death",
+      "Drug trafficking in volume: Felony 1 with mandatory minimum under 18 Pa.C.S. § 7508",
+      "Mandatory minimum 2 years for heroin/cocaine over threshold amounts under § 7508"
+    ],
+    "notes": "18 Pa.C.S. § 7508 imposes mandatory minimum sentences based on drug type and weight, though subject to constitutional challenge post-Alleyne v. United States."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "35 P.S. § 780-113(a)(30)",
+    "statute_title": "Delivery of Controlled Substance",
+    "offense_class": "Felony 3 (small delivery); Felony 2 or higher (larger amounts)",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3); 10 years (F2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Delivered a controlled substance to another person",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery to minor: Felony 1",
+      "Delivery in school zone: enhanced mandatory minimums"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "35 P.S. § 780-113(a)(30)",
+    "statute_title": "Manufacture of Controlled Substance",
+    "offense_class": "Felony 3 to Felony 1 depending on substance and amount",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3); 20 years (F1)",
+    "fine_max": "$250,000 (F1)",
+    "elements": [
+      "Manufactured or produced a controlled substance",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Meth lab operation: additional charges under 18 Pa.C.S. § 7508.2",
+      "Near school zone or in residence: enhanced penalties"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "35 P.S. § 780-113(a)(32)",
+    "statute_title": "Use or Possession of Drug Paraphernalia",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,500",
+    "elements": [
+      "Used, possessed with intent to use, delivered, possessed with intent to deliver, or manufactured drug paraphernalia",
+      "For purpose of planting, cultivating, growing, harvesting, manufacturing, compounding, converting, producing, processing, preparing, testing, packaging, repackaging, storing, containing, concealing, or injecting a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of paraphernalia to minor: misdemeanor with enhanced penalty"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "prescription-fraud",
+    "statute_number": "35 P.S. § 780-113(a)(12),(14)",
+    "statute_title": "Acquisition of Controlled Substance by Fraud",
+    "offense_class": "Misdemeanor 1",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Obtained or attempted to obtain a controlled substance by fraud, misrepresentation, or deception",
+      "OR forged or altered a prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3 for large-scale prescription fraud"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "35 P.S. § 780-113(a)(30)",
+    "statute_title": "Possession with Intent to Deliver Controlled Substance",
+    "offense_class": "Felony 3 to Felony 1",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3); 20 years (F1)",
+    "fine_max": "$250,000",
+    "elements": [
+      "Possessed a controlled substance",
+      "With intent to deliver, inferred from quantity, packaging, scales, currency, or other circumstantial evidence"
+    ],
+    "mandatory_minimum": "2 years for heroin or cocaine over threshold amounts under 18 Pa.C.S. § 7508",
+    "enhancements": [
+      "Delivery near school zone: mandatory minimum 2 to 4 years",
+      "Delivery to minor: Felony 1"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "18 Pa.C.S. § 2502(a)",
+    "statute_title": "Murder of the First Degree",
+    "offense_class": "Felony 1 (Murder of the First Degree — special class)",
+    "penalty_min": "Life imprisonment",
+    "penalty_max": "Life imprisonment or death",
+    "fine_max": "$50,000",
+    "elements": [
+      "Intentionally caused the death of another person",
+      "With specific intent to kill (premeditated)"
+    ],
+    "mandatory_minimum": "Life imprisonment",
+    "enhancements": [
+      "Death penalty available for aggravated circumstances (killing of law enforcement, multiple victims, torture, contract murder)",
+      "Mandatory life without parole if death penalty not imposed"
+    ],
+    "notes": "Pennsylvania retains the death penalty. First degree murder requires specific intent to kill (premeditation). Life without parole is mandatory if death penalty not sought or imposed."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "18 Pa.C.S. § 2502(b)",
+    "statute_title": "Murder of the Second Degree (Felony Murder)",
+    "offense_class": "Felony 1 (Murder — second degree)",
+    "penalty_min": "Life imprisonment",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$50,000",
+    "elements": [
+      "Committed or was an accomplice in the commission of a felony",
+      "Death of another person occurred during the commission of that felony",
+      "No specific intent to kill required"
+    ],
+    "mandatory_minimum": "Life imprisonment",
+    "enhancements": [],
+    "notes": "Pennsylvania second degree murder is limited to felony murder — killing that occurs during the commission of a felony. Subject to significant post-People v. Rosemond litigation regarding accomplice liability."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "18 Pa.C.S. § 2503",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "Felony 1",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Intentionally caused the death of another person",
+      "At the time of the killing defendant acted under sudden passion or heat of blood",
+      "Passion or heat was provoked by serious provocation by the victim",
+      "OR defendant unreasonably believed circumstances required use of deadly force (imperfect self-defense)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Pennsylvania retains voluntary manslaughter as a distinct Felony 1 offense, unlike Illinois which subsumed it into second degree murder."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "18 Pa.C.S. § 2504",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "Misdemeanor 1; Felony 3 (reckless driving or DUI contributing cause)",
+    "penalty_min": null,
+    "penalty_max": "5 years (M1); 7 years (F3)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Caused the death of another person",
+      "As a direct result of doing an unlawful act in a reckless or grossly negligent manner",
+      "OR doing a lawful act in a reckless or grossly negligent manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3 if death results from victim being struck by motor vehicle while defendant was engaged in reckless driving"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "18 Pa.C.S. § 2702",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "Felony 1 (serious bodily injury or against protected class); Felony 2 (serious bodily injury attempt or other)",
+    "penalty_min": null,
+    "penalty_max": "20 years (F1); 10 years (F2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Attempted to cause serious bodily injury to another, or caused such injury intentionally, knowingly, or recklessly under circumstances manifesting extreme indifference to human life",
+      "OR attempted to cause or intentionally, knowingly, or recklessly caused bodily injury to a law enforcement officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 1: against law enforcement officer, teacher, transport employee",
+      "Felony 1: with deadly weapon against protected class",
+      "Use of firearm: additional mandatory minimum under 42 Pa.C.S. § 9712"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "18 Pa.C.S. § 2701",
+    "statute_title": "Simple Assault",
+    "offense_class": "Misdemeanor 2 (basic); Misdemeanor 1 (fight by mutual consent); Summary (child under 12 by adult 21+)",
+    "penalty_min": null,
+    "penalty_max": "2 years (M2); 5 years (M1)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Attempted to cause or intentionally, knowingly, or recklessly caused bodily injury to another",
+      "OR negligently caused bodily injury with a deadly weapon",
+      "OR attempted by physical menace to put another in fear of imminent serious bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Elevates to Aggravated Assault (F1 or F2) when victim is a protected class or serious injury results"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "18 Pa.C.S. § 2701",
+    "statute_title": "Simple Assault (Pennsylvania does not use the term 'battery')",
+    "offense_class": "Misdemeanor 2",
+    "penalty_min": null,
+    "penalty_max": "2 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Intentionally, knowingly, or recklessly caused bodily injury to another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Pennsylvania does not have a separate 'battery' statute. Physical contact offenses are charged as Simple Assault (18 Pa.C.S. § 2701) or Aggravated Assault (§ 2702)."
+  },
+  {
+    "common_charge_slug": "aggravated-battery",
+    "statute_number": "18 Pa.C.S. § 2702",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "Felony 1 or Felony 2",
+    "penalty_min": null,
+    "penalty_max": "10 to 20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Attempted to cause serious bodily injury, or caused such injury",
+      "Intentionally, knowingly, or recklessly under circumstances manifesting extreme indifference to human life"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "42 Pa.C.S. § 9712: mandatory 5-year minimum if firearm visible during assault"
+    ],
+    "notes": "Pennsylvania calls this Aggravated Assault — equivalent to aggravated battery in other states."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "18 Pa.C.S. § 3701",
+    "statute_title": "Robbery",
+    "offense_class": "Felony 1 (serious bodily injury threat); Felony 2 (threat of bodily injury); Felony 3 (demand by threat)",
+    "penalty_min": null,
+    "penalty_max": "20 years (F1); 10 years (F2); 7 years (F3)",
+    "fine_max": "$25,000",
+    "elements": [
+      "In the course of committing a theft",
+      "Inflicted serious bodily injury upon another, threatened another with or intentionally put another in fear of immediate serious bodily injury",
+      "OR committed or threatened immediately to commit any felony of the first or second degree"
+    ],
+    "mandatory_minimum": "42 Pa.C.S. § 9712: 5-year mandatory minimum if firearm visible",
+    "enhancements": [
+      "Robbery of a Motor Vehicle (18 Pa.C.S. § 3702): Felony 1",
+      "Firearm visible: 5-year mandatory minimum under 42 Pa.C.S. § 9712"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "18 Pa.C.S. § 3701; 42 Pa.C.S. § 9712",
+    "statute_title": "Robbery with Firearm",
+    "offense_class": "Felony 1",
+    "penalty_min": "5 years (mandatory minimum under § 9712)",
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Committed a robbery",
+      "While visibly possessing a firearm or other deadly weapon"
+    ],
+    "mandatory_minimum": "5 years under 42 Pa.C.S. § 9712 (visible firearm)",
+    "enhancements": [
+      "10-year mandatory minimum if firearm discharged (42 Pa.C.S. § 9712.1)"
+    ],
+    "notes": "Pennsylvania's § 9712 mandatory minimums apply whenever a firearm is visible during the commission of a violent offense."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "18 Pa.C.S. § 2901",
+    "statute_title": "Kidnapping",
+    "offense_class": "Felony 1",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Unlawfully removed another person a substantial distance from where they were found",
+      "OR unlawfully confined another person for a substantial period in a place of isolation",
+      "To hold victim for ransom, as shield or hostage, to facilitate commission of a felony, to inflict bodily injury or terrorize victim, OR to interfere with government or political functions"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 1 with enhanced penalties if victim is a minor",
+      "Unlawful Restraint (18 Pa.C.S. § 2902): Felony 2 for lesser restraint"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "18 Pa.C.S. § 3301",
+    "statute_title": "Arson and Related Offenses",
+    "offense_class": "Felony 1 (endangering persons or occupied structure); Felony 2 (property); Felony 3 (unoccupied)",
+    "penalty_min": null,
+    "penalty_max": "20 years (F1); 10 years (F2); 7 years (F3)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Intentionally started a fire or caused an explosion",
+      "That endangered a person or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 1: fire caused death or serious bodily injury, or structure was occupied",
+      "Reckless Burning (18 Pa.C.S. § 3301(d)): Misdemeanor 1 for reckless burning"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "18 Pa.C.S. § 901; 18 Pa.C.S. § 2502",
+    "statute_title": "Criminal Attempt — Murder",
+    "offense_class": "Felony 1",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "With the intent to commit murder",
+      "Did any act which constitutes a substantial step toward commission of murder"
+    ],
+    "mandatory_minimum": "5 years if firearm visible (42 Pa.C.S. § 9712)",
+    "enhancements": [
+      "42 Pa.C.S. § 9712: 5-year mandatory minimum if firearm visible",
+      "42 Pa.C.S. § 9712.1: 10-year mandatory minimum if firearm discharged"
+    ],
+    "notes": "Criminal attempt in Pennsylvania is graded one degree below the completed offense, but murder attempt is Felony 1."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "18 Pa.C.S. § 2702(a)(4)",
+    "statute_title": "Aggravated Assault with Deadly Weapon",
+    "offense_class": "Felony 2",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Attempted to cause or intentionally or knowingly caused bodily injury",
+      "With a deadly weapon"
+    ],
+    "mandatory_minimum": "5 years if weapon was a firearm (42 Pa.C.S. § 9712)",
+    "enhancements": [
+      "Elevates to Felony 1 if victim is a protected class (law enforcement, teacher, etc.)"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "18 Pa.C.S. § 3921",
+    "statute_title": "Theft by Unlawful Taking or Disposition",
+    "offense_class": "Summary (under $50); Misdemeanor 3 ($50-$200); Misdemeanor 2 ($200-$2,000); Misdemeanor 1 ($2,000-$100,000); Felony 3 (over $100,000 or firearm or car)",
+    "penalty_min": null,
+    "penalty_max": "90 days (summary); 1 year (M3); 2 years (M2); 5 years (M1); 7 years (F3)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Unlawfully took, or exercised unlawful control over, movable property of another",
+      "With intent to deprive the owner thereof"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3: theft of firearm or motor vehicle regardless of value",
+      "Felony 2: theft by extortion involving threat to commit violence"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "18 Pa.C.S. § 3921",
+    "statute_title": "Theft by Unlawful Taking — Felony Value",
+    "offense_class": "Misdemeanor 1 ($2,000 to $100,000); Felony 3 (over $100,000)",
+    "penalty_min": null,
+    "penalty_max": "5 years (M1); 7 years (F3)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Same elements as theft",
+      "Property value exceeds $2,000 (M1) or $100,000 (F3)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Pennsylvania does not use the term 'grand theft' — grading is based on dollar amount thresholds within the general theft statute."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "18 Pa.C.S. § 3921",
+    "statute_title": "Theft by Unlawful Taking — Summary or Misdemeanor",
+    "offense_class": "Summary (under $50); Misdemeanor 3 ($50 to $200); Misdemeanor 2 ($200 to $2,000)",
+    "penalty_min": null,
+    "penalty_max": "90 days (summary); 1 year (M3); 2 years (M2)",
+    "fine_max": "$2,500",
+    "elements": [
+      "Same elements as theft",
+      "Property value under $2,000"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "18 Pa.C.S. § 3929",
+    "statute_title": "Retail Theft",
+    "offense_class": "Summary (1st offense, under $150); Misdemeanor 2 (1st offense, $150+, or 2nd offense); Felony 3 (3rd+ offense)",
+    "penalty_min": null,
+    "penalty_max": "90 days (summary); 2 years (M2); 7 years (F3)",
+    "fine_max": "$2,500 (M2); $15,000 (F3)",
+    "elements": [
+      "Took possession of, carried away, or obtained merchandise offered for sale",
+      "Without paying the full retail value",
+      "With intent to deprive the merchant of all or part of the retail value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3 for third or subsequent offense regardless of value",
+      "Organized retail crime: enhanced penalties"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "18 Pa.C.S. § 3502",
+    "statute_title": "Burglary",
+    "offense_class": "Felony 1 (occupied or adapted for overnight accommodation); Felony 2 (unoccupied structure)",
+    "penalty_min": null,
+    "penalty_max": "20 years (F1); 10 years (F2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Entered a building or occupied structure",
+      "OR separately secured portion thereof",
+      "With intent to commit a crime therein",
+      "Unless premises were open to public or actor was licensed or privileged to enter"
+    ],
+    "mandatory_minimum": "42 Pa.C.S. § 9714: 10-year mandatory minimum for second or subsequent conviction of crime of violence",
+    "enhancements": [
+      "Felony 1 if building is adapted for overnight accommodation (whether or not anyone present)",
+      "Mandatory minimum under § 9714 for repeat violent offenders"
+    ],
+    "notes": "Pennsylvania burglary grading depends on whether the structure is adapted for overnight accommodation, not whether a person is present at time of entry."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "18 Pa.C.S. § 3502(a)(1)",
+    "statute_title": "Burglary — Occupied Residence",
+    "offense_class": "Felony 1",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Entered a building adapted for overnight accommodation",
+      "With intent to commit a crime therein",
+      "A person was present at the time of entry"
+    ],
+    "mandatory_minimum": "5 years if firearm visible (42 Pa.C.S. § 9712)",
+    "enhancements": [
+      "Higher mandatory minimum under § 9714 for prior crime of violence"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "commercial-burglary",
+    "statute_number": "18 Pa.C.S. § 3502(a)(4)",
+    "statute_title": "Burglary — Non-Adapted Building",
+    "offense_class": "Felony 2",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Entered a building not adapted for overnight accommodation",
+      "With intent to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "18 Pa.C.S. § 3928",
+    "statute_title": "Unauthorized Use of Automobiles and Other Vehicles",
+    "offense_class": "Misdemeanor 2; Felony 3 if vehicle not returned within 24 hours",
+    "penalty_min": null,
+    "penalty_max": "2 years (M2); 7 years (F3)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Operated another person's automobile, airplane, motorcycle, motorboat, or other motor-propelled vehicle",
+      "Without consent of the owner",
+      "OR knowingly received the vehicle knowing it to have been taken without consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3: theft of a motor vehicle under general theft statute (18 Pa.C.S. § 3921)"
+    ],
+    "notes": "Pennsylvania has separate unauthorized use (M2) and theft of vehicle (F3 under general theft statute) charges."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "18 Pa.C.S. § 3925",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Same grading as theft based on value",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3 if over $100,000)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Intentionally received, retained, or disposed of movable property of another",
+      "Knowing that it had been stolen",
+      "OR believing that it had probably been stolen",
+      "Unless at the time of receiving the actor intended to restore it to the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Pennsylvania has a dedicated receiving stolen property statute with same grading tiers as theft."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "18 Pa.C.S. § 3304",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Summary (under $150); Misdemeanor 3 ($150-$500); Misdemeanor 2 ($500-$5,000); Misdemeanor 1 ($5,000+); Felony 3 (over $5,000 by explosion, flood, or aircraft)",
+    "penalty_min": null,
+    "penalty_max": "90 days (summary); 1 year (M3); 2 years (M2); 5 years (M1); 7 years (F3)",
+    "fine_max": "$15,000",
+    "elements": [
+      "Intentionally or recklessly tampered with tangible property of another",
+      "So as to endanger person or property",
+      "OR intentionally or recklessly caused pecuniary loss to another by defrauding a public utility"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3 for destruction by explosion, flood, or aircraft causing damage over $5,000"
+    ],
+    "notes": "Pennsylvania calls this 'Criminal Mischief' not vandalism."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "18 Pa.C.S. § 3503",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "Felony 3 (buildings); Misdemeanor 1 (defiance of order); Misdemeanor 3 (simple trespass)",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3); 5 years (M1); 1 year (M3)",
+    "fine_max": "$15,000",
+    "elements": [
+      "Knowing that not licensed or privileged to do so",
+      "Entered or remained in any place as to which notice against trespass had been given"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3: entering a building with intent to commit a crime (must be distinct from burglary) or breaking into a building"
+    ],
+    "notes": "Pennsylvania Criminal Trespass is graded more seriously than many states — entering a building can be a Felony 3."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "18 Pa.C.S. § 3304",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Summary to Felony 3 based on damage amount",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3)",
+    "fine_max": "$15,000",
+    "elements": [
+      "Intentionally or recklessly damaged tangible property of another person",
+      "OR tampered with property to endanger persons"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Pennsylvania's Criminal Mischief statute covers both vandalism and more serious property destruction."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "18 Pa.C.S. § 2711; 23 Pa.C.S. § 6102",
+    "statute_title": "Simple Assault / Aggravated Assault — Domestic Violence",
+    "offense_class": "Misdemeanor 2 to Felony 1 depending on injury and weapon",
+    "penalty_min": null,
+    "penalty_max": "2 years (M2); 20 years (F1)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Intentionally, knowingly, or recklessly caused bodily injury to a family or household member",
+      "OR placed such person in fear of imminent serious bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Mandatory arrest (18 Pa.C.S. § 2711) when reasonable grounds to believe domestic assault occurred",
+      "Enhanced penalties for second+ offense",
+      "Protection from Abuse order available under 23 Pa.C.S. § 6101"
+    ],
+    "notes": "Pennsylvania does not have a separate 'domestic violence' crime — assault charges are used with domestic violence designation for sentencing and mandatory arrest purposes."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "18 Pa.C.S. § 2701",
+    "statute_title": "Simple Assault — Domestic Context",
+    "offense_class": "Misdemeanor 2",
+    "penalty_min": null,
+    "penalty_max": "2 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Intentionally, knowingly, or recklessly caused bodily injury to a family or household member"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Mandatory arrest provision applies (18 Pa.C.S. § 2711)",
+      "Protection from Abuse (PFA) order typically issued"
+    ],
+    "notes": "Pennsylvania calls this Simple Assault in a domestic context. Mandatory arrest applies when physical injury is visible or credibly alleged."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "18 Pa.C.S. § 4304",
+    "statute_title": "Endangering Welfare of Children",
+    "offense_class": "Misdemeanor 1; Felony 3 (course of conduct or serious bodily injury)",
+    "penalty_min": null,
+    "penalty_max": "5 years (M1); 7 years (F3)",
+    "fine_max": "$10,000",
+    "elements": [
+      "As parent, guardian, or other person supervising child under 18",
+      "Knowingly endangered welfare of child by violating duty of care, protection, or support",
+      "OR, as adult, engaged in sexual activity or cohabited with person who committed child abuse"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3: course of conduct or child suffered serious bodily injury"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "18 Pa.C.S. § 2702(a)(1); 23 Pa.C.S. § 6303",
+    "statute_title": "Aggravated Assault / Child Abuse",
+    "offense_class": "Felony 1 (serious bodily injury); Felony 2 (serious bodily injury attempt)",
+    "penalty_min": null,
+    "penalty_max": "20 years (F1)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Caused serious bodily injury to a child",
+      "Intentionally, knowingly, or recklessly under circumstances manifesting extreme indifference to child welfare"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Pennsylvania Child Protective Services Law (23 Pa.C.S. § 6301) mandates reporting",
+      "Pattern of child abuse: additional charges under § 6303"
+    ],
+    "notes": "Child abuse charges prosecuted under criminal assault statutes. Child Protective Services Law governs civil reporting requirements."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "23 Pa.C.S. § 6114",
+    "statute_title": "Violation of Protection from Abuse Order",
+    "offense_class": "Misdemeanor 3 (1st offense); Misdemeanor 1 (2nd+); Felony 3 (weapon involved)",
+    "penalty_min": null,
+    "penalty_max": "1 year (M3); 5 years (M1); 7 years (F3)",
+    "fine_max": "$10,000",
+    "elements": [
+      "A Protection from Abuse (PFA) order was in effect",
+      "Defendant had notice of the order",
+      "Defendant violated any provision of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3: violation involving use of weapon",
+      "Each violation is a separate offense"
+    ],
+    "notes": "Pennsylvania PFA orders are issued under the Protection from Abuse Act (23 Pa.C.S. § 6101 et seq.)."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "18 Pa.C.S. § 2709.1",
+    "statute_title": "Stalking",
+    "offense_class": "Misdemeanor 1 (1st offense); Felony 3 (2nd+ offense or with court order in place)",
+    "penalty_min": null,
+    "penalty_max": "5 years (M1); 7 years (F3)",
+    "fine_max": "$10,000",
+    "elements": [
+      "On more than one occasion",
+      "Engaged in a course of conduct directed at a specific person",
+      "With intent to cause substantial emotional distress to the person",
+      "OR with intent to place the person in reasonable fear of bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3: second or subsequent offense, or defendant previously convicted of violent crime against victim"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "18 Pa.C.S. § 2709",
+    "statute_title": "Harassment",
+    "offense_class": "Summary; Misdemeanor 3 (repeated communications)",
+    "penalty_min": null,
+    "penalty_max": "90 days (summary); 1 year (M3)",
+    "fine_max": "$300 (summary); $2,500 (M3)",
+    "elements": [
+      "With intent to harass, annoy, or alarm another person",
+      "Struck, shoved, kicked, or otherwise subjected them to physical contact",
+      "OR followed them in public",
+      "OR engaged in a course of conduct or repeated acts which serve no legitimate purpose"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Misdemeanor 3 for course of conduct involving communication in obscene language"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "18 Pa.C.S. § 2713",
+    "statute_title": "Neglect of Care-Dependent Person",
+    "offense_class": "Misdemeanor 2; Felony 3 (great bodily harm or pattern of conduct)",
+    "penalty_min": null,
+    "penalty_max": "2 years (M2); 7 years (F3)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Knowingly endangered the welfare of a care-dependent person",
+      "By repeatedly failing to provide essential care or treatment",
+      "OR by abusing that person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3: course of conduct or great bodily injury results",
+      "Financial exploitation: separate offense under 18 Pa.C.S. § 3922 (theft by deception)"
+    ],
+    "notes": "Pennsylvania Older Adults Protective Services Act (35 P.S. § 10225.101) runs parallel to criminal prosecution."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "18 Pa.C.S. § 6105; 18 Pa.C.S. § 6106",
+    "statute_title": "Persons Not to Possess Firearms / Carrying Firearm Without License",
+    "offense_class": "Felony 2 (persons not to possess); Felony 3 (carrying without license)",
+    "penalty_min": null,
+    "penalty_max": "10 years (F2); 7 years (F3)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Possessed a firearm",
+      "While being a person prohibited from possessing firearms under 18 Pa.C.S. § 6105",
+      "OR carried a firearm in a vehicle or concealed without a valid license to carry (§ 6106)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Mandatory minimum 42 Pa.C.S. § 9712 if firearm visible during crime"
+    ],
+    "notes": "Pennsylvania requires a License to Carry Firearms (LTCF) issued by county sheriff for concealed or vehicle carry."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "18 Pa.C.S. § 6105",
+    "statute_title": "Persons Not to Possess, Use, Manufacture, Control, Sell or Transfer Firearms",
+    "offense_class": "Felony 2",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Convicted of enumerated offense (including any felony, misdemeanor punishable by imprisonment over 2 years, domestic violence misdemeanor)",
+      "Possessed, used, manufactured, controlled, sold, or transferred a firearm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Mandatory minimum under 42 Pa.C.S. § 9712 if firearm used in connection with another crime"
+    ],
+    "notes": "Pennsylvania § 6105 is broader than federal law — includes persons convicted of misdemeanors punishable by over 2 years and domestic violence misdemeanants."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "18 Pa.C.S. § 6106",
+    "statute_title": "Firearms Not to Be Carried Without a License",
+    "offense_class": "Felony 3",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Carried a firearm in a vehicle or concealed on or about person",
+      "Without a valid License to Carry Firearms (LTCF)",
+      "In any city of the first class (Philadelphia), in a vehicle, or in a place where carrying is restricted"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Misdemeanor 1 exception if person had right to possess firearm but simply lacked LTCF"
+    ],
+    "notes": "Pennsylvania LTCF issued by county sheriff or chief of police. Philadelphia has additional restrictions. Open carry without LTCF is generally legal except in Philadelphia."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "18 Pa.C.S. § 2707.1",
+    "statute_title": "Discharge of Firearm into an Occupied Structure",
+    "offense_class": "Felony 2",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Intentionally discharged a firearm",
+      "Into an occupied structure",
+      "Under circumstances manifesting extreme indifference to human life"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Additional charges for Reckless Endangerment (18 Pa.C.S. § 2705)"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "weapons-trafficking",
+    "statute_number": "18 Pa.C.S. § 6111",
+    "statute_title": "Sale or Transfer of Firearms",
+    "offense_class": "Felony 2 (sale to prohibited person); Misdemeanor 2 (procedural violations)",
+    "penalty_min": null,
+    "penalty_max": "10 years (F2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Sold, transferred, or delivered a firearm",
+      "To a person prohibited under 18 Pa.C.S. § 6105",
+      "OR without conducting required background check through dealer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Straw purchase: additional federal charges often accompany state charges"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "statute_number": "18 Pa.C.S. § 908",
+    "statute_title": "Prohibited Offensive Weapons",
+    "offense_class": "Misdemeanor 1",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Possessed, made, repaired, sold, or otherwise dealt in a prohibited offensive weapon",
+      "Including bombs, grenades, machine guns, sawed-off shotguns, blackjacks, sandbags, metal knuckles, or other weapons of destruction"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "unlawful-carry",
+    "statute_number": "18 Pa.C.S. § 6106",
+    "statute_title": "Firearms Not to Be Carried Without a License",
+    "offense_class": "Felony 3",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Carried a firearm in a vehicle or concealed on person",
+      "In any city of the first class or while in a vehicle anywhere in Pennsylvania",
+      "Without a valid License to Carry Firearms"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Same as concealed-carry-violation for Pennsylvania. Licensed to Carry Firearms (LTCF) is required for concealed carry and vehicle carry statewide."
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "statute_number": "18 Pa.C.S. § 3928; 18 Pa.C.S. § 4107",
+    "statute_title": "Deceptive Business Practices / Wire Fraud (state equivalent)",
+    "offense_class": "Misdemeanor 2 to Felony 3",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Used electronic communications to further a scheme to defraud",
+      "With intent to defraud another person of money or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wire fraud in Pennsylvania is typically prosecuted federally under 18 U.S.C. § 1343. State-level prosecution uses theft by deception or deceptive business practices statutes."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "18 Pa.C.S. § 4120",
+    "statute_title": "Identity Theft",
+    "offense_class": "Misdemeanor 1 (under $2,000); Felony 3 ($2,000 to $100,000); Felony 2 (over $100,000 or victim 60+)",
+    "penalty_min": null,
+    "penalty_max": "5 years (M1); 7 years (F3); 10 years (F2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Possesses or uses, through any means, identifying information of another person",
+      "Without the consent of that other person",
+      "To further any unlawful purpose"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 2: victim is 60 years of age or older or amount over $100,000"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "18 Pa.C.S. § 3927",
+    "statute_title": "Theft by Failure to Make Required Disposition of Funds (Embezzlement)",
+    "offense_class": "Same as theft based on amount",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3 if over $100,000)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Obtained property of another",
+      "Upon agreement or legal obligation to make specified payment or other disposition",
+      "Intentionally dealt with the property contrary to the agreement or legal obligation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Pennsylvania uses 'Theft by Failure to Make Required Disposition' for the embezzlement concept."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "18 Pa.C.S. § 4101",
+    "statute_title": "Forgery",
+    "offense_class": "Felony 2 (currency, money, securities, postage, revenue stamps); Felony 3 (public records, government instruments); Misdemeanor 1 (other writing)",
+    "penalty_min": null,
+    "penalty_max": "10 years (F2); 7 years (F3); 5 years (M1)",
+    "fine_max": "$25,000",
+    "elements": [
+      "With intent to defraud or injure another",
+      "Altered any writing of another without authority",
+      "OR made, completed, executed, authenticated, issued, or transferred any writing purporting to be the act of another",
+      "OR uttered any writing known to be forged"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "18 Pa.C.S. § 4105",
+    "statute_title": "Bad Checks",
+    "offense_class": "Summary (under $200); Misdemeanor 2 ($200-$500); Misdemeanor 1 ($500-$75,000); Felony 3 (over $75,000)",
+    "penalty_min": null,
+    "penalty_max": "90 days (summary); 2 years (M2); 5 years (M1); 7 years (F3)",
+    "fine_max": "$15,000",
+    "elements": [
+      "Issued or passed a check or similar sight order for payment of money",
+      "When at the time of issuance the issuer did not have sufficient funds in or credit with the drawee",
+      "And the issuer knew the check would not be honored"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "18 Pa.C.S. § 4117",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Felony 3",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Intentionally or knowingly presented false information to an insurance company",
+      "OR concealed information for the purpose of obtaining insurance benefits or proceeds",
+      "To which the person was not entitled"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 2 if involves arson or healthcare fraud over $100,000"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "18 Pa.C.S. § 4106",
+    "statute_title": "Access Device Fraud",
+    "offense_class": "Misdemeanor 1 (under $500); Felony 3 ($500-$1,000); Felony 2 (over $1,000)",
+    "penalty_min": null,
+    "penalty_max": "5 years (M1); 7 years (F3); 10 years (F2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Used an access device (credit card, debit card, account number)",
+      "To obtain money, goods, or services",
+      "Without authority of the cardholder"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "18 Pa.C.S. § 5111",
+    "statute_title": "Money Laundering",
+    "offense_class": "Felony 3 (under $100,000); Felony 2 (over $100,000)",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3); 10 years (F2)",
+    "fine_max": "Three times the amount involved",
+    "elements": [
+      "Conducted or attempted to conduct a financial transaction",
+      "Knowing the property represented proceeds of criminal activity",
+      "With intent to promote criminal activity, conceal the source or nature of proceeds, or avoid reporting requirements"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "18 Pa.C.S. § 3922",
+    "statute_title": "Theft by Deception",
+    "offense_class": "Same grading as theft based on value",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3 over $100,000)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Intentionally obtained property of another by deception",
+      "Created or reinforced a false impression (including false statements of fact, law, or intention)",
+      "OR prevented another from acquiring information that would have affected decision"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Pennsylvania uses 'Theft by Deception' (18 Pa.C.S. § 3922) for most general fraud conduct."
+  },
+  {
+    "common_charge_slug": "bank-fraud",
+    "statute_number": "18 Pa.C.S. § 3922; 18 Pa.C.S. § 4106",
+    "statute_title": "Theft by Deception / Access Device Fraud — Financial Institution",
+    "offense_class": "Felony 2 to Felony 3",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Intentionally obtained funds from a financial institution by deception or unauthorized access",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Bank fraud typically prosecuted federally under 18 U.S.C. § 1344. State prosecution uses theft by deception or access device fraud."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "18 Pa.C.S. § 3124.1",
+    "statute_title": "Sexual Assault",
+    "offense_class": "Felony 2",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Engaged in sexual intercourse or deviate sexual intercourse with a complainant",
+      "Without the complainant's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Rape (18 Pa.C.S. § 3121): Felony 1 — forcible compulsion or threat",
+      "Aggravated Indecent Assault (18 Pa.C.S. § 3125): Felony 2"
+    ],
+    "notes": "Pennsylvania has separate offense tiers: Rape (F1, with force), Sexual Assault (F2, without consent), and Aggravated Indecent Assault (F2)."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "18 Pa.C.S. § 3121",
+    "statute_title": "Rape",
+    "offense_class": "Felony 1",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Engaged in sexual intercourse with a complainant",
+      "By forcible compulsion or threat of forcible compulsion",
+      "OR by administering a drug or intoxicant that substantially impaired ability to resist",
+      "OR complainant was unconscious or unaware intercourse was occurring",
+      "OR complainant was less than 13 years of age"
+    ],
+    "mandatory_minimum": "10 years (42 Pa.C.S. § 9718) if victim under 16",
+    "enhancements": [
+      "Rape of child under 13: Felony 1 with 10-year mandatory minimum",
+      "SORNA registration required"
+    ],
+    "notes": "Pennsylvania retains 'rape' as a distinct offense title at Felony 1."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "18 Pa.C.S. § 3127",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Misdemeanor 2 (basic); Misdemeanor 1 (in presence of minor under 16)",
+    "penalty_min": null,
+    "penalty_max": "2 years (M2); 5 years (M1)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Exposed genitals in any public place",
+      "OR exposed genitals in any place where there were present other persons under circumstances in which the actor knew or should have known the conduct was likely to offend, affront, or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Misdemeanor 1 if person present was under 16 years of age",
+      "SORNA registration required for second offense or if minor victim"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "18 Pa.C.S. § 5902",
+    "statute_title": "Prostitution and Related Offenses",
+    "offense_class": "Summary (patronizing a prostitute); Misdemeanor 2 (soliciting or promoting)",
+    "penalty_min": null,
+    "penalty_max": "90 days (summary); 2 years (M2)",
+    "fine_max": "$500 (summary); $5,000 (M2)",
+    "elements": [
+      "Hired a prostitute or patronized prostitution",
+      "OR offered money or consideration to engage in sexual activity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3: patronizing a prostitute who is under 18 (trafficking provisions apply)"
+    ],
+    "notes": "Pennsylvania recently revised prostitution laws to focus prosecution on traffickers and buyers rather than persons who sell sex."
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "statute_number": "18 Pa.C.S. § 6318",
+    "statute_title": "Unlawful Contact with Minor",
+    "offense_class": "Felony 3 (contact); Felony 1 or 2 if underlying sexual offense would be F1/F2",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3); up to 20 years if underlying F1 offense",
+    "fine_max": "$25,000",
+    "elements": [
+      "Intentionally contacted a minor",
+      "For purpose of engaging in activity prohibited by law",
+      "Including via the internet, telephone, or any other means"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same grade as underlying sexual offense targeted",
+      "SORNA registration required"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "18 Pa.C.S. § 6312",
+    "statute_title": "Sexual Abuse of Children (Child Pornography)",
+    "offense_class": "Felony 3 (possession); Felony 2 (distribution); Felony 1 (production)",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3); 10 years (F2); 20 years (F1)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Photographed, videotaped, depicted, or recorded a minor engaging in sexual act",
+      "OR distributed or exhibited such material",
+      "OR knowingly possessed such material"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "SORNA Tier III (lifetime registration) for production",
+      "Mandatory consecutive sentences for multiple victims"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "18 Pa.C.S. § 4915.1",
+    "statute_title": "Failure to Comply with Registration of Sexual Offenders Requirements",
+    "offense_class": "Felony 3 (1st offense); Felony 2 (2nd+ offense)",
+    "penalty_min": null,
+    "penalty_max": "7 years (F3); 10 years (F2)",
+    "fine_max": "$15,000",
+    "elements": [
+      "Required to register as a sex offender under Pennsylvania's SORNA (Subchapter H or I)",
+      "Failed to register, verify, or provide required information within required timeframe"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 2 for second or subsequent failure to comply"
+    ],
+    "notes": "Pennsylvania's SORNA (Sexual Offender Registration and Notification Act) was substantially revised by Act 29 of 2018."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "18 Pa.C.S. § 3122.1",
+    "statute_title": "Statutory Sexual Assault",
+    "offense_class": "Felony 2 (4-8 year age gap); Felony 1 (11+ year age gap)",
+    "penalty_min": null,
+    "penalty_max": "10 years (F2); 20 years (F1)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Engaged in sexual intercourse with a complainant under 16 years of age",
+      "Defendant is four or more years older than the complainant",
+      "Complainant and defendant are not married to each other"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 1: defendant is 11 or more years older than victim",
+      "SORNA registration required"
+    ],
+    "notes": "Pennsylvania uses 'Statutory Sexual Assault' not 'statutory rape.' Age gap determines grading."
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "statute_number": "18 Pa.C.S. § 3125",
+    "statute_title": "Aggravated Indecent Assault",
+    "offense_class": "Felony 2 (basic); Felony 1 (victim under 13)",
+    "penalty_min": null,
+    "penalty_max": "10 years (F2); 20 years (F1)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Without the complainant's consent",
+      "Engaged in penetration, however slight, of the genitals or anus of the complainant with part of the defendant's body"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 1 if victim is under 13 years of age"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "statute_number": "18 Pa.C.S. § 3126",
+    "statute_title": "Indecent Assault",
+    "offense_class": "Misdemeanor 2 (basic); Misdemeanor 1 or Felony 3 (aggravated circumstances)",
+    "penalty_min": null,
+    "penalty_max": "2 years (M2); 5 years (M1); 7 years (F3)",
+    "fine_max": "$15,000",
+    "elements": [
+      "With indecent contact with another person",
+      "Without the person's consent",
+      "OR with person who is substantially impaired, incapacitated, or under 13"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Misdemeanor 1: indecent contact with person under 16",
+      "Felony 3: victim is under 13, or defendant previously convicted of sex offense"
+    ],
+    "notes": "Pennsylvania calls this 'Indecent Assault' — equivalent to sexual battery in other states."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "18 Pa.C.S. § 5503",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Summary; Misdemeanor 3 (intent to cause substantial harm or serious inconvenience)",
+    "penalty_min": null,
+    "penalty_max": "90 days (summary); 1 year (M3)",
+    "fine_max": "$300 (summary); $2,500 (M3)",
+    "elements": [
+      "With intent to cause public inconvenience, annoyance, or alarm, or recklessly creating risk thereof",
+      "Engaged in fighting or threatening, or in violent or tumultuous behavior",
+      "OR made unreasonable noise",
+      "OR used obscene language or made an obscene gesture",
+      "OR created hazardous or physically offensive condition"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "18 Pa.C.S. § 5104",
+    "statute_title": "Resisting Arrest or Other Law Enforcement",
+    "offense_class": "Misdemeanor 2",
+    "penalty_min": null,
+    "penalty_max": "2 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "With the intent to prevent a public servant from effecting a lawful arrest or discharging any other duty",
+      "Created a substantial risk of bodily injury to the public servant or anyone else",
+      "OR employed means justifying or requiring substantial force to overcome the resistance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated Assault charge (F1 or F2) if officer is injured"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "18 Pa.C.S. § 5101",
+    "statute_title": "Obstructing Administration of Law or Other Governmental Function",
+    "offense_class": "Misdemeanor 2",
+    "penalty_min": null,
+    "penalty_max": "2 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Intentionally obstructed, impaired, or perverted the administration of law",
+      "OR prevented or attempted to prevent a public servant from lawfully performing an official function",
+      "By means of intimidation, physical force or interference, breach of official duty, or any other unlawful act"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Tampering with Evidence (18 Pa.C.S. § 4910): Misdemeanor 2 to Felony 3",
+      "Witness Intimidation (18 Pa.C.S. § 4952): Felony 3"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "42 Pa.C.S. § 4131",
+    "statute_title": "Contempts",
+    "offense_class": "Misdemeanor (criminal contempt)",
+    "penalty_min": null,
+    "penalty_max": "6 months per count",
+    "fine_max": "$1,000",
+    "elements": [
+      "Misbehavior in presence of court or near thereto",
+      "Misbehavior of officers of court in official transactions",
+      "Disobedience or resistance to lawful process, judgment, decree, or order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Courts have inherent contempt power. Criminal contempt is separate from civil contempt (coercive)."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "18 Pa.C.S. § 5505",
+    "statute_title": "Public Drunkenness and Similar Misconduct",
+    "offense_class": "Summary",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$500 (1st); $1,000 (2nd+)",
+    "elements": [
+      "Appeared in a public place manifestly under the influence of alcohol or a controlled substance",
+      "To the degree that the person may endanger the person or other persons or property",
+      "OR annoy persons in the vicinity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Pennsylvania criminal public intoxication (§ 5505) is a summary offense. Unlike Illinois, Pennsylvania retains it as a criminal violation."
+  },
+  {
+    "common_charge_slug": "loitering",
+    "statute_number": "18 Pa.C.S. § 5506",
+    "statute_title": "Loitering and Prowling at Night Time",
+    "offense_class": "Summary",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$300",
+    "elements": [
+      "Loitered or prowled in a place at a time or in a manner not usual for law-abiding individuals",
+      "Under circumstances that warrant alarm for the safety of persons or property in the vicinity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "disturbing-peace",
+    "statute_number": "18 Pa.C.S. § 5503",
+    "statute_title": "Disorderly Conduct — Disturbing the Peace",
+    "offense_class": "Summary",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$300",
+    "elements": [
+      "Made unreasonable noise or engaged in tumultuous behavior",
+      "With intent to cause public inconvenience, annoyance, or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Pennsylvania consolidates disturbing the peace under Disorderly Conduct (18 Pa.C.S. § 5503)."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "18 Pa.C.S. § 5124",
+    "statute_title": "Default in Required Appearance",
+    "offense_class": "Misdemeanor 3 (misdemeanor underlying); Felony 3 (felony underlying)",
+    "penalty_min": null,
+    "penalty_max": "1 year (M3); 7 years (F3)",
+    "fine_max": "$2,500",
+    "elements": [
+      "Released on bail or recognizance in connection with a criminal proceeding",
+      "Failed to appear as required",
+      "Without lawful excuse"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "18 Pa.C.S. § 4906",
+    "statute_title": "False Reports to Law Enforcement Authorities",
+    "offense_class": "Misdemeanor 3 (basic); Misdemeanor 2 (false report of terrorism); Felony 3 (false report of terrorism causing evacuation)",
+    "penalty_min": null,
+    "penalty_max": "1 year (M3); 2 years (M2); 7 years (F3)",
+    "fine_max": "$2,500",
+    "elements": [
+      "Reported to law enforcement authorities an offense or other incident within their concern",
+      "Knowing that such offense or incident did not occur",
+      "OR provided false information to law enforcement"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3: false report causing evacuation of building or transportation vehicle"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "18 Pa.C.S. § 2706",
+    "statute_title": "Terroristic Threats",
+    "offense_class": "Misdemeanor 1 (basic); Felony 3 (threat to commit crime of violence with intent to terrorize)",
+    "penalty_min": null,
+    "penalty_max": "5 years (M1); 7 years (F3)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Communicated, directly or indirectly, a threat to",
+      "Commit any crime of violence with intent to terrorize another",
+      "OR cause evacuation of a building or place of assembly",
+      "OR otherwise cause serious public inconvenience"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony 3: threat causes evacuation or substantial disruption of school"
+    ],
+    "notes": "Pennsylvania calls criminal threats 'Terroristic Threats.' School threats are very aggressively prosecuted."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "42 Pa.C.S. § 9771",
+    "statute_title": "Modification or Revocation of Order of Probation",
+    "offense_class": "Dependent on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Full imprisonment sentence for underlying offense",
+    "fine_max": null,
+    "elements": [
+      "Was serving a term of probation",
+      "Violated condition of probation",
+      "Court must find violation by preponderance of evidence at revocation hearing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal conviction during probation: strong presumption for revocation"
+    ],
+    "notes": "Pennsylvania probation revocation hearings are before the sentencing judge. Commonwealth v. Simmons governs procedural requirements."
+  },
+  {
+    "common_charge_slug": "probation-violation-technical",
+    "statute_number": "42 Pa.C.S. § 9771",
+    "statute_title": "Technical Violation of Probation",
+    "offense_class": "Dependent on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Full probation sentence",
+    "fine_max": null,
+    "elements": [
+      "Failed to report to probation officer",
+      "Failed to pay restitution or fines",
+      "Failed to complete community service",
+      "Failed drug or alcohol test",
+      "OR other non-criminal condition violation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Pennsylvania legislature enacted Act 115 of 2019 requiring judges to consider graduated sanctions before imprisoning for technical probation violations."
+  },
+  {
+    "common_charge_slug": "probation-violation-substantive",
+    "statute_number": "42 Pa.C.S. § 9771",
+    "statute_title": "Substantive Violation of Probation — New Offense",
+    "offense_class": "Underlying offense class",
+    "penalty_min": null,
+    "penalty_max": "Full original sentence",
+    "fine_max": null,
+    "elements": [
+      "Committed a new criminal offense while on probation",
+      "New offense established by preponderance or separate criminal conviction"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Revocation and imposition of original sentence is presumptive for new felony during probation"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "61 Pa.C.S. § 6138",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Administrative — Pennsylvania Board of Probation and Parole proceeding",
+    "penalty_min": null,
+    "penalty_max": "Return to prison for remainder of sentence",
+    "fine_max": null,
+    "elements": [
+      "Released on parole by PBPP",
+      "Violated conditions of parole (new offense, absconder, failed drug test, etc.)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New crime during parole: mandatory return to prison plus new sentence consecutive"
+    ],
+    "notes": "Pennsylvania has a Board of Probation and Parole (PBPP) that handles state parole violations. County probation violations are handled by courts."
+  },
+  {
+    "common_charge_slug": "supervised-release-violation",
+    "statute_number": "61 Pa.C.S. § 6138",
+    "statute_title": "Parole Violation — Supervised Release",
+    "offense_class": "Administrative proceeding before PBPP",
+    "penalty_min": null,
+    "penalty_max": "Return to PDOC for balance of sentence",
+    "fine_max": null,
+    "elements": [
+      "Released on state parole or supervision",
+      "Violated conditions of supervision"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Pennsylvania uses 'parole' not 'supervised release.' PBPP handles state-level violations."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "18 Pa.C.S. § 903",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "Same grade as most serious offense that is object of conspiracy",
+    "penalty_min": null,
+    "penalty_max": "Same as underlying offense",
+    "fine_max": "$25,000",
+    "elements": [
+      "With intent of promoting or facilitating commission of a crime",
+      "Agreed with another person that they or one of them would engage in conduct which constitutes such crime",
+      "OR agreed to aid such other person in the planning or commission of such crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Pennsylvania conspiracy is graded same as the target offense (not one class lower like Illinois)",
+      "Overt act required only if conspiracy is Misdemeanor 1 or lower"
+    ],
+    "notes": "Pennsylvania conspiracy is graded the same as the underlying offense, unlike Illinois which grades it one class lower."
+  },
+  {
+    "common_charge_slug": "rico",
+    "statute_number": "18 Pa.C.S. § 911",
+    "statute_title": "Corrupt Organizations (Pennsylvania RICO equivalent)",
+    "offense_class": "Felony 1",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$25,000 or three times the gain from the violation",
+    "elements": [
+      "Was employed by or associated with an enterprise",
+      "Conducted or participated in conduct of enterprise's affairs",
+      "Through a pattern of racketeering activity",
+      "OR through collection of unlawful debt"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Civil forfeiture of proceeds",
+      "Federal RICO (18 U.S.C. § 1962) often charged in parallel"
+    ],
+    "notes": "Pennsylvania's Corrupt Organizations statute (18 Pa.C.S. § 911) is the state-level RICO equivalent."
+  },
+  {
+    "common_charge_slug": "self-defense",
+    "statute_number": "18 Pa.C.S. § 505",
+    "statute_title": "Use of Force in Self-Protection — Affirmative Defense",
+    "offense_class": "Justification defense — not a criminal charge",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": null,
+    "elements": [
+      "Defendant believed use of force was immediately necessary",
+      "To protect themselves against use of unlawful force by another",
+      "Belief was not reckless or negligent and force used was not excessive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Pennsylvania Castle Doctrine codified at 18 Pa.C.S. § 505(b)(2.1) — no duty to retreat in dwelling or workplace. Stand Your Ground: no duty to retreat if not the initial aggressor."
+  },
+  {
+    "common_charge_slug": "other",
+    "statute_number": "N/A",
+    "statute_title": "Other Pennsylvania Criminal Offense",
+    "offense_class": "Varies",
+    "penalty_min": null,
+    "penalty_max": "Varies",
+    "fine_max": null,
+    "elements": [],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Placeholder for Pennsylvania charges not covered by specific taxonomy entries. Consult 18 Pa.C.S. (Crimes Code), 35 P.S. (Drug Device and Cosmetic Act), and 75 Pa.C.S. (Vehicle Code)."
+  }
+]

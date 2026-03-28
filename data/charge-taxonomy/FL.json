@@ -1,0 +1,2122 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "316.193",
+    "statute_title": "Driving Under the Influence",
+    "offense_class": "2nd Degree Misdemeanor (first, no aggravators); 1st Degree Misdemeanor (BAC .15+ or minor present); 3rd Degree Felony (third within 10 years or fourth+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 9 months (BAC .15+/minor, first); 5 years (third within 10 yrs or fourth+)",
+    "fine_max": "$1,000 (first); $2,000 (BAC .15+/minor); $5,000 (third/subsequent)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While driving, defendant was under the influence of alcoholic beverages, chemical substances, or controlled substances",
+      "Influence impaired defendant's normal faculties, OR defendant had a BAC of .08 or higher"
+    ],
+    "mandatory_minimum": "8 hours imprisonment or community service (first offense); 10 days imprisonment if BAC .15+ or minor present",
+    "enhancements": [
+      "BAC .15 or higher",
+      "Minor in vehicle",
+      "Third conviction within 10 years (3rd degree felony)",
+      "Fourth or subsequent conviction (3rd degree felony)",
+      "Serious bodily injury (3rd degree felony under § 316.193(3)(c)2)",
+      "Death resulting (DUI manslaughter — 2nd degree felony under § 316.193(3)(c)3)"
+    ],
+    "notes": "Implied consent statute § 316.1932. Administrative license suspension separate from criminal penalties. Ignition interlock required for repeat offenses and first-offense BAC .15+."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "316.193(2)(a)",
+    "statute_title": "Driving Under the Influence — First Offense",
+    "offense_class": "2nd Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While driving, defendant was under the influence of alcohol or controlled substances",
+      "Normal faculties impaired OR BAC .08 or higher",
+      "No prior DUI convictions"
+    ],
+    "mandatory_minimum": "Not less than 8 hours imprisonment or community service; 50 hours community service",
+    "enhancements": [
+      "BAC .15 or higher (9-month max, $2,000 fine)",
+      "Minor in vehicle (same enhancement)"
+    ],
+    "notes": "Probation up to 1 year. Vehicle impoundment 10 days. 50 hours community service required. First offense is 2nd degree misdemeanor in FL absent aggravating factors."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "316.193(2)(b)",
+    "statute_title": "Driving Under the Influence — Repeat Offense",
+    "offense_class": "1st Degree Misdemeanor (second); 3rd Degree Felony (third within 10 years or fourth+)",
+    "penalty_min": "10 days (second offense); 30 days (third within 10 years)",
+    "penalty_max": "9 months (second); 5 years (third within 10 years or fourth+)",
+    "fine_max": "$2,000 (second); $5,000 (third/subsequent)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While driving, defendant was under the influence",
+      "Normal faculties impaired OR BAC .08 or higher",
+      "One or more prior DUI convictions"
+    ],
+    "mandatory_minimum": "10 days (second offense); 30 days (third within 10 years)",
+    "enhancements": [
+      "Third conviction within 10 years (3rd degree felony mandatory)",
+      "Fourth conviction regardless of time (3rd degree felony)",
+      "Prior DUI manslaughter (permanent revocation)"
+    ],
+    "notes": "Mandatory ignition interlock 1 year on second offense; 2 years if BAC .15+. Permanent license revocation possible for fourth or subsequent."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "316.193(1)(b)",
+    "statute_title": "DUI — Chemical or Controlled Substance",
+    "offense_class": "2nd Degree Misdemeanor (first offense); escalates same as alcohol DUI",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); same escalation as alcohol DUI on subsequent offenses",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While driving, defendant was under the influence of a chemical substance listed in § 877.111 or a controlled substance under Chapter 893",
+      "Influence impaired defendant's normal faculties"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prescription drugs taken outside prescribed manner",
+      "Multiple substances combined",
+      "Prior DUI conviction"
+    ],
+    "notes": "Florida has no per se drug impairment limit. Prosecution must prove impairment of normal faculties. Drug Recognition Expert (DRE) testimony commonly used. DREC evaluation results admissible."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "316.192",
+    "statute_title": "Reckless Driving",
+    "offense_class": "2nd Degree Misdemeanor (no injury/damage); 1st Degree Misdemeanor (with property damage/personal injury)",
+    "penalty_min": null,
+    "penalty_max": "90 days (first, no injury); 6 months (second+ or with damage); 5 years (serious bodily injury — 3rd degree felony)",
+    "fine_max": "$500 (first); $1,000 (second+); $5,000 (serious bodily injury)",
+    "elements": [
+      "Defendant drove a vehicle in Florida",
+      "Defendant drove with willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Property damage or personal injury (1st degree misdemeanor)",
+      "Serious bodily injury (3rd degree felony)",
+      "Second or subsequent conviction ($1,000 minimum fine)"
+    ],
+    "notes": "Willful and wanton disregard is a higher standard than mere negligence. Commonly charged alongside or as lesser-included of DUI. Racing on public roads is a separate offense under § 316.191."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "316.061 / 316.027",
+    "statute_title": "Leaving the Scene of a Crash",
+    "offense_class": "2nd Degree Misdemeanor (property damage only); 3rd Degree Felony (injury); 2nd Degree Felony (serious bodily injury); 1st Degree Felony (death)",
+    "penalty_min": null,
+    "penalty_max": "60 days (property); 5 years (injury); 15 years (serious bodily injury); 30 years (death)",
+    "fine_max": "$500; $5,000; $10,000; $10,000",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in a crash",
+      "The crash resulted in property damage, injury, or death",
+      "Defendant knew or reasonably should have known of the crash",
+      "Defendant willfully failed to stop and remain at the scene or provide required information"
+    ],
+    "mandatory_minimum": "4 years (death — § 316.027(2)(c))",
+    "enhancements": [
+      "Serious bodily injury (2nd degree felony)",
+      "Death (1st degree felony, 4-year mandatory minimum)",
+      "Prior conviction"
+    ],
+    "notes": "§ 316.027 governs crashes with injury/death; § 316.061 governs property-only crashes. Mandatory 4-year minimum for death with failure to stop under § 316.027(2)(c)."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "782.071",
+    "statute_title": "Vehicular Homicide",
+    "offense_class": "2nd Degree Felony; 1st Degree Felony (failure to stop and render aid)",
+    "penalty_min": null,
+    "penalty_max": "15 years (2nd degree); 30 years (with failure to stop)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "The operation caused the death of a human being or viable fetus",
+      "Operation was reckless — showing conscious disregard for the safety of others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Failure to stop and render aid (upgrades to 1st degree felony)",
+      "Multiple victims",
+      "Prior convictions"
+    ],
+    "notes": "Distinguished from DUI manslaughter (§ 316.193(3)) — vehicular homicide does not require alcohol/drug impairment as a primary element. Both can be charged for the same incident."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "316.193(3)(c)3",
+    "statute_title": "DUI Manslaughter",
+    "offense_class": "2nd Degree Felony; 1st Degree Felony (leaving scene)",
+    "penalty_min": "4 years (mandatory minimum)",
+    "penalty_max": "15 years (2nd degree); 30 years (1st degree)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant operated a motor vehicle while under the influence",
+      "Operation caused the death of a human being or viable unborn child"
+    ],
+    "mandatory_minimum": "4 years (§ 775.082); permanent driver license revocation",
+    "enhancements": [
+      "Leaving scene (1st degree felony, 30-year max)",
+      "BAC .15 or higher",
+      "Prior DUI conviction"
+    ],
+    "notes": "Level 8 offense under Florida's Criminal Punishment Code — state prison presumptive. Mandatory 4-year minimum cannot be suspended. Permanent revocation of driver's license."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "322.34",
+    "statute_title": "Driving While License Suspended, Revoked, or Cancelled",
+    "offense_class": "2nd Degree Misdemeanor (first); 1st Degree Misdemeanor (second); 3rd Degree Felony (HTO or third+)",
+    "penalty_min": null,
+    "penalty_max": "60 days (first); 1 year (second); 5 years (HTO/third+)",
+    "fine_max": "$500; $1,000; $5,000",
+    "elements": [
+      "Defendant drove a motor vehicle on a public road or highway",
+      "Defendant's license or driving privilege was suspended, revoked, or cancelled",
+      "Defendant had knowledge of the suspension (or constructive notice via mail)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Habitual Traffic Offender (HTO) designation — 3rd degree felony",
+      "Suspension for DUI (elevated penalties)",
+      "Prior conviction within 5 years"
+    ],
+    "notes": "HTO under § 322.264 requires 3+ major violations within 5 years. Knowledge established by proof DMV sent suspension notice. Civil citation available for some violations."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "316.1935",
+    "statute_title": "Fleeing or Attempting to Elude a Law Enforcement Officer",
+    "offense_class": "3rd Degree Felony (basic); 2nd Degree Felony (high speed/reckless); 1st Degree Felony (serious bodily injury or death)",
+    "penalty_min": null,
+    "penalty_max": "5 years (basic); 15 years (high speed); 30 years (injury/death)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was the operator of a motor vehicle",
+      "A law enforcement officer in an authorized patrol vehicle with visible emergency lights and siren activated ordered defendant to stop",
+      "Defendant willfully fled or attempted to elude the officer"
+    ],
+    "mandatory_minimum": "3 years (§ 316.1935(4) — high-speed fleeing causing serious injury or death)",
+    "enhancements": [
+      "High speed or reckless driving (2nd degree felony)",
+      "Serious bodily injury resulting (2nd degree felony)",
+      "Death resulting (1st degree felony)"
+    ],
+    "notes": "Both siren and lights must be activated. Mandatory 3-year minimum for high-speed fleeing causing serious injury. License revocation mandatory."
+  },
+  {
+    "common_charge_slug": "open-container",
+    "statute_number": "316.1936",
+    "statute_title": "Possession of Open Container of Alcoholic Beverage in Vehicle",
+    "offense_class": "2nd Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant was the operator or passenger of a vehicle on a public highway",
+      "A container of alcoholic beverage with broken seal, missing cap, or partially removed contents was in the passenger area",
+      "Defendant possessed the open container"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Trunk, locked glove box, or behind last upright rear seat in vehicles without trunks are exceptions. Civil infraction option for passengers in some circumstances."
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "statute_number": "316.1932",
+    "statute_title": "Implied Consent — Refusal to Submit to Test",
+    "offense_class": "Civil infraction (first); 1st Degree Misdemeanor (second or subsequent refusal)",
+    "penalty_min": null,
+    "penalty_max": "1 year (criminal second refusal)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant was lawfully arrested for DUI",
+      "Officer requested defendant submit to breath, blood, or urine test",
+      "Defendant was informed of consequences of refusal",
+      "Defendant refused to submit"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent refusal (1st degree misdemeanor criminal charge)",
+      "Commercial vehicle refusal"
+    ],
+    "notes": "First refusal: 12-month administrative license suspension. Second refusal: 18-month administrative suspension PLUS 1st degree misdemeanor. Refusal admissible as evidence of consciousness of guilt."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "893.13(6)(a)",
+    "statute_title": "Possession of Controlled Substance",
+    "offense_class": "1st Degree Misdemeanor (Schedule III-IV small amount); 3rd Degree Felony (Schedule I-II)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (3rd degree felony)",
+    "fine_max": "$1,000; $5,000",
+    "elements": [
+      "Defendant knew of the presence of the substance",
+      "Defendant had actual or constructive possession",
+      "The substance was a controlled substance under Chapter 893"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Within 1,000 feet of school, park, or other protected location (§ 893.13(1)(c)) — 1st degree felony",
+      "Within 200 feet of public housing",
+      "Amount triggering trafficking threshold (§ 893.135)"
+    ],
+    "notes": "Florida eliminated knowledge-of-illicit-nature element (§ 893.101). Knowledge of presence sufficient. Drug Court available for eligible defendants."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "893.13(6)(b)",
+    "statute_title": "Possession of Cannabis",
+    "offense_class": "1st Degree Misdemeanor (20 grams or less); 3rd Degree Felony (more than 20 grams)",
+    "penalty_min": null,
+    "penalty_max": "1 year (20g or less); 5 years (over 20g)",
+    "fine_max": "$1,000; $5,000",
+    "elements": [
+      "Defendant knew of the presence of the cannabis",
+      "Defendant had actual or constructive possession",
+      "Substance was cannabis as defined in § 893.02"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "More than 20 grams (felony threshold)",
+      "Within 1,000 feet of school",
+      "25+ lbs triggers trafficking (§ 893.135)"
+    ],
+    "notes": "Medical marijuana defense available under Art. X, § 29 and § 381.986 for licensed holders. Recreational marijuana remained illegal (Amendment 3 failed Nov 2024). Many counties have civil citation ordinances for small amounts."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "893.13(6)(a)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knew of the presence of cocaine",
+      "Defendant had actual or constructive possession",
+      "Substance was cocaine — Schedule II under § 893.03"
+    ],
+    "mandatory_minimum": "3 years (if 28 grams — trafficking threshold under § 893.135)",
+    "enhancements": [
+      "28g+ trafficking (3-year mandatory minimum)",
+      "200g+ (7-year mandatory minimum)",
+      "400g+ (15-year mandatory minimum)",
+      "Within 1,000 feet of school (2nd degree felony)"
+    ],
+    "notes": "Cocaine is Schedule II. Simple possession under 28g is 3rd degree felony. Lab confirmation required. Chain of custody is a critical defense issue."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "893.13(6)(a)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knew of the presence of methamphetamine",
+      "Defendant had actual or constructive possession",
+      "Substance was methamphetamine — Schedule II"
+    ],
+    "mandatory_minimum": "3 years (14 grams trafficking threshold under § 893.135(1)(d))",
+    "enhancements": [
+      "14g+ trafficking (3-year mandatory minimum)",
+      "28g+ (7-year mandatory minimum)",
+      "200g+ (15-year mandatory minimum)",
+      "Within 1,000 feet of school"
+    ],
+    "notes": "Meth trafficking thresholds lower than cocaine. Prior drug conviction can trigger habitual offender sentencing."
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "statute_number": "893.13(6)(a)",
+    "statute_title": "Possession of Heroin, Fentanyl, or Opioids",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knew of the presence of the opioid substance",
+      "Defendant had actual or constructive possession",
+      "Substance was a Schedule I or II opioid (heroin, fentanyl, oxycodone, etc.)"
+    ],
+    "mandatory_minimum": "3 years (4 grams fentanyl/heroin trafficking under § 893.135)",
+    "enhancements": [
+      "Fentanyl 4g+ trafficking (3-year mandatory minimum)",
+      "14g+ (7-year minimum)",
+      "28g+ (15-year minimum)",
+      "Fentanyl causing death (1st degree murder per § 782.04(1)(a)2.z — 2023 law)",
+      "Within 1,000 feet of school"
+    ],
+    "notes": "2023 law: delivering fentanyl that causes death can be charged as 1st degree murder. Fentanyl and fentanyl analogs share the 4-gram trafficking threshold. Heroin threshold is also 4 grams."
+  },
+  {
+    "common_charge_slug": "drug-possession-prescription",
+    "statute_number": "893.13(7)(a)1",
+    "statute_title": "Possession of Prescription Drug Without Valid Prescription",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a prescription drug",
+      "Defendant did not have a valid prescription from a licensed practitioner",
+      "OR Defendant obtained the prescription by fraud, misrepresentation, or deception"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Doctor shopping (multiple prescriptions from different practitioners)",
+      "Large quantity",
+      "Distribution or sale"
+    ],
+    "notes": "Valid prescription is an affirmative defense. Pill bottle with someone else's name does not establish a valid prescription for the defendant."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "893.135",
+    "statute_title": "Drug Trafficking",
+    "offense_class": "1st Degree Felony",
+    "penalty_min": "3 years (minimum varies by substance and amount)",
+    "penalty_max": "Life (certain substances/amounts)",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant knowingly sold, purchased, manufactured, delivered, or brought into Florida, or was in actual or constructive possession of a controlled substance",
+      "The quantity met or exceeded the trafficking threshold for that substance"
+    ],
+    "mandatory_minimum": "3 years (cocaine 28g, heroin/fentanyl 4g, meth 14g, cannabis 25 lbs); escalates to 7, 15, 25 years, or life based on quantity",
+    "enhancements": [
+      "Highest quantity tier (capital trafficking — life or 25-year minimum)",
+      "Use of minor in trafficking",
+      "Near school",
+      "Substantial assistance cooperation (§ 893.135(4)) — only way to mitigate mandatory minimum"
+    ],
+    "notes": "Mandatory minimums cannot be suspended, deferred, or withheld. Knowledge of illicit nature is NOT an element per § 893.101. Substantial assistance is the primary mitigation route."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "893.13(1)(a)",
+    "statute_title": "Sale, Manufacture, or Delivery of Controlled Substance",
+    "offense_class": "2nd Degree Felony (Schedule I-II); 3rd Degree Felony (Schedule III-IV)",
+    "penalty_min": null,
+    "penalty_max": "15 years (Schedule I-II); 5 years (Schedule III-IV)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant sold, manufactured, or delivered a controlled substance",
+      "OR Defendant possessed a controlled substance with intent to sell, manufacture, or deliver",
+      "Substance was a controlled substance under Chapter 893"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Within 1,000 feet of school, park, or playground (1st degree felony)",
+      "Within 1,000 feet of place of worship (1st degree felony)",
+      "Sale to minor (1st degree felony)",
+      "Within 200 feet of public housing"
+    ],
+    "notes": "Location-enhanced charges carry significantly higher penalties. Constructive possession plus indicia (scales, bags, cash, messages) supports intent charge."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "893.13(1)(a)",
+    "statute_title": "Manufacturing Controlled Substance",
+    "offense_class": "2nd Degree Felony (Schedule I-II); 3rd Degree Felony (Schedule III-IV)",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant manufactured a controlled substance",
+      "Substance was a controlled substance under Chapter 893",
+      "Defendant acted knowingly"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Meth lab with child present",
+      "Use of hazardous waste",
+      "Fire or explosion resulting"
+    ],
+    "notes": "Manufacturing includes production, preparation, propagation, compounding, or processing. Marijuana cultivation included. Meth lab contamination may implicate additional environmental liability."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "893.147",
+    "statute_title": "Use or Possession of Drug Paraphernalia",
+    "offense_class": "1st Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant used or possessed with intent to use drug paraphernalia",
+      "Paraphernalia was used or intended to be used in connection with a controlled substance",
+      "Defendant acted knowingly"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sale to minor (3rd degree felony)",
+      "Manufacture or distribution (3rd degree felony)"
+    ],
+    "notes": "Paraphernalia defined broadly in § 893.145 — pipes, syringes, rolling papers, scales. Intent inferred from proximity to drugs, residue, and statements."
+  },
+  {
+    "common_charge_slug": "prescription-fraud",
+    "statute_number": "831.02",
+    "statute_title": "Uttering a Forged Prescription",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant uttered, published, or passed a forged prescription",
+      "Defendant knew the prescription was forged",
+      "Defendant acted with intent to injure or defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple forged prescriptions (each counts separately)",
+      "Doctor shopping in combination",
+      "Opioid prescriptions"
+    ],
+    "notes": "Also prosecuted under § 893.13(7)(a) for obtaining controlled substance by fraud. Both charges often filed simultaneously. Pharmacy surveillance footage commonly used."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "893.13(1)(a)2",
+    "statute_title": "Possession with Intent to Sell or Deliver",
+    "offense_class": "2nd Degree Felony (Schedule I-II); 3rd Degree Felony (Schedule III-V)",
+    "penalty_min": null,
+    "penalty_max": "15 years (Schedule I-II); 5 years (Schedule III-V)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "Defendant possessed with specific intent to sell or deliver",
+      "Substance was a controlled substance under Chapter 893"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near school/park/church (1st degree felony)",
+      "Large quantity",
+      "Packaging in individual units"
+    ],
+    "notes": "Intent proven circumstantially through quantity, packaging, scales, cash, and text messages. Actual sale need not be proven."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "782.04(1)",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Capital Felony; Life Felony",
+    "penalty_min": "Life without parole (if death penalty not sought)",
+    "penalty_max": "Death",
+    "fine_max": null,
+    "elements": [
+      "Defendant unlawfully killed a human being",
+      "The killing was premeditated (prior deliberation and reflection), OR",
+      "The killing occurred during perpetration or attempted perpetration of an enumerated felony (felony murder)"
+    ],
+    "mandatory_minimum": "Life without possibility of parole",
+    "enhancements": [
+      "Law enforcement officer victim",
+      "Multiple victims",
+      "Heinous, atrocious, or cruel manner",
+      "Prior capital felony conviction",
+      "Victim under 12",
+      "Hate crime motivation",
+      "Drug-induced homicide (fentanyl) added 2023"
+    ],
+    "notes": "Post-Hurst v. Florida (2016) — jury must unanimously recommend death. Felony murder predicate felonies listed in § 782.04(1)(a)2. Fentanyl-induced death added as predicate 2023."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "782.04(2)",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "1st Degree Felony (Punishable by Life)",
+    "penalty_min": null,
+    "penalty_max": "Life",
+    "fine_max": null,
+    "elements": [
+      "Defendant unlawfully killed a human being",
+      "The killing was by an act imminently dangerous to another evincing a depraved mind",
+      "Defendant had no premeditated design to cause death"
+    ],
+    "mandatory_minimum": "16.75 years (Criminal Punishment Code Level 10 scoresheet)",
+    "enhancements": [
+      "Firearm possession (10-20-Life — § 775.087)",
+      "Discharge of firearm (20-year mandatory minimum)",
+      "Death by firearm (25-year mandatory minimum)",
+      "Victim under 18"
+    ],
+    "notes": "Depraved mind murder requires conduct that was extremely dangerous and showed no regard for human life. Less culpable mental state than 1st degree but often charged together as alternative counts."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "782.07",
+    "statute_title": "Manslaughter",
+    "offense_class": "2nd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant killed a human being",
+      "Killing was the result of culpable negligence, OR",
+      "Killing occurred in sudden heat of passion resulting from adequate provocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Firearm use (10-20-Life)",
+      "Victim under 18 (aggravated manslaughter — 1st degree felony)",
+      "Victim elderly or disabled (aggravated manslaughter)",
+      "Law enforcement officer victim (aggravated manslaughter)"
+    ],
+    "notes": "Aggravated manslaughter provisions in § 782.07(2)-(4) carry 30-year maximum. Florida treats voluntary and involuntary manslaughter under same statute."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "782.07",
+    "statute_title": "Manslaughter by Culpable Negligence",
+    "offense_class": "2nd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant killed a human being",
+      "Death resulted from defendant's culpable negligence",
+      "Culpable negligence is gross and flagrant, showing reckless disregard for human life"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 18 (aggravated manslaughter of a child — 1st degree felony)",
+      "Victim elderly or disabled",
+      "Law enforcement officer"
+    ],
+    "notes": "Culpable negligence standard is higher than civil negligence — more than simple carelessness. Child abuse resulting in death typically charged as aggravated manslaughter of a child."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "784.021",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant intentionally and unlawfully threatened by word or act to do violence to the victim",
+      "Defendant appeared to have the ability to carry out the threat",
+      "The act created a well-founded fear in the victim that violence was imminent",
+      "The assault was made with a deadly weapon without intent to kill, OR with intent to commit a felony"
+    ],
+    "mandatory_minimum": "3 years (10-20-Life if firearm carried); 20 years (firearm discharged)",
+    "enhancements": [
+      "10-20-Life firearm enhancement",
+      "Victim is law enforcement (2nd degree felony)",
+      "Victim under 12 (1st degree felony)",
+      "Hate crime designation"
+    ],
+    "notes": "Assault in Florida requires NO physical contact — it is the threat plus reasonable fear. Battery (§ 784.03) requires actual contact."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "784.011",
+    "statute_title": "Assault",
+    "offense_class": "2nd Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant intentionally and unlawfully threatened by word or act to do violence to the victim",
+      "Defendant appeared to have the ability to carry out the threat",
+      "The act created a well-founded fear in the victim that violence was imminent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is law enforcement (felony upgrade)",
+      "Use of weapon (elevates to aggravated assault)"
+    ],
+    "notes": "Simple assault requires no physical contact — purely threat-based. Often filed with disorderly conduct."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "784.03",
+    "statute_title": "Battery",
+    "offense_class": "1st Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant actually and intentionally touched or struck the victim against the victim's will",
+      "OR Defendant intentionally caused bodily harm to the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior battery conviction (felony battery — 3rd degree felony)",
+      "Victim is law enforcement, firefighter, healthcare worker (felony battery)",
+      "Strangulation (§ 784.041 — 3rd degree felony)",
+      "Victim pregnant or elderly"
+    ],
+    "notes": "Battery requires actual physical contact; assault does not. Domestic battery (§ 741.028) requires mandatory arrest. Prior battery conviction raises to 3rd degree felony."
+  },
+  {
+    "common_charge_slug": "aggravated-battery",
+    "statute_number": "784.045",
+    "statute_title": "Aggravated Battery",
+    "offense_class": "2nd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally touched or struck the victim",
+      "Defendant intentionally or knowingly caused great bodily harm, permanent disability, or permanent disfigurement",
+      "OR Defendant used a deadly weapon during the battery"
+    ],
+    "mandatory_minimum": "10 years (§ 775.087 10-20-Life if firearm used)",
+    "enhancements": [
+      "10-20-Life firearm enhancement",
+      "Victim is law enforcement (1st degree felony)",
+      "Victim elderly or disabled (1st degree felony — § 784.08)",
+      "Victim pregnant",
+      "Hate crime"
+    ],
+    "notes": "Great bodily harm is a higher standard than bodily harm. Aggravated battery on pregnant woman is 1st degree felony under § 784.045(1)(b)."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "812.13",
+    "statute_title": "Robbery",
+    "offense_class": "2nd Degree Felony (no weapon); 1st Degree Felony (weapon); Life Felony (firearm or deadly weapon)",
+    "penalty_min": null,
+    "penalty_max": "15 years (no weapon); 30 years (with weapon); Life (firearm/deadly weapon)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant took money or other property from the victim or victim's custody",
+      "Defendant used force, violence, assault, or putting in fear",
+      "Defendant intended to permanently or temporarily deprive the victim of the property"
+    ],
+    "mandatory_minimum": "10 years (10-20-Life if firearm carried)",
+    "enhancements": [
+      "10-20-Life firearm enhancement",
+      "Victim elderly or disabled",
+      "Home invasion robbery (1st degree felony — § 812.135)",
+      "Multiple victims"
+    ],
+    "notes": "Home invasion robbery (§ 812.135) is a 1st degree felony with potential life sentence. Carjacking (§ 812.133) is a separate charge."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "812.13(2)(a)",
+    "statute_title": "Robbery with a Firearm or Deadly Weapon",
+    "offense_class": "Life Felony",
+    "penalty_min": "10 years (10-20-Life)",
+    "penalty_max": "Life",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant took money or other property from the victim",
+      "Defendant used force, violence, assault, or putting in fear",
+      "Defendant carried a firearm or other deadly weapon during the robbery"
+    ],
+    "mandatory_minimum": "10 years (§ 775.087); 20 years if firearm discharged; 25 years if death or serious bodily injury",
+    "enhancements": [
+      "Firearm discharged (20-year mandatory minimum)",
+      "Death or serious bodily injury (25-year mandatory minimum)",
+      "Multiple victims",
+      "Mask worn"
+    ],
+    "notes": "Life felony — maximum life imprisonment. 10-20-Life mandatory minimums cannot be suspended. Firearm need not be loaded or functional for enhancement to apply."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "787.01",
+    "statute_title": "Kidnapping",
+    "offense_class": "1st Degree Felony (Punishable by Life)",
+    "penalty_min": null,
+    "penalty_max": "Life",
+    "fine_max": null,
+    "elements": [
+      "Defendant forcibly, secretly, or by threat confined, abducted, imprisoned, or restrained the victim against his or her will",
+      "Defendant did so without lawful authority",
+      "Defendant intended to: hold for ransom, use as shield/hostage, commit or facilitate a felony, inflict bodily harm, terrorize, or interfere with government functions"
+    ],
+    "mandatory_minimum": "Life if victim under 13 and defendant also convicted of sexual battery",
+    "enhancements": [
+      "Victim under 13 (life felony; capital if sexual battery also charged)",
+      "Firearm use (10-20-Life)",
+      "Victim law enforcement"
+    ],
+    "notes": "False imprisonment (§ 787.02) is the lesser offense without the felony-intent requirement. Movement must be more than incidental to separate kidnapping from false imprisonment."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "806.01",
+    "statute_title": "Arson",
+    "offense_class": "1st Degree Felony (occupied structure or dwelling); 2nd Degree Felony (unoccupied structure)",
+    "penalty_min": null,
+    "penalty_max": "30 years (1st degree); 15 years (2nd degree)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant willfully and unlawfully, or while committing a felony, by fire or explosion",
+      "Damaged or caused to be damaged any dwelling, structure, or vehicle",
+      "With intent or while the damage was intentional"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupied dwelling (1st degree felony)",
+      "Death resulting (murder charge)",
+      "Firefighter injured",
+      "Insurance fraud motivation"
+    ],
+    "notes": "§ 806.01(1) — 1st degree felony for occupied structure or any dwelling. § 806.01(2) — 2nd degree felony for unoccupied structure."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "777.04; 782.04",
+    "statute_title": "Attempted First or Second Degree Murder",
+    "offense_class": "1st Degree Felony (attempt 1st degree); Life Felony (with firearm)",
+    "penalty_min": null,
+    "penalty_max": "30 years (1st degree attempt); Life (with firearm)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant attempted to commit first or second degree murder",
+      "Defendant had premeditated intent to kill (for attempted 1st degree)",
+      "Defendant committed an overt act toward commission of the murder"
+    ],
+    "mandatory_minimum": "10 years (10-20-Life if firearm used)",
+    "enhancements": [
+      "10-20-Life firearm enhancement",
+      "Victim is law enforcement",
+      "Multiple victims targeted",
+      "Hate crime"
+    ],
+    "notes": "Attempt statute § 777.04. Attempted 2nd degree charged when premeditation absent. Attempted murder of law enforcement carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "784.021(1)(a)",
+    "statute_title": "Aggravated Assault with a Deadly Weapon",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": "3 years (if firearm — 10-20-Life)",
+    "penalty_max": "5 years; 20 years if firearm discharged",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant intentionally threatened to do violence to the victim",
+      "Defendant appeared to have the ability to carry out the threat",
+      "Threat created well-founded fear in the victim",
+      "Defendant used a deadly weapon without intent to kill"
+    ],
+    "mandatory_minimum": "3 years minimum (firearm carried); 20 years (firearm discharged)",
+    "enhancements": [
+      "10-20-Life firearm enhancement",
+      "Victim is law enforcement (2nd degree felony)",
+      "Victim under 12"
+    ],
+    "notes": "No actual contact required — assault is threat-based in Florida. Deadly weapon includes knife, bat, vehicle, or any object used to threaten death or great bodily harm."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "812.014",
+    "statute_title": "Theft",
+    "offense_class": "2nd Degree Misdemeanor (under $100); 1st Degree Misdemeanor ($100-$749); 3rd Degree Felony ($750-$19,999); 2nd Degree Felony ($20,000-$99,999); 1st Degree Felony ($100,000+)",
+    "penalty_min": null,
+    "penalty_max": "60 days; 1 year; 5 years; 15 years; 30 years",
+    "fine_max": "$500; $1,000; $5,000; $10,000; $10,000",
+    "elements": [
+      "Defendant knowingly obtained or used, or endeavored to obtain or use, the property of another",
+      "Defendant intended to temporarily or permanently deprive the owner of a right to the property or a benefit from it",
+      "OR Defendant appropriated the property to his or her own use or to a person not entitled to the use"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior theft conviction (escalates charge level)",
+      "Theft from elderly person (§ 812.0145)",
+      "Emergency equipment (1st degree felony regardless of value)",
+      "Grand theft of law enforcement equipment"
+    ],
+    "notes": "Florida raised felony threshold from $300 to $750 in 2019. Second petit theft conviction = 3rd degree felony. Restitution available. Civil demand allowed for shoplifting under § 772.11."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "812.014(2)",
+    "statute_title": "Grand Theft",
+    "offense_class": "3rd Degree Felony ($750-$19,999); 2nd Degree Felony ($20,000-$99,999); 1st Degree Felony ($100,000+)",
+    "penalty_min": null,
+    "penalty_max": "5 years; 15 years; 30 years",
+    "fine_max": "$5,000; $10,000; $10,000",
+    "elements": [
+      "Defendant knowingly obtained or used property of another",
+      "With intent to deprive the owner of the property",
+      "Value of property was $750 or more"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Theft from elderly (mandatory restitution + enhanced penalties)",
+      "Motor vehicle (§ 812.014(2)(c)5 — automatic grand theft)",
+      "Emergency equipment (1st degree felony regardless of value)"
+    ],
+    "notes": "Special categories regardless of value: firearm, law enforcement badge, stop sign, will, vehicle with person inside. Cargo theft under § 812.019."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "812.014(3)",
+    "statute_title": "Petit Theft",
+    "offense_class": "2nd Degree Misdemeanor (under $100); 1st Degree Misdemeanor ($100-$749)",
+    "penalty_min": null,
+    "penalty_max": "60 days; 1 year",
+    "fine_max": "$500; $1,000",
+    "elements": [
+      "Defendant knowingly obtained or used property of another",
+      "With intent to deprive the owner",
+      "Value of property was under $750"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior theft conviction escalates charge level",
+      "Two prior petit theft convictions = 3rd degree felony"
+    ],
+    "notes": "Third petit theft offense becomes 3rd degree felony. Civil demand letters from merchants allowed under § 772.11."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "812.015",
+    "statute_title": "Retail Theft",
+    "offense_class": "2nd Degree Misdemeanor (under $100); 1st Degree Misdemeanor ($100-$749); 3rd Degree Felony ($750+ or prior conviction)",
+    "penalty_min": null,
+    "penalty_max": "60 days; 1 year; 5 years",
+    "fine_max": "$500; $1,000; $5,000",
+    "elements": [
+      "Defendant took possession of or carried away merchandise",
+      "OR Defendant altered/removed a price tag, transferred merchandise, or removed a shopping cart",
+      "Defendant intended to deprive the merchant of possession or full retail value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized retail theft (§ 812.015(8)) — 2nd degree felony",
+      "Value $750+ (grand theft rules apply)",
+      "Use of booster bag or demagnetizing device"
+    ],
+    "notes": "Merchant detention privilege under § 812.015(3). Organized retail theft ring (3+ people, multiple stores) is 2nd degree felony."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "810.02",
+    "statute_title": "Burglary",
+    "offense_class": "3rd Degree Felony (unoccupied structure/conveyance); 2nd Degree Felony (occupied structure or dwelling); 1st Degree Felony (armed or assault/battery during)",
+    "penalty_min": null,
+    "penalty_max": "5 years (3rd); 15 years (2nd); 30 years / Life (1st)",
+    "fine_max": "$5,000; $10,000; $15,000",
+    "elements": [
+      "Defendant entered a dwelling, structure, or conveyance",
+      "At the time of entering, defendant had intent to commit an offense therein",
+      "AND defendant entered without permission OR remained after permission was withdrawn"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupied at time of entry (2nd degree felony minimum)",
+      "Armed during burglary (1st degree felony)",
+      "Assault or battery during (1st degree felony — life eligible)",
+      "Prior burglary conviction"
+    ],
+    "notes": "Burglary in Florida does not require nighttime or breaking — any unlawful entry with criminal intent. Remaining concealed in structure also qualifies."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "810.02(3)(a)",
+    "statute_title": "Burglary of a Dwelling",
+    "offense_class": "2nd Degree Felony (unoccupied); 1st Degree Felony (occupied or assault/battery inside)",
+    "penalty_min": null,
+    "penalty_max": "15 years (2nd); 30 years (1st)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant entered or remained in a dwelling",
+      "Entry was without permission or consent",
+      "Defendant intended to commit an offense inside the dwelling"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupied at time of entry (1st degree felony)",
+      "Armed entry (1st degree felony)",
+      "Assault or battery inside (life felony)"
+    ],
+    "notes": "Dwelling means any building actually used as a place of abode. Attached garage and curtilage qualify."
+  },
+  {
+    "common_charge_slug": "commercial-burglary",
+    "statute_number": "810.02(3)(b)",
+    "statute_title": "Burglary of a Structure",
+    "offense_class": "3rd Degree Felony (unoccupied); 2nd Degree Felony (occupied or assault/battery)",
+    "penalty_min": null,
+    "penalty_max": "5 years (3rd); 15 years (2nd)",
+    "fine_max": "$5,000; $10,000",
+    "elements": [
+      "Defendant entered or remained in a structure (not a dwelling)",
+      "Without permission or consent",
+      "Defendant intended to commit an offense inside"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Structure occupied at time of entry (2nd degree felony)",
+      "Armed entry",
+      "Prior burglary"
+    ],
+    "notes": "Structure means any building that is not a dwelling (stores, warehouses, schools). Burglary of a conveyance (car) — separate 3rd degree felony."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "812.014(2)(c)5",
+    "statute_title": "Grand Theft of a Motor Vehicle",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly obtained or used a motor vehicle belonging to another",
+      "Defendant intended to permanently or temporarily deprive the owner",
+      "The vehicle was a motor vehicle (all qualify — no value threshold)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized scheme to defraud (§ 812.019)",
+      "Carjacking — force or violence (§ 812.133 — life felony)"
+    ],
+    "notes": "Motor vehicle theft is automatically grand theft (3rd degree felony) regardless of value. Carjacking (§ 812.133) requires force or violence — 1st degree felony (life eligible with firearm)."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "812.019",
+    "statute_title": "Dealing in Stolen Property",
+    "offense_class": "2nd Degree Felony (trafficking); 3rd Degree Felony (dealing)",
+    "penalty_min": null,
+    "penalty_max": "15 years (trafficking); 5 years (dealing)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant trafficked in, or endeavored to traffic in, property that defendant knew or should have known was stolen",
+      "OR Defendant received, retained, concealed, or withheld from the true owner stolen property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organizer or supervisor of trafficking ring (1st degree felony)",
+      "Prior conviction",
+      "Electronic equipment"
+    ],
+    "notes": "§ 812.025 prohibits charging both theft and dealing in stolen property from the same transaction. 'Should have known' standard allows circumstantial evidence of knowledge."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "806.13",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "2nd Degree Misdemeanor (under $200); 1st Degree Misdemeanor ($200-$999); 3rd Degree Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "60 days; 1 year; 5 years",
+    "fine_max": "$500; $1,000; $5,000",
+    "elements": [
+      "Defendant willfully and maliciously injured or damaged real or personal property belonging to another",
+      "Defendant had no right to damage the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Religious property damage $1,000+ (2nd degree felony)",
+      "Graffiti on school property",
+      "Damage to utility or communications equipment"
+    ],
+    "notes": "Restitution is mandatory. Value is replacement or repair cost."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "810.08",
+    "statute_title": "Trespass in Structure or Conveyance",
+    "offense_class": "2nd Degree Misdemeanor (without warning); 1st Degree Misdemeanor (after warning); 3rd Degree Felony (with weapon)",
+    "penalty_min": null,
+    "penalty_max": "60 days; 1 year; 5 years",
+    "fine_max": "$500; $1,000; $5,000",
+    "elements": [
+      "Defendant willfully entered or remained in a structure or conveyance",
+      "Defendant was not authorized, licensed, or invited",
+      "OR Defendant remained after permission was withdrawn"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed with dangerous weapon (3rd degree felony)",
+      "School grounds during school hours (3rd degree felony)",
+      "Prior conviction"
+    ],
+    "notes": "Trespass in a structure (§ 810.08) vs. trespass on property (§ 810.09) are separate charges. School trespass during hours is automatic 3rd degree felony."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "806.13",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "2nd Degree Misdemeanor (under $200); 1st Degree Misdemeanor ($200-$999); 3rd Degree Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "60 days; 1 year; 5 years",
+    "fine_max": "$500; $1,000; $5,000",
+    "elements": [
+      "Defendant willfully and maliciously injured or damaged real or personal property belonging to another",
+      "Defendant had no legal right to damage the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Religious property (elevated to 2nd degree felony)",
+      "Graffiti on school property",
+      "Damage to utility or communications equipment"
+    ],
+    "notes": "Florida uses 'criminal mischief' not 'vandalism.' Restitution mandatory. Graffiti specifically addressed in § 806.13(3)."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "741.28; 741.283",
+    "statute_title": "Domestic Violence",
+    "offense_class": "1st Degree Misdemeanor minimum (domestic battery); escalates with underlying charge",
+    "penalty_min": "5 days county jail (if great bodily harm inflicted or prior DV conviction)",
+    "penalty_max": "Depends on underlying charge",
+    "fine_max": "Depends on underlying charge",
+    "elements": [
+      "Defendant committed assault, aggravated assault, battery, aggravated battery, sexual assault, stalking, kidnapping, false imprisonment, or any offense resulting in physical injury or death",
+      "The victim is a family or household member as defined in § 741.28"
+    ],
+    "mandatory_minimum": "5 days county jail if great bodily harm inflicted, deadly weapon used/threatened, or prior DV conviction",
+    "enhancements": [
+      "Child present during incident (mandatory BIP counseling)",
+      "Prior domestic violence conviction (mandatory 5-day jail minimum)",
+      "Violation of injunction (separate criminal charge)"
+    ],
+    "notes": "Mandatory arrest in Florida (§ 741.2901) — officer must arrest if probable cause exists regardless of victim's wishes. No-contact order automatic upon arrest. Prosecutor can proceed without victim cooperation."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "784.03; 741.283",
+    "statute_title": "Domestic Battery",
+    "offense_class": "1st Degree Misdemeanor",
+    "penalty_min": "5 days county jail (great bodily harm or prior DV conviction)",
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant actually and intentionally touched or struck the victim against the victim's will",
+      "OR Defendant intentionally caused bodily harm",
+      "Victim is a family or household member (spouse, former spouse, cohabitant, parent of common child)"
+    ],
+    "mandatory_minimum": "5 days county jail minimum when great bodily harm inflicted or prior DV conviction",
+    "enhancements": [
+      "Aggravated domestic battery (2nd degree felony)",
+      "Strangulation (§ 784.041 — 3rd degree felony)",
+      "Child present",
+      "Violation of injunction"
+    ],
+    "notes": "Strangulation during domestic battery is a separate felony under § 784.041. First offense diversion programs available in some counties."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "827.03(2)(d)",
+    "statute_title": "Negligent Treatment or Maltreatment of a Child",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant is a caregiver for a child under 18",
+      "Defendant willfully or negligently failed to provide care, supervision, or services to maintain child's mental or physical health",
+      "OR Defendant failed to protect the child from abuse or exploitation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Great bodily harm (2nd degree felony)",
+      "Permanent disability (2nd degree felony)",
+      "Death resulting (1st degree felony)"
+    ],
+    "notes": "§ 827.03 is Florida's child abuse and neglect statute. DCF involvement is separate from criminal proceedings. Mandatory reporters who fail to report face 3rd degree felony under § 39.205."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "827.03(1)(b)",
+    "statute_title": "Child Abuse",
+    "offense_class": "3rd Degree Felony (without great bodily harm); 1st Degree Felony (with great bodily harm)",
+    "penalty_min": null,
+    "penalty_max": "5 years (3rd); 30 years (1st degree with great bodily harm)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant intentionally committed an act that could reasonably be expected to result in physical or mental injury to a child",
+      "OR Defendant actively encouraged another to commit such an act"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Great bodily harm resulting (1st degree felony)",
+      "Torture or malicious punishment (aggravated child abuse — 1st degree felony)",
+      "Prior child abuse conviction"
+    ],
+    "notes": "Aggravated child abuse (§ 827.03(2)(a)) — 1st degree felony includes torture, malicious punishment, or great bodily harm. Florida has mandatory minimum sentencing for sexual child abuse."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "741.31",
+    "statute_title": "Violation of Injunction for Protection Against Domestic Violence",
+    "offense_class": "1st Degree Misdemeanor (first violation); 3rd Degree Felony (subsequent violation or aggravated acts)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000; $5,000",
+    "elements": [
+      "A domestic violence injunction was entered against defendant",
+      "Defendant had knowledge of the injunction",
+      "Defendant willfully violated a specific term of the injunction"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent violation within 5 years (3rd degree felony)",
+      "Violation by electronic communication",
+      "New act of violence during violation"
+    ],
+    "notes": "Injunction violations prosecuted separately from any new criminal charges arising from the same incident. Florida has multiple injunction types: domestic violence, sexual violence, dating violence, repeat violence, stalking."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "784.048",
+    "statute_title": "Stalking",
+    "offense_class": "1st Degree Misdemeanor (basic); 3rd Degree Felony (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "1 year (basic); 5 years (aggravated)",
+    "fine_max": "$1,000; $5,000",
+    "elements": [
+      "Defendant willfully, maliciously, and repeatedly followed, harassed, or cyberstalked the victim",
+      "The conduct caused substantial emotional distress",
+      "The conduct served no legitimate purpose"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Credible threat made (aggravated stalking — 3rd degree felony)",
+      "Victim under 16 (3rd degree felony)",
+      "Violation of injunction while stalking (3rd degree felony)"
+    ],
+    "notes": "Cyberstalking (§ 784.048(1)(d)) includes electronic harassment across multiple platforms including doxxing and harassment campaigns."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "825.102",
+    "statute_title": "Abuse, Aggravated Abuse, or Neglect of an Elderly Person or Disabled Adult",
+    "offense_class": "3rd Degree Felony (abuse/neglect); 2nd Degree Felony (great bodily harm); 1st Degree Felony (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "5 years; 15 years; 30 years",
+    "fine_max": "$5,000; $10,000; $10,000",
+    "elements": [
+      "Victim is an elderly person (65+) or disabled adult",
+      "Defendant intentionally inflicted physical or psychological injury",
+      "OR Defendant committed an intentional act reasonably expected to result in injury",
+      "OR Defendant actively encouraged another to commit such act"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Great bodily harm resulting (2nd degree felony)",
+      "Torture or malicious punishment (aggravated — 1st degree felony)",
+      "Financial exploitation (separate § 825.103 charge)",
+      "Caregiver relationship"
+    ],
+    "notes": "Financial exploitation of elderly (§ 825.103) prosecuted separately. Mandatory reporting requirements for caregivers. Elder financial fraud aggressively prosecuted in Florida due to large elderly population."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "790.01",
+    "statute_title": "Carrying a Concealed Weapon",
+    "offense_class": "1st Degree Misdemeanor (non-firearm); 3rd Degree Felony (firearm, prohibited person)",
+    "penalty_min": null,
+    "penalty_max": "1 year (non-firearm); 5 years (firearm)",
+    "fine_max": "$1,000; $5,000",
+    "elements": [
+      "Defendant knowingly carried a weapon or firearm concealed from ordinary sight",
+      "Defendant was a prohibited person OR was carrying in a prohibited location",
+      "Conduct occurred post-July 1, 2023 (permitless carry) and defendant was ineligible"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "10-20-Life if used in commission of violent crime",
+      "Convicted felon in possession (separate felony charge)",
+      "Machine gun or short-barreled weapon (2nd degree felony)"
+    ],
+    "notes": "Florida enacted permitless carry (Constitutional Carry) effective July 1, 2023 (HB 543). Eligible persons no longer need a permit. Remaining crimes focus on prohibited persons, prohibited places, and prohibited weapons types."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "790.23",
+    "statute_title": "Felons and Delinquents Possessing Firearms or Weapons",
+    "offense_class": "2nd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant has been convicted of a felony or adjudicated delinquent for a would-be felony",
+      "Defendant knowingly had in his or her care, custody, possession, or control any firearm or electric weapon",
+      "OR Defendant carried a concealed weapon"
+    ],
+    "mandatory_minimum": "3 years (§ 775.087 if used in commission of another felony)",
+    "enhancements": [
+      "10-20-Life if used in commission of violent crime",
+      "Federal prosecution under 18 U.S.C. § 922(g) often concurrent",
+      "Prior felon-in-possession conviction"
+    ],
+    "notes": "Actual or constructive possession both sufficient. Restoration of civil rights does not automatically restore firearm rights in Florida."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "790.15",
+    "statute_title": "Discharging Firearms in Public",
+    "offense_class": "1st Degree Misdemeanor (basic); 2nd Degree Felony (from vehicle — drive-by)",
+    "penalty_min": null,
+    "penalty_max": "1 year (basic); 15 years (from vehicle)",
+    "fine_max": "$1,000; $10,000",
+    "elements": [
+      "Defendant knowingly discharged a firearm",
+      "In a public place, on a highway, or over any public highway or occupied premises",
+      "In a manner or direction that exposed persons or property to risk"
+    ],
+    "mandatory_minimum": "3 years minimum (§ 775.087 if in commission of a felony)",
+    "enhancements": [
+      "Discharge from vehicle on public road (2nd degree felony)",
+      "Drive-by shooting (§ 790.19 — 2nd degree felony)",
+      "Injury resulting"
+    ],
+    "notes": "Drive-by shooting under § 790.19 carries separate penalties. Celebratory gunfire (New Year's) prosecuted under this statute."
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "statute_number": "790.221",
+    "statute_title": "Possession of Short-Barreled Rifle, Short-Barreled Shotgun, or Machine Gun",
+    "offense_class": "2nd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant had in his or her possession, ownership, or custody a short-barreled rifle, short-barreled shotgun, or machine gun",
+      "Defendant knew the weapon was operable"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "10-20-Life if used in commission of violent crime",
+      "Federal NFA violations concurrent"
+    ],
+    "notes": "Florida law makes possession of NFA items a 2nd degree felony even if federally registered — creating conflict with federal NFA compliance. Silencers/suppressors also regulated under § 790.222."
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "statute_number": "817.034",
+    "statute_title": "Florida Communications Fraud Act",
+    "offense_class": "3rd Degree Felony (under $300); 2nd Degree Felony ($300-$19,999); 1st Degree Felony ($20,000+)",
+    "penalty_min": null,
+    "penalty_max": "5 years; 15 years; 30 years",
+    "fine_max": "$5,000; $10,000; $10,000",
+    "elements": [
+      "Defendant engaged in a scheme to defraud",
+      "Defendant obtained property by means of false or fraudulent representation",
+      "Defendant communicated via wire, radio, electromagnetic, or photooptical systems"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized scheme ($20,000+ — 1st degree felony)",
+      "Elderly victim (§ 825.103 parallel charge)",
+      "Multiple victims"
+    ],
+    "notes": "State-level communications fraud act. Federal wire fraud (18 U.S.C. § 1343) also commonly prosecuted concurrently. Pattern of activity can result in organized fraud charges under § 817.034(4)."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "817.568",
+    "statute_title": "Criminal Use of Personal Identification Information",
+    "offense_class": "3rd Degree Felony (basic); 2nd Degree Felony (10-19 victims or fraud over $5,000); 1st Degree Felony (20+ victims or fraud over $50,000)",
+    "penalty_min": null,
+    "penalty_max": "5 years; 15 years; 30 years",
+    "fine_max": "$5,000; $10,000; $10,000",
+    "elements": [
+      "Defendant willfully and without authorization fraudulently used personal identification information",
+      "The information belonged to an individual or fictitious individual",
+      "Defendant used it to obtain or attempt to obtain any benefit, compensation, credit, or access"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "10-19 victims (2nd degree felony)",
+      "20+ victims (1st degree felony)",
+      "Victim elderly",
+      "Using another's identity to avoid arrest"
+    ],
+    "notes": "Florida's identity theft statute is broad — covers use of others' information to obtain benefits of any kind. Victim counts across multiple incidents can be aggregated for enhanced charges."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "812.014",
+    "statute_title": "Theft by Employee or Trustee (Embezzlement)",
+    "offense_class": "3rd Degree Felony (under $20,000); 2nd Degree Felony ($20,000-$99,999); 1st Degree Felony ($100,000+)",
+    "penalty_min": null,
+    "penalty_max": "5 years; 15 years; 30 years",
+    "fine_max": "$5,000; $10,000; $10,000",
+    "elements": [
+      "Defendant was entrusted with property by another",
+      "Defendant knowingly obtained or used the property",
+      "With intent to temporarily or permanently deprive the owner",
+      "Defendant was in a position of trust or had authorized access"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Employee theft from employer (§ 812.015(8))",
+      "Public employee (ethics charges concurrent)",
+      "Breach of fiduciary duty"
+    ],
+    "notes": "Florida does not have a specific embezzlement statute — prosecuted as theft under § 812.014. Mandatory restitution under § 775.089."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "831.01",
+    "statute_title": "Forgery",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant falsely made, altered, forged, or counterfeited a public record, certificate, deed, will, contract, note, check, or other instrument",
+      "Defendant acted with intent to injure or defraud any person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Uttering forged instrument (§ 831.02 — separate charge)",
+      "Multiple instruments",
+      "Government documents"
+    ],
+    "notes": "Florida separates forgery (making the false instrument — § 831.01) from uttering (passing it — § 831.02). Both are 3rd degree felonies."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "832.05",
+    "statute_title": "Worthless Check or Draft",
+    "offense_class": "1st Degree Misdemeanor (under $150); 3rd Degree Felony ($150+)",
+    "penalty_min": null,
+    "penalty_max": "1 year; 5 years",
+    "fine_max": "$1,000; $5,000",
+    "elements": [
+      "Defendant drew, made, uttered, issued, or delivered a check or draft",
+      "Defendant knew at the time of issuance that there were insufficient funds",
+      "Defendant had intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Pattern of worthless checks (organized scheme)",
+      "Payroll check"
+    ],
+    "notes": "Written demand providing 7 days to pay is prerequisite to prosecution under § 832.07. Diversion programs available for first offenders."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "817.234",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "3rd Degree Felony (under $20,000); 2nd Degree Felony ($20,000-$100,000); 1st Degree Felony ($100,000+)",
+    "penalty_min": null,
+    "penalty_max": "5 years; 15 years; 30 years",
+    "fine_max": "$5,000; $10,000; $10,000",
+    "elements": [
+      "Defendant knowingly presented or caused to be presented a false or fraudulent claim for payment of a loss or injury",
+      "The claim was under any insurance policy",
+      "Defendant acted with intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "PIP (Personal Injury Protection) fraud",
+      "Staged accident",
+      "Healthcare provider billing fraud",
+      "Hurricane or property damage fraud"
+    ],
+    "notes": "Florida is a major PIP insurance fraud state. Office of Insurance Regulation and Division of Insurance Fraud actively prosecute. Organized fraud rings common."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "817.61",
+    "statute_title": "Fraudulent Use of Credit Cards",
+    "offense_class": "3rd Degree Felony (two or more transactions totaling $100+ within 6 months)",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant used a credit card or account number",
+      "Defendant knew the card was stolen, forged, expired, revoked, or obtained by fraud",
+      "Defendant used it to obtain money, goods, services, or anything of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple victims or cards",
+      "Card skimming device (§ 817.625 — 2nd degree felony)",
+      "Identity theft concurrent charge"
+    ],
+    "notes": "Credit card skimming devices (§ 817.625) are separately punishable as 2nd degree felony."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "896.101",
+    "statute_title": "Money Laundering",
+    "offense_class": "3rd Degree Felony ($300-$19,999); 2nd Degree Felony ($20,000-$99,999); 1st Degree Felony ($100,000+)",
+    "penalty_min": null,
+    "penalty_max": "5 years; 15 years; 30 years",
+    "fine_max": "$5,000; $10,000; Twice the value laundered",
+    "elements": [
+      "Defendant knowingly conducted or attempted to conduct a financial transaction",
+      "The transaction involved proceeds from a specified unlawful activity",
+      "Defendant knew the property was proceeds of criminal activity",
+      "Defendant intended to promote criminal activity, avoid reporting, or conceal the nature of the proceeds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Pattern of activity",
+      "Use of financial institution",
+      "Structuring (smurfing) to avoid reporting"
+    ],
+    "notes": "Florida money laundering statute mirrors federal § 1956. Often prosecuted with drug trafficking, fraud, or organized crime. Civil forfeiture separate under Chapter 932."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "817.034",
+    "statute_title": "Organized Scheme to Defraud",
+    "offense_class": "3rd Degree Felony (under $300); 2nd Degree Felony ($300-$19,999); 1st Degree Felony ($20,000+)",
+    "penalty_min": null,
+    "penalty_max": "5 years; 15 years; 30 years",
+    "fine_max": "$5,000; $10,000; $10,000",
+    "elements": [
+      "Defendant engaged in a scheme to defraud",
+      "Defendant obtained or attempted to obtain property or money by means of false or fraudulent pretenses",
+      "The false representations were intentional and material"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Communications fraud pattern (§ 817.034(4))",
+      "Elderly victim",
+      "Multiple victims"
+    ],
+    "notes": "Catch-all fraud statute. Florida RICO (§ 895.03) available for pattern of fraud across multiple incidents."
+  },
+  {
+    "common_charge_slug": "securities-fraud",
+    "statute_number": "517.301",
+    "statute_title": "Fraudulent Transactions — Securities",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant offered or sold a security",
+      "Defendant made a false statement of material fact or omitted a material fact necessary to make the statement not misleading",
+      "Defendant acted with willful intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple investors (separate counts)",
+      "Aggregate investment over $50,000",
+      "Use of interstate commerce (federal prosecution concurrent)"
+    ],
+    "notes": "Florida OFR and AG Economic Crimes Division prosecute. Federal SEC prosecution often concurrent. Ponzi scheme charges typically aggregated."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "794.011",
+    "statute_title": "Sexual Battery",
+    "offense_class": "Capital Felony (victim under 12, offender 18+); Life Felony (physical force, victim 12+); 1st or 2nd Degree Felony (other circumstances)",
+    "penalty_min": "Life without parole (capital)",
+    "penalty_max": "Death (capital); Life (life felony)",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed a sexual act upon or with the victim",
+      "Defendant used force or coercion without consent",
+      "OR Victim was under 12 years of age",
+      "OR Victim was physically or mentally incapacitated"
+    ],
+    "mandatory_minimum": "Life without parole (victim under 12, offender 18+)",
+    "enhancements": [
+      "Victim under 12 (capital offense)",
+      "Position of authority",
+      "Weapon used",
+      "Multiple victims",
+      "Jimmy Ryce Act civil commitment after sentence"
+    ],
+    "notes": "Victim under 12 + defendant 18+ = capital felony. Mandatory sex offender registration and community notification under Chapter 943. Florida's rape shield law (§ 794.022) limits victim history evidence."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "794.011(4)",
+    "statute_title": "Sexual Battery with Physical Force Likely to Cause Serious Personal Injury",
+    "offense_class": "Life Felony",
+    "penalty_min": null,
+    "penalty_max": "Life",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed a sexual act upon or with the victim",
+      "Defendant used or threatened to use a deadly weapon OR used force likely to cause serious personal injury",
+      "Without consent of the victim"
+    ],
+    "mandatory_minimum": "Level 9 under Criminal Punishment Code — state prison mandatory",
+    "enhancements": [
+      "Weapon use",
+      "Multiple offenders",
+      "Victim under 18",
+      "Drugging the victim",
+      "Prior sex offense conviction"
+    ],
+    "notes": "Florida does not use 'rape' in its statutes — charged as sexual battery under § 794.011. Rape shield law § 794.022 restricts victim's prior sexual history evidence."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "800.03",
+    "statute_title": "Exposure of Sexual Organs",
+    "offense_class": "1st Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant exposed or exhibited his or her sexual organs",
+      "The exposure occurred in a public place or in a private place exposed to public view",
+      "Defendant acted in a vulgar or indecent manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is a minor (lewd or lascivious exhibition under § 800.04 — 2nd degree felony)",
+      "School or place where children are present",
+      "Prior sex offense conviction"
+    ],
+    "notes": "If victim is under 16, charge typically elevated to lewd or lascivious exhibition (§ 800.04). Sex offender registration may be required depending on circumstances and victim age."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "796.07",
+    "statute_title": "Prohibiting Prostitution and Related Acts",
+    "offense_class": "2nd Degree Misdemeanor (first offense solicitation); 1st Degree Misdemeanor (second); 3rd Degree Felony (third+ or near school/church)",
+    "penalty_min": null,
+    "penalty_max": "60 days; 1 year; 5 years",
+    "fine_max": "$500; $1,000; $5,000",
+    "elements": [
+      "Defendant solicited, induced, enticed, or procured another to commit prostitution",
+      "OR Defendant agreed to engage in prostitution for compensation",
+      "OR Defendant engaged in prostitution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent offense (3rd degree felony)",
+      "Within 1,000 feet of school or church",
+      "Minor victim (mandatory sex offender registration)"
+    ],
+    "notes": "2014 reform made purchasing sex a 3rd degree felony. John School diversion programs available. Human trafficking (§ 787.06) charged when victim is trafficked."
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "statute_number": "800.04",
+    "statute_title": "Lewd or Lascivious Offenses Committed Upon or in Presence of Persons Under 16",
+    "offense_class": "2nd Degree Felony (victim 12-15); 1st Degree Felony (victim under 12)",
+    "penalty_min": null,
+    "penalty_max": "15 years; 30 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant was 18 years of age or older",
+      "Defendant intentionally touched in a lewd or lascivious manner the breasts, genitals, genital area, or buttocks",
+      "Victim was under 16 years of age"
+    ],
+    "mandatory_minimum": "State prison presumptive for all levels",
+    "enhancements": [
+      "Victim under 12 (1st degree felony)",
+      "Prior sex offense conviction",
+      "Position of authority over victim"
+    ],
+    "notes": "Four subsections: molestation (§ 800.04(4)), conduct (§ 800.04(5)), exhibition (§ 800.04(6)), battery. Battery version — victim 12-15 is 2nd degree; under 12 is 1st degree."
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "statute_number": "847.0135",
+    "statute_title": "Computer Pornography and Traveling to Meet a Minor",
+    "offense_class": "3rd Degree Felony (solicitation); 2nd Degree Felony (traveling)",
+    "penalty_min": null,
+    "penalty_max": "5 years (solicitation); 15 years (traveling)",
+    "fine_max": "$5,000; $10,000",
+    "elements": [
+      "Defendant knowingly used a computer or online service to solicit, lure, or entice a child under 16",
+      "Defendant believed the minor to be under 16",
+      "Solicitation was for sexual conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Traveling to meet (2nd degree felony — § 847.0135(4))",
+      "Sending obscene material to minor (§ 847.0133)",
+      "Prior conviction"
+    ],
+    "notes": "Traveling to meet (§ 847.0135(4)) is a separate 2nd degree felony where actual travel occurs. FDLE conducts regular undercover operations. Federal charges commonly concurrent."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "827.071",
+    "statute_title": "Sexual Performance by a Child / Child Pornography",
+    "offense_class": "2nd Degree Felony (possessing); 1st Degree Felony (producing, promoting, distributing)",
+    "penalty_min": "State prison mandatory",
+    "penalty_max": "15 years (possession); 30 years (production/distribution)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed, controlled, or intentionally viewed material depicting a child under 18 engaging in sexual conduct",
+      "OR Defendant produced, promoted, financed, distributed, or possessed with intent to promote such material"
+    ],
+    "mandatory_minimum": "State prison presumptive",
+    "enhancements": [
+      "Distribution or production (1st degree felony)",
+      "Victim under 12",
+      "100+ images",
+      "Federal prosecution concurrent under 18 U.S.C. § 2256"
+    ],
+    "notes": "Mandatory lifetime sex offender registration. FDLE actively investigates. Federal charges typically pursued concurrently."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "943.0435",
+    "statute_title": "Sex Offender Registration — Failure to Register",
+    "offense_class": "3rd Degree Felony (first offense); 2nd Degree Felony (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "5 years; 15 years",
+    "fine_max": "$5,000; $10,000",
+    "elements": [
+      "Defendant was a sex offender required to register under Florida law",
+      "Defendant failed to initially register, update registration, or report as required",
+      "Defendant knew or should have known of the obligation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sexual predator designation (higher frequency reporting)",
+      "Failure to register and leaving the state",
+      "Second or subsequent violation (2nd degree felony)"
+    ],
+    "notes": "Florida has strict registration requirements — twice annual updates, report within 48 hours of address change. Cannot reside within 1,000 feet of school, park, playground, or bus stop."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "794.05",
+    "statute_title": "Unlawful Sexual Activity with Certain Minors",
+    "offense_class": "2nd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant is 24 years of age or older",
+      "Defendant engaged in sexual activity with a person who is 16 or 17 years of age",
+      "The minor was not the defendant's spouse at the time"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Defendant in position of authority over minor",
+      "Prior sex offense conviction"
+    ],
+    "notes": "Florida's age of consent is 18. § 794.05 specifically addresses 24+ adults with 16-17 year olds. 'Romeo and Juliet' provision (§ 943.04354) allows registry removal for defendants within 4 years of victim's age."
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "statute_number": "794.011",
+    "statute_title": "Sexual Battery",
+    "offense_class": "Capital Felony through 2nd Degree Felony (depends on circumstances)",
+    "penalty_min": null,
+    "penalty_max": "Life / Death",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed oral, anal, or vaginal penetration, or digital/object penetration",
+      "Without consent of victim",
+      "OR by use of force, threat, or coercion"
+    ],
+    "mandatory_minimum": "State prison mandatory for all felony levels",
+    "enhancements": [
+      "Victim under 12 + defendant 18+ (capital)",
+      "Physical force likely to cause serious injury (life felony)",
+      "Victim mentally incapacitated",
+      "Position of authority"
+    ],
+    "notes": "Florida's primary sexual offense statute. Impaired consent through intoxication (voluntary or involuntary) is a critical issue. Florida rape shield law limits victim history evidence."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "877.03",
+    "statute_title": "Breach of the Peace; Disorderly Conduct",
+    "offense_class": "2nd Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant engaged in an act that corrupted the public morals or outraged the sense of public decency",
+      "OR Defendant affected the peace and quiet of persons who witnessed the act",
+      "OR Defendant engaged in brawling, fighting, or tumultuous conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "During a state of emergency (3rd degree felony)",
+      "At a funeral or memorial service"
+    ],
+    "notes": "Florida's disorderly conduct requires actual public disturbance — mere offensive speech alone insufficient under First Amendment. Disorderly intoxication (§ 856.011) is a separate, lesser offense."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "843.02",
+    "statute_title": "Resisting Officer Without Violence",
+    "offense_class": "1st Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant resisted, obstructed, or opposed a law enforcement officer",
+      "The officer was engaged in the lawful execution of any legal duty",
+      "Defendant's resistance was without violence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "With violence (3rd degree felony under § 843.01)",
+      "Injury to officer"
+    ],
+    "notes": "Resisting with violence (§ 843.01) is a 3rd degree felony. Lawfulness of the arrest is a contested defense issue in Florida courts."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "918.13",
+    "statute_title": "Tampering with or Fabricating Physical Evidence",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knew or had reasonable grounds to believe a criminal trial or proceeding was pending or would be instituted",
+      "Defendant altered, destroyed, concealed, or removed any record, document, or thing",
+      "With intent to impair its availability as evidence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Witness intimidation (§ 914.22 — 3rd degree felony)",
+      "Jury tampering (1st degree felony)",
+      "Suborning perjury"
+    ],
+    "notes": "Witness tampering (§ 914.22) carries enhanced penalties when used to obstruct major felony prosecutions."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "38.23",
+    "statute_title": "Indirect Contempt of Court",
+    "offense_class": "2nd Degree Misdemeanor (indirect contempt); Criminal contempt varies",
+    "penalty_min": null,
+    "penalty_max": "60 days or indefinite until compliance (civil contempt)",
+    "fine_max": "$500",
+    "elements": [
+      "A lawful court order was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant willfully and intentionally disobeyed the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violation of domestic violence injunction (separate criminal charge under § 741.31)",
+      "Repeat violations"
+    ],
+    "notes": "Direct contempt handled summarily by the court. Indirect contempt requires show cause hearing."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "856.011",
+    "statute_title": "Disorderly Intoxication",
+    "offense_class": "2nd Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant was intoxicated in a public place",
+      "AND Defendant endangered the safety of another person or property, OR caused a public disturbance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior conviction within 12 months (mandatory treatment program referral)",
+      "Second conviction (public detoxification program)"
+    ],
+    "notes": "Florida requires both intoxication AND endangerment/public disturbance. Mere public intoxication alone is NOT a crime in Florida — this distinguishes it from many other states."
+  },
+  {
+    "common_charge_slug": "loitering",
+    "statute_number": "856.021",
+    "statute_title": "Loitering or Prowling",
+    "offense_class": "2nd Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant loitered or prowled in a place, at a time, or in a manner not usual for law-abiding individuals",
+      "Circumstances warranted justifiable and reasonable alarm or immediate concern for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near schools or playgrounds",
+      "Prior drug or theft conviction"
+    ],
+    "notes": "Florida requires an objective reasonable officer standard. Defendant must be given opportunity to dispel alarm before arrest. Vagueness challenges frequently raised."
+  },
+  {
+    "common_charge_slug": "disturbing-peace",
+    "statute_number": "877.03",
+    "statute_title": "Breach of the Peace",
+    "offense_class": "2nd Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant engaged in conduct that corrupted public morals",
+      "OR Defendant outraged the sense of public decency",
+      "OR Defendant affected the peace and quiet of persons who witnessed the act"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "During state of emergency",
+      "At school event or near place of worship"
+    ],
+    "notes": "Florida uses breach of peace and disorderly conduct interchangeably under § 877.03. Physical conduct required — offensive speech alone is insufficient."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "843.15",
+    "statute_title": "Failure to Appear",
+    "offense_class": "1st Degree Misdemeanor (misdemeanor underlying); 3rd Degree Felony (felony underlying)",
+    "penalty_min": null,
+    "penalty_max": "1 year; 5 years",
+    "fine_max": "$1,000; $5,000",
+    "elements": [
+      "Defendant was released on bail or recognizance",
+      "Defendant was required to appear before a court for any criminal proceeding",
+      "Defendant willfully failed to appear as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Bond forfeiture (civil consequence)",
+      "Underlying felony charge increases FTA to felony"
+    ],
+    "notes": "FTA charge runs consecutive to underlying charge. Willfulness is an element — defendant must have known of the hearing. Bond forfeiture is a separate civil proceeding."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "817.49",
+    "statute_title": "False Reports of Commission of Crimes",
+    "offense_class": "1st Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant made a report to a law enforcement agency of a crime",
+      "The report was false",
+      "Defendant knew the report was false at the time of making it"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "False report involving terrorism (3rd degree felony under § 790.163)",
+      "False bomb threat (3rd degree felony)",
+      "Multiple false reports"
+    ],
+    "notes": "False domestic violence allegations commonly prosecuted under this statute. Restitution to law enforcement for investigation costs available."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "836.10",
+    "statute_title": "Written Threats to Kill or Do Bodily Injury",
+    "offense_class": "2nd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant composed or sent any letter, inscription, or electronic record",
+      "The communication threatened to kill or do bodily injury to another person",
+      "OR Defendant made such threat via electronic communication to a school, school official, or student"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "School shooting threat (escalated prosecution)",
+      "Multiple victims named",
+      "Use of social media"
+    ],
+    "notes": "Unlike assault (§ 784.011), actual present ability to carry out the threat is not required. School threats receive aggressive prosecution in Florida."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "784.048(1)(a)",
+    "statute_title": "Harassment (Course of Conduct)",
+    "offense_class": "1st Degree Misdemeanor (as component of stalking charge)",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant engaged in a course of conduct directed at a specific person",
+      "The conduct caused substantial emotional distress",
+      "The conduct served no legitimate purpose"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Repeated course of conduct (escalates to stalking)",
+      "Electronic communications (cyberstalking)"
+    ],
+    "notes": "Florida addresses harassment primarily through § 784.048 (stalking). Standalone harassment charges are typically charged within the stalking framework."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "948.06",
+    "statute_title": "Violation of Probation or Community Control",
+    "offense_class": "Not a separate offense — defendant faces original sentencing exposure",
+    "penalty_min": null,
+    "penalty_max": "Maximum sentence for original offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation or community control",
+      "Defendant willfully and substantially violated a condition of probation or community control"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New law violation (substantive — typically warrants revocation)",
+      "Technical violation (failure to report, positive drug test, curfew)",
+      "Multiple simultaneous violations"
+    ],
+    "notes": "VOP hearings use preponderance of evidence standard. Hearsay admissible. Defendant may be held without bail pending VOP hearing."
+  },
+  {
+    "common_charge_slug": "probation-violation-technical",
+    "statute_number": "948.06(2)(a)",
+    "statute_title": "Technical Violation of Probation",
+    "offense_class": "Not a separate class — faces original offense sentencing",
+    "penalty_min": null,
+    "penalty_max": "Maximum for original offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on probation",
+      "Defendant violated a technical condition: failure to report, failure to pay fees, curfew violation, failed drug test, unauthorized travel, etc."
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Pattern of technical violations",
+      "Underlying offense severity"
+    ],
+    "notes": "Florida 2019 reform (SB 2534) — technical violations for certain non-violent offenders may result in sanctions short of revocation. Structured sanctions grid available."
+  },
+  {
+    "common_charge_slug": "probation-violation-substantive",
+    "statute_number": "948.06(2)(b)",
+    "statute_title": "Substantive Violation of Probation (New Law Violation)",
+    "offense_class": "Not a separate class — faces original sentencing plus prosecution for new offense",
+    "penalty_min": null,
+    "penalty_max": "Maximum for original offense plus separate prosecution for new offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on probation",
+      "Defendant committed a new criminal offense while on probation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New offense is a felony (almost always results in revocation)",
+      "Violent new offense",
+      "New offense against same victim"
+    ],
+    "notes": "Substantive violations almost always result in full revocation. Florida courts may impose maximum of original sentence consecutively with the new sentence."
+  },
+  {
+    "common_charge_slug": "community-control-violation",
+    "statute_number": "948.101",
+    "statute_title": "Violation of Community Control",
+    "offense_class": "Not a separate class — faces original sentencing exposure",
+    "penalty_min": null,
+    "penalty_max": "Maximum for original offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on community control (house arrest)",
+      "Defendant willfully and substantially violated a condition",
+      "Common violations: leaving approved residence, failure to appear for check-in, unauthorized absences"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New law violation",
+      "Electronic monitoring violation (ankle bracelet)",
+      "Absconding"
+    ],
+    "notes": "Community control is a stricter alternative to probation. GPS monitoring standard. Violations treated similarly to probation violations but often result in immediate incarceration."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "947.141",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Not a separate criminal offense — administrative revocation with re-imprisonment on original sentence",
+    "penalty_min": null,
+    "penalty_max": "Remainder of original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole by the Florida Commission on Offender Review",
+      "Defendant violated one or more conditions of parole",
+      "The Florida Commission on Offender Review issued a warrant"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New law violation",
+      "Contact with victim",
+      "Absconding"
+    ],
+    "notes": "Florida abolished parole for offenses committed on or after October 1, 1983, with limited exceptions. For pre-1983 offenses, Florida Commission on Offender Review (FCOR) handles. Most modern supervision is probation or community control."
+  },
+  {
+    "common_charge_slug": "supervised-release-violation",
+    "statute_number": "948.06",
+    "statute_title": "Violation of Supervised Release / Conditional Release",
+    "offense_class": "Not a separate criminal offense — administrative revocation",
+    "penalty_min": null,
+    "penalty_max": "Remainder of original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on conditional release or post-prison supervisory release",
+      "Defendant violated one or more conditions of supervised release"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New law violation",
+      "Absconding"
+    ],
+    "notes": "Florida's conditional release (§ 947.1405) applies to offenders serving violent felony sentences. Supervised community release under FCOR. Violations result in return to prison."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "777.04(3)",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "One degree below the target offense",
+    "penalty_min": null,
+    "penalty_max": "One degree below target offense maximum",
+    "fine_max": "Same as one degree below target offense",
+    "elements": [
+      "Defendant agreed with one or more persons to commit an offense",
+      "At least one party did an overt act in furtherance of the agreement",
+      "Defendant had specific intent to commit the target offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Conspiracy to commit trafficking (follows trafficking mandatory minimums under § 893.135)",
+      "Florida RICO enterprise",
+      "Multiple overt acts"
+    ],
+    "notes": "Florida conspiracy carries penalty one degree below completed offense, EXCEPT drug trafficking conspiracies carry same mandatory minimums as trafficking. Unlike federal law, Florida requires an overt act."
+  },
+  {
+    "common_charge_slug": "self-defense",
+    "statute_number": "776.012; 776.013",
+    "statute_title": "Justifiable Use of Force / Stand Your Ground",
+    "offense_class": "Affirmative defense — not a charged offense",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": null,
+    "elements": [
+      "Defendant was not the initial aggressor",
+      "Defendant reasonably believed force was necessary to prevent imminent death or great bodily harm",
+      "OR Defendant was in his or her dwelling and an intruder forcibly entered (Castle Doctrine)",
+      "Defendant had a right to be in the place where force was used (Stand Your Ground)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Florida's Stand Your Ground law (§ 776.013) — no duty to retreat when in a place where defendant has a right to be. Pre-trial immunity hearing under § 776.032. After 2017 amendment, prosecution bears burden of disproving immunity by clear and convincing evidence at pre-trial hearing."
+  },
+  {
+    "common_charge_slug": "other",
+    "statute_number": "775.082",
+    "statute_title": "Penalties for Felonies and Misdemeanors",
+    "offense_class": "Varies by underlying offense classification",
+    "penalty_min": null,
+    "penalty_max": "Life (1st degree PBL); 30 years (1st degree felony); 15 years (2nd degree); 5 years (3rd degree); 1 year (1st degree misdemeanor); 60 days (2nd degree misdemeanor)",
+    "fine_max": "Varies",
+    "elements": [],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Habitual Felony Offender (§ 775.084) — enhanced sentences",
+      "Habitual Violent Felony Offender",
+      "Three-Time Violent Felony Offender",
+      "Prison Releasee Reoffender (PRR) — mandatory maximum sentence",
+      "10-20-Life (§ 775.087)"
+    ],
+    "notes": "Florida's Criminal Punishment Code (§ 921.002) governs felony sentencing with a scoresheet system. Prison Releasee Reoffender (PRR) requires mandatory maximum if offense committed within 3 years of release. Habitual offender designations significantly extend sentences."
+  }
+]

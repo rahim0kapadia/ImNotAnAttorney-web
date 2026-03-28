@@ -1,0 +1,2010 @@
+[
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "N.J.S.A. 39:4-50",
+    "statute_title": "Driving While Intoxicated — First Offense",
+    "offense_class": "Traffic Offense (not classified as crime under Title 2C)",
+    "penalty_min": "12-48 hours (IDRC)",
+    "penalty_max": "30 days jail",
+    "fine_max": "$400 (BAC 0.08-0.10) or $500 (BAC 0.10+)",
+    "elements": [
+      "Operating a motor vehicle upon a highway or quasi-public area",
+      "While under the influence of intoxicating liquor OR with BAC of 0.08% or higher",
+      "OR with BAC of 0.10% or higher (enhanced penalties)"
+    ],
+    "mandatory_minimum": "12-48 hours in Intoxicated Driver Resource Center (IDRC); license suspension 3 months (0.08-0.10) or 7-12 months (0.10+)",
+    "enhancements": [
+      "BAC 0.10%+: higher fine tier ($500-$1,000)",
+      "Prior DWI within 10 years: second offense penalties",
+      "Refusal to take breath test: N.J.S.A. 39:4-50.4a — concurrent suspension",
+      "School zone DWI: double minimum penalties — N.J.S.A. 39:4-50(g)"
+    ],
+    "notes": "NJ uses 'Driving While Intoxicated' (DWI). Not a Title 2C crime — handled in Municipal Court. No jail for first offense except in aggravated cases. License suspension mandatory. Surcharge: $1,000/year for 3 years (MCCA)."
+  },
+  {
+    "common_charge_slug": "dui-second-offense",
+    "statute_number": "N.J.S.A. 39:4-50(a)(2)",
+    "statute_title": "Driving While Intoxicated — Second Offense",
+    "offense_class": "Traffic Offense",
+    "penalty_min": "48 hours jail",
+    "penalty_max": "90 days jail",
+    "fine_max": "$1,000",
+    "elements": [
+      "Operating a motor vehicle while under the influence",
+      "Prior DWI conviction within 10 years"
+    ],
+    "mandatory_minimum": "48 hours jail; 30 days community service; 2-year license revocation",
+    "enhancements": [
+      "Third offense: increased mandatory jail",
+      "School zone: double penalties",
+      "Refusal concurrent: additional suspension"
+    ],
+    "notes": "30 days community service (in lieu of or in addition to jail). Ignition interlock device required during and after suspension. Surcharges apply for 3 years post-conviction."
+  },
+  {
+    "common_charge_slug": "dui-third-offense",
+    "statute_number": "N.J.S.A. 39:4-50(a)(3)",
+    "statute_title": "Driving While Intoxicated — Third or Subsequent Offense",
+    "offense_class": "Traffic Offense",
+    "penalty_min": "180 days jail",
+    "penalty_max": "180 days jail",
+    "fine_max": "$1,000",
+    "elements": [
+      "Operating a motor vehicle while under the influence",
+      "Two or more prior DWI convictions"
+    ],
+    "mandatory_minimum": "180 days incarceration (90 days credit for inpatient rehab); 10-year license revocation",
+    "enhancements": [
+      "Prior indictable conviction for DWI: enhanced",
+      "School zone: mandatory period doubled"
+    ],
+    "notes": "10-year mandatory license revocation. Ignition interlock required. 90 days may be served in residential treatment program. Fourth offense also results in 10-year revocation with same jail time."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "N.J.S.A. 39:4-50(a)",
+    "statute_title": "Driving Under the Influence of Drugs",
+    "offense_class": "Traffic Offense",
+    "penalty_min": "12-48 hours (IDRC)",
+    "penalty_max": "30 days jail (first offense)",
+    "fine_max": "$400-$500",
+    "elements": [
+      "Operating a motor vehicle",
+      "While under the influence of any narcotic, hallucinogenic, or habit-producing drug",
+      "Or with a Schedule I controlled dangerous substance (CDS) in urine"
+    ],
+    "mandatory_minimum": "Same as alcohol DWI; IDRC attendance required",
+    "enhancements": [
+      "Drug DWI in school zone: double penalties",
+      "Prior DWI (alcohol or drug): same escalation applies"
+    ],
+    "notes": "NJ drug DWI uses same statute as alcohol DWI. Drug recognition expert (DRE) testimony used. Urine test for CDS presence. No per se level for most drugs except marijuana (still disputed)."
+  },
+  {
+    "common_charge_slug": "dui-vehicular-homicide",
+    "statute_number": "N.J.S.A. 2C:11-5",
+    "statute_title": "Vehicular Homicide",
+    "offense_class": "2nd Degree Crime",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Causing the death of another person",
+      "By driving a vehicle recklessly",
+      "Including DWI as presumptive recklessness"
+    ],
+    "mandatory_minimum": "DWI-related: mandatory 3-5 year NERA period; 180-day license suspension",
+    "enhancements": [
+      "DWI at time of death: no probation — N.J.S.A. 2C:11-5(b)(1)",
+      "Prior DWI conviction: 1st Degree treatment — N.J.S.A. 2C:11-5(c)(2)",
+      "NERA applies: 85% of sentence without parole"
+    ],
+    "notes": "DWI-related vehicular homicide presumptively reckless. No probation if DWI involved. Prior DWI conviction elevates to 1st Degree Crime (10-20 years). NERA applies to DWI vehicular homicide."
+  },
+  {
+    "common_charge_slug": "dui-felony-injury",
+    "statute_number": "N.J.S.A. 2C:12-1(c)",
+    "statute_title": "Assault by Auto — DWI Causing Serious Bodily Injury",
+    "offense_class": "2nd Degree Crime",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Driving a vehicle recklessly or while intoxicated",
+      "Causing serious bodily injury to another person"
+    ],
+    "mandatory_minimum": "If DWI: no probation; mandatory Graves Act consideration if weapon used",
+    "enhancements": [
+      "Prior DWI: upgraded from 3rd to 2nd Degree",
+      "Bodily injury only (not serious): 3rd Degree",
+      "School zone: 4th Degree standalone or enhanced on primary"
+    ],
+    "notes": "Assault by Auto is the NJ mechanism for DWI-injury cases. Seriousness of injury determines degree. Simple bodily injury is 4th Degree. Serious bodily injury is 3rd or 2nd Degree depending on DWI involvement."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "N.J.S.A. 39:4-96",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Traffic Offense (not Title 2C)",
+    "penalty_min": "0 days",
+    "penalty_max": "60 days jail; 3-month license suspension",
+    "fine_max": "$200 (first); $500 (subsequent)",
+    "elements": [
+      "Operating a vehicle heedlessly",
+      "In willful or wanton disregard of the rights or safety of others",
+      "In a manner likely to endanger a person or property"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Second offense within 5 years: $500 fine, up to 3 months jail",
+      "Causing injury: assault by auto — N.J.S.A. 2C:12-1(c)",
+      "School zone: additional penalties"
+    ],
+    "notes": "Reckless driving is a motor vehicle offense handled in municipal court. Points assessed (5 points). First offense up to 60 days jail and $200 fine. Distinguished from careless driving (N.J.S.A. 39:4-97)."
+  },
+  {
+    "common_charge_slug": "driving-suspended-license",
+    "statute_number": "N.J.S.A. 39:3-40",
+    "statute_title": "Driving While Suspended",
+    "offense_class": "Traffic Offense",
+    "penalty_min": "0 days",
+    "penalty_max": "180 days jail",
+    "fine_max": "$500 first; $750 second; $1,000 third+",
+    "elements": [
+      "Operating a motor vehicle upon a public highway",
+      "While driving privileges are suspended or revoked"
+    ],
+    "mandatory_minimum": "None (unless DWI-related suspension: 10-45 days mandatory)",
+    "enhancements": [
+      "DWI suspension: 10-90 days mandatory jail — N.J.S.A. 39:3-40(f)",
+      "Third offense on DWI suspension: 180 days mandatory",
+      "Accident while driving suspended: additional civil liability"
+    ],
+    "notes": "DWI-related suspension driving carries mandatory jail time escalating with offense number. Non-DWI suspension driving is fine/community service. Insurance surcharges apply."
+  },
+  {
+    "common_charge_slug": "possession-marijuana",
+    "statute_number": "N.J.S.A. 2C:35-10",
+    "statute_title": "Possession of CDS — Marijuana (Residual Amounts)",
+    "offense_class": "Disorderly Persons Offense (small amounts for those under 21 or excess amounts)",
+    "penalty_min": "0 days",
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Knowing possession of marijuana",
+      "In excess of 6 ounces (adults 21+) or any amount (under 21)",
+      "Without lawful purpose"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Over 6 oz but under 1 pound: Disorderly Persons",
+      "1-5 pounds: 4th Degree Crime — N.J.S.A. 2C:35-5",
+      "Distribution: separate enhanced charges"
+    ],
+    "notes": "Adult recreational marijuana legalized in NJ effective April 2022 (up to 6 oz). Under-21 possession of any amount is civil violation or disorderly persons. Large quantities still criminal under distribution or trafficking statutes."
+  },
+  {
+    "common_charge_slug": "possession-controlled-substance",
+    "statute_number": "N.J.S.A. 2C:35-10(a)",
+    "statute_title": "Possession of CDS — Schedule I/II (Not Marijuana)",
+    "offense_class": "3rd Degree Crime (heroin, cocaine, meth, fentanyl); 4th Degree (Schedule III-IV)",
+    "penalty_min": "3 years (3rd Degree guidelines)",
+    "penalty_max": "5 years (3rd Degree); 18 months (4th Degree)",
+    "fine_max": "$75,000 (3rd Degree); $10,000 (4th Degree)",
+    "elements": [
+      "Knowingly and unlawfully possessing",
+      "A controlled dangerous substance (CDS)",
+      "Not pursuant to a valid prescription"
+    ],
+    "mandatory_minimum": "None for simple possession",
+    "enhancements": [
+      "School zone: mandatory 1-year addition — N.J.S.A. 2C:35-7",
+      "Public housing: mandatory 1-year addition",
+      "Drug-free park: mandatory addition",
+      "Prior CDS conviction: parole ineligibility period may apply"
+    ],
+    "notes": "NJ's Drug Free Zone law doubles mandatory minimums for possession within 500 feet of school or within 500 feet of public housing. School zone carries mandatory 1-year parole ineligibility. Drug courts widely available."
+  },
+  {
+    "common_charge_slug": "possession-with-intent-distribute",
+    "statute_number": "N.J.S.A. 2C:35-5",
+    "statute_title": "Manufacturing, Distributing, or Dispensing CDS",
+    "offense_class": "1st-3rd Degree Crime (amount and substance dependent)",
+    "penalty_min": "10 years (1st Degree weight)",
+    "penalty_max": "20 years (1st Degree)",
+    "fine_max": "$500,000 (1st Degree); $150,000 (2nd Degree)",
+    "elements": [
+      "Knowingly or purposely manufacturing, distributing, dispensing, or possessing with intent",
+      "A controlled dangerous substance (CDS)",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": "1st Degree (5+ oz heroin/cocaine or 25+ lbs marijuana): NERA — must serve 1/3 to 1/2 before parole; School zone: additional mandatory 1-3 years",
+    "enhancements": [
+      "Within 500 feet of school: mandatory 1-3 year consecutive — N.J.S.A. 2C:35-7",
+      "Public housing zone: mandatory addition — N.J.S.A. 2C:35-7.1",
+      "1st Degree: NERA applies (85% of sentence)",
+      "Distributing to minor: upgrade one degree — N.J.S.A. 2C:35-6",
+      "Using juvenile to distribute: 3rd Degree standalone — N.J.S.A. 2C:35-6"
+    ],
+    "notes": "NJ's primary drug distribution statute. Quantity-based degrees: 5+ oz heroin/cocaine = 1st Degree; 1/2-5 oz = 2nd Degree; smaller = 3rd Degree. School zone add-on is commonly used prosecutorial tool."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "N.J.S.A. 2C:35-3",
+    "statute_title": "Leader of Narcotics Trafficking Network",
+    "offense_class": "1st Degree Crime",
+    "penalty_min": "25 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$750,000",
+    "elements": [
+      "Conspiring with others as organizer, supervisor, or manager",
+      "Of a network of persons who engage in the production, manufacture, shipment, or distribution of CDS",
+      "Acting with respect to quantities in excess of statutory thresholds"
+    ],
+    "mandatory_minimum": "25-year mandatory minimum without parole",
+    "enhancements": [
+      "Drug kingpin conviction: no parole for 25 years",
+      "Forfeiture of all proceeds and assets",
+      "RICO charges concurrent"
+    ],
+    "notes": "New Jersey's drug kingpin statute. 25-year mandatory without parole. Designed for leaders of drug networks. Requires proof of supervisory role and quantity thresholds. Not merged with simple distribution."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "N.J.S.A. 2C:36-2",
+    "statute_title": "Use or Possession with Intent to Use Drug Paraphernalia",
+    "offense_class": "Disorderly Persons Offense",
+    "penalty_min": "0 days",
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Possession or use of drug paraphernalia",
+      "With intent to use in connection with a controlled dangerous substance violation"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Distribution of paraphernalia to minor: 4th Degree Crime — N.J.S.A. 2C:36-3",
+      "Prior CDS conviction: sentencing enhancement"
+    ],
+    "notes": "Paraphernalia charges frequently accompany CDS possession charges. Distribution of paraphernalia to person under 18 is a 4th Degree Crime."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "N.J.S.A. 2C:11-3(a)(1)-(2)",
+    "statute_title": "Murder — Purposeful or Knowing",
+    "offense_class": "1st Degree Crime (special designation)",
+    "penalty_min": "30 years without parole",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "No statutory cap",
+    "elements": [
+      "Purposely or knowingly causing the death of another person",
+      "OR purposely or knowingly causing serious bodily injury resulting in death"
+    ],
+    "mandatory_minimum": "30-year parole disqualifier mandatory; life possible with 30-year minimum",
+    "enhancements": [
+      "Murder of law enforcement: mandatory life, 30-year disqualifier",
+      "Murder by hired killer: mandatory life, 30-year disqualifier",
+      "Victim under 14 — murder by parent/guardian: 30-year disqualifier",
+      "Serial murder: death penalty replaced by life without parole"
+    ],
+    "notes": "NJ abolished death penalty in 2007. Maximum is Life LWOP or life with 30-year parole disqualifier. Murder is not classified as 1st or 2nd Degree in NJ Title 2C — it is 'murder' with sentencing structure. NERA does not apply — murder has its own parole disqualifier provisions."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "N.J.S.A. 2C:11-3(a)(3)",
+    "statute_title": "Murder — Felony Murder",
+    "offense_class": "1st Degree Crime",
+    "penalty_min": "30 years without parole",
+    "penalty_max": "Life",
+    "fine_max": "No cap",
+    "elements": [
+      "As principal or accomplice",
+      "During commission or attempted commission of robbery, sexual assault, arson, burglary, kidnapping, or carjacking",
+      "Causing the death of any person including co-felon"
+    ],
+    "mandatory_minimum": "30-year parole disqualifier",
+    "enhancements": [
+      "Prior murder conviction: mandatory life",
+      "Multiple victims: multiple murder counts"
+    ],
+    "notes": "NJ felony murder is still 1st Degree Crime level (murder) — does not reduce to manslaughter. NJ Supreme Court has narrowed felony murder in recent years (State v. Doolin). Accomplice liability broadly applied."
+  },
+  {
+    "common_charge_slug": "manslaughter-voluntary",
+    "statute_number": "N.J.S.A. 2C:11-4(a)",
+    "statute_title": "Aggravated Manslaughter",
+    "offense_class": "1st Degree Crime",
+    "penalty_min": "10 years",
+    "penalty_max": "30 years",
+    "fine_max": "$200,000",
+    "elements": [
+      "Recklessly causing the death of another person",
+      "Under circumstances manifesting extreme indifference to human life"
+    ],
+    "mandatory_minimum": "NERA applies: 85% of sentence before parole eligibility",
+    "enhancements": [
+      "Victim is law enforcement: enhanced sentencing",
+      "DWI-related: no probation",
+      "Prior violent record: extended term"
+    ],
+    "notes": "NJ's aggravated manslaughter is a 1st Degree Crime — unusual among states. NERA applies. Regular manslaughter (N.J.S.A. 2C:11-4(b)) is 2nd Degree. Passion/provocation manslaughter is also 2nd Degree."
+  },
+  {
+    "common_charge_slug": "manslaughter-involuntary",
+    "statute_number": "N.J.S.A. 2C:11-5(a)",
+    "statute_title": "Vehicular Homicide — Reckless Driving",
+    "offense_class": "2nd Degree Crime",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Causing the death of another person",
+      "By driving a vehicle recklessly",
+      "On a public highway or quasi-public area"
+    ],
+    "mandatory_minimum": "If DWI involved: no probation; NERA may apply",
+    "enhancements": [
+      "DWI at time: no probation, 180-day license suspension — N.J.S.A. 2C:11-5(b)",
+      "Prior DWI conviction: 1st Degree Crime — N.J.S.A. 2C:11-5(c)",
+      "Fleeing scene: enhanced sentencing"
+    ],
+    "notes": "NJ vehicular homicide under reckless driving is 2nd Degree. DWI-related vehicular homicide carries no probation and possible 1st Degree upgrade with prior DWI."
+  },
+  {
+    "common_charge_slug": "assault-simple",
+    "statute_number": "N.J.S.A. 2C:12-1(a)",
+    "statute_title": "Simple Assault",
+    "offense_class": "Disorderly Persons Offense",
+    "penalty_min": "0 days",
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Attempts to cause or purposely, knowingly, or recklessly causes bodily injury to another",
+      "OR negligently causes bodily injury with a deadly weapon",
+      "OR attempts by physical menace to put another in fear of imminent serious bodily injury"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Mutual fighting: Petty Disorderly Persons (30 days)",
+      "Against law enforcement/school employee: upgrade to 3rd Degree",
+      "Domestic setting: mandatory no-drop policy"
+    ],
+    "notes": "Simple assault in NJ is a disorderly persons offense (lower than crime). Mutual fighting reduces to Petty Disorderly Persons. Against certain protected victims (LEO, teacher, etc.) elevates to 3rd Degree Crime."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "N.J.S.A. 2C:12-1(b)",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "2nd, 3rd, or 4th Degree Crime (based on circumstances)",
+    "penalty_min": "18 months (4th Degree)",
+    "penalty_max": "10 years (2nd Degree)",
+    "fine_max": "$150,000 (2nd Degree); $75,000 (3rd); $10,000 (4th)",
+    "elements": [
+      "Attempting to cause or causing serious bodily injury to another",
+      "OR causing bodily injury with a deadly weapon",
+      "OR causing significant bodily injury purposely or knowingly",
+      "OR pointing a firearm at another"
+    ],
+    "mandatory_minimum": "2nd Degree: NERA applies (85% of sentence)",
+    "enhancements": [
+      "Serious bodily injury: 2nd Degree with NERA",
+      "Firearm: 2nd Degree and Graves Act may apply",
+      "Against law enforcement: 2nd Degree",
+      "Against elderly/disabled: 2nd Degree"
+    ],
+    "notes": "NJ's aggravated assault has multiple subsets. Pointing a firearm: 4th Degree. Using firearm to cause injury: 3rd Degree. Causing serious bodily injury: 2nd Degree with NERA. Strangulation: 3rd Degree — N.J.S.A. 2C:12-1(b)(12)."
+  },
+  {
+    "common_charge_slug": "assault-deadly-weapon",
+    "statute_number": "N.J.S.A. 2C:12-1(b)(2)",
+    "statute_title": "Aggravated Assault with Deadly Weapon",
+    "offense_class": "3rd Degree Crime",
+    "penalty_min": "3 years",
+    "penalty_max": "5 years",
+    "fine_max": "$75,000",
+    "elements": [
+      "Attempts to cause or purposely or knowingly causes",
+      "Bodily injury to another with a deadly weapon"
+    ],
+    "mandatory_minimum": "NERA may apply if weapon is firearm and serious bodily injury resulted",
+    "enhancements": [
+      "Serious bodily injury caused: 2nd Degree with NERA",
+      "Firearm: Graves Act may trigger mandatory minimum",
+      "Against protected victim (teacher, elderly): enhanced degree"
+    ],
+    "notes": "3rd Degree aggravated assault with deadly weapon. Upgraded to 2nd Degree if serious bodily injury results. Graves Act applies if firearm is used."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "N.J.S.A. 2C:15-1",
+    "statute_title": "Robbery",
+    "offense_class": "2nd Degree Crime (unarmed); 1st Degree (armed or injury)",
+    "penalty_min": "5 years (2nd Degree)",
+    "penalty_max": "20 years (1st Degree)",
+    "fine_max": "$200,000 (1st Degree); $150,000 (2nd Degree)",
+    "elements": [
+      "In the course of committing a theft",
+      "Inflicting bodily injury or using force upon another",
+      "OR threatening another with immediate bodily injury",
+      "OR purposely putting another in fear"
+    ],
+    "mandatory_minimum": "NERA applies to both 1st and 2nd Degree robbery (85% of sentence)",
+    "enhancements": [
+      "Armed with deadly weapon: 1st Degree Crime",
+      "Serious bodily injury inflicted: 1st Degree Crime",
+      "Victim is 60+: presumption of 1st Degree",
+      "Graves Act: firearm triggers mandatory minimum"
+    ],
+    "notes": "NERA (No Early Release Act) applies to robbery — must serve 85% of sentence. Armed robbery is 1st Degree (10-20 years with NERA). Unarmed robbery with no injury is 2nd Degree. Carjacking is separate offense under N.J.S.A. 2C:15-2."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "N.J.S.A. 2C:15-1(b)",
+    "statute_title": "Robbery — First Degree (Armed)",
+    "offense_class": "1st Degree Crime",
+    "penalty_min": "10 years",
+    "penalty_max": "20 years",
+    "fine_max": "$200,000",
+    "elements": [
+      "Robbery",
+      "While armed with a deadly weapon",
+      "OR while inflicting serious bodily injury",
+      "OR against a victim 60 years or older"
+    ],
+    "mandatory_minimum": "NERA: 85% of sentence (no parole until 85%); Graves Act mandatory minimum if firearm",
+    "enhancements": [
+      "Graves Act firearm: mandatory 5-year minimum without parole — N.J.S.A. 2C:43-6(c)",
+      "Prior robbery conviction: Persistent Dangerous Offender designation possible",
+      "Multiple victims: consecutive sentences"
+    ],
+    "notes": "1st Degree robbery carries NERA (85% served). Graves Act adds mandatory 5-year minimum if firearm is involved. Consecutive sentencing for multiple victims common. Graves Act waiver available through plea negotiation."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "N.J.S.A. 2C:13-1",
+    "statute_title": "Kidnapping",
+    "offense_class": "1st Degree Crime",
+    "penalty_min": "15 years",
+    "penalty_max": "Life (if victim under 16 and not released unharmed)",
+    "fine_max": "$200,000",
+    "elements": [
+      "Knowingly unlawfully removing another from the place where found",
+      "OR unlawfully confining another for a substantial period",
+      "With purpose to hold for ransom, use as hostage, inflict bodily injury, terrorize, or facilitate crime"
+    ],
+    "mandatory_minimum": "NERA: 85% of sentence; 15-year parole ineligibility for crime against minor",
+    "enhancements": [
+      "Victim under 16 not released: life with 25-year parole disqualifier",
+      "Victim is minor and sexually assaulted: enhanced — NERA minimum 25 years",
+      "Megan's Law registration if sex offense involved"
+    ],
+    "notes": "Kidnapping of a minor who is not released unharmed carries Life. NERA applies — must serve 85%. If victim is released in same or better condition, ordinary 1st Degree penalties apply. Parental kidnapping is a separate offense (N.J.S.A. 2C:13-4)."
+  },
+  {
+    "common_charge_slug": "carjacking",
+    "statute_number": "N.J.S.A. 2C:15-2",
+    "statute_title": "Carjacking",
+    "offense_class": "1st Degree Crime",
+    "penalty_min": "10 years (NERA: 85%)",
+    "penalty_max": "Life",
+    "fine_max": "$200,000",
+    "elements": [
+      "Unlawfully taking a motor vehicle from another person",
+      "While using force or threatening force",
+      "OR while the person is in or immediately entering the vehicle"
+    ],
+    "mandatory_minimum": "NERA applies: 85% of sentence before parole; Graves Act if armed",
+    "enhancements": [
+      "Firearm used: Graves Act — 5-year mandatory",
+      "Serious injury: enhanced sentence within 1st Degree",
+      "Multiple victims in vehicle: additional charges"
+    ],
+    "notes": "Carjacking is 1st Degree with NERA (85% must be served). Distinct from robbery. Maximum is Life. Graves Act applies if firearm present. Consecutive to other charges typical."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "N.J.S.A. 2C:18-2",
+    "statute_title": "Burglary",
+    "offense_class": "3rd Degree Crime (unoccupied); 2nd Degree (occupied or armed)",
+    "penalty_min": "3 years (3rd Degree)",
+    "penalty_max": "10 years (2nd Degree)",
+    "fine_max": "$150,000 (2nd); $75,000 (3rd)",
+    "elements": [
+      "Enters a structure",
+      "Without license or privilege to do so",
+      "With purpose to commit an offense therein"
+    ],
+    "mandatory_minimum": "NERA may apply if 2nd Degree (occupied structure burglary)",
+    "enhancements": [
+      "Structure occupied at time: 2nd Degree",
+      "Armed with deadly weapon: 2nd Degree",
+      "Bodily injury caused: 2nd Degree with NERA",
+      "Prior burglary: extended term"
+    ],
+    "notes": "NJ burglary is 3rd Degree by default, 2nd Degree if structure is occupied or defendant is armed. NERA applies to 2nd Degree burglary. 'Structure' broadly defined to include vehicles, watercraft."
+  },
+  {
+    "common_charge_slug": "home-invasion",
+    "statute_number": "N.J.S.A. 2C:18-2(b)(1)",
+    "statute_title": "Burglary of Occupied Structure (Home Invasion)",
+    "offense_class": "2nd Degree Crime",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Burglary of a structure",
+      "At a time when the structure is occupied",
+      "OR while armed with a deadly weapon"
+    ],
+    "mandatory_minimum": "NERA applies: 85% of sentence before parole",
+    "enhancements": [
+      "Assault committed during burglary: aggravated assault concurrent",
+      "Firearm: Graves Act mandatory minimum",
+      "Multiple victims: enhanced sentencing"
+    ],
+    "notes": "NJ uses 2nd Degree burglary for occupied structures — equivalent to home invasion. NERA mandatory. Graves Act firearm minimum of 5 years without parole if gun is involved."
+  },
+  {
+    "common_charge_slug": "larceny",
+    "statute_number": "N.J.S.A. 2C:20-3",
+    "statute_title": "Theft by Unlawful Taking or Disposition",
+    "offense_class": "2nd-4th Degree Crime or Disorderly Persons (value-based)",
+    "penalty_min": "0 days (Disorderly Persons)",
+    "penalty_max": "10 years (2nd Degree, $75,000+)",
+    "fine_max": "$150,000 (2nd Degree); $75,000 (3rd); $10,000 (4th)",
+    "elements": [
+      "Purposely taking or exercising unlawful control",
+      "Over movable property of another",
+      "With purpose to deprive the owner of the property"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "$75,000+: 2nd Degree",
+      "$1,000-$75,000: 3rd Degree",
+      "$500-$1,000: 4th Degree",
+      "Under $500: Disorderly Persons",
+      "From person of elderly: upgraded one degree"
+    ],
+    "notes": "NJ consolidates theft offenses under N.J.S.A. 2C:20-1 et seq. All theft forms (robbery excepted) share the same grading by value. Theft of firearm: 4th Degree regardless of value."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "N.J.S.A. 2C:20-3",
+    "statute_title": "Theft of a Motor Vehicle",
+    "offense_class": "3rd Degree Crime ($1,000-$75,000 value range typical)",
+    "penalty_min": "3 years",
+    "penalty_max": "5 years",
+    "fine_max": "$75,000",
+    "elements": [
+      "Purposely taking or exercising unlawful control",
+      "Over a motor vehicle",
+      "With purpose to deprive the owner"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Use of force or threat: carjacking — N.J.S.A. 2C:15-2",
+      "Chop shop operation: 2nd Degree — N.J.S.A. 2C:20-16",
+      "Prior auto theft: extended term"
+    ],
+    "notes": "Auto theft graded by value of vehicle. Most vehicles qualify as 3rd Degree. Carjacking is separate and more severe. Chop shops (N.J.S.A. 2C:20-16) carry 2nd Degree exposure."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "N.J.S.A. 2C:20-11",
+    "statute_title": "Shoplifting",
+    "offense_class": "Disorderly Persons to 2nd Degree Crime (value-based)",
+    "penalty_min": "0 days",
+    "penalty_max": "10 years (2nd Degree, $75,000+)",
+    "fine_max": "Varies by degree",
+    "elements": [
+      "Purposely taking merchandise from a retail establishment",
+      "Without paying the full retail value",
+      "OR concealing merchandise, under-ringing, or destroying a theft detection device"
+    ],
+    "mandatory_minimum": "None; 3rd offense: 90-day mandatory community service",
+    "enhancements": [
+      "Organized retail theft ring: felony enhancement — N.J.S.A. 2C:20-11.3",
+      "Third offense: mandatory 90 days community service",
+      "Booster bag or device: separate charge — N.J.S.A. 2C:20-11(b)(6)"
+    ],
+    "notes": "NJ shoplifting: under $200 = Disorderly Persons; $200-$500 = 4th Degree; $500-$75,000 = 3rd Degree; $75,000+ = 2nd Degree. Organized retail theft is enhanced. Third offense adds mandatory community service."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "N.J.S.A. 2C:17-1",
+    "statute_title": "Arson and Related Offenses",
+    "offense_class": "2nd or 3rd Degree Crime",
+    "penalty_min": "3 years (3rd Degree)",
+    "penalty_max": "10 years (2nd Degree)",
+    "fine_max": "$150,000 (2nd Degree)",
+    "elements": [
+      "Starting a fire or causing an explosion",
+      "That places another person in danger of death or bodily injury",
+      "OR with purpose of destroying a building or occupied structure"
+    ],
+    "mandatory_minimum": "NERA if 2nd Degree (85% of sentence)",
+    "enhancements": [
+      "Person present in structure: 2nd Degree — NERA",
+      "Firefighter or investigator injured: enhanced sentencing",
+      "Insurance fraud arson: concurrent fraud charges"
+    ],
+    "notes": "NJ arson distinguishes reckless burning (3rd Degree) from purposeful with persons endangered (2nd Degree with NERA). Aggravated arson provisions for occupied structures. Insurance fraud arson commonly prosecuted together."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "N.J.S.A. 2C:17-3",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "2nd-4th Degree Crime or Disorderly Persons (damage value-based)",
+    "penalty_min": "0 days (Disorderly Persons)",
+    "penalty_max": "10 years (2nd Degree, $75,000+)",
+    "fine_max": "$150,000 (2nd Degree)",
+    "elements": [
+      "Purposely or knowingly damaging tangible property of another",
+      "OR recklessly or negligently damaging property with fire, explosives, or other dangerous means"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "$75,000+: 2nd Degree",
+      "$2,000-$75,000: 3rd Degree",
+      "$500-$2,000: 4th Degree",
+      "Under $500: Disorderly Persons",
+      "Bias/hate crime motivation: bias intimidation statute adds additional charge — N.J.S.A. 2C:16-1"
+    ],
+    "notes": "NJ Criminal Mischief graded by value of damage. Graffiti under N.J.S.A. 2C:17-3(b). Bias-motivated vandalism triggers separate N.J.S.A. 2C:16-1 bias intimidation charge."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "N.J.S.A. 2C:25-17 (Prevention of Domestic Violence Act)",
+    "statute_title": "Domestic Violence — Underlying Predicate Offenses",
+    "offense_class": "Underlying offense classification applies (Disorderly Persons to 1st Degree)",
+    "penalty_min": "Underlying offense minimum",
+    "penalty_max": "Underlying offense maximum",
+    "fine_max": "Underlying offense fine",
+    "elements": [
+      "Commission of a predicate offense listed in N.J.S.A. 2C:25-19",
+      "Against a protected person (current or former spouse, domestic partner, household member, parent of common child)",
+      "Predicate offenses include: assault, stalking, terroristic threats, criminal mischief, trespass, burglary, harassment, sexual assault, homicide, kidnapping, bias crime"
+    ],
+    "mandatory_minimum": "TRO/FRO issued upon arrest; no-bail warrant may issue",
+    "enhancements": [
+      "Strangulation: 3rd Degree aggravated assault — N.J.S.A. 2C:12-1(b)(12)",
+      "FRO violation: 4th Degree Crime — N.J.S.A. 2C:29-9",
+      "Prior DV conviction: enhanced sentencing on predicate offense"
+    ],
+    "notes": "NJ's Prevention of Domestic Violence Act (PDVA) creates civil protection order framework. Criminal prosecution uses underlying predicate offense. Strangulation is specifically elevated to 3rd Degree aggravated assault."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "N.J.S.A. 2C:12-10",
+    "statute_title": "Stalking",
+    "offense_class": "4th Degree Crime (first); 3rd Degree (repeat or with restraining order)",
+    "penalty_min": "18 months (4th Degree)",
+    "penalty_max": "5 years (3rd Degree)",
+    "fine_max": "$75,000 (3rd Degree); $10,000 (4th Degree)",
+    "elements": [
+      "Purposefully or knowingly engaging in a course of conduct",
+      "Directed at a specific person",
+      "That would cause a reasonable person to fear for safety or suffer emotional distress"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "While under a restraining order: 3rd Degree",
+      "Second or subsequent conviction: 3rd Degree",
+      "Using social media or electronic communications: same statute applies — cyberstalking"
+    ],
+    "notes": "NJ stalking statute covers both physical and electronic (cyber) stalking. 'Course of conduct' requires 2+ acts. Second offense or violation of TRO/FRO elevates to 3rd Degree."
+  },
+  {
+    "common_charge_slug": "violating-protective-order",
+    "statute_number": "N.J.S.A. 2C:29-9",
+    "statute_title": "Violation of Final Restraining Order (FRO)",
+    "offense_class": "4th Degree Crime",
+    "penalty_min": "18 months",
+    "penalty_max": "18 months",
+    "fine_max": "$10,000",
+    "elements": [
+      "Existence of a valid Final Restraining Order",
+      "Defendant had knowledge of the order",
+      "Defendant purposely or knowingly violated a term of the order"
+    ],
+    "mandatory_minimum": "None statutory; court may impose",
+    "enhancements": [
+      "Assault committed during violation: concurrent aggravated assault",
+      "Stalking during violation: concurrent stalking charge",
+      "Multiple violations: multiple counts"
+    ],
+    "notes": "Violation of NJ FRO is a 4th Degree Crime. TRO violation is a contempt matter handled civilly. Criminal violation requires a Final Restraining Order, not just TRO. Also triggers contempt proceedings."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "N.J.S.A. 9:6-3",
+    "statute_title": "Child Abuse — Cruelty and Neglect of Children",
+    "offense_class": "4th Degree Crime (neglect); 3rd Degree Crime (abuse with injury); 2nd Degree (serious injury)",
+    "penalty_min": "18 months",
+    "penalty_max": "10 years (2nd Degree)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Parent or person responsible for the care of a child",
+      "Inflicting physical or mental harm upon the child",
+      "OR allowing the child to be subjected to abuse"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Sexual abuse element: CSC statute concurrent",
+      "Child death: murder or aggravated manslaughter",
+      "Pattern of abuse: extended term"
+    ],
+    "notes": "NJ child abuse statute under Title 9. Aggravated criminal assault of a child under N.J.S.A. 2C:12-1 also applies. Mandatory reporting law (N.J.S.A. 9:6-8.10) applies broadly. DCPP involvement concurrent."
+  },
+  {
+    "common_charge_slug": "child-neglect",
+    "statute_number": "N.J.S.A. 9:6-1",
+    "statute_title": "Child Neglect",
+    "offense_class": "4th Degree Crime",
+    "penalty_min": "18 months",
+    "penalty_max": "18 months",
+    "fine_max": "$10,000",
+    "elements": [
+      "Parent or guardian",
+      "Abandoning, refusing to provide, or failing to provide",
+      "Necessary care (food, clothing, shelter, medical care) for a child"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Serious harm results: upgraded to 3rd or 2nd Degree under N.J.S.A. 2C:24-4(a)",
+      "Death resulting: murder or manslaughter charges",
+      "Prior neglect adjudication: sentencing enhancement"
+    ],
+    "notes": "NJ child endangerment under N.J.S.A. 2C:24-4(a) is the companion criminal statute. DCPP/DYFS proceedings run concurrently. Endangering welfare of children (N.J.S.A. 2C:24-4) is the more commonly used criminal charge."
+  },
+  {
+    "common_charge_slug": "firearm-felon-in-possession",
+    "statute_number": "N.J.S.A. 2C:39-7",
+    "statute_title": "Certain Persons Not to Have Weapons",
+    "offense_class": "2nd Degree Crime",
+    "penalty_min": "5 years (NERA: 85%)",
+    "penalty_max": "10 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Having been convicted of specific crimes or offenses",
+      "Possessing, owning, purchasing, or controlling a firearm",
+      "OR having been convicted of domestic violence predicate and possessing any weapon"
+    ],
+    "mandatory_minimum": "Graves Act: 5-year mandatory minimum without parole — N.J.S.A. 2C:43-6(c)",
+    "enhancements": [
+      "Graves Act mandatory applies to ALL prohibited persons firearm cases",
+      "Use in crime: additional concurrent charges",
+      "Prior Certain Persons conviction: extended term mandatory"
+    ],
+    "notes": "NJ's felon-in-possession equivalent. 2nd Degree Crime. Graves Act applies — mandatory 5-year minimum without parole. Also applies to persons convicted of DV predicate offenses who possess ANY weapon, not just firearms. One of the most heavily prosecuted NJ gun laws."
+  },
+  {
+    "common_charge_slug": "carrying-concealed-weapon",
+    "statute_number": "N.J.S.A. 2C:39-5(b)",
+    "statute_title": "Unlawful Possession of a Handgun",
+    "offense_class": "2nd Degree Crime",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Carrying, possessing, or controlling a handgun",
+      "Without first having obtained a Permit to Carry a Handgun",
+      "Outside of the person's dwelling place or place of business"
+    ],
+    "mandatory_minimum": "Graves Act: 5-year mandatory minimum without parole",
+    "enhancements": [
+      "Firearm is loaded: sentencing enhancement",
+      "In school zone: mandatory additional 3-5 years",
+      "Graves Act waiver available through plea to 2nd Degree without mandatory minimum"
+    ],
+    "notes": "NJ had most restrictive carry laws in US before Bruen (2022). Post-Bruen, shall-issue permits available but NJ still maintains Graves Act mandatory minimum for permit-less carry. 2nd Degree with mandatory 5-year minimum under Graves Act."
+  },
+  {
+    "common_charge_slug": "felony-firearm",
+    "statute_number": "N.J.S.A. 2C:43-6(c) (Graves Act)",
+    "statute_title": "Graves Act — Mandatory Minimum for Firearm Offenses",
+    "offense_class": "Mandatory minimum sentence enhancement (not standalone offense)",
+    "penalty_min": "5 years without parole (minimum)",
+    "penalty_max": "Underlying offense maximum",
+    "fine_max": "Underlying offense fine",
+    "elements": [
+      "Conviction for a Graves Act offense (firearm-related crime under N.J.S.A. 2C:39-1 et seq.)",
+      "With exception of certain non-violent possession offenses",
+      "Including unlawful possession, possession by certain persons, using firearm in commission of crime"
+    ],
+    "mandatory_minimum": "1/2 of sentence or 5 years, whichever is greater, without parole eligibility",
+    "enhancements": [
+      "Prior Graves Act offense: mandatory term increases",
+      "Second Graves Act offense: 10-year mandatory without parole",
+      "Graves Act waiver: Prosecutor may downgrade — requires court approval"
+    ],
+    "notes": "The Graves Act is NJ's signature gun law — applies to all N.J.S.A. 2C:39-series convictions. The mandatory minimum is the GREATER of half the sentence OR 5 years. No parole during mandatory period. Waiver available but rarely granted in practice."
+  },
+  {
+    "common_charge_slug": "assault-firearm",
+    "statute_number": "N.J.S.A. 2C:12-1(b)(1) and N.J.S.A. 2C:39-4",
+    "statute_title": "Aggravated Assault with Firearm / Possession of Firearm for Unlawful Purpose",
+    "offense_class": "2nd Degree Crime",
+    "penalty_min": "5 years (NERA: 85%)",
+    "penalty_max": "10 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Attempt to cause serious bodily injury using a firearm",
+      "OR possession of a firearm with purpose to use it unlawfully against another"
+    ],
+    "mandatory_minimum": "Graves Act: 5-year mandatory minimum; NERA: 85% of sentence",
+    "enhancements": [
+      "Serious bodily injury inflicted: NERA in full force",
+      "Victim is law enforcement: enhanced sentencing",
+      "Prior violent felony: extended term"
+    ],
+    "notes": "Both aggravated assault with firearm and possession for unlawful purpose are 2nd Degree with Graves Act mandatory and NERA. Frequently charged together. Most common felony gun charges in NJ."
+  },
+  {
+    "common_charge_slug": "fraud-identity-theft",
+    "statute_number": "N.J.S.A. 2C:21-17",
+    "statute_title": "Impersonation / Identity Theft",
+    "offense_class": "2nd-4th Degree Crime (harm-based)",
+    "penalty_min": "18 months",
+    "penalty_max": "10 years (2nd Degree, $75,000+ loss or 5+ victims)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Obtaining personal identifying information of another",
+      "Without authorization",
+      "With purpose to fraudulently obtain a benefit or to injure or defraud"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "5+ victims or $75,000+ loss: 2nd Degree",
+      "$500-$75,000 or 2-4 victims: 3rd Degree",
+      "Under $500 or 1 victim: 4th Degree",
+      "Victim is 62+: additional $10,000 fine"
+    ],
+    "notes": "NJ identity theft tiered by number of victims and financial loss. Senior victim (62+) triggers mandatory $10,000 fine. Restitution mandatory. Impersonation using internet or computer carries additional charges."
+  },
+  {
+    "common_charge_slug": "fraud-credit-card",
+    "statute_number": "N.J.S.A. 2C:21-6",
+    "statute_title": "Credit Card Fraud",
+    "offense_class": "4th Degree Crime (under $75,000); 3rd Degree ($75,000+)",
+    "penalty_min": "18 months",
+    "penalty_max": "5 years (3rd Degree)",
+    "fine_max": "$75,000",
+    "elements": [
+      "Using a credit card with knowledge that it is stolen, revoked, or used without authorization",
+      "With intent to defraud",
+      "Obtaining money, goods, services, or anything of value"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Skimming device: additional charges — N.J.S.A. 2C:21-6.1",
+      "Identity theft component: concurrent charges",
+      "Multiple cards/victims: multiple counts"
+    ],
+    "notes": "NJ credit card fraud under N.J.S.A. 2C:21-6. Skimming devices are separately criminalized under N.J.S.A. 2C:21-6.1. Restitution mandatory."
+  },
+  {
+    "common_charge_slug": "fraud-insurance",
+    "statute_number": "N.J.S.A. 2C:21-4.6",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "4th Degree Crime (under $1,000); 3rd Degree ($1,000-$75,000); 2nd Degree ($75,000+)",
+    "penalty_min": "18 months",
+    "penalty_max": "10 years (2nd Degree)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Knowingly making or causing to be made",
+      "A false, fictitious, fraudulent, or misleading statement",
+      "In connection with an insurance claim or application"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Personal injury fraud scheme (PIP fraud): mandatory criminal referral",
+      "Healthcare provider fraud: additional penalties — N.J.S.A. 2C:21-4.3",
+      "Organized fraud ring: 2nd Degree enhancement"
+    ],
+    "notes": "NJ Insurance Fraud Prevention Act. Auto insurance (PIP/personal injury) fraud is highly prevalent and prosecuted. Healthcare provider insurance fraud has enhanced penalties. Civil enforcement also available through OIC."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "N.J.S.A. 2C:20-9",
+    "statute_title": "Theft by Breach of Fiduciary Duty (Embezzlement)",
+    "offense_class": "2nd-4th Degree Crime or Disorderly Persons (value-based)",
+    "penalty_min": "18 months (4th Degree)",
+    "penalty_max": "10 years (2nd Degree, $75,000+)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Being a fiduciary",
+      "Knowingly dealing with property entrusted to them",
+      "In a manner they know to be incompatible with their fiduciary duty"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Public officer or official: 2nd Degree regardless of amount — N.J.S.A. 2C:20-9(c)",
+      "Elderly victim: one degree enhanced",
+      "Organized scheme: additional conspiracy charges"
+    ],
+    "notes": "NJ consolidates embezzlement under theft by breach of fiduciary duty. Public officer theft is automatically 2nd Degree. Restitution mandatory."
+  },
+  {
+    "common_charge_slug": "csc-first-degree",
+    "statute_number": "N.J.S.A. 2C:14-2(a)",
+    "statute_title": "Aggravated Sexual Assault — First Degree",
+    "offense_class": "1st Degree Crime",
+    "penalty_min": "10 years",
+    "penalty_max": "20 years",
+    "fine_max": "$200,000",
+    "elements": [
+      "Committing an act of sexual penetration",
+      "Under aggravated circumstances: victim under 13; victim 13-15 and defendant authority figure; force, coercion, or incapacitation; victim physically helpless; armed with weapon"
+    ],
+    "mandatory_minimum": "NERA: 85% of sentence must be served before parole eligibility",
+    "enhancements": [
+      "Victim under 13: NERA mandatory, life possible",
+      "Repeat offenders: Megan's Law Tier 3 registration (lifetime)",
+      "Prior sex offense conviction: extended term",
+      "Predatory Sex Offenders Act: additional civil commitment"
+    ],
+    "notes": "NJ uses 'aggravated sexual assault' (1st Degree) and 'sexual assault' (2nd Degree). NERA mandatory for 1st Degree — 85% served before parole. Megan's Law registration required. Parole Supervision for Life (PSL) mandatory for adults."
+  },
+  {
+    "common_charge_slug": "csc-second-degree",
+    "statute_number": "N.J.S.A. 2C:14-2(b)-(c)",
+    "statute_title": "Sexual Assault — Second Degree",
+    "offense_class": "2nd Degree Crime",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Sexual penetration with another person",
+      "Using physical force or coercion",
+      "OR victim is 16 or 17 and defendant has supervisory or disciplinary authority",
+      "OR victim is 13-15 and defendant is at least 4 years older"
+    ],
+    "mandatory_minimum": "NERA: 85% of sentence; Parole Supervision for Life (PSL) mandatory",
+    "enhancements": [
+      "Prior sex offense: extended term",
+      "Megan's Law Tier 2 or 3 registration",
+      "Position of trust: sentencing enhancement",
+      "Special Probation (BIRIA): available in limited circumstances"
+    ],
+    "notes": "2nd Degree sexual assault (penetration with force or statutory age circumstances). NERA mandatory. PSL (lifetime parole supervision) required for all adults convicted of sexual assault. Megan's Law registration mandatory."
+  },
+  {
+    "common_charge_slug": "csc-third-degree",
+    "statute_number": "N.J.S.A. 2C:14-3(a)",
+    "statute_title": "Aggravated Criminal Sexual Contact — Third Degree",
+    "offense_class": "3rd Degree Crime",
+    "penalty_min": "3 years",
+    "penalty_max": "5 years",
+    "fine_max": "$75,000",
+    "elements": [
+      "Sexual contact (not penetration)",
+      "Under aggravated circumstances (same as aggravated sexual assault but contact only)",
+      "Including force, incapacity, victim age under 13"
+    ],
+    "mandatory_minimum": "NERA may apply depending on circumstances",
+    "enhancements": [
+      "Prior sex offense: extended term",
+      "Megan's Law registration required",
+      "PSL mandatory for adults"
+    ],
+    "notes": "3rd Degree for sexual contact under aggravated circumstances. Criminal sexual contact (4th Degree, N.J.S.A. 2C:14-3(b)) covers non-aggravated sexual contact with force."
+  },
+  {
+    "common_charge_slug": "csc-fourth-degree",
+    "statute_number": "N.J.S.A. 2C:14-3(b)",
+    "statute_title": "Criminal Sexual Contact — Fourth Degree",
+    "offense_class": "4th Degree Crime",
+    "penalty_min": "18 months",
+    "penalty_max": "18 months",
+    "fine_max": "$10,000",
+    "elements": [
+      "Sexual contact",
+      "Using physical force or coercion",
+      "Without specific aggravating circumstances of 3rd Degree"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Prior sex offense: enhanced to 3rd Degree",
+      "Megan's Law registration required",
+      "PSL mandatory"
+    ],
+    "notes": "Lowest-level NJ sex offense. 4th Degree Criminal Sexual Contact. Megan's Law and PSL still apply despite misdemeanor-equivalent severity. Force or coercion required — not just offensive touching."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "N.J.S.A. 2C:14-4",
+    "statute_title": "Lewdness",
+    "offense_class": "Disorderly Persons Offense; 4th Degree if victim under 13",
+    "penalty_min": "0 days",
+    "penalty_max": "6 months (Disorderly Persons); 18 months (4th Degree)",
+    "fine_max": "$1,000 (Disorderly); $10,000 (4th Degree)",
+    "elements": [
+      "Exposing intimate parts",
+      "For the purpose of arousing or gratifying sexual desire",
+      "Under circumstances likely to cause affront or alarm"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Victim under 13: 4th Degree Crime",
+      "Online exposure/transmission: computer crime charges added",
+      "School zone: municipal ordinance may apply"
+    ],
+    "notes": "NJ uses 'Lewdness' rather than indecent exposure. Disorderly Persons for general lewdness, 4th Degree if victim is under 13. Megan's Law registration possible for 4th Degree lewd acts against minors."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "N.J.S.A. 2C:34-1",
+    "statute_title": "Prostitution and Related Offenses",
+    "offense_class": "Disorderly Persons (solicitation); 4th Degree (promoting); 3rd Degree (promoting minor)",
+    "penalty_min": "0 days",
+    "penalty_max": "6 months (Disorderly Persons); 18 months (4th Degree); 5 years (3rd Degree)",
+    "fine_max": "$1,000 (Disorderly); $10,000 (4th Degree)",
+    "elements": [
+      "Soliciting or promoting prostitution",
+      "Engaging in sexual activity as a business for compensation",
+      "OR profiting from prostitution of another"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Promoting prostitution of minor under 18: 3rd Degree",
+      "Compelling prostitution through force: 1st Degree — N.J.S.A. 2C:13-8",
+      "Human trafficking: additional enhanced charges"
+    ],
+    "notes": "NJ prostitution law under N.J.S.A. 2C:34-1. Solicitation is Disorderly Persons. Promoting is 4th Degree. Promoting minor's prostitution is 3rd Degree. Sex trafficking of minors prosecuted under N.J.S.A. 2C:13-8."
+  },
+  {
+    "common_charge_slug": "sex-trafficking",
+    "statute_number": "N.J.S.A. 2C:13-8",
+    "statute_title": "Human Trafficking — Sexual Exploitation",
+    "offense_class": "1st Degree Crime",
+    "penalty_min": "10 years",
+    "penalty_max": "20 years (or Life if minor victim)",
+    "fine_max": "$200,000",
+    "elements": [
+      "Recruiting, luring, enticing, or harboring a person",
+      "Through force, fraud, or coercion",
+      "For the purpose of commercial sexual activity"
+    ],
+    "mandatory_minimum": "NERA: 85% of sentence; victim under 18: no probation",
+    "enhancements": [
+      "Victim under 18: mandatory life imprisonment or 20-year minimum",
+      "Multiple victims: consecutive sentences",
+      "Use of controlled substance to control victim: additional CDS charges"
+    ],
+    "notes": "NJ Human Trafficking statute under N.J.S.A. 2C:13-8. Minors cannot consent — no defense of consent for trafficking of persons under 18. Asset forfeiture. Victim services and safe harbor provisions under N.J.S.A. 2C:13-9."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "N.J.S.A. 2C:33-2(b)",
+    "statute_title": "Disorderly Conduct — Intoxication",
+    "offense_class": "Petty Disorderly Persons Offense",
+    "penalty_min": "0 days",
+    "penalty_max": "30 days",
+    "fine_max": "$500",
+    "elements": [
+      "Appearing in a public place",
+      "Under the influence of alcohol or a controlled substance",
+      "Manifesting a purpose to cause public inconvenience, annoyance, or alarm"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Creating serious hazard: disorderly conduct upgrade",
+      "DWI if operating a vehicle: N.J.S.A. 39:4-50"
+    ],
+    "notes": "NJ does not have a standalone 'public intoxication' statute. Charged as Disorderly Conduct (Petty Disorderly Persons) or under municipal ordinances. DWI applies when operating a vehicle."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "N.J.S.A. 2C:33-2",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Petty Disorderly Persons Offense",
+    "penalty_min": "0 days",
+    "penalty_max": "30 days",
+    "fine_max": "$500",
+    "elements": [
+      "Engaging in fighting, threatening, or violent behavior",
+      "OR creating a hazardous or physically offensive condition",
+      "OR using offensive, threatening, or abusive language in a public place"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Simple assault concurrent if physical contact",
+      "Mutual fighting: Petty Disorderly Persons (same)",
+      "Near school or public event: local ordinance may enhance"
+    ],
+    "notes": "NJ disorderly conduct is Petty Disorderly Persons (30 days max). Distinguished from simple assault (Disorderly Persons, 6 months) when no physical contact occurs. Commonly used for altercations."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "N.J.S.A. 2C:18-3",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "4th Degree Crime (dwelling); Disorderly Persons (other structure); Petty Disorderly (land)",
+    "penalty_min": "0 days",
+    "penalty_max": "18 months (4th Degree, dwelling)",
+    "fine_max": "$10,000 (4th Degree); $1,000 (Disorderly)",
+    "elements": [
+      "Entering or surreptitiously remaining in any structure",
+      "Knowing that permission has been denied",
+      "Without license, privilege, or lawful reason"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Dwelling: 4th Degree Crime",
+      "School building: 4th Degree",
+      "Other structure: Disorderly Persons",
+      "Open land: Petty Disorderly Persons"
+    ],
+    "notes": "NJ trespass escalates based on type of structure. Dwelling trespass is 4th Degree Crime. Other structures are Disorderly Persons. Open land is Petty Disorderly. Defiant trespasser (refuses to leave) included."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "N.J.S.A. 2C:29-2",
+    "statute_title": "Resisting Arrest",
+    "offense_class": "Disorderly Persons Offense (no force); 3rd Degree (flight/force used)",
+    "penalty_min": "0 days",
+    "penalty_max": "6 months (no force); 5 years (flight or force — 3rd Degree)",
+    "fine_max": "$1,000 (Disorderly); $75,000 (3rd Degree)",
+    "elements": [
+      "Knowingly preventing or attempting to prevent a law enforcement officer",
+      "From effecting a lawful arrest",
+      "By creating a substantial risk of bodily injury or employing means requiring substantial force"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Flight: 3rd Degree",
+      "Officer injured: aggravated assault concurrent",
+      "Use of vehicle to flee: eluding — N.J.S.A. 2C:29-2(b)"
+    ],
+    "notes": "NJ resisting arrest: passive resistance is Disorderly Persons; active resistance with flight or force is 3rd Degree Crime. Eluding police in vehicle is separately 2nd or 3rd Degree under N.J.S.A. 2C:29-2(b)."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "N.J.S.A. 2C:29-1",
+    "statute_title": "Obstructing Administration of Law or Other Governmental Function",
+    "offense_class": "Disorderly Persons Offense; 4th Degree if force or flight",
+    "penalty_min": "0 days",
+    "penalty_max": "6 months (Disorderly); 18 months (4th Degree)",
+    "fine_max": "$1,000 (Disorderly); $10,000 (4th Degree)",
+    "elements": [
+      "Purposely obstructing, impairing, or perverting the administration of law",
+      "Or other governmental function",
+      "Using force, violence, physical interference, or obstacle, or an independently unlawful act"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Force used: 4th Degree",
+      "Official misconduct (official doing it): 2nd Degree — N.J.S.A. 2C:30-2",
+      "Witness tampering concurrent: N.J.S.A. 2C:28-5"
+    ],
+    "notes": "NJ obstruction is broadly worded. Passive obstruction is Disorderly Persons; use of force elevates to 4th Degree. Tampering with witness/evidence are separate offenses."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "N.J.S.A. 2C:28-1",
+    "statute_title": "Perjury",
+    "offense_class": "3rd Degree Crime",
+    "penalty_min": "3 years",
+    "penalty_max": "5 years",
+    "fine_max": "$75,000",
+    "elements": [
+      "In any official proceeding",
+      "Making a false statement under oath or affirmation",
+      "With knowledge of its falsity",
+      "With purpose to mislead a public servant in performing his official function"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "False swearing (not in official proceeding): 4th Degree — N.J.S.A. 2C:28-2",
+      "False statements to police: hindering apprehension — N.J.S.A. 2C:29-3",
+      "Perjury in capital case: aggravating factor"
+    ],
+    "notes": "NJ perjury is 3rd Degree Crime. 'Official proceeding' includes trials, hearings, depositions, and administrative proceedings. Subornation of perjury is 3rd Degree under N.J.S.A. 2C:28-3."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "N.J.S.A. 2C:27-2",
+    "statute_title": "Bribery in Official and Political Matters",
+    "offense_class": "3rd Degree Crime",
+    "penalty_min": "3 years",
+    "penalty_max": "5 years",
+    "fine_max": "$75,000 or 3x bribe amount",
+    "elements": [
+      "Offering, conferring, agreeing to confer, or soliciting, accepting, or agreeing to accept",
+      "A benefit as consideration for a vote, opinion, recommendation, decision, or exercise of discretion",
+      "By a public servant, party official, or voter"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Commercial bribery: 2nd Degree if value exceeds $200 — N.J.S.A. 2C:21-10",
+      "Receiving unlawful benefit (public servant): 2nd Degree — N.J.S.A. 2C:27-9",
+      "Official misconduct: additional 2nd Degree charge — N.J.S.A. 2C:30-2"
+    ],
+    "notes": "NJ bribery covers political and official corruption. 3rd Degree for giving or receiving. Official misconduct (N.J.S.A. 2C:30-2) is a 2nd Degree parallel charge for officials acting corruptly."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "N.J.S.A. 2C:21-25",
+    "statute_title": "Financial Facilitation of Criminal Activity (Money Laundering)",
+    "offense_class": "1st-3rd Degree Crime (amount-based)",
+    "penalty_min": "3 years (3rd Degree)",
+    "penalty_max": "20 years (1st Degree)",
+    "fine_max": "$500,000 (1st Degree) or 2x proceeds laundered",
+    "elements": [
+      "Knowingly engaging in a financial transaction",
+      "With proceeds derived from criminal activity",
+      "With intent to conceal or disguise the nature, location, source, ownership, or control of the proceeds"
+    ],
+    "mandatory_minimum": "None; NERA may apply for 1st Degree",
+    "enhancements": [
+      "$500,000+: 1st Degree",
+      "$75,000-$500,000: 2nd Degree",
+      "Under $75,000: 3rd Degree",
+      "Drug trafficking underlying: federal concurrent prosecution",
+      "Forfeiture of all proceeds"
+    ],
+    "notes": "NJ money laundering under N.J.S.A. 2C:21-25. Asset forfeiture available. Federal charges under 18 U.S.C. § 1956 frequently concurrent for organized schemes."
+  },
+  {
+    "common_charge_slug": "criminal-enterprise",
+    "statute_number": "N.J.S.A. 2C:41-2 (NJ RICO)",
+    "statute_title": "NJ RICO — Racketeering",
+    "offense_class": "2nd Degree Crime",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$150,000 or 3x gain",
+    "elements": [
+      "Conducting or participating in an enterprise",
+      "Through a pattern of racketeering activity",
+      "With knowledge or intent to benefit the enterprise"
+    ],
+    "mandatory_minimum": "NERA may apply depending on predicate acts",
+    "enhancements": [
+      "Drug trafficking predicate: enhanced penalties",
+      "Murder predicate: 1st Degree enhancement",
+      "Financial benefit forfeiture",
+      "Federal RICO concurrent: 18 U.S.C. § 1962"
+    ],
+    "notes": "NJ RICO under N.J.S.A. 2C:41-1 et seq. (New Jersey Criminal Justice Act). Requires 'pattern' of at least 2 acts within 10 years. Civil RICO available to private plaintiffs. Asset forfeiture."
+  },
+  {
+    "common_charge_slug": "extortion",
+    "statute_number": "N.J.S.A. 2C:20-5",
+    "statute_title": "Theft by Extortion",
+    "offense_class": "2nd Degree Crime",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Obtaining property of another by threatening",
+      "To inflict bodily injury, commit a crime, accuse of a crime, expose secrets, or abuse official position"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Threat of bodily harm: concurrent assault charges",
+      "Use of mail or wire: federal extortion — 18 U.S.C. § 875",
+      "Organized crime context: NJ RICO charges"
+    ],
+    "notes": "NJ extortion classified under theft statutes (N.J.S.A. 2C:20-5). Graded as 2nd Degree when threat involved — unlike other theft forms graded by value. Federal Hobbs Act extortion (18 U.S.C. § 1951) frequently used for organized crime."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "N.J.S.A. 2C:20-7",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Same grading as theft by value (2nd-4th Degree or Disorderly Persons)",
+    "penalty_min": "0 days (Disorderly Persons)",
+    "penalty_max": "10 years (2nd Degree)",
+    "fine_max": "$150,000 (2nd Degree)",
+    "elements": [
+      "Purposely receiving, retaining, or disposing of movable property of another",
+      "Knowing it has been stolen",
+      "OR believing it is probably stolen",
+      "With purpose to benefit from it or to prevent the owner from recovering it"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Motor vehicle: enhanced if chop shop operation",
+      "Jewelry, firearms: value-based grading applies",
+      "Commercial fencing: multiple counts or racketeering"
+    ],
+    "notes": "NJ receiving stolen property graded same as theft by value. Knowledge of stolen status may be inferred from circumstances. Professional fencing operations subject to racketeering charges."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "N.J.S.A. 2C:21-1",
+    "statute_title": "Forgery",
+    "offense_class": "3rd Degree Crime (most documents); 4th Degree (non-money instruments)",
+    "penalty_min": "3 years (3rd Degree)",
+    "penalty_max": "5 years (3rd Degree)",
+    "fine_max": "$75,000",
+    "elements": [
+      "Altering, completing, executing, or authenticating",
+      "Any writing or object",
+      "With purpose to defraud or injure another"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Government documents, currency: 3rd Degree",
+      "Prescription forgery: 3rd Degree with CDS concurrent",
+      "Fraudulent use of forged document: additional uttering charge — N.J.S.A. 2C:21-2"
+    ],
+    "notes": "NJ forgery under N.J.S.A. 2C:21-1. Uttering forged document is separate offense under N.J.S.A. 2C:21-2. Counterfeit currency is federal offense. Check kiting has separate provisions."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "N.J.S.A. 2C:5-2",
+    "statute_title": "Conspiracy",
+    "offense_class": "Same as the most serious offense in the conspiracy (one degree below for non-1st Degree)",
+    "penalty_min": "Varies with underlying offense",
+    "penalty_max": "Varies (Life if murder conspiracy; otherwise one degree below substantive offense)",
+    "fine_max": "Same as underlying offense",
+    "elements": [
+      "Agreeing with one or more persons to commit an offense",
+      "With purpose of promoting or facilitating its commission",
+      "AND an overt act in furtherance"
+    ],
+    "mandatory_minimum": "None (follows underlying offense)",
+    "enhancements": [
+      "Conspiracy to commit 1st Degree crime: 1st Degree conspiracy",
+      "Drug distribution conspiracy: school zone mandatory minimums may apply",
+      "Continuing conspiracy: Wharton's Rule considerations"
+    ],
+    "notes": "NJ conspiracy graded one degree below the target offense, except conspiracy to commit 1st Degree crime remains 1st Degree. Overt act required. Withdrawal defense available with proper notice."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "N.J.S.A. 2C:5-1",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "One degree below the completed offense",
+    "penalty_min": "Varies",
+    "penalty_max": "One degree below completed offense (attempt to commit 1st Degree = 2nd Degree)",
+    "fine_max": "Same as one-degree-below offense",
+    "elements": [
+      "Purposely engaging in conduct which would constitute the crime if the attendant circumstances were as a reasonable person would believe them to be",
+      "OR doing something which is a substantial step in a course of conduct planned to culminate in the crime"
+    ],
+    "mandatory_minimum": "None (follows underlying offense)",
+    "enhancements": [
+      "Attempt to commit murder: 1st Degree Crime",
+      "Attempt at 1st Degree: treated as 1st Degree for sentencing purposes under N.J.S.A. 2C:5-4",
+      "Substantial step must be more than mere preparation"
+    ],
+    "notes": "NJ attempt graded one degree below completed offense. Attempt of 1st Degree is still 1st Degree. Abandonment is an affirmative defense if voluntary and complete. 'Substantial step' test used."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "N.J.S.A. 2C:2-6",
+    "statute_title": "Liability for Conduct of Another (Accomplice)",
+    "offense_class": "Same as the principal offense",
+    "penalty_min": "Same as principal",
+    "penalty_max": "Same as principal",
+    "fine_max": "Same as principal",
+    "elements": [
+      "With the purpose of promoting or facilitating the commission of the offense",
+      "Soliciting another person to commit it",
+      "OR aiding, agreeing to aid, or attempting to aid another person in planning or committing it"
+    ],
+    "mandatory_minimum": "Same as principal (Graves Act/NERA apply equally)",
+    "enhancements": [
+      "Active participation increases culpability",
+      "Getaway driver subject to same charges as principal",
+      "Accessory after the fact: hindering apprehension — N.J.S.A. 2C:29-3"
+    ],
+    "notes": "NJ accomplice liability — same punishment as principal. Accessory after the fact is not an accomplice in NJ — charged under hindering apprehension (N.J.S.A. 2C:29-3). Graves Act and NERA apply equally to accomplices."
+  },
+  {
+    "common_charge_slug": "hit-run-injury",
+    "statute_number": "N.J.S.A. 2C:12-1.1",
+    "statute_title": "Leaving the Scene of an Accident (Personal Injury)",
+    "offense_class": "3rd Degree Crime",
+    "penalty_min": "3 years",
+    "penalty_max": "5 years",
+    "fine_max": "$75,000",
+    "elements": [
+      "Operating a motor vehicle involved in an accident resulting in injury to a person",
+      "Knowingly failing to stop",
+      "Or to provide name, address, and vehicle identification"
+    ],
+    "mandatory_minimum": "License suspension mandatory (1-5 years)",
+    "enhancements": [
+      "Death resulting: 2nd Degree — N.J.S.A. 2C:12-1.1",
+      "DWI concurrent: enhanced sentencing",
+      "Second offense: extended term"
+    ],
+    "notes": "NJ elevated leaving the scene of injury/death to 3rd/2nd Degree indictable offense. Property damage only: Title 39 motor vehicle offense. License suspension mandatory. Restitution to victim required."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "N.J.S.A. 9:6-8.84",
+    "statute_title": "Abuse, Neglect, Exploitation of Vulnerable Adults",
+    "offense_class": "4th Degree Crime (neglect/emotional); 3rd Degree (physical/serious); 2nd Degree (death)",
+    "penalty_min": "18 months",
+    "penalty_max": "10 years (2nd Degree)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Person responsible for care of a vulnerable adult",
+      "Willfully abusing, neglecting, or mistreating",
+      "OR allowing abuse, neglect, or exploitation"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Financial exploitation concurrent: N.J.S.A. 2C:21-17.1",
+      "Death resulting: aggravated manslaughter",
+      "Prior conviction: extended term"
+    ],
+    "notes": "NJ Adult Protective Services Act — criminal provisions. Title 2C financial exploitation of vulnerable adult under N.J.S.A. 2C:21-17.1 runs concurrently. Mandatory reporting."
+  },
+  {
+    "common_charge_slug": "financial-exploitation-elder",
+    "statute_number": "N.J.S.A. 2C:21-17.1",
+    "statute_title": "Theft or Wrongful Taking — Elderly or Vulnerable Person",
+    "offense_class": "4th-2nd Degree Crime (value-based; one degree elevated from standard theft)",
+    "penalty_min": "18 months",
+    "penalty_max": "10 years (2nd Degree)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Committing theft or unlawful taking",
+      "From a person who is 60 years of age or older",
+      "Or from a vulnerable adult (disabled/incapacitated)"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Amount over $75,000: 2nd Degree",
+      "$1,000-$75,000: 3rd Degree (standard theft 3rd would be $500-$75,000)",
+      "Financial institution employee: enhanced sentencing",
+      "Caregiver: breach of fiduciary enhancement"
+    ],
+    "notes": "NJ elevates theft crimes against elderly or vulnerable adults by one degree. $1,000 threshold for 3rd Degree (vs. $500 for standard theft). Restitution mandatory. Both civil and criminal remedies available."
+  },
+  {
+    "common_charge_slug": "terroristic-threats",
+    "statute_number": "N.J.S.A. 2C:12-3",
+    "statute_title": "Terroristic Threats",
+    "offense_class": "3rd Degree Crime; 2nd Degree if threat to commit crime of 1st or 2nd Degree",
+    "penalty_min": "3 years",
+    "penalty_max": "10 years (2nd Degree)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Threatening to commit any crime of violence",
+      "With purpose to terrorize another",
+      "OR threatening to commit a crime of violence in reckless disregard of the risk of causing terror"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Threat to commit 1st or 2nd Degree crime: 2nd Degree — N.J.S.A. 2C:12-3(b)",
+      "School threat: separate enhanced provisions — N.J.S.A. 2C:33-3",
+      "Online threat: same statute, computer charges may be added"
+    ],
+    "notes": "NJ terroristic threats is 3rd Degree (base) or 2nd Degree (if the threatened crime is 1st or 2nd Degree). Threatening school or community is 3rd Degree under N.J.S.A. 2C:33-3. Harassment (N.J.S.A. 2C:33-4) is a lower-level alternative."
+  },
+  {
+    "common_charge_slug": "weapons-carrying-prohibited",
+    "statute_number": "N.J.S.A. 2C:39-5(d)",
+    "statute_title": "Possession of Other Weapons Without License",
+    "offense_class": "4th Degree Crime",
+    "penalty_min": "18 months",
+    "penalty_max": "18 months",
+    "fine_max": "$10,000",
+    "elements": [
+      "Having in one's possession any weapon",
+      "Under circumstances not manifestly appropriate for such lawful uses as it may have",
+      "Without license or legal authority"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Handgun: N.J.S.A. 2C:39-5(b) — 2nd Degree with Graves Act",
+      "Prohibited weapon (switchblade, brass knuckles): additional charges — N.J.S.A. 2C:39-3",
+      "School zone: mandatory additional term — N.J.S.A. 2C:39-5(e)"
+    ],
+    "notes": "NJ regulates 'weapons' broadly. Specific prohibited weapons under N.J.S.A. 2C:39-3. Handgun possession without permit is 2nd Degree (Graves Act). School zone weapon possession carries mandatory additional sentence."
+  },
+  {
+    "common_charge_slug": "weapons-school-zone",
+    "statute_number": "N.J.S.A. 2C:39-5(e)",
+    "statute_title": "Possession of Firearm in School Zone",
+    "offense_class": "2nd Degree Crime (firearm); 3rd Degree (other weapon)",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years (2nd Degree)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Possessing or carrying a weapon",
+      "In or within 1,000 feet of school property or school bus",
+      "Without authorization"
+    ],
+    "mandatory_minimum": "Graves Act applies for firearm: 5-year mandatory",
+    "enhancements": [
+      "Firearm: 2nd Degree + Graves Act",
+      "Prior weapons conviction: extended term",
+      "During school hours: aggravating factor"
+    ],
+    "notes": "NJ Gun-Free School Zone Act makes possession of firearm on school grounds a 2nd Degree Crime with Graves Act. Distance extends to 1,000 feet of school property. Both state and federal (18 U.S.C. § 922(q)) apply."
+  },
+  {
+    "common_charge_slug": "bomb-threat",
+    "statute_number": "N.J.S.A. 2C:33-3",
+    "statute_title": "False Public Alarm / Bomb Threat",
+    "offense_class": "4th Degree Crime (general false alarm); 3rd Degree (targeting school/mass transit)",
+    "penalty_min": "18 months",
+    "penalty_max": "5 years (3rd Degree)",
+    "fine_max": "$75,000 plus restitution",
+    "elements": [
+      "Initiating or circulating a report or warning",
+      "Knowing it is false or baseless",
+      "Which would prompt official emergency response or public evacuation"
+    ],
+    "mandatory_minimum": "None; restitution mandatory for response costs",
+    "enhancements": [
+      "School or house of worship: 3rd Degree — N.J.S.A. 2C:33-3(e)",
+      "Emergency services mobilized: mandatory restitution",
+      "Multiple threats: multiple counts"
+    ],
+    "notes": "False public alarm (bomb threat) escalated to 3rd Degree for school and religious institution threats. Restitution for evacuation costs mandatory. Juvenile offenders frequently charged."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "N.J.S.A. 4:22-17",
+    "statute_title": "Cruelty to Animals",
+    "offense_class": "4th Degree Crime (serious cruelty); Disorderly Persons (neglect)",
+    "penalty_min": "18 months (4th Degree)",
+    "penalty_max": "18 months (4th Degree) or 6 months (Disorderly)",
+    "fine_max": "$3,000-$5,000 (4th Degree) per offense",
+    "elements": [
+      "Intentionally or knowingly",
+      "Overdriving, overloading, torturing, or killing an animal",
+      "OR causing unnecessary suffering to an animal"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Multiple animals: multiple counts",
+      "Animal fighting: 4th Degree — N.J.S.A. 4:22-24",
+      "Prior conviction: extended term"
+    ],
+    "notes": "NJ animal cruelty under N.J.S.A. 4:22-17 et seq. Upgraded from summary offense to 4th Degree Crime in 2016 (Jax's Law). Animal fighting is separately criminalized. SPCA has law enforcement authority."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "N.J.S.A. 2C:45-3",
+    "statute_title": "Probation Violation",
+    "offense_class": "Revocation proceeding; penalty up to original term",
+    "penalty_min": "0 days (may continue on modified probation)",
+    "penalty_max": "Remaining term or maximum of original offense",
+    "fine_max": "No additional fine",
+    "elements": [
+      "Defendant on a probation term",
+      "Willfully violating a condition of probation",
+      "Established by preponderance of evidence at violation hearing"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "New criminal offense while on probation: consecutive sentencing likely",
+      "Technical violations: stepped responses (community service, jail)",
+      "PSL (Parole Supervision for Life) violations: NJSP Parole Board jurisdiction"
+    ],
+    "notes": "NJ probation violations heard before sentencing judge. No jury. Preponderance standard. Court may continue, modify, or revoke to impose custodial sentence up to original maximum. Drug court technical violations have their own graduated responses."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "N.J.S.A. 30:4-123.60",
+    "statute_title": "Parole Violation",
+    "offense_class": "Administrative proceeding",
+    "penalty_min": "Varies",
+    "penalty_max": "Return to prison for remainder of sentence",
+    "fine_max": "None",
+    "elements": [
+      "Person on parole",
+      "Violating conditions of parole",
+      "Including new criminal conduct, technical violations, or absconding"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "New crime while on parole: consecutive term likely",
+      "Absconding: warrant issued; no bail typical"
+    ],
+    "notes": "NJ State Parole Board jurisdiction. Due process rights under Morrissey v. Brewer apply. Parole Supervision for Life (PSL) violations for sex offenders handled by NJ State Parole Board with more supervision."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "N.J.S.A. 2C:29-5",
+    "statute_title": "Escape from Custody",
+    "offense_class": "3rd Degree Crime (escape from institution); 4th Degree (leave temporary release)",
+    "penalty_min": "3 years (3rd Degree)",
+    "penalty_max": "5 years (3rd Degree); 18 months (4th Degree)",
+    "fine_max": "$75,000",
+    "elements": [
+      "Escaping from official detention",
+      "OR using force, threat, or deception to escape",
+      "Without authorization"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Force or weapon used: additional assault charges",
+      "Injuring corrections officer: aggravated assault concurrent",
+      "Conspiracy to escape: additional charges"
+    ],
+    "notes": "NJ escape is 3rd Degree for facility escape. Failure to return from furlough is 4th Degree. Sentence for escape runs consecutive to existing sentence."
+  },
+  {
+    "common_charge_slug": "false-police-report",
+    "statute_number": "N.J.S.A. 2C:28-4",
+    "statute_title": "Falsely Reporting an Incident",
+    "offense_class": "4th Degree Crime; 3rd Degree if bomb threat or mass casualty",
+    "penalty_min": "18 months",
+    "penalty_max": "5 years (3rd Degree)",
+    "fine_max": "$75,000 plus restitution",
+    "elements": [
+      "Knowingly giving or causing a false report to be given",
+      "To any law enforcement or civil authority",
+      "Reporting that an offense has been committed or a fire is burning"
+    ],
+    "mandatory_minimum": "None; restitution mandatory if emergency response triggered",
+    "enhancements": [
+      "Bomb threat or terrorist act: 3rd Degree — N.J.S.A. 2C:33-3",
+      "Emergency response costs: mandatory restitution",
+      "Prior false report: sentencing enhancement"
+    ],
+    "notes": "NJ false report to law enforcement is 4th Degree. False bomb threat separately prosecuted as 3rd Degree under N.J.S.A. 2C:33-3. Restitution for response costs. Distinct from false statements in official proceedings (perjury)."
+  },
+  {
+    "common_charge_slug": "cybercrime",
+    "statute_number": "N.J.S.A. 2C:20-25",
+    "statute_title": "Computer Criminal Activity",
+    "offense_class": "4th-2nd Degree Crime (damage/loss-based)",
+    "penalty_min": "18 months",
+    "penalty_max": "10 years (2nd Degree, $75,000+ damage)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Purposely or knowingly and without authorization accessing",
+      "A computer system, network, or data",
+      "Altering, damaging, deleting, or obtaining data"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "$75,000+ damage: 2nd Degree",
+      "$500-$75,000: 3rd Degree",
+      "Under $500: 4th Degree",
+      "Government systems: enhanced federal charges",
+      "Healthcare data breach: HIPAA federal parallel"
+    ],
+    "notes": "NJ Computer Criminal Activity Act under N.J.S.A. 2C:20-23 et seq. Graded by financial damage caused. Federal CFAA (18 U.S.C. § 1030) charges frequently concurrent for interstate computer crimes."
+  },
+  {
+    "common_charge_slug": "tax-evasion",
+    "statute_number": "N.J.S.A. 54:49-14",
+    "statute_title": "Tax Fraud",
+    "offense_class": "3rd Degree Crime (amount-based)",
+    "penalty_min": "3 years",
+    "penalty_max": "5 years per count",
+    "fine_max": "$75,000 per count",
+    "elements": [
+      "Willfully failing to file a required tax return",
+      "OR willfully making or subscribing a false tax return",
+      "With intent to evade or defeat any tax"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Multiple years of non-filing: multiple counts",
+      "Sales tax fraud: N.J.S.A. 54:32B-13",
+      "Federal concurrent IRS prosecution",
+      "Offshore account concealment: additional charges"
+    ],
+    "notes": "NJ Division of Taxation handles state tax fraud. Federal IRS prosecution concurrent. Sales tax fraud separately prosecuted under N.J.S.A. 54:32B-13. Restitution and interest mandatory."
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "statute_number": "N.J.S.A. 2C:21-4.3 (state) / 18 U.S.C. § 1343 (federal)",
+    "statute_title": "Scheme to Defraud / Wire Fraud",
+    "offense_class": "2nd-4th Degree Crime (state, loss-based); federal: up to 20 years",
+    "penalty_min": "18 months (state)",
+    "penalty_max": "10 years (state); 20 years (federal)",
+    "fine_max": "$150,000 (state); $250,000 (federal)",
+    "elements": [
+      "A scheme or artifice to defraud",
+      "Using wire communications, internet, or electronic means",
+      "Obtaining money or property through false pretenses"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Financial institution victim: 30 years federal",
+      "COVID/disaster fraud: enhanced federal",
+      "Mail fraud concurrent: 18 U.S.C. § 1341"
+    ],
+    "notes": "Federal wire fraud frequently charged for interstate fraud. NJ state fraud under N.J.S.A. 2C:21-4 covers scheme to defraud. Both charges often filed together."
+  },
+  {
+    "common_charge_slug": "fraud-mortgage",
+    "statute_number": "N.J.S.A. 2C:21-4.5",
+    "statute_title": "Residential Mortgage Fraud",
+    "offense_class": "2nd-4th Degree Crime (loss-based)",
+    "penalty_min": "18 months",
+    "penalty_max": "10 years (2nd Degree, $75,000+)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Knowingly making false statements",
+      "In connection with a residential mortgage loan",
+      "With intent to defraud a lender, borrower, or government entity"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "$75,000+ loss: 2nd Degree",
+      "Multiple loans: multiple counts",
+      "Bank fraud: federal prosecution concurrent — 18 U.S.C. § 1344",
+      "Real estate professional: licensing consequences"
+    ],
+    "notes": "NJ Residential Mortgage Fraud Act under N.J.S.A. 2C:21-4.5. Federal bank fraud charges frequently concurrent. Straw buyer schemes and appraisal fraud common patterns."
+  },
+  {
+    "common_charge_slug": "possession-child-pornography",
+    "statute_number": "N.J.S.A. 2C:24-4(b)(4)",
+    "statute_title": "Possession of Child Sexual Abuse Material (CSAM)",
+    "offense_class": "4th Degree Crime",
+    "penalty_min": "18 months",
+    "penalty_max": "18 months",
+    "fine_max": "$10,000",
+    "elements": [
+      "Knowingly possessing",
+      "Any photograph, film, or other material depicting a child",
+      "In a sexually explicit manner"
+    ],
+    "mandatory_minimum": "None; Megan's Law registration required",
+    "enhancements": [
+      "Distribution or showing: 3rd Degree — N.J.S.A. 2C:24-4(b)(3)",
+      "Production: 2nd Degree — N.J.S.A. 2C:24-4(b)(2)",
+      "Federal concurrent prosecution: 18 U.S.C. § 2252",
+      "Prior sex conviction: extended term"
+    ],
+    "notes": "NJ CSAM possession is 4th Degree. Each image may be a separate count under N.J.S.A. 2C:24-4(b)(5) (each depicts a separate victim). Megan's Law registration mandatory. Federal charges typical for internet-based distribution."
+  },
+  {
+    "common_charge_slug": "production-child-pornography",
+    "statute_number": "N.J.S.A. 2C:24-4(b)(2)",
+    "statute_title": "Production/Creation of Child Sexual Abuse Material",
+    "offense_class": "2nd Degree Crime",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Filming, photographing, or reproducing",
+      "A minor engaged in sexually explicit conduct",
+      "For the purpose of creating CSAM"
+    ],
+    "mandatory_minimum": "NERA: 85% of sentence; Megan's Law registration mandatory",
+    "enhancements": [
+      "Child under 13: enhanced sentencing within 2nd Degree",
+      "Prior sex offense: extended term",
+      "Distribution of material: additional concurrent charges"
+    ],
+    "notes": "2nd Degree CSAM production in NJ — NERA applies (85% served before parole). Federal prosecution under 18 U.S.C. § 2251 typically concurrent. PSL (Parole Supervision for Life) mandatory."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "N.J.S.A. 2C:33-4",
+    "statute_title": "Harassment",
+    "offense_class": "Petty Disorderly Persons Offense; 4th Degree if pattern toward bias",
+    "penalty_min": "0 days",
+    "penalty_max": "30 days (Petty Disorderly); 18 months (4th Degree bias)",
+    "fine_max": "$500 (Petty Disorderly); $10,000 (4th Degree)",
+    "elements": [
+      "Making or causing to be made a communication in a manner likely to cause annoyance or alarm",
+      "OR striking, kicking, shoving, or subjecting to offensive touching",
+      "OR engaging in any other course of alarming conduct with purpose to alarm or annoy"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Bias-based harassment: 4th Degree — N.J.S.A. 2C:16-1 concurrent",
+      "Cyberstalking/electronic harassment: stalking charges may apply",
+      "Against DV protected person: predicate for FRO"
+    ],
+    "notes": "NJ harassment (Petty Disorderly) is a common predicate for domestic violence FRO proceedings. 4th Degree elevation for bias-based harassment. Electronic harassment increasingly charged."
+  },
+  {
+    "common_charge_slug": "eluding-police",
+    "statute_number": "N.J.S.A. 2C:29-2(b)",
+    "statute_title": "Eluding an Officer",
+    "offense_class": "3rd Degree Crime (default); 2nd Degree if creates risk of injury",
+    "penalty_min": "3 years",
+    "penalty_max": "10 years (2nd Degree)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Operating a motor vehicle",
+      "After being signaled by a police officer to stop",
+      "Intentionally fleeing or attempting to elude the officer"
+    ],
+    "mandatory_minimum": "License revocation mandatory; NERA may apply for 2nd Degree",
+    "enhancements": [
+      "Creates risk of death or injury to another: 2nd Degree — N.J.S.A. 2C:29-2(b)",
+      "High-speed chase injuring bystander: NERA applicable",
+      "OWI concurrent: enhanced sentencing"
+    ],
+    "notes": "NJ eluding is 3rd Degree by default, elevated to 2nd Degree with risk of injury (NERA). License revocation 6 months to 2 years. Consecutive to other charges arising from same incident."
+  },
+  {
+    "common_charge_slug": "hate-crime",
+    "statute_number": "N.J.S.A. 2C:16-1",
+    "statute_title": "Bias Intimidation",
+    "offense_class": "3rd Degree Crime (standalone); elevated by underlying offense degree",
+    "penalty_min": "3 years",
+    "penalty_max": "10 years if 2nd Degree underlying crime",
+    "fine_max": "$75,000-$150,000",
+    "elements": [
+      "Committing a predicate offense",
+      "Because of, or in a manner reasonably calculated to put another person in fear on account of",
+      "Race, color, religion, gender, disability, sexual orientation, gender identity, national origin, or ethnicity"
+    ],
+    "mandatory_minimum": "None; community service often ordered",
+    "enhancements": [
+      "If the underlying crime is 1st Degree: bias intimidation is 2nd Degree",
+      "If underlying is 2nd/3rd Degree: bias intimidation is 3rd Degree",
+      "If Disorderly Persons: bias intimidation is 4th Degree",
+      "Mandatory civil penalty to victim"
+    ],
+    "notes": "NJ bias intimidation statute. Conviction elevated by one degree relative to underlying offense. Includes sexual orientation and gender identity — broader than many states. Civil penalties additionally available under LAD."
+  },
+  {
+    "common_charge_slug": "human-trafficking",
+    "statute_number": "N.J.S.A. 2C:13-8(a)(1)",
+    "statute_title": "Human Trafficking — Labor Trafficking",
+    "offense_class": "1st Degree Crime",
+    "penalty_min": "10 years",
+    "penalty_max": "20 years (or Life if minor victim)",
+    "fine_max": "$200,000",
+    "elements": [
+      "Recruiting, luring, enticing, transporting, providing, obtaining, or harboring a person",
+      "By means of force, threat of force, fraud, or coercion",
+      "For the purpose of labor or services"
+    ],
+    "mandatory_minimum": "NERA: 85% of sentence",
+    "enhancements": [
+      "Victim under 18: maximum Life, no consent defense",
+      "Multiple victims: consecutive sentences",
+      "Drug use to control victim: additional CDS charges"
+    ],
+    "notes": "NJ Human Trafficking Act (N.J.S.A. 2C:13-8). Sex and labor trafficking both covered. Minor victims: no defense of consent. Safe harbor for victims under N.J.S.A. 2C:13-9. Asset forfeiture."
+  },
+  {
+    "common_charge_slug": "witness-tampering",
+    "statute_number": "N.J.S.A. 2C:28-5",
+    "statute_title": "Tampering with Witnesses and Informants",
+    "offense_class": "3rd Degree Crime; 2nd Degree if threat of force",
+    "penalty_min": "3 years",
+    "penalty_max": "10 years (2nd Degree)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Believing that an official proceeding or investigation is pending or about to be instituted",
+      "Attempts to induce or otherwise cause a witness or informant to testify falsely",
+      "OR to withhold testimony, information, or evidence",
+      "OR flee jurisdiction to avoid testifying"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Use or threat of force: 2nd Degree — N.J.S.A. 2C:28-5(a)(3)",
+      "NERA may apply for 2nd Degree",
+      "Retaliation against witness: hindering apprehension charge concurrent"
+    ],
+    "notes": "NJ witness tampering escalates to 2nd Degree if force or threats are used. NERA applies to 2nd Degree (85% served). Separate from jury tampering under N.J.S.A. 2C:29-4."
+  },
+  {
+    "common_charge_slug": "jury-tampering",
+    "statute_number": "N.J.S.A. 2C:29-4",
+    "statute_title": "Tampering with a Juror or Jurors",
+    "offense_class": "3rd Degree Crime",
+    "penalty_min": "3 years",
+    "penalty_max": "5 years",
+    "fine_max": "$75,000",
+    "elements": [
+      "Attempting to influence a juror's vote, opinion, or action",
+      "In relation to a case or proceeding",
+      "Without official authority and otherwise than by lawful argument"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Bribery of juror: concurrent bribery charge — N.J.S.A. 2C:27-6",
+      "Force used: 2nd Degree concurrent",
+      "During capital case: aggravating factor"
+    ],
+    "notes": "NJ jury tampering is 3rd Degree. Bribery of juror is separately charged under N.J.S.A. 2C:27-6 (3rd Degree). Contact with potential jurors during voir dire also covered."
+  },
+  {
+    "common_charge_slug": "criminal-contempt",
+    "statute_number": "N.J.S.A. 2C:29-9",
+    "statute_title": "Contempt of Court / Violation of Court Order",
+    "offense_class": "4th Degree Crime (FRO violation); contempt power for other violations",
+    "penalty_min": "18 months",
+    "penalty_max": "18 months (4th Degree)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Willful disobedience of a court order",
+      "Including protective orders, injunctions, or other court-ordered prohibitions"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "FRO violation with assault: concurrent aggravated assault",
+      "Repeat contempt: enhanced by court",
+      "Civil contempt until compliance: coercive confinement possible"
+    ],
+    "notes": "FRO (Final Restraining Order) violation is 4th Degree Criminal Contempt. TRO violation handled as civil contempt. Separate statutory contempt power under Court Rules. Combined civil/criminal proceedings common."
+  },
+  {
+    "common_charge_slug": "impersonating-officer",
+    "statute_number": "N.J.S.A. 2C:28-8",
+    "statute_title": "Impersonating a Public Servant",
+    "offense_class": "4th Degree Crime (impersonation only); 3rd Degree (if deceiving or taking action)",
+    "penalty_min": "18 months",
+    "penalty_max": "5 years (3rd Degree)",
+    "fine_max": "$75,000",
+    "elements": [
+      "Pretending to be a public servant",
+      "With purpose to induce another to submit to pretended official authority",
+      "OR take or withhold action based on the impersonation"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Pretend arrest or search: 3rd Degree",
+      "Obtaining money through impersonation: fraud concurrent",
+      "Use of realistic badge, vehicle, or uniform: aggravating factor"
+    ],
+    "notes": "NJ impersonating public servant. Using impersonation to commit another offense elevates to 3rd Degree. Fake traffic stops and 'cop pulls' increasingly prosecuted. False credentials separate offense under N.J.S.A. 2C:21-17."
+  },
+  {
+    "common_charge_slug": "gang-participation",
+    "statute_number": "N.J.S.A. 2C:33-29",
+    "statute_title": "Street Gang Criminality",
+    "offense_class": "3rd Degree Crime (enhancement on underlying offense)",
+    "penalty_min": "3 years",
+    "penalty_max": "5 years",
+    "fine_max": "$75,000",
+    "elements": [
+      "Committing any crime or offense",
+      "For the benefit of, at the direction of, or in association with a criminal street gang",
+      "With knowledge that the group is a criminal street gang"
+    ],
+    "mandatory_minimum": "None; runs consecutive to underlying offense",
+    "enhancements": [
+      "Underlying crime is 1st or 2nd Degree: gang enhancement is 2nd Degree",
+      "Prior gang conviction: extended term",
+      "Recruitment of juvenile: additional charge"
+    ],
+    "notes": "NJ street gang enhancement under N.J.S.A. 2C:33-29. Consecutive to underlying offense. Requires proving gang membership and gang-related motive. Gang recruitment of juveniles separately criminalized."
+  },
+  {
+    "common_charge_slug": "possession-explosives",
+    "statute_number": "N.J.S.A. 2C:39-3(a)",
+    "statute_title": "Possession of Destructive Devices / Explosives",
+    "offense_class": "3rd Degree Crime",
+    "penalty_min": "3 years",
+    "penalty_max": "5 years",
+    "fine_max": "$75,000",
+    "elements": [
+      "Knowingly having in possession or under control",
+      "Any destructive device, explosive device, or bomb",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": "Graves Act may apply if used as weapon",
+    "enhancements": [
+      "Use in or near school: mandatory additional term",
+      "Intent to terrorize: terroristic threats concurrent — N.J.S.A. 2C:12-3",
+      "Actual detonation: additional arson or assault charges"
+    ],
+    "notes": "NJ destructive devices under N.J.S.A. 2C:39-3. Prohibited weapons statute. Federal prosecution under 18 U.S.C. § 844 concurrent for explosives. Manufacturing explosives is additionally charged."
+  },
+  {
+    "common_charge_slug": "fraud-welfare",
+    "statute_number": "N.J.S.A. 44:10-79",
+    "statute_title": "Public Assistance Fraud",
+    "offense_class": "3rd Degree Crime ($75,000+); 4th Degree ($500-$75,000); Disorderly Persons (under $500)",
+    "penalty_min": "18 months",
+    "penalty_max": "5 years (3rd Degree)",
+    "fine_max": "$75,000",
+    "elements": [
+      "Willfully making a false statement or misrepresentation",
+      "In connection with an application for public assistance (NJ FamilyCare, SNAP, TANF)",
+      "With intent to fraudulently obtain benefits"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "SNAP/federal benefits: federal prosecution concurrent",
+      "Medicaid fraud: additional charges — N.J.S.A. 2C:51-5",
+      "Organized benefits fraud: multiple counts"
+    ],
+    "notes": "NJ public assistance fraud graded by amount obtained. Medicaid fraud (N.J.S.A. 2C:51-5) carries enhanced penalties. SNAP fraud also subject to federal prosecution. Restitution and benefit disqualification mandatory."
+  }
+]

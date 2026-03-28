@@ -1,0 +1,1915 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "625 ILCS 5/11-501",
+    "statute_title": "Driving Under the Influence of Alcohol, Other Drug or Drugs, Intoxicating Compound or Compounds or Any Combination Thereof",
+    "offense_class": "Class A Misdemeanor (1st/2nd offense); Class 4 Felony (3rd offense)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (Class 4 felony)",
+    "fine_max": "$2,500 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Operated a motor vehicle",
+      "On a public highway or other public or private property used for vehicular travel",
+      "While under the influence of alcohol (BAC 0.08+) or other drugs or combination that rendered the person incapable of safely driving"
+    ],
+    "mandatory_minimum": "100 hours community service or 5 days imprisonment for second offense",
+    "enhancements": [
+      "Aggravated DUI (Class 4 Felony): 3rd+ offense, DUI without valid license, DUI in school zone",
+      "Class 2 Felony: DUI causing great bodily harm",
+      "Class 1 Felony: DUI causing death",
+      "BAC 0.16+ doubles minimum fine on first offense",
+      "Presence of child under 16 in vehicle: additional Class 6 Felony charge"
+    ],
+    "notes": "Illinois DUI law includes 11 separate bases for DUI under 625 ILCS 5/11-501(a). Statutory summary suspension of driving privileges applies automatically on arrest."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "625 ILCS 5/11-501",
+    "statute_title": "Driving Under the Influence — First Offense",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,500",
+    "elements": [
+      "First DUI conviction or supervision",
+      "Operated a motor vehicle while impaired by alcohol or drugs"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "If BAC 0.16+: mandatory minimum $500 fine and 100 hours community service",
+      "If transporting child under 16: additional Class 6 Felony (720 ILCS 5/12-3.05)"
+    ],
+    "notes": "First offense DUI is eligible for court supervision, which avoids a conviction on record if successfully completed. Minimum 1-year statutory summary suspension."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "625 ILCS 5/11-501",
+    "statute_title": "Driving Under the Influence — Repeat Offense",
+    "offense_class": "Class A Misdemeanor (2nd); Class 4 to Class 2 Felony (3rd+)",
+    "penalty_min": "5 days imprisonment or 240 hours community service (2nd offense)",
+    "penalty_max": "1 year (2nd); 3 to 7 years (3rd+ felony)",
+    "fine_max": "$2,500 (2nd); $25,000 (felony)",
+    "elements": [
+      "Prior DUI conviction or supervision on record",
+      "Current DUI offense proven under 625 ILCS 5/11-501"
+    ],
+    "mandatory_minimum": "5 days or 240 community service hours for 2nd offense",
+    "enhancements": [
+      "3rd offense: Class 4 Felony (3-year revocation)",
+      "4th offense: Class 4 Felony (lifetime revocation)",
+      "5th offense: Class 1 Felony",
+      "6th+ offense: Class X Felony"
+    ],
+    "notes": "Illinois maintains a lifetime look-back for prior DUI offenses. 3rd+ offense results in permanent felony record."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "625 ILCS 5/11-501(a)(4),(5),(6),(7)",
+    "statute_title": "Driving Under the Influence of Drugs or Intoxicating Compound",
+    "offense_class": "Class A Misdemeanor (1st); Class 4 Felony (3rd+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (felony)",
+    "fine_max": "$2,500 (misdemeanor)",
+    "elements": [
+      "Operated a motor vehicle",
+      "While under the influence of any drug or combination of drugs that rendered driver incapable of safely driving",
+      "OR with presence of cocaine, heroin, methamphetamine, or cannabis metabolite exceeding statutory thresholds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same felony escalation as alcohol DUI for repeat offenses",
+      "Cannabis DUI threshold: 5 nanograms THC per mL blood or 10 ng per mL other bodily substance"
+    ],
+    "notes": "Per se drug DUI under 11-501(a)(6) applies to cannabis. Zero-tolerance for other controlled substances under 11-501(a)(5)."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "625 ILCS 5/11-503",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Class A Misdemeanor; Class 4 Felony if great bodily harm results",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (felony)",
+    "fine_max": "$2,500",
+    "elements": [
+      "Operated a vehicle on any highway or private property used for vehicle traffic",
+      "With willful or wanton disregard for the safety of persons or property",
+      "OR used an incline in a highway to cause the vehicle to become airborne"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 4 Felony if reckless driving causes great bodily harm, permanent disability, or disfigurement",
+      "Aggravated if committed in a school zone"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "625 ILCS 5/11-401",
+    "statute_title": "Motor Vehicle Accident Involving Death or Personal Injuries — Duty to Stop",
+    "offense_class": "Class 4 Felony (injury); Class 1 Felony (death)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class 4); 15 years (Class 1)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Driver of a vehicle involved in an accident resulting in injury or death",
+      "Failed to immediately stop at the scene",
+      "Failed to provide name, address, and vehicle registration information",
+      "Failed to render reasonable assistance to injured persons"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 1 Felony if accident caused death",
+      "Immediate revocation of driving privileges"
+    ],
+    "notes": "Property-damage-only hit and run is a separate offense under 625 ILCS 5/11-402 (Class A Misdemeanor)."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "720 ILCS 5/9-3",
+    "statute_title": "Reckless Homicide — Motor Vehicle",
+    "offense_class": "Class 3 Felony; Class 2 Felony (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class 3); 7 years (Class 2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Operated a motor vehicle in a reckless manner",
+      "Unintentional killing of another person resulted",
+      "Acts constituted conscious disregard of a substantial and unjustifiable risk"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 2 Felony (aggravated): two or more deaths result",
+      "DUI-related death charged separately under 625 ILCS 5/11-501(d) as aggravated DUI Class X",
+      "School zone or construction zone: enhanced penalties"
+    ],
+    "notes": "DUI-related vehicular death is typically charged as aggravated DUI causing death under 625 ILCS 5/11-501(d) rather than reckless homicide, though both may be charged."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "720 ILCS 5/9-3",
+    "statute_title": "Involuntary Manslaughter — Motor Vehicle (Reckless Homicide)",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Operated a motor vehicle in a reckless manner",
+      "Caused the unintentional death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated: Class 2 Felony for death in school zone or construction zone"
+    ],
+    "notes": "Illinois does not separately title vehicular manslaughter — the offense falls under the reckless homicide statute."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "625 ILCS 5/6-303",
+    "statute_title": "Driving While Driver's License, Permit, or Privilege to Operate a Motor Vehicle is Suspended or Revoked",
+    "offense_class": "Class A Misdemeanor; up to Class 4 Felony (3rd+ offense or revoked for DUI)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (felony)",
+    "fine_max": "$2,500 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Operated a motor vehicle",
+      "While driver's license, permit, or privilege to operate was suspended or revoked"
+    ],
+    "mandatory_minimum": "10 days imprisonment or 30 days community service for 2nd violation during DUI suspension",
+    "enhancements": [
+      "Class 4 Felony: 4th+ offense or when suspension/revocation is for DUI conviction",
+      "Class 2 Felony: 4th conviction when revocation was for reckless homicide or aggravated DUI"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "625 ILCS 5/11-204",
+    "statute_title": "Fleeing or Attempting to Elude a Police Officer",
+    "offense_class": "Class A Misdemeanor; Class 4 Felony (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (Class 4 felony)",
+    "fine_max": "$2,500",
+    "elements": [
+      "Driver of a vehicle on a highway",
+      "Willfully failed or refused to obey a direction to stop by a police officer driving an authorized emergency vehicle with siren or lights engaged"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated (Class 4 Felony): reckless driving during flight, exceeding speed limit by 21+ mph, disobeying 2+ traffic control devices",
+      "Class 3 Felony if aggravated AND caused bodily harm or accident"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "open-container",
+    "statute_number": "625 ILCS 5/11-502",
+    "statute_title": "Possession of Alcoholic Beverage in Motor Vehicle",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,500",
+    "elements": [
+      "Transported or possessed an alcoholic beverage in a motor vehicle",
+      "While operating the vehicle on a highway",
+      "Container had a broken seal, partially removed contents, or was open"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Passengers may be charged as well. Exceptions exist for passengers in buses, taxis, and limousines."
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "statute_number": "625 ILCS 5/11-501.1",
+    "statute_title": "Implied Consent — Refusal of Chemical Testing",
+    "offense_class": "Civil/Administrative (not a separate criminal charge)",
+    "penalty_min": null,
+    "penalty_max": "Administrative suspension only",
+    "fine_max": null,
+    "elements": [
+      "Arrested for DUI",
+      "Refused to submit to or failed to complete chemical testing (breath, blood, or urine)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "First refusal: 12-month statutory summary suspension",
+      "Second+ refusal: 36-month suspension",
+      "Refusal may be used as evidence at DUI trial"
+    ],
+    "notes": "Refusal is an administrative violation triggering statutory summary suspension, not a separate criminal charge in Illinois."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "720 ILCS 570/402",
+    "statute_title": "Possession of Controlled Substance",
+    "offense_class": "Class 4 Felony (small amounts); up to Class X Felony (large amounts)",
+    "penalty_min": null,
+    "penalty_max": "1 to 3 years (Class 4); 6 to 30 years (Class X)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly possessed a controlled substance",
+      "Substance was listed in Schedules I through V of the Illinois Controlled Substances Act",
+      "Without a valid prescription or other lawful authority"
+    ],
+    "mandatory_minimum": "6 years for 100 to 400g Class X amounts",
+    "enhancements": [
+      "Class 1 Felony: heroin, cocaine, or opioids 15+ grams",
+      "Class X Felony: heroin or cocaine 100+ grams (mandatory 6 to 30 years)",
+      "Enhanced if possession within 1,000 feet of school"
+    ],
+    "notes": "Illinois removed cannabis possession from this statute for amounts under 30g. See 720 ILCS 550/4 for cannabis."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "720 ILCS 550/4; 410 ILCS 705/10-10",
+    "statute_title": "Possession of Cannabis",
+    "offense_class": "Civil infraction (under 30g); Class A Misdemeanor (30 to 100g); Class 4 Felony (100 to 500g)",
+    "penalty_min": null,
+    "penalty_max": "Civil fine (under 10g); 1 year (30 to 100g); 3 years (100 to 500g)",
+    "fine_max": "$200 civil (under 10g); $2,500 misdemeanor; $25,000 felony",
+    "elements": [
+      "Possessed cannabis",
+      "Amount exceeded legal adult-use limits (30g flower for non-registered users)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "500g to 2,000g: Class 3 Felony",
+      "2,000g to 5,000g: Class 2 Felony",
+      "5,000g+: Class 1 Felony",
+      "Enhanced penalties within 1,000 feet of school"
+    ],
+    "notes": "Illinois legalized recreational cannabis in 2020. Adults 21+ may possess up to 30g flower, 5g concentrate, 500mg THC in products."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "720 ILCS 570/402(c)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Class 4 Felony (under 15g); Class 1 Felony (15 to 100g); Class X Felony (100g+)",
+    "penalty_min": null,
+    "penalty_max": "1 to 3 years (Class 4); 4 to 15 years (Class 1); 6 to 30 years (Class X)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly possessed cocaine or a substance containing cocaine",
+      "Amount falls within charged quantity bracket"
+    ],
+    "mandatory_minimum": "6 years (100 to 400g); 9 years (400 to 900g); 12 years (900g+)",
+    "enhancements": [
+      "Class X with 6-year minimum: 100 to 400g",
+      "Class X with 9-year minimum: 400 to 900g",
+      "Class X with 12-year minimum: 900g+"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "720 ILCS 646/60",
+    "statute_title": "Methamphetamine Possession",
+    "offense_class": "Class 3 Felony (under 5g); Class 2 Felony (5 to 15g); up to Class X Felony (100g+)",
+    "penalty_min": null,
+    "penalty_max": "2 to 5 years (Class 3); 3 to 7 years (Class 2); 6 to 30+ years (Class X)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly possessed methamphetamine or a substance containing methamphetamine"
+    ],
+    "mandatory_minimum": "6 years (100 to 400g meth); escalating mandatory minimums for larger amounts",
+    "enhancements": [
+      "Class X for 100g+: mandatory 6 to 30 years",
+      "Enhanced if within 1,000 feet of school, daycare, or public park"
+    ],
+    "notes": "Illinois Methamphetamine Control and Community Protection Act (720 ILCS 646) governs meth offenses separately from the general Controlled Substances Act."
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "statute_number": "720 ILCS 570/402(c)",
+    "statute_title": "Possession of Heroin or Opioid Controlled Substances",
+    "offense_class": "Class 4 Felony (under 15g); Class 1 Felony (15 to 100g); Class X Felony (100g+)",
+    "penalty_min": null,
+    "penalty_max": "1 to 3 years (Class 4); 4 to 15 years (Class 1); 6 to 30 years (Class X)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly possessed heroin, fentanyl, or a Schedule I or II opioid controlled substance",
+      "Without a valid prescription"
+    ],
+    "mandatory_minimum": "6 years (100 to 400g heroin); 9 years (400 to 900g); 12 years (900g+)",
+    "enhancements": [
+      "Fentanyl: Class X triggered at lower thresholds due to mixture weight calculations under 720 ILCS 570/402(c)"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "drug-possession-prescription",
+    "statute_number": "720 ILCS 570/402(c)",
+    "statute_title": "Possession of Prescription Controlled Substance Without Valid Prescription",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly possessed a Schedule II through V prescription controlled substance",
+      "Without a valid prescription issued in the defendant's name"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Higher felony class based on weight — same Schedule II drug thresholds apply"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "720 ILCS 570/401",
+    "statute_title": "Manufacture or Delivery of Controlled Substances",
+    "offense_class": "Class 1 Felony (small amounts); Class X Felony (large amounts)",
+    "penalty_min": null,
+    "penalty_max": "4 to 15 years (Class 1); 6 to 30 years to natural life (Class X)",
+    "fine_max": "$250,000 or street value, whichever is greater",
+    "elements": [
+      "Knowingly delivered a controlled substance to another person",
+      "OR possessed with intent to deliver",
+      "Substance was a Schedule I or II controlled substance"
+    ],
+    "mandatory_minimum": "6 years (Class X cocaine or heroin 100g+)",
+    "enhancements": [
+      "Class X with extended term: delivery within 1,000 feet of school or public park",
+      "Enhanced if delivery to person under 18",
+      "Continuing narcotics conspiracy under 720 ILCS 570/405.2"
+    ],
+    "notes": "720 ILCS 570/401 lists specific substance thresholds with escalating felony classes."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "720 ILCS 570/401",
+    "statute_title": "Delivery of Controlled Substances",
+    "offense_class": "Class 2 Felony (small delivery); Class X Felony (large amounts)",
+    "penalty_min": null,
+    "penalty_max": "3 to 7 years (Class 2); 6 to 30 years (Class X)",
+    "fine_max": "$250,000",
+    "elements": [
+      "Knowingly delivered a controlled substance to another person",
+      "Without legal authority to distribute"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near school zone: enhanced classification",
+      "To person under 18: Class X regardless of quantity"
+    ],
+    "notes": "Same statute as drug trafficking; distinction based on quantity thresholds in 720 ILCS 570/401 subsections."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "720 ILCS 570/401; 720 ILCS 646/15",
+    "statute_title": "Manufacture of Controlled Substances",
+    "offense_class": "Class 1 to Class X Felony depending on substance",
+    "penalty_min": null,
+    "penalty_max": "4 to 15 years (Class 1); 6 to 30 years (Class X)",
+    "fine_max": "$250,000",
+    "elements": [
+      "Manufactured, produced, prepared, or processed a controlled substance",
+      "OR possessed chemicals and equipment with intent to manufacture"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Meth manufacturing: Class X offense under 720 ILCS 646/15 (6 to 30 years)",
+      "Manufacturing within 1,000 feet of school: Class X mandatory"
+    ],
+    "notes": "Meth manufacturing is governed by the Methamphetamine Control and Community Protection Act (720 ILCS 646). All other manufacturing falls under the Controlled Substances Act."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "720 ILCS 600/3.5",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Civil violation (first offense); Class A Misdemeanor (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "$200 fine (first offense); 1 year (subsequent)",
+    "fine_max": "$200 (first offense); $2,500 (subsequent)",
+    "elements": [
+      "Possessed drug paraphernalia with intent to use for introducing a controlled substance into the body",
+      "OR to pack, store, contain, or conceal a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Illinois revised paraphernalia law in 2016. First offense is civil infraction. Needle and syringe possession for personal use decriminalized under 720 ILCS 635."
+  },
+  {
+    "common_charge_slug": "prescription-fraud",
+    "statute_number": "720 ILCS 570/406",
+    "statute_title": "Fraudulent Acquisition of Prescription Controlled Substance",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Obtained or attempted to obtain a controlled substance by fraud, deceit, misrepresentation, or subterfuge",
+      "OR forged or altered a prescription",
+      "OR impersonated a licensed practitioner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 2 Felony if value exceeds $500 or multiple prescriptions obtained",
+      "Professional license revocation for licensed practitioners"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "720 ILCS 570/401",
+    "statute_title": "Possession of Controlled Substance with Intent to Deliver",
+    "offense_class": "Class 1 Felony (small amounts); Class X Felony (large amounts)",
+    "penalty_min": null,
+    "penalty_max": "4 to 15 years (Class 1); 6 to 30 years (Class X)",
+    "fine_max": "$250,000",
+    "elements": [
+      "Possessed a controlled substance",
+      "Intent to deliver inferred from quantity, packaging, scales, currency, or other circumstantial evidence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same enhancements as delivery charges under 720 ILCS 570/401"
+    ],
+    "notes": "Illinois treats possession with intent as equivalent to delivery under the same statute and sentencing schedule."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "720 ILCS 5/9-1",
+    "statute_title": "First Degree Murder",
+    "offense_class": "Class M Felony (most serious felony in Illinois)",
+    "penalty_min": "20 years",
+    "penalty_max": "60 years; natural life for aggravated circumstances",
+    "fine_max": "$25,000",
+    "elements": [
+      "Killed an individual without lawful justification",
+      "AND either: (1) intended to kill or do great bodily harm; (2) knew act would cause death; OR (3) was attempting or committing a forcible felony (felony murder)"
+    ],
+    "mandatory_minimum": "20 years; 60 years for killing law enforcement or during predicate felony",
+    "enhancements": [
+      "Natural life (no parole): multiple murders, murder for hire, torture, murder of officer or firefighter, murder during armed robbery, murder of witness",
+      "Death penalty abolished in Illinois (2011)",
+      "Truth-in-sentencing: must serve 100% of sentence"
+    ],
+    "notes": "Illinois abolished the death penalty in 2011. Natural life imprisonment is the maximum."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "720 ILCS 5/9-2",
+    "statute_title": "Second Degree Murder",
+    "offense_class": "Class 1 Felony",
+    "penalty_min": "4 years",
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Elements of first degree murder are present",
+      "AND at the time of killing defendant was acting under sudden and intense passion resulting from serious provocation",
+      "OR defendant believed circumstances justified the killing but that belief was unreasonable (imperfect self-defense)"
+    ],
+    "mandatory_minimum": "4 years",
+    "enhancements": [
+      "If victim was officer or firefighter: minimum sentence increases",
+      "Prior felony convictions increase sentencing range"
+    ],
+    "notes": "Second degree murder is an affirmative mitigating defense to first degree murder. Defendant must present evidence by preponderance of the evidence."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "720 ILCS 5/9-2",
+    "statute_title": "Second Degree Murder (encompasses voluntary manslaughter concept)",
+    "offense_class": "Class 1 Felony",
+    "penalty_min": "4 years",
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Intentional killing",
+      "Under sudden and intense passion resulting from serious provocation by the victim"
+    ],
+    "mandatory_minimum": "4 years",
+    "enhancements": [],
+    "notes": "Illinois does not use the term 'voluntary manslaughter' — the concept is subsumed in Second Degree Murder under 720 ILCS 5/9-2."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "720 ILCS 5/9-3",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "Class 3 Felony; Class 2 Felony (with deadly weapon)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class 3); 7 years (Class 2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Unintentionally killed an individual",
+      "Acts were performed recklessly — conscious disregard of a substantial and unjustifiable risk of death"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 2 Felony if committed with a firearm or other deadly weapon"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "720 ILCS 5/12-2",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "Class A Misdemeanor to Class 3 Felony depending on victim or weapon",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Committed an assault (placing a person in reasonable apprehension of receiving a battery)",
+      "AND used a deadly weapon, discharged a firearm from a vehicle, acted from disguise, targeted a protected-class victim, or acted in a public place"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 3 Felony: assault with firearm, against police, firefighter, EMT, teacher, or elderly person",
+      "Class 2 Felony: discharge of firearm or specific aggravating victim categories",
+      "Class 1 Felony: firearm discharge causing injury"
+    ],
+    "notes": "720 ILCS 5/12-2 lists 15+ categories of aggravating factors."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "720 ILCS 5/12-1",
+    "statute_title": "Assault",
+    "offense_class": "Class C Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$1,500",
+    "elements": [
+      "Engaged in conduct that placed another in reasonable apprehension of receiving a battery",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Illinois assault does not require physical contact. Battery (720 ILCS 5/12-3) is the completed physical contact offense."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "720 ILCS 5/12-3",
+    "statute_title": "Battery",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,500",
+    "elements": [
+      "Knowingly, without legal justification",
+      "Made physical contact of insulting or provoking nature with an individual",
+      "OR caused bodily harm to an individual"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated Battery (720 ILCS 5/12-3.05): Class 3 to Class X felony depending on aggravating factor"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "aggravated-battery",
+    "statute_number": "720 ILCS 5/12-3.05",
+    "statute_title": "Aggravated Battery",
+    "offense_class": "Class 3 Felony to Class X Felony depending on circumstances",
+    "penalty_min": null,
+    "penalty_max": "30 years (Class X with firearm discharge)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Committed a battery",
+      "AND: caused great bodily harm, permanent disability, or disfigurement; used a deadly weapon; victim was a protected class; committed on a public way; used a caustic substance; OR discharged a firearm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class X Felony: battery with firearm causing great bodily harm",
+      "15-year mandatory add-on if personally discharged a firearm causing great bodily harm (720 ILCS 5/33A-2)"
+    ],
+    "notes": "720 ILCS 5/12-3.05 contains 20+ categories. Firearm discharge add-ons are mandatory consecutive under 720 ILCS 5/33A-2."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "720 ILCS 5/18-1",
+    "statute_title": "Robbery",
+    "offense_class": "Class 2 Felony; Class 1 Felony (victim 60+ or disabled)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Class 2); 15 years (Class 1)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly took property from the person or presence of another",
+      "By use of force or by threatening the imminent use of force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 1 Felony: victim is 60 years of age or older or is a disabled person"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "720 ILCS 5/18-2",
+    "statute_title": "Armed Robbery",
+    "offense_class": "Class X Felony",
+    "penalty_min": "6 years",
+    "penalty_max": "30 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Committed a robbery",
+      "While carrying on or about person a dangerous weapon",
+      "OR while indicating by words or actions possession of a dangerous weapon"
+    ],
+    "mandatory_minimum": "6 years",
+    "enhancements": [
+      "15-year mandatory add-on if armed with a firearm",
+      "20-year mandatory add-on if firearm discharged",
+      "25-year to natural life add-on if firearm discharge caused great bodily harm or death"
+    ],
+    "notes": "Mandatory consecutive sentencing enhancements under 720 ILCS 5/33A-2 apply to firearm use."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "720 ILCS 5/10-1",
+    "statute_title": "Kidnapping",
+    "offense_class": "Class 2 Felony; Class X Felony (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Class 2); 30 years (Class X)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly and secretly confined another against their will",
+      "OR by force or threat took another from one place to another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated Kidnapping (Class X, 720 ILCS 5/10-2): ransom demand, weapon use, victim under 13, infliction of great bodily harm, victim is police officer"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "720 ILCS 5/20-1",
+    "statute_title": "Arson",
+    "offense_class": "Class 2 Felony; Class 1 Felony (residential or occupied structure)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Class 2); 15 years (Class 1)",
+    "fine_max": "$25,000",
+    "elements": [
+      "By means of fire or explosive",
+      "Knowingly damaged or destroyed any real or personal property",
+      "Value over $150 OR which was a dwelling"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated Arson (Class X, 720 ILCS 5/20-1.1): person present, fire in place of worship, fire in school",
+      "Residential Arson is a Class 1 Felony minimum"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "720 ILCS 5/8-4; 720 ILCS 5/9-1",
+    "statute_title": "Attempt — First Degree Murder",
+    "offense_class": "Class X Felony",
+    "penalty_min": "6 years",
+    "penalty_max": "30 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Performed a substantial step toward commission of first degree murder",
+      "With specific intent to commit first degree murder"
+    ],
+    "mandatory_minimum": "6 years",
+    "enhancements": [
+      "10-year mandatory add-on for personal use of a firearm",
+      "15-year add-on for discharge of a firearm",
+      "20-year add-on for discharge causing great bodily harm or death"
+    ],
+    "notes": "Attempt murder is specifically Class X regardless of the general one-class-lower rule. Firearm add-ons are mandatory consecutive."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "720 ILCS 5/12-2(a)(1)",
+    "statute_title": "Aggravated Assault with Deadly Weapon",
+    "offense_class": "Class A Misdemeanor to Class 3 Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Placed another in reasonable apprehension of receiving a battery",
+      "While using a deadly weapon other than a firearm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 3 Felony if weapon used is a firearm",
+      "Further escalation based on victim category"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "720 ILCS 5/16-1",
+    "statute_title": "Theft",
+    "offense_class": "Class A Misdemeanor (under $500); Class 3 Felony ($500 to $10,000); Class 2 Felony ($10,000 to $100,000)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 to 7 years (felony)",
+    "fine_max": "$2,500 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Knowingly obtained or exerted unauthorized control over another's property",
+      "OR obtained by deception, threat, or from lost or mistaken property",
+      "With intent to permanently deprive the owner of use and benefit"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 1 Felony: theft over $100,000 from school, place of worship, or government",
+      "Class X Felony: theft over $1,000,000"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "720 ILCS 5/16-1",
+    "statute_title": "Theft — Felony Value",
+    "offense_class": "Class 3 Felony ($500 to $10,000); Class 2 Felony ($10,000 to $100,000)",
+    "penalty_min": null,
+    "penalty_max": "5 to 7 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Same elements as theft",
+      "Property value exceeds $500 threshold"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Illinois does not use the term 'grand theft' — all theft is under 720 ILCS 5/16-1 with classification based on value."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "720 ILCS 5/16-1",
+    "statute_title": "Theft — Misdemeanor Value",
+    "offense_class": "Class A Misdemeanor (under $500)",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,500",
+    "elements": [
+      "Same elements as theft",
+      "Property value under $500"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Elevates to Class 4 Felony if defendant has a prior theft conviction"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "720 ILCS 5/16-25",
+    "statute_title": "Retail Theft",
+    "offense_class": "Class A Misdemeanor (under $300); Class 3 Felony ($300+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$2,500 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Took possession of, carried away, transferred, or caused to be carried away merchandise from a retail establishment",
+      "With intent to retain merchandise without paying full retail value",
+      "OR altered price tag, transferred merchandise to different container, under-rang register, or returned merchandise not purchased from merchant"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized retail theft (720 ILCS 5/16-30): Class 4 to Class 2 Felony",
+      "Prior retail theft conviction elevates classification"
+    ],
+    "notes": "Civil recovery statute allows merchants to demand up to $1,000 civilly regardless of criminal prosecution."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "720 ILCS 5/19-1",
+    "statute_title": "Burglary",
+    "offense_class": "Class 2 Felony; Class 1 Felony (school, daycare, place of worship)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Class 2); 15 years (Class 1)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Without authority",
+      "Knowingly entered or remained within a building, structure, or vehicle",
+      "With intent to commit therein a felony or theft"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Residential Burglary (720 ILCS 5/19-3): Class 1 Felony",
+      "Home Invasion (720 ILCS 5/19-6): Class X Felony"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "720 ILCS 5/19-3",
+    "statute_title": "Residential Burglary",
+    "offense_class": "Class 1 Felony",
+    "penalty_min": "4 years",
+    "penalty_max": "15 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Without authority",
+      "Knowingly entered or remained within the dwelling place of another",
+      "With intent to commit therein a felony or theft"
+    ],
+    "mandatory_minimum": "4 years",
+    "enhancements": [
+      "Home Invasion (720 ILCS 5/19-6): Class X Felony if a person is present and defendant is armed",
+      "Non-probationable for second offense"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "commercial-burglary",
+    "statute_number": "720 ILCS 5/19-1",
+    "statute_title": "Burglary — Commercial Building",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Without authority entered or remained in a building used for commercial purposes",
+      "With intent to commit a felony or theft therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Elevates to Class 1 if committed in school, daycare, or place of worship"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "625 ILCS 5/4-103",
+    "statute_title": "Possession of Stolen Motor Vehicle",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly possessed a stolen motor vehicle",
+      "OR concealed knowledge that vehicle was stolen",
+      "Without owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 1 Felony: chop shop operation or VIN alteration (625 ILCS 5/4-103.2)"
+    ],
+    "notes": "Unauthorized vehicle taking also charged under 720 ILCS 5/16-1 (theft) or 625 ILCS 5/4-102 (unauthorized use of vehicle)."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "720 ILCS 5/16-1(a)(4)",
+    "statute_title": "Theft — Obtaining Control Over Stolen Property",
+    "offense_class": "Class A Misdemeanor (under $500); Class 3 to Class 1 Felony (based on value)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); up to 15 years (Class 1 felony)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Obtained control over stolen property",
+      "Knowing the property to be stolen or under circumstances that would reasonably induce belief it was stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Illinois does not have a separate receiving stolen property statute — it falls within the general theft statute as subsection (a)(4)."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "720 ILCS 5/21-1",
+    "statute_title": "Criminal Damage to Property",
+    "offense_class": "Class A Misdemeanor (under $500); Class 4 to Class 2 Felony (based on damage amount)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 7 years (Class 2 felony)",
+    "fine_max": "$2,500 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Knowingly damaged the property of another",
+      "Without consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 3 Felony: damage $500 to $10,000 or damage to school, church, or fire department",
+      "Class 2 Felony: damage $10,000 to $100,000",
+      "Class 1 Felony: damage over $100,000"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "720 ILCS 5/21-3",
+    "statute_title": "Criminal Trespass to Real Property",
+    "offense_class": "Class B Misdemeanor; Class A Misdemeanor (residences, schools, farmland)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 1 year (Class A)",
+    "fine_max": "$1,500 (Class B); $2,500 (Class A)",
+    "elements": [
+      "Entered or remained on or in property of another",
+      "After receiving notice from the owner that entry was forbidden",
+      "OR remained after being directed to leave by owner or authorized person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Criminal Trespass to a Residence (720 ILCS 5/19-4): Class A Misdemeanor"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "720 ILCS 5/21-1",
+    "statute_title": "Criminal Damage to Property",
+    "offense_class": "Class A Misdemeanor to Class 1 Felony",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor) to 15 years (Class 1 felony)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly damaged or destroyed the property of another",
+      "OR knowingly started a fire on another's land without consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Illinois calls this 'Criminal Damage to Property' — same statute (720 ILCS 5/21-1) as vandalism."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "720 ILCS 5/12-3.2",
+    "statute_title": "Domestic Battery",
+    "offense_class": "Class A Misdemeanor (1st offense); Class 4 Felony (2nd+ or against pregnant victim)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (felony)",
+    "fine_max": "$2,500 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Intentionally or knowingly caused bodily harm",
+      "OR made physical contact of insulting or provoking nature",
+      "With a family or household member"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 4 Felony: second or subsequent offense or committed against pregnant victim",
+      "Class 3 Felony: third+ offense",
+      "Aggravated Domestic Battery (720 ILCS 5/12-3.3): Class 2 Felony for strangulation or great bodily harm"
+    ],
+    "notes": "Illinois Domestic Violence Act (750 ILCS 60) provides civil remedies. Mandatory no-contact order on arrest."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "720 ILCS 5/12-3.2",
+    "statute_title": "Domestic Battery",
+    "offense_class": "Class A Misdemeanor (1st); Class 4 Felony (2nd+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (felony)",
+    "fine_max": "$2,500",
+    "elements": [
+      "Intentionally or knowingly caused bodily harm to family or household member",
+      "OR made physical contact of insulting or provoking nature with family or household member"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated Domestic Battery (720 ILCS 5/12-3.3): Class 2 Felony for strangulation or great bodily harm"
+    ],
+    "notes": "Conviction requires completion of a domestic battery counseling program."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "720 ILCS 5/12C-5",
+    "statute_title": "Endangering the Life or Health of a Child",
+    "offense_class": "Class A Misdemeanor; Class 3 Felony if great bodily harm results",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$2,500 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Willfully caused or permitted a child under 18",
+      "To be placed in circumstances that endangered the child's life or health"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 3 Felony: great bodily harm or permanent disability results",
+      "Class 2 Felony: death of child results"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "720 ILCS 5/12C-20",
+    "statute_title": "Aggravated Battery to a Child",
+    "offense_class": "Class X Felony",
+    "penalty_min": "6 years",
+    "penalty_max": "30 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Intentionally or knowingly caused great bodily harm, permanent disability, or disfigurement",
+      "To a child under 13 years of age"
+    ],
+    "mandatory_minimum": "6 years",
+    "enhancements": [
+      "Natural life if child dies as a result"
+    ],
+    "notes": "Illinois DCFS administrative proceedings run parallel to criminal prosecution."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "720 ILCS 5/12-3.4",
+    "statute_title": "Violation of Order of Protection",
+    "offense_class": "Class A Misdemeanor (1st); Class 4 Felony (2nd+ or stalking violation)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (felony)",
+    "fine_max": "$2,500 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Order of protection was in effect",
+      "Defendant had actual knowledge of the order",
+      "Committed an act in violation of the order's specific terms"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 4 Felony: second+ violation or violation involving stalking or surveillance",
+      "Class 3 Felony: second+ violation involving domestic battery"
+    ],
+    "notes": "Order of protection issued under the Illinois Domestic Violence Act (750 ILCS 60) or Civil No Contact Order Act."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "720 ILCS 5/12-7.3",
+    "statute_title": "Stalking",
+    "offense_class": "Class 4 Felony (1st); Class 3 Felony (2nd+)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class 4); 5 years (Class 3)",
+    "fine_max": "$25,000",
+    "elements": [
+      "On at least 2 separate occasions",
+      "Followed, monitored, observed, surveilled, threatened, or communicated to or about a specific person",
+      "Knowing that conduct would cause a reasonable person to fear for their safety",
+      "Actually caused the victim to fear for their safety"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated Stalking (720 ILCS 5/12-7.4): Class 3 Felony — violates court order, uses weapon, victim under 18",
+      "Class 1 Felony for certain aggravated circumstances"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "720 ILCS 5/26.5-2",
+    "statute_title": "Harassment by Telephone or Electronic Communication",
+    "offense_class": "Class B Misdemeanor (1st); Class A Misdemeanor (2nd+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 1 year (Class A)",
+    "fine_max": "$1,500 (Class B); $2,500 (Class A)",
+    "elements": [
+      "Made a telephone call or electronic communication",
+      "With intent to harass, threaten, or intimidate another person",
+      "Content was obscene, threatening, or defendant repeatedly contacted to annoy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 4 Felony if made to a minor under 18 or violates an order of protection"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "720 ILCS 5/12-21",
+    "statute_title": "Criminal Abuse or Neglect of an Elderly or Disabled Person",
+    "offense_class": "Class 3 Felony; Class 2 Felony (great bodily harm)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class 3); 7 years (Class 2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Had a duty of care for a person 60 years of age or older or a disabled adult",
+      "Knowingly or intentionally abused, neglected, or financially exploited that person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 2 Felony: great bodily harm results",
+      "Class 1 Felony: death results"
+    ],
+    "notes": "Also prosecuted under the Adult Protective Services Act (320 ILCS 20). Financial exploitation is a separate offense under 720 ILCS 5/17-56."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "720 ILCS 5/24-1",
+    "statute_title": "Unlawful Use of Weapons",
+    "offense_class": "Class A Misdemeanor to Class 4 Felony depending on circumstances",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (Class 4 felony)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Sold, manufactured, transferred, purchased, possessed, or carried a weapon",
+      "In circumstances prohibited by law (concealed without license, in vehicle without proper storage, switchblade, tear gas, etc.)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated UUW (720 ILCS 5/24-1.6): Class 4 to Class 1 Felony for prior felony or possessing while masked"
+    ],
+    "notes": "Illinois requires a FOID card for all firearm possession. Carrying without FOID or CCLC triggers UUW."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "720 ILCS 5/24-1.1",
+    "statute_title": "Unlawful Use or Possession of Weapons by Felon",
+    "offense_class": "Class 3 Felony; Class 2 Felony (second+ offense)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class 3); 7 years (Class 2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Convicted of a felony or adjudicated delinquent for a felony offense",
+      "Possessed any firearm, firearm ammunition, or Taser",
+      "OR possessed explosive bullets"
+    ],
+    "mandatory_minimum": "2 years (non-probationable) for Class 3",
+    "enhancements": [
+      "Class 2 Felony: second+ offense or possession of assault weapon"
+    ],
+    "notes": "Non-probationable: Illinois law bars probation for convicted felons possessing firearms."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "720 ILCS 5/24-1; 430 ILCS 66",
+    "statute_title": "Unlawful Use of Weapons — Concealed Carry Violation",
+    "offense_class": "Class A Misdemeanor to Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (felony)",
+    "fine_max": "$2,500 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Carried a concealed firearm",
+      "Without a valid Illinois Concealed Carry License",
+      "OR carried in a statutorily prohibited location (school, government building, bar, etc.)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated UUW for prohibited locations: Class 4 Felony",
+      "Carrying while FOID revoked: Class 3 Felony"
+    ],
+    "notes": "Illinois CCLC required in addition to FOID card."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "720 ILCS 5/24-1.5",
+    "statute_title": "Reckless Discharge of a Firearm",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Recklessly discharged a firearm",
+      "In a manner that endangered the bodily safety of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated Discharge of Firearm (720 ILCS 5/24-1.2): Class 1 Felony — discharge in direction of person, occupied vehicle, school, or law enforcement"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "weapons-trafficking",
+    "statute_number": "720 ILCS 5/24-3",
+    "statute_title": "Unlawful Sale or Delivery of Firearms",
+    "offense_class": "Class 4 Felony; Class 2 Felony (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class 4); 7 years (Class 2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly sold or transferred a firearm",
+      "To a person prohibited from possessing firearms (felon, minor, intoxicated person, etc.)",
+      "OR sold without routing through an FFL dealer for a background check"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated: sale of assault weapon or sale to known gang member"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "statute_number": "720 ILCS 5/24-1(a)(1)-(7)",
+    "statute_title": "Unlawful Use of Weapons — Prohibited Weapons",
+    "offense_class": "Class A Misdemeanor to Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Possessed a weapon prohibited under Illinois law",
+      "Including switchblades, brass knuckles, metal-piercing bullets, stun guns without FOID, illegal silencers, or machine guns"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Assault weapons ban enacted in 2023 (PA 102-1116) is subject to ongoing litigation as of 2026."
+  },
+  {
+    "common_charge_slug": "unlawful-carry",
+    "statute_number": "720 ILCS 5/24-1.6",
+    "statute_title": "Aggravated Unlawful Use of a Weapon",
+    "offense_class": "Class 4 Felony (1st); Class 1 Felony (2nd+ or prior firearm conviction)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class 4); 15 years (Class 1)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Carried or possessed a loaded firearm on person or accessible in a vehicle",
+      "Was not on own land or in own dwelling",
+      "AND: did not have FOID card; weapon was uncased; had prior felony; or was under 21 without parental permission"
+    ],
+    "mandatory_minimum": "Mandatory imprisonment (non-probationable) for Class 4",
+    "enhancements": [
+      "Class 1 Felony: second+ conviction under this section"
+    ],
+    "notes": "AUUW is among the most commonly charged gun offenses in Illinois. Non-probationable for first-time felony offenders."
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "statute_number": "720 ILCS 5/17-3",
+    "statute_title": "Fraud — Wire or Telecommunications",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Used a computer, telecommunications device, or electronic medium",
+      "To commit fraud or deceit",
+      "For the purpose of financial gain"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Federal wire fraud (18 U.S.C. 1343) is often charged instead in multi-state schemes. Illinois state charge used for intrastate fraud."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "720 ILCS 5/16-30",
+    "statute_title": "Identity Theft",
+    "offense_class": "Class 4 Felony (under $300); Class 3 to Class 1 Felony (based on loss amount)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class 4); 4 to 15 years (Class 1)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly used another person's personal identifying information",
+      "With intent to fraudulently obtain credit, money, goods, services, or other property",
+      "OR to commit any other crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 3 Felony: loss $300 to $2,000",
+      "Class 2 Felony: loss $2,000 to $10,000",
+      "Class 1 Felony: loss over $10,000 or victim is 60+"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "720 ILCS 5/16-1(a)(2)",
+    "statute_title": "Theft by Lawful Possession (Embezzlement)",
+    "offense_class": "Class A Misdemeanor (under $500); Class 3 to Class 1 Felony (based on value)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); up to 15 years (Class 1 felony)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Obtained lawful possession of property",
+      "Converted that property to personal use without authorization",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Illinois does not have a separate embezzlement statute. Covered under general theft statute 720 ILCS 5/16-1 as 'theft by lawful possession'."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "720 ILCS 5/17-3",
+    "statute_title": "Forgery",
+    "offense_class": "Class 3 Felony; Class 2 Felony (financial instrument)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class 3); 7 years (Class 2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "With intent to defraud",
+      "Made, altered, delivered, endorsed, or possessed any writing appearing to be genuine when it was not",
+      "Writing created, modified, or terminated legal rights, obligations, or status"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 2 Felony: forgery of check, bond, deed, will, or other financial instrument"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "720 ILCS 5/17-1",
+    "statute_title": "Deceptive Practices — Worthless Check",
+    "offense_class": "Class A Misdemeanor (under $150); Class 4 to Class 1 Felony (based on amount)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); up to 15 years (Class 1 felony)",
+    "fine_max": "$2,500 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Knowingly issued or delivered a check or draft",
+      "With intent to defraud",
+      "Knowing at time of delivery there were insufficient funds on deposit"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 4 Felony: amount $150 to $1,000",
+      "Class 3 Felony: amount $1,000 to $10,000",
+      "Class 1 Felony: amount over $100,000"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "720 ILCS 5/17-10.5",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class 4 Felony (under $300); Class 3 to Class 1 Felony (based on amount)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class 4); up to 15 years (Class 1)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly obtained or attempted to obtain insurance benefits through material misrepresentation",
+      "OR knowingly submitted a false or fraudulent insurance claim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "720 ILCS 5/17-36",
+    "statute_title": "Fraudulent Use of Electronic Transmission — Credit Card Fraud",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Used another person's credit card, debit card, or account number",
+      "Without authorization",
+      "To obtain money, goods, or services"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 3 Felony: amount over $300 in a 6-month period"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "720 ILCS 5/29B-1",
+    "statute_title": "Money Laundering",
+    "offense_class": "Class 3 Felony (under $10,000); Class 1 Felony (over $100,000)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class 3); 15 years (Class 1)",
+    "fine_max": "Twice the amount laundered or $500,000, whichever is greater",
+    "elements": [
+      "Conducted or attempted to conduct a financial transaction",
+      "Knowing proceeds were derived from criminal activity",
+      "With intent to promote criminal activity OR conceal nature or source of proceeds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "720 ILCS 5/17-1",
+    "statute_title": "Deceptive Practices",
+    "offense_class": "Class A Misdemeanor (under $300); Class 4 to Class 1 Felony (based on amount)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 15 years (Class 1 felony)",
+    "fine_max": "$25,000",
+    "elements": [
+      "By means of false pretense, false statement, or fraudulent misrepresentation",
+      "Obtained money, property, services, or other thing of value",
+      "Or caused another to execute a document affecting property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "bank-fraud",
+    "statute_number": "720 ILCS 5/17-1; 720 ILCS 5/17-3",
+    "statute_title": "Deceptive Practices — Bank or Financial Institution Fraud",
+    "offense_class": "Class 1 Felony (large amounts)",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly executed or attempted to execute a scheme to defraud a financial institution",
+      "By means of false or fraudulent pretenses, representations, or promises",
+      "To obtain money, funds, or other property under the custody of a financial institution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Bank fraud is typically prosecuted federally under 18 U.S.C. 1344. Illinois state prosecution uses deceptive practices statute."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "720 ILCS 5/11-1.20",
+    "statute_title": "Criminal Sexual Assault",
+    "offense_class": "Class 1 Felony; Class X Felony (aggravated)",
+    "penalty_min": "4 years",
+    "penalty_max": "15 years (Class 1); 30 years (Class X)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Committed an act of sexual penetration",
+      "By use of force or threat of force",
+      "OR knew victim was unable to give knowing consent",
+      "OR was related to victim under 18, was a family member, or held a position of trust or authority over the victim"
+    ],
+    "mandatory_minimum": "4 years (Class 1); 6 years (Class X)",
+    "enhancements": [
+      "Aggravated Criminal Sexual Assault (720 ILCS 5/11-1.30): Class X — weapon displayed, great bodily harm inflicted, victim under 9, perpetrator over 17 and victim under 13"
+    ],
+    "notes": "Truth-in-sentencing: must serve 85% of sentence. SORA registration required."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "720 ILCS 5/11-1.20",
+    "statute_title": "Criminal Sexual Assault",
+    "offense_class": "Class 1 Felony; Class X Felony (aggravated)",
+    "penalty_min": "4 years",
+    "penalty_max": "30 years (aggravated)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Committed an act of sexual penetration",
+      "By use of force or threat of force",
+      "Without consent of victim"
+    ],
+    "mandatory_minimum": "4 years",
+    "enhancements": [
+      "Predatory Criminal Sexual Assault (720 ILCS 5/11-1.40): Class X — penetration of victim under 13 by perpetrator 17 or older; mandatory 6 to 60 years"
+    ],
+    "notes": "Illinois eliminated the term 'rape' in 1984. The offense is Criminal Sexual Assault under 720 ILCS 5/11-1.20."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "720 ILCS 5/11-9",
+    "statute_title": "Public Indecency",
+    "offense_class": "Class A Misdemeanor; Class 4 Felony (3rd+ offense)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (felony)",
+    "fine_max": "$2,500",
+    "elements": [
+      "In a public place",
+      "Performed a sexual act or exposed body parts",
+      "In a lewd manner in the presence of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 4 Felony for third+ conviction",
+      "SORA registration may be required if victim is under 17"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "720 ILCS 5/11-14",
+    "statute_title": "Solicitation of a Sexual Act",
+    "offense_class": "Class A Misdemeanor (1st); Class 4 Felony (2nd+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (felony)",
+    "fine_max": "$2,500",
+    "elements": [
+      "Offered or agreed to perform a sexual act for any money or thing of value",
+      "OR solicited another person to perform a sexual act for compensation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 4 Felony: solicitation within 1,000 feet of school or place of worship",
+      "Class 3 Felony: solicitation of person under 18"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "statute_number": "720 ILCS 5/11-20.1B",
+    "statute_title": "Traveling to Meet a Minor / Grooming",
+    "offense_class": "Class 3 Felony (grooming); Class 2 Felony (traveling to meet)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class 3); 7 years (Class 2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Used electronic communication to solicit a minor",
+      "For purpose of engaging in sexual activity",
+      "OR traveled to meet a minor for sexual purposes after online solicitation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 2 Felony if defendant traveled to meet minor",
+      "SORA registration required"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "720 ILCS 5/11-20.1",
+    "statute_title": "Child Pornography",
+    "offense_class": "Class 1 Felony (possession); Class X Felony (production or distribution)",
+    "penalty_min": "4 years (Class 1); 6 years (Class X)",
+    "penalty_max": "15 years (Class 1); 30 years (Class X)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Photographed, filmed, videotaped, created, or possessed a depiction of a child under 18",
+      "Engaged in sexual conduct or depicted in a lewd manner",
+      "OR disseminated such material"
+    ],
+    "mandatory_minimum": "4 years (possession); 6 years (production)",
+    "enhancements": [
+      "Each image or video counts as a separate offense",
+      "Mandatory SORA registration for life",
+      "Mandatory consecutive sentences for multiple counts"
+    ],
+    "notes": "Non-probationable. Lifetime sex offender registration required."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "730 ILCS 150/3",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Class 3 Felony (1st); Class 2 Felony (2nd+)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class 3); 7 years (Class 2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Required to register as a sex offender under the Illinois Sex Offender Registration Act",
+      "Knowingly failed to register or verify address within 3 days of establishing residence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 2 Felony for second or subsequent failure to register"
+    ],
+    "notes": "Registration required within 3 days of establishing residence. Annual or quarterly updates required depending on offense classification."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "720 ILCS 5/11-1.50",
+    "statute_title": "Criminal Sexual Abuse",
+    "offense_class": "Class 4 Felony; Class A Misdemeanor (certain age combinations)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class 4); 1 year (misdemeanor)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Committed an act of sexual conduct or sexual penetration",
+      "With a person between 13 and 17 years of age",
+      "Defendant was at least 5 years older than the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated Criminal Sexual Abuse (720 ILCS 5/11-1.60): Class 2 Felony — victim under 13, defendant in position of trust or authority, defendant is family member"
+    ],
+    "notes": "Consensual sex between a 13 to 16 year old and someone less than 5 years older is not criminal in Illinois."
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "statute_number": "720 ILCS 5/11-1.50",
+    "statute_title": "Criminal Sexual Abuse",
+    "offense_class": "Class A Misdemeanor to Class 2 Felony",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 7 years (Class 2 felony)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Committed an act of sexual conduct (touching)",
+      "By force or threat of force",
+      "OR with a person incapable of giving knowing consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated Criminal Sexual Abuse (720 ILCS 5/11-1.60): Class 2 Felony"
+    ],
+    "notes": "Sexual conduct (touching) vs. sexual penetration determines criminal sexual abuse vs. criminal sexual assault."
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "statute_number": "720 ILCS 5/11-1.50",
+    "statute_title": "Criminal Sexual Abuse (equivalent to sexual battery)",
+    "offense_class": "Class A Misdemeanor to Class 2 Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Committed an act of sexual conduct by force or threat",
+      "OR with a victim unable to give knowing consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Illinois does not use the term 'sexual battery.' Criminal Sexual Abuse (720 ILCS 5/11-1.50) covers equivalent conduct."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "720 ILCS 5/26-1",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Class C Misdemeanor (most acts); Class 4 Felony (false fire or emergency report)",
+    "penalty_min": null,
+    "penalty_max": "30 days (Class C); 3 years (Class 4 felony)",
+    "fine_max": "$1,500 (Class C); $25,000 (felony)",
+    "elements": [
+      "Knowingly did any act in a manner that is unreasonably annoying, alarming, or dangerous",
+      "Which provoked a breach of the peace"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class A Misdemeanor: peeping tom, transmitting false police report",
+      "Class 4 Felony: false 911 report or false report of fire, bomb, or disaster"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "720 ILCS 5/31-1",
+    "statute_title": "Resisting or Obstructing a Peace Officer",
+    "offense_class": "Class A Misdemeanor; Class 4 Felony (injury to officer)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (felony)",
+    "fine_max": "$2,500",
+    "elements": [
+      "Knowingly resisted or obstructed the performance of",
+      "Any authorized act within the official capacity",
+      "Of a peace officer, correctional officer, or firefighter"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 4 Felony: officer suffers injury during the resistance"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "720 ILCS 5/31-4",
+    "statute_title": "Obstructing Justice",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowingly destroyed, altered, concealed, or disguised physical evidence",
+      "OR planted false evidence",
+      "OR furnished false information",
+      "With intent to prevent apprehension or obstruct prosecution of any person for any crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Class 3 Felony if obstruction relates to a Class 1, 2, or X felony case"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "720 ILCS 5/32-1",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Class A Misdemeanor (direct); Class 4 Felony (indirect or continuing)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (felony)",
+    "fine_max": "$2,500",
+    "elements": [
+      "Knowingly failed to comply with a court order or perform a court-ordered duty",
+      "OR disrupted court proceedings",
+      "OR willfully disobeyed a lawful process or order of court"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Courts retain inherent contempt power for immediate sanctions up to 6 months without a formal charge."
+  },
+  {
+    "common_charge_slug": "loitering",
+    "statute_number": "720 ILCS 5/11-14.1; 720 ILCS 5/36-3",
+    "statute_title": "Loitering for Drug or Sexual Purposes",
+    "offense_class": "Class B Misdemeanor (basic); Class A Misdemeanor (drug or sex purpose loitering)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 1 year (Class A)",
+    "fine_max": "$1,500 (Class B); $2,500 (Class A)",
+    "elements": [
+      "Remained in a public place with intent to engage in drug activity or solicit a sexual act",
+      "OR remained in a place without lawful purpose after being asked to leave by an officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Basic loitering ordinances are typically municipal. State loitering statutes focus on drug or sex-purpose loitering."
+  },
+  {
+    "common_charge_slug": "disturbing-peace",
+    "statute_number": "720 ILCS 5/26-1",
+    "statute_title": "Disorderly Conduct — Disturbing the Peace",
+    "offense_class": "Class C Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$1,500",
+    "elements": [
+      "Knowingly engaged in fighting, threatening, or violent behavior",
+      "OR created unreasonable noise or disturbance",
+      "That provoked a breach of the peace"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Illinois consolidates disturbing the peace under the disorderly conduct statute."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "720 ILCS 5/32-10",
+    "statute_title": "Bail Jumping — Failure to Appear",
+    "offense_class": "Class 4 Felony (felony underlying case); Class A Misdemeanor (misdemeanor case)",
+    "penalty_min": null,
+    "penalty_max": "3 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Released on bail or personal recognizance",
+      "Knowingly failed to appear before the court as required by conditions of release",
+      "With intent to avoid prosecution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Under the SAFE-T Act (2021), Illinois moved to a no-cash-bail system. Failure to appear remains a criminal offense."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "720 ILCS 5/26-1(a)(4)",
+    "statute_title": "Disorderly Conduct — False Report of Emergency",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Transmitted a false report",
+      "That a fire, explosion, crime, catastrophe, or other emergency was occurring",
+      "To any law enforcement agency, fire department, or emergency management agency"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony counts for each separate false report transmitted"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "720 ILCS 5/12-6",
+    "statute_title": "Intimidation",
+    "offense_class": "Class 3 Felony; Class 2 Felony (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class 3); 7 years (Class 2)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Communicated to another a threat to perform an action prohibited by law",
+      "With intent to cause that person to perform or omit an act against their will",
+      "OR with intent to cause fear in that person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated Intimidation (720 ILCS 5/12-6.1): Class 2 Felony if against public officials or crime victims",
+      "Threatening a Public Official (720 ILCS 5/12-9): Class 4 Felony"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "730 ILCS 5/5-6-4",
+    "statute_title": "Violation of Probation or Conditional Discharge",
+    "offense_class": "Dependent on underlying offense class",
+    "penalty_min": null,
+    "penalty_max": "Full sentence of underlying offense",
+    "fine_max": null,
+    "elements": [
+      "Was serving a term of probation or conditional discharge",
+      "Violated one or more conditions of probation",
+      "Violation proven by preponderance of the evidence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense during probation: presumption against continued probation",
+      "Court may impose original sentence or modify conditions"
+    ],
+    "notes": "Violations heard by the sentencing judge. Standard of proof is preponderance. Defendant may be held without bail pending hearing."
+  },
+  {
+    "common_charge_slug": "probation-violation-technical",
+    "statute_number": "730 ILCS 5/5-6-4",
+    "statute_title": "Technical Violation of Probation",
+    "offense_class": "Administrative — depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Full remaining probation sentence",
+    "fine_max": null,
+    "elements": [
+      "Failed to report to probation officer as required",
+      "Failed drug or alcohol test",
+      "Failed to complete required community service hours",
+      "Failed to pay fines or restitution",
+      "OR other non-criminal condition violation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Under the SAFE-T Act, court must consider less restrictive alternatives before revoking probation for technical violations."
+  },
+  {
+    "common_charge_slug": "probation-violation-substantive",
+    "statute_number": "730 ILCS 5/5-6-4",
+    "statute_title": "Substantive Violation of Probation — New Criminal Offense",
+    "offense_class": "Underlying offense class",
+    "penalty_min": null,
+    "penalty_max": "Full original sentence",
+    "fine_max": null,
+    "elements": [
+      "Committed a new criminal offense while on probation",
+      "New offense proven by preponderance or separate criminal conviction"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "May result in revocation and imposition of original sentence plus new sentence running consecutively"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "supervised-release-violation",
+    "statute_number": "730 ILCS 5/3-3-9",
+    "statute_title": "Violation of Mandatory Supervised Release",
+    "offense_class": "Administrative revocation proceeding",
+    "penalty_min": null,
+    "penalty_max": "Return to IDOC for balance of sentence",
+    "fine_max": null,
+    "elements": [
+      "Was on mandatory supervised release (MSR)",
+      "Violated one or more conditions of MSR",
+      "Violation proven by preponderance at Prisoner Review Board hearing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "In Illinois, parole is called Mandatory Supervised Release (MSR). Violations heard by Prisoner Review Board, not courts."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "730 ILCS 5/3-3-9",
+    "statute_title": "Violation of Mandatory Supervised Release (Parole)",
+    "offense_class": "Administrative — Prisoner Review Board proceeding",
+    "penalty_min": null,
+    "penalty_max": "Return to IDOC for remainder of sentence",
+    "fine_max": null,
+    "elements": [
+      "Released on MSR following IDOC sentence",
+      "Violated conditions of release (new offense, failed drug test, absconded, etc.)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Illinois uses 'Mandatory Supervised Release' rather than 'parole.' Revocation is administrative through the Prisoner Review Board."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "720 ILCS 5/8-2",
+    "statute_title": "Conspiracy",
+    "offense_class": "One class below the most serious offense that is the object of the conspiracy",
+    "penalty_min": null,
+    "penalty_max": "One class below target offense maximum",
+    "fine_max": "$25,000",
+    "elements": [
+      "With intent that an offense be committed",
+      "Agreed with one or more other persons to commit or attempt to commit an offense",
+      "AND any one of them performed an overt act in furtherance of the agreement"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Conspiracy to commit a Class X Felony is a Class 1 Felony",
+      "No overt act required for Class X conspiracy if target is drug trafficking"
+    ],
+    "notes": null
+  },
+  {
+    "common_charge_slug": "self-defense",
+    "statute_number": "720 ILCS 5/7-1",
+    "statute_title": "Use of Force in Defense of Person — Affirmative Defense",
+    "offense_class": "Affirmative defense — not a criminal charge",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": null,
+    "elements": [
+      "Defendant reasonably believed use of force was necessary",
+      "To defend against another's imminent use of unlawful force",
+      "Force used was not greater than reasonably necessary to prevent the harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Illinois self-defense is an affirmative defense. Defendant must produce some evidence; state must disprove beyond reasonable doubt. Castle Doctrine codified at 720 ILCS 5/7-2."
+  },
+  {
+    "common_charge_slug": "other",
+    "statute_number": "N/A",
+    "statute_title": "Other Illinois Criminal Offense",
+    "offense_class": "Varies",
+    "penalty_min": null,
+    "penalty_max": "Varies",
+    "fine_max": null,
+    "elements": [],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Placeholder for Illinois charges not covered by specific taxonomy entries. Consult 720 ILCS 5 (Criminal Code of 2012) and other Illinois compiled statutes."
+  }
+]

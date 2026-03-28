@@ -1,0 +1,2256 @@
+[
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "MCL 257.625(1)",
+    "statute_title": "Operating While Intoxicated — First Offense",
+    "offense_class": "93-day Misdemeanor",
+    "penalty_min": "0 days",
+    "penalty_max": "93 days",
+    "fine_max": "$500",
+    "elements": [
+      "Operating a motor vehicle",
+      "Upon a highway or other place open to the general public",
+      "While under the influence of alcoholic liquor OR with BAC of 0.08% or more"
+    ],
+    "mandatory_minimum": "None for first offense",
+    "enhancements": [
+      "BAC 0.17%+ (Super Drunk/High BAC): 180 days jail, $700 fine — MCL 257.625(1)(c)",
+      "Child under 16 in vehicle: additional 93-day misdemeanor charge — MCL 257.625(7)",
+      "Prior OWI within 7 years: second offense felony"
+    ],
+    "notes": "Michigan uses 'Operating While Intoxicated' (OWI), not DUI/DWI. License suspension 30-180 days. Mandatory vehicle immobilization. Ignition interlock may be required."
+  },
+  {
+    "common_charge_slug": "dui-second-offense",
+    "statute_number": "MCL 257.625(9)(b)",
+    "statute_title": "Operating While Intoxicated — Second Offense",
+    "offense_class": "1-year Misdemeanor",
+    "penalty_min": "5 days",
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Operating a motor vehicle while intoxicated",
+      "Prior conviction for OWI, OWVI, or OUIN within 7 years"
+    ],
+    "mandatory_minimum": "5 days jail or 30 days community service",
+    "enhancements": [
+      "Third offense within 10 years: Class E Felony",
+      "BAC 0.17%+ on second offense: enhanced penalties",
+      "Child in vehicle at time of offense: additional charges"
+    ],
+    "notes": "License revocation minimum 1 year. Vehicle immobilization 90-180 days. Ignition interlock required upon reinstatement."
+  },
+  {
+    "common_charge_slug": "dui-third-offense",
+    "statute_number": "MCL 257.625(9)(c)",
+    "statute_title": "Operating While Intoxicated — Third or Subsequent Offense",
+    "offense_class": "Class E Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Operating a motor vehicle while intoxicated",
+      "Two or more prior OWI convictions"
+    ],
+    "mandatory_minimum": "30 days jail or 60 days community service",
+    "enhancements": [
+      "Prior felony OWI conviction: enhanced sentencing",
+      "Serious injury resulting: Class D Felony — MCL 257.625(5)",
+      "Death resulting: Class B Felony — MCL 257.625(4)"
+    ],
+    "notes": "License revocation. Vehicle forfeiture possible. Habitual offender provisions apply."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "MCL 257.625(8)",
+    "statute_title": "Operating While Intoxicated by Controlled Substance",
+    "offense_class": "93-day Misdemeanor",
+    "penalty_min": "0 days",
+    "penalty_max": "93 days",
+    "fine_max": "$500",
+    "elements": [
+      "Operating a motor vehicle",
+      "While under the influence of a controlled substance",
+      "OR with any amount of a Schedule 1 controlled substance in blood (per se rule)"
+    ],
+    "mandatory_minimum": "None for first offense",
+    "enhancements": [
+      "Prior OWI within 7 years: second offense penalties",
+      "Death resulting: Class B Felony"
+    ],
+    "notes": "Michigan has a zero-tolerance per se law for any Schedule 1 controlled substance or cocaine in blood regardless of impairment (OUIN — Operating with presence of drugs). Separate from impairment-based OWI."
+  },
+  {
+    "common_charge_slug": "dui-felony-injury",
+    "statute_number": "MCL 257.625(5)",
+    "statute_title": "Operating While Intoxicated Causing Serious Impairment of a Body Function",
+    "offense_class": "Class D Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Operating a motor vehicle while intoxicated",
+      "Causing an accident",
+      "Resulting in serious impairment of a body function of another person"
+    ],
+    "mandatory_minimum": "None statutory",
+    "enhancements": [
+      "Prior OWI record: consecutive sentencing possible",
+      "Death caused: Class B Felony — MCL 257.625(4)"
+    ],
+    "notes": "'Serious impairment' defined as substantial limitation of important body function. License revocation."
+  },
+  {
+    "common_charge_slug": "dui-vehicular-homicide",
+    "statute_number": "MCL 257.625(4)",
+    "statute_title": "Operating While Intoxicated Causing Death",
+    "offense_class": "Class B Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Operating a motor vehicle while intoxicated",
+      "Causing the death of another person"
+    ],
+    "mandatory_minimum": "None statutory",
+    "enhancements": [
+      "Emergency responder killed: enhanced sentencing",
+      "Multiple deaths: consecutive sentences per victim"
+    ],
+    "notes": "License revocation. Vehicle forfeiture. Also known as 'OWI Causing Death.' Prosecutors may also charge second-degree murder if egregious facts."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "MCL 257.626",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Misdemeanor (up to 93 days for first; 6 months for injury)",
+    "penalty_min": "0 days",
+    "penalty_max": "93 days",
+    "fine_max": "$500",
+    "elements": [
+      "Operating a vehicle",
+      "In willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Causing serious injury: up to 2 years — MCL 257.626b",
+      "Causing death: up to 15 years — MCL 257.626b"
+    ],
+    "notes": "6 points on driving record. License suspension possible. Distinguished from careless driving (civil infraction)."
+  },
+  {
+    "common_charge_slug": "driving-suspended-license",
+    "statute_number": "MCL 257.904",
+    "statute_title": "Driving While License Suspended, Revoked, or Denied",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "0 days",
+    "penalty_max": "93 days first offense; 1 year second offense",
+    "fine_max": "$500 first; $1,000 second",
+    "elements": [
+      "Operating a motor vehicle upon a highway",
+      "While operator's license is suspended, revoked, denied, or never obtained"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Second offense within 7 years: 1-year misdemeanor",
+      "OWI-related suspension: enhanced penalties",
+      "Third or subsequent: possible felony"
+    ],
+    "notes": "Vehicle may be immobilized. Prior OWI-related suspension adds additional penalties."
+  },
+  {
+    "common_charge_slug": "possession-marijuana",
+    "statute_number": "MCL 333.27955",
+    "statute_title": "Unlawful Use/Possession of Marijuana (Under MRTMA)",
+    "offense_class": "Civil Infraction (small amounts); Misdemeanor (over limits)",
+    "penalty_min": "Civil fine",
+    "penalty_max": "Misdemeanor penalties for violations over MRTMA limits",
+    "fine_max": "$100 civil infraction",
+    "elements": [
+      "Possession of marijuana",
+      "In excess of 2.5 ounces in public or 10 ounces at home",
+      "OR transfer to minor"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Possession near school: additional penalties",
+      "Transfer to minor: Class E or D Felony — MCL 333.7401c"
+    ],
+    "notes": "Adult recreational marijuana is legal in Michigan under MRTMA (MCL 333.27951 et seq.) up to 2.5 oz publicly, 10 oz at home. Exceedances are civil infractions or misdemeanors depending on amount. Medical use governed by MMMA."
+  },
+  {
+    "common_charge_slug": "possession-controlled-substance",
+    "statute_number": "MCL 333.7403",
+    "statute_title": "Possession of a Controlled Substance",
+    "offense_class": "Class E Felony (Schedule 1/2 narcotics); Misdemeanor (others)",
+    "penalty_min": "0 years",
+    "penalty_max": "4 years (Schedule 1/2); 2 years (Schedule 3/4); 1 year (Schedule 5)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Knowing possession",
+      "Of a controlled substance",
+      "Not authorized by law"
+    ],
+    "mandatory_minimum": "None for simple possession",
+    "enhancements": [
+      "Possession of 25+ grams heroin/cocaine: possession with intent presumed",
+      "Prior drug conviction: additional sentencing points",
+      "In drug-free school zone: double penalties"
+    ],
+    "notes": "Michigan Sentencing Guidelines apply. First-time offenders may be eligible for Holmes Youthful Trainee Act (HYTA) or 7411 deferral. Drug courts widely available."
+  },
+  {
+    "common_charge_slug": "possession-with-intent-distribute",
+    "statute_number": "MCL 333.7401",
+    "statute_title": "Delivery/Manufacture/Possession with Intent — Controlled Substance",
+    "offense_class": "Class A-E Felony (varies by substance and amount)",
+    "penalty_min": "1 year",
+    "penalty_max": "Life (Class A — 1000+ grams cocaine/heroin)",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "Delivery, manufacture, or possession with intent to deliver",
+      "A controlled substance",
+      "Knowingly and intentionally"
+    ],
+    "mandatory_minimum": "Varies by quantity; life for 1,000+ grams cocaine/heroin",
+    "enhancements": [
+      "1,000+ grams cocaine/heroin: life or any term of years — Class A",
+      "450-999 grams: up to 30 years — Class B",
+      "50-449 grams: up to 20 years — Class C",
+      "25-49 grams: up to 4 years — Class E",
+      "Delivery to minor: double penalty — MCL 333.7410",
+      "In drug-free school zone: 2-year mandatory consecutive — MCL 333.7410a"
+    ],
+    "notes": "Michigan's drug trafficking law has quantity-based tiers. Large-scale trafficking carries life sentences. 'Delivery' includes constructive transfer."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "MCL 333.7401(2)(a)(i)",
+    "statute_title": "Delivery/Manufacture — 1,000+ Grams (High-Level Trafficking)",
+    "offense_class": "Class A Felony",
+    "penalty_min": "0 years (guidelines; mandatory for certain quantities)",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "Delivery or manufacture of a controlled substance",
+      "1,000 or more grams of mixture containing cocaine, heroin, or methamphetamine",
+      "Knowingly and intentionally"
+    ],
+    "mandatory_minimum": "Life or any term of years (judicial discretion within Class A)",
+    "enhancements": [
+      "Prior drug felony: enhanced minimum",
+      "Use of firearm: consecutive penalty — MCL 750.227b",
+      "Leadership role: sentencing enhancement"
+    ],
+    "notes": "Highest drug trafficking tier. Federal prosecution often pursued concurrently. Asset forfeiture applies."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "MCL 333.7401(2)(b)(ii)",
+    "statute_title": "Manufacture of Methamphetamine",
+    "offense_class": "Class B Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Manufacturing methamphetamine",
+      "Or possessing precursor chemicals with intent to manufacture",
+      "Knowingly and intentionally"
+    ],
+    "mandatory_minimum": "None statutory",
+    "enhancements": [
+      "Manufacturing in presence of minor: additional 2-year consecutive — MCL 333.7401d",
+      "Manufacturing causing injury: aggravated charges",
+      "Prior conviction: sentencing enhancement"
+    ],
+    "notes": "Separate offense for meth labs. Environmental cleanup liability. Methamphetamine lab in presence of minor is standalone offense under MCL 333.7401d."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "MCL 333.7451",
+    "statute_title": "Possession/Sale of Drug Paraphernalia",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "0 days",
+    "penalty_max": "90 days",
+    "fine_max": "$5,000",
+    "elements": [
+      "Possession of drug paraphernalia",
+      "With intent to use in connection with controlled substance violation"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Sale of paraphernalia to minor: misdemeanor — MCL 333.7453",
+      "Combination with possession charge: consecutive possible"
+    ],
+    "notes": "Michigan's paraphernalia statute is part of the Public Health Code. Items must have drug-related purpose."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "MCL 750.316",
+    "statute_title": "Murder — First Degree (Premeditated)",
+    "offense_class": "Life Felony",
+    "penalty_min": "Life without parole",
+    "penalty_max": "Life without parole",
+    "fine_max": "No statutory fine",
+    "elements": [
+      "Killing of a human being",
+      "With premeditation and deliberation",
+      "OR during perpetration of an enumerated felony (felony murder)"
+    ],
+    "mandatory_minimum": "Mandatory life without parole (LWOP)",
+    "enhancements": [
+      "Victim is law enforcement: LWOP mandatory",
+      "Multiple victims: consecutive LWOP terms",
+      "Juvenile offenders: Miller v. Alabama applies — individualized sentencing"
+    ],
+    "notes": "Michigan abolished the death penalty in 1847. LWOP is the maximum. Felony murder (during robbery, CSC, arson, etc.) also first degree. Juveniles subject to Miller hearing."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "MCL 750.317",
+    "statute_title": "Murder — Second Degree",
+    "offense_class": "Class A Felony (Life)",
+    "penalty_min": "Life or any term of years",
+    "penalty_max": "Life",
+    "fine_max": "No statutory fine",
+    "elements": [
+      "Killing of a human being",
+      "With malice aforethought",
+      "Without premeditation or during non-enumerated felony"
+    ],
+    "mandatory_minimum": "None (life or any term)",
+    "enhancements": [
+      "Prior murder conviction: life mandatory",
+      "Use of firearm: 2-year mandatory consecutive — MCL 750.227b",
+      "Gang-related: sentencing enhancement"
+    ],
+    "notes": "Includes depraved heart murder. No death penalty in Michigan. 'Malice aforethought' can be implied from circumstances. Sentencing allows judge discretion on term."
+  },
+  {
+    "common_charge_slug": "manslaughter-voluntary",
+    "statute_number": "MCL 750.321",
+    "statute_title": "Manslaughter — Voluntary",
+    "offense_class": "Class C Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "15 years",
+    "fine_max": "$7,500",
+    "elements": [
+      "Killing of a human being",
+      "Without malice",
+      "In the heat of passion caused by adequate provocation",
+      "Before cooling off"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Use of firearm: 2-year consecutive minimum — MCL 750.227b",
+      "Prior violent felony: sentencing enhancement",
+      "Domestic victim: aggravating factor"
+    ],
+    "notes": "Michigan manslaughter statute is general. Heat of passion must be reasonable. Cooling off period negates defense."
+  },
+  {
+    "common_charge_slug": "manslaughter-involuntary",
+    "statute_number": "MCL 750.329",
+    "statute_title": "Manslaughter — Involuntary (with firearm)",
+    "offense_class": "Class C Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "15 years",
+    "fine_max": "$7,500",
+    "elements": [
+      "Killing of a human being",
+      "By pointing or aiming a firearm",
+      "Without intent to kill"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Gross negligence (without firearm): common law manslaughter",
+      "OWI causing death: separate MCL 257.625(4)"
+    ],
+    "notes": "MCL 750.329 specifically covers firearm-related involuntary manslaughter. General negligent manslaughter is common law in Michigan. Vehicular manslaughter prosecuted under OWI statute."
+  },
+  {
+    "common_charge_slug": "assault-simple",
+    "statute_number": "MCL 750.81",
+    "statute_title": "Assault and Battery",
+    "offense_class": "93-day Misdemeanor",
+    "penalty_min": "0 days",
+    "penalty_max": "93 days",
+    "fine_max": "$500",
+    "elements": [
+      "An act intended to cause harmful or offensive contact",
+      "OR an attempt to commit battery",
+      "Against another person"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Domestic violence: 93-day misdemeanor (same statute, different track)",
+      "Second DV offense: 1-year misdemeanor — MCL 750.81(4)",
+      "Third DV offense: Class E Felony — MCL 750.81(5)"
+    ],
+    "notes": "Michigan combines assault and battery into one offense. Simple assault is the uncompleted act; battery is the completed touching. Both charged under MCL 750.81."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "MCL 750.81a",
+    "statute_title": "Assault — Infliction of Serious or Aggravated Injury",
+    "offense_class": "1-year Misdemeanor",
+    "penalty_min": "0 days",
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Assault or battery",
+      "Infliction of a serious or aggravated injury",
+      "Without a weapon"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Against pregnant woman: Class E Felony — MCL 750.81d(3)",
+      "Against utility/transit worker: Class E Felony",
+      "Strangulation: Class D Felony (up to 10 years) — MCL 750.84(1)(b)"
+    ],
+    "notes": "Serious injury without a weapon. More severe charges apply with weapons or specific victims. Strangulation is separately enhanced under MCL 750.84."
+  },
+  {
+    "common_charge_slug": "assault-deadly-weapon",
+    "statute_number": "MCL 750.82",
+    "statute_title": "Felonious Assault (Assault with a Dangerous Weapon)",
+    "offense_class": "Class F Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "4 years",
+    "fine_max": "$2,000",
+    "elements": [
+      "An assault",
+      "With a dangerous weapon",
+      "Without intending to commit murder or great bodily harm"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "With intent to murder or do great bodily harm: AWIGBH — Class D Felony — MCL 750.84",
+      "In weapon-free school zone: additional 2-year consecutive — MCL 750.82(2)",
+      "Against law enforcement: enhanced felony"
+    ],
+    "notes": "'Dangerous weapon' broadly construed — includes vehicles, glass bottles, dogs. AWIGBH under MCL 750.84 is more serious (Class D, up to 10 years)."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "MCL 750.530",
+    "statute_title": "Robbery",
+    "offense_class": "Class C Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "15 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "In the course of committing a larceny",
+      "Use of force or violence against any person",
+      "OR putting person in fear of immediate force or violence"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Armed robbery (dangerous weapon): Class B Felony — MCL 750.529",
+      "Carjacking: Class A Felony — MCL 750.529a",
+      "Victim injury: sentencing enhancement",
+      "Use of firearm: 2-year consecutive — MCL 750.227b"
+    ],
+    "notes": "Unarmed robbery. Michigan requires force 'in the course of committing' — includes immediately before or after larceny. Armed robbery carries up to life under MCL 750.529."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "MCL 750.529",
+    "statute_title": "Armed Robbery",
+    "offense_class": "Class B Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "Life",
+    "fine_max": "No cap specified",
+    "elements": [
+      "Robbery",
+      "While armed with a dangerous weapon",
+      "OR while representing oneself to be armed"
+    ],
+    "mandatory_minimum": "2-year consecutive for firearm use under MCL 750.227b",
+    "enhancements": [
+      "Carjacking (armed): Class A Felony up to life — MCL 750.529a",
+      "Victim seriously injured: increased sentence",
+      "Gang involvement: sentencing enhancement"
+    ],
+    "notes": "Carrying or claiming to have a weapon both qualify. Firearm possession charge runs consecutive under 750.227b. Carjacking is distinct and more severe."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "MCL 750.349",
+    "statute_title": "Kidnapping",
+    "offense_class": "Class A Felony (Life)",
+    "penalty_min": "Life or any term of years",
+    "penalty_max": "Life",
+    "fine_max": "$50,000",
+    "elements": [
+      "Knowingly restraining another person",
+      "With intent to hold for ransom, use as shield/hostage, engage in criminal sexual conduct, inflict bodily injury, terrorize, or interfere with governmental functions",
+      "OR secret confinement"
+    ],
+    "mandatory_minimum": "None (life or any term)",
+    "enhancements": [
+      "Victim is minor: presumptive life",
+      "Death of victim: LWOP or life",
+      "Crossing state lines: federal prosecution likely"
+    ],
+    "notes": "MCL 750.349b covers 'unlawful imprisonment' as lesser offense (Class D). Secret confinement kidnapping unique to Michigan. Jury must be instructed on lesser."
+  },
+  {
+    "common_charge_slug": "carjacking",
+    "statute_number": "MCL 750.529a",
+    "statute_title": "Carjacking",
+    "offense_class": "Class A Felony",
+    "penalty_min": "Life or any term of years",
+    "penalty_max": "Life",
+    "fine_max": "No cap specified",
+    "elements": [
+      "In the course of committing a larceny of a motor vehicle",
+      "Use or threat of force or violence against the person",
+      "Or putting person in fear"
+    ],
+    "mandatory_minimum": "None (life or any term)",
+    "enhancements": [
+      "Armed with firearm: 2-year consecutive — MCL 750.227b",
+      "Victim injury: sentencing enhancement",
+      "Vehicle used in crime: additional charges"
+    ],
+    "notes": "Separate from armed robbery. Specific to motor vehicle taking. Can be charged alongside other offenses arising from same conduct."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "MCL 750.110",
+    "statute_title": "Breaking and Entering — Building (Burglary)",
+    "offense_class": "Class D Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "10 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Breaking and entering any building, tent, hotel, office, store, or other structure",
+      "With intent to commit a felony or larceny therein"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Home invasion (dwelling): Class B or C Felony — MCL 750.110a",
+      "Armed: additional firearm penalty",
+      "Prior B&E conviction: sentencing enhancement"
+    ],
+    "notes": "Michigan uses 'Breaking and Entering' rather than burglary. Home invasion is more severe. Constructive breaking (entering through open door with intent) is sufficient."
+  },
+  {
+    "common_charge_slug": "home-invasion",
+    "statute_number": "MCL 750.110a",
+    "statute_title": "Home Invasion — First, Second, Third Degree",
+    "offense_class": "Class B Felony (1st degree); Class C Felony (2nd); Class D Felony (3rd)",
+    "penalty_min": "0 years",
+    "penalty_max": "20 years (1st); 15 years (2nd); 5 years (3rd)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Breaking and entering a dwelling",
+      "OR entering without permission",
+      "With intent to commit felony, larceny, or assault while therein",
+      "1st degree: armed with dangerous weapon or another person present"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Victim injured during home invasion: enhanced sentencing",
+      "Armed: additional 2-year consecutive — MCL 750.227b",
+      "Prior home invasion: sentencing enhancement"
+    ],
+    "notes": "Three degrees based on aggravating factors. First degree is the most serious — armed or occupied dwelling. Occupied dwelling home invasion is Class B (up to 20 years)."
+  },
+  {
+    "common_charge_slug": "larceny",
+    "statute_number": "MCL 750.356",
+    "statute_title": "Larceny",
+    "offense_class": "Class H Felony ($1,000-$20,000); Misdemeanor (under $1,000)",
+    "penalty_min": "0 days",
+    "penalty_max": "5 years ($20,000+); 2 years ($1,000-$20,000); 1 year ($200-$1,000); 93 days (under $200)",
+    "fine_max": "$10,000 (felony)",
+    "elements": [
+      "Taking and carrying away",
+      "Property of another person",
+      "With intent to permanently deprive the owner of the property"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "$20,000+: Class F Felony (up to 5 years) — MCL 750.356(4)(a)",
+      "From a person (larceny from person): Class G Felony — MCL 750.357",
+      "Habitual offender: enhanced sentencing",
+      "Organized retail theft: additional charges — MCL 752.1084"
+    ],
+    "notes": "Michigan larceny is threshold-based: <$200 (93-day), $200-$1,000 (1 year), $1,000-$20,000 (Class H/5 years), $20,000+ (Class F/10 years). Note: thresholds raised 2024."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "MCL 750.413",
+    "statute_title": "Taking Motor Vehicle Without Authority (TMVA)",
+    "offense_class": "Class D Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Taking or using a motor vehicle",
+      "Without authority of owner",
+      "With intent to steal or permanently deprive"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Carjacking (force used): Class A Felony — MCL 750.529a",
+      "Prior auto theft: sentencing enhancement",
+      "Organized auto theft ring: enhanced charges — MCL 750.535a"
+    ],
+    "notes": "Michigan uses 'Taking Motor Vehicle Without Authority' (TMVA). Joyriding (temporary use without permission) is a separate misdemeanor under MCL 750.414."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "MCL 750.356c",
+    "statute_title": "Retail Fraud — First, Second, Third Degree",
+    "offense_class": "Class H Felony (1st); Misdemeanor (2nd/3rd)",
+    "penalty_min": "0 days",
+    "penalty_max": "5 years (1st degree); 1 year (2nd); 93 days (3rd)",
+    "fine_max": "$10,000 (1st degree)",
+    "elements": [
+      "While in a store in which goods are offered for sale",
+      "Altering price, concealing goods, or removing merchandise",
+      "With intent to steal or pay less than the full price"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Organized retail fraud: Class F Felony — MCL 752.1084",
+      "Fraud device/tool used: enhanced charge",
+      "Prior retail fraud conviction: degree enhancement"
+    ],
+    "notes": "Retail fraud degrees based on value: 1st ($1,000+, felony), 2nd ($200-$1,000), 3rd (under $200). Michigan-specific terminology. Civil demand for damages also possible."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "MCL 750.72",
+    "statute_title": "Arson — Burning of a Dwelling House",
+    "offense_class": "Class A Felony (Life)",
+    "penalty_min": "Life or any term of years",
+    "penalty_max": "Life",
+    "fine_max": "$20,000",
+    "elements": [
+      "Willful and malicious burning",
+      "Of a dwelling house",
+      "Whether occupied or not"
+    ],
+    "mandatory_minimum": "None (life or any term)",
+    "enhancements": [
+      "Person present and injured: aggravated arson",
+      "Firefighter injured: enhanced penalty",
+      "Insurance fraud arson: additional fraud charges"
+    ],
+    "notes": "Burning a dwelling is the most serious arson. MCL 750.73 (burning real property, non-dwelling) is Class D. MCL 750.74 (burning personal property) is Class E-H."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "MCL 750.377a",
+    "statute_title": "Malicious Destruction of Property (MDOP)",
+    "offense_class": "Class F-H Felony or Misdemeanor (threshold-based)",
+    "penalty_min": "0 days",
+    "penalty_max": "10 years ($20,000+); 5 years ($1,000-$20,000); 1 year ($200-$1,000); 93 days (under $200)",
+    "fine_max": "$15,000 (felony)",
+    "elements": [
+      "Wilfully and maliciously",
+      "Destroying, injuring, or damaging",
+      "Property of another person"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Religious institution: mandatory minimum applies — MCL 750.377b",
+      "School property: enhanced — MCL 380.1300",
+      "Graffiti: separate civil liability"
+    ],
+    "notes": "Michigan's vandalism/property damage statute uses value thresholds same as larceny. Restitution mandatory. Bias-motivated MDOP subject to ethnic intimidation enhancement."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "MCL 750.81(2)",
+    "statute_title": "Domestic Violence — Assault and Battery",
+    "offense_class": "93-day Misdemeanor (1st); 1-year Misdemeanor (2nd); Class E Felony (3rd+)",
+    "penalty_min": "0 days",
+    "penalty_max": "93 days (1st); 1 year (2nd); 5 years (3rd+)",
+    "fine_max": "$500 (1st); $1,000 (2nd); $5,000 (3rd+)",
+    "elements": [
+      "Assault or assault and battery",
+      "Against a person who is a spouse, former spouse, dating partner, or co-habitant",
+      "OR parent of a common child"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Strangulation: Class D Felony — MCL 750.84(1)(b)",
+      "Aggravated DV (serious injury): 1-year or Class E Felony",
+      "Violation of PPO: contempt or criminal charge"
+    ],
+    "notes": "Michigan tracks DV offenses separately for enhancement purposes. Third conviction creates felony regardless of severity. Mandatory arrest policy in most jurisdictions. Firearm prohibition upon conviction."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "MCL 750.411h",
+    "statute_title": "Stalking",
+    "offense_class": "Misdemeanor (1 year); Class E Felony if aggravated",
+    "penalty_min": "0 days",
+    "penalty_max": "1 year; 5 years (aggravated)",
+    "fine_max": "$1,000; $10,000 (aggravated)",
+    "elements": [
+      "A willful course of conduct",
+      "Involving repeated or continuing harassment of another individual",
+      "That would cause a reasonable person to feel terrorized, frightened, or harassed"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Aggravated stalking (violation of PPO, prior conviction, under 18 victim): Class E Felony — MCL 750.411i",
+      "Cyberstalking: same statute applies to electronic communications",
+      "Victim safety plan violation: additional penalties"
+    ],
+    "notes": "Michigan's cyberstalking provisions include electronic communications, emails, and social media. 'Course of conduct' requires at least 2 acts."
+  },
+  {
+    "common_charge_slug": "violating-protective-order",
+    "statute_number": "MCL 600.2950",
+    "statute_title": "Violation of Personal Protection Order (PPO)",
+    "offense_class": "Misdemeanor (93-day) or Contempt",
+    "penalty_min": "0 days",
+    "penalty_max": "93 days",
+    "fine_max": "$500",
+    "elements": [
+      "Existence of a Personal Protection Order",
+      "Respondent had knowledge of the order",
+      "Conduct prohibited by the order occurred"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Second violation: 1-year misdemeanor",
+      "Assault during violation: separate felony charges",
+      "Criminal contempt proceedings also available: up to 93 days"
+    ],
+    "notes": "Michigan PPOs are civil orders enforced criminally. Violation triggers both criminal prosecution and contempt. Armed respondents subject to federal gun prohibition."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "MCL 750.136b",
+    "statute_title": "Child Abuse — First Through Fourth Degree",
+    "offense_class": "Class B Felony (1st); Class D Felony (2nd); Class G Felony (3rd); Misdemeanor (4th)",
+    "penalty_min": "0 days",
+    "penalty_max": "Life (1st degree); 10 years (2nd); 2 years (3rd); 1 year (4th)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Intentionally or knowingly causing physical harm to a child",
+      "OR cruel punishment/torture (1st degree)",
+      "OR omission causing harm (2nd-4th degree)"
+    ],
+    "mandatory_minimum": "None (1st degree life or any term)",
+    "enhancements": [
+      "Child death resulting: murder charges",
+      "Pattern of abuse: sentencing enhancement",
+      "Prior child abuse conviction: enhanced degree"
+    ],
+    "notes": "Michigan has four degrees of child abuse. 1st degree (Life) requires intent to cause serious physical harm or torture. Mandatory reporters include all adults in Michigan under MCL 722.623."
+  },
+  {
+    "common_charge_slug": "child-neglect",
+    "statute_number": "MCL 722.633",
+    "statute_title": "Child Neglect / Failure to Provide — Criminal",
+    "offense_class": "Misdemeanor to Class E Felony (depends on harm)",
+    "penalty_min": "0 days",
+    "penalty_max": "2 years (if serious harm); otherwise 93 days to 1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Parent, guardian, or person with legal custody",
+      "Fails to provide adequate food, clothing, shelter, or medical care",
+      "To a child under age 18"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Serious physical harm results: Class E Felony",
+      "Death of child: murder or manslaughter",
+      "Prior CPS history: sentencing enhancement"
+    ],
+    "notes": "Criminal neglect separate from CPS/civil neglect proceedings. Both may run concurrently. Child endangerment also charged under MCL 750.136b(4th degree)."
+  },
+  {
+    "common_charge_slug": "firearm-felon-in-possession",
+    "statute_number": "MCL 750.224f",
+    "statute_title": "Possession of a Firearm by a Felon (PFWDVRO)",
+    "offense_class": "Class G Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Possession or use of a firearm",
+      "By a person convicted of a specified felony",
+      "Within the specified period after completing sentence"
+    ],
+    "mandatory_minimum": "None statutory",
+    "enhancements": [
+      "Certain violent felony prior: lifetime ban",
+      "Federal prosecution concurrent: 18 U.S.C. § 922(g)",
+      "Use in crime: additional charges"
+    ],
+    "notes": "Michigan's felon-in-possession applies for 3 years after completion of sentence for specified felonies (firearms, CSC, etc.), or permanently for violent felonies. Different from federal lifetime ban."
+  },
+  {
+    "common_charge_slug": "carrying-concealed-weapon",
+    "statute_number": "MCL 750.227",
+    "statute_title": "Carrying a Concealed Weapon (CCW)",
+    "offense_class": "Class E Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "5 years",
+    "fine_max": "$2,500",
+    "elements": [
+      "Carrying a pistol concealed on person",
+      "OR in a vehicle",
+      "Without a valid Concealed Pistol License (CPL)"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Prior felony: sentence enhancement",
+      "In weapon-free school zone: additional 2-year consecutive",
+      "Used in crime: additional charges"
+    ],
+    "notes": "Michigan is a shall-issue CPL state. CPL holders exempt. Open carry of pistol in vehicle without CPL is still unlawful under MCL 750.227. Separate provisions for long guns."
+  },
+  {
+    "common_charge_slug": "felony-firearm",
+    "statute_number": "MCL 750.227b",
+    "statute_title": "Felony Firearm — Possession During Commission of Felony",
+    "offense_class": "2-year mandatory consecutive Felony (escalating)",
+    "penalty_min": "2 years mandatory consecutive",
+    "penalty_max": "5 years (second); life (third)",
+    "fine_max": "$2,500",
+    "elements": [
+      "Carrying or having in possession a firearm",
+      "At the time of commission or attempt of a felony",
+      "Regardless of whether the firearm was used"
+    ],
+    "mandatory_minimum": "2 years consecutive (first); 5 years consecutive (second); life (third+)",
+    "enhancements": [
+      "Second felony firearm offense: 5-year mandatory consecutive",
+      "Third felony firearm offense: life imprisonment",
+      "No parole/probation on mandatory term"
+    ],
+    "notes": "Michigan's felony firearm statute is extremely powerful — mandatory consecutive sentence cannot be suspended or paroled. Simply possessing firearm during felony triggers it. Most influential Michigan gun law in practice."
+  },
+  {
+    "common_charge_slug": "assault-firearm",
+    "statute_number": "MCL 750.82 / MCL 750.227b",
+    "statute_title": "Assault with a Firearm (Felonious Assault + Felony Firearm)",
+    "offense_class": "Class F Felony + 2-year mandatory consecutive",
+    "penalty_min": "2 years mandatory (felony firearm)",
+    "penalty_max": "4 years (felonious assault) + 2 years mandatory consecutive (felony firearm)",
+    "fine_max": "$4,500 combined",
+    "elements": [
+      "Felonious assault with firearm as dangerous weapon",
+      "PLUS: possession of firearm at time of felony"
+    ],
+    "mandatory_minimum": "2 years consecutive mandatory for felony firearm component",
+    "enhancements": [
+      "Intent to kill: assault with intent to murder — MCL 750.83",
+      "Great bodily harm: AWIGBH — MCL 750.84",
+      "Law enforcement victim: enhanced penalties"
+    ],
+    "notes": "In practice, assault with firearm charges are filed as both MCL 750.82 (felonious assault) and MCL 750.227b (felony firearm). The 2-year mandatory runs consecutive."
+  },
+  {
+    "common_charge_slug": "fraud-identity-theft",
+    "statute_number": "MCL 445.65",
+    "statute_title": "Identity Theft",
+    "offense_class": "Class F Felony (information theft); Class E Felony (financial harm)",
+    "penalty_min": "0 years",
+    "penalty_max": "5 years (identity theft); additional up to 5 years for use",
+    "fine_max": "$25,000",
+    "elements": [
+      "Obtaining personal identifying information of another",
+      "Without authorization",
+      "With intent to fraudulently use to obtain money, credit, goods, services, or other property"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Elderly victim: sentencing enhancement",
+      "Multiple victims: consecutive charges",
+      "Financial losses over $20,000: Class D Felony"
+    ],
+    "notes": "Michigan Identity Theft Protection Act (MCL 445.61 et seq.). Both identity theft (obtaining information) and identity fraud (using information) are separate offenses. Restitution mandatory."
+  },
+  {
+    "common_charge_slug": "fraud-credit-card",
+    "statute_number": "MCL 750.157n",
+    "statute_title": "Fraudulent Use of Credit/Debit Card",
+    "offense_class": "Misdemeanor ($500-) to Class G Felony ($1,000+)",
+    "penalty_min": "0 days",
+    "penalty_max": "4 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 (felony)",
+    "elements": [
+      "Using a credit or debit card",
+      "With knowledge that the card is stolen, revoked, or used without authorization",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Skimming device use: additional charges — MCL 750.157s",
+      "Organized fraud scheme: additional charges — MCL 750.218",
+      "Identity theft combined: concurrent charges"
+    ],
+    "notes": "Michigan credit card fraud governed by MCL 750.157m-157q. Skimming is separately criminalized. Restitution mandatory."
+  },
+  {
+    "common_charge_slug": "fraud-insurance",
+    "statute_number": "MCL 500.4503",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class F Felony ($1,000-$10,000); Class D Felony ($10,000+)",
+    "penalty_min": "0 years",
+    "penalty_max": "4 years (under $10,000); 10 years ($10,000+)",
+    "fine_max": "$50,000",
+    "elements": [
+      "Presenting, or causing to be presented",
+      "A claim for insurance benefits",
+      "Knowing the claim to contain materially false information"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Staged accident (auto insurance): additional charges",
+      "Healthcare fraud: federal prosecution possible",
+      "Multiple fraudulent claims: multiple counts"
+    ],
+    "notes": "Auto insurance fraud is prevalent in Michigan. Michigan also has specific auto no-fault fraud provisions. Workers' comp fraud under MCL 418.821."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "MCL 750.174",
+    "statute_title": "Embezzlement",
+    "offense_class": "Class H Felony ($1,000-$20,000) to Class B Felony ($100,000+)",
+    "penalty_min": "0 years",
+    "penalty_max": "20 years ($100,000+); 10 years ($50,000-$100,000); 5 years ($20,000-$50,000); 1 year (under $1,000)",
+    "fine_max": "3x amount embezzled",
+    "elements": [
+      "Having property entrusted to one's care",
+      "By virtue of employment or position of trust",
+      "Fraudulent conversion of that property for own use"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Public official: mandatory restitution",
+      "Financial institution: enhanced penalties",
+      "Multiple victims: additional counts"
+    ],
+    "notes": "Michigan embezzlement has value-based tiers. Public official embezzlement may trigger additional penalties and forfeiture. Fiduciary breaches also subject to civil liability."
+  },
+  {
+    "common_charge_slug": "fraud-welfare",
+    "statute_number": "MCL 400.60",
+    "statute_title": "Welfare Fraud / Public Assistance Fraud",
+    "offense_class": "Misdemeanor to Felony (amount-based)",
+    "penalty_min": "0 days",
+    "penalty_max": "4 years (felony)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Making a false statement or misrepresentation",
+      "In connection with an application for public assistance",
+      "With intent to fraudulently obtain benefits"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "SNAP fraud: federal prosecution possible",
+      "Medicaid fraud: Class D Felony — MCL 400.606",
+      "Organized benefits fraud: enhanced charges"
+    ],
+    "notes": "Public assistance fraud covers food stamps (SNAP), TANF, Medicaid. Restitution and benefit ineligibility are common consequences. DHHS administrative sanctions run separately."
+  },
+  {
+    "common_charge_slug": "csc-first-degree",
+    "statute_number": "MCL 750.520b",
+    "statute_title": "Criminal Sexual Conduct — First Degree",
+    "offense_class": "Class A Felony (Life)",
+    "penalty_min": "25 years (if victim under 13) to Life",
+    "penalty_max": "Life",
+    "fine_max": "$25,000",
+    "elements": [
+      "Sexual penetration",
+      "With another person",
+      "Under circumstances set out in MCL 750.520b (age, force, coercion, incapacity, domestic relationship)"
+    ],
+    "mandatory_minimum": "25-year mandatory minimum if victim under 13 at time of offense",
+    "enhancements": [
+      "Victim under 13: mandatory 25-year minimum — MCL 750.520b(2)(b)",
+      "Multiple acts: consecutive sentencing",
+      "Prior CSC conviction: enhanced mandatory",
+      "Use of weapon or force: aggravating factor"
+    ],
+    "notes": "CSC-1 is Michigan's most serious sexual assault offense. Life or any term of years. Sex offender registration mandatory (Tier 3 — lifetime). Romeo and Juliet provisions do NOT apply to CSC-1."
+  },
+  {
+    "common_charge_slug": "csc-second-degree",
+    "statute_number": "MCL 750.520c",
+    "statute_title": "Criminal Sexual Conduct — Second Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "15 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Sexual contact (not penetration)",
+      "With another person",
+      "Under circumstances described in MCL 750.520c"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Victim under 13: enhanced sentencing",
+      "Prior CSC conviction: significant enhancement",
+      "Use of weapon or threats: aggravating factor"
+    ],
+    "notes": "CSC-2 covers sexual contact (touching intimate parts). Tier 2 sex offender registration (25 years). Defenses include age proximity under MCL 750.520e."
+  },
+  {
+    "common_charge_slug": "csc-third-degree",
+    "statute_number": "MCL 750.520d",
+    "statute_title": "Criminal Sexual Conduct — Third Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "15 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Sexual penetration",
+      "With another person",
+      "Under circumstances defined in MCL 750.520d (victim age 13-15, force, coercion, incapacity)"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Multiple acts: consecutive sentencing",
+      "Position of trust over victim: aggravating factor",
+      "Victim age 13-15 with actor 5+ years older: sex offender registration Tier 2"
+    ],
+    "notes": "CSC-3 involves penetration with victim aged 13-15 or involving force/coercion. Similar elements to CSC-1 but lesser circumstances. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "csc-fourth-degree",
+    "statute_number": "MCL 750.520e",
+    "statute_title": "Criminal Sexual Conduct — Fourth Degree",
+    "offense_class": "2-year Misdemeanor",
+    "penalty_min": "0 days",
+    "penalty_max": "2 years",
+    "fine_max": "$500",
+    "elements": [
+      "Sexual contact",
+      "With another person",
+      "Under circumstances enumerated in MCL 750.520e (limited force, victim age, incapacity)"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Prior CSC conviction: Class D Felony",
+      "Position of authority: aggravating factor",
+      "Victim mental or physical incapacity: enhanced sentencing"
+    ],
+    "notes": "Highest-level misdemeanor CSC. Two-year Misdemeanor. Tier 1 sex offender registration (15 years). Romeo and Juliet exception if actor is less than 4 years older than 13-15 year old victim."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "MCL 750.335a",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Misdemeanor (1 year); Class H Felony (aggravated)",
+    "penalty_min": "0 days",
+    "penalty_max": "1 year; 2 years (aggravated with fondling)",
+    "fine_max": "$1,000; $2,000 (aggravated)",
+    "elements": [
+      "Knowingly making any open or indecent exposure of person",
+      "Or of the person of another",
+      "In public or in a private place where others may see"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Fondling while exposing: Class H Felony — MCL 750.335a(2)(b)",
+      "Prior conviction: enhanced sentencing",
+      "In front of child: aggravating factor"
+    ],
+    "notes": "Aggravated indecent exposure (fondling while exposing) is a felony. Sex offender registration may be required depending on circumstances and prior record."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "MCL 750.449",
+    "statute_title": "Soliciting/Accosting for Immoral Purposes",
+    "offense_class": "Misdemeanor (93 days to 2 years depending on circumstances)",
+    "penalty_min": "0 days",
+    "penalty_max": "93 days (solicitation); 2 years (accosting minor)",
+    "fine_max": "$500 to $2,000",
+    "elements": [
+      "Soliciting, enticing, or accosting another person",
+      "For the purpose of prostitution, lewdness, or assignation",
+      "In a public place or visible from a public place"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Soliciting a minor: Class D Felony — MCL 750.449a",
+      "Human trafficking: separate charges — MCL 750.462a",
+      "Using a vehicle: additional civil forfeiture"
+    ],
+    "notes": "Michigan's solicitation law. Johns may be charged under MCL 750.449a. Human trafficking prosecution increasingly common. Diversion programs available in some counties."
+  },
+  {
+    "common_charge_slug": "sex-trafficking",
+    "statute_number": "MCL 750.462e",
+    "statute_title": "Labor or Sex Trafficking",
+    "offense_class": "Class B Felony (forced); Class C Felony (financial benefit)",
+    "penalty_min": "0 years",
+    "penalty_max": "20 years (Class B); 15 years (Class C)",
+    "fine_max": "$20,000",
+    "elements": [
+      "Recruiting, enticing, harboring, transporting, providing, obtaining, or maintaining a person",
+      "Through force, fraud, or coercion",
+      "For labor or commercial sexual activity"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Victim under 18: Class A Felony (Life) — MCL 750.462f",
+      "Victim under 13: enhanced mandatory",
+      "Use of controlled substance to facilitate: additional charges"
+    ],
+    "notes": "Michigan Human Trafficking Act (MCL 750.462a et seq.). Minor victims cannot consent — no defense of consent. Traffickers subject to asset forfeiture. SARO designation available to victims."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "MCL 436.1703",
+    "statute_title": "Minor in Possession of Alcohol (MIP) / Disorderly Person",
+    "offense_class": "Misdemeanor (90 days)",
+    "penalty_min": "0 days",
+    "penalty_max": "90 days",
+    "fine_max": "$100 first; $200 second; $500 third+",
+    "elements": [
+      "Person under age 21",
+      "Possession, purchase, or consumption of alcohol",
+      "OR adult who is visibly intoxicated in public and creating a disturbance"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Using false ID to obtain alcohol: separate charge — MCL 436.1701",
+      "Furnishing alcohol to minor: Class A Misdemeanor — MCL 436.1701",
+      "Repeat offense: higher fine tier"
+    ],
+    "notes": "Michigan does not have a standalone public intoxication statute for adults. Adults charged under disorderly person statute (MCL 750.167). MIP is age-specific under Liquor Control Code."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "MCL 750.167",
+    "statute_title": "Disorderly Person / Disorderly Conduct",
+    "offense_class": "90-day Misdemeanor",
+    "penalty_min": "0 days",
+    "penalty_max": "90 days",
+    "fine_max": "$500",
+    "elements": [
+      "A person who is intoxicated in a public place and creates a disturbance",
+      "OR window peeper, brawler, loiterer for immoral purpose",
+      "OR engages in indecent, insulting, or obscene conduct"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Repeated disorderly conduct: sentencing enhancement",
+      "Combined with assault: separate charges"
+    ],
+    "notes": "Michigan's disorderly person statute covers numerous minor offenses. No separate 'disorderly conduct' statute — all under MCL 750.167. Civil infractions for minor disturbances."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "MCL 750.552",
+    "statute_title": "Trespassing / Entering Premises Without Permission",
+    "offense_class": "Misdemeanor (90 days) to Class E Felony (if armed)",
+    "penalty_min": "0 days",
+    "penalty_max": "90 days (simple); 5 years (armed trespass — MCL 750.552a)",
+    "fine_max": "$250 (simple); $5,000 (armed)",
+    "elements": [
+      "Entering or remaining upon property of another",
+      "Without permission",
+      "After being forbidden to do so"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Armed trespass: Class E Felony — MCL 750.552a",
+      "Critical infrastructure: enhanced felony",
+      "Prior trespass on same property: sentencing enhancement"
+    ],
+    "notes": "Simple trespass is 90-day misdemeanor. Trespass while armed is Class E Felony. Critical infrastructure trespass (pipelines, utilities) carries enhanced felony penalties."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "MCL 750.81d",
+    "statute_title": "Resisting or Obstructing a Police Officer",
+    "offense_class": "2-year Misdemeanor; Class D Felony if injury",
+    "penalty_min": "0 days",
+    "penalty_max": "2 years; 4 years (officer injured); 15 years (death)",
+    "fine_max": "$2,000; $5,000 (injury); $15,000 (death)",
+    "elements": [
+      "Knowingly and willfully",
+      "Assault, batter, wound, resist, obstruct, oppose, or endanger",
+      "A person the defendant knows is performing official duties (law enforcement, EMT, firefighter)"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Officer injured: Class D Felony (up to 4 years)",
+      "Officer seriously injured: Class C Felony (up to 10 years)",
+      "Officer killed: Class B Felony (up to 20 years)"
+    ],
+    "notes": "Michigan's 'resisting and obstructing' is broader than resisting arrest — covers any interference with official duties. Verbal obstruction may suffice. Widely charged."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "MCL 750.505",
+    "statute_title": "Common Law Obstruction of Justice",
+    "offense_class": "Class G Felony (5 years)",
+    "penalty_min": "0 years",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "An act or omission",
+      "That tends to impede or obstruct the administration of justice",
+      "With intent to obstruct"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Witness tampering: separate charge — MCL 750.122",
+      "Evidence destruction: separate charge — MCL 750.483a",
+      "Bribery of official: separate charge — MCL 750.117"
+    ],
+    "notes": "Michigan uses common law obstruction. Specific statutes for witness intimidation (MCL 750.122), jury tampering, and evidence destruction. False police report under MCL 750.411a."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "MCL 750.422",
+    "statute_title": "Perjury",
+    "offense_class": "Class E Felony (15-year max)",
+    "penalty_min": "0 years",
+    "penalty_max": "15 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Making a false statement",
+      "Under oath in a judicial or quasi-judicial proceeding",
+      "With knowledge of falsity and intent to mislead"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "False affidavit: MCL 750.423 (15 years)",
+      "Subornation of perjury: MCL 750.425 (5 years)",
+      "Perjury causing wrongful conviction: aggravating factor"
+    ],
+    "notes": "Michigan perjury carries up to 15 years — higher than many states. Subornation of perjury (procuring others to perjure) is a separate 5-year felony."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "MCL 750.117",
+    "statute_title": "Bribery of Public Officer or Employee",
+    "offense_class": "Class E Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000 or 3x bribe amount",
+    "elements": [
+      "Giving, offering, or promising",
+      "A benefit to a public officer or employee",
+      "With intent to influence their official action"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Receiving bribe (official): same penalties — MCL 750.118",
+      "Judicial bribery: enhanced",
+      "Commercial bribery: MCL 750.125 (1-year misdemeanor)"
+    ],
+    "notes": "Both giving and receiving bribery are separate offenses. Commercial bribery (private sector) is a misdemeanor. Kickback schemes may be charged as embezzlement or conspiracy."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "MCL 750.411k",
+    "statute_title": "Money Laundering",
+    "offense_class": "Class C Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "20 years",
+    "fine_max": "$500,000 or 2x amount laundered",
+    "elements": [
+      "Conducting a financial transaction",
+      "Involving proceeds from a specified unlawful activity",
+      "With knowledge that the property represents proceeds of unlawful activity",
+      "With intent to conceal or disguise origin"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Federal money laundering concurrent: 18 U.S.C. § 1956",
+      "Drug trafficking underlying: sentencing enhancement",
+      "Financial institution involved: additional penalties"
+    ],
+    "notes": "Michigan Money Laundering statute. Federal charges frequently concurrent. Asset forfeiture available. Structuring (avoiding reporting requirements) also chargeable."
+  },
+  {
+    "common_charge_slug": "criminal-enterprise",
+    "statute_number": "MCL 750.159i",
+    "statute_title": "Michigan Racketeer Influenced and Corrupt Organizations (RICO) — Conducting Criminal Enterprise",
+    "offense_class": "Class B Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "20 years",
+    "fine_max": "$100,000 or 3x gain",
+    "elements": [
+      "A pattern of racketeering activity",
+      "Conducted through or in connection with an enterprise",
+      "With intent to benefit the enterprise"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Enterprise spanning multiple states: federal RICO concurrent",
+      "Murder predicate: enhanced sentencing",
+      "Leadership role: enhanced guidelines"
+    ],
+    "notes": "Michigan RICO under MCL 750.159f et seq. Forfeiture of enterprise assets. Civil RICO also available to plaintiffs. Requires 2+ related racketeering acts within 10 years."
+  },
+  {
+    "common_charge_slug": "gang-participation",
+    "statute_number": "MCL 750.411u",
+    "statute_title": "Street Gang Membership — Criminal Street Gang Activity",
+    "offense_class": "Class D Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "10 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Participation in a criminal street gang",
+      "By committing or attempting to commit a crime for the benefit of, at the direction of, or in association with the gang"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Crime near school: additional consecutive sentence",
+      "Crime involving firearms: enhanced penalties",
+      "Leadership: higher charge tier"
+    ],
+    "notes": "Michigan Criminal Street Gang statutes under MCL 750.411t et seq. Gang membership alone not criminal — must commit a crime for the gang. Sentencing enhancement for underlying crimes."
+  },
+  {
+    "common_charge_slug": "hazing",
+    "statute_number": "MCL 750.411t",
+    "statute_title": "Hazing",
+    "offense_class": "Misdemeanor to Class E Felony",
+    "penalty_min": "0 days",
+    "penalty_max": "1 year (simple); 5 years (if serious injury)",
+    "fine_max": "$1,000 to $5,000",
+    "elements": [
+      "Knowing and willful acts",
+      "As a condition or precondition of joining a group or organization",
+      "That involves physical harm, degradation, or endangerment"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Death resulting: manslaughter or murder charges",
+      "Serious injury: felony hazing — MCL 750.411t(1)(b)",
+      "Organizational officer involved: leadership enhancement"
+    ],
+    "notes": "Michigan Hazing Act covers schools, colleges, and organizations. 'Matt Araiza's Law' amendments. Organization may face civil and criminal liability."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "MCL 771.4",
+    "statute_title": "Probation Violation",
+    "offense_class": "Revocation hearing; penalty up to maximum of underlying offense",
+    "penalty_min": "0 days",
+    "penalty_max": "Maximum of original offense",
+    "fine_max": "No additional statutory fine",
+    "elements": [
+      "Defendant on probation",
+      "Willful violation of a probation condition",
+      "Established by preponderance of evidence at violation hearing"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Technical violation: judge has discretion — no statutory limit",
+      "New criminal offense: may result in maximum sentence",
+      "Absconding: warrant issued, detention pending hearing"
+    ],
+    "notes": "Michigan probation violations proceed before sentencing judge. No jury. Preponderance standard. Court can continue probation, modify conditions, or sentence to maximum. Technical violators may be eligible for Swift and Sure Sanctions program."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "MCL 791.240",
+    "statute_title": "Parole Violation",
+    "offense_class": "Administrative proceeding; return to prison possible",
+    "penalty_min": "Varies",
+    "penalty_max": "Remainder of sentence",
+    "fine_max": "None",
+    "elements": [
+      "Parolee violating conditions of parole",
+      "Including new criminal conduct, absconding, or technical violations"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "New felony while on parole: return to prison plus new sentence",
+      "Absconding: maximum penalty at hearing"
+    ],
+    "notes": "MDOC Parole Board has jurisdiction. Parole violations handled administratively. Parolee has due process rights (Morrissey v. Brewer). Michigan DOC may impose dipping, electronic monitoring, or return."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "MCL 750.193",
+    "statute_title": "Escaping from Custody",
+    "offense_class": "Class G Felony (if convicted of felony); Misdemeanor (if awaiting trial on misdemeanor)",
+    "penalty_min": "0 years",
+    "penalty_max": "5 years (felony custody); 2 years (misdemeanor custody)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Breaking from or escaping lawful custody",
+      "Of a prison, jail, or detention facility",
+      "OR escape from officer during transfer"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Use of force or weapon: additional assault charges",
+      "Escape by prisoner serving life: enhanced penalty",
+      "Multiple escape attempts: consecutive sentences"
+    ],
+    "notes": "MCL 750.193 covers escaping from custody of any confinement facility. Constructive escape (failure to return from work release) under MCL 800.74."
+  },
+  {
+    "common_charge_slug": "false-police-report",
+    "statute_number": "MCL 750.411a",
+    "statute_title": "False Report of a Felony or Misdemeanor",
+    "offense_class": "Misdemeanor to Class F Felony",
+    "penalty_min": "0 days",
+    "penalty_max": "93 days (minor false report); 4 years (false report of felony); additional if resources expended",
+    "fine_max": "$500 to $2,000",
+    "elements": [
+      "Knowing and wilful",
+      "Reporting to law enforcement a crime that did not occur",
+      "OR providing false information in a police report"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "False bomb threat: Class D Felony — MCL 750.544",
+      "Resources expended in response: restitution mandatory",
+      "Terrorism false report: Class B Felony"
+    ],
+    "notes": "False felony report is Class F (4 years). False misdemeanor report is 93-day misdemeanor. Restitution for emergency response costs. False school bomb threat is separate enhanced offense."
+  },
+  {
+    "common_charge_slug": "cybercrime",
+    "statute_number": "MCL 752.795",
+    "statute_title": "Unauthorized Access to Computer Systems",
+    "offense_class": "Class E Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Intentionally and without authorization",
+      "Accessing, altering, damaging, or destroying",
+      "A computer program, network, or data"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Financial damage over $10,000: Class D Felony",
+      "Government systems: enhanced federal charges",
+      "Ransomware deployment: additional counts"
+    ],
+    "notes": "Michigan Computer Crime Law (MCL 752.791 et seq.). Federal CFAA charges frequently concurrent. Cyberbullying covered by separate statute (MCL 750.411x)."
+  },
+  {
+    "common_charge_slug": "cyberbullying",
+    "statute_number": "MCL 750.411x",
+    "statute_title": "Cyberbullying",
+    "offense_class": "Misdemeanor (93 days); Class E Felony if serious harm",
+    "penalty_min": "0 days",
+    "penalty_max": "93 days; 1 year (2nd+); 5 years (bodily harm); Life (if death)",
+    "fine_max": "$500 to $10,000",
+    "elements": [
+      "Intentional posting of a message or statement",
+      "In a public media forum about a minor",
+      "Knowing the message is false, with intent to emotionally harm or extort"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Victim suffers serious bodily harm: Class E Felony",
+      "Victim commits suicide: Class B Felony or Life",
+      "Prior cyberbullying: 1-year misdemeanor"
+    ],
+    "notes": "Michigan's cyberbullying statute enacted 2018 (Matt Epling Law). Applies to minors. Adult cyberstalking under MCL 750.411h. Specific to false statements posted publicly about a minor."
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "statute_number": "MCL 750.218 (state) / 18 U.S.C. § 1343 (federal)",
+    "statute_title": "Obtaining Money by False Pretenses / Wire Fraud",
+    "offense_class": "Class D Felony (state, $50,000+); federal: up to 20 years",
+    "penalty_min": "0 years",
+    "penalty_max": "10 years (state); 20 years (federal)",
+    "fine_max": "$15,000 (state); $250,000 (federal)",
+    "elements": [
+      "A scheme or artifice to defraud",
+      "Using electronic communications, wire, radio, or television",
+      "Obtaining money or property by false or fraudulent pretenses"
+    ],
+    "mandatory_minimum": "None (state)",
+    "enhancements": [
+      "Financial institution as victim: 30 years federal",
+      "Emergency (disaster fraud): enhanced federal",
+      "Amounts over $1M: state Class C Felony"
+    ],
+    "notes": "State false pretenses under MCL 750.218; federal wire fraud under 18 U.S.C. § 1343. Federal prosecution typical for large schemes or interstate conduct."
+  },
+  {
+    "common_charge_slug": "tax-evasion",
+    "statute_number": "MCL 205.27",
+    "statute_title": "Tax Fraud / Failure to File — Michigan Income Tax",
+    "offense_class": "Misdemeanor to Class E Felony",
+    "penalty_min": "0 days",
+    "penalty_max": "4 years (tax evasion); 1 year (failure to file)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Willful failure to file a required tax return",
+      "OR willful understatement or failure to pay taxes",
+      "With intent to evade tax obligation"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Fraudulent claim: enhanced penalties",
+      "Business/corporate tax fraud: corporate officer liability",
+      "Federal concurrent prosecution: IRS criminal division"
+    ],
+    "notes": "Michigan Treasury administers state tax fraud. Federal IRS charges frequently concurrent. Sales tax fraud (MCL 205.111) is separate."
+  },
+  {
+    "common_charge_slug": "extortion",
+    "statute_number": "MCL 750.213",
+    "statute_title": "Extortion / Malicious Threats",
+    "offense_class": "Class E Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "20 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Malicious threats to extort money",
+      "OR threats to injure another's property, reputation, or person",
+      "With intent to compel compliance"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Amount extorted over $20,000: enhanced sentencing",
+      "Threat of violence: additional assault or terroristic threat charges",
+      "Use of computer/internet: cybercrime charges added"
+    ],
+    "notes": "Michigan extortion carries up to 20 years — more severe than many states. Blackmail (threatening exposure of information) falls under this statute. Separate from robbery."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "MCL 750.535",
+    "statute_title": "Receiving and Concealing Stolen Property",
+    "offense_class": "Class H Felony ($1,000+) to Class D Felony ($20,000+); Misdemeanor (under $1,000)",
+    "penalty_min": "0 days",
+    "penalty_max": "10 years ($20,000+); 5 years ($1,000-$20,000); 1 year (under $1,000)",
+    "fine_max": "$5,000 (felony)",
+    "elements": [
+      "Buying, receiving, possessing, or concealing stolen, embezzled, or converted property",
+      "With knowledge that it was stolen, embezzled, or converted",
+      "Intending to defraud the owner"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Organized auto theft ring: MCL 750.535a",
+      "Prior receiving stolen property conviction: sentencing enhancement",
+      "Commercial fencing operation: additional charges"
+    ],
+    "notes": "Value-based tiers same as larceny. Motor vehicle receiving stolen property enhanced under MCL 750.535(5). Proof of knowledge often circumstantial."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "MCL 750.248",
+    "statute_title": "Forgery of Public Records and Official Documents",
+    "offense_class": "Class F Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "14 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Fraudulently making, altering, or forging",
+      "A public record, official document, court record, instrument, or writing",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Uttering forged instrument: separate charge — MCL 750.249",
+      "Financial documents: enhanced penalties",
+      "Government document fraud: federal charges possible"
+    ],
+    "notes": "Michigan has multiple forgery statutes. MCL 750.248 (public records/court docs — 14 years), MCL 750.249 (private instruments — 14 years), MCL 750.250 (bank notes — 5 years). Uttering (using forged doc) is separate."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "MCL 750.157a",
+    "statute_title": "Conspiracy",
+    "offense_class": "Same maximum as the substantive offense conspired to commit",
+    "penalty_min": "0 years",
+    "penalty_max": "Same as underlying offense (Life if murder conspiracy)",
+    "fine_max": "Same as underlying offense",
+    "elements": [
+      "An agreement between two or more persons",
+      "To do an illegal act or a legal act in an illegal manner",
+      "With intent to commit the substantive offense"
+    ],
+    "mandatory_minimum": "None (follows underlying offense)",
+    "enhancements": [
+      "Drug conspiracy: quantity-based thresholds apply",
+      "Federal conspiracy concurrent: 18 U.S.C. § 371",
+      "RICO conspiracy: additional enhancement"
+    ],
+    "notes": "Michigan conspiracy carries same maximum as the substantive offense. No overt act required for conspiracy in Michigan (split from federal law which requires overt act for § 371). Withdrawal defense possible."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "MCL 750.92",
+    "statute_title": "Attempt to Commit a Felony",
+    "offense_class": "Reduced from substantive offense (generally 5 years max for felony, 2 years for misdemeanor)",
+    "penalty_min": "0 years",
+    "penalty_max": "5 years for felony attempt; 2 years for misdemeanor attempt; Life if attempted murder",
+    "fine_max": "Varies",
+    "elements": [
+      "Intent to commit a specific crime",
+      "AND an overt act done toward committing that crime",
+      "Falling short of completing the intended offense"
+    ],
+    "mandatory_minimum": "None (unless underlying offense has mandatory)",
+    "enhancements": [
+      "Attempted murder: assault with intent to murder — MCL 750.83 (Life)",
+      "Attempted armed robbery: Class C Felony",
+      "Near-completion of offense: sentencing enhancement"
+    ],
+    "notes": "Michigan attempt generally punished at reduced level. Attempted murder is separately codified as 'Assault with Intent to Murder' under MCL 750.83 (up to Life). General attempt statute MCL 750.92."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "MCL 767.39",
+    "statute_title": "Aiding and Abetting",
+    "offense_class": "Same as the principal offense",
+    "penalty_min": "Same as principal",
+    "penalty_max": "Same as principal",
+    "fine_max": "Same as principal",
+    "elements": [
+      "The defendant assisted the principal",
+      "In the commission of the offense",
+      "With knowledge that the principal intended to commit a crime",
+      "AND intending to aid"
+    ],
+    "mandatory_minimum": "Same as principal",
+    "enhancements": [
+      "Active participation increases culpability",
+      "Weapon possession during aiding: felony firearm may attach",
+      "Getaway driver: same liability as principal"
+    ],
+    "notes": "Michigan law makes aiders and abettors equally guilty as principals. No separate 'accessory before the fact' distinction. Accessories after the fact are charged separately (MCL 750.505)."
+  },
+  {
+    "common_charge_slug": "hit-run-injury",
+    "statute_number": "MCL 257.617",
+    "statute_title": "Leaving the Scene of an Accident Involving Personal Injury or Death",
+    "offense_class": "Class D Felony (injury); Class B Felony (death)",
+    "penalty_min": "0 years",
+    "penalty_max": "5 years (injury); 15 years (death)",
+    "fine_max": "$5,000 (injury); $10,000 (death)",
+    "elements": [
+      "Operating a motor vehicle involved in an accident",
+      "Resulting in injury or death to a person",
+      "Failing to stop, render aid, and provide information"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "OWI at time of accident: concurrent charges",
+      "Death resulting: Class B Felony",
+      "Prior leaving scene: sentencing enhancement"
+    ],
+    "notes": "Duty to stop, render reasonable assistance, and provide identification. Property damage only: misdemeanor under MCL 257.618. Separate criminal culpability from underlying negligence."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "MCL 750.145n",
+    "statute_title": "Vulnerable Adult Abuse — First Through Fourth Degree",
+    "offense_class": "Class D Felony (1st); Class F Felony (2nd); Class H Felony (3rd); Misdemeanor (4th)",
+    "penalty_min": "0 days",
+    "penalty_max": "10 years (1st); 4 years (2nd); 2 years (3rd); 1 year (4th)",
+    "fine_max": "$5,000",
+    "elements": [
+      "A caregiver for a vulnerable adult",
+      "Intentionally or knowingly causes physical or mental harm",
+      "OR willful neglect of duty to provide care"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Financial exploitation concurrent: MCL 750.174a",
+      "Death of vulnerable adult: enhanced murder/manslaughter",
+      "Healthcare setting: licensing consequences"
+    ],
+    "notes": "Michigan Vulnerable Adults Act. 'Vulnerable adult' includes elderly or disabled persons under care. Mandatory reporting by caregivers. Financial exploitation of vulnerable adult is a separate offense."
+  },
+  {
+    "common_charge_slug": "financial-exploitation-elder",
+    "statute_number": "MCL 750.174a",
+    "statute_title": "Financial Exploitation of a Vulnerable Adult",
+    "offense_class": "Class D Felony ($1,000+) to Class C Felony ($100,000+)",
+    "penalty_min": "0 years",
+    "penalty_max": "10 years ($100,000+); 5 years ($1,000-$100,000)",
+    "fine_max": "$100,000",
+    "elements": [
+      "Obtaining money or property",
+      "From a vulnerable adult",
+      "Through undue influence, fraud, coercion, or breach of fiduciary duty"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Caregiver position of trust: sentencing enhancement",
+      "Embezzlement concurrent: MCL 750.174",
+      "Restitution mandatory"
+    ],
+    "notes": "Michigan's financial elder abuse statute. 'Vulnerable adult' includes those 18+ who are disabled or 65+ with limited capacity. Civil remedies also available (3x damages)."
+  },
+  {
+    "common_charge_slug": "terroristic-threats",
+    "statute_number": "MCL 750.543m",
+    "statute_title": "Threat of Terrorism",
+    "offense_class": "Class B Felony (20 years)",
+    "penalty_min": "0 years",
+    "penalty_max": "20 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Threatening to commit an act of terrorism",
+      "By any means of communication",
+      "With specific intent to terrorize"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Actual bomb/weapon present: terrorism execution charges — Class A",
+      "School threat: additional charges under school safety laws",
+      "Federal prosecution: 18 U.S.C. § 875 concurrent"
+    ],
+    "notes": "Michigan Anti-Terrorism Act (MCL 750.543b et seq.). School threats separately enhanced under MCL 750.543m and school safety laws. Causing evacuation (MCL 750.543p) is additional charge."
+  },
+  {
+    "common_charge_slug": "weapons-carrying-prohibited",
+    "statute_number": "MCL 750.227c",
+    "statute_title": "Carrying Pistol — Prohibited Places",
+    "offense_class": "Class A Misdemeanor (up to 90 days) or higher depending on location",
+    "penalty_min": "0 days",
+    "penalty_max": "90 days misdemeanor; felony if in school",
+    "fine_max": "$100",
+    "elements": [
+      "Carrying a pistol or dangerous weapon",
+      "Into a prohibited place",
+      "Without legal authority"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "School zone: Class E Felony — MCL 750.237a",
+      "Courthouse: additional contempt charges",
+      "Legislative buildings: enhanced penalties"
+    ],
+    "notes": "Michigan's pistol-free zones include schools, courts, casinos, stadiums, hospitals. CPL holders not exempt from all zones (courts, polling places, churches by policy). School zone felony under MCL 750.237a."
+  },
+  {
+    "common_charge_slug": "weapons-school-zone",
+    "statute_number": "MCL 750.237a",
+    "statute_title": "Weapons — Weapon-Free School Zone Offense",
+    "offense_class": "Class G Felony to Class E Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "2 years (possessing weapon at school); additional consecutive 2 years for crime in zone",
+    "fine_max": "$5,000",
+    "elements": [
+      "Possessing a dangerous weapon",
+      "On school property or in a vehicle on school property",
+      "Without school authorization"
+    ],
+    "mandatory_minimum": "None for simple possession (discretionary)",
+    "enhancements": [
+      "Crime committed in school zone: mandatory 2-year consecutive sentence",
+      "Firearm involved: felony firearm may also attach",
+      "Pointing weapon at student: additional assault charges"
+    ],
+    "notes": "Weapon-free school zone enhancement adds consecutive 2 years for crimes committed with weapons in or near schools. Zero tolerance school discipline policies run separately."
+  },
+  {
+    "common_charge_slug": "bomb-threat",
+    "statute_number": "MCL 750.543m / MCL 750.544",
+    "statute_title": "Bomb Threat / False Report of Explosive",
+    "offense_class": "Class D Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000 plus restitution",
+    "elements": [
+      "Making a false report or threat",
+      "Of a bomb, explosive, or other destructive device",
+      "Knowing the report is false or the threat is not real"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "School bomb threat: separate enhanced provision under school safety",
+      "Resources expended: mandatory restitution",
+      "Multiple threats: additional counts"
+    ],
+    "notes": "False bomb threat is a felony in Michigan. Restitution for emergency response costs is mandatory. Juveniles frequently charged. Repeat school threats trigger habitual offender provisions."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "MCL 750.50",
+    "statute_title": "Animal Cruelty / Killing or Torturing an Animal",
+    "offense_class": "Class H Felony (first); Class F Felony (repeat or extreme cruelty)",
+    "penalty_min": "0 years",
+    "penalty_max": "4 years (first felony); 2 years (misdemeanor)",
+    "fine_max": "$5,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Intentionally killing, maiming, or torturing an animal",
+      "OR using an animal in a fighting operation",
+      "OR abandonment causing death"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Animal fighting: Class H Felony — MCL 750.49",
+      "Second conviction: Class F Felony (4 years)",
+      "Cat or dog: enhanced penalties over other animals"
+    ],
+    "notes": "Michigan animal cruelty law enhanced 2007. Animal fighting is separately criminalized. Domestic violence animal abuse connection often used in prosecution strategy."
+  },
+  {
+    "common_charge_slug": "retail-fraud",
+    "statute_number": "MCL 750.356c",
+    "statute_title": "Retail Fraud — Organized",
+    "offense_class": "Class F Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Two or more persons acting in concert",
+      "Committing retail fraud",
+      "With total value exceeding $1,000"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Organized retail theft ring: MCL 752.1081 enhanced penalties",
+      "Prior retail fraud: degree enhancement",
+      "Fraud device used: additional charges"
+    ],
+    "notes": "Organized retail fraud creates felony liability where individual thefts might be misdemeanors. Michigan Organized Retail Crime Act (MCL 752.1081 et seq.) provides additional enforcement."
+  },
+  {
+    "common_charge_slug": "assault-police-officer",
+    "statute_number": "MCL 750.81d",
+    "statute_title": "Assaulting, Battering, Wounding, Resisting, or Obstructing Officer",
+    "offense_class": "2-year Misdemeanor to Class B Felony",
+    "penalty_min": "0 days",
+    "penalty_max": "2 years (simple); 4 years (injury); 10 years (serious injury); 20 years (death)",
+    "fine_max": "$2,000 to $20,000",
+    "elements": [
+      "Assaulting, battering, wounding, resisting, obstructing, opposing, or endangering",
+      "A person the defendant knows or has reason to know is performing official duties",
+      "Including law enforcement, EMTs, corrections officers, firefighters"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Officer seriously injured: Class C Felony",
+      "Officer killed: Class B Felony",
+      "Use of weapon: felony firearm may apply"
+    ],
+    "notes": "MCL 750.81d covers broad category of interference with officers and emergency responders. Even verbal obstruction may qualify. Enhanced penalties scale with resulting harm."
+  },
+  {
+    "common_charge_slug": "eluding-police",
+    "statute_number": "MCL 750.479a",
+    "statute_title": "Fleeing and Eluding — Operating Vehicle to Avoid Police",
+    "offense_class": "Class G Felony (1st); Class F Felony (2nd); Class D Felony (3rd/4th)",
+    "penalty_min": "0 years",
+    "penalty_max": "2 years (1st); 4 years (2nd); 10 years (3rd/4th with injury or reckless driving)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Operating a motor vehicle",
+      "Willfully failing to obey a police officer's signal to stop",
+      "While the officer is in uniform and the vehicle is marked"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Sustained high-speed chase: 3rd degree — Class F",
+      "Causing injury or extreme recklessness: 4th degree — Class D",
+      "Prior fleeing conviction: degree enhancement"
+    ],
+    "notes": "Michigan has four degrees of fleeing and eluding. 1st degree (2 years) is base, escalating with risk factors. Combined with OWI or reckless driving in many cases."
+  },
+  {
+    "common_charge_slug": "hate-crime",
+    "statute_number": "MCL 750.147b",
+    "statute_title": "Ethnic Intimidation (Hate Crime)",
+    "offense_class": "2-year Misdemeanor (simple); up to Class C Felony (injury)",
+    "penalty_min": "0 days",
+    "penalty_max": "2 years (intimidation); escalates based on underlying crime",
+    "fine_max": "$5,000",
+    "elements": [
+      "Malicious use of violence, property damage, or harassment",
+      "Motivated by the victim's race, color, religion, gender, or national origin",
+      "With intent to intimidate or harm"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Underlying assault: combined sentencing",
+      "Bias-motivated property destruction: mandatory sentencing enhancement",
+      "Multiple victims targeted: additional counts"
+    ],
+    "notes": "Michigan Ethnic Intimidation Act (MCL 750.147b). Does not include sexual orientation (gap in Michigan law as of writing). Civil remedies under Elliott-Larsen Civil Rights Act also available."
+  },
+  {
+    "common_charge_slug": "human-trafficking",
+    "statute_number": "MCL 750.462c",
+    "statute_title": "Forced Labor or Services",
+    "offense_class": "Class B Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "20 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Recruiting, harboring, transporting, providing, or obtaining a person",
+      "By force, fraud, or coercion",
+      "For the purpose of forced labor or services"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Victim under 18: Class A Felony — MCL 750.462f",
+      "Use of controlled substance to facilitate: additional charges",
+      "Leadership role: enhanced sentencing"
+    ],
+    "notes": "Michigan Human Trafficking Act (MCL 750.462a et seq.). Civil cause of action available to victims (MCL 750.462n). Asset forfeiture. Federal parallel prosecution under 18 U.S.C. § 1589."
+  },
+  {
+    "common_charge_slug": "possession-explosives",
+    "statute_number": "MCL 750.200",
+    "statute_title": "Manufacturing or Possessing Explosives",
+    "offense_class": "Class D Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Manufacturing, possessing, transporting, or delivering",
+      "Any explosive or incendiary device",
+      "Without lawful authority or license"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Intent to terrorize: Class B Felony under MCL 750.543n",
+      "Used in crime: additional charges",
+      "Near school: mandatory consecutive enhancement"
+    ],
+    "notes": "Michigan explosives possession statute. Licensed mining/commercial use exempt. Molotov cocktails and improvised explosive devices clearly covered. Federal concurrent prosecution under 18 U.S.C. § 844."
+  },
+  {
+    "common_charge_slug": "impersonating-officer",
+    "statute_number": "MCL 750.215",
+    "statute_title": "Impersonating a Police Officer",
+    "offense_class": "Class G Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "4 years",
+    "fine_max": "$2,000",
+    "elements": [
+      "Pretending to be a peace officer or public official",
+      "Without lawful authority",
+      "While exercising authority claimed from that position"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Assault or fraud committed while impersonating: additional charges",
+      "Use of official-looking badge/vehicle: sentencing enhancement",
+      "Traffic stop impersonation: enhanced penalties"
+    ],
+    "notes": "Using a fake badge or wearing law enforcement uniform while acting as officer. Separate from impersonating public employees (MCL 750.217). High-profile cases involve fake traffic stops."
+  },
+  {
+    "common_charge_slug": "criminal-contempt",
+    "statute_number": "MCL 600.1701",
+    "statute_title": "Criminal Contempt of Court",
+    "offense_class": "Misdemeanor (up to 93 days per count)",
+    "penalty_min": "0 days",
+    "penalty_max": "93 days (indefinite for civil contempt until compliance)",
+    "fine_max": "$7,500",
+    "elements": [
+      "Willful disobedience of a court order",
+      "OR conduct that disrupts, obstructs, or interferes with judicial proceedings"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Contempt of PPO: also criminal charge under MCL 600.2950",
+      "Repeated contempt: multiple consecutive counts",
+      "Jury present: direct contempt — immediate sanction"
+    ],
+    "notes": "Michigan contempt is 93 days per count, but multiple counts can stack. Civil contempt for compliance continues until defendant complies. Criminal contempt for past conduct ends with sentence."
+  },
+  {
+    "common_charge_slug": "unlawful-imprisonment",
+    "statute_number": "MCL 750.349b",
+    "statute_title": "Unlawful Imprisonment",
+    "offense_class": "Class D Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "15 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Knowingly restraining another person",
+      "Under circumstances that do not amount to kidnapping",
+      "Without legal authority and without consent"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Kidnapping (if all elements met): Class A Felony — MCL 750.349",
+      "Victim is minor: enhanced sentencing",
+      "Use of force or weapon: additional charges"
+    ],
+    "notes": "Lesser offense to kidnapping. No specific intent to ransom or harm required. Used when kidnapping cannot be proven. Often charged with other offenses."
+  },
+  {
+    "common_charge_slug": "fraud-mortgage",
+    "statute_number": "MCL 565.451",
+    "statute_title": "Mortgage Fraud",
+    "offense_class": "Class E Felony to Class B Felony (amount-based)",
+    "penalty_min": "0 years",
+    "penalty_max": "20 years ($100,000+); 15 years ($50,000-$100,000); 5 years (under $50,000)",
+    "fine_max": "$100,000",
+    "elements": [
+      "Making a materially false statement",
+      "In connection with a mortgage loan application or real estate transaction",
+      "With intent to defraud a lender or purchaser"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Multiple loan applications: multiple counts",
+      "Bank fraud: federal prosecution concurrent",
+      "Real estate professional involved: licensing action"
+    ],
+    "notes": "Michigan Mortgage Fraud Act. Straw buyer arrangements and appraisal fraud commonly charged. Federal bank fraud under 18 U.S.C. § 1344 frequently concurrent."
+  },
+  {
+    "common_charge_slug": "illegal-dumping",
+    "statute_number": "MCL 324.8905",
+    "statute_title": "Littering / Open Dumping",
+    "offense_class": "Civil infraction to Misdemeanor; Felony for large-scale dumping",
+    "penalty_min": "Civil fine",
+    "penalty_max": "5 years (open dumping — felony)",
+    "fine_max": "$10,000 (felony); $500 (misdemeanor)",
+    "elements": [
+      "Knowingly depositing solid waste",
+      "On property without authorization",
+      "Other than a licensed waste disposal facility"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Hazardous waste: enhanced felony — MCL 324.11122",
+      "Large volume (7+ cubic yards): Class G Felony",
+      "Corporate dumping: officer liability"
+    ],
+    "notes": "Regulated under Michigan Natural Resources and Environmental Protection Act. Hazardous waste dumping is separately enhanced. Local ordinance violations run concurrently."
+  },
+  {
+    "common_charge_slug": "drunk-in-public",
+    "statute_number": "MCL 750.167",
+    "statute_title": "Disorderly Person — Intoxication in Public",
+    "offense_class": "90-day Misdemeanor",
+    "penalty_min": "0 days",
+    "penalty_max": "90 days",
+    "fine_max": "$500",
+    "elements": [
+      "A person intoxicated by alcohol or a controlled substance",
+      "In a public place",
+      "Creating a disturbance or unable to care for self"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Repeat offender: diversion/treatment may be required",
+      "Combined with DV or assault: separate charges"
+    ],
+    "notes": "Michigan does not have a standalone drunk in public statute. Charged under the disorderly person statute. Typical resolution is a fine with community service. Treatment courts available."
+  },
+  {
+    "common_charge_slug": "noise-ordinance",
+    "statute_number": "MCL 750.167(1)(e)",
+    "statute_title": "Disorderly Person — Disturbing the Peace",
+    "offense_class": "90-day Misdemeanor",
+    "penalty_min": "0 days",
+    "penalty_max": "90 days",
+    "fine_max": "$500",
+    "elements": [
+      "Willful and malicious conduct",
+      "In disruption of a lawful assembly or public peace",
+      "OR using profane or indecent language in public"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Near school or church: local ordinance enhancement",
+      "Repeat conduct: sentencing enhancement"
+    ],
+    "notes": "Michigan disturbing the peace under MCL 750.167. Most jurisdictions also have local noise ordinances as civil infraction alternative. First Amendment considerations apply to pure speech."
+  },
+  {
+    "common_charge_slug": "stalking-cyber",
+    "statute_number": "MCL 750.411s",
+    "statute_title": "Cyberstalking",
+    "offense_class": "Misdemeanor (2 years); Class E Felony if aggravated",
+    "penalty_min": "0 days",
+    "penalty_max": "2 years; 5 years (aggravated)",
+    "fine_max": "$2,000; $10,000 (aggravated)",
+    "elements": [
+      "A willful course of conduct",
+      "Involving repeated electronic communications",
+      "That would cause a reasonable person to feel terrorized, frightened, or harassed"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Violation of PPO: aggravated — MCL 750.411t",
+      "Prior stalking conviction: aggravated charge",
+      "Victim under 18: aggravated stalking"
+    ],
+    "notes": "Michigan's electronic stalking statute under MCL 750.411s. Different from cyberbullying (MCL 750.411x) which targets minors specifically. 'Course of conduct' requires 2+ acts."
+  },
+  {
+    "common_charge_slug": "aggravated-stalking",
+    "statute_number": "MCL 750.411i",
+    "statute_title": "Aggravated Stalking",
+    "offense_class": "Class E Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Stalking (course of conduct causing reasonable fear)",
+      "PLUS: violation of PPO, prior stalking conviction, victim under 18, or making credible threat"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Prior aggravated stalking: enhanced sentencing",
+      "Use of weapon: additional charges",
+      "Child victim: sex offender registration if elements met"
+    ],
+    "notes": "Aggravated stalking requires base stalking plus one aggravating factor. PPO violation concurrent with stalking creates presumptive aggravated charge. Sex offender registration may apply if victim is minor."
+  },
+  {
+    "common_charge_slug": "jury-tampering",
+    "statute_number": "MCL 750.120a",
+    "statute_title": "Juror Tampering / Jury Tampering",
+    "offense_class": "Class E Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Willfully communicating with a juror",
+      "In relation to the juror's duties",
+      "With intent to influence a verdict or decision"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Bribery of juror: additional bribery charges — MCL 750.120",
+      "Organized tampering scheme: conspiracy charges",
+      "During capital case: enhanced sentencing"
+    ],
+    "notes": "Juror tampering includes contact with juror or potential juror. Obstruction of justice may also be charged concurrently. Social media contact with jurors increasingly prosecuted."
+  },
+  {
+    "common_charge_slug": "witness-tampering",
+    "statute_number": "MCL 750.122",
+    "statute_title": "Intimidation of a Witness or Victim",
+    "offense_class": "Class F Felony (4 years); Class C Felony (15 years) if serious harm",
+    "penalty_min": "0 years",
+    "penalty_max": "4 years (intimidation only); 15 years (if serious injury results)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Intimidating, interfering with, or bribing a witness or victim",
+      "With intent to obstruct justice or prevent testimony",
+      "In a pending or prospective criminal proceeding"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Assault of witness: additional charges and enhanced sentencing",
+      "Gang-related intimidation: gang enhancement",
+      "Prior witness tampering: habitual offender sentencing"
+    ],
+    "notes": "Victim intimidation and witness tampering are combined under MCL 750.122. Serious injury to witness elevates to Class C Felony. Applies to prospective (not just pending) proceedings."
+  },
+  {
+    "common_charge_slug": "prostitution",
+    "statute_number": "MCL 750.448",
+    "statute_title": "Prostitution",
+    "offense_class": "Misdemeanor (93 days to 2 years depending on circumstances)",
+    "penalty_min": "0 days",
+    "penalty_max": "93 days (first); 1 year (second); 2 years (third+)",
+    "fine_max": "$500 to $2,000",
+    "elements": [
+      "Engaging in sexual acts",
+      "For hire or compensation",
+      "With another person"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Near school: enhanced penalties",
+      "HIV positive and engaging in prostitution: felony — MCL 333.5210",
+      "Trafficking component: Class B/C Felony — MCL 750.462a"
+    ],
+    "notes": "Michigan's prostitution laws apply to both selling and buying sex. Prior to 2023 reforms, sellers faced more enforcement than buyers. Human trafficking laws increasingly used for exploitation cases."
+  },
+  {
+    "common_charge_slug": "pandering",
+    "statute_number": "MCL 750.455",
+    "statute_title": "Pandering / Pimping",
+    "offense_class": "Class C Felony (15 years)",
+    "penalty_min": "0 years",
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Procuring, inducing, or enticing a person",
+      "To become a prostitute or to engage in sexual acts for hire",
+      "Through persuasion, promises, threats, or violence"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Victim under 18: Class B Felony (human trafficking) — MCL 750.462f",
+      "Violence used: additional assault charges",
+      "Drug use to control victim: additional charges"
+    ],
+    "notes": "Pandering (procuring) and keeping a house of prostitution (MCL 750.452) are separate offenses. Human trafficking charges increasingly used for exploitation of adults and minors."
+  },
+  {
+    "common_charge_slug": "possession-child-pornography",
+    "statute_number": "MCL 750.145c(4)",
+    "statute_title": "Possession of Child Sexually Abusive Material (CSAM)",
+    "offense_class": "Class E Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "4 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Knowingly possessing",
+      "Any child sexually abusive material",
+      "Knowing or having reason to know it is child sexually abusive material"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Production or distribution: Class B or C Felony — MCL 750.145c(2)/(3)",
+      "Using a computer to distribute: enhanced federal charges",
+      "Prior CSAM conviction: enhanced sentencing"
+    ],
+    "notes": "Michigan uses 'child sexually abusive material' (CSAM). Production is Class B Felony (20 years). Distribution is Class C Felony (7 years). Tier 3 sex offender registration (lifetime). Federal parallel prosecution common."
+  },
+  {
+    "common_charge_slug": "production-child-pornography",
+    "statute_number": "MCL 750.145c(2)",
+    "statute_title": "Production of Child Sexually Abusive Material (CSAM)",
+    "offense_class": "Class B Felony",
+    "penalty_min": "0 years",
+    "penalty_max": "20 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Persuading, inducing, enticing, coercing, or forcing a child",
+      "To engage in sexually explicit conduct",
+      "For the purpose of producing child sexually abusive material"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Child under 13: enhanced federal prosecution",
+      "Prior CSAM conviction: mandatory enhancement",
+      "Distribution of material: additional Class C Felony count"
+    ],
+    "notes": "Most serious CSAM offense in Michigan. Life sentences available for repeat offenders. Federal prosecution under 18 U.S.C. § 2251 typically concurrent. Tier 3 sex offender registration mandatory."
+  },
+  {
+    "common_charge_slug": "owi-minor-in-vehicle",
+    "statute_number": "MCL 257.625(7)",
+    "statute_title": "OWI with Passenger Under 16 Years of Age",
+    "offense_class": "93-day Misdemeanor (additional consecutive charge)",
+    "penalty_min": "0 days",
+    "penalty_max": "93 days",
+    "fine_max": "$500",
+    "elements": [
+      "Operating a motor vehicle while intoxicated",
+      "With a passenger under 16 years of age in the vehicle"
+    ],
+    "mandatory_minimum": "None",
+    "enhancements": [
+      "Child protective services referral mandatory",
+      "Enhanced sentence on primary OWI charge",
+      "Repeat offense: child endangerment charges possible"
+    ],
+    "notes": "Separate misdemeanor charge in addition to primary OWI. Child Protective Services will be notified. License suspension includes this factor. Second offense with child present escalates severity."
+  }
+]
