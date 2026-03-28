@@ -50,7 +50,7 @@ imnotanattorney.com
 
 [0:47-0:55] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com"]
-"We research. You ask. Full DUI timeline guide — link in bio."
+"Know What They Know. Full DUI timeline guide — link in bio."
 
 ## On-Screen Text
 - [0:00] "YOUR LICENSE IS DISAPPEARING"

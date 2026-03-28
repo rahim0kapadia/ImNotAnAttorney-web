@@ -28,7 +28,7 @@ After you hired them: every hour on YOUR case is time they can't bill to a new c
 
 Understanding this isn't cynicism. It's protection.
 
-We research. You ask.
+Know What They Know.
 
 imnotanattorney.com
 
@@ -64,7 +64,7 @@ how attorneys make money, criminal defense retainer, flat fee criminal defense, 
 "The question to always ask yourself: at every stage of my case, what is the financially optimal outcome for my attorney — and does that match what's optimal for me?"
 
 **[0:49-0:56] CTA — TEXT ON SCREEN: "imnotanattorney.com"**
-"Information is how you protect yourself. We research. You ask. Full breakdown — link in bio."
+"Information is how you protect yourself. Know What They Know. Full breakdown — link in bio."
 
 ---
 

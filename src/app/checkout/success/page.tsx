@@ -319,10 +319,10 @@ function SuccessContent() {
         </div>
 
         <h1 className="text-2xl font-bold text-white">
-          Payment Confirmed
+          Your Analysis Is Being Built
         </h1>
         <p className="mt-3 text-sm text-zinc-300">
-          You&apos;re one of the defendants who fights back. Your report is being prepared now.
+          You&apos;re one of the defendants who prepares instead of waits. That changes how your next attorney meeting goes.
         </p>
 
         {info ? (
@@ -364,7 +364,7 @@ function SuccessContent() {
             {info.noIntakeAction && info.intakeUrl && (
               <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
                 <p className="text-sm font-semibold text-amber-400">
-                  Your 48-hour clock starts when you submit
+                  One step left — tell us about your case
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
                   {info.noIntakeAction}
@@ -373,7 +373,7 @@ function SuccessContent() {
                   href={customerEmail ? `${info.intakeUrl}&email=${encodeURIComponent(customerEmail)}` : info.intakeUrl}
                   className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
                 >
-                  Submit Case Details — Start the Clock &rarr;
+                  Tell Us About Your Case &rarr;
                 </Link>
               </div>
             )}

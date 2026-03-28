@@ -25,7 +25,7 @@ Should You Take the Plea Deal? Ask These 3 Questions First.
 
 Before you sign anything, ask these 3 questions. Your attorney's answers will tell you everything.
 
-We research. You ask. Your attorney answers.
+Know What They Know.
 
 This is legal information, not legal advice. We are not attorneys.
 
@@ -63,7 +63,7 @@ should I take plea deal, plea bargain explained, plea deal or trial, criminal de
 "Here's the rule: the plea recommendation should come AFTER the investigation. Not before it. If your attorney is pushing the plea before they've done the work — that's not strategy. That's convenience."
 
 **[0:51-0:58] CTA — TEXT ON SCREEN: "imnotanattorney.com"**
-"We research. You ask. Full plea evaluation guide — link in bio."
+"Know What They Know. Full plea evaluation guide — link in bio."
 
 ---
 

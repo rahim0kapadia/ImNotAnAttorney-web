@@ -288,7 +288,7 @@ ONLY reference INNA when ALL of these conditions are true:
 
 **Key messages to weave into AMA responses:**
 - The origin story (68.3g missing evidence, CI phone dual attribution, drug type mismatch)
-- "We Research. You Ask." -- the concept, not the brand
+- "Know What They Know." -- the concept, not the brand
 - How defendants can hold attorneys accountable with the right questions
 - The Defense Milestone Score as a free self-assessment tool
 - Specific examples of questions that changed case trajectories

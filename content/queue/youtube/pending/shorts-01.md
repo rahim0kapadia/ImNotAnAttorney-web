@@ -49,7 +49,7 @@ imnotanattorney.com/score (Free Defense Milestone Score)
 
 [0:46-0:58] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com/score"]
-"Your public defender may care deeply about your case. But caring and having the time to act on that care are different things. Free Case Progress Score — link in bio. We research. You ask."
+"Your public defender may care deeply about your case. But caring and having the time to act on that care are different things. Free Case Progress Score — link in bio. Know What They Know."
 
 ## On-Screen Text
 - [0:00] "150 cases per year = ABA recommendation"

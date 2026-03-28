@@ -42,7 +42,7 @@ This is legal information, not legal advice. We are not attorneys.
 12:00 - The emotional reality (it's okay to be scared)
 13:00 - What to do next
 
-We Research. You Ask. Your Attorney Answers.
+Know What They Know.
 https://imnotanattorney.com
 https://imnotanattorney.com/score (Free Defense Milestone Score)
 https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full written guide)
@@ -269,10 +269,10 @@ https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full w
 "If you need a deep dive -- a full analysis of your case, your charges, your attorney's work, and the specific questions for your situation -- that's our Case Decoder. $97. Built for exactly this moment."
 
 **[13:00-13:30] CLOSE**
-[Text on screen: "We Research. You Ask. Your Attorney Answers."]
+[Text on screen: "Know What They Know."]
 "A felony charge is not a felony conviction. The space between those two things is where your defense happens. Make sure someone is actually defending you."
 
-"We research. You ask. Subscribe -- this channel exists because nobody gives defendants a map. We're the map."
+"Know What They Know. Subscribe -- this channel exists because nobody gives defendants a map. We're the map."
 
 ---
 

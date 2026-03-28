@@ -38,7 +38,7 @@
 
 [SECOND 40-45]
 **Visual**: Conference room from the opening -- but now the defendant has a notebook full of questions, pen in hand.
-**Text overlay**: "Don't sign in the dark. We Research. You Ask. imnotanattorney.com"
+**Text overlay**: "Don't sign in the dark. Know What They Know. imnotanattorney.com"
 **Audio**: Piano shifts to confident beat. Resolves.
 
 ## CTA

@@ -86,7 +86,7 @@ IMPORTANT: Idea Pins do NOT have outbound links. Their purpose is brand awarenes
 
 ### Slide 7 — CTA
 
-**Visual**: Black background. Centered amber text: "We Research. You Ask." Below in white: "Follow @ImNotAnAttorney for more questions your attorney hopes you never think of." Small logo at bottom. Clean, no clutter.
+**Visual**: Black background. Centered amber text: "Know What They Know." Below in white: "Follow @ImNotAnAttorney for more questions your attorney hopes you never think of." Small logo at bottom. Clean, no clutter.
 
 **Text overlay**: Tagline + follow CTA
 **Purpose**: Convert viewers to followers. The tagline reinforces the brand promise.
@@ -164,7 +164,7 @@ Gray footnote at bottom: "Declining has consequences. Know your state's laws."
 
 ### Slide 5 — CTA
 
-**Visual**: Black background. Amber text: "We Research. You Ask." White text: "Follow @ImNotAnAttorney for more rights guides and defendant resources." Small logo. Clean.
+**Visual**: Black background. Amber text: "Know What They Know." White text: "Follow @ImNotAnAttorney for more rights guides and defendant resources." Small logo. Clean.
 
 **Text overlay**: Tagline + follow CTA
 **Purpose**: Convert to followers. Position the account as a rights education resource.
@@ -266,7 +266,7 @@ Gray text: "Bad evidence can be challenged. But someone has to look."
 - "2. Bring your notes to your attorney meeting"
 - "3. Ask: 'How does this affect our defense strategy?'"
 
-Amber text at bottom: "We Research. You Ask."
+Amber text at bottom: "Know What They Know."
 
 **Text overlay**: Action steps + tagline
 **Purpose**: Converts education into action. Ties back to brand mission.
@@ -368,7 +368,7 @@ Amber text at bottom: "We Research. You Ask."
 
 ---
 
-**Context**: Attorney accountability is INNA's core brand territory. This Idea Pin directly targets the frustration and anxiety that drives defendants to search Pinterest for help. The "Number 3" curiosity hook in slide 1 creates a strong scroll-through incentive. Each sign pairs with a specific question to ask — maintaining the "We Research. You Ask." brand promise.
+**Context**: Attorney accountability is INNA's core brand territory. This Idea Pin directly targets the frustration and anxiety that drives defendants to search Pinterest for help. The "Number 3" curiosity hook in slide 1 creates a strong scroll-through incentive. Each sign pairs with a specific question to ask — maintaining the "Know What They Know." brand promise.
 
 **KPI Target**: Saves (primary), Follower growth (secondary)
 **Seasonal relevance**: Evergreen
@@ -464,7 +464,7 @@ Gray text: "The whole thing often takes less than 5 minutes at the bench."
 
 Amber callout box: "The arraignment is the beginning, not the end. What your attorney does in the weeks after is what actually matters."
 
-Below: "We Research. You Ask." + "Follow @ImNotAnAttorney for more court prep guides."
+Below: "Know What They Know." + "Follow @ImNotAnAttorney for more court prep guides."
 
 **Text overlay**: Post-arraignment actions + CTA
 **Purpose**: Transitions from the immediate (arraignment) to the ongoing (case management). Plants the seed that attorney accountability matters going forward. Converts to follow.

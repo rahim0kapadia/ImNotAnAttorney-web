@@ -10,7 +10,7 @@ title: "26 Infographic Pin Descriptions — All Blog Topics"
 
 # 26 Infographic Pin Descriptions for ImNotAnAttorney
 
-Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black background, amber (#F59E0B) accent, white text. Typography: bold sans-serif headers (Inter Black or similar), clean body text. Every pin includes "imnotanattorney.com" watermark bottom-right and the tagline "We Research. You Ask." in small amber text.
+Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black background, amber (#F59E0B) accent, white text. Typography: bold sans-serif headers (Inter Black or similar), clean body text. Every pin includes "imnotanattorney.com" watermark bottom-right and the tagline "Know What They Know." in small amber text.
 
 ---
 
@@ -152,7 +152,7 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 - Secondary: defendant questions for lawyer, criminal case questions
 - Long-tail: what questions should I ask my criminal defense attorney
 
-**Visual Concept**: Black background. Large "10" in amber at top left. Title in white: "Questions Every Defendant Should Ask." Clean numbered list showing questions 1-4 in full, questions 5-10 as blurred lines with a "Get all 10" button-style CTA. Each question has a small category tag (Strategy, Evidence, Timeline, Cost). Bottom: "We Research. You Ask." + URL.
+**Visual Concept**: Black background. Large "10" in amber at top left. Title in white: "Questions Every Defendant Should Ask." Clean numbered list showing questions 1-4 in full, questions 5-10 as blurred lines with a "Get all 10" button-style CTA. Each question has a small category tag (Strategy, Evidence, Timeline, Cost). Bottom: "Know What They Know." + URL.
 
 **Fresh Pin Variants** (3 additional):
 1. Printable checklist style — "Print this. Bring it to your next meeting." with checkbox format

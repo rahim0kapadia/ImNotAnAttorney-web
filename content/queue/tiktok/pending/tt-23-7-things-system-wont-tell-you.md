@@ -74,8 +74,8 @@ suggested_posting_time: "Tuesday 7:00 PM EST"
 **Text overlay**: "Information asymmetry is the weapon. Questions are the defense."
 
 [SECOND 57-60]
-**Visual**: Black screen. "We Research. You Ask." Logo/brand mark.
-**Text overlay**: "We Research. You Ask. imnotanattorney.com"
+**Visual**: Black screen. "Know What They Know." Logo/brand mark.
+**Text overlay**: "Know What They Know. imnotanattorney.com"
 **Audio**: Beat resolves to silence.
 
 ---

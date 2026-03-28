@@ -40,7 +40,7 @@ export function HomepageHero() {
   const secondaryHref = selectedSlug ? "/start" : "/playbooks";
   const secondaryLabel = selectedSlug
     ? `Need deeper analysis? Case Decoder \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`
-    : "Browse all Defense Playbooks \u2014 $97 each";
+    : "See the Defense Playbook for your charges \u2014 $97 each";
 
   return (
     <>
@@ -50,14 +50,14 @@ export function HomepageHero() {
             <h1 className="font-display text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
               Your Case File Has Answers.
               <br />
-              <span className="text-amber-400">We Find Them. You Ask.</span>
+              <span className="text-amber-400">We Find Them. Now You Know.</span>
             </h1>
           </FadeInUp>
           <FadeInUp delay={0.1}>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300">
-              Case-specific research and accountability questions for criminal
-              defendants &mdash; built from 40+ defense attorneys&apos;
-              documented methods.
+              Case-specific research that uncovers what your case file actually
+              contains &mdash; and the exact questions that close the information
+              gap. Built from 40+ elite defense attorney methodologies.
             </p>
           </FadeInUp>
 
@@ -102,7 +102,7 @@ export function HomepageHero() {
             <p className="mt-3 text-sm text-zinc-400">
               For defendants and the people who love them.{" "}
               <span className="font-semibold text-amber-500">
-                We Research. You Ask.
+                Know What They Know.
               </span>
             </p>
           </FadeInUp>

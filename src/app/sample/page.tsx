@@ -80,7 +80,7 @@ function InlineCTA({ variant }: { variant: "mid" | "end" }) {
         href="/checkout?tier=case-decoder"
         className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
       >
-        Get Questions My Attorney Can&apos;t Dodge — {TIER_CORE["case-decoder"].priceDisplay} →
+        Get Your Case Analysis — {TIER_CORE["case-decoder"].priceDisplay} →
       </Link>
     </div>
   );
@@ -126,7 +126,7 @@ export default function SamplePage() {
               CASE DECODER REPORT
             </p>
             <p className="mt-1 text-center text-xs text-zinc-400">
-              ImNotAnAttorney | We Research. You Ask.
+              ImNotAnAttorney | Know What They Know.
             </p>
             <div className="mt-4 space-y-1 text-xs">
               <p>
@@ -153,11 +153,11 @@ export default function SamplePage() {
             </p>
             <p className="mt-3 text-sm leading-relaxed text-zinc-300">
               Every question and framework in this report traces to documented
-              winning methods from elite criminal defense attorneys. Your report
-              draws on elite defense methodology — forensic evidence
-              analysis, cross-examination frameworks, and DWI suppression
-              strategy — selected for DWI cases from 40+ documented attorney
-              methodologies.
+              winning methods from elite criminal defense attorneys. Calibrated
+              for DWI defense using documented methodology from Lawrence Taylor
+              (DWI suppression), Robert Remar (field sobriety analysis), and
+              Robert Ramsey (BAC forensics) — three of the most cited DUI defense
+              attorneys in published legal scholarship.
             </p>
           </div>
 
@@ -626,7 +626,7 @@ export default function SamplePage() {
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 2
                     </td>
-                    <td className="py-2 pr-4">Review your priority questions</td>
+                    <td className="py-2 pr-4">Your 5 priority questions — already marked in order</td>
                     <td className="py-2 text-zinc-400">
                       Read the 5 Priority Questions. Highlight what matters most.
                     </td>
@@ -635,7 +635,7 @@ export default function SamplePage() {
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 3
                     </td>
-                    <td className="py-2 pr-4">Follow up if no response</td>
+                    <td className="py-2 pr-4">The follow-up template is ready if needed</td>
                     <td className="py-2 text-zinc-400">
                       Send the follow-up template. Step 3 of Your Advocacy Steps.
                     </td>
@@ -644,7 +644,7 @@ export default function SamplePage() {
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 4
                     </td>
-                    <td className="py-2 pr-4">Gather your materials</td>
+                    <td className="py-2 pr-4">Your What to Bring checklist is in the report</td>
                     <td className="py-2 text-zinc-400">
                       Use the What to Bring checklist.
                     </td>
@@ -653,7 +653,7 @@ export default function SamplePage() {
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 5
                     </td>
-                    <td className="py-2 pr-4">Practice your questions</td>
+                    <td className="py-2 pr-4">Read the questions once before the meeting</td>
                     <td className="py-2 text-zinc-400">
                       Read them aloud once. It helps.
                     </td>

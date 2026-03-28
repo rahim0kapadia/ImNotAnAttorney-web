@@ -50,7 +50,7 @@ imnotanattorney.com
 
 [0:48-0:57] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com"]
-"Field sobriety tests feel like a verdict. They're a screening tool with a documented error rate. We research. You ask. Link in bio."
+"Field sobriety tests feel like a verdict. They're a screening tool with a documented error rate. Know What They Know. Link in bio."
 
 ## On-Screen Text
 - [0:00] "1 in 3 sober people FAIL this test"

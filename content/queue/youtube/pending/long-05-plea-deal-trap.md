@@ -51,7 +51,7 @@ This is legal information, not legal advice. We are not attorneys.
 11:00 - Making the decision with real information
 12:00 - What to do next
 
-We Research. You Ask. Your Attorney Answers.
+Know What They Know.
 https://imnotanattorney.com
 https://imnotanattorney.com/score (Free Case Progress Score)
 https://imnotanattorney.com/checkout?tier=case-decoder (Case Decoder - $197)
@@ -78,7 +78,7 @@ plea deal, should I take plea deal, plea bargain, criminal plea deal, trial pena
 **[0:20-0:35] CREDIBILITY + STAKES**
 "Over 97 percent of federal cases and 94 percent of state cases end in plea bargains. That means the overwhelming majority of defendants face this exact moment. And most of them make the decision in the dark."
 
-[Text on screen: "We Research. You Ask."]
+[Text on screen: "Know What They Know."]
 "We're ImNotAnAttorney. We've studied how the best defense attorneys in the country approach plea decisions. The gap between what they do and what most defendants experience is massive."
 
 ---
@@ -261,9 +261,9 @@ plea deal, should I take plea deal, plea bargain, criminal plea deal, trial pena
 
 "If you're earlier in the process, start with the free Case Progress Score. Five minutes. Clear answers."
 
-"We research. You ask. Your attorney answers."
+"Know What They Know."
 
-[Text on screen: "We Research. You Ask. Your Attorney Answers."]
+[Text on screen: "Know What They Know."]
 "Subscribe — this channel exists because every defendant deserves to make this decision with information, not fear."
 
 ---
@@ -284,7 +284,7 @@ plea deal, should I take plea deal, plea bargain, criminal plea deal, trial pena
 
 **[0:35-0:44]** "Your attorney should tell you: what is the realistic sentencing difference between the plea and losing at trial? Not the maximum. The realistic number."
 
-**[0:44-0:52]** "If they can't give you a specific answer — they haven't done the analysis. We research. You ask. Link in bio."
+**[0:44-0:52]** "If they can't give you a specific answer — they haven't done the analysis. Know What They Know. Link in bio."
 
 ---
 

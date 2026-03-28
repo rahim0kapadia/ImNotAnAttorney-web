@@ -68,7 +68,7 @@ suggested_posting_time: "Monday 7:00 PM EST"
 **Text overlay**: "Participants get better outcomes. Every time."
 
 [SECOND 55-60]
-**Visual**: Black screen. Text: "We Research. You Ask." Then: "imnotanattorney.com"
+**Visual**: Black screen. Text: "Know What They Know." Then: "imnotanattorney.com"
 **Audio**: Beat resolves. Silence on the last frame.
 
 ---

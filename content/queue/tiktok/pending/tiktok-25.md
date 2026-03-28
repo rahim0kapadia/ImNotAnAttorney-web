@@ -38,7 +38,7 @@
 
 [SECOND 42-45]
 **Visual**: Clean black screen.
-**Text overlay**: "Know what you're signing. We Research. You Ask. imnotanattorney.com"
+**Text overlay**: "Know what you're signing. Know What They Know. imnotanattorney.com"
 **Audio**: Beat resolves to silence.
 
 ## CTA

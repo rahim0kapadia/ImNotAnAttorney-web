@@ -57,7 +57,7 @@ Text overlay: "Public record. Your right."
 [SECOND 48-52]
 Black screen. White text:
 "Check your docket today."
-"We Research. You Ask."
+"Know What They Know."
 "imnotanattorney.com"
 
 ### Caption

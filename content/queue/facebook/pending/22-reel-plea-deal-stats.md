@@ -58,7 +58,7 @@ Text overlay: "'Limited-time offer' is a negotiation tactic."
 
 [SECOND 42-45]
 Black screen. White text:
-"We Research. You Ask."
+"Know What They Know."
 "imnotanattorney.com"
 
 ### Caption

@@ -80,7 +80,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "Fastest pre-discovery jurisdiction intelligence. Your judge's patterns, prosecution tendencies, and realistic outcome range — delivered in 72 hours.",
+        desc: "Your judge's sentencing patterns, prosecution tendencies, and realistic outcome range — researched from public records and 40+ attorney methodology.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
         stageLabel: "30-90 days in",
       },
@@ -104,7 +104,7 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. All witnesses researched, JOA research brief, Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on elite preparation standards, cross-examination design, and precision strike methodology — from attorneys who defined modern trial practice.",
+        desc: "Full trial intelligence cycle: nightly testimony analysis, morning prep brief with cross-examination angles, witness impeachment research — every trial day. All witnesses researched, JOA research brief, Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: true,
         stageLabel: "Trial confirmed",
@@ -129,7 +129,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "Fastest pre-discovery jurisdiction intelligence. Your judge's DUI sentencing patterns, local diversion programs, and realistic outcome range — delivered in 72 hours.",
+        desc: "Your judge's DUI sentencing patterns, local diversion programs, and realistic outcome range — researched from public records and 40+ attorney methodology.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
         stageLabel: "30-90 days in",
       },
@@ -153,7 +153,7 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. Officer research, expert credibility questions, jury selection research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on elite preparation standards, cross-examination design, and precision strike methodology — from attorneys who defined modern trial practice.",
+        desc: "Full trial intelligence cycle: nightly testimony analysis, morning prep brief with cross-examination angles, witness impeachment research — every trial day. Officer research, expert credibility questions, jury selection research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: true,
         stageLabel: "Trial confirmed",
@@ -178,7 +178,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "Fastest pre-discovery jurisdiction intelligence. Your judge's sentencing patterns, AUSA profile and track record, guidelines calculation review, and cooperation decision questions — delivered in 72 hours.",
+        desc: "Your judge's sentencing patterns, AUSA profile and track record, guidelines calculation review, and cooperation decision questions — researched from public records and 40+ attorney methodology.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
         stageLabel: "30-90 days in",
       },
@@ -202,7 +202,7 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "Trial Intelligence Operations — evening debrief + morning prep brief every trial day. Expert credibility research, cooperator background questions, guidelines research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room. Built on elite preparation standards, appellate frameworks, and precision methodology — from attorneys who defined modern trial practice.",
+        desc: "Full trial intelligence cycle: nightly testimony analysis, morning prep brief with cross-examination angles, witness impeachment research — every trial day. Expert credibility research, cooperator background questions, guidelines research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: true,
         stageLabel: "Trial confirmed",
@@ -216,7 +216,7 @@ const faqs = [
   {
     question: "Will this replace my attorney?",
     answer:
-      "No. You need an attorney. We provide legal research and questions — not legal advice. Think of us as insurance on your attorney investment. We research. You ask.",
+      "No. You need an attorney. We provide legal research and questions — not legal advice. Think of us as a second set of eyes on your case. We research your situation and give you specific questions your attorney needs to answer. You show up to your next meeting prepared — instead of waiting for your attorney to decide what to tell you.",
   },
   {
     question: "What exactly do I get in my report?",
@@ -363,12 +363,12 @@ export default function ServicesPage() {
           <h2 className="font-display text-lg font-bold text-white">
             Smart defendants don&apos;t just hire an attorney.{" "}
             <span className="text-amber-400">
-              They make sure they understand their own case.
+              They get a second set of eyes on their own case — so they&apos;re never the only stranger in the room.
             </span>
           </h2>
           <p className="mt-2 text-sm text-zinc-400">
             You paid $10K-$100K+ for an attorney. Our services cost a fraction
-            of that — to make sure they&apos;re actually earning it.
+            of that — to make sure you understand every decision they&apos;re making, and why.
           </p>
           <StaggerContainer className="mt-6 grid gap-4 md:grid-cols-3">
             {[
@@ -499,7 +499,7 @@ export default function ServicesPage() {
               <p className="mt-2 text-sm text-zinc-400">
                 26 questions for revocation hearings. Willfulness defense,
                 state cap laws, alternatives to revocation, graduated sanctions.
-                Zero competition.
+                Built from the case-specific arguments that keep defendants out of revocation.
               </p>
               <p className="mt-2 text-xs text-zinc-500">
                 {TIER_CORE["probation-violation"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
@@ -817,13 +817,13 @@ export default function ServicesPage() {
             <div className="space-y-2 text-sm text-zinc-400">
               <p>
                 <span className="font-semibold text-white">{TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay}):</span>{" "}
-                Delivered within 48 hours. 10+ targeted questions from your case details.
+                10+ targeted questions researched from your specific charge details. Delivered within 48 hours of intake.
               </p>
               <p>
                 <span className="font-semibold text-white">
                   {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay}):
                 </span>{" "}
-                Delivered within 72 hours. 10-15 targeted questions with judge intelligence.
+                10-15 targeted questions with judge intelligence and jurisdiction analysis. Delivered within 72 hours of intake.
               </p>
               <p>
                 <span className="font-semibold text-white">
@@ -835,7 +835,7 @@ export default function ServicesPage() {
                 <span className="font-semibold text-white">
                   {TIER_CORE["situation-room"].name} ({TIER_CORE["situation-room"].priceDisplay}):
                 </span>{" "}
-                Priority 24-48hr turnaround. Trial Intelligence Operations — evening debrief + morning prep brief every trial day.
+                Full trial intelligence cycle — nightly testimony analysis, morning prep brief, witness impeachment research — every trial day. Priority 24-48hr turnaround.
               </p>
             </div>
           </div>

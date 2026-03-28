@@ -61,7 +61,7 @@ Text overlay:
 Person facing camera:
 "You are not being difficult. You are being a responsible participant in your own defense."
 Text overlay: "You are not being difficult."
-Fade to: "We Research. You Ask." / "imnotanattorney.com"
+Fade to: "Know What They Know." / "imnotanattorney.com"
 
 ### Caption
 

@@ -54,7 +54,7 @@ suggested_posting_time: "Thursday 8:00 PM EST"
 
 [SECOND 40-45]
 **Visual**: Plea agreement from the start — but now with notes written on it, questions in the margins, "NOT YET" written next to the signature line.
-**Text overlay**: "Don't sign in the dark. We Research. You Ask. imnotanattorney.com"
+**Text overlay**: "Don't sign in the dark. Know What They Know. imnotanattorney.com"
 **Audio**: Clock stops. Beat resolves.
 
 ---

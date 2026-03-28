@@ -25,7 +25,7 @@ Discovery is the evidence being used against you — and you have a constitution
 
 Most defendants never read their own discovery. That's a mistake. Here are the 5 documents you should be asking for right now.
 
-We research. You ask. Your attorney answers.
+Know What They Know.
 
 This is legal information, not legal advice.
 
@@ -66,7 +66,7 @@ discovery rights criminal case, what is discovery, criminal discovery documents,
 "Number five: the search warrant. What was the probable cause? Was it specific enough? Was the search executed within the scope of the warrant? If any of this is defective, the evidence it produced can be suppressed."
 
 **[0:48-0:56] CTA — TEXT ON SCREEN: "Ask your attorney: Can I see my discovery?"**
-"You don't need a law degree. You just need one sentence: 'Can I see my discovery?' If your attorney says no — that's information. We research. You ask. Link in bio."
+"You don't need a law degree. You just need one sentence: 'Can I see my discovery?' If your attorney says no — that's information. Know What They Know. Link in bio."
 
 ---
 

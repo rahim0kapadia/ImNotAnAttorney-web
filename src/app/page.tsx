@@ -56,9 +56,9 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "Your Case File Has Answers Your Attorney Hasn't Mentioned. We Find Them. You Ask.",
+    title: "Your Case File Has Answers Your Attorney Hasn't Mentioned. Know What They Know.",
     description:
-      "Built by a defendant who found 68.3g of missing evidence his attorney never mentioned. We research your charges and give you the exact questions that hold your attorney accountable.",
+      "Built by a defendant who found 68.3g of missing evidence his attorney never mentioned. We research your charges and give you the questions that close the gap between what you know and what your attorney knows.",
   },
 };
 
@@ -79,7 +79,7 @@ const homeFaqs = [
   {
     question: "Is this legal? Am I allowed to do this?",
     answer:
-      "Absolutely. You have a constitutional right to understand your own case. INA provides legal research and questions — the same information available in any law library. We do not provide legal advice. Your attorney provides legal advice. We research. You ask.",
+      "Absolutely. You have a constitutional right to understand your own case. INAA provides legal research and questions — the same information available in any law library. We do not provide legal advice. Your attorney provides legal advice. We provide the information — so you know what they know.",
   },
   {
     question: "Can I get a refund?",
@@ -104,7 +104,7 @@ const homeFaqs = [
   {
     question: "How fast do I get my report?",
     answer:
-      `${TIER_CORE["case-decoder"].name}: ${TIER_CORE["case-decoder"].delivery}. ${TIER_CORE["intelligence-brief"].name}: ${TIER_CORE["intelligence-brief"].delivery}. ${TIER_CORE["x-ray"].name}: ${TIER_CORE["x-ray"].delivery}. ${TIER_CORE["war-room"].name}: ${TIER_CORE["war-room"].delivery.split(" +")[0]} initial + weekly updates. ${TIER_CORE["situation-room"].name}: ${TIER_CORE["situation-room"].delivery} with Trial Intelligence Operations.`,
+      `${TIER_CORE["case-decoder"].name}: ${TIER_CORE["case-decoder"].delivery}. ${TIER_CORE["intelligence-brief"].name}: ${TIER_CORE["intelligence-brief"].delivery}. ${TIER_CORE["x-ray"].name}: ${TIER_CORE["x-ray"].delivery}. ${TIER_CORE["war-room"].name}: ${TIER_CORE["war-room"].delivery.split(" +")[0]} initial + weekly updates. ${TIER_CORE["situation-room"].name}: ${TIER_CORE["situation-room"].delivery} with Trial Intelligence Operations. Every report is built from elite defense methodology and reviewed before delivery — the timeline is our commitment, the quality is our guarantee.`,
   },
   {
     question: "I've already spent everything on my attorney. Is $197 worth it?",
@@ -378,7 +378,7 @@ export default function Home() {
             </h2>
           </FadeInUp>
           <p className="mt-3 text-center text-zinc-400">
-            Three steps. Ten minutes. Questions your attorney won&apos;t expect.
+            Three steps. One report. Questions your attorney won&apos;t expect.
           </p>
           <StaggerContainer className="relative mt-12 grid gap-8 md:grid-cols-3">
             {/* Connecting line between step circles on desktop */}
@@ -387,21 +387,21 @@ export default function Home() {
               {
                 step: "01",
                 title: "Submit your charges",
-                desc: "Your charges, your stage, what your attorney has or hasn\u2019t done. 10 minutes.",
+                desc: "Your charges, your case stage, what your attorney has or hasn\u2019t done. That\u2019s everything we need.",
                 badge: null,
                 border: "border-l-2 border-zinc-700",
               },
               {
                 step: "02",
                 title: "We research overnight",
-                desc: "Your case analyzed through 40+ elite defense methodologies. Chain of custody. Informant credibility. Constitutional frameworks. Every angle your attorney should be covering.",
-                badge: "48 hours",
+                desc: "Your case analyzed through 40+ elite defense methodologies. Chain of custody. Informant credibility. Constitutional frameworks. Every angle your attorney should be covering. Delivered in 48 hours.",
+                badge: "40+ methodologies",
                 border: "border-l-2 border-amber-500/50",
               },
               {
                 step: "03",
-                title: "You walk in armed",
-                desc: "A custom report with pointed, case-specific questions. Bring them to your next meeting. Your attorney now knows you\u2019re paying attention.",
+                title: "Walk in prepared",
+                desc: "A custom report with pointed, case-specific questions already formatted for your attorney meeting. When you show up with these, your attorney knows you\u2019re paying attention.",
                 badge: "10-15 questions",
                 border: "border-l-2 border-amber-400",
               },
@@ -528,7 +528,7 @@ export default function Home() {
             <StaggerItem>
               <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
                 <div className="text-2xl font-bold text-amber-400">{TIER_CORE["case-decoder"].priceDisplay}</div>
-                <p className="mt-1 text-xs font-semibold text-zinc-500">Case Decoder. 48 hours. Your case specifically.</p>
+                <p className="mt-1 text-xs font-semibold text-zinc-500">Case Decoder. Your charges, your judge, your specific situation.</p>
                 <p className="mt-2 text-sm text-zinc-400">
                   10-15 case-specific questions based on your charges, your judge, your discovery.
                 </p>
@@ -606,7 +606,7 @@ export default function Home() {
                 </h2>
               </FadeInUp>
               <p className="mt-3 text-center text-zinc-400">
-                Charge-specific questions and case research &mdash; 48-hour delivery.
+                Charge-specific research and questions &mdash; built from documented defense attorney methodology.
               </p>
               <StaggerContainer className="mt-12 grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 {CHARGE_CATEGORIES.map((cat) => (
@@ -674,7 +674,7 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <p className="text-sm font-semibold text-amber-400">The Speed Guarantee</p>
+                <p className="text-sm font-semibold text-amber-400">The Delivery Guarantee</p>
                 <p className="mt-1 text-sm text-zinc-300">
                   Your {TIER_CORE["case-decoder"].name} in 48 hours. Your {TIER_CORE["intelligence-brief"].name} in 72
                   hours. If we miss the deadline, full refund AND you keep the report
@@ -712,7 +712,7 @@ export default function Home() {
           </FadeInUp>
           <p className="mt-3 text-center text-zinc-400">
             A second attorney consultation costs $500. Judge research costs $300.
-            Question scripts cost $200. All of it in 48 hours would run $1,000+.
+            Question scripts cost $200. Assembling all of it yourself would run $1,000+.
             Your Case Decoder: {TIER_CORE["case-decoder"].priceDisplay}. Every tier
             draws from the same intelligence base &mdash; 40+ elite defense
             attorneys and their documented tactics. The tier determines how deep we go.
@@ -736,7 +736,7 @@ export default function Home() {
           <LeadCapture
             successUpsellHref="/start"
             successUpsellLabel={`Ready to go deeper? Get your Case Decoder \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`}
-            successUpsellDescription="Case-specific research with 10-15 targeted questions. 48-hour delivery. Every dollar credited toward higher tiers."
+            successUpsellDescription="Case-specific research with 10-15 targeted questions built from elite defense methodology. Every dollar credited toward higher tiers."
           />
           <p className="mt-6 text-center text-sm text-zinc-400">
             Want a quick answer?{" "}
@@ -772,7 +772,7 @@ export default function Home() {
             <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
               You&apos;re up at 2am because nobody will explain your case.
               <br />
-              <span className="text-amber-400">You&apos;ve called. You&apos;ve emailed. You&apos;ve waited. Now stop waiting. Start asking.</span>
+              <span className="text-amber-400">You&apos;ve called. You&apos;ve emailed. You&apos;ve waited. Now stop waiting. Start knowing.</span>
             </h2>
             <p className="mt-4 text-zinc-400">
               Motions expire. Evidence disappears. Witnesses forget.
@@ -781,7 +781,7 @@ export default function Home() {
               What happens next is between you and your attorney.
             </p>
             <p className="mt-3 text-sm font-semibold text-zinc-300">
-              Be the defendant your attorney wasn&apos;t expecting.
+              The defendant who walks in prepared changes the conversation.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4">
               <Link

@@ -104,4 +104,4 @@ Your $97 is fully credited toward case-specific analysis within 30 days.
 
 *This is legal information, not legal advice. We are not attorneys and do not provide legal representation. DUI laws vary significantly by state — always consult with a licensed attorney in your jurisdiction.*
 
-*ImNotAnAttorney.com — We Research. You Ask.*
+*ImNotAnAttorney.com — Know What They Know.*

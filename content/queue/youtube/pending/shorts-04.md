@@ -54,7 +54,7 @@ imnotanattorney.com
 
 [0:50-0:58] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com"]
-"Biggest mistake at arraignment? Talking to police or prosecutors without your attorney present. Before, during, or after court — say nothing to anyone about your case. We research. You ask. Link in bio."
+"Biggest mistake at arraignment? Talking to police or prosecutors without your attorney present. Before, during, or after court — say nothing to anyone about your case. Know What They Know. Link in bio."
 
 ## On-Screen Text
 - [0:00] "YOUR FIRST COURT DATE"

@@ -34,7 +34,7 @@
 [SECOND 35-42]
 **Visual**: The conveyor belt from the opening -- but now one case number is missing from the line. The spot is empty. The person is standing to the side, prepared, notebook in hand.
 **Audio/Voiceover**: "The system doesn't come with an instruction manual. We built the questions."
-**Text overlay**: "We Research. You Ask."
+**Text overlay**: "Know What They Know."
 
 [SECOND 42-45]
 **Visual**: Clean black screen.
@@ -50,7 +50,7 @@ Take the free Defense Milestone Score -- see where you stand.
 - 0:03 "Arrest: hours. Arraignment: 4 min. No one asks."
 - 0:15 "Questions slow the belt down."
 - 0:25 "5 questions that take you off the belt."
-- 0:35 "We Research. You Ask."
+- 0:35 "Know What They Know."
 - 0:42 "imnotanattorney.com/score"
 
 ## Caption
@@ -61,6 +61,6 @@ The criminal justice system is designed for efficiency, not individual justice. 
 
 ---
 
-**Context**: This is a "System Exposed" video that uses the conveyor belt as a visual metaphor for assembly-line justice. Sourced from how-criminal-cases-actually-work and 7-things-criminal-justice-wont-tell-you. The factory/industrial imagery is a powerful contrast to what most people expect from the justice system. The INNA tagline "We Research. You Ask." lands perfectly as the anti-conveyor-belt tool.
+**Context**: This is a "System Exposed" video that uses the conveyor belt as a visual metaphor for assembly-line justice. Sourced from how-criminal-cases-actually-work and 7-things-criminal-justice-wont-tell-you. The factory/industrial imagery is a powerful contrast to what most people expect from the justice system. The INNA tagline "Know What They Know." lands perfectly as the anti-conveyor-belt tool.
 **Loop strategy**: Opens with all case numbers on the belt (passive processing), closes with one case number missing from the line (active departure). The visual gap on the conveyor belt is subtle but powerful on rewatch.
 **KPI target**: Profile visits + Shares (this is a brand-defining video that communicates INNA's entire value proposition in 45 seconds)

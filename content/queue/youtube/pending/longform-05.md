@@ -38,7 +38,7 @@ This is legal information, not legal advice. We are not attorneys.
 12:30 - When cooperation makes sense (and when it doesn't)
 13:30 - What to do next
 
-We Research. You Ask. Your Attorney Answers.
+Know What They Know.
 https://imnotanattorney.com
 https://imnotanattorney.com/score (Free Defense Milestone Score)
 https://imnotanattorney.com/blog/complete-white-collar-defense-guide (Full written guide)
@@ -68,7 +68,7 @@ https://imnotanattorney.com/blog/complete-white-collar-defense-guide (Full writt
 **[0:15-0:30] THE PROMISE**
 "This video covers everything you need to understand: how federal investigations work, what wire fraud actually requires the government to prove, how sentencing guidelines are calculated, the cooperation trap that destroys more defendants than it helps, and the fifteen questions your attorney must be able to answer."
 
-[Text on screen: "We Research. You Ask."]
+[Text on screen: "Know What They Know."]
 "We're ImNotAnAttorney. We don't practice law. We research how federal cases are built and how they come apart. Let's start at the beginning."
 
 ---
@@ -278,10 +278,10 @@ https://imnotanattorney.com/blog/complete-white-collar-defense-guide (Full writt
 "For a comprehensive case analysis -- your charges, the evidence, your attorney's work, and the specific questions for your situation -- that's our Intelligence Brief. Includes judge research, prosecutor history, and full accountability analysis."
 
 **[14:30-15:00] CLOSE**
-[Text on screen: "We Research. You Ask. Your Attorney Answers."]
+[Text on screen: "Know What They Know."]
 "Federal cases are different. The stakes are higher. The government has more resources. The sentencing is harsher. But the defense opportunities are also greater -- if your attorney knows where to look."
 
-"We research. You ask. Your attorney answers. Subscribe -- this channel exists because defendants deserve information, not fear."
+"Know What They Know. Subscribe -- this channel exists because defendants deserve information, not fear."
 
 ---
 

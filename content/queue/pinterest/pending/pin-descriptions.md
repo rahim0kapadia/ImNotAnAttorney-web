@@ -10,7 +10,7 @@ title: "35 Pin Descriptions -- All Blog Posts Complete"
 
 # 35 Pin Descriptions for ImNotAnAttorney
 
-Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black background, amber (#F59E0B) accent, white text. Typography: bold sans-serif headers (Inter Black or similar), clean body text. Every pin includes "imnotanattorney.com" watermark bottom-right and the tagline "We Research. You Ask." in small amber text.
+Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black background, amber (#F59E0B) accent, white text. Typography: bold sans-serif headers (Inter Black or similar), clean body text. Every pin includes "imnotanattorney.com" watermark bottom-right and the tagline "Know What They Know." in small amber text.
 
 ---
 
@@ -40,7 +40,7 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Design Concept:**
 - **Text overlay:** "10 Questions Every Defendant Should Ask" / "Print this. Bring it to your next meeting."
 - **Color scheme:** Black background, amber numbered list, white text
-- **Visual style:** Large "10" in amber at top left. Clean numbered list showing questions 1-4 in full, questions 5-10 as blurred lines with a "Get all 10" CTA. Each question has a small category tag (Strategy, Evidence, Timeline, Cost). Bottom: "We Research. You Ask." + URL.
+- **Visual style:** Large "10" in amber at top left. Clean numbered list showing questions 1-4 in full, questions 5-10 as blurred lines with a "Get all 10" CTA. Each question has a small category tag (Strategy, Evidence, Timeline, Cost). Bottom: "Know What They Know." + URL.
 **Keywords:** questions to ask criminal defense attorney, defendant questions for lawyer, criminal case questions, what to ask your attorney, criminal defense meeting, attorney consultation questions, defendant rights questions, criminal case preparation, defense strategy questions, questions before court date
 **Cross-pin to boards:** Attorney Accountability
 

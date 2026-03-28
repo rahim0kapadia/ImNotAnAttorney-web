@@ -70,11 +70,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ImNotAnAttorney — We Research. You Ask.",
+    default: "ImNotAnAttorney — Know What They Know.",
     template: "%s | ImNotAnAttorney",
   },
   description:
-    "Legal empowerment for criminal defendants. We research your case and generate the questions that hold your attorney accountable. We provide legal information, not legal advice.",
+    "Legal empowerment for criminal defendants. We research your case and generate the questions that close the gap between what you know and what everyone else in the courtroom knows.",
   openGraph: {
     type: "website",
     locale: "en_US",

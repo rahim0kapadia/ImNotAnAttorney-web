@@ -37,7 +37,7 @@
 **Text overlay**: "Understand the incentive. Ask better questions."
 
 [SECOND 42-45]
-**Visual**: "We Research. You Ask." logo treatment.
+**Visual**: "Know What They Know." logo treatment.
 **Text overlay**: "imnotanattorney.com/score -- free Defense Milestone Score"
 **Audio**: Beat resolves cleanly.
 
@@ -50,7 +50,7 @@ Take the free Defense Milestone Score at imnotanattorney.com/score
 - 0:15 "Quick plea = profitable. Trial = expensive."
 - 0:25 Questions list
 - 0:35 "Understand the incentive. Ask better questions."
-- 0:42 "We Research. You Ask."
+- 0:42 "Know What They Know."
 
 ## Caption
 Your attorney charges a flat fee. Whether they fight for 3 months or settle in 2 weeks, they earn the same. That doesn't make them bad -- but it means you should understand the financial pressure behind the advice. These questions help.

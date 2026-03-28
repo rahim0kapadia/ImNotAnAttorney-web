@@ -373,8 +373,8 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
 
   // Band-specific email capture headlines (Godin + Chaperon)
   const bandEmailHeadlines: Record<string, string> = {
-    Critical: "Your attorney has 48 hours to answer these 10 questions. Get them now.",
-    Concerning: "Your attorney has 48 hours to answer these 10 questions. Get them now.",
+    Critical: "Get the 10 questions your attorney needs to answer — based on your score.",
+    Concerning: "Get the 10 questions your attorney needs to answer — based on your score.",
     Average: "Get the 10 questions that change how your next attorney meeting goes — sent now.",
     Adequate: "Get the checklist attorneys use to evaluate case readiness — sent now.",
     Excellent: "Get the checklist attorneys use to evaluate case readiness — sent now.",
@@ -416,7 +416,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           {bandContextLines[result.band] || ""}
         </p>
         <p className="mt-1 text-xs text-zinc-400">
-          Scored against pre-trial preparation standards used by top criminal defense attorneys.
+          Scored against pre-trial preparation benchmarks derived from documented defense methodology.
         </p>
       </div>
 
@@ -478,7 +478,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
           <p className="text-sm leading-relaxed text-zinc-300">
             <span className="font-semibold text-white">If your attorney told you everything is fine:</span>{" "}
-            that&apos;s exactly what this tool is designed to check. Attorneys communicate at the level of detail they think you can handle. The Case Decoder gives you the specific benchmarks for your charge type so you can have a different kind of conversation — one where you ask the questions.
+            that&apos;s exactly what this tool is designed to check. Attorneys communicate at the level of detail they think you can handle. The Case Decoder gives you the specific benchmarks for your charge type — and the questions already written, built from the same methodology elite defense attorneys use internally.
           </p>
         </div>
       )}
@@ -618,7 +618,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
                 <p className="text-sm text-zinc-300">
                   <span className="font-semibold text-white">Need case-specific analysis?</span>{" "}
-                  The Case Decoder ({TIER_CORE["case-decoder"].priceDisplay}) analyzes YOUR discovery, YOUR judge, YOUR case stage — 15 calibrated questions delivered in 48 hours. Every playbook dollar applies as credit.
+                  The Case Decoder ({TIER_CORE["case-decoder"].priceDisplay}) analyzes YOUR discovery, YOUR judge, YOUR case stage — 15 calibrated questions built from your exact charge type and case stage. Every playbook dollar applies as credit.
                 </p>
                 <Link
                   href={`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`}
@@ -636,7 +636,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           <div className="space-y-4">
             <p className="text-sm font-semibold text-zinc-300">Where to start depends on what you need next.</p>
             <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
-              <h3 className="font-bold text-white">Get your case analyzed in 48 hours — {TIER_CORE["case-decoder"].priceDisplay}</h3>
+              <h3 className="font-bold text-white">Get your case analyzed by documented defense methodology — {TIER_CORE["case-decoder"].priceDisplay}</h3>
               <p className="mt-2 text-sm text-zinc-400">
                 15 questions specific to your {getChargeLabel(answers.chargeType)} charges, a 7-day action plan, email templates, and phone scripts. Every question built from the same methods used by elite defense attorneys.
               </p>
@@ -680,7 +680,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 : "Average isn\u2019t a strategy. The Case Decoder finds what your attorney should be doing that isn\u2019t showing up in basic milestones."}
             </h3>
             <p className="mt-2 text-sm text-zinc-400">
-              The score measured 10 surface indicators. The Case Decoder goes deeper — analyzing {getChargeLabel(answers.chargeType)}-specific patterns, your exact case stage, and the gaps your score revealed. 15 calibrated questions, email templates, and a 7-day action plan, delivered in 48 hours.
+              The score measured 10 surface indicators. The Case Decoder goes deeper — analyzing {getChargeLabel(answers.chargeType)}-specific patterns, your exact case stage, and the gaps your score revealed. 15 calibrated questions, email templates, and a 7-day action plan, built from your exact charge type and case stage.
             </p>
             <p className="mt-2 text-xs text-zinc-400">
               {TIER_CORE["case-decoder"].priceDisplay}. Less than one hour of the attorney time you already paid for. Every dollar applies as credit toward higher tiers.

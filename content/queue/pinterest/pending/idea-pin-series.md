@@ -132,7 +132,7 @@ IMPORTANT: Idea Pins do NOT have outbound links. Their purpose is brand awarenes
 
 ### Slide 12 -- CTA
 
-**Visual**: Black background. Centered amber text: "We Research. You Ask." Below in white: "Follow @ImNotAnAttorney for more questions your attorney hopes you never think of." Small logo at bottom. Clean, no clutter.
+**Visual**: Black background. Centered amber text: "Know What They Know." Below in white: "Follow @ImNotAnAttorney for more questions your attorney hopes you never think of." Small logo at bottom. Clean, no clutter.
 
 **Text overlay**: Tagline + follow CTA
 **Purpose**: Convert viewers to followers. The tagline reinforces the brand promise.
@@ -271,7 +271,7 @@ Gray text: "If months pass with no motions filed and no explanation why, see our
 
 Below, in amber: "Your outcome depends on what your attorney does between today and resolution day."
 
-Below that: "We Research. You Ask." and "Follow @ImNotAnAttorney for more DUI defense guides." Logo at bottom.
+Below that: "Know What They Know." and "Follow @ImNotAnAttorney for more DUI defense guides." Logo at bottom.
 
 **Text overlay**: Resolution + CTA
 **Purpose**: Ties the entire timeline together. The closing line -- "Your outcome depends on what your attorney does" -- is the bridge to INNA's service. Converts to follow.
@@ -396,7 +396,7 @@ Gray text at bottom in smaller font: "If you recognized 3 or more of these signs
 
 ---
 
-**Context**: Attorney accountability is INNA's core brand territory. This Idea Pin directly targets the frustration and anxiety that drives defendants to search Pinterest for help. The "Number 4" curiosity hook in slide 1 creates a strong scroll-through incentive, and delivering on that promise in slide 5 builds trust. Every sign pairs with a specific diagnostic question -- maintaining the "We Research. You Ask." brand promise. The 7-sign format with diagnostic questions makes this the most save-worthy pin in the INNA catalog. Family members and friends searching on behalf of someone facing charges are a significant secondary audience.
+**Context**: Attorney accountability is INNA's core brand territory. This Idea Pin directly targets the frustration and anxiety that drives defendants to search Pinterest for help. The "Number 4" curiosity hook in slide 1 creates a strong scroll-through incentive, and delivering on that promise in slide 5 builds trust. Every sign pairs with a specific diagnostic question -- maintaining the "Know What They Know." brand promise. The 7-sign format with diagnostic questions makes this the most save-worthy pin in the INNA catalog. Family members and friends searching on behalf of someone facing charges are a significant secondary audience.
 
 **KPI Target**: Saves (primary), Follower growth (secondary)
 **Seasonal relevance**: Evergreen -- attorney accountability has no seasonal pattern

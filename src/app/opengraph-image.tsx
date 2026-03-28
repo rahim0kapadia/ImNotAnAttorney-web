@@ -6,7 +6,7 @@
  * is shared on social media (Facebook, Twitter/X, LinkedIn, iMessage, etc.).
  *
  * Content: Centered brand name ("ImNotAnAttorney" with amber "Im"), tagline
- * ("We Research. You Ask."), and description text on a dark gradient background.
+ * ("Know What They Know."), and description text on a dark gradient background.
  *
  * Runs on the Edge runtime for fast generation. No external fonts or images are loaded.
  *
@@ -15,7 +15,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "ImNotAnAttorney — We Research. You Ask.";
+export const alt = "ImNotAnAttorney — Know What They Know.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -53,7 +53,7 @@ export default async function Image() {
             textAlign: "center",
           }}
         >
-          We Research. You Ask.
+          Know What They Know.
         </div>
         <div
           style={{

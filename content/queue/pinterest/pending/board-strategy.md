@@ -13,7 +13,7 @@ title: "INNA Pinterest Board Strategy"
 ## Profile Optimization
 
 **Profile Name**: ImNotAnAttorney | Criminal Defense Questions & Defendant Resources
-**Profile Bio**: We research. You ask. Legal information and accountability questions for criminal defendants. Defense playbooks, court prep guides, and the questions your attorney hopes you never think of. Not legal advice.
+**Profile Bio**: Know What They Know. Legal information and accountability questions for criminal defendants. Defense playbooks, court prep guides, and the questions your attorney hopes you never think of. Not legal advice.
 **Profile Keywords**: criminal defense, defendant rights, attorney accountability, court preparation, legal questions, criminal justice system
 
 ---

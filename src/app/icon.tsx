@@ -19,13 +19,13 @@ export default function Icon() {
       >
         <span
           style={{
-            fontSize: 18,
+            fontSize: 13,
             fontWeight: 800,
             color: "#F59E0B",
-            letterSpacing: -1,
+            letterSpacing: -0.5,
           }}
         >
-          IA
+          INAA
         </span>
       </div>
     ),

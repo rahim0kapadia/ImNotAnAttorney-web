@@ -49,7 +49,7 @@ This is legal information, not legal advice. We are not attorneys.
 13:15 - Where cases are actually won and lost (the honest map)
 14:00 - Timeline reality check + what to do next
 
-We Research. You Ask. Your Attorney Answers.
+Know What They Know.
 https://imnotanattorney.com
 https://imnotanattorney.com/score (Free Case Progress Score)
 
@@ -247,7 +247,7 @@ how criminal cases work, criminal case process, criminal justice system explaine
 
 "And if you want the full picture — a complete analysis of your case with specific questions for your specific attorney — that's our Case Decoder. It's what we built this for."
 
-"We research. You ask. Your attorney answers. Subscribe — next video, we're breaking down DUI defense: everything your attorney should be doing and probably isn't."
+"Know What They Know. Subscribe — next video, we're breaking down DUI defense: everything your attorney should be doing and probably isn't."
 
 ---
 
@@ -267,7 +267,7 @@ how criminal cases work, criminal case process, criminal justice system explaine
 
 **[0:30-0:40]** "If your attorney hasn't filed a single motion in your case — and can't explain why — that's a red flag. The defense happens in the motions. The deal happens after."
 
-**[0:40-0:50]** "We research. You ask. Full breakdown — link in bio."
+**[0:40-0:50]** "Know What They Know. Full breakdown — link in bio."
 
 ---
 

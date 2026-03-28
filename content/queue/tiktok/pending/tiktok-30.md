@@ -29,7 +29,7 @@
 [SECOND 25-35]
 **Visual**: The courtroom from the opening -- but now the defense side has a notebook, a list of questions, highlighted discovery pages. Still one person. But prepared.
 **Audio/Voiceover**: "We're not attorneys. We don't give legal advice. We don't tell you what to do. What we do is research your specific situation -- your charges, your judge, your evidence, your attorney's track record -- and generate the questions that close the information gap. You bring the questions. Your attorney has to answer them. That's how the dynamic changes."
-**Text overlay**: "We Research. You Ask. That's how the dynamic changes."
+**Text overlay**: "Know What They Know. That's how the dynamic changes."
 
 [SECOND 35-42]
 **Visual**: Text cascading: every VoC phrase appearing and dissolving. "My lawyer won't call me back." "Nobody explained anything." "I don't know what to do." "Am I going to jail?" Each one dissolves into a specific question.
@@ -37,7 +37,7 @@
 **Text overlay**: Fears transforming into questions.
 
 [SECOND 42-45]
-**Visual**: Clean black screen. The INNA tagline appears, word by word: "We Research. You Ask."
+**Visual**: Clean black screen. The INNA tagline appears, word by word: "Know What They Know."
 **Text overlay**: "imnotanattorney.com -- free Defense Milestone Score at /score"
 **Audio**: Cinematic beat resolves. Powerful. Final.
 
@@ -49,15 +49,15 @@ Take the free Defense Milestone Score at imnotanattorney.com/score. Find out wha
 - 0:01 "Information asymmetry."
 - 0:03 "Prosecution: everything. You: what they tell you."
 - 0:15 Each question grows the bar
-- 0:25 "We Research. You Ask."
+- 0:25 "Know What They Know."
 - 0:35 Fears dissolving into questions
-- 0:42 "We Research. You Ask. imnotanattorney.com"
+- 0:42 "Know What They Know. imnotanattorney.com"
 
 ## Caption
-The criminal justice system runs on information asymmetry. The prosecution knows more than you. The court knows more than you. Your attorney knows more than you. Every question you ask closes the gap. We're not attorneys. We don't give advice. We research your situation and generate the questions that change the dynamic. We Research. You Ask.
+The criminal justice system runs on information asymmetry. The prosecution knows more than you. The court knows more than you. Even your own attorney knows more than you. We close that gap. We're not attorneys. We don't give advice. We research your situation and generate the questions that change the dynamic. Know What They Know.
 
 ## Hashtags
-#criminaldefense #informationasymmetry #defendantrights #knowyourrights #criminaljustice #weresearchyouask
+#criminaldefense #informationasymmetry #defendantrights #knowyourrights #criminaljustice #knowwhattheyknow
 
 ---
 

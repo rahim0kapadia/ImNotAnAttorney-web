@@ -50,7 +50,7 @@ imnotanattorney.com/score
 
 [0:47-0:57] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com/score"]
-"If any of these hit home, document everything in writing and start asking hard questions. Free Case Progress Score tells you where your defense stands in five minutes. Link in bio. We research. You ask."
+"If any of these hit home, document everything in writing and start asking hard questions. Free Case Progress Score tells you where your defense stands in five minutes. Link in bio. Know What They Know."
 
 ## On-Screen Text
 - [0:00] "You paid $25,000. What are they doing?"

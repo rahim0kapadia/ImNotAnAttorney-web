@@ -96,7 +96,7 @@ export default function SampleXRayPage() {
               X-RAY DISCOVERY ANALYSIS
             </p>
             <p className="mt-1 text-center text-xs text-zinc-400">
-              ImNotAnAttorney | We Research. You Ask.
+              ImNotAnAttorney | Know What They Know.
             </p>
             <div className="mt-6 grid gap-3 text-xs sm:grid-cols-2">
               <div>
@@ -144,7 +144,7 @@ export default function SampleXRayPage() {
         <FadeInUp>
           <div className="mt-10 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6 text-center">
             <p className="text-sm font-semibold text-amber-400">
-              Your discovery documents may have findings like these.
+              Every set of discovery documents contains findings. The question is whether someone has looked.
             </p>
             <p className="mt-1 text-sm text-zinc-400">
               See what&apos;s in yours.
@@ -525,9 +525,9 @@ export default function SampleXRayPage() {
                   Q3 — CONSTITUTIONAL
                 </p>
                 <p className="mt-2 text-sm font-semibold leading-relaxed text-white">
-                  &ldquo;My client made statements at 14:15 but Miranda wasn&apos;t
-                  administered until 14:32. Can those statements be
-                  suppressed?&rdquo;
+                  &ldquo;I made statements at 14:15. The arrest report shows Miranda
+                  wasn&apos;t read until 14:32. Does that timing create a suppression
+                  argument?&rdquo;
                 </p>
                 <div className="mt-3 space-y-2 text-xs text-zinc-400">
                   <p>

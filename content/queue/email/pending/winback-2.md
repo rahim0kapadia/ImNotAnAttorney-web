@@ -54,7 +54,7 @@ A real case. A real discovery review. And the question that changed everything.
 
 <p>That question didn't come from the attorney. It came from the research. It came from someone looking at the actual numbers and asking why they didn't match.</p>
 
-<p>That's what we do. We research. You ask.</p>
+<p>That's what we do. Know What They Know.</p>
 
 <a href="https://imnotanattorney.com/blog/what-500-pages-of-drug-trafficking-discovery-contained" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Read the Full Case Study</a>
 

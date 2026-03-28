@@ -38,7 +38,7 @@
 
 [SECOND 40-45]
 **Visual**: POV returns to the courtroom hallway -- but now the person is standing, notepad in hand, walking toward their attorney. Not angry. Prepared.
-**Text overlay**: "Don't wonder. Ask. We Research. You Ask. imnotanattorney.com"
+**Text overlay**: "Don't wonder. Ask. Know What They Know. imnotanattorney.com"
 **Audio**: Laughter fades. Confident footsteps. Beat resolves.
 
 ## CTA

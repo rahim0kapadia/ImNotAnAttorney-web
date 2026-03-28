@@ -25,7 +25,7 @@ Firing your attorney feels terrifying. But keeping a bad one might be worse.
 
 Here's the step-by-step process to switch lawyers without damaging your case. Do NOT fire your attorney until you watch this.
 
-We research. You ask.
+Know What They Know.
 
 This is legal information, not legal advice.
 
@@ -66,7 +66,7 @@ how to fire your lawyer, fire criminal defense attorney, change lawyers criminal
 "And if you're thinking 'but I already paid ten thousand dollars' — that money is spent whether you stay or go. A new attorney who actually works your case is worth more than a bad attorney you overpaid."
 
 **[0:50-0:57] CTA — TEXT ON SCREEN: "imnotanattorney.com"**
-"Your freedom is worth more than any retainer. We research. You ask. Full guide — link in bio."
+"Your freedom is worth more than any retainer. Know What They Know. Full guide — link in bio."
 
 ---
 

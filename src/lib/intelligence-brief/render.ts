@@ -355,7 +355,7 @@ export function renderIntelligenceBriefHtml(
 <div class="container">
   <div class="header-block">
     <h1 class="header-title">CASE INTELLIGENCE BRIEF</h1>
-    <p class="header-subtitle">ImNotAnAttorney | We Research. You Ask.</p>
+    <p class="header-subtitle">ImNotAnAttorney | Know What They Know.</p>
     <div class="header-meta">
       <p class="meta-field"><strong class="meta-label">Prepared for:</strong> ${escapeHtml(meta.firstName)}</p>
       <p class="meta-field"><strong class="meta-label">Charge(s):</strong> ${escapeHtml(meta.charges)}</p>

@@ -47,7 +47,7 @@ This is legal information, not legal advice. We are not attorneys.
 12:00 - What good alignment actually looks like
 13:00 - What to do next
 
-We Research. You Ask. Your Attorney Answers.
+Know What They Know.
 https://imnotanattorney.com
 https://imnotanattorney.com/score (Free Case Progress Score)
 
@@ -67,7 +67,7 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 **[0:15-0:30] CREDIBILITY + STAKES**
 "We're ImNotAnAttorney. We don't practice law. We don't give legal advice. What we do is research — the kind of research that gives defendants the questions they need to hold their attorneys accountable. We've studied how the best defense attorneys in the country approach cases, and we've studied the gap between that and what most defendants actually get."
 
-[Text on screen: "We Research. You Ask."]
+[Text on screen: "Know What They Know."]
 "The gap is enormous. And it starts with money."
 
 ---
@@ -227,8 +227,8 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 
 "We're not your lawyers. But we're on your side."
 
-[Text on screen: "We Research. You Ask. Your Attorney Answers."]
-"We research. You ask. Subscribe if this was useful — next week we're breaking down how criminal cases actually move through the system, stage by stage. The map nobody gives you."
+[Text on screen: "Know What They Know."]
+"Know What They Know. Subscribe if this was useful — next week we're breaking down how criminal cases actually move through the system, stage by stage. The map nobody gives you."
 
 ---
 
@@ -254,7 +254,7 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 
 **[0:40-0:48]** "#7: If this were YOUR case — what would you do? Watch their face when you ask it."
 
-**[0:48-0:55]** "Your attorney works for you. We research. You ask. Link in bio."
+**[0:48-0:55]** "Your attorney works for you. Know What They Know. Link in bio."
 
 ---
 

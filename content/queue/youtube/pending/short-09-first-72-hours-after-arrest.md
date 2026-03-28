@@ -25,7 +25,7 @@ You just got arrested. Or someone you love did. The next 72 hours matter more th
 
 Here are the 5 things you need to do RIGHT NOW — before your first court date.
 
-We research. You ask.
+Know What They Know.
 
 This is legal information, not legal advice. We are not attorneys.
 
@@ -63,7 +63,7 @@ what to do after arrest, first 72 hours arrest, just arrested what now, criminal
 "Number five. As soon as you have an attorney, ask three questions: What are the exact charges and maximum penalties? When will you receive discovery? And when should I expect to hear from you next? Set expectations now. Not after months of silence."
 
 **[0:48-0:58] CTA — TEXT ON SCREEN: "imnotanattorney.com"**
-"The first 72 hours set the tone for your entire case. Don't waste them. We research. You ask. Free guides — link in bio."
+"The first 72 hours set the tone for your entire case. Don't waste them. Know What They Know. Free guides — link in bio."
 
 ---
 

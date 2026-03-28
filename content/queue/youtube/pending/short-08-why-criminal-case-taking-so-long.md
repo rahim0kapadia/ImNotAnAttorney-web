@@ -25,7 +25,7 @@ It's been 8 months. Nothing seems to be happening. Your attorney keeps saying "t
 
 Here's how to tell if the delay is strategic — or a sign nobody is doing anything.
 
-We research. You ask.
+Know What They Know.
 
 imnotanattorney.com
 
@@ -61,7 +61,7 @@ why is my criminal case taking so long, criminal case delay, continuance after c
 "Red flags: five continuances in a row with no explanation. Zero motions on the court docket after six months. You're the only one initiating contact. The prosecution says they're ready but your side keeps asking for more time."
 
 **[0:45-0:55] CTA — TEXT ON SCREEN: "imnotanattorney.com"**
-"The waiting is its own punishment. You can't plan. You can't move. Every decision gets filtered through 'but what about my case.' You deserve a timeline. We research. You ask. Link in bio."
+"The waiting is its own punishment. You can't plan. You can't move. Every decision gets filtered through 'but what about my case.' You deserve a timeline. Know What They Know. Link in bio."
 
 ---
 

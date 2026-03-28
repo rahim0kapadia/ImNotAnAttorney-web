@@ -31,7 +31,7 @@ const TEMPLATES = [
   {
     label: "General share",
     template: (code: string, url: string) =>
-      `If you or someone you know is dealing with criminal charges, this service helps you hold your attorney accountable. Code ${code} for 10% off: ${url}`,
+      `If you or someone you know is dealing with criminal charges, this service researches your case and gives you the questions that close the information gap. Code ${code} for 10% off: ${url}`,
   },
 ];
 

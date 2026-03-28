@@ -46,7 +46,7 @@ imnotanattorney.com/score
 
 [0:46-0:56] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com/score"]
-"The plea decision is the biggest decision most defendants ever face. Make it with information, not fear. Free Case Progress Score — link in bio. We research. You ask."
+"The plea decision is the biggest decision most defendants ever face. Make it with information, not fear. Free Case Progress Score — link in bio. Know What They Know."
 
 ## On-Screen Text
 - [0:00] "Before you sign ANYTHING"

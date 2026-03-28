@@ -50,7 +50,7 @@ This is legal information, not legal advice. We are not attorneys.
 10:30 - When the plea IS the right call
 11:00 - What to do next
 
-We Research. You Ask. Your Attorney Answers.
+Know What They Know.
 https://imnotanattorney.com
 https://imnotanattorney.com/checkout?tier=dui-first-offense (DUI Defense Playbook - $97)
 
@@ -215,7 +215,7 @@ DUI defense, how to beat a DUI, DUI attorney, DUI lawyer, breathalyzer calibrati
 
 "For a personalized analysis of your specific case — what's been done, what's been missed, and what to ask next — that's our Case Decoder."
 
-"We research. You ask. Your attorney answers. Subscribe — next week we're covering drug cases: your rights they hope you don't know about."
+"Know What They Know. Subscribe — next week we're covering drug cases: your rights they hope you don't know about."
 
 ---
 
@@ -233,7 +233,7 @@ DUI defense, how to beat a DUI, DUI attorney, DUI lawyer, breathalyzer calibrati
 
 **[0:30-0:40]** "If your attorney hasn't requested the calibration records for the specific machine used in your case — ask them why. Today."
 
-**[0:40-0:52]** "One question: 'Have you reviewed the breathalyzer calibration records?' Their answer tells you everything. We research. You ask. Link in bio."
+**[0:40-0:52]** "One question: 'Have you reviewed the breathalyzer calibration records?' Their answer tells you everything. Know What They Know. Link in bio."
 
 ---
 

@@ -38,7 +38,7 @@
 
 [SECOND 40-45]
 **Visual**: The conference room from the opening -- but the chair on the defendant's side is now empty. The person walked out.
-**Text overlay**: "Know what you're walking into. We Research. You Ask. imnotanattorney.com"
+**Text overlay**: "Know what you're walking into. Know What They Know. imnotanattorney.com"
 **Audio**: Drone resolves. Door closes.
 
 ## CTA

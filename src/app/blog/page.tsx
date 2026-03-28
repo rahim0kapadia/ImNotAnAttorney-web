@@ -30,9 +30,9 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Criminal Defense Blog — Questions Your Attorney Should Answer",
+  title: "Criminal Defense Blog — What Defendants Need to Know Before Court",
   description:
-    "In-depth legal research and defense strategies for criminal defendants. DUI, drug cases, white collar — the questions your attorney should be answering but isn't.",
+    "In-depth legal research and defense strategies for criminal defendants — the information that closes the gap between what you know and what everyone else in the courtroom knows.",
   alternates: {
     canonical: `${SITE_URL}/blog`,
   },
@@ -72,9 +72,9 @@ export default async function BlogPage({
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: "Criminal Defense Blog — Questions Your Attorney Should Answer",
+            name: "Criminal Defense Blog — What Defendants Need to Know Before Court",
             description:
-              "In-depth legal research and defense strategies for criminal defendants. DUI, drug cases, white collar — the questions your attorney should be answering but isn't.",
+              "In-depth legal research and defense strategies for criminal defendants — the information that closes the gap between what you know and what everyone else in the courtroom knows.",
             url: `${SITE_URL}/blog`,
             isPartOf: { "@id": `${SITE_URL}/#website` },
             author: {
@@ -91,12 +91,12 @@ export default async function BlogPage({
       />
       <div className="mx-auto max-w-4xl">
         <FadeInUp>
-          <h1 className="font-display text-3xl font-bold text-white md:text-4xl">Criminal Defense Blog — Questions Your Attorney Should Answer</h1>
+          <h1 className="font-display text-3xl font-bold text-white md:text-4xl">Criminal Defense Blog — What Defendants Need to Know Before Court</h1>
           <p className="mt-3 text-zinc-400">
             Legal information that actually helps. No jargon, no fluff.
           </p>
           <p className="mt-4 text-sm leading-relaxed text-zinc-400">
-            97% of criminal cases end in plea deals (Bureau of Justice Statistics). In most of those cases, the defendant never asked the questions that could have changed the outcome. We help you ask them. Every article below is built on documented defense methodologies from attorneys like Lawrence Taylor (DUI defense), Barry Scheck (forensic evidence), and Gerry Spence (jury persuasion) &mdash; applied to the situations defendants actually face.
+            97% of criminal cases end in plea deals (Bureau of Justice Statistics). In most of those cases, nobody gave the defendant the questions before it was too late. That&apos;s what this blog is for. Every article below is built on documented defense methodologies from attorneys like Lawrence Taylor (DUI defense), Barry Scheck (forensic evidence), and Gerry Spence (jury persuasion) &mdash; applied to the situations defendants actually face.
           </p>
         </FadeInUp>
 

@@ -54,7 +54,7 @@ Text overlay appears as list:
 
 [SECOND 30-38]
 "You can't fix the system. But you can be the client who doesn't get lost in it."
-Text overlay: "We Research. You Ask."
+Text overlay: "Know What They Know."
 Fade to: "imnotanattorney.com" (small, bottom of screen)
 
 ### Caption

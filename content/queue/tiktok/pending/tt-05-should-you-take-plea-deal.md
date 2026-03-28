@@ -60,7 +60,7 @@ suggested_posting_time: "Wednesday 8:00 PM EST"
 
 [SECOND 52-60]
 **Visual**: Person holds up the written list of questions to camera. Direct stare.
-**Text overlay**: "We research. You ask. imnotanattorney.com"
+**Text overlay**: "Know What They Know. imnotanattorney.com"
 **Audio/Voiceover**: "Don't sign in the dark."
 
 ---

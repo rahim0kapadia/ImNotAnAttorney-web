@@ -47,7 +47,7 @@ const tiers: TierCard[] = [
       { item: "Case stage diagnostic", value: "$150" },
       { item: "Communication playbook", value: "$100" },
     ],
-    description: "48-hour turnaround. No discovery needed.",
+    description: "Charge analysis + 15 targeted questions. No discovery needed. Delivered in 48 hours.",
     features: [
       "Plain-English charge breakdown — the equivalent of a $500 consultation, in writing",
       "15 calibrated questions for your attorney (6-part format) — $200+ if scripted by a paralegal",
@@ -61,7 +61,7 @@ const tiers: TierCard[] = [
     cta: "Get Your Case Decoder",
     featured: true,
     tier: "case-decoder",
-    bestFor: "Just arrested, need clarity fast",
+    bestFor: "Just arrested — need to understand your charges and what to ask",
     priorityAvailable: `Priority: ${TIER_CORE["case-decoder"].priorityDelivery} (+$${TIER_CORE["case-decoder"].priorityPrice! / 100})`,
   },
   {
@@ -127,7 +127,7 @@ const tiers: TierCard[] = [
     price: TIER_CORE["war-room"].priceDisplay,
     anchor: "Less than 10% of most retainers",
     description:
-      "Full intelligence operation. 25-28 days + weekly updates.",
+      "Full-case intelligence operation — judge dossiers, witness analysis, case law, weekly updates. Initial delivery: 25-28 days.",
     features: [
       "Everything in The X-Ray",
       "Judge & prosecution dossiers",
@@ -150,7 +150,7 @@ const tiers: TierCard[] = [
     price: TIER_CORE["situation-room"].priceDisplay,
     anchor: "Trial Intelligence Operations. Requires War Room.",
     description:
-      "Evening debrief + morning prep brief every trial day. 24-48hr priority turnaround.",
+      "Full trial intelligence cycle — evening debrief + morning prep brief every trial day. Priority turnaround: 24-48 hours.",
     features: [
       "Everything in The War Room",
       "Trial Intelligence Operations — daily trial prep cycle",

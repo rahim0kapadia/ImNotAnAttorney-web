@@ -25,7 +25,7 @@ Your attorney works for YOU. These 3 questions will tell you instantly if they'r
 
 Write these down. Bring them to your next meeting. Watch the reaction.
 
-We research. You ask. Your attorney answers.
+Know What They Know.
 
 This is legal information, not legal advice.
 
@@ -60,7 +60,7 @@ questions to ask criminal defense attorney, attorney accountability, lazy lawyer
 "Number three: 'If this were your case — not your client's, YOUR case — what would you do?' Then stop talking. Watch their face. A good attorney will give you a direct, honest answer. A bad attorney will deflect."
 
 **[0:43-0:52] CTA — TEXT ON SCREEN: "Your case. Your money. Your freedom."**
-"Your attorney works for you. Not the other way around. You're paying them to defend your freedom, and you have every right to know what they're doing with your money and your life. We research. You ask. Link in bio."
+"Your attorney works for you. Not the other way around. You're paying them to defend your freedom, and you have every right to know what they're doing with your money and your life. Know What They Know. Link in bio."
 
 ---
 

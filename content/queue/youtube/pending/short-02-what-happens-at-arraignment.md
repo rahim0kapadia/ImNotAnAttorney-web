@@ -25,7 +25,7 @@ Your first court date is coming and you're terrified. Here's exactly what happen
 
 Spoiler: it's way less dramatic than you think. But what you do AFTER matters more than anything.
 
-We research. You ask.
+Know What They Know.
 
 imnotanattorney.com
 
@@ -64,7 +64,7 @@ what happens at arraignment, first court date, arraignment explained, criminal c
 "Biggest mistake defendants make at arraignment? Talking to police or prosecutors without their attorney present. Before, during, or after court — say nothing to anyone about your case."
 
 **[0:50-0:57] CTA — TEXT ON SCREEN: "imnotanattorney.com"**
-"We research. You ask. Full guide on what to bring and what to wear — link in bio."
+"Know What They Know. Full guide on what to bring and what to wear — link in bio."
 
 ---
 

@@ -11,7 +11,7 @@ interface StickyMobileCTAProps {
 
 export function StickyMobileCTA({
   href = "/start",
-  label = `Get Started — ${TIER_CORE["dui-first-offense"].priceDisplay}+`,
+  label = `See What Your Case Reveals — from ${TIER_CORE["dui-first-offense"].priceDisplay}`,
 }: StickyMobileCTAProps) {
   const [show, setShow] = useState(false);
 

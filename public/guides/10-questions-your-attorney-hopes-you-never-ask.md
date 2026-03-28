@@ -2,7 +2,7 @@
 
 **A Free Guide from ImNotAnAttorney**
 
-*We Research. You Ask.*
+*Know What They Know.*
 
 ---
 

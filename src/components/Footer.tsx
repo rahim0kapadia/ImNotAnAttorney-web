@@ -36,7 +36,7 @@ export function Footer() {
             >
               help@imnotanattorney.com
             </a>
-            {" "}&mdash; We respond within 4 hours
+            {" "}&mdash; Someone who understands your situation responds.
           </p>
         </div>
         <div className="grid gap-8 md:grid-cols-5">
@@ -46,7 +46,7 @@ export function Footer() {
               Im<span className="text-amber-400">Not</span>AnAttorney
             </Link>
             <p className="mt-3 text-sm text-zinc-400">
-              We Research. You Ask.
+              Know What They Know.
             </p>
             <p className="mt-2 text-xs text-zinc-400">
               Legal information, not legal advice.
@@ -68,6 +68,12 @@ export function Footer() {
                 className="text-sm text-zinc-400 hover:text-white"
               >
                 Services
+              </Link>
+              <Link
+                href="/sample"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Sample Report
               </Link>
               <Link
                 href="/playbooks"

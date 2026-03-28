@@ -40,7 +40,7 @@ This is legal information, not legal advice. We are not attorneys.
 09:00 - When to fire your lawyer (and how)
 10:30 - What to do right now
 
-We Research. You Ask. Your Attorney Answers.
+Know What They Know.
 https://imnotanattorney.com
 https://imnotanattorney.com/score (Free Defense Milestone Score)
 
@@ -68,7 +68,7 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 **[0:15-0:30] CREDIBILITY + STAKES**
 "We're ImNotAnAttorney. We don't practice law. We research how defense attorneys actually operate -- the best ones and the ones who coast. We've studied bar complaints, malpractice cases, and attorney disciplinary records. The gap between what defendants expect and what they get is enormous."
 
-[Text on screen: "We Research. You Ask."]
+[Text on screen: "Know What They Know."]
 "And it starts with knowing what good actually looks like."
 
 ---
@@ -223,10 +223,10 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 "If you need more than a score -- if you want us to actually review your case, analyze what your attorney has and hasn't done, and generate the specific questions for your situation -- that's our Case Decoder. Starting at $97. It's what we built this for."
 
 **[11:30-12:00] CLOSE**
-[Text on screen: "We Research. You Ask. Your Attorney Answers."]
+[Text on screen: "Know What They Know."]
 "We're not your lawyers. But we're on your side."
 
-"We research. You ask. Subscribe -- next week, we're breaking down how to actually read your own discovery documents. The evidence against you is in a file somewhere. You should know what's in it."
+"Know What They Know. Subscribe -- next week, we're breaking down how to actually read your own discovery documents. The evidence against you is in a file somewhere. You should know what's in it."
 
 ---
 

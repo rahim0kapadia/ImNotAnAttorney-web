@@ -972,7 +972,7 @@ function CheckoutContent() {
             />
             {emailError && <p className="mt-1 text-xs text-red-400">{emailError}</p>}
             <p className="mt-2 text-xs text-zinc-400">No spam — ever. Just your {info.isDigitalProduct ? "download link" : "report"} and delivery updates.</p>
-            <p className="mt-1 text-xs text-zinc-500">Responses within 4 hours &mdash; help@imnotanattorney.com</p>
+            <p className="mt-1 text-xs text-zinc-500">You&apos;ll receive your report at this address &mdash; help@imnotanattorney.com</p>
           </div>
 
           {/* RETURNING CUSTOMER — For IB+ tiers, allow linking to existing CD. */}
@@ -1120,7 +1120,7 @@ function CheckoutContent() {
                 : `Get Instant Access — ${info.price}`
               : band === "Critical" || band === "Concerning"
               ? `Get My ${info.name} — Close These Gaps (${priorityDelivery && info.priorityPriceNum ? `$${info.priceNum + info.priorityPriceNum}` : info.price}) →`
-              : `Pay ${priorityDelivery && info.priorityPriceNum ? `$${info.priceNum + info.priorityPriceNum}` : info.price} — Secure Checkout`}
+              : `Get My ${info.name} — ${priorityDelivery && info.priorityPriceNum ? `$${info.priceNum + info.priorityPriceNum}` : info.price} →`}
           </button>
 
           <p className="mt-3 text-center text-sm text-zinc-300">

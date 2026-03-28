@@ -23,7 +23,7 @@ target_length: 55s
 ### Description
 You paid thousands. You have no idea what's happening. Here are 5 signs your criminal defense attorney might not be working your case — and what to ask them today.
 
-We research. You ask. Your attorney answers.
+Know What They Know.
 
 This is legal information, not legal advice. We are not attorneys.
 
@@ -61,7 +61,7 @@ criminal defense attorney, lawyer not working my case, signs bad lawyer, attorne
 "Number five. They push the plea deal without explaining alternatives. 'Just take the deal' is not legal strategy. It's the path of least resistance — for them."
 
 **[0:48-0:55] CTA — TEXT ON SCREEN: "imnotanattorney.com"**
-"If any of these hit home — document everything and start asking questions. We research. You ask. Link in bio."
+"If any of these hit home — document everything and start asking questions. Know What They Know. Link in bio."
 
 ---
 

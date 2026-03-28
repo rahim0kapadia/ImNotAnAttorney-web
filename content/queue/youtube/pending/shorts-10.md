@@ -50,7 +50,7 @@ imnotanattorney.com
 
 [0:48-0:57] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com"]
-"The evidence is your case. Don't let someone else decide what you need to see. We research. You ask. Full discovery guide — link in bio."
+"The evidence is your case. Don't let someone else decide what you need to see. Know What They Know. Full discovery guide — link in bio."
 
 ## On-Screen Text
 - [0:00] "Have YOU seen your file?"

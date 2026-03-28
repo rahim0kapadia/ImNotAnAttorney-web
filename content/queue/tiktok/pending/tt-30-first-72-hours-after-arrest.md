@@ -64,7 +64,7 @@ suggested_posting_time: "Monday 8:00 PM EST"
 
 [SECOND 57-60]
 **Visual**: Notebook from earlier, full of notes, organized. Direct eye contact.
-**Text overlay**: "Don't panic. Organize. We Research. You Ask. imnotanattorney.com"
+**Text overlay**: "Don't panic. Organize. Know What They Know. imnotanattorney.com"
 **Audio**: Clock stops. Heartbeat fades. Confident beat resolves.
 
 ---

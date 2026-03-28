@@ -37,7 +37,7 @@ This is legal information, not legal advice. We are not attorneys.
 09:30 - When to switch (and how)
 10:30 - What to do next
 
-We Research. You Ask. Your Attorney Answers.
+Know What They Know.
 https://imnotanattorney.com
 https://imnotanattorney.com/score (Free Defense Milestone Score)
 
@@ -65,7 +65,7 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 **[0:15-0:30] CREDIBILITY + STAKES**
 "We're ImNotAnAttorney. We don't practice law. We research how criminal defense actually works. We've studied the ABA caseload standards, the Bureau of Justice Assistance data, attorney fee structures, and documented case outcomes."
 
-[Text on screen: "We Research. You Ask."]
+[Text on screen: "Know What They Know."]
 "The answer to 'public defender or private attorney' is more complicated than anyone wants to admit. Here's the truth."
 
 ---
@@ -234,10 +234,10 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 "If you want a deep analysis of what your attorney has and hasn't done -- regardless of whether they're court-appointed or paid -- that's our Case Decoder. Starting at $97. Specific questions for your specific situation."
 
 **[11:30-12:00] CLOSE**
-[Text on screen: "We Research. You Ask. Your Attorney Answers."]
+[Text on screen: "Know What They Know."]
 "The question isn't 'public defender or private attorney.' The question is: 'Is the person defending me actually defending me?'"
 
-"We research. You ask. Subscribe -- next week, we're covering what actually happens when you get charged with a felony for the first time. The real version. Not the nightmare version."
+"Know What They Know. Subscribe -- next week, we're covering what actually happens when you get charged with a felony for the first time. The real version. Not the nightmare version."
 
 ---
 

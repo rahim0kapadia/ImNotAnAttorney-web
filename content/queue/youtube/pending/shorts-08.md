@@ -50,7 +50,7 @@ imnotanattorney.com
 
 [0:48-0:56] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com"]
-"Understanding the business model isn't cynicism. It's self-defense. We research. You ask. Link in bio."
+"Understanding the business model isn't cynicism. It's self-defense. Know What They Know. Link in bio."
 
 ## On-Screen Text
 - [0:00] "$25,000 retainer"

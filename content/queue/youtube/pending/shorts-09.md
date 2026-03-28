@@ -50,7 +50,7 @@ imnotanattorney.com
 
 [0:46-0:58] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com/score"]
-"Charges being dropped doesn't happen by accident. It happens because an attorney does the work. Ask yours: what is our strategy for dismissal? If they don't have one, you need to know that now. Free Case Progress Score — link in bio. We research. You ask."
+"Charges being dropped doesn't happen by accident. It happens because an attorney does the work. Ask yours: what is our strategy for dismissal? If they don't have one, you need to know that now. Free Case Progress Score — link in bio. Know What They Know."
 
 ## On-Screen Text
 - [0:00] "YES. But not the way you think."

@@ -24,7 +24,7 @@
  *      plain English translation)
  *   6. What We're NOT — UPL compliance section. Five explicit disclaimers:
  *      not a law firm, no legal advice, no court representation, no attorney
- *      replacement, no outcome guarantees. "We Research. You Ask." tagline.
+ *      replacement, no outcome guarantees. "Know What They Know." tagline.
  *   7. CTA — Services page + blog links
  *   8. Lead capture — Email opt-in fallback
  *
@@ -192,14 +192,10 @@ export default function AboutPage() {
               methodologies. Investigation patterns. 40+ legendary attorneys.
             </p>
             <p>
-              We built a system that does what he did — but faster, deeper, and
-              available to any defendant who refuses to sit in the dark about
-              their own case.
+              We built a system that does what he did — more thoroughly, with documented methodology behind every finding, and available to any defendant who refuses to sit in the dark about their own case.
             </p>
             <p>
-              We don&apos;t give legal advice. We give you the questions your
-              attorney should be answering. What you do with them is between you
-              and your attorney.
+              We don&apos;t give legal advice. We give your attorney the questions they need to be answering — documented, sourced, and ready for your next meeting.
             </p>
           </div>
         </section>
@@ -222,7 +218,7 @@ export default function AboutPage() {
               },
               {
                 title: "Plain English",
-                desc: "Legal documents are written for attorneys, not defendants. We translate everything into language you can understand — and act on.",
+                desc: "Legal documents are written for attorneys, not defendants. We translate everything into language that makes your next conversation with your attorney concrete instead of confusing.",
               },
             ].map((item) => (
               <StaggerItem
@@ -238,7 +234,7 @@ export default function AboutPage() {
         </FadeInUp>
 
         {/* WHAT WE'RE NOT — UPL (Unauthorized Practice of Law) compliance.  */}
-        {/* Five explicit disclaimers plus the "We Research. You Ask."       */}
+        {/* Five explicit disclaimers plus the "Know What They Know."        */}
         {/* tagline that defines the legal boundary of our services.         */}
         {/* This section is legally important — do not remove or soften.     */}
         <FadeInUp>
@@ -262,11 +258,12 @@ export default function AboutPage() {
           </ul>
           <div className="mt-6 rounded-lg border border-amber-500/30 bg-amber-500/5 p-4">
             <p className="text-sm font-semibold text-amber-400">
-              We Research. You Ask.
+              Know What They Know.
             </p>
             <p className="mt-1 text-sm text-zinc-400">
-              That&apos;s the line. We stay on our side of it.
+              We provide legal information — not legal advice. Not representation. Not outcomes. Information is the equalizer.
             </p>
+            <p className="mt-3 text-sm text-zinc-400">In every criminal case, the judge, the prosecutor, and your defense attorney already know each other. They work in the same building. They&apos;ve seen hundreds of cases like yours. You are the only person in that room who doesn&apos;t know how this works. We close that gap.</p>
           </div>
         </section>
         </FadeInUp>
@@ -286,7 +283,7 @@ export default function AboutPage() {
               href="/checkout?tier=case-decoder"
               className="rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
             >
-              Get Your Questions — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+              Get Your Case Analysis — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
             </Link>
             <Link
               href="/blog"
@@ -308,7 +305,7 @@ export default function AboutPage() {
             </Link>
             <Link href="/blog/how-your-attorney-makes-money" className="block rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
               <p className="text-sm font-semibold text-amber-400">How Your Attorney Makes Money</p>
-              <p className="mt-1 text-xs text-zinc-400">Understanding the business model explains why some attorneys push pleas over motions.</p>
+              <p className="mt-1 text-xs text-zinc-400">The economics of criminal defense — what every defendant should understand before their first meeting.</p>
             </Link>
             <Link href="/blog/attorney-not-returning-calls" className="block rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
               <p className="text-sm font-semibold text-amber-400">Your Attorney Won&apos;t Return Your Calls</p>

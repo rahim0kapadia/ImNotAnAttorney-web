@@ -50,7 +50,7 @@ imnotanattorney.com
 
 [0:47-0:57] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com"]
-"The breathalyzer result feels like a verdict. It's not. It's a data point. And data points can be challenged. We research. You ask. Link in bio."
+"The breathalyzer result feels like a verdict. It's not. It's a data point. And data points can be challenged. Know What They Know. Link in bio."
 
 ## On-Screen Text
 - [0:00] "The number is NOT a fact."

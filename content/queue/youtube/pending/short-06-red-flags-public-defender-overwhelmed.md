@@ -25,7 +25,7 @@ The ABA recommends a max of 150 felony cases per attorney per year. Many public 
 
 This isn't about bad people. It's about bad math. Here's what to watch for.
 
-We research. You ask.
+Know What They Know.
 
 imnotanattorney.com
 
@@ -61,7 +61,7 @@ public defender overwhelmed, public defender caseload, court appointed attorney,
 "Here's what you do. Ask them directly: how many active cases are you currently handling? How much time have you been able to spend on mine? The answers won't make you happy. But they'll tell you what you're working with."
 
 **[0:45-0:54] CTA — TEXT ON SCREEN: "imnotanattorney.com"**
-"You deserve to know. We research. You ask. Free resources — link in bio."
+"You deserve to know. Know What They Know. Free resources — link in bio."
 
 ---
 

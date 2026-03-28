@@ -55,7 +55,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             color: "#71717a",
           }}
         >
-          imnotanattorney.com &bull; We Research. You Ask.
+          imnotanattorney.com &bull; Know What They Know.
         </div>
       </div>
     ),

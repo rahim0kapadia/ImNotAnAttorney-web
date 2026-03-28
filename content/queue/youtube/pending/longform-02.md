@@ -38,7 +38,7 @@ This is legal information, not legal advice. We are not attorneys.
 11:30 - What to do with what you find
 12:30 - What to do next
 
-We Research. You Ask. Your Attorney Answers.
+Know What They Know.
 https://imnotanattorney.com
 https://imnotanattorney.com/score (Free Defense Milestone Score)
 https://imnotanattorney.com/blog/how-to-read-your-discovery (Full written guide)
@@ -245,10 +245,10 @@ https://imnotanattorney.com/blog/how-to-read-your-discovery (Full written guide)
 "If you want us to do the deep dive -- analyze your discovery, identify what your attorney has and hasn't addressed, and generate the specific questions for your situation -- that's our X-Ray package. It's exactly what we built for cases like the one in the case study."
 
 **[12:30-13:00] CLOSE**
-[Text on screen: "We Research. You Ask. Your Attorney Answers."]
+[Text on screen: "Know What They Know."]
 "The evidence against you is in a file. You have the right to read it. You have the ability to understand it. And you might catch what your attorney missed."
 
-"We research. You ask. Subscribe -- next week, we're covering public defender versus private attorney. The truth nobody tells you about both."
+"Know What They Know. Subscribe -- next week, we're covering public defender versus private attorney. The truth nobody tells you about both."
 
 ---
 

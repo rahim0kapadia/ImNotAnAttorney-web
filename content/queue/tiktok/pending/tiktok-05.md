@@ -48,7 +48,7 @@
 
 [SECOND 55-60]
 **Visual**: The scale from the opening. This time it reads: "YOUR QUESTIONS MATTER."
-**Text overlay**: "We Research. You Ask. imnotanattorney.com"
+**Text overlay**: "Know What They Know. imnotanattorney.com"
 **Audio**: Beat drops to resolution.
 
 ## CTA

@@ -51,7 +51,7 @@ This is legal information, not legal advice. We are not attorneys.
 11:30 - When the plea makes sense
 12:15 - What to do next
 
-We Research. You Ask. Your Attorney Answers.
+Know What They Know.
 https://imnotanattorney.com
 https://imnotanattorney.com/checkout?tier=drug-possession (Drug Possession Defense Playbook - $97)
 
@@ -225,7 +225,7 @@ drug possession defense, drug charge defense, motion to suppress drugs, illegal 
 
 "For a personalized case analysis — our Case Decoder reviews your specific situation and gives you the exact questions for your attorney."
 
-"We research. You ask. Your attorney answers. Subscribe — next video: the plea deal trap and what they're not telling you about the biggest decision of your case."
+"Know What They Know. Subscribe — next video: the plea deal trap and what they're not telling you about the biggest decision of your case."
 
 ---
 
@@ -245,7 +245,7 @@ drug possession defense, drug charge defense, motion to suppress drugs, illegal 
 
 **[0:38-0:46]** "The Fourth Amendment protects you against unreasonable searches. If they violated it, the evidence gets thrown out. Doesn't matter how much they found."
 
-**[0:46-0:54]** "We research. You ask. Full drug case defense guide — link in bio."
+**[0:46-0:54]** "Know What They Know. Full drug case defense guide — link in bio."
 
 ---
 
