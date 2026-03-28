@@ -176,7 +176,7 @@ export const TIER_CORE = {
     priorityPrice: 29700,
     priorityDelivery: "24 hours",
     includesTiers: ["case-decoder"] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-28
   },
   "x-ray": {
     name: "The X-Ray",
@@ -191,7 +191,7 @@ export const TIER_CORE = {
     priorityPrice: 49700,
     priorityDelivery: "5 business days",
     includesTiers: ["case-decoder", "intelligence-brief"] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-28
   },
   "war-room": {
     name: "The War Room",
@@ -206,7 +206,7 @@ export const TIER_CORE = {
     priorityPrice: 99700,
     priorityDelivery: "Expedited 20-day delivery",
     includesTiers: ["case-decoder", "intelligence-brief", "x-ray"] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-28
   },
   "situation-room": {
     name: "The Situation Room",
@@ -221,7 +221,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: ["case-decoder", "intelligence-brief", "x-ray", "war-room"] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-28
   },
   "extra-witness": {
     name: "Extra Witness Intel",
@@ -236,7 +236,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-28
   },
   "witness-pack": {
     name: "Standalone Witness Pack",
@@ -251,7 +251,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean,
+    live: true as boolean, // LIVE — 2026-03-28
   },
 } as const;
 
