@@ -6,12 +6,14 @@
  *
  * Scoring algorithm:
  * - Starts at 50 (midpoint) and adjusts based on weighted categories:
- *   - Time since arrest vs milestones: 30% weight (drives penalty thresholds)
  *   - Motions filed: 20% weight
  *   - Discovery received: 15% weight
  *   - Communication frequency: 15% weight
  *   - Attorney type: 10% weight
  *   - Strategy discussion: 10% weight
+ * - Time since arrest is a MODIFIER, not a direct scorer — it scales penalties
+ *   for motions, discovery, and compound checks. No points added/subtracted
+ *   for time alone; it determines how harshly missing milestones are penalized.
  * - Time-based expectations: penalties increase as time passes without expected
  *   milestones (e.g., no motions at 3+ months is worse than at 1 month)
  * - Final score is clamped to 0-100 and bucketed into bands:
@@ -94,6 +96,9 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     score += 5;
   } else if (input.hasAttorney === "public-defender") {
     score += 0; // neutral — PDs are overloaded, not bad
+    observations.push(
+      "Public defenders handle high caseloads — often 2-4x the recommended maximum. This doesn't mean yours is doing a bad job, but it means you need to be proactive: confirm deadlines, request updates in writing, and ask specifically about motions and discovery status."
+    );
   } else if (input.hasAttorney === "no") {
     score -= 15;
     observations.push(
@@ -204,8 +209,10 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   // =========================================================================
   if (timeIndex >= 3 && input.motionsFiled !== "yes" && input.hasDiscovery !== "yes") {
     score -= 10;
+    const motionStatus = input.motionsFiled === "dont-know" ? "unknown motion status" : "no motions";
+    const discoveryStatus = input.hasDiscovery === "dont-know" ? "unknown discovery status" : "no discovery";
     observations.push(
-      `At ${getTimeLabel(input.timeSinceArrest)} since arrest with no motions and no discovery, multiple defense windows may have already closed. The longer this continues, the fewer options remain available.`
+      `At ${getTimeLabel(input.timeSinceArrest)} since arrest with ${motionStatus} and ${discoveryStatus}, multiple defense windows may have already closed. The longer this continues, the fewer options remain available.`
     );
   }
 

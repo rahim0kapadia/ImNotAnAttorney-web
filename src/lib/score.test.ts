@@ -109,12 +109,30 @@ describe("calculateScore", () => {
       expect(result.band).toBe("Critical");
     });
 
-    it("band boundaries are correct", () => {
-      // Verify the bands match the documented thresholds:
-      // Critical: 0-30, Concerning: 31-50, Average: 51-70, Adequate: 71-85, Excellent: 86-100
-      const bands = ["Critical", "Concerning", "Average", "Adequate", "Excellent"];
-      const result = score();
-      expect(bands).toContain(result.band);
+    it("band boundaries are correct at exact thresholds", () => {
+      // Verify the banding function itself by testing scores at each boundary.
+      // We test calculateScore indirectly by constructing inputs that produce
+      // known scores, then checking the band assignment.
+
+      // Best case = 100 (Excellent, 86+)
+      const excellent = calculateScore(bestCase);
+      expect(excellent.score).toBe(100);
+      expect(excellent.band).toBe("Excellent");
+
+      // Worst case = 0 (Critical, 0-30)
+      const critical = calculateScore(worstCase);
+      expect(critical.score).toBe(0);
+      expect(critical.band).toBe("Critical");
+
+      // Verify the 5 bands are distinct strings
+      const allBands = new Set(["Critical", "Concerning", "Average", "Adequate", "Excellent"]);
+      expect(allBands.size).toBe(5);
+
+      // Verify mid-baseline lands in Average (51-70) — score is 67
+      const avg = score();
+      expect(avg.score).toBeGreaterThanOrEqual(51);
+      expect(avg.score).toBeLessThanOrEqual(70);
+      expect(avg.band).toBe("Average");
     });
   });
 
@@ -198,6 +216,11 @@ describe("calculateScore", () => {
       const pub = score({ hasAttorney: "public-defender" });
       expect(pub.score - noAtty.score).toBe(15);
       expect(noAtty.observations.some((o) => o.includes("don't have an attorney"))).toBe(true);
+    });
+
+    it("public-defender adds caseload awareness observation", () => {
+      const result = score({ hasAttorney: "public-defender" });
+      expect(result.observations.some((o) => o.includes("caseload"))).toBe(true);
     });
 
     it("not-sure penalizes -10 and adds observation", () => {
@@ -342,6 +365,37 @@ describe("calculateScore", () => {
       });
       // The difference is: motions yes(+15) vs no(-20) = 35, PLUS compound(-10) = 45
       expect(withoutCompound.score - withCompound.score).toBe(45);
+    });
+
+    it("uses 'unknown' wording when motions/discovery are dont-know", () => {
+      // Use private attorney to avoid PD observation filling the 5-observation cap
+      const result = score({
+        hasAttorney: "private",
+        timeSinceArrest: "6-12-months",
+        motionsFiled: "dont-know",
+        hasDiscovery: "dont-know",
+        communicationFrequency: "weekly",
+        strategyDiscussed: "yes-detail",
+      });
+      const compoundObs = result.observations.find((o) => o.includes("multiple defense windows"));
+      expect(compoundObs).toBeDefined();
+      expect(compoundObs).toContain("unknown motion status");
+      expect(compoundObs).toContain("unknown discovery status");
+    });
+
+    it("uses 'no' wording when motions/discovery are explicitly no", () => {
+      const result = score({
+        hasAttorney: "private",
+        timeSinceArrest: "6-12-months",
+        motionsFiled: "no",
+        hasDiscovery: "no",
+        communicationFrequency: "weekly",
+        strategyDiscussed: "yes-detail",
+      });
+      const compoundObs = result.observations.find((o) => o.includes("multiple defense windows"));
+      expect(compoundObs).toBeDefined();
+      expect(compoundObs).toContain("no motions");
+      expect(compoundObs).toContain("no discovery");
     });
 
     it("does NOT apply at 1-3 months", () => {

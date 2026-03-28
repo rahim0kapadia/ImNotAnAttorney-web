@@ -771,7 +771,6 @@ export default function ScorePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState(false);
-  const [completionCount, setCompletionCount] = useState(0);
   const [loadingStep, setLoadingStep] = useState(0);
   const [stats, setStats] = useState<{
     totalCompletions: number;
@@ -782,15 +781,7 @@ export default function ScorePage() {
   const answeredCount = Object.keys(answers).length;
   const allAnswered = answeredCount === questions.length;
 
-  // Fetch completion count on mount
-  useEffect(() => {
-    fetch("/api/score/count")
-      .then((r) => r.json())
-      .then((d) => setCompletionCount(d.count || 0))
-      .catch(() => {});
-  }, []);
-
-  // Fetch DAI stats on mount
+  // Fetch DAI stats on mount (includes totalCompletions — single source of truth)
   useEffect(() => {
     fetch("/api/stats/score-summary")
       .then((r) => r.json())
@@ -844,6 +835,7 @@ export default function ScorePage() {
 
       if (!res.ok) {
         clearInterval(stepTimer);
+        setLoadingStep(0);
         setError("Something went wrong. Please try again.");
         return;
       }
@@ -858,7 +850,6 @@ export default function ScorePage() {
       clearInterval(stepTimer);
 
       setResult(data);
-      setCompletionCount((prev) => prev + 1);
 
       // Persist to sessionStorage (score + answers for context restoration)
       try {
@@ -907,7 +898,7 @@ export default function ScorePage() {
             Answer 10 questions. Get your Defense Milestone Score in 60 seconds — free, no email required.
           </p>
           <p className="mt-2 text-xs text-zinc-500">Your answers are not stored.</p>
-          <CompletionCounter target={completionCount} />
+          <CompletionCounter target={stats?.totalCompletions ?? 0} />
         </div>
 
         <div className="mt-6">
