@@ -1,0 +1,44 @@
+/**
+ * @file /api/cron/demand-score — Daily demand scoring pipeline
+ *
+ * Computes demand scores, quadrant classifications (GOLD_MINE / RED_OCEAN /
+ * RISKY_BET / DEAD_ZONE), content gaps, and emerging topics from
+ * reddit_signals data. Writes results to:
+ *   - demand_scores    (upsert by dimension+window)
+ *   - content_gaps     (upsert by charge_type_slug+pain_point_slug)
+ *   - emerging_topics  (insert/update by topic_phrases)
+ *
+ * Protected by CRON_SECRET bearer token.
+ * Idempotency lock: "demand-score", 23h window.
+ */
+
+import { NextRequest, NextResponse } from "next/server";
+import { requireCron } from "@/lib/auth/guards";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { acquireCronLock, releaseCronLock } from "@/lib/cron-idempotency";
+import { scoreDemand } from "@/lib/demand/score-demand";
+
+export async function GET(req: NextRequest) {
+  // ── Auth ──
+  const auth = requireCron(req);
+  if (!auth.authorized) return auth.error;
+
+  // ── Idempotency guard (prevent duplicate runs within 23h window) ──
+  const lock = await acquireCronLock("demand-score", 23 * 60 * 60 * 1000);
+  if (!lock.shouldRun) {
+    return NextResponse.json({ skipped: true, reason: lock.reason });
+  }
+
+  const supabase = createAdminClient();
+
+  try {
+    const result = await scoreDemand(supabase);
+
+    await releaseCronLock(lock.executionId, "completed");
+    return NextResponse.json(result);
+  } catch (err) {
+    console.error("[Cron/demand-score] Fatal error:", err);
+    await releaseCronLock(lock.executionId, "failed");
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}

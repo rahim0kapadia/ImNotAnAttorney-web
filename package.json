@@ -10,6 +10,7 @@
     "check-tiers": "node scripts/check-tiers.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.80.0",
     "@next/third-parties": "^16.2.0",
     "@supabase/supabase-js": "^2.97.0",
     "@types/qrcode": "^1.5.6",
