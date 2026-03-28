@@ -5,6 +5,8 @@
  * that transform pages from "content" to "reference material" in AI classification.
  */
 
+import { SITE_URL } from "@/lib/site";
+
 /**
  * Returns Thing entities for the Article `about` property based on category and tags.
  * Maps categories to broad legal topic entities, and tags to specific concept entities.
@@ -201,4 +203,78 @@ export function getArticleCitations(
     name: c.name,
     url: c.url,
   }));
+}
+
+/**
+ * Returns a DefinedTermSet schema for the legal glossary.
+ * Used for AI/entity SEO — signals to LLMs and search engines that this site
+ * is an authoritative reference for criminal defense terminology.
+ */
+export function generateDefinedTermSet() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    "@id": `${SITE_URL}/#glossary`,
+    name: "Criminal Defense Legal Glossary",
+    description:
+      "Definitions of legal concepts, evidence terminology, and procedural terms used in criminal defense — written for defendants, not lawyers.",
+    hasDefinedTerm: [
+      {
+        "@type": "DefinedTerm",
+        name: "Brady Material",
+        description:
+          "Evidence the prosecution possesses that is favorable to the defendant. Under Brady v. Maryland (1963), prosecutors must disclose this evidence. Failure to do so is a Brady violation — grounds for appeal or dismissal.",
+        url: `${SITE_URL}/blog/discovery-rights-drug-cases`,
+      },
+      {
+        "@type": "DefinedTerm",
+        name: "Chain of Custody",
+        description:
+          "The documented trail of evidence from the scene to the courtroom. Gaps in the chain — missing logs, unsigned transfers, weight discrepancies — can render evidence inadmissible.",
+        url: `${SITE_URL}/blog/evidence-handling-criminal-cases`,
+      },
+      {
+        "@type": "DefinedTerm",
+        name: "Constructive Possession",
+        description:
+          "A legal theory allowing charges for possession of items not physically on the defendant. Prosecutors must prove knowledge and control — proximity alone is not sufficient.",
+        url: `${SITE_URL}/blog/trafficking-charges-constructive-possession`,
+      },
+      {
+        "@type": "DefinedTerm",
+        name: "Suppression Motion",
+        description:
+          "A motion to exclude evidence obtained in violation of constitutional rights (4th Amendment search, Miranda violations). Must typically be filed within 30 days of arraignment.",
+        url: `${SITE_URL}/blog/motion-to-suppress-evidence`,
+      },
+      {
+        "@type": "DefinedTerm",
+        name: "Discovery",
+        description:
+          "The process by which the prosecution shares evidence with the defense — police reports, lab results, witness statements, surveillance footage. Defendants have a right to this material.",
+        url: `${SITE_URL}/blog/discovery-rights-drug-cases`,
+      },
+      {
+        "@type": "DefinedTerm",
+        name: "Field Sobriety Test",
+        description:
+          "A series of physical and cognitive tests administered roadside during a DUI stop. These tests have documented error rates — the one-leg stand has a 35% false-positive rate even when administered correctly.",
+        url: `${SITE_URL}/blog/field-sobriety-test-accuracy`,
+      },
+      {
+        "@type": "DefinedTerm",
+        name: "Plea Bargain",
+        description:
+          "An agreement between the defendant and prosecutor where the defendant pleads guilty to a lesser charge in exchange for a reduced sentence. Over 90% of criminal cases are resolved this way.",
+        url: `${SITE_URL}/blog/plea-bargain-questions`,
+      },
+      {
+        "@type": "DefinedTerm",
+        name: "Sentencing Guidelines",
+        description:
+          "Federal or state frameworks that recommend sentence ranges based on offense severity and criminal history. Judges may depart from guidelines with documented reasons.",
+        url: `${SITE_URL}/blog/federal-sentencing-guidelines`,
+      },
+    ],
+  };
 }
