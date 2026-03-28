@@ -58,6 +58,17 @@ Full verification: `node ~/projects/continuous-verification/verify.mjs --project
 
 </important>
 
+## Design System
+
+- **Brand identity:** `design-system/brand.md` -- read BEFORE any UI/frontend work. Defines colors, typography, theme constraints.
+- **Design intelligence:** UIU UX Pro Max skill at `.claude/skills/ui-ux-pro-max/` -- run `python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<query>" --design-system` for industry-specific design recommendations.
+- **Global design rule:** `~/.claude/rules/design-intelligence.md` auto-loads on UI files. Defines priority chain: brand.md > UIU search > frontend-design skill > existing patterns.
+- **Brand:** Dark mode only. Amber (#f59e0b) + Navy (#1E3A8A) on black. Playfair Display (display) + Lato (body).
+
+<important if="building UI components, pages, styling, or frontend features">
+Read `design-system/brand.md` FIRST. All colors, fonts, and design decisions must follow it. Use UIU UX Pro Max search for accessibility rules, UX patterns, and industry guidance.
+</important>
+
 ## Reference
 
 - Business docs: `C:\Users\email\projects\ImNotAnAttorney\`
