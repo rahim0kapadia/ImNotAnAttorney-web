@@ -279,7 +279,10 @@ async function searchCaseLaw(statuteNumber, jurisdictionStatuteId) {
   const baseStatute = statuteNumber.split(";")[0].trim().split("(")[0].trim();
   const searchQuery = encodeURIComponent(`"${baseStatute}" florida`);
 
-  const url = `https://www.courtlistener.com/api/rest/v4/search/?type=o&q=${searchQuery}&court=flaapp1%2Cflaapp2%2Cflaapp3%2Cflaapp4%2Cflaapp5%2Cfla&order_by=dateFiled+desc`;
+  // Search FL courts: Supreme Court (fla), all 6 DCAs (fladistctapp, flaapp1-5)
+  // Sort by citeCount descending to get the most impactful cases first
+  const flCourts = "fla%2Cfladistctapp%2Cflaapp1%2Cflaapp2%2Cflaapp3%2Cflaapp4%2Cflaapp5";
+  const url = `https://www.courtlistener.com/api/rest/v4/search/?type=o&q=${searchQuery}&court=${flCourts}&order_by=citeCount+desc`;
 
   return new Promise((resolve) => {
     https
@@ -299,8 +302,10 @@ async function searchCaseLaw(statuteNumber, jurisdictionStatuteId) {
           }
           try {
             const data = JSON.parse(body);
-            const results = (data.results || []).slice(0, 10);
-            console.log(`    ✓ CourtListener: ${data.count || 0} results (using top ${results.length})`);
+            // Filter to results that have citations (published opinions)
+            const withCitations = (data.results || []).filter((r) => r.citation && r.citation.length > 0);
+            const results = withCitations.slice(0, 10);
+            console.log(`    ✓ CourtListener: ${data.count || 0} total, ${withCitations.length} with citations (using top ${results.length})`);
             resolve(results);
           } catch (e) {
             console.log(`    ✗ CourtListener parse error: ${e.message}`);
@@ -319,17 +324,23 @@ async function storeCaseLaw(cases, jurisdictionStatuteId) {
   if (cases.length === 0) return;
 
   for (const c of cases) {
-    const caseName = c.caseName || c.case_name || "Unknown";
-    const citation = c.citation?.[0] || c.citations?.[0]?.volume + " " + c.citations?.[0]?.reporter + " " + c.citations?.[0]?.page || "";
+    const caseName = c.caseName || "Unknown";
+    // citation is a string array like ["468 So. 2d 936", "10 Fla. L. Weekly 201"]
+    // Use the first citation as primary, store all in source_urls
+    // citation is a string array — first non-empty string wins, fallback to ""
+    const citationRaw = Array.isArray(c.citation) ? c.citation.filter((x) => typeof x === "string" && x.length > 0) : [];
+    const citation = citationRaw.length > 0 ? citationRaw[0] : "";
     const court = c.court || "";
     const year = c.dateFiled ? new Date(c.dateFiled).getFullYear() : null;
-    const holding = (c.snippet || "").slice(0, 500);
+    // CourtListener search results don't have snippet — use syllabus or posture
+    const holding = (c.syllabus || c.posture || "").slice(0, 500);
     const clusterUrl = c.absolute_url ? `https://www.courtlistener.com${c.absolute_url}` : "";
+    const allCitationUrls = [clusterUrl, ...(c.citation || []).slice(1)].filter(Boolean);
 
     const sql = `INSERT INTO statute_case_law
-      (jurisdiction_statute_id, case_name, citation, court, year, holding, source_urls, confidence_score)
+      (jurisdiction_statute_id, case_name, citation, court, year, holding, source_urls, courtlistener_cluster_id, confidence_score)
     VALUES
-      (${esc(jurisdictionStatuteId)}, ${esc(caseName)}, ${esc(citation)}, ${esc(court)}, ${year || "NULL"}, ${esc(holding)}, ${escArray(clusterUrl ? [clusterUrl] : [])}, 0.30)
+      (${esc(jurisdictionStatuteId)}, ${esc(caseName)}, ${esc(citation)}, ${esc(court)}, ${year || "NULL"}, ${esc(holding)}, ${escArray(allCitationUrls)}, ${esc(c.cluster_id ? String(c.cluster_id) : null)}, 0.40)
     ON CONFLICT DO NOTHING`;
 
     try {
