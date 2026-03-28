@@ -22,11 +22,31 @@ import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 
-const tiers = [
+interface TierCard {
+  name: string;
+  price: string;
+  anchor: string;
+  valueStack?: ReadonlyArray<{ item: string; value: string }>;
+  description: string;
+  features: string[];
+  cta: string;
+  featured: boolean;
+  tier: string;
+  bestFor: string;
+  priorityAvailable?: string;
+}
+
+const tiers: TierCard[] = [
   {
     name: TIER_CORE["case-decoder"].name,
     price: TIER_CORE["case-decoder"].priceDisplay,
     anchor: "vs. $500+ for a 1-hour consultation",
+    valueStack: [
+      { item: "Attorney consultation equivalent", value: "$500" },
+      { item: "Paralegal-scripted question set", value: "$200" },
+      { item: "Case stage diagnostic", value: "$150" },
+      { item: "Communication playbook", value: "$100" },
+    ],
     description: "48-hour turnaround. No discovery needed.",
     features: [
       "Plain-English charge breakdown — the equivalent of a $500 consultation, in writing",
@@ -48,6 +68,12 @@ const tiers = [
     name: TIER_CORE["intelligence-brief"].name,
     price: TIER_CORE["intelligence-brief"].priceDisplay,
     anchor: "vs. $1,500+ for a second-opinion attorney",
+    valueStack: [
+      { item: "Second-opinion attorney review", value: "$1,500" },
+      { item: "Judge research report", value: "$300" },
+      { item: "Motion landscape analysis", value: "$400" },
+      { item: "Prosecution vulnerability assessment", value: "$200" },
+    ],
     description:
       "Judge intel + 10-15 targeted questions. No discovery needed.",
     features: [
@@ -73,6 +99,12 @@ const tiers = [
     name: TIER_CORE["x-ray"].name,
     price: TIER_CORE["x-ray"].priceDisplay,
     anchor: "vs. $3,000+ for a second attorney to review discovery",
+    valueStack: [
+      { item: "Discovery review (paralegal, 20hrs)", value: "$2,000" },
+      { item: "Evidence chain audit", value: "$500" },
+      { item: "Constitutional issues analysis", value: "$800" },
+      { item: "Expert witness prep questions", value: "$400" },
+    ],
     description: "Full discovery analysis. 10 business days.",
     features: [
       "Everything in Intelligence Brief",
@@ -209,6 +241,22 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
             )}
             {"priorityAvailable" in tier && tier.priorityAvailable && (
               <p className="mt-1 text-xs text-zinc-500">{tier.priorityAvailable}</p>
+            )}
+            {tier.valueStack && (
+              <div className="mt-4 space-y-1 border-l-2 border-amber-500/30 pl-3">
+                {tier.valueStack.map((vs) => (
+                  <div key={vs.item} className="flex items-baseline justify-between text-xs">
+                    <span className="text-zinc-400">{vs.item}</span>
+                    <span className="ml-2 text-zinc-500 line-through">{vs.value}</span>
+                  </div>
+                ))}
+                <div className="flex items-baseline justify-between text-xs font-semibold pt-1 border-t border-zinc-800">
+                  <span className="text-zinc-300">Total value</span>
+                  <span className="text-amber-400">
+                    ${tier.valueStack.reduce((sum, vs) => sum + parseInt(vs.value.replace(/[^0-9]/g, ""), 10), 0).toLocaleString()}+
+                  </span>
+                </div>
+              </div>
             )}
             {/* Desktop: show all features. Mobile: show first 3 + expand */}
             <ul className="mt-6 hidden flex-1 space-y-3 md:block">
