@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
     // ── Fetch up to 3 qa-passed drafts, oldest first ──
     const { data: drafts, error: fetchErr } = await supabase
       .from("blog_drafts")
-      .select("*, content_gaps!inner(charge_type_slug)")
+      .select("*, content_gaps!blog_drafts_content_gap_id_fkey(charge_type_slug)")
       .eq("status", "qa-passed")
       .order("qa_passed_at", { ascending: true })
       .limit(3);

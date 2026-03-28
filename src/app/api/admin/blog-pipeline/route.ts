@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
   const { data: drafts, error } = await supabase
     .from("blog_drafts")
     .select(
-      "*, content_gaps!inner(charge_type_slug, pain_point_slug, gap_score, demand_quadrant)"
+      "*, content_gaps!blog_drafts_content_gap_id_fkey(charge_type_slug, pain_point_slug, gap_score, demand_quadrant)"
     )
     .order("created_at", { ascending: false })
     .limit(50);
