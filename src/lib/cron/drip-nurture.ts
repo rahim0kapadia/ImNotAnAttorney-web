@@ -14,6 +14,7 @@ import {
   getNextDui72hEmail,
   getNextAbandonedScoreEmail,
   getNextWinbackEmail,
+  interpolateScoreVars,
 } from "@/lib/drip-emails";
 import type { DripEmail } from "@/lib/drip-emails";
 import { SITE_URL } from "@/lib/site";
@@ -36,7 +37,7 @@ export async function sendNurtureEmails(ctx: CronContext): Promise<CronResult> {
   // Fetch all active (non-unsubscribed) subscribers, ordered by signup date.
   const { data: subscribers, error: subError } = await ctx.supabase
     .from("subscribers")
-    .select("id, email, created_at, score_band, source")
+    .select("id, email, created_at, score_band, score_value, charge_type, source")
     .is("unsubscribed_at", null)
     .order("created_at", { ascending: true })
     .limit(200);
@@ -125,6 +126,15 @@ export async function sendNurtureEmails(ctx: CronContext): Promise<CronResult> {
             };
           }
         }
+      }
+
+      // ── INTERPOLATE SCORE VARIABLES ──
+      if (nextEmail && sub.score_band) {
+        nextEmail = interpolateScoreVars(
+          nextEmail,
+          sub.score_value ?? null,
+          sub.charge_type ?? null
+        );
       }
 
       if (!nextEmail) {

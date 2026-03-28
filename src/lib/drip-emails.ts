@@ -79,6 +79,7 @@
  */
 
 import { TIER_CORE, upgradePrice, upgradeCostBetween } from "@/lib/tiers";
+import { getChargeLabel } from "@/lib/score";
 import { escapeHtml } from "@/lib/email";
 
 // ============================================================
@@ -146,6 +147,61 @@ function cta(text: string, href: string): string {
  */
 function link(text: string, href: string): string {
   return `<a href="${getSiteUrl()}${href}" style="color: #F59E0B; text-decoration: underline;">${text}</a>`;
+}
+
+/**
+ * Interpolates score-specific template variables in email subject and HTML.
+ *
+ * Replaces:
+ * - {{SCORE}} with numeric score (e.g., "42")
+ * - {{CHARGE_LABEL}} with human-readable charge label (e.g., "DUI/DWI")
+ * - charge-variant divs: shows matching variant, strips others
+ *
+ * If scoreValue is null, {{SCORE}} becomes "your score".
+ * If chargeType is null, {{CHARGE_LABEL}} becomes "criminal"
+ * and all charge-variant divs are stripped.
+ */
+export function interpolateScoreVars(
+  email: DripEmail,
+  scoreValue: number | null,
+  chargeType: string | null
+): DripEmail {
+  const scoreStr = scoreValue != null ? String(scoreValue) : "your score";
+  const chargeLabel = chargeType ? getChargeLabel(chargeType) : "criminal";
+
+  const subject = email.subject
+    .split("{{SCORE}}").join(scoreStr)
+    .split("{{CHARGE_LABEL}}").join(chargeLabel);
+
+  let html = email.html
+    .split("{{SCORE}}").join(scoreStr)
+    .split("{{CHARGE_LABEL}}").join(chargeLabel);
+
+  // Show matching charge-variant div, strip others
+  const variants = ["dui", "drug", "white-collar", "felony", "misdemeanor"];
+  const matchSlug = chargeType === "other-felony" ? "felony"
+    : chargeType === "other-misdemeanor" ? "misdemeanor"
+    : chargeType;
+
+  for (const v of variants) {
+    if (v === matchSlug) {
+      // Show: remove display:none
+      html = html.split(`class="charge-variant-${v}" style="display:none;"`).join(`class="charge-variant-${v}"`);
+    } else {
+      // Strip: remove entire div block
+      const openTag = `<div class="charge-variant-${v}" style="display:none;">`;
+      const closeTag = `</div>`;
+      let idx = html.indexOf(openTag);
+      while (idx !== -1) {
+        const endIdx = html.indexOf(closeTag, idx);
+        if (endIdx === -1) break;
+        html = html.slice(0, idx) + html.slice(endIdx + closeTag.length);
+        idx = html.indexOf(openTag);
+      }
+    }
+  }
+
+  return { ...email, subject, html };
 }
 
 // ============================================================
@@ -317,6 +373,67 @@ export const SCORE_CRISIS_EMAILS: DripEmail[] = [
     `,
   },
 
+  // Day 3: Charge-specific — how cases like yours usually play out.
+  // {{CHARGE_LABEL}} and {{SCORE}} are interpolated at send time by
+  // interpolateScoreVars() in drip-nurture.ts.
+  {
+    key: "score_crisis_day3",
+    delayDays: 3,
+    subject: "How {{CHARGE_LABEL}} cases with your score usually play out",
+    html: `
+      <h1 style="color: #F59E0B;">How {{CHARGE_LABEL}} Cases Like Yours Play Out</h1>
+      <p>You scored <strong style="color: white;">{{SCORE}}/100</strong> on your Defense Milestone Score. Here's what that typically means for {{CHARGE_LABEL}} cases:</p>
+
+      <div class="charge-variant-dui" style="display:none;">
+        <p><strong style="color: white;">DUI/DWI defendants</strong> in your score range often have one or more of these gaps:</p>
+        <ul style="padding-left: 20px;">
+          <li><strong style="color: white;">DMV hearing not requested</strong> — the administrative hearing is separate from the criminal case and has its own deadline (usually 7-10 days from arrest). Miss it and your license gets suspended regardless of the criminal outcome.</li>
+          <li><strong style="color: white;">Breathalyzer calibration records not requested</strong> — every breath test machine has calibration logs. If the machine wasn't calibrated within the required window, the BAC number can be challenged. Most attorneys don't request these unless asked.</li>
+          <li><strong style="color: white;">Field sobriety test conditions not documented</strong> — lighting, surface, weather, and the officer's training records all affect whether the FST results hold up. If your attorney hasn't documented these, ask why.</li>
+        </ul>
+      </div>
+
+      <div class="charge-variant-drug" style="display:none;">
+        <p><strong style="color: white;">Drug offense defendants</strong> in your score range often have one or more of these gaps:</p>
+        <ul style="padding-left: 20px;">
+          <li><strong style="color: white;">Lab report not independently reviewed</strong> — the substance and weight in the police report don't always match the lab results. A 68.3g field weight that comes back as 52.1g in the lab can change the charge entirely.</li>
+          <li><strong style="color: white;">Search and seizure not challenged</strong> — if the evidence was found during a traffic stop, a consent search, or a warrant execution, each has specific constitutional requirements. An invalid search can suppress all downstream evidence.</li>
+          <li><strong style="color: white;">Chain of custody gaps</strong> — evidence that changed hands without proper documentation, or was stored improperly, creates reasonable doubt about what was actually seized.</li>
+        </ul>
+      </div>
+
+      <div class="charge-variant-white-collar" style="display:none;">
+        <p><strong style="color: white;">White collar defendants</strong> in your score range often have one or more of these gaps:</p>
+        <ul style="padding-left: 20px;">
+          <li><strong style="color: white;">Intent not adequately challenged</strong> — white collar charges almost always require proving intent. Your attorney should be building a narrative around legitimate business purpose, good-faith reliance on advisors, or lack of knowledge.</li>
+          <li><strong style="color: white;">Document volume used against you</strong> — prosecutors cherry-pick from thousands of pages. Your attorney should be identifying the documents that show the full context, not just the ones the prosecution highlighted.</li>
+          <li><strong style="color: white;">Restitution strategy not started</strong> — voluntary restitution before sentencing dramatically affects outcomes. If your attorney hasn't discussed this, ask about the timeline.</li>
+        </ul>
+      </div>
+
+      <div class="charge-variant-felony" style="display:none;">
+        <p><strong style="color: white;">Felony defendants</strong> in your score range often have one or more of these gaps:</p>
+        <ul style="padding-left: 20px;">
+          <li><strong style="color: white;">Preliminary hearing strategy unclear</strong> — the preliminary hearing is your first real opportunity to test the prosecution's case. Your attorney should have a specific plan for what to challenge and which witnesses to cross-examine.</li>
+          <li><strong style="color: white;">Discovery incomplete or unreviewed</strong> — felony cases generate significant discovery. If your attorney summarized it rather than walking you through it page by page, important details may have been missed.</li>
+          <li><strong style="color: white;">Sentencing exposure not mapped</strong> — you should know the minimum, maximum, and guideline range for each charge, including how enhancements or prior record affect the math.</li>
+        </ul>
+      </div>
+
+      <div class="charge-variant-misdemeanor" style="display:none;">
+        <p><strong style="color: white;">Misdemeanor defendants</strong> in your score range often have one or more of these gaps:</p>
+        <ul style="padding-left: 20px;">
+          <li><strong style="color: white;">Diversion or deferred adjudication not explored</strong> — many misdemeanor charges qualify for programs that can result in dismissal. If your attorney hasn't discussed these options, ask specifically about eligibility.</li>
+          <li><strong style="color: white;">Collateral consequences not addressed</strong> — a misdemeanor conviction can affect employment, housing, professional licenses, and immigration status. Your attorney should be considering these beyond just the criminal penalty.</li>
+          <li><strong style="color: white;">Witness statements not obtained</strong> — misdemeanor cases often rely heavily on one or two witnesses. Your attorney should be getting statements or depositions before memories fade or witnesses become unavailable.</li>
+        </ul>
+      </div>
+
+      <p>The Case Decoder maps every vulnerability specific to your charges, jurisdiction, and case stage — then generates the exact questions to close each gap.</p>
+      ${cta("Get My Case Decoder \u2014 " + TIER_CORE["case-decoder"].priceDisplay, "/checkout?tier=case-decoder")}
+    `,
+  },
+
   // Day 5: Transition — closes crisis sequence, sets expectations
   {
     key: "score_crisis_transition",
@@ -365,7 +482,7 @@ export const SCORE_REENGAGE_EMAILS: DripEmail[] = [
   {
     key: "score_reengage_day7",
     delayDays: 7,
-    subject: "7 days since your score. Has anything changed?",
+    subject: "Your defense score was {{SCORE}}. Here's what changed since then.",
     html: `
       <h1 style="color: #F59E0B;">7 Days Since Your Score</h1>
       <p>A week ago, you scored your defense. Three things matter right now:</p>
@@ -390,12 +507,31 @@ export const SCORE_REENGAGE_EMAILS: DripEmail[] = [
   {
     key: "score_reengage_day14",
     delayDays: 14,
-    subject: "The one thing defendants always miss",
+    subject: "The one thing {{CHARGE_LABEL}} defendants always miss",
     html: `
-      <h1 style="color: #F59E0B;">The One Thing Defendants Always Miss</h1>
+      <h1 style="color: #F59E0B;">The One Thing {{CHARGE_LABEL}} Defendants Always Miss</h1>
       <p>Motions have deadlines. And once a deadline passes, arguments that could have changed your case are <strong style="color: #EF4444;">gone forever</strong>.</p>
-      <p>A motion to suppress evidence. A Franks hearing to challenge the warrant. A motion to dismiss based on a charging deficiency. Each one has a filing window — and your attorney may not remind you when those windows are closing.</p>
-      <p>In the real case we analyzed, <strong style="color: white;">zero motions had been filed</strong>. The substance variance alone — police said "amphetamine," the lab confirmed MDMA — was grounds for a motion to dismiss. But only if filed before the deadline.</p>
+
+      <div class="charge-variant-dui" style="display:none;">
+        <p>For DUI/DWI cases, the motion most often missed is a <strong style="color: white;">motion to suppress the breath or blood test results</strong>. If the breathalyzer wasn't calibrated within the required window, or if the blood draw didn't follow proper chain-of-custody protocol, the BAC number — the prosecution's strongest evidence — can be excluded entirely. But only if the motion is filed before the deadline.</p>
+      </div>
+
+      <div class="charge-variant-drug" style="display:none;">
+        <p>For drug offense cases, the motion most often missed is a <strong style="color: white;">motion to suppress evidence based on an unlawful search</strong>. Whether it was a traffic stop, a consent search, or a warrant execution, each has specific constitutional requirements. The prosecution needs that evidence — if it was obtained improperly and your attorney files in time, it can be excluded.</p>
+      </div>
+
+      <div class="charge-variant-white-collar" style="display:none;">
+        <p>For white collar cases, the motion most often missed is a <strong style="color: white;">motion to compel discovery of exculpatory documents</strong>. Prosecutors are required to disclose evidence favorable to the defense (Brady material), but they don't always do it proactively. Your attorney should be filing motions to ensure the full picture — including documents that support your defense — is on the table.</p>
+      </div>
+
+      <div class="charge-variant-felony" style="display:none;">
+        <p>For felony cases, the motion most often missed is a <strong style="color: white;">motion to reduce charges at the preliminary hearing stage</strong>. If the prosecution's evidence doesn't support the highest charge, a well-timed motion can force a reduction before trial. But it requires preparation — your attorney needs to identify the weakness and file before the window closes.</p>
+      </div>
+
+      <div class="charge-variant-misdemeanor" style="display:none;">
+        <p>For misdemeanor cases, the opportunity most often missed is a <strong style="color: white;">motion for diversion or deferred adjudication</strong>. Many jurisdictions offer programs that can result in complete dismissal — but they have eligibility windows and filing requirements. If your attorney hasn't explored this, ask specifically about your eligibility before the next court date.</p>
+      </div>
+
       <p>Understanding what motions apply to your case — and when they need to be filed — is one of the most important things you can do right now.</p>
       <p>${link("Read the Full Guide: What Motions Should Your Attorney Be Filing?", "/blog/what-motions-should-your-attorney-be-filing")}</p>
       <p style="margin-top: 24px;">Want the motion analysis specific to <strong style="color: white;">your</strong> charges and jurisdiction? The Case Decoder maps out what applies to your case.</p>
