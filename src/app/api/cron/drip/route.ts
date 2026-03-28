@@ -11,6 +11,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireCron } from "@/lib/auth/guards";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { acquireCronLock, releaseCronLock } from "@/lib/cron-idempotency";
 import { sendEmail } from "@/lib/email";
 import type { CronContext, CronResult } from "@/lib/cron/types";
 import { mergeResults } from "@/lib/cron/types";
@@ -79,21 +80,15 @@ export async function GET(req: NextRequest) {
   const auth = requireCron(req);
   if (!auth.authorized) return auth.error;
 
-  const supabase = createAdminClient();
-
-  // ── Concurrency guard (prevent concurrent runs) ──
-  // NOTE: pg_try_advisory_lock is session-scoped, but Supabase REST uses
-  // connection pooling — the lock may be acquired/released on different
-  // connections. As a defense-in-depth layer, we keep the RPC call but
-  // return 409 (not 200) so Vercel Cron logs it as a failure if it fires.
-  const { data: lockAcquired } = await supabase.rpc("acquire_cron_lock", { lock_key: 1 });
-  if (!lockAcquired) {
-    return NextResponse.json(
-      { message: "Cron already running (lock not acquired)" },
-      { status: 409 }
-    );
+  // ── Idempotency guard (prevent duplicate runs within 23h window) ──
+  // Uses cron_executions table — works across serverless instances unlike
+  // pg_try_advisory_lock which is session-scoped and unreliable with pooling.
+  const lock = await acquireCronLock("drip", 23 * 60 * 60 * 1000);
+  if (!lock.shouldRun) {
+    return NextResponse.json({ skipped: true, reason: lock.reason });
   }
 
+  const supabase = createAdminClient();
   const now = new Date();
   const ctx: CronContext = {
     supabase,
@@ -147,11 +142,11 @@ export async function GET(req: NextRequest) {
       result: { ...totals, failedTasks },
     });
 
+    await releaseCronLock(lock.executionId, "completed");
     return NextResponse.json(totals);
   } catch (err) {
     console.error("[Cron] Unexpected error:", err);
+    await releaseCronLock(lock.executionId, "failed");
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
-  } finally {
-    await supabase.rpc("release_cron_lock", { lock_key: 1 });
   }
 }
