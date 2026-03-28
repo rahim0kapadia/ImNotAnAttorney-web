@@ -794,7 +794,7 @@ function CheckoutContent() {
             <p className="mt-1 text-sm text-zinc-300">
               {band === "Critical" || band === "Concerning"
                 ? "If the analysis and questions we deliver aren't specific to your charges, your case stage, and the gaps your attorney hasn't addressed — we'll rebuild it from scratch at no charge. If the rebuild still doesn't fit your situation, you get a full refund. No questions. No forms. One email."
-                : `Delivery Guarantee: ${info.guarantee}`}
+                : "If the questions we deliver don't surface at least one gap your attorney hasn't addressed — every dollar back. No explanation required. No forms. One email."}
             </p>
             {!(band === "Critical" || band === "Concerning") && tier !== "situation-room" && (
               <p className="mt-2 text-sm text-zinc-300">
