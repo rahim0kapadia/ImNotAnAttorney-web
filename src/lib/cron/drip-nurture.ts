@@ -129,7 +129,7 @@ export async function sendNurtureEmails(ctx: CronContext): Promise<CronResult> {
       }
 
       // ── INTERPOLATE SCORE VARIABLES ──
-      if (nextEmail && sub.score_band) {
+      if (nextEmail && (sub.score_band || sub.score_value != null || sub.charge_type)) {
         nextEmail = interpolateScoreVars(
           nextEmail,
           sub.score_value ?? null,

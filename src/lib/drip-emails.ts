@@ -541,7 +541,7 @@ export const SCORE_REENGAGE_EMAILS: DripEmail[] = [
   {
     key: "score_reengage_day21",
     delayDays: 21,
-    subject: "Same score. Different outcome. The only difference was the questions.",
+    subject: "You scored {{SCORE}}. Another defendant scored the same. Only one asked questions.",
     html: `
       <h1 style="color: #F59E0B;">Same Score. Different Outcome.</h1>
       <p><strong style="color: white;">Defendant A</strong> scored their defense, read the results, and waited for their attorney to handle things. Trusted the process. Didn't follow up.</p>
@@ -563,7 +563,7 @@ export const SCORE_REENGAGE_EMAILS: DripEmail[] = [
   {
     key: "score_reengage_day30",
     delayDays: 30,
-    subject: "30 days since your score. One more shot.",
+    subject: "30 days since your {{CHARGE_LABEL}} score. One more shot.",
     html: `
       <h1 style="color: #F59E0B;">30 Days Since Your Score</h1>
       <p>It's been a month. In that time, filing deadlines have been running. Discovery windows may have closed. Your attorney has been busy — but the question is whether they've been busy on <strong style="color: white;">your</strong> case.</p>
