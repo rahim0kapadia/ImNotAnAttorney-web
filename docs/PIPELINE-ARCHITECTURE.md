@@ -56,12 +56,12 @@ Customer pays → Case created → Intake form submitted
 | 1 | Charge categories (12) | Migration 028 seed | `charge_categories` | `getChargeCategories()` → IntakeChargeCategories | Intake Step 1 category grid | ✅ LIVE |
 | 2 | Common charges (115) | Migration 029 seed | `common_charges` | `getCommonCharges()` → IntakeChargeSelector | Intake charge selection | ✅ LIVE |
 | 3 | Charge questions (161) | Migration 029 seed | `charge_questions` | `getChargeQuestions()` → IntakeChargeQuestions | Intake charge-specific questions | ✅ LIVE |
-| 4 | Statute number + title | **NONE** | `jurisdiction_statutes` | `buildEnrichedChargeContext()` → report prompt | "CHARGE CONTEXT" block: statute citation | ❌ BROKEN |
-| 5 | Prosecution elements | **NONE** | `jurisdiction_statutes.elements[]` | `buildEnrichedChargeContext()` → report prompt | Elements prosecution must prove | ❌ BROKEN |
-| 6 | Penalty range (min/max) | **NONE** | `jurisdiction_statutes.penalty_min/max` | `buildEnrichedChargeContext()` → report prompt | Section 3a Outcome Map sentencing | ❌ BROKEN |
-| 7 | Fine max | **NONE** | `jurisdiction_statutes.fine_max` | `buildEnrichedChargeContext()` → report prompt | Financial exposure in report | ❌ BROKEN |
-| 8 | Mandatory minimum | **NONE** | `jurisdiction_statutes.mandatory_minimum` | `buildEnrichedChargeContext()` → report prompt | Mandatory minimum warning | ❌ BROKEN |
-| 9 | Enhancements | **NONE** | `jurisdiction_statutes.enhancements[]` | `buildEnrichedChargeContext()` → report prompt | Enhancement triggers (priors, weapon) | ❌ BROKEN |
+| 4 | Statute number + title | `load-jurisdiction-data.mjs` + `legal-research-fl.mjs` | `jurisdiction_statutes` | `buildEnrichedChargeContext()` → report prompt | "CHARGE CONTEXT" block: statute citation | ⚠️ PARTIAL (510 rows across 5 states, FL verified) |
+| 5 | Prosecution elements | `load-jurisdiction-data.mjs` (from AI-generated JSON) | `jurisdiction_statutes.elements[]` | `buildEnrichedChargeContext()` → report prompt | Elements prosecution must prove | ⚠️ PARTIAL (AI-generated, pending verification) |
+| 6 | Penalty range (min/max) | `load-jurisdiction-data.mjs` | `jurisdiction_statutes.penalty_min/max` | `buildEnrichedChargeContext()` → report prompt | Section 3a Outcome Map sentencing | ⚠️ PARTIAL (AI-generated, pending verification) |
+| 7 | Fine max | `load-jurisdiction-data.mjs` | `jurisdiction_statutes.fine_max` | `buildEnrichedChargeContext()` → report prompt | Financial exposure in report | ⚠️ PARTIAL (AI-generated, pending verification) |
+| 8 | Mandatory minimum | `load-jurisdiction-data.mjs` | `jurisdiction_statutes.mandatory_minimum` | `buildEnrichedChargeContext()` → report prompt | Mandatory minimum warning | ⚠️ PARTIAL (AI-generated, pending verification) |
+| 9 | Enhancements | `load-jurisdiction-data.mjs` | `jurisdiction_statutes.enhancements[]` | `buildEnrichedChargeContext()` → report prompt | Enhancement triggers (priors, weapon) | ⚠️ PARTIAL (AI-generated, pending verification) |
 | 10 | Expert→charge mapping | **NONE (column empty)** | `experts.common_charge_slugs[]` | `getChargeContext():1756` → report prompt | "GOD MODE EXPERTS" panel | ❌ BROKEN |
 
 ### Layer 2: Legal Research (per case, run before report generation)
@@ -69,11 +69,11 @@ Customer pays → Case created → Intake form submitted
 | # | Data Point | Producer | Table | Consumer | Deliverable | Status |
 |---|-----------|----------|-------|----------|-------------|--------|
 | 11 | Pre-researched case law | **Engine: legal-research.mjs (NOT RUNNING)** | `case_law_references` (research_source=pre_research) | `fetchLegalResearchData():2113` → report prompt | "PRE-RESEARCHED CASE LAW" — Claude told to cite THESE over generated | ❌ BROKEN |
-| 12 | Court name + type | **Engine: jurisdiction-profile.mjs (NOT RUNNING)** | `jurisdiction_profiles` | `fetchLegalResearchData():2103` → report prompt | "JURISDICTION PROFILE" block | ❌ BROKEN (table doesn't exist in web DB) |
+| 12 | Court name + type | **Engine: jurisdiction-profile.mjs (NOT RUNNING)** | `jurisdiction_profiles` | `fetchLegalResearchData():2103` → report prompt | "JURISDICTION PROFILE" block | 🔲 DESIGNED (table created via migration 011, no producer yet) |
 | 13 | Speedy trial statute + days | **Engine: jurisdiction-profile.mjs** | `jurisdiction_profiles.speedy_trial_*` | `fetchLegalResearchData()` → report prompt | Speedy trial clock in report | ❌ BROKEN |
 | 14 | Charge statute text + URL | **Engine: jurisdiction-profile.mjs** | `jurisdiction_profiles.charge_statute_*` | `fetchLegalResearchData()` → report prompt | Statute text with source link | ❌ BROKEN |
 | 15 | Wex legal definitions | **Engine: legal-research.mjs (NOT RUNNING)** | `cases.wex_definitions` (JSONB) | `fetchLegalResearchData():2123` → report prompt | "LEGAL TERM DEFINITIONS" glossary | ❌ BROKEN |
-| 16 | Judge profile | **Engine: judge-research.mjs (NOT RUNNING)** | `judge_profiles` | `fetchLegalResearchData():2139` (IB only) | Section 3e "Judge Intelligence Profile" | ❌ BROKEN (table doesn't exist) |
+| 16 | Judge profile | **Engine: judge-research.mjs (NOT RUNNING)** | `judge_profiles` | `fetchLegalResearchData():2139` (IB only) | Section 3e "Judge Intelligence Profile" | 🔲 DESIGNED (table created via migration 011, no producer yet) |
 | 17 | Motion deadlines | **NONE** | `variables.ts:279` hardcoded fallback | `buildIBVariables()` → IB prompts | Section 4 deadline calendar | ❌ BROKEN (always "ask your attorney") |
 | 18 | Arraignment date | **NONE (not in intake form)** | `variables.ts:276` hardcoded fallback | `buildIBVariables()` → IB prompts | Timeline anchor in Section 1a | ❌ BROKEN (always "ask your attorney") |
 
@@ -104,13 +104,19 @@ Customer pays → Case created → Intake form submitted
 
 ## BROKEN LINK SUMMARY
 
-**18 of 31 data points are broken.** The entire legal data enrichment layer (items 4-24) is non-functional. Every report generates with zero verified legal data injection. Claude falls back to:
-- Training data for statutes, penalties, case law (hallucination risk)
-- "Ask your attorney" for deadlines, judge intel, arraignment dates
-- Generic text for state bar contacts, courthouse logistics
+**12 of 31 data points still broken** (down from 18). Progress:
+- Items 4-9: ⚠️ PARTIAL — 510 statute rows loaded across 5 states (FL, GA, IL, NC, PA). FL statutes being verified via Online Sunshine. AI-generated data pending full verification.
+- Items 12, 16: 🔲 DESIGNED — tables created (migration 011 applied 2026-03-28), no producer yet.
+- Items 10-11, 13-15, 17-24: ❌ Still broken.
 
-### Root Cause
-Migration 011 (`legal-source-maximization`) was written for the parent project but **never applied to the shared Supabase database**. The engine workers that populate the legal research tables are designed but not deployed. The web report generator queries these tables, catches errors silently, and proceeds without the data.
+Remaining gaps:
+- Case law (item 11): needs CourtListener API token
+- Judge profiles (item 16): needs CourtListener People API
+- Motion deadlines, arraignment dates (items 17-18): need state rules lookup
+- Enrichment layer (items 19-24): not yet started
+
+### Root Cause (RESOLVED 2026-03-28)
+Migration 011 applied. Migration 030 added research tracking columns + `statute_case_law` table. Jurisdiction data loaded from AI-generated JSON files. Research skill (`legal-research-fl.mjs`) verifies statutes against FL Online Sunshine.
 
 ---
 

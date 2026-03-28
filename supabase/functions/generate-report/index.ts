@@ -1647,6 +1647,23 @@ RULES:
 /** Loose type for intake records — fields vary by intake version. */
 type IntakeData = Record<string, any>;
 
+/** Maps full US state names to 2-letter jurisdiction codes for jurisdiction_statutes lookup. */
+const STATE_TO_CODE: Record<string, string> = {
+  "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
+  "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
+  "District of Columbia": "DC", "Florida": "FL", "Georgia": "GA", "Hawaii": "HI",
+  "Idaho": "ID", "Illinois": "IL", "Indiana": "IN", "Iowa": "IA",
+  "Kansas": "KS", "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME",
+  "Maryland": "MD", "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN",
+  "Mississippi": "MS", "Missouri": "MO", "Montana": "MT", "Nebraska": "NE",
+  "Nevada": "NV", "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM",
+  "New York": "NY", "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH",
+  "Oklahoma": "OK", "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI",
+  "South Carolina": "SC", "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX",
+  "Utah": "UT", "Vermont": "VT", "Virginia": "VA", "Washington": "WA",
+  "West Virginia": "WV", "Wisconsin": "WI", "Wyoming": "WY",
+};
+
 /**
  * Resolves raw intake charge_type text to a DB slug.
  * Intake data has inconsistent casing (e.g., "dui" vs "White Collar / Fraud").
@@ -1739,10 +1756,13 @@ async function getChargeContext(
   chargeSpecificData: Record<string, string>,
   url: string,
   key: string,
+  state?: string,
 ): Promise<string> {
   const csBlock = formatChargeSpecificData(chargeSpecificData);
   const jur = jurisdictionLevel === "federal" ? "FEDERAL" : jurisdictionLevel === "state" ? "STATE" : "UNKNOWN JURISDICTION";
   const slug = await resolveChargeSlugEnhanced(chargeType, url, key);
+  const stateCode = state ? (STATE_TO_CODE[state] || (state.length === 2 ? state.toUpperCase() : null)) : null;
+  const jurisdictionCode = jurisdictionLevel === "federal" ? "federal" : stateCode;
 
   // ── NEW: Try enriched context from taxonomy tables ──
   try {
@@ -1752,26 +1772,63 @@ async function getChargeContext(
     const commonCharge = (ccRows as Array<Record<string, unknown>>)[0];
 
     if (commonCharge) {
+      // Get jurisdiction-specific statute data
+      // deno-lint-ignore no-explicit-any
+      let statute: any = null;
+      if (jurisdictionCode) {
+        try {
+          const statRows = await supabaseSelect(url, key, "jurisdiction_statutes",
+            `common_charge_slug=eq.${encodeURIComponent(slug)}&jurisdiction=eq.${encodeURIComponent(jurisdictionCode)}&active=eq.true&limit=1`);
+          if (statRows.length > 0) statute = statRows[0];
+        } catch (e) {
+          console.log(`[generate-report] jurisdiction_statutes lookup skipped:`, e instanceof Error ? e.message : e);
+        }
+      }
+
       // Get experts for this common charge
       const expertRows = await supabaseSelect(url, key, "experts",
         `common_charge_slugs=cs.${encodeURIComponent(`{"${slug}"}`)}&select=id,name,why_elite,key_framework&limit=3`);
       const experts = expertRows as Array<{id: string; name: string; why_elite: string; key_framework: string}>;
 
-      if (experts.length > 0) {
-        // Build enriched context block
+      if (experts.length > 0 || statute) {
+        // Build enriched context block with statute data
         const chargeLines: string[] = [];
-        chargeLines.push(`- Charge: ${commonCharge.label}`);
-        if (commonCharge.severity_range) {
-          chargeLines.push(`- Severity: ${commonCharge.severity_range}`);
+
+        if (statute && statute.statute_number) {
+          const statuteRef = `${jurisdictionCode} ${statute.statute_number}`;
+          chargeLines.push(`- Charge: ${commonCharge.label} (${statuteRef})`);
+          if (statute.statute_title) chargeLines.push(`- Statute Title: ${statute.statute_title}`);
+          if (statute.offense_class) chargeLines.push(`- Classification: ${statute.offense_class}`);
+          if (statute.elements && statute.elements.length > 0) {
+            chargeLines.push(`- Elements prosecution must prove: ${statute.elements.join("; ")}`);
+          }
+          const penaltyMin = statute.penalty_min || "unknown";
+          const penaltyMax = statute.penalty_max || "unknown";
+          const finePart = statute.fine_max ? `, fine up to ${statute.fine_max}` : "";
+          chargeLines.push(`- Penalty Range: ${penaltyMin} to ${penaltyMax}${finePart}`);
+          chargeLines.push(`- Mandatory Minimum: ${statute.mandatory_minimum || "None"}`);
+          if (statute.enhancements && statute.enhancements.length > 0) {
+            chargeLines.push(`- Enhancements: ${statute.enhancements.join("; ")}`);
+          }
+          if (statute.statute_url) {
+            chargeLines.push(`- Source: ${statute.statute_url}`);
+          }
+        } else {
+          chargeLines.push(`- Charge: ${commonCharge.label}`);
+          if (commonCharge.severity_range) {
+            chargeLines.push(`- Severity: ${commonCharge.severity_range}`);
+          }
         }
 
         let result = `\nCHARGE-SPECIFIC CONTEXT — ${commonCharge.label} (${jur}):\n`;
         result += `CHARGE CONTEXT:\n${chargeLines.join("\n")}\n`;
 
-        const expertLines = experts.map((e, i) =>
-          `${i + 1}. ${e.name} — ${e.why_elite}. Methodology: ${e.key_framework}.`
-        ).join("\n");
-        result += `\nGOD MODE EXPERTS (triangulated — use their methodology):\n${expertLines}`;
+        if (experts.length > 0) {
+          const expertLines = experts.map((e, i) =>
+            `${i + 1}. ${e.name} — ${e.why_elite}. Methodology: ${e.key_framework}.`
+          ).join("\n");
+          result += `\nGOD MODE EXPERTS (triangulated — use their methodology):\n${expertLines}`;
+        }
 
         if (commonCharge.description) {
           result += `\nFocus: ${commonCharge.description}`;
@@ -1779,7 +1836,7 @@ async function getChargeContext(
 
         result += csBlock;
 
-        console.log(`[generate-report] Enriched context from taxonomy for "${slug}"`);
+        console.log(`[generate-report] Enriched context from taxonomy for "${slug}"${statute ? ` + statute ${statute.statute_number}` : ""}`);
         return result;
       }
     }
@@ -2257,7 +2314,7 @@ async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabase
 
   const jurisdictionLevel = intake.jurisdiction_level || "unknown";
   const chargeSpecificData = intake.charge_specific_data || {};
-  const chargeBlock = await getChargeContext(intake.charge_type, jurisdictionLevel, chargeSpecificData, supabaseUrl, supabaseKey);
+  const chargeBlock = await getChargeContext(intake.charge_type, jurisdictionLevel, chargeSpecificData, supabaseUrl, supabaseKey, intake.state);
   const evidenceBlock = getEvidenceContext(intake.evidence_type || []);
 
   // ── Legal research data injection (Wave 5.2) ──────────────
@@ -3840,7 +3897,7 @@ async function handleIBPhaseA(
   const chargeSpecificData = intake.charge_specific_data || {};
   let chargeContext = "";
   try {
-    chargeContext = await getChargeContext(intake.charge_type, jurisdictionLevel, chargeSpecificData, supabaseUrl, supabaseKey);
+    chargeContext = await getChargeContext(intake.charge_type, jurisdictionLevel, chargeSpecificData, supabaseUrl, supabaseKey, intake.state);
   } catch {
     chargeContext = getChargeContextFallback(intake.charge_type, jurisdictionLevel, chargeSpecificData);
   }
@@ -3971,7 +4028,7 @@ async function handleIBPhaseB(
   // Build charge context
   let chargeContext = "";
   try {
-    chargeContext = await getChargeContext(intake.charge_type, intake.jurisdiction_level || "state", intake.charge_specific_data || {}, supabaseUrl, supabaseKey);
+    chargeContext = await getChargeContext(intake.charge_type, intake.jurisdiction_level || "state", intake.charge_specific_data || {}, supabaseUrl, supabaseKey, intake.state);
   } catch {
     chargeContext = getChargeContextFallback(intake.charge_type, intake.jurisdiction_level || "state", intake.charge_specific_data || {});
   }
