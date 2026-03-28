@@ -1,5 +1,12 @@
 {
   "drip": 7403323,
   "engine": 7403325,
-  "generate-backup": 7403328
+  "generate-backup": 7403328,
+  "batch-poll": 7422011,
+  "_notes": {
+    "drip": "ON — daily 14:00 UTC. Ghost duplicate 7310015 deleted 2026-03-27.",
+    "engine": "OFF — disabled intentionally.",
+    "generate-backup": "OFF — disabled intentionally.",
+    "batch-poll": "OFF — registered but route does not exist at src/app/api/cron/batch-poll/. Delete job or implement route before enabling."
+  }
 }

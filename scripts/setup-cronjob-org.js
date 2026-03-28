@@ -11,6 +11,22 @@
 const fs = require('fs');
 const path = require('path');
 
+const DRY_RUN = process.argv.includes('--dry-run');
+
+async function getExistingJobs(apiKey) {
+  const resp = await fetch('https://api.cron-job.org/jobs', {
+    headers: { 'Authorization': `Bearer ${apiKey}` }
+  });
+  if (!resp.ok) throw new Error(`Failed to fetch jobs: ${resp.status}`);
+  const data = await resp.json();
+  const existing = new Set();
+  for (const job of (data.jobs || [])) {
+    if (job.url) existing.add(job.url);
+    if (job.title) existing.add(job.title);
+  }
+  return existing;
+}
+
 // Read env vars from .env.local
 function loadEnv() {
   const envPath = path.join(__dirname, '..', '.env.local');
@@ -152,12 +168,36 @@ function sleep(ms) {
 
 async function main() {
   console.log('Setting up cron-job.org for ImNotAnAttorney');
+  if (DRY_RUN) console.log('*** DRY RUN — no API calls will be made ***');
   console.log('='.repeat(50));
 
+  let existingJobs = new Set();
+  if (!DRY_RUN) {
+    console.log('Fetching existing jobs...');
+    existingJobs = await getExistingJobs(CRONJOB_API_KEY);
+    console.log(`Found ${existingJobs.size} existing job identifiers`);
+    console.log('');
+  }
+
   const results = [];
+  let skipped = 0;
 
   for (let i = 0; i < CRON_JOBS.length; i++) {
     const job = CRON_JOBS[i];
+    const jobUrl = `${CRON_URL}/${job.name}`;
+    const jobTitle = `ImNotAnAttorney: ${job.name}`;
+
+    if (DRY_RUN) {
+      console.log(`WOULD CREATE: ${job.name}`);
+      continue;
+    }
+
+    if (existingJobs.has(jobUrl) || existingJobs.has(jobTitle)) {
+      console.log(`SKIP: ${job.name} already exists`);
+      skipped++;
+      continue;
+    }
+
     const result = await createCronJob(job);
     results.push(result);
 
@@ -169,20 +209,22 @@ async function main() {
   }
 
   // Save job IDs to file for future reference
-  const idsPath = path.join(__dirname, 'cronjob-org-ids.json');
-  const ids = {};
-  for (const r of results) {
-    if (r.success) {
-      ids[r.name] = r.jobId;
+  if (!DRY_RUN && results.length > 0) {
+    const idsPath = path.join(__dirname, 'cronjob-org-ids.json');
+    const ids = {};
+    for (const r of results) {
+      if (r.success) {
+        ids[r.name] = r.jobId;
+      }
     }
+    fs.writeFileSync(idsPath, JSON.stringify(ids, null, 2) + '\n');
+    console.log(`\nJob IDs saved to ${idsPath}`);
   }
-  fs.writeFileSync(idsPath, JSON.stringify(ids, null, 2) + '\n');
-  console.log(`\nJob IDs saved to ${idsPath}`);
 
   console.log('='.repeat(50));
   const succeeded = results.filter((r) => r.success).length;
   const failed = results.filter((r) => !r.success).length;
-  console.log(`Done. ${succeeded} created, ${failed} failed.`);
+  console.log(`Done. ${succeeded} created, ${skipped} skipped, ${failed} failed.`);
 }
 
 main().catch(console.error);
