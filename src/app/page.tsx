@@ -41,7 +41,6 @@ import { RecentPurchaseNotification } from "@/components/RecentPurchaseNotificat
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { DiscoveryReveal } from "@/components/motion/DiscoveryReveal";
 import { HomepageHero } from "@/components/HomepageHero";
-import { getPlaybookConfig, allPlaybookSlugs } from "@/lib/playbook-configs";
 import { SITE_URL } from "@/lib/site";
 import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
@@ -167,14 +166,18 @@ export default function Home() {
             provider: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
             areaServed: { "@type": "Country", name: "United States" },
             knowsAbout: [
-              "DUI Defense",
-              "Drug Possession Defense",
-              "Drug Trafficking Defense",
-              "Probation Violation",
-              "White Collar Criminal Defense",
-              "Sex Offense Defense",
-              "Federal Criminal Defense",
-              "Self-Defense Cases",
+              "DUI & Driving Offenses",
+              "Drug Offenses",
+              "Violent Crimes",
+              "Property Crimes",
+              "Domestic & Family Offenses",
+              "Weapons Charges",
+              "Fraud & Financial Crimes",
+              "Sex Offenses",
+              "Public Order & Conduct",
+              "Probation & Parole Violations",
+              "Federal Charges",
+              "Criminal Defense Research",
             ],
             speakable: {
               "@type": "SpeakableSpecification",
@@ -580,45 +583,55 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PLAYBOOK CATALOG — 8 charge-type cards for SEO + routing */}
-      <section className="border-t border-zinc-800 px-4 py-20 section-alt">
-        <div className="mx-auto max-w-5xl">
-          <FadeInUp>
-            <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
-              Defense Playbooks by Charge Type
-            </h2>
-          </FadeInUp>
-          <p className="mt-3 text-center text-zinc-400">
-            Charge-specific questions and research &mdash; instant download, $97 each.
-          </p>
-          <StaggerContainer className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {allPlaybookSlugs().map((slug) => {
-              const config = getPlaybookConfig(slug);
-              if (!config) return null;
-              return (
-                <StaggerItem key={slug}>
-                  <Link
-                    href={`/checkout?tier=${slug}`}
-                    className="group block rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 transition-all hover:border-amber-500/50 h-full"
-                  >
-                    <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">
-                      {config.hero.eyebrow}
-                    </p>
-                    <p className="mt-2 text-sm leading-relaxed text-zinc-400">
-                      {config.proof.methods[0].insight.length > 120
-                        ? config.proof.methods[0].insight.slice(0, 120) + "\u2026"
-                        : config.proof.methods[0].insight}
-                    </p>
-                    <p className="mt-3 text-sm font-bold text-amber-400 group-hover:text-amber-300">
-                      $97 &mdash; Instant Download &rarr;
-                    </p>
-                  </Link>
-                </StaggerItem>
-              );
-            })}
-          </StaggerContainer>
-        </div>
-      </section>
+      {/* CHARGE CATALOG — 12 charge-category cards for SEO + routing */}
+      {(() => {
+        const CHARGE_CATEGORIES = [
+          { slug: "dui-driving", label: "DUI & Driving Offenses", description: "Breathalyzer challenges, field sobriety analysis, rising BAC defense", playbook: "dui-first-offense" },
+          { slug: "drug-offenses", label: "Drug Offenses", description: "Possession, trafficking, weight disputes, search legality", playbook: "drug-possession" },
+          { slug: "violent-crimes", label: "Violent Crimes", description: "Assault, battery, self-defense, force proportionality", playbook: null },
+          { slug: "property-crimes", label: "Property Crimes", description: "Theft, burglary, shoplifting, identity evidence", playbook: null },
+          { slug: "domestic-family", label: "Domestic & Family", description: "DV defense, protective orders, false allegations", playbook: null },
+          { slug: "weapons", label: "Weapons Charges", description: "Possession, carry violations, Second Amendment defense", playbook: null },
+          { slug: "fraud-financial", label: "Fraud & Financial", description: "Wire fraud, identity theft, embezzlement, asset forfeiture", playbook: "white-collar" },
+          { slug: "sex-offenses", label: "Sex Offenses", description: "Forensic evidence, investigation protocols, registry defense", playbook: "sex-offense" },
+          { slug: "public-order", label: "Public Order", description: "Disorderly conduct, resisting arrest, contempt", playbook: null },
+          { slug: "probation-parole", label: "Probation Violations", description: "Technical violations, revocation hearings, compliance", playbook: "probation-violation" },
+          { slug: "federal-specific", label: "Federal Charges", description: "Sentencing guidelines, cooperation, mandatory minimums", playbook: "federal-criminal" },
+          { slug: "other", label: "Other Charges", description: "We research any criminal charge type", playbook: null },
+        ] as const;
+        return (
+          <section className="border-t border-zinc-800 px-4 py-20 section-alt">
+            <div className="mx-auto max-w-5xl">
+              <FadeInUp>
+                <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
+                  Research Available for Every Charge Type
+                </h2>
+              </FadeInUp>
+              <p className="mt-3 text-center text-zinc-400">
+                Charge-specific questions and case research &mdash; 48-hour delivery.
+              </p>
+              <StaggerContainer className="mt-12 grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                {CHARGE_CATEGORIES.map((cat) => (
+                  <StaggerItem key={cat.slug}>
+                    <Link
+                      href={cat.playbook ? `/checkout?tier=${cat.playbook}` : "/start"}
+                      className="group block rounded-lg border border-zinc-800 bg-zinc-900 p-5 transition-all hover:border-zinc-600 h-full cursor-pointer"
+                    >
+                      <p className="text-sm font-bold text-zinc-200">{cat.label}</p>
+                      <p className="mt-2 text-xs leading-relaxed text-zinc-400">
+                        {cat.description}
+                      </p>
+                      <p className="mt-3 text-xs font-semibold text-amber-500 group-hover:text-amber-400">
+                        {cat.playbook ? "Defense Playbook \u2014 $97 \u2192" : "Case Research \u2014 $197 \u2192"}
+                      </p>
+                    </Link>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* WHAT WE ARE — Peer-voiced identity (Chaperon rewrite). Moved from    */}
       {/* post-DiscoveryReveal to pre-guarantee per all 5 experts.            */}
