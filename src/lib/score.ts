@@ -273,6 +273,10 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     observations.push(
       "As a licensed professional, a conviction could trigger licensing board action, suspension, or revocation — separate from the criminal case itself. Make sure your attorney is addressing professional licensing consequences, not just the criminal charges."
     );
+  } else if (input.licensedProfession === "yes-other") {
+    observations.push(
+      "A conviction can affect employment background checks, security clearances, government positions, and professional opportunities — even without a formal license at stake. Make sure your attorney is considering collateral employment consequences, not just the criminal penalty."
+    );
   } else if (input.licensedProfession === "student") {
     observations.push(
       "As a student, a conviction can affect financial aid eligibility, campus housing, and academic standing. For drug offenses specifically, federal law ties FAFSA eligibility to conviction status. Make sure your attorney knows you're a student — the collateral consequences may be as important as the criminal case."
@@ -292,17 +296,21 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   else if (score <= 85) band = "Adequate";
   else band = "Excellent";
 
+  // Guarantee at least 3 observations. Pad with general advice if needed.
+  if (observations.length < 3 && score >= 70) {
+    observations.push(
+      "Your case shows no major red flags in the areas we measure. The Case Decoder goes deeper into charge-specific elements and jurisdiction patterns."
+    );
+  }
   if (observations.length < 3) {
-    if (score >= 70) {
-      observations.push(
-        "Your case shows no major red flags in the areas we measure. The Case Decoder goes deeper into charge-specific elements and jurisdiction patterns."
-      );
-    }
-    if (observations.length < 3) {
-      observations.push(
-        "No milestone assessment captures everything. The factors we can't measure from 10 questions — judge tendencies, prosecutor patterns, jurisdiction-specific deadlines — often matter most."
-      );
-    }
+    observations.push(
+      "No milestone assessment captures everything. The factors we can't measure from 10 questions — judge tendencies, prosecutor patterns, jurisdiction-specific deadlines — often matter most."
+    );
+  }
+  if (observations.length < 3) {
+    observations.push(
+      "The questions above are a starting point. Every case has jurisdiction-specific deadlines, procedural requirements, and strategic considerations that a 10-question assessment can't capture."
+    );
   }
 
   return { score, band, observations: observations.slice(0, 5) };
@@ -373,7 +381,12 @@ export function getChargeSpecificObservation(chargeType: string, timeIndex: numb
         ? "For felony cases at this stage, your attorney should have a clear theory of defense and be preparing for key evidentiary hearings. Ask: \"What is our defense theory and what motions are we filing?\""
         : `For felony cases, your attorney should be building a defense theory and identifying which elements of the charge are weakest. Ask: "What is our theory of defense?"`;
     case "other-misdemeanor":
-      return "Even for misdemeanor charges, a conviction creates a permanent record that can affect employment, housing, and professional licensing. Make sure your attorney is treating this seriously.";
+      if (noAttorney) {
+        return "Even for misdemeanor charges, a conviction creates a permanent record that can affect employment, housing, and professional licensing. Many misdemeanor charges qualify for diversion or deferred adjudication — programs that can result in dismissal. When you retain an attorney, ask specifically about eligibility.";
+      }
+      return timeIndex >= 2
+        ? "Even for misdemeanor charges, a conviction creates a permanent record. At this stage, your attorney should have explored diversion or deferred adjudication options and be actively preparing for hearings. Ask: \"Have we explored every alternative to a conviction on my record?\""
+        : "Even for misdemeanor charges, a conviction creates a permanent record that can affect employment, housing, and professional licensing. Ask your attorney about diversion or deferred adjudication — programs that can result in dismissal instead of conviction.";
     default:
       return `For ${getChargeLabel(chargeType)} cases, make sure your attorney has explained the specific elements the prosecution must prove and which ones are weakest.`;
   }

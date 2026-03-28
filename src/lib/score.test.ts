@@ -139,6 +139,24 @@ describe("calculateScore", () => {
       expect(result.observations.length).toBeGreaterThanOrEqual(3);
     });
 
+    it("guarantees 3 observations for Average-band minimal-trigger case (regression)", () => {
+      // This exact combo previously produced only 2 observations:
+      // score < 70 skipped the first pad, leaving only 1 charge-specific + 1 generic
+      const result = calculateScore({
+        chargeType: "other-misdemeanor",
+        timeSinceArrest: "less-than-1-month",
+        hasAttorney: "private",
+        motionsFiled: "yes",
+        hasDiscovery: "yes",
+        communicationFrequency: "monthly",
+        strategyDiscussed: "yes-detail",
+        criminalHistory: "none",
+        caseStage: "arrested",
+        licensedProfession: "no",
+      });
+      expect(result.observations.length).toBeGreaterThanOrEqual(3);
+    });
+
     it("always includes a charge-specific observation", () => {
       for (const chargeType of ALLOWED_VALUES.chargeType) {
         const result = score({ chargeType });

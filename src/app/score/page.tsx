@@ -319,7 +319,7 @@ function getLoadingSteps(chargeType: string): string[] {
  *   Origin story → Tribe identity → Single CD CTA → Email capture →
  *   Playbook step-down → Trust line → Reset
  */
-function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAdjust, stats }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void; answers: Record<string, string>; scoreRef: React.RefObject<HTMLDivElement | null>; onAdjust: () => void; stats: { totalCompletions: number; insights: { pctNoMotions: number | null; pctNeverDiscovery: number | null; pctNoComm: number | null } } | null }) {
+function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAdjust, onReset, stats }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void; answers: Record<string, string>; scoreRef: React.RefObject<HTMLDivElement | null>; onAdjust: () => void; onReset: () => void; stats: { totalCompletions: number; insights: { pctNoMotions: number | null; pctNeverDiscovery: number | null; pctNoComm: number | null } } | null }) {
   const [emailSubmitting, setEmailSubmitting] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [copiedTemplate, setCopiedTemplate] = useState(false);
@@ -745,7 +745,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
       {/* 12. RESET */}
       <p className="text-center text-sm text-zinc-400 space-x-4">
         <button
-          onClick={() => window.location.reload()}
+          onClick={onReset}
           className="text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
         >
           Take the score again
@@ -937,7 +937,7 @@ export default function ScorePage() {
         )}
 
         {result ? (
-          <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} scoreRef={scoreRef} onAdjust={() => setResult(null)} stats={stats} />
+          <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} scoreRef={scoreRef} onAdjust={() => setResult(null)} onReset={() => { setResult(null); setAnswers({}); setEmailSent(false); try { sessionStorage.removeItem("inna-score"); } catch {} }} stats={stats} />
         ) : (
           <form onSubmit={handleSubmit} className="mt-10 space-y-8">
             <p className="text-sm text-zinc-400">
