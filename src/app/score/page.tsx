@@ -319,7 +319,7 @@ function getLoadingSteps(chargeType: string): string[] {
  *   Origin story → Tribe identity → Single CD CTA → Email capture →
  *   Playbook step-down → Trust line → Reset
  */
-function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAdjust }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void; answers: Record<string, string>; scoreRef: React.RefObject<HTMLDivElement | null>; onAdjust: () => void }) {
+function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAdjust, stats }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void; answers: Record<string, string>; scoreRef: React.RefObject<HTMLDivElement | null>; onAdjust: () => void; stats: { totalCompletions: number; insights: { pctNoMotions: number | null; pctNeverDiscovery: number | null; pctNoComm: number | null } } | null }) {
   const [emailSubmitting, setEmailSubmitting] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [copiedTemplate, setCopiedTemplate] = useState(false);
@@ -435,6 +435,29 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           </FadeInUp>
         ))}
       </div>
+
+      {/* 2b. DAI BENCHMARK INSIGHTS — aggregate data from prior completions */}
+      {stats && stats.insights.pctNoMotions !== null && (
+        <div className="mt-6 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+          <p className="text-xs font-semibold uppercase tracking-wider text-amber-500">
+            What our data shows
+          </p>
+          <ul className="mt-3 space-y-2 text-sm text-zinc-400">
+            {stats.insights.pctNoMotions !== null && stats.insights.pctNoMotions > 0 && (
+              <li>{stats.insights.pctNoMotions}% of defendants who scored had no motions filed</li>
+            )}
+            {stats.insights.pctNeverDiscovery !== null && stats.insights.pctNeverDiscovery > 0 && (
+              <li>{stats.insights.pctNeverDiscovery}% had never seen their discovery documents</li>
+            )}
+            {stats.insights.pctNoComm !== null && stats.insights.pctNoComm > 0 && (
+              <li>{stats.insights.pctNoComm}% reported zero communication from their attorney</li>
+            )}
+          </ul>
+          <p className="mt-3 text-xs text-zinc-600">
+            Anonymous, aggregated data from {stats.totalCompletions.toLocaleString()} defense assessments.
+          </p>
+        </div>
+      )}
 
       {/* 3. URGENCY BLOCK — for crisis buyers only (score <= 55) */}
       {result.score <= 55 && (
@@ -750,6 +773,10 @@ export default function ScorePage() {
   const [emailSent, setEmailSent] = useState(false);
   const [completionCount, setCompletionCount] = useState(0);
   const [loadingStep, setLoadingStep] = useState(0);
+  const [stats, setStats] = useState<{
+    totalCompletions: number;
+    insights: { pctNoMotions: number | null; pctNeverDiscovery: number | null; pctNoComm: number | null };
+  } | null>(null);
   const scoreRef = useRef<HTMLDivElement>(null);
 
   const answeredCount = Object.keys(answers).length;
@@ -760,6 +787,14 @@ export default function ScorePage() {
     fetch("/api/score/count")
       .then((r) => r.json())
       .then((d) => setCompletionCount(d.count || 0))
+      .catch(() => {});
+  }, []);
+
+  // Fetch DAI stats on mount
+  useEffect(() => {
+    fetch("/api/stats/score-summary")
+      .then((r) => r.json())
+      .then(setStats)
       .catch(() => {});
   }, []);
 
@@ -892,8 +927,17 @@ export default function ScorePage() {
           </p>
         </div>
 
+        {stats && stats.totalCompletions >= 50 && !result && (
+          <p className="mb-6 text-center text-sm text-zinc-500">
+            <span className="font-semibold text-zinc-400">
+              {stats.totalCompletions.toLocaleString()}
+            </span>{" "}
+            defendants have scored their defense.
+          </p>
+        )}
+
         {result ? (
-          <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} scoreRef={scoreRef} onAdjust={() => setResult(null)} />
+          <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} scoreRef={scoreRef} onAdjust={() => setResult(null)} stats={stats} />
         ) : (
           <form onSubmit={handleSubmit} className="mt-10 space-y-8">
             <p className="text-sm text-zinc-400">
