@@ -80,9 +80,8 @@ export async function GET(req: NextRequest) {
       title: draft.title,
     });
   } catch (err) {
-    const errMsg = err instanceof Error ? err.message : String(err);
-    console.error("[Cron/blog-generate] Fatal error:", errMsg);
+    console.error("[Cron/blog-generate] Fatal error:", err);
     await releaseCronLock(lock.executionId, "failed");
-    return NextResponse.json({ error: errMsg }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
