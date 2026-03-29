@@ -2,7 +2,7 @@
  * @file /api/cron/drip — Daily cron orchestrator
  *
  * Schedule: Runs daily at 9 AM EST (14:00 UTC) via Vercel Cron.
- * Protected by CRON_SECRET bearer token (Vercel sets this automatically).
+ * Protected by CRON_AUTH_TOKEN bearer token via cron-job.org.
  *
  * All task logic lives in src/lib/cron/*.ts — this file is a thin orchestrator
  * that runs each task sequentially with isolated error handling.
