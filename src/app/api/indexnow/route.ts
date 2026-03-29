@@ -16,7 +16,7 @@ const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
 
 export async function POST(req: NextRequest) {
   const secret = req.headers.get("authorization")?.replace("Bearer ", "") ?? "";
-  const expected = process.env.CRON_SECRET ?? "";
+  const expected = process.env.CRON_AUTH_TOKEN ?? "";
   const secretBuf = Buffer.from(secret);
   const expectedBuf = Buffer.from(expected);
   if (!secret || !expected || secretBuf.length !== expectedBuf.length || !crypto.timingSafeEqual(secretBuf, expectedBuf)) {

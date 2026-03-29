@@ -21,7 +21,7 @@ const REQUIRED_ENV = [
   "ANTHROPIC_API_KEY",
   "OPERATOR_SECRET",
   "OPERATOR_EMAIL",
-  "CRON_SECRET",
+  "CRON_AUTH_TOKEN",
 ];
 
 export async function GET() {

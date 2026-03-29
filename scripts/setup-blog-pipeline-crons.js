@@ -3,7 +3,7 @@
  * Run with: node scripts/setup-blog-pipeline-crons.js
  *
  * Reads secrets from .env.local (same pattern as setup-cronjob-org.js).
- * Requires CRONJOB_API_KEY and CRON_SECRET to be set in .env.local.
+ * Requires CRONJOB_API_KEY and CRON_AUTH_TOKEN to be set in .env.local.
  *
  * Saves created job IDs to scripts/blog-pipeline-cron-ids.json for future reference.
  */
@@ -53,10 +53,10 @@ function loadEnv() {
 
 const env = loadEnv();
 const CRONJOB_API_KEY = env.CRONJOB_API_KEY;
-const CRON_SECRET = env.CRON_SECRET;
+const CRON_AUTH_TOKEN = env.CRON_AUTH_TOKEN;
 
-if (!CRONJOB_API_KEY || !CRON_SECRET) {
-  console.error('ERROR: CRONJOB_API_KEY and CRON_SECRET must be set in .env.local');
+if (!CRONJOB_API_KEY || !CRON_AUTH_TOKEN) {
+  console.error('ERROR: CRONJOB_API_KEY and CRON_AUTH_TOKEN must be set in .env.local');
   process.exit(1);
 }
 
@@ -114,7 +114,7 @@ async function createCronJob(job) {
       },
       extendedData: {
         headers: {
-          'Authorization': `Bearer ${CRON_SECRET}`,
+          'Authorization': `Bearer ${CRON_AUTH_TOKEN}`,
           'Content-Type': 'application/json',
         },
       },

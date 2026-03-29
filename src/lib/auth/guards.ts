@@ -71,7 +71,7 @@ export function requireOperatorSecret(req: NextRequest): GuardResult {
 
 /** Validates Bearer token against CRON_SECRET. Used by /api/cron/* routes. */
 export function requireCron(req: NextRequest): GuardResult {
-  const secret = process.env.CRON_SECRET;
+  const secret = process.env.CRON_AUTH_TOKEN;
   if (!secret) {
     return { authorized: false, error: new AuthError("Server misconfigured", 500).toResponse() };
   }

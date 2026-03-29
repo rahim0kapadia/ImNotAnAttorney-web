@@ -77,7 +77,7 @@ export async function middleware(req: NextRequest) {
 
   // ── Cron routes (/api/cron/*) ──────────────────────────────
   if (pathname.startsWith("/api/cron")) {
-    const cronSecret = process.env.CRON_SECRET;
+    const cronSecret = process.env.CRON_AUTH_TOKEN;
     if (!cronSecret) {
       return NextResponse.json(
         { error: "Server misconfigured" },
