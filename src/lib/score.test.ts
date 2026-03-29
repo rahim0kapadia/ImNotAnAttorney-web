@@ -182,7 +182,14 @@ describe("calculateScore", () => {
           (obs) =>
             obs.toLowerCase().includes("dui") ||
             obs.toLowerCase().includes("drug") ||
+            obs.toLowerCase().includes("trafficking") ||
+            obs.toLowerCase().includes("probation") ||
             obs.toLowerCase().includes("white collar") ||
+            obs.toLowerCase().includes("sex offense") ||
+            obs.toLowerCase().includes("registry") ||
+            obs.toLowerCase().includes("federal") ||
+            obs.toLowerCase().includes("self-defense") ||
+            obs.toLowerCase().includes("justified") ||
             obs.toLowerCase().includes("felony") ||
             obs.toLowerCase().includes("misdemeanor") ||
             obs.toLowerCase().includes("cases")
@@ -604,8 +611,14 @@ describe("getTimeLabel", () => {
 describe("getChargeLabel", () => {
   it("converts all slugs to readable labels", () => {
     expect(getChargeLabel("drug")).toBe("drug offense");
+    expect(getChargeLabel("drug-possession")).toBe("drug possession");
+    expect(getChargeLabel("drug-trafficking")).toBe("drug trafficking");
     expect(getChargeLabel("dui")).toBe("DUI/DWI");
+    expect(getChargeLabel("probation-violation")).toBe("probation violation");
     expect(getChargeLabel("white-collar")).toBe("white collar");
+    expect(getChargeLabel("sex-offense")).toBe("sex offense");
+    expect(getChargeLabel("federal-criminal")).toBe("federal criminal");
+    expect(getChargeLabel("self-defense")).toBe("self-defense");
     expect(getChargeLabel("other-felony")).toBe("felony");
     expect(getChargeLabel("other-misdemeanor")).toBe("misdemeanor");
   });
@@ -649,6 +662,59 @@ describe("getChargeSpecificObservation", () => {
     expect(obs).toContain("permanent record");
   });
 
+  it("drug-possession returns same observation style as legacy drug", () => {
+    const possession = getChargeSpecificObservation("drug-possession", 0, "private");
+    const legacy = getChargeSpecificObservation("drug", 0, "private");
+    expect(possession).toContain("drug possession");
+    expect(legacy).toContain("drug possession");
+  });
+
+  it("drug-trafficking mentions mandatory minimums or quantity", () => {
+    const obs = getChargeSpecificObservation("drug-trafficking", 0, "private");
+    expect(obs.toLowerCase()).toMatch(/mandatory minimum|quantity/);
+  });
+
+  it("drug-trafficking no-attorney mentions CI and wiretap", () => {
+    const obs = getChargeSpecificObservation("drug-trafficking", 0, "no");
+    expect(obs.toLowerCase()).toMatch(/confidential informant|wiretap/);
+  });
+
+  it("probation-violation mentions technical vs substantive", () => {
+    const obs = getChargeSpecificObservation("probation-violation", 0, "private");
+    expect(obs).toContain("technical");
+    expect(obs).toContain("substantive");
+  });
+
+  it("sex-offense mentions registration or SORNA", () => {
+    const obs = getChargeSpecificObservation("sex-offense", 0, "private");
+    expect(obs.toLowerCase()).toMatch(/registration|registry|sorna/);
+  });
+
+  it("sex-offense no-attorney mentions collateral consequences", () => {
+    const obs = getChargeSpecificObservation("sex-offense", 0, "no");
+    expect(obs).toContain("collateral consequences");
+  });
+
+  it("federal-criminal mentions sentencing guidelines or USSG", () => {
+    const obs = getChargeSpecificObservation("federal-criminal", 0, "private");
+    expect(obs.toLowerCase()).toMatch(/guideline|ussg|ausa/);
+  });
+
+  it("federal-criminal late-stage mentions Rule 16", () => {
+    const obs = getChargeSpecificObservation("federal-criminal", 2, "private");
+    expect(obs).toContain("Rule 16");
+  });
+
+  it("self-defense mentions reasonable belief or justified", () => {
+    const obs = getChargeSpecificObservation("self-defense", 0, "private");
+    expect(obs.toLowerCase()).toMatch(/reasonable belief|imminent harm|surveillance/);
+  });
+
+  it("self-defense no-attorney mentions stand your ground or duty to retreat", () => {
+    const obs = getChargeSpecificObservation("self-defense", 0, "no");
+    expect(obs.toLowerCase()).toMatch(/stand your ground|duty to retreat/);
+  });
+
   it("unknown charge type returns generic observation", () => {
     const obs = getChargeSpecificObservation("arson", 0, "private");
     expect(obs).toContain("elements the prosecution must prove");
@@ -672,8 +738,19 @@ describe("ALLOWED_VALUES", () => {
     }
   });
 
-  it("chargeType has exactly 5 values", () => {
-    expect(ALLOWED_VALUES.chargeType).toHaveLength(5);
+  it("chargeType has exactly 11 values", () => {
+    expect(ALLOWED_VALUES.chargeType).toHaveLength(11);
+  });
+
+  it("chargeType includes all 8 playbook charge types plus catch-alls and legacy", () => {
+    const expected = [
+      "drug", "drug-possession", "drug-trafficking", "dui",
+      "probation-violation", "white-collar", "sex-offense",
+      "federal-criminal", "self-defense", "other-felony", "other-misdemeanor",
+    ];
+    for (const ct of expected) {
+      expect(ALLOWED_VALUES.chargeType).toContain(ct);
+    }
   });
 
   it("caseStage has 7 values covering the full lifecycle", () => {

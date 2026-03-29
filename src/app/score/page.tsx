@@ -66,9 +66,14 @@ const questions = [
     id: "chargeType",
     label: "What are you charged with?",
     options: [
-      { value: "drug", label: "Drug offense" },
       { value: "dui", label: "DUI / DWI" },
+      { value: "drug-possession", label: "Drug possession" },
+      { value: "drug-trafficking", label: "Drug trafficking / distribution" },
+      { value: "probation-violation", label: "Probation violation" },
       { value: "white-collar", label: "White collar / fraud" },
+      { value: "sex-offense", label: "Sex offense" },
+      { value: "federal-criminal", label: "Federal criminal charge" },
+      { value: "self-defense", label: "Self-defense / justifiable force" },
       { value: "other-felony", label: "Other felony" },
       { value: "other-misdemeanor", label: "Other misdemeanor" },
     ],
@@ -170,15 +175,27 @@ const questions = [
 const CHARGE_PLAYBOOK: Record<string, string> = {
   dui: "dui-first-offense",
   drug: "drug-possession",
+  "drug-possession": "drug-possession",
+  "drug-trafficking": "drug-trafficking",
+  "probation-violation": "probation-violation",
   "white-collar": "white-collar",
+  "sex-offense": "sex-offense",
+  "federal-criminal": "federal-criminal",
+  "self-defense": "self-defense",
 };
 
 /** Converts chargeType slug to display label */
 function getChargeLabel(charge: string): string {
   const labels: Record<string, string> = {
     drug: "drug offense",
+    "drug-possession": "drug possession",
+    "drug-trafficking": "drug trafficking",
     dui: "DUI/DWI",
+    "probation-violation": "probation violation",
     "white-collar": "white collar",
+    "sex-offense": "sex offense",
+    "federal-criminal": "federal criminal",
+    "self-defense": "self-defense",
     "other-felony": "felony",
     "other-misdemeanor": "misdemeanor",
   };
@@ -224,6 +241,60 @@ const ATTORNEY_EMAIL_TEMPLATES: Record<string, { questions: string[]; preservati
       "When is our next scheduled communication, and what should I prepare before then?",
     ],
     preservationNote: "Federal cases have strict filing deadlines for pre-trial motions, and loss calculation challenges must be raised early in the process.",
+  },
+  "drug-possession": {
+    questions: [
+      "I'd like to understand whether the search warrant and affidavit in my case have been reviewed for potential challenges. Have any issues been identified?",
+      "Has the lab report been compared against the field inventory — specifically weight, substance type, and chain of custody documentation?",
+      "Have any motions been filed or planned, specifically regarding evidence suppression or search validity? What are the filing deadlines?",
+      "When is our next scheduled communication, and what should I prepare before then?",
+    ],
+    preservationNote: "Search warrant challenges and evidence suppression motions must be filed before specific court deadlines. Once those windows close, the evidence stays in.",
+  },
+  "drug-trafficking": {
+    questions: [
+      "I'd like to understand whether I'm charged based on quantity thresholds or actual distribution evidence, and how that affects my exposure to mandatory minimums.",
+      "Has the reliability of any confidential informants been examined, and have we reviewed the CI's history of cases and cooperation agreements?",
+      "If wiretap evidence was used, has the authorization and minimization compliance been reviewed for potential challenges?",
+      "Have any motions been filed or planned? What are the key filing deadlines?",
+    ],
+    preservationNote: "Wiretap authorization challenges and CI reliability motions must be filed before specific pre-trial deadlines. Mandatory minimums for trafficking are based on quantity calculations that can be contested.",
+  },
+  "probation-violation": {
+    questions: [
+      "I'd like to understand whether this is classified as a technical or substantive violation, and how that distinction affects the possible outcomes.",
+      "Are graduated sanctions or alternatives to revocation available in my jurisdiction, and have those been explored?",
+      "What evidence does the prosecution intend to present at the revocation hearing, and what is our strategy for responding?",
+      "When is the revocation hearing scheduled, and what documentation should I prepare?",
+    ],
+    preservationNote: "Probation revocation hearings can be scheduled quickly. Compliance documentation, treatment records, and employment verification should be gathered immediately.",
+  },
+  "sex-offense": {
+    questions: [
+      "I'd like to understand the full scope of collateral consequences — specifically registry requirements, residency restrictions, and employment limitations under current SORNA rules.",
+      "Has the forensic evidence collection been reviewed for procedural errors — chain of custody, interview protocols, and digital evidence handling?",
+      "Has all Brady material been requested and received? Are there any inconsistencies in witness statements or prior statements?",
+      "Have any motions been filed or planned? What are the key filing deadlines I should be aware of?",
+    ],
+    preservationNote: "Digital evidence and forensic interview recordings may be subject to preservation requests. Registry consequences make plea decisions particularly high-stakes — understand the full collateral impact before any plea discussions.",
+  },
+  "federal-criminal": {
+    questions: [
+      "I'd like to understand my current sentencing guideline range under the USSG — including base offense level, specific offense characteristics, and criminal history category.",
+      "Has all Rule 16 discovery been received and reviewed? Are there additional materials we should request?",
+      "Have any discussions with the AUSA occurred regarding cooperation, plea agreements, or charge bargaining? What is the government's theory of the case?",
+      "Have any motions been filed or planned? What are the key filing deadlines?",
+    ],
+    preservationNote: "Federal pre-trial motions have strict filing deadlines. Early assessment of cooperation options and sentencing exposure is critical — federal sentences are substantially longer than state equivalents.",
+  },
+  "self-defense": {
+    questions: [
+      "I'd like to understand our jurisdiction's self-defense standard — specifically, is this a 'stand your ground' jurisdiction or 'duty to retreat,' and how does that affect our defense theory?",
+      "Has all evidence supporting my reasonable belief of imminent harm been preserved — including surveillance footage, 911 recordings, medical records, and witness statements?",
+      "Has the proportionality of force been analyzed in the context of the threat I faced? Are we prepared to address this at trial?",
+      "Have any motions been filed or planned? What are the key filing deadlines?",
+    ],
+    preservationNote: "Surveillance footage and 911 recordings have retention windows. Witness memories fade quickly — early identification and statements are critical for self-defense cases.",
   },
   "other-felony": {
     questions: [
@@ -290,8 +361,14 @@ function CompletionCounter({ target }: { target: number }) {
 function getLoadingSteps(chargeType: string): string[] {
   const chargeLabel: Record<string, string> = {
     drug: "drug",
+    "drug-possession": "drug possession",
+    "drug-trafficking": "drug trafficking",
     dui: "DUI/DWI",
+    "probation-violation": "probation violation",
     "white-collar": "white collar",
+    "sex-offense": "sex offense",
+    "federal-criminal": "federal criminal",
+    "self-defense": "self-defense",
     "other-felony": "felony",
     "other-misdemeanor": "misdemeanor",
   };
@@ -495,8 +572,18 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             <span className="font-semibold text-rose-400">Time-sensitive:</span>{" "}
             {answers.chargeType === "dui" && answers.motionsFiled !== "yes"
               ? "DUI cases have time-critical evidence — breathalyzer calibration logs and dash cam footage have fixed retention windows. Some agencies delete footage at 30 or 90 days. If your attorney hasn't preserved this evidence, it may already be gone."
-              : answers.chargeType === "drug" && answers.motionsFiled !== "yes"
-              ? "In drug cases, search warrant challenges and evidence suppression motions must be filed before specific court deadlines. Once those windows close, the evidence — even if improperly obtained — stays in."
+              : (answers.chargeType === "drug" || answers.chargeType === "drug-possession") && answers.motionsFiled !== "yes"
+              ? "In drug possession cases, search warrant challenges and evidence suppression motions must be filed before specific court deadlines. Once those windows close, the evidence — even if improperly obtained — stays in."
+              : answers.chargeType === "drug-trafficking"
+              ? "Trafficking charges carry mandatory minimum sentences based on quantity calculations that can be contested. Wiretap authorization challenges and CI reliability motions have strict pre-trial deadlines — once those windows close, the evidence stays in regardless of how it was obtained."
+              : answers.chargeType === "probation-violation"
+              ? "Probation revocation hearings can be scheduled quickly and use a lower standard of proof. Compliance documentation, treatment records, and employment verification need to be gathered immediately — the hearing may come before you're ready."
+              : answers.chargeType === "sex-offense"
+              ? "Sex offense convictions trigger mandatory registry requirements, residency restrictions, and employment limitations that can last decades — separate from the criminal sentence. Every plea discussion needs to account for these collateral consequences before any decision is made."
+              : answers.chargeType === "federal-criminal"
+              ? "Federal cases move faster and carry substantially longer sentences than state cases. Federal sentencing guidelines and mandatory minimums make early guideline calculation and cooperation assessment critical — the window for pre-indictment intervention is narrow."
+              : answers.chargeType === "self-defense"
+              ? "Self-defense cases depend on evidence that degrades quickly — surveillance footage, 911 recordings, and witness memories. If this evidence isn't preserved now, it may not exist by trial. Your attorney should have preservation requests filed immediately."
               : "Motion deadlines in criminal cases run from the date of arrest — not from when you decide to act. Suppression motions, speedy trial demands, and diversion applications all have filing windows that close permanently."}
           </p>
         </div>

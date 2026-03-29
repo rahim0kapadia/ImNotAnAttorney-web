@@ -48,7 +48,7 @@ export interface ScoreResult {
  * logic -- only pre-defined slug values that are checked against this list).
  */
 export const ALLOWED_VALUES: Record<string, string[]> = {
-  chargeType: ["drug", "dui", "white-collar", "other-felony", "other-misdemeanor"],
+  chargeType: ["drug", "drug-possession", "drug-trafficking", "dui", "probation-violation", "white-collar", "sex-offense", "federal-criminal", "self-defense", "other-felony", "other-misdemeanor"],
   timeSinceArrest: ["less-than-1-month", "1-3-months", "3-6-months", "6-12-months", "12-plus-months"],
   hasAttorney: ["private", "public-defender", "no", "not-sure"],
   motionsFiled: ["yes", "no", "dont-know"],
@@ -345,8 +345,14 @@ export function getTimeLabel(time: string): string {
 export function getChargeLabel(charge: string): string {
   const labels: Record<string, string> = {
     drug: "drug offense",
+    "drug-possession": "drug possession",
+    "drug-trafficking": "drug trafficking",
     dui: "DUI/DWI",
+    "probation-violation": "probation violation",
     "white-collar": "white collar",
+    "sex-offense": "sex offense",
+    "federal-criminal": "federal criminal",
+    "self-defense": "self-defense",
     "other-felony": "felony",
     "other-misdemeanor": "misdemeanor",
   };
@@ -369,17 +375,53 @@ export function getChargeSpecificObservation(chargeType: string, timeIndex: numb
         ? "For DUI cases at this stage, your attorney should have already requested breathalyzer calibration records and the arresting officer's field sobriety certification. Ask: \"Have we received the breathalyzer maintenance logs?\""
         : "For DUI cases, early priorities include requesting the dash/body cam footage and the breathalyzer calibration records. Ask your attorney if these have been requested.";
     case "drug":
+    case "drug-possession":
       if (noAttorney) {
-        return "For drug cases, the right attorney will examine how the evidence was obtained — search warrant validity, informant reliability, chain of custody, and lab report accuracy. These are the first questions to ask when you retain counsel.";
+        return "For drug possession cases, the right attorney will examine how the evidence was obtained — search warrant validity, informant reliability, chain of custody, and lab report accuracy. These are the first questions to ask when you retain counsel.";
       }
       return timeIndex >= 2
-        ? "For drug cases at this stage, lab report review is critical — weight calculation errors and chain-of-custody gaps have led to charge reductions. Ask: \"Have you reviewed the lab report for accuracy?\""
-        : "For drug cases, your attorney should be examining how the evidence was obtained — search warrant validity, informant reliability, and chain of custody. Ask what their plan is for challenging the evidence.";
+        ? "For drug possession cases at this stage, lab report review is critical — weight calculation errors and chain-of-custody gaps have led to charge reductions. Ask: \"Have you reviewed the lab report for accuracy?\""
+        : "For drug possession cases, your attorney should be examining how the evidence was obtained — search warrant validity, informant reliability, and chain of custody. Ask what their plan is for challenging the evidence.";
+    case "drug-trafficking":
+      if (noAttorney) {
+        return "For trafficking charges, the right attorney will examine whether you're charged based on quantity thresholds or actual distribution evidence, whether confidential informant testimony is involved, and whether wiretap evidence was properly authorized. Mandatory minimums make early intervention critical.";
+      }
+      return timeIndex >= 2
+        ? "For trafficking cases at this stage, your attorney should have reviewed all wiretap authorizations, CI reliability records, and co-defendant statements. Conspiracy charges can extend liability to others' actions. Ask: \"Have you challenged the CI's reliability and the basis for the quantity calculation?\""
+        : "For trafficking cases, your attorney should be examining the basis for the charge — quantity-based thresholds vs. actual distribution evidence, and whether conspiracy exposure applies. Ask: \"Am I exposed to mandatory minimums, and what is the quantity at issue?\"";
+    case "probation-violation":
+      if (noAttorney) {
+        return "Probation violation hearings use a lower standard of proof — preponderance of evidence, not beyond reasonable doubt. The right attorney will determine whether this is a technical or substantive violation and whether graduated sanctions or alternatives to revocation are available.";
+      }
+      return timeIndex >= 2
+        ? "For probation violations at this stage, your attorney should have a clear strategy for the revocation hearing — including mitigating evidence, compliance documentation, and alternative sanctions. Ask: \"What evidence are we presenting at the hearing, and have we explored graduated sanctions?\""
+        : "For probation violations, the distinction between technical and substantive violations matters — technical violations often have alternatives to revocation. Ask your attorney: \"Is this a technical or substantive violation, and what alternatives to jail time exist?\"";
     case "white-collar":
       if (noAttorney) {
         return "White collar cases often have parallel civil or regulatory exposure on a separate timeline. When you retain an attorney, one of the first questions to ask is whether there is civil liability connected to the charges.";
       }
       return "White collar cases often have parallel civil or regulatory exposure on a separate timeline. Ask: \"Is there any civil liability connected to these charges, and are we addressing it?\"";
+    case "sex-offense":
+      if (noAttorney) {
+        return "Sex offense cases carry severe collateral consequences beyond the criminal sentence — mandatory registry under SORNA, residency restrictions, and employment limitations that can last decades. The right attorney will scrutinize forensic evidence procedures, digital evidence handling, and Brady material before anything else.";
+      }
+      return timeIndex >= 2
+        ? "For sex offense cases at this stage, your attorney should have reviewed all forensic reports, challenged evidence handling procedures, and assessed Brady material. Registry consequences make every decision high-stakes. Ask: \"Have you identified any issues with how the evidence was collected, and what is our defense theory?\""
+        : "For sex offense cases, your attorney should be scrutinizing forensic evidence collection, digital evidence preservation, and interview procedures. Ask: \"What are the registration requirements if convicted, and what is your strategy to avoid them?\"";
+    case "federal-criminal":
+      if (noAttorney) {
+        return "Federal cases move faster and carry harsher penalties than state cases. Federal sentencing guidelines, mandatory minimums, and cooperation agreements make early attorney involvement critical. The right attorney will immediately assess your exposure under the USSG and explore pre-indictment intervention.";
+      }
+      return timeIndex >= 2
+        ? "For federal cases at this stage, your attorney should have filed all pre-trial motions, obtained Rule 16 discovery, and have a clear sentencing strategy. Ask: \"Have we received all Rule 16 discovery, and what is our sentencing exposure under the guidelines?\""
+        : "For federal cases, your attorney should be calculating your sentencing guideline range and examining grand jury materials. Ask: \"What is my estimated guideline range, and what has been discussed with the AUSA?\"";
+    case "self-defense":
+      if (noAttorney) {
+        return "Self-defense is an affirmative defense — you're admitting the act but arguing it was justified. The right attorney will examine whether your jurisdiction follows 'stand your ground' or 'duty to retreat,' the proportionality of force used, and the timeline of events. Witness statements and surveillance footage are time-critical.";
+      }
+      return timeIndex >= 2
+        ? "For self-defense cases at this stage, your attorney should have a clear theory of justification, preserved all surveillance and witness evidence, and prepared for force proportionality arguments. Ask: \"What is our theory of justification, and have we preserved all evidence of the threat?\""
+        : "For self-defense cases, your attorney should be preserving all evidence of the threat — witness statements, surveillance footage, medical records, and 911 recordings. Ask: \"What evidence supports my reasonable belief of imminent harm, and has it been preserved?\"";
     case "other-felony":
       if (noAttorney) {
         return "For felony cases, the right attorney will build a defense theory by identifying which elements of the charge are weakest. This should be one of the first conversations you have with counsel.";
