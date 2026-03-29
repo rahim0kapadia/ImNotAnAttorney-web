@@ -50,3 +50,12 @@ next-env.d.ts
 
 # Tool artifacts
 .review-state.json
+
+# Generated images (reproducible from scripts/)
+scripts/gbp-cover-1024x576.png
+scripts/gbp-cover-v2-1024x576.png
+scripts/gbp-profile-500x500.png
+scripts/gbp-photos/
+
+# Test reports
+test-reports/
