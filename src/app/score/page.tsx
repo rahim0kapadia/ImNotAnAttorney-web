@@ -323,6 +323,10 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
   const [emailSubmitting, setEmailSubmitting] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [copiedTemplate, setCopiedTemplate] = useState(false);
+  const [shareToken, setShareToken] = useState<string | null>(null);
+  const [shareUrl, setShareUrl] = useState<string | null>(null);
+  const [shareLoading, setShareLoading] = useState(false);
+  const [shareError, setShareError] = useState<string | null>(null);
 
   const isCrisis = result.score <= 50;
   const timeIndex = getTimeIndex(answers.timeSinceArrest);
@@ -399,6 +403,31 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
     lines.push("");
     lines.push("[Your Name]");
     return lines.join("\n");
+  }
+
+  async function handleShare() {
+    if (shareLoading || shareToken) return;
+    setShareLoading(true);
+    setShareError(null);
+    try {
+      const res = await fetch("/api/score/share", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(answers),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({ error: "Could not create share link" }));
+        setShareError(data.error || "Could not create share link");
+        return;
+      }
+      const data = await res.json();
+      setShareToken(data.token);
+      setShareUrl(data.url);
+    } catch {
+      setShareError("Could not connect. Please try again.");
+    } finally {
+      setShareLoading(false);
+    }
   }
 
   return (
@@ -724,15 +753,34 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </div>
       )}
 
-      {/* 10. SHARE BUTTONS — viral growth loop */}
-      <ShareButtons
-        url="/score"
-        title="Defense Milestone Score"
-        heading="Know someone facing charges? Send them this tool — 60 seconds, free, no email."
-        subheading="Share the tool, not your result. Their score stays private."
-        shareText="Check if your attorney is actually working your case — free, 60 seconds, no email required: "
-        utmParams="utm_source=share&utm_medium=score&utm_campaign=viral"
-      />
+      {/* 10. SHARE YOUR SCORE — personalized viral share */}
+      {!shareToken ? (
+        <FadeInUp>
+          <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6 text-center">
+            <p className="text-sm font-bold text-white">Know someone facing charges?</p>
+            <p className="mt-1 text-xs text-zinc-400">
+              Send them this — 60 seconds, free, no email required.
+            </p>
+            <button
+              onClick={handleShare}
+              disabled={shareLoading}
+              className="mt-4 rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black hover:bg-amber-400 disabled:opacity-50 transition-colors"
+            >
+              {shareLoading ? "Creating link..." : "Share Your Score"}
+            </button>
+            {shareError && <p className="mt-2 text-xs text-red-400">{shareError}</p>}
+          </div>
+        </FadeInUp>
+      ) : (
+        <ShareButtons
+          url={shareUrl!}
+          title={`Defense Milestone Score: ${result.band}`}
+          heading="Share your score"
+          subheading="Your score link is ready. Pick how you want to share it."
+          shareText={`I just scored my criminal defense in 60 seconds — free, no email. Worth checking if you have a case: ${shareUrl}`}
+          emailBody={`I used this free tool to check if my attorney is hitting basic defense milestones. Takes 60 seconds, no email required: ${shareUrl}`}
+        />
+      )}
 
       {/* 11. PRIVACY + AGGREGATE NOTICE */}
       <p className="text-center text-xs text-zinc-400">
