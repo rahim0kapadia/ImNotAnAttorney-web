@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 500px;
+    height: 500px;
+    background: #09090b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ring {
+    position: absolute;
+    width: 460px;
+    height: 460px;
+    border-radius: 50%;
+    border: 2px solid rgba(245, 158, 11, 0.12);
+    top: 20px;
+    left: 20px;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .icon-group {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+
+  .brandname {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: #ffffff;
+    margin-top: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  .brandname span {
+    color: #f59e0b;
+  }
+</style>
+</head>
+<body>
+  <div class="ring"></div>
+  <div class="content">
+    <div class="icon-group">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Case file / document -->
+        <rect x="45" y="30" width="90" height="120" rx="4" fill="none" stroke="#3f3f46" stroke-width="2"/>
+        <rect x="50" y="35" width="80" height="110" rx="3" fill="#18181b" stroke="#52525b" stroke-width="1"/>
+        <!-- Document lines -->
+        <line x1="62" y1="55" x2="118" y2="55" stroke="#3f3f46" stroke-width="2" stroke-linecap="round"/>
+        <line x1="62" y1="67" x2="110" y2="67" stroke="#3f3f46" stroke-width="2" stroke-linecap="round"/>
+        <line x1="62" y1="79" x2="115" y2="79" stroke="#3f3f46" stroke-width="2" stroke-linecap="round"/>
+        <line x1="62" y1="91" x2="105" y2="91" stroke="#3f3f46" stroke-width="2" stroke-linecap="round"/>
+        <line x1="62" y1="103" x2="112" y2="103" stroke="#3f3f46" stroke-width="2" stroke-linecap="round"/>
+        <line x1="62" y1="115" x2="98" y2="115" stroke="#3f3f46" stroke-width="2" stroke-linecap="round"/>
+        <!-- Highlighted line (the finding) -->
+        <rect x="59" y="73" width="60" height="12" rx="2" fill="rgba(245,158,11,0.15)"/>
+        <line x1="62" y1="79" x2="115" y2="79" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+        <!-- Magnifying glass -->
+        <circle cx="138" cy="120" r="28" fill="none" stroke="#f59e0b" stroke-width="3"/>
+        <circle cx="138" cy="120" r="22" fill="rgba(245,158,11,0.06)"/>
+        <line x1="157" y1="141" x2="175" y2="162" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>
+        <!-- Silhouette figure (head + shoulders, top-left) -->
+        <circle cx="32" cy="52" r="14" fill="#27272a"/>
+        <path d="M10,90 Q10,70 32,68 Q54,70 54,90" fill="#27272a"/>
+        <!-- Figure's arm reaching toward document -->
+        <path d="M48,78 Q55,72 58,65" fill="none" stroke="#27272a" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="brandname">Im<span>Not</span>An<span>Attorney</span></div>
+  </div>
+</body>
+</html>

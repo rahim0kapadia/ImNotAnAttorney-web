@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1024px;
+    height: 576px;
+    background: #0a0a0a;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Subtle grid texture */
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245,158,11,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,158,11,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  /* Left column — 60% */
+  .left {
+    width: 60%;
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .category {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: #f59e0b;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .rule {
+    width: 60px;
+    height: 2px;
+    background: #f59e0b;
+    margin: 20px 0;
+  }
+
+  .tagline {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 44px;
+    color: #fff;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+  }
+
+  .tagline em {
+    font-style: normal;
+    color: #f59e0b;
+  }
+
+  .url {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: #52525b;
+    margin-top: 28px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Right column — 40% */
+  .right {
+    width: 40%;
+    padding: 60px 50px 60px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Case finding card */
+  .finding-card {
+    background: #18181b;
+    border-left: 3px solid #f59e0b;
+    border-radius: 0 6px 6px 0;
+    padding: 24px;
+  }
+
+  .finding-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .finding-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    color: #f59e0b;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .finding-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    color: #ef4444;
+    background: rgba(239,68,68,0.1);
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+  }
+
+  .finding-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #27272a;
+  }
+
+  .finding-row:last-child {
+    border-bottom: none;
+  }
+
+  .finding-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #71717a;
+  }
+
+  .finding-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #e4e4e7;
+    text-align: right;
+  }
+
+  .finding-value.alert {
+    color: #ef4444;
+  }
+
+  .finding-value.amber {
+    color: #f59e0b;
+  }
+
+  /* Second smaller card */
+  .stats-card {
+    background: #18181b;
+    border-left: 3px solid #3f3f46;
+    border-radius: 0 6px 6px 0;
+    padding: 16px 24px;
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    color: #52525b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+
+  <div class="left">
+    <div class="category">Criminal Defense Research</div>
+    <div class="rule"></div>
+    <div class="tagline">Know What<br><em>They</em> Know.</div>
+    <div class="url">imnotanattorney.com</div>
+  </div>
+
+  <div class="right">
+    <div class="finding-card">
+      <div class="finding-header">
+        <span class="finding-label">Case Finding</span>
+        <span class="finding-status">Undisclosed</span>
+      </div>
+      <div class="finding-row">
+        <span class="finding-key">Scene weight</span>
+        <span class="finding-value">93.9g</span>
+      </div>
+      <div class="finding-row">
+        <span class="finding-key">Lab weight</span>
+        <span class="finding-value">25.59g</span>
+      </div>
+      <div class="finding-row">
+        <span class="finding-key">Delta</span>
+        <span class="finding-value alert">68.3g unaccounted</span>
+      </div>
+      <div class="finding-row">
+        <span class="finding-key">Attorney raised</span>
+        <span class="finding-value alert">No</span>
+      </div>
+      <div class="finding-row">
+        <span class="finding-key">Source</span>
+        <span class="finding-value amber">Lab report p.12</span>
+      </div>
+    </div>
+
+    <div class="stats-card">
+      <div class="stat">
+        <div class="stat-number">15</div>
+        <div class="stat-label">Questions</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Findings</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Defense Angles</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

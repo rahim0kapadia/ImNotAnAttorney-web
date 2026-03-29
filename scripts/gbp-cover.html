@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1024px;
+    height: 576px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Subtle amber gradient glow from bottom-left */
+  .glow {
+    position: absolute;
+    bottom: -120px;
+    left: -80px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Left accent bar */
+  .accent-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #f59e0b;
+  }
+
+  .content {
+    text-align: center;
+    padding: 0 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tagline {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 64px;
+    color: #fff;
+    letter-spacing: -1px;
+    line-height: 1.15;
+  }
+
+  .tagline em {
+    font-style: normal;
+    color: #f59e0b;
+  }
+
+  .brand {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: #f59e0b;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 32px;
+  }
+
+  .sub {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #71717a;
+    margin-top: 14px;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="accent-bar"></div>
+  <div class="content">
+    <div class="tagline">Know What <em>They</em> Know.</div>
+    <div class="brand">ImNotAnAttorney</div>
+    <div class="sub">Criminal Defense Research for Defendants</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 500px;
+    height: 500px;
+    background: #09090b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Circle-safe zone guide — all content stays inside this radius */
+  .content {
+    width: 340px;
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .brandname {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 42px;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  .brandname span {
+    color: #f59e0b;
+  }
+
+  .tagline {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #71717a;
+    margin-top: 16px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Subtle amber ring that follows the circle crop */
+  .ring {
+    position: absolute;
+    width: 460px;
+    height: 460px;
+    border-radius: 50%;
+    border: 2px solid rgba(245, 158, 11, 0.15);
+    top: 20px;
+    left: 20px;
+  }
+</style>
+</head>
+<body>
+  <div class="ring"></div>
+  <div class="content">
+    <div class="brandname">Im<span>Not</span>An<span>Attorney</span></div>
+    <div class="tagline">Know What They Know.</div>
+  </div>
+</body>
+</html>
