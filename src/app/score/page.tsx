@@ -530,7 +530,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           You just scored your defense in 60 seconds. That&apos;s a different kind of defendant.
         </p>
         <p className="mt-2 text-sm font-medium text-zinc-200">
-          That&apos;s who this was built for.
+          That&apos;s who this was built for. Here&apos;s what comes next.
         </p>
       </div>
 

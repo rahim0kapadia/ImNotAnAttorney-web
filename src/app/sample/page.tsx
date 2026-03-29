@@ -597,9 +597,10 @@ export default function SamplePage() {
                 If you&apos;re feeling overwhelmed, start here:
               </p>
               <p className="mt-1 text-sm text-zinc-300">
-                Send the pre-written email from Exactly What to Say. Copy, paste,
-                send. 30 seconds. Done. You&apos;ve just done something most
-                defendants never do.
+                The pre-written email in Exactly What to Say is built from your
+                case specifics. Copy, paste, send. The questions that follow
+                aren&apos;t generic tips — they&apos;re the same moves that
+                separate prepared defendants from unprepared ones.
               </p>
             </div>
 
@@ -617,27 +618,27 @@ export default function SamplePage() {
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 1
                     </td>
-                    <td className="py-2 pr-4">Send the email</td>
+                    <td className="py-2 pr-4">Your attorney email is ready to send</td>
                     <td className="py-2 text-zinc-400">
-                      Copy-paste from Exactly What to Say. Done.
+                      Pre-written in Exactly What to Say — copy, paste, send.
                     </td>
                   </tr>
                   <tr className="border-b border-zinc-800">
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 2
                     </td>
-                    <td className="py-2 pr-4">Your 5 priority questions are already marked in order</td>
+                    <td className="py-2 pr-4">5 priority questions are highlighted and numbered</td>
                     <td className="py-2 text-zinc-400">
-                      They&apos;re highlighted and numbered — just skim when you&apos;re ready.
+                      Already in order — review when ready.
                     </td>
                   </tr>
                   <tr className="border-b border-zinc-800">
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 3
                     </td>
-                    <td className="py-2 pr-4">The follow-up template is ready if needed</td>
+                    <td className="py-2 pr-4">Follow-up template is ready if needed</td>
                     <td className="py-2 text-zinc-400">
-                      Send the follow-up template. Step 3 of Your Advocacy Steps.
+                      Pre-written in Your Advocacy Steps — built for this scenario.
                     </td>
                   </tr>
                   <tr className="border-b border-zinc-800">
@@ -653,18 +654,18 @@ export default function SamplePage() {
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 5
                     </td>
-                    <td className="py-2 pr-4">Read the questions once before the meeting</td>
+                    <td className="py-2 pr-4">Questions are documented for your meeting</td>
                     <td className="py-2 text-zinc-400">
-                      Read them aloud once. It helps.
+                      Familiar with them beforehand means sharper follow-ups.
                     </td>
                   </tr>
                   <tr>
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 6-7
                     </td>
-                    <td className="py-2 pr-4">Attend your meeting</td>
+                    <td className="py-2 pr-4">Meeting Ready Sheet prepared</td>
                     <td className="py-2 text-zinc-400">
-                      Bring your Meeting Ready Sheet. Ask, listen, write.
+                      Everything you need is on one page — questions, checklist, notes space.
                     </td>
                   </tr>
                 </tbody>
