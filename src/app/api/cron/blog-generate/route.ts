@@ -1,25 +1,19 @@
 /**
- * @file /api/cron/blog-generate — Daily blog post generation pipeline
+ * @file /api/cron/blog-generate — Blog pipeline status endpoint
  *
- * Picks the highest-scoring queued content gap, runs the full generation
- * pipeline (topic enrichment → Anthropic claude-opus-4-6 → MDX parse →
- * validation → DB insert), and returns the generated draft slug + title.
- *
- * One post per invocation. maxDuration = 300s (Vercel Pro limit) to
- * accommodate the Opus API call which can take 60-120s for 8K token output.
+ * Returns counts of content_gaps and blog_drafts by status.
+ * Generation has been moved to a local scheduled task (claude -p via Max
+ * subscription) — this route is now a lightweight status-only probe.
  *
  * Protected by CRON_SECRET bearer token.
- * Idempotency lock: "blog-generate", 23h window.
+ * Idempotency lock: "blog-generate", 23h window (prevents status spam).
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { requireCron } from "@/lib/auth/guards";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { acquireCronLock, releaseCronLock } from "@/lib/cron-idempotency";
-import { generatePost } from "@/lib/blog-generation/generate-post";
-import type { ContentGapForGeneration } from "@/lib/types/blog-pipeline";
 
-export const maxDuration = 300; // 5 minutes for Opus generation
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
@@ -36,48 +30,38 @@ export async function GET(req: NextRequest) {
   const supabase = createAdminClient();
 
   try {
-    // ── Pick ONE queued gap (highest gap_score first) ──
-    const { data: gaps, error: gapError } = await supabase
+    // Query gap counts by status
+    const { data: statusCounts, error } = await supabase
       .from("content_gaps")
-      .select(
-        "id, charge_type_slug, pain_point_slug, demand_quadrant, demand_score, gap_score, suggested_title, suggested_keywords"
-      )
-      .eq("status", "queued")
-      .order("gap_score", { ascending: false })
-      .limit(1);
+      .select("status");
 
-    if (gapError) {
-      throw new Error(`content_gaps query failed: ${gapError.message}`);
+    // Count by status
+    const counts: Record<string, number> = { queued: 0, "in-progress": 0, complete: 0 };
+    if (statusCounts) {
+      for (const row of statusCounts) {
+        if (row.status in counts) counts[row.status]++;
+      }
     }
 
-    if (!gaps || gaps.length === 0) {
-      await releaseCronLock(lock.executionId, "completed");
-      return NextResponse.json({ generated: false, reason: "no queued gaps" });
+    // Also count blog_drafts by status
+    const { data: draftCounts, error: draftError } = await supabase
+      .from("blog_drafts")
+      .select("status");
+
+    const drafts: Record<string, number> = { draft: 0, "qa-running": 0, "qa-passed": 0, "qa-failed": 0, published: 0 };
+    if (draftCounts) {
+      for (const row of draftCounts) {
+        if (row.status in drafts) drafts[row.status]++;
+      }
     }
-
-    const gap = gaps[0] as ContentGapForGeneration;
-
-    // ── Mark in-progress to prevent double-pick ──
-    const { error: updateError } = await supabase
-      .from("content_gaps")
-      .update({ status: "in-progress" })
-      .eq("id", gap.id);
-
-    if (updateError) {
-      throw new Error(
-        `Failed to mark gap ${gap.id} in-progress: ${updateError.message}`
-      );
-    }
-
-    // ── Run generation pipeline ──
-    const draft = await generatePost(gap, supabase);
 
     await releaseCronLock(lock.executionId, "completed");
 
     return NextResponse.json({
-      generated: true,
-      slug: draft.slug,
-      title: draft.title,
+      pipeline: "blog-generate",
+      note: "Generation moved to local scheduled task (claude -p via Max subscription)",
+      content_gaps: counts,
+      blog_drafts: drafts,
     });
   } catch (err) {
     console.error("[Cron/blog-generate] Fatal error:", err);

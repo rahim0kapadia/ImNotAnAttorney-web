@@ -15,11 +15,12 @@
   - `C:\Users\email\projects\ImNotAnAttorney\system\EVALUATION-TEAM.md` — UPL + Psych criteria
   - `C:\Users\email\.openclaw\workspace\skills\ai-humanizer\` — humanizer skill (24 detectors)
   - `.claude/rules/brand-voice.md` — INAA brand voice guide
-- **Tech stack:** Next.js 16 + React 19 + Supabase + Vercel + cron-job.org + Anthropic API
+- **Tech stack:** Next.js 16 + React 19 + Supabase + Vercel + cron-job.org + local claude -p (Max subscription)
 - **Key decisions:**
   - content_gaps.status is the state machine (identified -> queued -> in-progress -> published / declined)
   - Quality gates: AI Humanizer (score < 45) -> A1 Slop Audit (PASS) -> UPL Compliance (PASS all U1-U15) -> Publish
-  - Generation via Anthropic API (Opus for drafting, Sonnet for QA evaluation)
+  - Generation via local claude -p (Max subscription, Opus model) — NOT Anthropic API
+  - QA evaluation via Anthropic API (Sonnet — lightweight, still on Vercel)
   - All new routes follow existing cron pattern: requireCron(req) auth + acquireCronLock() idempotency
   - Blog posts are MDX files committed to git -> Vercel auto-deploys on push
   - Publishing via GitHub Contents API (serverless-compatible, no local git state)
@@ -42,12 +43,14 @@ content_gaps table (daily feed from demand pipeline)
  +-----------+---------------------+
              v
  +---------------------------------+
- |  /api/cron/blog-generate        |  (Task 3 — the core generation route)
+ |  LOCAL: blog-generate-local.js  |  (Task 3 — moved to local scheduled task)
+ |  Windows Scheduled Task daily   |
  |  Picks one queued gap           |
  |  Enriches with Reddit signals   |
- |  Generates MDX via Opus API     |
+ |  Generates MDX via claude -p    |
  |  Stores in blog_drafts table    |
  |  Status: queued -> in-progress  |
+ |  (Vercel route = status-only)   |
  +-----------+---------------------+
              v
  +---------------------------------+
@@ -209,27 +212,35 @@ CREATE INDEX IF NOT EXISTS idx_content_gaps_queue ON content_gaps(status, gap_sc
 
 ---
 
-### Task 3: Blog Generation Route — `/api/cron/blog-generate`
+### Task 3: Blog Generation — LOCAL scheduled task (migrated 2026-03-29)
 **Files:**
-- `src/app/api/cron/blog-generate/route.ts` — API route handler
-- `src/lib/blog-generation/generate-post.ts` — core generation logic
-- `src/lib/blog-generation/prompts.ts` — prompt templates and charge-type skill mapping
-- `src/lib/blog-generation/topic-research.ts` — topic enrichment from demand signals
+- `C:\Users\email\.claude\scripts\blog-generate-local.js` — local generation script (NEW)
+- `C:\Users\email\.claude\scripts\telegram\prompts\blog-generate.txt` — prompt template (NEW)
+- `src/app/api/cron/blog-generate/route.ts` — Vercel route (NOW status-only, no LLM call)
+- `src/lib/blog-generation/generate-post.ts` — original generation logic (KEPT for reference, unused by local script)
+- `src/lib/blog-generation/prompts.ts` — original prompt templates (ported to blog-generate.txt)
+- `src/lib/blog-generation/topic-research.ts` — original enrichment (ported to blog-generate-local.js)
 
-**Purpose:** Picks one queued content gap, researches the topic via Reddit signal data, generates a full MDX blog post using Anthropic API with expert frameworks, and stores the result in blog_drafts.
+**Migration note (2026-03-29):** Generation moved from Vercel/Anthropic API to local `claude -p` via Max subscription. Saves API credits. Same prompt, same validation, same DB schema. The Vercel route now returns pipeline status counts only. cron-job.org job #7425842 deleted. Windows Scheduled Task "BlogGenerate" runs daily at 6:30 AM ET (10:30 UTC).
 
-**Route handler logic:**
-1. `requireCron(req)` + `acquireCronLock("blog-generate", 23 * 60 * 60 * 1000)`
-2. Pick ONE gap: `SELECT * FROM content_gaps WHERE status = 'queued' ORDER BY gap_score DESC LIMIT 1`
-3. If no queued gap: return `{ generated: false, reason: "no queued gaps" }`
-4. Update content_gaps SET status = 'in-progress'
-5. Call `generatePost(gap)` from generate-post.ts
-6. Return `{ generated: true, slug: draft.slug, title: draft.title }`
+**Local script logic:**
+1. Acquire file-based lock (`~/.claude/atlas-engine/data/locks/blog-generate.lock`)
+2. Load Supabase creds from `.env.local`
+3. Pick ONE gap: `GET content_gaps?status=eq.queued&order=gap_score.desc&limit=1`
+4. If no queued gap: release lock, exit
+5. Mark gap `in-progress`
+6. Enrich topic (Reddit signals, demand scores, related blog posts from `content/blog/`)
+7. Build prompt from template + gap data
+8. Pipe prompt to `claude -p` (Opus, 10-min timeout)
+9. Parse MDX output with gray-matter, validate (frontmatter, word count, TLDRBox)
+10. Insert into `blog_drafts`, update `content_gaps.blog_draft_id`
+11. On failure: roll back gap to `queued`, send Telegram notification
+12. On success: send Telegram notification
 
-**Vercel function config:**
+**Vercel status route (gutted):**
 ```typescript
-export const maxDuration = 300; // 5 minutes for Opus generation
 export const dynamic = 'force-dynamic';
+// Returns: { pipeline, note, content_gaps: {queued, in-progress, complete}, blog_drafts: {draft, qa-running, qa-passed, ...} }
 ```
 
 **topic-research.ts — `enrichTopic(gap)` function:**
@@ -754,11 +765,10 @@ const jobs = [
     url: `${BASE_URL}/api/cron/blog-generate-queue`,
     schedule: { minutes: [0], hours: [10], mdays: [-1], months: [-1], wdays: [-1] },
   },
-  {
-    title: 'INAA: blog-generate',
-    url: `${BASE_URL}/api/cron/blog-generate`,
-    schedule: { minutes: [30], hours: [10], mdays: [-1], months: [-1], wdays: [-1] },
-  },
+  // REMOVED (2026-03-29): blog-generate moved to local Windows Scheduled Task "BlogGenerate"
+  // Was: { title: 'INAA: blog-generate', url: '/api/cron/blog-generate', schedule: 10:30 UTC }
+  // Now: node C:\Users\email\.claude\scripts\blog-generate-local.js (daily 6:30 AM ET)
+  // The Vercel route is now status-only (no LLM call)
   {
     title: 'INAA: blog-qa',
     url: `${BASE_URL}/api/cron/blog-qa`,
@@ -1003,7 +1013,8 @@ After each batch deployment:
 
 **Batch 2 verification:**
 - Queue route: `curl -H "Authorization: Bearer CRON_SECRET" https://imnotanattorney.com/api/cron/blog-generate-queue` returns JSON with queued count (or 0 if no identified gaps)
-- Generate route: `curl -H "Authorization: Bearer CRON_SECRET" https://imnotanattorney.com/api/cron/blog-generate` returns JSON with generated=true/false
+- Generate (local): `node C:\Users\email\.claude\scripts\blog-generate-local.js` — picks top gap, generates draft, inserts into blog_drafts
+- Generate route (status only): `curl -H "Authorization: Bearer CRON_SECRET" https://imnotanattorney.com/api/cron/blog-generate` returns JSON with content_gaps + blog_drafts counts
 - QA route: `curl -H "Authorization: Bearer CRON_SECRET" https://imnotanattorney.com/api/cron/blog-qa` returns JSON with processed count
 - Publish route: `curl -H "Authorization: Bearer CRON_SECRET" https://imnotanattorney.com/api/cron/blog-publish` returns JSON with published count
 - Admin: `curl https://imnotanattorney.com/api/admin/blog-pipeline` returns drafts list and stats
@@ -1012,7 +1023,7 @@ After each batch deployment:
 **End-to-end test:**
 1. Manually insert a content_gap: `INSERT INTO content_gaps (charge_type_slug, gap_score, demand_quadrant, status, suggested_title) VALUES ('dui', 10.00, 'GOLD_MINE', 'identified', 'Field Sobriety Tests: What Your Attorney Needs to Know [2026]');`
 2. Trigger queue route manually -> gap transitions to queued
-3. Trigger generate route manually -> draft appears in blog_drafts with status='draft'
+3. Run `node C:\Users\email\.claude\scripts\blog-generate-local.js` manually -> draft appears in blog_drafts with status='draft'
 4. Trigger QA route manually -> draft evaluated, status becomes qa-passed or qa-failed
 5. If qa-passed: trigger publish route manually -> MDX file appears in GitHub repo, Vercel deploys, blog post visible at /blog/slug
 
@@ -1025,7 +1036,8 @@ After each batch deployment:
 | Opus generates UPL-violating content | Legal liability | UPL gate is zero-tolerance with 15 criteria; 3-retry limit with auto-decline prevents any UPL-violating content from publishing |
 | Humanizer false positives on legal terminology | Posts rejected unnecessarily | Blog threshold set at 45 (not 25); legal terms like "arraignment" and "continuance" are domain-specific, not AI slop; Tier 1 list excludes legal vocabulary |
 | GitHub API rate limits | Publishing blocked | Max 3 posts/day = 3 API calls; well within GitHub's 5000 requests/hour limit for authenticated requests |
-| Vercel function timeout on Opus generation | Generation fails | maxDuration set to 300 seconds (5 min); Opus typically responds in 30-90 seconds for blog-length content; idempotency lock prevents duplicate runs |
+| Local generation timeout | Generation fails | 10-minute timeout on claude -p; file-based lock (30-min stale threshold) prevents duplicate runs; gap rolls back to queued on failure; Telegram notification sent |
+| ~~Vercel function timeout on Opus generation~~ | ~~RESOLVED~~ | Migrated to local claude -p (2026-03-29) — no Vercel timeout constraint |
 | Content gap score changes between queue and generate | Stale topic generated | Re-check gap_score at generation time; skip gap if score dropped below 5 since queueing |
 | Duplicate slugs | File overwrite | UNIQUE constraint on blog_drafts.slug; GitHub API returns 422 if file exists; slug suffixing (-2, -3) as fallback |
 | Git merge conflicts on content/blog/ | Deploy blocked | GitHub API creates individual commits with no local state; each publish is an atomic API call, no merge conflicts possible |
