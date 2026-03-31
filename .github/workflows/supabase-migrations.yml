@@ -1,0 +1,29 @@
+name: Supabase Migrations
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'supabase/migrations/**'
+
+jobs:
+  push-migrations:
+    name: Push Migrations to Production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Link project
+        run: supabase link --project-ref jxjbjmgdukwkoclydqdr
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Push migrations
+        run: supabase db push --linked
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
