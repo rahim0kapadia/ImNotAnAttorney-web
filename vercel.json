@@ -8,6 +8,12 @@
     },
     "src/app/api/cron/generate-backup/route.ts": {
       "maxDuration": 10
+    },
+    "src/app/api/cron/demand-fetch/route.ts": {
+      "maxDuration": 300
+    },
+    "src/app/api/cron/demand-score/route.ts": {
+      "maxDuration": 120
     }
   }
 }

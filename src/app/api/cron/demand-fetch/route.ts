@@ -16,6 +16,9 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { acquireCronLock, releaseCronLock } from '@/lib/cron-idempotency';
 import { fetchRedditSignals } from '@/lib/demand/fetch-signals';
 
+export const maxDuration = 300;
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   // ── Auth ──
   const auth = requireCron(req);

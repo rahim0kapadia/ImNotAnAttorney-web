@@ -18,6 +18,9 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { acquireCronLock, releaseCronLock } from "@/lib/cron-idempotency";
 import { scoreDemand } from "@/lib/demand/score-demand";
 
+export const maxDuration = 120;
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   // ── Auth ──
   const auth = requireCron(req);

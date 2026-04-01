@@ -319,7 +319,7 @@ export async function fetchRedditSignals(supabase: SupabaseClient): Promise<Dema
       const terms = SEARCH_TERMS[slug];
       if (!terms?.length) continue;
 
-      for (const term of terms.slice(0, 2)) {
+      for (const term of terms.slice(0, 1)) {
         const posts = await fetchSearch(sub, term);
         requestCount++;
 
