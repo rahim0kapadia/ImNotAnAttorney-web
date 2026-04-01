@@ -12,7 +12,7 @@
  * Idempotency lock: "demand-score", 23h window.
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { requireCron } from "@/lib/auth/guards";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { acquireCronLock, releaseCronLock } from "@/lib/cron-idempotency";
@@ -32,16 +32,18 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ skipped: true, reason: lock.reason });
   }
 
-  const supabase = createAdminClient();
+  // Return 200 immediately so cron-job.org (30s free-plan cap) doesn't
+  // report a false timeout. The actual work runs post-response via after().
+  after(async () => {
+    const supabase = createAdminClient();
+    try {
+      await scoreDemand(supabase);
+      await releaseCronLock(lock.executionId, "completed");
+    } catch (err) {
+      console.error("[Cron/demand-score] Fatal error:", err);
+      await releaseCronLock(lock.executionId, "failed");
+    }
+  });
 
-  try {
-    const result = await scoreDemand(supabase);
-
-    await releaseCronLock(lock.executionId, "completed");
-    return NextResponse.json(result);
-  } catch (err) {
-    console.error("[Cron/demand-score] Fatal error:", err);
-    await releaseCronLock(lock.executionId, "failed");
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
-  }
+  return NextResponse.json({ status: "started", executionId: lock.executionId });
 }
