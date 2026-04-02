@@ -100,10 +100,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Validate charge type against allowlist — log new taxonomy slugs instead of rejecting.
-    // The frontend sends either a legacy dropdown value or a new DB taxonomy slug.
+    // Validate charge type against allowlist — reject unknown values to prevent prompt injection.
     if (!(ALLOWED_CHARGE_TYPES as readonly string[]).includes(chargeType)) {
-      console.log(`[Intake] New taxonomy slug: ${chargeType}`);
+      return NextResponse.json(
+        { error: "Invalid charge type" },
+        { status: 400 }
+      );
     }
 
     const supabase = createAdminClient();

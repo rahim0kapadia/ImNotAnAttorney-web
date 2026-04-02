@@ -15,7 +15,9 @@ export async function GET(req: NextRequest) {
       question_id: q.question_id,
       label: q.label,
       options: q.options,
-    })));
+    })), {
+      headers: { "Cache-Control": "public, max-age=3600" },
+    });
   } catch {
     return NextResponse.json([]);
   }

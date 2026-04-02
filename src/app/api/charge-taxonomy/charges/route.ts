@@ -25,7 +25,9 @@ export async function GET(req: NextRequest) {
           offense_class: statute?.offense_class ?? null,
         };
       }));
-      return NextResponse.json(enriched);
+      return NextResponse.json(enriched, {
+        headers: { "Cache-Control": "public, max-age=3600" },
+      });
     }
 
     return NextResponse.json(charges.map(c => ({
@@ -34,7 +36,9 @@ export async function GET(req: NextRequest) {
       description: c.description,
       statute_number: null,
       offense_class: null,
-    })));
+    })), {
+      headers: { "Cache-Control": "public, max-age=3600" },
+    });
   } catch {
     return NextResponse.json([]);
   }

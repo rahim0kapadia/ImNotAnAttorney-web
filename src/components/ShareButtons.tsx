@@ -37,7 +37,7 @@ export function ShareButtons({
   const smsText = shareText || `Read this — it might help with your case: ${shareUrl}`;
   const waText = shareText || `${title} ${shareUrl}`;
   const emailSubject = `This might help — ${title}`;
-  const emailBodyText = emailBody || `I thought this might be useful for your case:\n\n${title}\n${shareUrl}\n\nIt covers questions you should be asking your attorney.`;
+  const emailBodyText = emailBody || `I thought this might be useful for your case:\n\n${title}\n${shareUrl}\n\nIt covers questions worth asking your attorney.`;
 
   const buttons = [
     {

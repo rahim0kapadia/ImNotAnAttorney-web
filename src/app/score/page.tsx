@@ -527,11 +527,11 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
 
       {/* 2. OBSERVATIONS — Plain-English findings from the score algorithm */}
       <div className="space-y-3">
-        <h3 className="text-sm font-semibold text-zinc-300">
+        <h2 className="text-sm font-semibold text-zinc-300">
           {isCrisis
             ? "Here\u2019s what your score found \u2014 and why each one matters:"
             : "Here\u2019s what your score reveals \u2014 and what to check next:"}
-        </h3>
+        </h2>
         {result.observations.map((obs, i) => (
           <FadeInUp key={i} delay={i * 0.1}>
             <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">

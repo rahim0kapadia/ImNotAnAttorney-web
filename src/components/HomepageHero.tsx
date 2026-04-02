@@ -88,6 +88,12 @@ export function HomepageHero() {
                 Every dollar credited toward higher tiers. Credits valid 12
                 months.
               </p>
+              <Link
+                href="#pricing"
+                className="mt-2 text-xs text-zinc-400 underline decoration-zinc-600 hover:text-zinc-300"
+              >
+                See pricing →
+              </Link>
             </div>
           </FadeInUp>
         </div>

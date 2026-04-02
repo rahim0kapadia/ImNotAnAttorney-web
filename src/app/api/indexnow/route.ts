@@ -9,19 +9,14 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { SITE_URL } from "@/lib/site";
-import crypto from "crypto";
+import { requireCron } from "@/lib/auth/guards";
 
 const INDEXNOW_KEY = process.env.INDEXNOW_KEY || "e4052ae08a6601d2550172f078562c00";
 const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
 
 export async function POST(req: NextRequest) {
-  const secret = req.headers.get("authorization")?.replace("Bearer ", "") ?? "";
-  const expected = process.env.CRON_AUTH_TOKEN ?? "";
-  const secretBuf = Buffer.from(secret);
-  const expectedBuf = Buffer.from(expected);
-  if (!secret || !expected || secretBuf.length !== expectedBuf.length || !crypto.timingSafeEqual(secretBuf, expectedBuf)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const auth = requireCron(req);
+  if (!auth.authorized) return auth.error;
 
   let body;
   try {

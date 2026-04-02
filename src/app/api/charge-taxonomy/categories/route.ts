@@ -7,7 +7,9 @@ export async function GET() {
     const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (!url || !key) return NextResponse.json([]);
     const categories = await getChargeCategories(url, key);
-    return NextResponse.json(categories);
+    return NextResponse.json(categories, {
+      headers: { "Cache-Control": "public, max-age=3600" },
+    });
   } catch {
     return NextResponse.json([]);
   }

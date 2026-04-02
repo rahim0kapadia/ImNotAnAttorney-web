@@ -46,6 +46,7 @@ export function DiscoveryGate({ children }: DiscoveryGateProps) {
           <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-center">
             <button
               onClick={() => setFilter(filter === "post-discovery" ? "all" : "post-discovery")}
+              aria-pressed={filter === "post-discovery"}
               className={`rounded-lg px-6 py-3 text-sm font-semibold transition-colors ${
                 filter === "post-discovery"
                   ? "bg-amber-500 text-black"
@@ -56,6 +57,7 @@ export function DiscoveryGate({ children }: DiscoveryGateProps) {
             </button>
             <button
               onClick={() => setFilter(filter === "pre-discovery" ? "all" : "pre-discovery")}
+              aria-pressed={filter === "pre-discovery"}
               className={`rounded-lg px-6 py-3 text-sm font-semibold transition-colors ${
                 filter === "pre-discovery"
                   ? "bg-amber-500 text-black"

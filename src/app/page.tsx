@@ -37,7 +37,6 @@ import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContai
 import { AnimatedCounter } from "@/components/motion/AnimatedCounter";
 import { TrustBadges } from "@/components/TrustBadges";
 import { TestimonialSection } from "@/components/TestimonialSection";
-import { RecentPurchaseNotification } from "@/components/RecentPurchaseNotification";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { DiscoveryReveal } from "@/components/motion/DiscoveryReveal";
 import { HomepageHero } from "@/components/HomepageHero";
@@ -800,7 +799,6 @@ export default function Home() {
       </section>
 
       {/* Global components */}
-      <RecentPurchaseNotification />
       <StickyMobileCTA />
     </div>
   );
