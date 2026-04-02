@@ -46,7 +46,7 @@ export function FAQAccordion({ items }: FAQAccordionProps) {
             aria-expanded={openIndex === i}
             aria-controls={`faq-answer-${i}`}
           >
-            <span className="text-sm font-semibold text-white">
+            <span className="text-base font-semibold text-white">
               {item.question}
             </span>
             <motion.span

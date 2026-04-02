@@ -111,7 +111,7 @@ export function Header() {
         <button
           ref={toggleRef}
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="text-zinc-400 md:hidden"
+          className="p-2 text-zinc-400 md:hidden"
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
         >
@@ -180,7 +180,7 @@ export function Header() {
             <Link
               href="/start"
               onClick={() => setMobileOpen(false)}
-              className="rounded-lg bg-amber-500 px-4 py-2 text-center text-sm font-semibold text-black transition-colors hover:bg-amber-400"
+              className="rounded-lg bg-amber-500 px-4 py-3 text-center text-sm font-semibold text-black transition-colors hover:bg-amber-400"
             >
               Get Started
             </Link>

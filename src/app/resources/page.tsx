@@ -189,7 +189,7 @@ export default function ResourcesPage() {
             Arrested for DUI in the Last 48 Hours?
           </h2>
           <p className="mt-1 text-sm text-zinc-400">
-            There are three things you need to do before your window closes — one has a deadline as short as 7 days.
+            There are three things worth doing immediately before your window closes — one has a deadline as short as 7 days.
           </p>
           <div className="mt-6">
             <LeadCapture

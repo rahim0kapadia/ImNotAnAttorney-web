@@ -937,7 +937,7 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
       },
       {
         title: "Cooperation Is a Business Decision",
-        text: "Proffer agreements, 5K1.1 motions, substantial assistance \u2014 cooperation can cut your sentence dramatically. But it can also be used against you. You need to understand the terms before you sign anything.",
+        text: "Proffer agreements, 5K1.1 motions, substantial assistance \u2014 cooperation can cut your sentence dramatically. But it can also be used against you. Understanding the terms before signing is critical.",
       },
       {
         title: "\u201CTrust Me\u201D Isn\u2019t a Strategy",

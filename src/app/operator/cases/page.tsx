@@ -209,7 +209,9 @@ function CaseListContent() {
               {cases.map((c) => (
                 <tr
                   key={c.id}
+                  tabIndex={0}
                   onClick={() => router.push(`/operator/cases/${c.id}`)}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); router.push(`/operator/cases/${c.id}`); } }}
                   className="border-b border-zinc-800 cursor-pointer hover:bg-zinc-800/50 transition-colors"
                 >
                   <td className="px-4 py-3 text-zinc-200 font-medium max-w-[200px] truncate">

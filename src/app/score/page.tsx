@@ -879,7 +879,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             >
               {shareLoading ? "Creating link..." : "Share Your Score"}
             </button>
-            {shareError && <p className="mt-2 text-xs text-red-400">{shareError}</p>}
+            {shareError && <p role="alert" className="mt-2 text-xs text-red-400">{shareError}</p>}
           </div>
         </FadeInUp>
       ) : (
@@ -1125,7 +1125,7 @@ export default function ScorePage() {
             </div>
             {questions.map((q, qIndex) => (
               <fieldset key={q.id}>
-                <legend className="text-sm font-semibold text-zinc-300">
+                <legend className="text-base font-semibold text-zinc-300">
                   <span className="mr-2 text-amber-400">{qIndex + 1}.</span>
                   {q.label}
                 </legend>
@@ -1139,7 +1139,7 @@ export default function ScorePage() {
                   {q.options.map((opt) => (
                     <label
                       key={opt.value}
-                      className={`flex min-h-[44px] cursor-pointer items-center gap-3 rounded-lg border px-3 py-3 text-sm transition-colors ${
+                      className={`flex min-h-[44px] cursor-pointer items-center gap-3 rounded-lg border px-3 py-3 text-base transition-colors ${
                         answers[q.id] === opt.value
                           ? "border-amber-500/50 bg-amber-500/5 text-white"
                           : "border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:border-zinc-700"

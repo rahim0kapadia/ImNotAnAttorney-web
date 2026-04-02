@@ -235,9 +235,9 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
             {tier.anchor && (
               <p className="mt-1 text-xs text-amber-400/70">{tier.anchor}</p>
             )}
-            <p className="mt-2 text-sm text-zinc-400">{tier.description}</p>
+            <p className="mt-2 text-base text-zinc-400">{tier.description}</p>
             {tier.bestFor && (
-              <p className="mt-2 text-sm font-medium text-amber-400">Best for: {tier.bestFor}</p>
+              <p className="mt-2 text-base font-medium text-amber-400">Best for: {tier.bestFor}</p>
             )}
             {"priorityAvailable" in tier && tier.priorityAvailable && (
               <p className="mt-1 text-xs text-zinc-400">{tier.priorityAvailable}</p>
@@ -349,9 +349,9 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
             {tier.anchor && (
               <p className="mt-1 text-xs text-amber-400/70">{tier.anchor}</p>
             )}
-            <p className="mt-2 text-sm text-zinc-400">{tier.description}</p>
+            <p className="mt-2 text-base text-zinc-400">{tier.description}</p>
             {tier.bestFor && (
-              <p className="mt-2 text-sm font-medium text-amber-400">Best for: {tier.bestFor}</p>
+              <p className="mt-2 text-base font-medium text-amber-400">Best for: {tier.bestFor}</p>
             )}
             <ul className="mt-6 flex-1 space-y-3">
               {tier.features.map((feature) => (
@@ -405,7 +405,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
         <p className="text-sm font-semibold text-amber-400">
           Upgrade Credits: 100% Applied
         </p>
-        <p className="mt-2 text-sm text-zinc-400">
+        <p className="mt-2 text-base text-zinc-400">
           Start with the Case Decoder for {TIER_CORE["case-decoder"].priceDisplay}. If you upgrade later, every
           dollar you paid is credited toward the next tier. No money wasted.
           12-month expiration.
@@ -415,7 +415,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
       {/* Guarantee */}
       <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
         <p className="text-lg font-bold text-white">Deliverable Guarantee</p>
-        <p className="mt-2 text-sm text-zinc-400">
+        <p className="mt-2 text-base text-zinc-400">
           Delivery Guarantee: On time with the stated question count — or a
           full cash refund. Satisfaction Guarantee: Not satisfied? 100% credit
           toward any higher tier within 30 days.

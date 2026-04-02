@@ -21,7 +21,7 @@
  * intake forms, blog pages, legal pages, and more.
  */
 
-import { createHash, createHmac } from "crypto";
+import { createHash, createHmac, timingSafeEqual } from "crypto";
 
 // ============================================================
 // SHARED CRYPTO UTILITIES
@@ -181,13 +181,12 @@ export function verifyOperatorToken(
     .update(payload)
     .digest("hex");
 
-  // Constant-time comparison to prevent timing attacks
-  if (providedHmac.length !== expectedHmac.length) return false;
-  let mismatch = 0;
-  for (let i = 0; i < providedHmac.length; i++) {
-    mismatch |= providedHmac.charCodeAt(i) ^ expectedHmac.charCodeAt(i);
-  }
-  return mismatch === 0;
+  // Constant-time comparison using HMAC-then-timingSafeEqual to prevent
+  // length oracle attacks (matches auth/guards.ts pattern).
+  // HMAC digests are always 32 bytes regardless of input length.
+  const hmacA = createHmac("sha256", "inna-guard-compare").update(providedHmac).digest();
+  const hmacB = createHmac("sha256", "inna-guard-compare").update(expectedHmac).digest();
+  return timingSafeEqual(hmacA, hmacB);
 }
 
 /**

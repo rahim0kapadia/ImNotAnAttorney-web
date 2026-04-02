@@ -943,7 +943,7 @@ function CheckoutContent() {
 
           {/* Error */}
           {error && (
-            <div className="mt-4 rounded-lg border border-red-500/50 bg-red-500/10 p-3">
+            <div role="alert" className="mt-4 rounded-lg border border-red-500/50 bg-red-500/10 p-3">
               <p className="text-sm text-red-400">{error}</p>
             </div>
           )}
@@ -970,7 +970,7 @@ function CheckoutContent() {
               required
               className={`mt-2 w-full rounded-lg border-2 ${emailError ? "border-red-500" : "border-amber-500/50"} bg-white px-4 py-3 text-base text-zinc-900 placeholder-zinc-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30`}
             />
-            {emailError && <p className="mt-1 text-xs text-red-400">{emailError}</p>}
+            {emailError && <p role="alert" className="mt-1 text-xs text-red-400">{emailError}</p>}
             <p className="mt-2 text-xs text-zinc-400">No spam — ever. Just your {info.isDigitalProduct ? "download link" : "report"} and delivery updates.</p>
             <p className="mt-1 text-xs text-zinc-400">You&apos;ll receive your report at this address &mdash; help@imnotanattorney.com</p>
           </div>

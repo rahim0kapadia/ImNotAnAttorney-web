@@ -16,7 +16,7 @@ import {
 import type { BatchResultSucceeded } from "@/lib/batch-api";
 import { renderReportHtml } from "@/lib/report-renderer";
 import { sendEmail } from "@/lib/email";
-import { hashToken } from "@/lib/site";
+import { hashToken, signOperatorToken } from "@/lib/site";
 
 export async function pollBatchResults(
   ctx: CronContext
@@ -183,7 +183,7 @@ async function processCDResult(
       to: ctx.operatorEmail,
       subject: `Case Decoder Ready — ${meta.firstName} (${meta.charges})`,
       html: `<p>Batch-generated report ready for review.</p>
-        <p><a href="${reportUrl}">Preview Report</a> | <a href="${ctx.siteUrl}/api/deliver?caseId=${row.id}&token=$OPERATOR_SECRET">Approve &amp; Deliver</a></p>`,
+        <p><a href="${reportUrl}">Preview Report</a> | <a href="${ctx.siteUrl}/api/deliver?caseId=${row.id}&token=${signOperatorToken(row.id)}">Approve &amp; Deliver</a></p>`,
     },
     { category: "operator-alert", case_id: row.id }
   );

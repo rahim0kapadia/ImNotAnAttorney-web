@@ -148,7 +148,7 @@ export function ChargeTypeSelector({ onSelect }: ChargeTypeSelectorProps) {
       </div>
       {selectedCategory && (
         <p
-          className="mx-auto mt-3 max-w-xl text-sm text-zinc-400 transition-opacity"
+          className="mx-auto mt-3 max-w-xl text-base text-zinc-400 transition-opacity"
           key={selectedCategory.slug}
         >
           {selectedCategory.oneLiner}

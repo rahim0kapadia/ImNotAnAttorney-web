@@ -63,6 +63,18 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "Applebot-Extended",
         allow: ["/"],
       },
+      {
+        userAgent: "ClaudeBot",
+        allow: ["/"],
+      },
+      {
+        userAgent: "Claude-User",
+        allow: ["/"],
+      },
+      {
+        userAgent: "Claude-SearchBot",
+        allow: ["/"],
+      },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,

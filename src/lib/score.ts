@@ -97,7 +97,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.hasAttorney === "public-defender") {
     score += 0; // neutral — PDs are overloaded, not bad
     observations.push(
-      "Public defenders handle high caseloads — often 2-4x the recommended maximum. This doesn't mean yours is doing a bad job, but it means you need to be proactive: confirm deadlines, request updates in writing, and ask specifically about motions and discovery status."
+      "Public defenders carry 2-4x recommended caseloads. Being proactive can help — confirm deadlines, request written updates, and ask about motions and discovery status."
     );
   } else if (input.hasAttorney === "no") {
     score -= 15;
@@ -107,7 +107,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.hasAttorney === "not-sure") {
     score -= 10;
     observations.push(
-      "You're not certain about your representation status. Before anything else, confirm whether you have active counsel and who they are — your next court date may already be scheduled."
+      "Confirm whether you have active counsel and who they are — your next court date may already be scheduled."
     );
   }
 
@@ -128,7 +128,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     if (timeIndex >= 2) {
       score -= 20;
       observations.push(
-        `At ${getTimeLabel(input.timeSinceArrest)} post-arrest with no motions filed, key defense windows may already be closing. Suppression motions filed late are often rejected outright — meaning evidence your attorney could have challenged stays in.`
+        `At ${getTimeLabel(input.timeSinceArrest)} post-arrest with no motions filed, key defense windows may be closing. Late suppression motions are often rejected — challengeable evidence stays in.`
       );
     } else {
       score -= 5;
@@ -137,7 +137,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     // "dont-know"
     score -= 10;
     observations.push(
-      "You don't know whether motions have been filed. An engaged attorney communicates about filings proactively — if you don't know, it may mean nothing has been filed. Ask: \"What motions have you filed, and what is still pending?\""
+      "An engaged attorney communicates about filings proactively. If you don't know, nothing may have been filed. Ask: \"What motions have you filed, and what is still pending?\""
     );
   }
 
@@ -150,7 +150,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     if (timeIndex >= 2) {
       score -= 15;
       observations.push(
-        "Discovery should be in your attorney's hands by now. Without it, your attorney is building a defense without seeing the prosecution's evidence — and you can't challenge what you haven't reviewed."
+        "Discovery should be in your attorney's hands by now. Without it, the defense is being built blind — and you can't challenge evidence you haven't reviewed."
       );
     } else {
       score -= 3;
@@ -159,7 +159,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     // "dont-know"
     score -= 10;
     observations.push(
-      "You're not sure what discovery is. Discovery is the evidence the prosecution must share with your defense — police reports, lab results, witness statements. Ask your attorney: \"Have we received all discovery?\""
+      "Discovery is evidence the prosecution must share — police reports, lab results, witness statements. Ask your attorney: \"Have we received all discovery?\""
     );
   }
 
@@ -178,12 +178,12 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.communicationFrequency === "rarely") {
     score -= 10;
     observations.push(
-      "Rare communication from your attorney is concerning. If your attorney isn't contacting you, there's a real chance they haven't touched your file either — attorneys bill by the hour, and no contact often means no work."
+      "Rare communication is concerning. No contact often means no work — attorneys bill by the hour, and silence frequently means your file hasn't been touched."
     );
   } else if (input.communicationFrequency === "never") {
     score -= 20;
     observations.push(
-      "No communication from your attorney is a serious red flag. Deadlines, hearings, and plea offers can move forward whether you know about them or not. Send a written request for a case status update — email or letter, so there's a record."
+      "Zero communication is a serious red flag. Deadlines, hearings, and plea offers move forward whether you know or not. Send a written status request for the record."
     );
   }
 
@@ -200,7 +200,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.strategyDiscussed === "no") {
     score -= 12;
     observations.push(
-      "Your attorney hasn't discussed case strategy with you. An attorney who hasn't explained their defense theory either doesn't have one yet, or doesn't think you need to know. Neither is acceptable when your freedom is on the line."
+      "An attorney who hasn't explained their defense theory either doesn't have one or doesn't think you need to know. Neither is acceptable when freedom is at stake."
     );
   }
 
@@ -212,7 +212,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     const motionStatus = input.motionsFiled === "dont-know" ? "unknown motion status" : "no motions";
     const discoveryStatus = input.hasDiscovery === "dont-know" ? "unknown discovery status" : "no discovery";
     observations.push(
-      `At ${getTimeLabel(input.timeSinceArrest)} since arrest with ${motionStatus} and ${discoveryStatus}, multiple defense windows may have already closed. The longer this continues, the fewer options remain available.`
+      `At ${getTimeLabel(input.timeSinceArrest)} since arrest with ${motionStatus} and ${discoveryStatus}, multiple defense windows may have closed. The longer this continues, the fewer options remain.`
     );
   }
 
@@ -229,7 +229,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.criminalHistory === "felony" || input.criminalHistory === "multiple") {
     score -= 5;
     observations.push(
-      "Prior convictions can trigger sentencing enhancements, mandatory minimums, and loss of diversion eligibility. Ask your attorney: \"How are you accounting for my record in the defense strategy and sentencing exposure?\""
+      "Prior convictions can trigger sentencing enhancements, mandatory minimums, and loss of diversion eligibility. Ask: \"How is my record factored into defense strategy and sentencing exposure?\""
     );
   }
 
@@ -257,19 +257,19 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   if (input.caseStage === "pre-trial" && input.motionsFiled !== "yes") {
     score -= 5;
     observations.push(
-      "You're in the pre-trial phase but no motions have been filed. This is the stage where suppression motions, discovery motions, and other pre-trial motions are expected. Ask your attorney: \"What motions are we filing before trial?\""
+      "Pre-trial phase with no motions filed. This is when suppression and discovery motions are expected. Ask your attorney: \"What motions are we filing before trial?\""
     );
   }
   if (input.caseStage === "trial-prep" && input.strategyDiscussed !== "yes-detail") {
     score -= 5;
     observations.push(
-      "You're preparing for trial but haven't had a detailed strategy discussion with your attorney. At this stage, the defense theory, witness list, and key evidence should all have been walked through with you."
+      "Preparing for trial without a detailed strategy discussion. At this stage, the defense theory, witness list, and key evidence should all have been walked through with you."
     );
   }
   if (input.caseStage === "arraigned" && input.hasDiscovery !== "yes" && timeIndex >= 1) {
     score -= 3;
     observations.push(
-      "You've been arraigned but haven't received discovery yet. After arraignment, your attorney should be requesting or following up on discovery — the prosecution's evidence that your defense needs to review."
+      "Arraigned but no discovery yet. After arraignment, your attorney should be requesting or following up on the prosecution's evidence your defense needs to review."
     );
   }
 
@@ -278,15 +278,15 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   // =========================================================================
   if (input.licensedProfession === "yes-licensed") {
     observations.push(
-      "As a licensed professional, a conviction could trigger licensing board action, suspension, or revocation — separate from the criminal case itself. Make sure your attorney is addressing professional licensing consequences, not just the criminal charges."
+      "A conviction could trigger licensing board action, suspension, or revocation — separate from the criminal case. Confirm your attorney is addressing licensing consequences too."
     );
   } else if (input.licensedProfession === "yes-other") {
     observations.push(
-      "A conviction can affect employment background checks, security clearances, government positions, and professional opportunities — even without a formal license at stake. Make sure your attorney is considering collateral employment consequences, not just the criminal penalty."
+      "A conviction affects background checks, security clearances, and professional opportunities — even without a license at stake. Make sure your attorney is considering collateral employment consequences."
     );
   } else if (input.licensedProfession === "student") {
     observations.push(
-      "As a student, a conviction can affect financial aid eligibility, campus housing, and academic standing. For drug offenses specifically, federal law ties FAFSA eligibility to conviction status. Make sure your attorney knows you're a student — the collateral consequences may be as important as the criminal case."
+      "A conviction can affect financial aid, campus housing, and academic standing. For drug offenses, federal law ties FAFSA eligibility to conviction status. Confirm your attorney knows."
     );
   }
 

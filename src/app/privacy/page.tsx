@@ -517,7 +517,8 @@ export default function PrivacyPage() {
                 Categories disclosed to third parties:
               </strong>{" "}
               Identifiers (to Stripe for payment, to Resend for email delivery);
-              case information (to Anthropic for automated analysis). No categories
+              case information (to Anthropic for automated analysis); internet/network
+              activity (to Google Analytics for traffic analytics). No categories
               are sold.
             </p>
             <p className="mt-2">
