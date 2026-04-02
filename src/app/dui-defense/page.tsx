@@ -94,7 +94,7 @@ export default function DuiDefenseHubPage() {
           on where you were charged. Select your state below to see the
           specific information that applies to your situation.
         </p>
-        <p className="mt-3 text-sm text-zinc-500">
+        <p className="mt-3 text-sm text-zinc-400">
           Over 1.5 million DUI arrests happen every year. You are not the
           first person to go through this. Defense questions built on Lawrence
           Taylor&rsquo;s systematic DUI defense framework and NHTSA field
@@ -112,7 +112,7 @@ export default function DuiDefenseHubPage() {
               className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900/50 px-4 py-3 text-sm transition-colors hover:border-amber-500/30 hover:bg-zinc-900"
             >
               <span className="font-medium text-zinc-300">{s.name}</span>
-              <span className="text-xs text-zinc-500">{s.abbr}</span>
+              <span className="text-xs text-zinc-400">{s.abbr}</span>
             </Link>
           ))}
         </div>
@@ -124,7 +124,7 @@ export default function DuiDefenseHubPage() {
           <h2 className="font-display text-2xl font-bold text-white">
             Additional DUI Resources
           </h2>
-          <p className="mt-2 text-sm text-zinc-500">
+          <p className="mt-2 text-sm text-zinc-400">
             Defense questions built on Lawrence Taylor&rsquo;s systematic DUI
             defense framework and NHTSA field sobriety test standards.
           </p>
@@ -162,7 +162,7 @@ export default function DuiDefenseHubPage() {
       {/* DISCLAIMER */}
       <section className="mt-12">
         <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-zinc-400">
             <strong>Important:</strong> This page provides general legal
             information about DUI laws across the United States. Laws change
             frequently. This is not legal advice. Your attorney remains the

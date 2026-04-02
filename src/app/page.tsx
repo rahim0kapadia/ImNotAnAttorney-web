@@ -144,7 +144,7 @@ const faqSchema = {
 
 export default function Home() {
   return (
-    <main>
+    <div>
       {/* FAQ Schema */}
       <script
         type="application/ld+json"
@@ -345,7 +345,7 @@ export default function Home() {
                 },
               ]}
             />
-            <p className="mt-4 text-center text-xs text-zinc-600">
+            <p className="mt-4 text-center text-xs text-zinc-400">
               *Based on real defendant experiences. Names changed for privacy. Jurisdictions, timelines, and specific findings vary by case.
             </p>
           </div>
@@ -499,7 +499,7 @@ export default function Home() {
               </p>
               <div className="mt-3">
                 <p className="text-sm font-semibold text-white">Michelle P.</p>
-                <p className="text-xs text-zinc-500">White Collar Fraud, New York &middot; Charges dropped</p>
+                <p className="text-xs text-zinc-400">White Collar Fraud, New York &middot; Charges dropped</p>
               </div>
             </div>
           </FadeInUp>
@@ -510,7 +510,7 @@ export default function Home() {
             <StaggerItem>
               <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
                 <div className="text-2xl font-bold text-red-400">Less than one hour</div>
-                <p className="mt-1 text-xs font-semibold text-zinc-500">of your attorney&apos;s billing rate ($250-$500/hr).</p>
+                <p className="mt-1 text-xs font-semibold text-zinc-400">of your attorney&apos;s billing rate ($250-$500/hr).</p>
                 <p className="mt-2 text-sm text-zinc-400">
                   For a full case analysis with 10-15 targeted questions.
                 </p>
@@ -519,7 +519,7 @@ export default function Home() {
             <StaggerItem>
               <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
                 <div className="text-2xl font-bold text-red-400">$10K-$100K+</div>
-                <p className="mt-1 text-xs font-semibold text-zinc-500">What you already paid your attorney.</p>
+                <p className="mt-1 text-xs font-semibold text-zinc-400">What you already paid your attorney.</p>
                 <p className="mt-2 text-sm text-zinc-400">
                   INAA makes sure that money does what you paid for.
                 </p>
@@ -528,7 +528,7 @@ export default function Home() {
             <StaggerItem>
               <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
                 <div className="text-2xl font-bold text-amber-400">{TIER_CORE["case-decoder"].priceDisplay}</div>
-                <p className="mt-1 text-xs font-semibold text-zinc-500">Case Decoder. Your charges, your judge, your specific situation.</p>
+                <p className="mt-1 text-xs font-semibold text-zinc-400">Case Decoder. Your charges, your judge, your specific situation.</p>
                 <p className="mt-2 text-sm text-zinc-400">
                   10-15 case-specific questions based on your charges, your judge, your discovery.
                 </p>
@@ -575,7 +575,7 @@ export default function Home() {
               },
             ]}
           />
-          <p className="mt-4 text-center text-xs text-zinc-600">
+          <p className="mt-4 text-center text-xs text-zinc-400">
             *Based on real defendant experiences. Names changed for privacy. Jurisdictions, timelines, and specific findings vary by case. Past results do not guarantee future outcomes.
           </p>
         </div>
@@ -802,6 +802,6 @@ export default function Home() {
       {/* Global components */}
       <RecentPurchaseNotification />
       <StickyMobileCTA />
-    </main>
+    </div>
   );
 }

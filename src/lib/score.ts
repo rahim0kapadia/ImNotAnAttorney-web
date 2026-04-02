@@ -150,7 +150,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     if (timeIndex >= 2) {
       score -= 15;
       observations.push(
-        "You should have received discovery by now. Without it, your attorney is building a defense without seeing the prosecution's evidence — and you can't challenge what you haven't reviewed."
+        "Discovery should be in your attorney's hands by now. Without it, your attorney is building a defense without seeing the prosecution's evidence — and you can't challenge what you haven't reviewed."
       );
     } else {
       score -= 3;
@@ -172,7 +172,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     score += 0;
     if (timeIndex >= 2) {
       observations.push(
-        "Monthly communication may be acceptable early on, but as your case progresses, you should expect more frequent updates — especially around hearings and deadlines."
+        "Monthly communication may be acceptable early on, but as your case progresses, more frequent updates become the norm — especially around hearings and deadlines."
       );
     }
   } else if (input.communicationFrequency === "rarely") {
@@ -263,7 +263,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   if (input.caseStage === "trial-prep" && input.strategyDiscussed !== "yes-detail") {
     score -= 5;
     observations.push(
-      "You're preparing for trial but haven't had a detailed strategy discussion with your attorney. At this stage, you should understand the defense theory, know which witnesses will be called, and have reviewed key evidence together."
+      "You're preparing for trial but haven't had a detailed strategy discussion with your attorney. At this stage, the defense theory, witness list, and key evidence should all have been walked through with you."
     );
   }
   if (input.caseStage === "arraigned" && input.hasDiscovery !== "yes" && timeIndex >= 1) {

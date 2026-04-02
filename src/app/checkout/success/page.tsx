@@ -288,7 +288,7 @@ function SuccessContent() {
             We couldn&apos;t verify this payment. If you completed checkout, check your email for a confirmation — it may take a moment to process.
           </p>
           {sessionId && (
-            <p className="mt-3 text-sm text-zinc-500">
+            <p className="mt-3 text-sm text-zinc-400">
               Reference: {sessionId.slice(0, 20)}...
             </p>
           )}
@@ -336,7 +336,7 @@ function SuccessContent() {
                   <p className="text-zinc-400">
                     Your playbook download link has been sent to <span className="text-zinc-300">{customerEmail}</span>
                   </p>
-                  <p className="mt-2 text-sm text-zinc-500">
+                  <p className="mt-2 text-sm text-zinc-400">
                     Check your inbox — if you don&apos;t see it in 5 minutes, check spam.
                   </p>
                 </div>
@@ -389,7 +389,7 @@ function SuccessContent() {
                 >
                   Upload Discovery Documents &rarr;
                 </Link>
-                <p className="mt-3 text-xs text-zinc-500">
+                <p className="mt-3 text-xs text-zinc-400">
                   We also sent upload instructions to your email.
                 </p>
               </div>
@@ -424,7 +424,7 @@ function SuccessContent() {
                     ? "White collar cases are document-heavy — forensic accounting gaps, transaction timelines, and asset protection questions require charge-specific analysis. The Case Decoder identifies the financial evidence questions your attorney should be asking."
                     : "The Playbook gives you the general framework. The Case Decoder applies it to YOUR specific charges, YOUR jurisdiction, and YOUR attorney's track record."}
                 </p>
-                <p className="mt-1 text-xs text-zinc-500">
+                <p className="mt-1 text-xs text-zinc-400">
                   Adds: personalized charge breakdown, ready-to-send email templates, phone scripts, 7-day action plan, attorney meeting prep.
                 </p>
                 <Link
@@ -487,7 +487,7 @@ function SuccessContent() {
                 </p>
 
                 {/* Features below fold */}
-                <p className="mt-2 text-xs text-zinc-500">
+                <p className="mt-2 text-xs text-zinc-400">
                   X-Ray adds: full discovery analysis, evidence chain audit, prosecution weakness analysis, 35-50 page-referenced questions, Attorney Delivery Package.
                 </p>
               </div>
@@ -523,7 +523,7 @@ function SuccessContent() {
                   Discovery arrives on a timeline outside your control. When it does, the questions change from &ldquo;what typically happens&rdquo; to &ldquo;what is actually in here.&rdquo; One option is to have that analysis ready before your next attorney meeting.
                 </p>
 
-                <p className="mt-3 text-xs text-zinc-500">
+                <p className="mt-3 text-xs text-zinc-400">
                   Adds: full discovery document index, chronological reconstruction, contradiction report, constitutional issues analysis, 35-50 page-referenced questions, Judge Intelligence Profile, Prosecutor Research Profile.
                 </p>
               </div>
@@ -561,14 +561,14 @@ function SuccessContent() {
                   </Link>
                 </div>
 
-                <p className="mt-3 text-sm text-zinc-500">
+                <p className="mt-3 text-sm text-zinc-400">
                   War Room + Priority Delivery is also available at $3,497 after credit for defendants with an upcoming court date.{" "}
                   <Link href="/checkout?tier=war-room&priority=1" className="text-zinc-400 underline decoration-zinc-600 hover:text-zinc-300">
                     Learn more
                   </Link>
                 </p>
 
-                <p className="mt-3 text-xs text-zinc-500">
+                <p className="mt-3 text-xs text-zinc-400">
                   War Room adds: witness analysis (up to 8), officer dossiers, motion timing analysis, wave strategy overview, case law reference package, evidence chain audit, weekly intelligence updates, attorney delivery package.
                 </p>
               </div>

@@ -85,7 +85,7 @@ const QUADRANT_COLORS: Record<string, string> = {
   GOLD_MINE: "bg-amber-100 text-amber-800 border-amber-300",
   RED_OCEAN: "bg-red-100 text-red-800 border-red-300",
   RISKY_BET: "bg-blue-100 text-blue-800 border-blue-300",
-  DEAD_ZONE: "bg-zinc-100 text-zinc-600 border-zinc-300",
+  DEAD_ZONE: "bg-zinc-100 text-zinc-400 border-zinc-300",
   UNKNOWN: "bg-zinc-50 text-zinc-400 border-zinc-200",
 };
 
@@ -392,7 +392,7 @@ export default function DemandDashboard() {
                   </tr>
                 ))}
                 {scores.length === 0 && (
-                  <tr><td colSpan={8} className="py-8 text-center text-zinc-500">No scores yet. Run the demand pipeline first.</td></tr>
+                  <tr><td colSpan={8} className="py-8 text-center text-zinc-400">No scores yet. Run the demand pipeline first.</td></tr>
                 )}
               </tbody>
             </table>
@@ -408,7 +408,7 @@ export default function DemandDashboard() {
                 <div>
                   <div className="font-medium text-white">{g.charge_type_slug}{g.pain_point_slug ? ` / ${g.pain_point_slug}` : ""}</div>
                   {g.suggested_title && <div className="text-sm text-zinc-400 mt-0.5">{g.suggested_title}</div>}
-                  <div className="flex gap-3 mt-1 text-xs text-zinc-500">
+                  <div className="flex gap-3 mt-1 text-xs text-zinc-400">
                     <span>Demand: {g.demand_score.toFixed(1)}</span>
                     <span>Gap: {g.gap_score.toFixed(0)}</span>
                     <span className={`px-1.5 rounded ${QUADRANT_COLORS[g.demand_quadrant] || ""}`}>
@@ -425,7 +425,7 @@ export default function DemandDashboard() {
                 </button>
               </div>
             ))}
-            {gaps.length === 0 && <p className="text-zinc-500 text-sm">No content gaps identified yet.</p>}
+            {gaps.length === 0 && <p className="text-zinc-400 text-sm">No content gaps identified yet.</p>}
           </div>
         </section>
 
@@ -438,7 +438,7 @@ export default function DemandDashboard() {
                 <div>
                   <div className="font-medium text-white">{t.topic_phrases.join(" + ")}</div>
                   {t.representative_title && <div className="text-sm text-zinc-400 mt-0.5 truncate max-w-lg">{t.representative_title}</div>}
-                  <div className="flex gap-3 mt-1 text-xs text-zinc-500">
+                  <div className="flex gap-3 mt-1 text-xs text-zinc-400">
                     <span>{t.post_count} posts</span>
                     <span>Urgency: {t.avg_urgency.toFixed(1)}</span>
                     <span>Engagement: {t.avg_engagement.toFixed(0)}</span>
@@ -453,7 +453,7 @@ export default function DemandDashboard() {
                 </button>
               </div>
             ))}
-            {emerging.length === 0 && <p className="text-zinc-500 text-sm">No emerging topics detected yet.</p>}
+            {emerging.length === 0 && <p className="text-zinc-400 text-sm">No emerging topics detected yet.</p>}
           </div>
         </section>
 
@@ -482,7 +482,7 @@ export default function DemandDashboard() {
                   </tr>
                 ))}
                 {performance.length === 0 && (
-                  <tr><td colSpan={5} className="py-8 text-center text-zinc-500">No performance data yet.</td></tr>
+                  <tr><td colSpan={5} className="py-8 text-center text-zinc-400">No performance data yet.</td></tr>
                 )}
               </tbody>
             </table>
@@ -497,12 +497,12 @@ export default function DemandDashboard() {
               <div key={s.id} className="flex items-center justify-between bg-zinc-900 rounded-lg p-3 border border-zinc-800">
                 <div>
                   <div className="font-medium text-white">r/{s.display_name || s.subreddit}</div>
-                  <div className="flex gap-3 mt-1 text-xs text-zinc-500">
+                  <div className="flex gap-3 mt-1 text-xs text-zinc-400">
                     <span>{s.subscribers.toLocaleString()} members</span>
                     <span>Via: {s.discovered_via_charge_type}</span>
                     <span>Relevance: {s.relevance_score.toFixed(0)}</span>
                   </div>
-                  {s.description && <div className="text-xs text-zinc-500 mt-1 truncate max-w-lg">{s.description}</div>}
+                  {s.description && <div className="text-xs text-zinc-400 mt-1 truncate max-w-lg">{s.description}</div>}
                 </div>
                 <div className="flex gap-2">
                   <button
@@ -520,7 +520,7 @@ export default function DemandDashboard() {
                 </div>
               </div>
             ))}
-            {subreddits.length === 0 && <p className="text-zinc-500 text-sm">No subreddit candidates yet.</p>}
+            {subreddits.length === 0 && <p className="text-zinc-400 text-sm">No subreddit candidates yet.</p>}
           </div>
         </section>
       </div>

@@ -28,10 +28,10 @@ export default function IntakeChargeQuestions({
   return (
     <div className="space-y-6">
       {questions.map((question) => (
-        <div key={question.question_id}>
-          <p className="text-sm font-medium text-zinc-200 mb-2">
+        <fieldset key={question.question_id} role="radiogroup" className="border-0 p-0 m-0">
+          <legend className="text-sm font-medium text-zinc-200 mb-2">
             {question.label}
-          </p>
+          </legend>
           <div className="flex flex-wrap gap-2">
             {question.options.map((option) => {
               const isSelected = answers[question.question_id] === option;
@@ -39,6 +39,8 @@ export default function IntakeChargeQuestions({
                 <button
                   key={option}
                   type="button"
+                  role="radio"
+                  aria-checked={isSelected}
                   onClick={() => handleSelect(question.question_id, option)}
                   className={[
                     "px-3 py-1.5 rounded-full border text-sm cursor-pointer transition-all",
@@ -52,7 +54,7 @@ export default function IntakeChargeQuestions({
               );
             })}
           </div>
-        </div>
+        </fieldset>
       ))}
     </div>
   );

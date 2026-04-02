@@ -110,7 +110,7 @@ export default function PartnersPage() {
           Commission Per Sale
         </h2>
         <PartnerCommissionTable rows={COMMISSION_TABLE} />
-        <p className="text-center text-zinc-500 text-sm mt-4">
+        <p className="text-center text-zinc-400 text-sm mt-4">
           One X-Ray referral = {xRayEarning}. Five referrals a month = {xRayFiveMonthly} in passive income.
         </p>
       </section>
@@ -143,7 +143,7 @@ export default function PartnersPage() {
             },
           ]}
         />
-        <p className="mt-4 text-center text-xs text-zinc-600">
+        <p className="mt-4 text-center text-xs text-zinc-400">
           *Based on real defendant experiences. Names changed for privacy.
         </p>
       </section>
@@ -174,7 +174,7 @@ export default function PartnersPage() {
 
       {/* Footer */}
       <footer className="border-t border-zinc-800 py-8">
-        <div className="max-w-5xl mx-auto px-6 text-center text-zinc-500 text-sm">
+        <div className="max-w-5xl mx-auto px-6 text-center text-zinc-400 text-sm">
           <p>
             ImNotAnAttorney provides legal information, not legal advice.
           </p>

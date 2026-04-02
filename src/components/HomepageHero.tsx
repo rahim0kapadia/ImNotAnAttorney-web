@@ -84,7 +84,7 @@ export function HomepageHero() {
                 Find It or It&apos;s Free &mdash; if we don&apos;t find
                 something your attorney hasn&apos;t raised, full refund.
               </p>
-              <p className="text-xs text-zinc-500">
+              <p className="text-xs text-zinc-400">
                 Every dollar credited toward higher tiers. Credits valid 12
                 months.
               </p>

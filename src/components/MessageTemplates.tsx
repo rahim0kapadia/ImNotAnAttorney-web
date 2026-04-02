@@ -69,7 +69,7 @@ export function MessageTemplates({ promoCode, referralUrl }: MessageTemplatesPro
           </div>
         );
       })}
-      <p className="text-xs text-zinc-500">
+      <p className="text-xs text-zinc-400">
         Replace [name] with the defendant&apos;s name when you paste.
       </p>
     </div>

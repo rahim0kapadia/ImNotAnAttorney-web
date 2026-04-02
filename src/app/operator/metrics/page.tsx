@@ -58,7 +58,7 @@ function MetricsContent() {
   if (loading && !metrics) {
     return (
       <div className="p-8">
-        <p className="text-sm text-zinc-500">Loading metrics...</p>
+        <p className="text-sm text-zinc-400">Loading metrics...</p>
       </div>
     );
   }
@@ -103,7 +103,7 @@ function MetricsContent() {
       {/* ===== Top-level cards ===== */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-          <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+          <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             Total Revenue
           </p>
           <p className="text-3xl font-bold text-white">
@@ -111,13 +111,13 @@ function MetricsContent() {
           </p>
         </div>
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-          <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+          <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             Total Cases
           </p>
           <p className="text-3xl font-bold text-white">{m.total_cases}</p>
         </div>
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-          <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+          <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             Avg Delivery Time
           </p>
           <p className="text-3xl font-bold text-white">
@@ -127,7 +127,7 @@ function MetricsContent() {
           </p>
         </div>
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-          <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+          <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             SLA Compliance
           </p>
           <p
@@ -147,13 +147,13 @@ function MetricsContent() {
       {/* ===== Pipeline Health ===== */}
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-          <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+          <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             Active Jobs
           </p>
           <p className="text-3xl font-bold text-white">{m.active_jobs}</p>
         </div>
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-          <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+          <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             Failed Jobs
           </p>
           <p
@@ -165,7 +165,7 @@ function MetricsContent() {
           </p>
         </div>
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-          <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+          <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             Open Tasks
           </p>
           <p className="text-3xl font-bold text-white">{m.open_tasks}</p>
@@ -191,7 +191,7 @@ function MetricsContent() {
         </h2>
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 space-y-3">
           {statusEntries.length === 0 ? (
-            <p className="text-sm text-zinc-500">No cases yet.</p>
+            <p className="text-sm text-zinc-400">No cases yet.</p>
           ) : (
             statusEntries.map(([status, count]) => (
               <div key={status} className="flex items-center gap-4">
@@ -222,7 +222,7 @@ function MetricsContent() {
         </h2>
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 space-y-3">
           {tierEntries.length === 0 ? (
-            <p className="text-sm text-zinc-500">No cases yet.</p>
+            <p className="text-sm text-zinc-400">No cases yet.</p>
           ) : (
             tierEntries.map(([tier, count]) => (
               <div key={tier} className="flex items-center gap-4">

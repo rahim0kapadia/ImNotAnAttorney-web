@@ -453,7 +453,7 @@ export default function ServicesPage() {
                 Breathalyzer calibration checklist, case stage roadmap, 12 red
                 flags, Case Progress Scorecard. Instant PDF.
               </p>
-              <p className="mt-2 text-xs text-zinc-500">
+              <p className="mt-2 text-xs text-zinc-400">
                 {TIER_CORE["dui-first-offense"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
@@ -477,7 +477,7 @@ export default function ServicesPage() {
                 lab analysis challenges, search &amp; seizure, CI reliability.
                 Built from real cases.
               </p>
-              <p className="mt-2 text-xs text-zinc-500">
+              <p className="mt-2 text-xs text-zinc-400">
                 {TIER_CORE["drug-possession"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
@@ -501,7 +501,7 @@ export default function ServicesPage() {
                 state cap laws, alternatives to revocation, graduated sanctions.
                 Built from the case-specific arguments that keep defendants out of revocation.
               </p>
-              <p className="mt-2 text-xs text-zinc-500">
+              <p className="mt-2 text-xs text-zinc-400">
                 {TIER_CORE["probation-violation"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
@@ -523,7 +523,7 @@ export default function ServicesPage() {
               <p className="mt-2 text-sm text-zinc-400">
                 26 questions for fraud, embezzlement, and federal charges. Wire fraud elements, cooperation decisions, sentencing guidelines, AUSA profiling. Instant PDF.
               </p>
-              <p className="mt-2 text-xs text-zinc-500">
+              <p className="mt-2 text-xs text-zinc-400">
                 {TIER_CORE["white-collar"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
@@ -545,7 +545,7 @@ export default function ServicesPage() {
               <p className="mt-2 text-sm text-zinc-400">
                 26 questions covering registry implications, evidence preservation, accusation analysis, and constitutional protections. Instant PDF.
               </p>
-              <p className="mt-2 text-xs text-zinc-500">
+              <p className="mt-2 text-xs text-zinc-400">
                 {TIER_CORE["sex-offense"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
@@ -567,7 +567,7 @@ export default function ServicesPage() {
               <p className="mt-2 text-sm text-zinc-400">
                 26 questions on federal procedure, sentencing guidelines, cooperation agreements, and AUSA tactics. Instant PDF.
               </p>
-              <p className="mt-2 text-xs text-zinc-500">
+              <p className="mt-2 text-xs text-zinc-400">
                 {TIER_CORE["federal-criminal"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
@@ -589,7 +589,7 @@ export default function ServicesPage() {
               <p className="mt-2 text-sm text-zinc-400">
                 26 questions on conspiracy charges, mandatory minimums, informant reliability, and wiretap challenges. Instant PDF.
               </p>
-              <p className="mt-2 text-xs text-zinc-500">
+              <p className="mt-2 text-xs text-zinc-400">
                 {TIER_CORE["drug-trafficking"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
@@ -611,7 +611,7 @@ export default function ServicesPage() {
               <p className="mt-2 text-sm text-zinc-400">
                 26 questions on use of force standards, stand your ground, castle doctrine, and witness credibility. Instant PDF.
               </p>
-              <p className="mt-2 text-xs text-zinc-500">
+              <p className="mt-2 text-xs text-zinc-400">
                 {TIER_CORE["self-defense"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
               </p>
             </Link>
@@ -698,7 +698,7 @@ export default function ServicesPage() {
                   </div>
                   <p className="mt-2 text-sm text-zinc-400">{tier.desc}</p>
                   {tier.slug === "x-ray" && (
-                    <p className="mt-3 text-xs text-zinc-500">
+                    <p className="mt-3 text-xs text-zinc-400">
                       Analysis powered by 7 defense methodologies: evidence chain integrity, drug forensic analysis, constitutional compliance mapping, witness statement cross-referencing, suppression opportunity detection, investigation quality assessment, and 15-pattern forensic detection.
                     </p>
                   )}

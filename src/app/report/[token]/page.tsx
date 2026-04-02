@@ -346,7 +346,7 @@ export default async function ReportPage({
       />
       <div className="print-hidden mb-4 flex flex-col items-start gap-2">
         <PrintButton />
-        <p className="text-xs text-zinc-500">
+        <p className="text-xs text-zinc-400">
           Click &quot;Download as PDF&quot; then select &quot;Save as PDF&quot;
           in your browser&apos;s print dialog.
         </p>

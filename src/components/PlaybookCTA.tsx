@@ -37,7 +37,7 @@ export function PlaybookCTA() {
           Or upgrade to {TIER_CORE["case-decoder"].name} — {TIER_CORE["case-decoder"].priceDisplay}
         </Link>
       </div>
-      <p className="mt-2 text-xs text-zinc-500">
+      <p className="mt-2 text-xs text-zinc-400">
         {TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward {TIER_CORE["case-decoder"].name} within 30 days.
       </p>
     </div>

@@ -172,7 +172,7 @@ function InboxContent() {
           <h1 className="text-2xl font-bold text-white mb-2 text-center">
             Admin Inbox
           </h1>
-          <p className="text-zinc-500 text-sm text-center mb-6">
+          <p className="text-zinc-400 text-sm text-center mb-6">
             Enter password to continue
           </p>
           {error && (
@@ -211,7 +211,7 @@ function InboxContent() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-white">Inbox</h1>
-            <p className="text-sm text-zinc-500">
+            <p className="text-sm text-zinc-400">
               help@imnotanattorney.com &mdash; {total} email
               {total !== 1 ? "s" : ""}
               {unreadCount > 0 && (
@@ -259,9 +259,9 @@ function InboxContent() {
           {/* Email list */}
           <div className="space-y-1">
             {loading && emails.length === 0 ? (
-              <p className="text-zinc-500 text-sm">Loading...</p>
+              <p className="text-zinc-400 text-sm">Loading...</p>
             ) : emails.length === 0 ? (
-              <p className="text-zinc-500 text-sm">No emails yet.</p>
+              <p className="text-zinc-400 text-sm">No emails yet.</p>
             ) : (
               emails.map((email) => (
                 <button
@@ -294,17 +294,17 @@ function InboxContent() {
                         </span>
                       </div>
                       <p
-                        className={`text-sm truncate mt-1 ${email.read ? "text-zinc-500" : "text-zinc-300"}`}
+                        className={`text-sm truncate mt-1 ${email.read ? "text-zinc-400" : "text-zinc-300"}`}
                       >
                         {email.subject || "(no subject)"}
                       </p>
                       {email.body_text && (
-                        <p className="text-xs text-zinc-600 truncate mt-1">
+                        <p className="text-xs text-zinc-400 truncate mt-1">
                           {email.body_text.slice(0, 100)}
                         </p>
                       )}
                     </div>
-                    <span className="text-xs text-zinc-600 whitespace-nowrap flex-shrink-0">
+                    <span className="text-xs text-zinc-400 whitespace-nowrap flex-shrink-0">
                       {formatDate(email.created_at)}
                     </span>
                   </div>
@@ -322,7 +322,7 @@ function InboxContent() {
                 >
                   &larr; Previous
                 </button>
-                <span className="text-xs text-zinc-500">
+                <span className="text-xs text-zinc-400">
                   Page {page} of {totalPages}
                 </span>
                 <button
@@ -353,7 +353,7 @@ function InboxContent() {
                           : selected.from_email}
                       </span>
                     </p>
-                    <p className="text-sm text-zinc-500">
+                    <p className="text-sm text-zinc-400">
                       To: {selected.to_email} &mdash;{" "}
                       {new Date(selected.created_at).toLocaleString()}
                     </p>
@@ -370,7 +370,7 @@ function InboxContent() {
                     </button>
                     <button
                       onClick={() => toggleRead(selected)}
-                      className="text-xs text-zinc-500 hover:text-zinc-300 border border-zinc-700 rounded px-2 py-1"
+                      className="text-xs text-zinc-400 hover:text-zinc-300 border border-zinc-700 rounded px-2 py-1"
                     >
                       Mark {selected.read ? "unread" : "read"}
                     </button>
@@ -379,7 +379,7 @@ function InboxContent() {
                 {/* Reply compose */}
                 {replying && (
                   <div className="border-t border-zinc-800 pt-4 mb-4">
-                    <p className="text-xs text-zinc-500 mb-2">
+                    <p className="text-xs text-zinc-400 mb-2">
                       Replying to {selected.from_email}
                     </p>
                     <textarea
@@ -462,7 +462,7 @@ function InboxContent() {
                       {selected.body_text}
                     </pre>
                   ) : (
-                    <p className="text-zinc-500 text-sm">
+                    <p className="text-zinc-400 text-sm">
                       No content available.
                     </p>
                   )}
@@ -470,7 +470,7 @@ function InboxContent() {
               </div>
             ) : (
               <div className="flex items-center justify-center h-full">
-                <p className="text-zinc-600 text-sm">
+                <p className="text-zinc-400 text-sm">
                   Select an email to read
                 </p>
               </div>
@@ -487,7 +487,7 @@ export default function InboxPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-          <p className="text-zinc-500">Loading...</p>
+          <p className="text-zinc-400">Loading...</p>
         </div>
       }
     >

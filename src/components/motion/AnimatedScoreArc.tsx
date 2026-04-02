@@ -110,7 +110,7 @@ export function AnimatedScoreArc({ score, maxScore = 100, size = 200 }: Animated
           className="text-4xl font-bold"
           suffix=""
         />
-        <span className="text-sm text-zinc-500">/ {maxScore}</span>
+        <span className="text-sm text-zinc-400">/ {maxScore}</span>
       </div>
     </div>
   );

@@ -74,7 +74,7 @@ export function OperatorShell({ children }: { children: ReactNode }) {
   if (checking) {
     return (
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <p className="text-zinc-500 text-sm">Loading...</p>
+        <p className="text-zinc-400 text-sm">Loading...</p>
       </div>
     );
   }
@@ -87,7 +87,7 @@ export function OperatorShell({ children }: { children: ReactNode }) {
           <h1 className="text-2xl font-bold text-white mb-2 text-center">
             Operator Dashboard
           </h1>
-          <p className="text-zinc-500 text-sm text-center mb-6">
+          <p className="text-zinc-400 text-sm text-center mb-6">
             Enter password to continue
           </p>
           {error && (
@@ -151,7 +151,7 @@ export function OperatorShell({ children }: { children: ReactNode }) {
         <div className="p-4 border-t border-zinc-800">
           <button
             onClick={handleLogout}
-            className="w-full text-left text-sm text-zinc-500 hover:text-white transition-colors"
+            className="w-full text-left text-sm text-zinc-400 hover:text-white transition-colors"
           >
             Sign Out
           </button>

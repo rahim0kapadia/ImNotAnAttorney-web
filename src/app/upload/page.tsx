@@ -145,7 +145,7 @@ function UploadContent() {
             placeholder="you@example.com"
             className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none"
           />
-          <p className="mt-1 text-xs text-zinc-500">Must match the email you used at checkout.</p>
+          <p className="mt-1 text-xs text-zinc-400">Must match the email you used at checkout.</p>
         </div>
 
         <div className="mt-8">

@@ -137,7 +137,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
       <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4 py-16">
         <div className="max-w-lg w-full">
           <h2 className="text-2xl font-bold text-center mb-2">
-            Here&apos;s what we recommend
+            Here&apos;s what to consider
           </h2>
           <p className="text-zinc-400 text-center mb-8">{rec.reason}</p>
 
@@ -146,7 +146,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
             <p className="text-zinc-400 text-sm mb-4">{tier.delivery}</p>
 
             <div className="flex items-baseline gap-3 mb-4">
-              <span className="text-zinc-500 line-through text-lg">
+              <span className="text-zinc-400 line-through text-lg">
                 ${originalPrice}
               </span>
               <span className="text-3xl font-bold text-white">
@@ -167,13 +167,13 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
 
             <Link
               href="/services"
-              className="block text-center text-zinc-500 text-sm mt-4 hover:text-zinc-400"
+              className="block text-center text-zinc-400 text-sm mt-4 hover:text-zinc-400"
             >
               See other options
             </Link>
           </div>
 
-          <p className="text-center text-zinc-500 text-xs mt-6">
+          <p className="text-center text-zinc-400 text-xs mt-6">
             ImNotAnAttorney provides legal information — not legal advice.
           </p>
         </div>
@@ -210,7 +210,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
             ))}
           </div>
 
-          <p className="text-center text-zinc-500 text-xs mt-8">
+          <p className="text-center text-zinc-400 text-xs mt-8">
             {partnerName}&apos;s code <span className="font-mono text-amber-400">{promoCode}</span> is applied automatically.
           </p>
         </div>

@@ -77,7 +77,7 @@ export default function PlaybookSalesPage({ config }: Props) {
             Two Books Included
           </span>
         </div>
-        <p className="mt-2 text-sm text-zinc-500">
+        <p className="mt-2 text-sm text-zinc-400">
           Emergency Playbook + Full Defense Playbook &mdash; both delivered instantly
         </p>
         <Link
@@ -95,7 +95,7 @@ export default function PlaybookSalesPage({ config }: Props) {
             2 payments of ${(tier.price / 200).toFixed(2)}
           </Link>
         </p>
-        <p className="mt-2 text-xs text-zinc-500">
+        <p className="mt-2 text-xs text-zinc-400">
           Download within 60 seconds of purchase. No intake form. No waiting.
         </p>
         {config.hero.coverImage && (
@@ -178,7 +178,7 @@ export default function PlaybookSalesPage({ config }: Props) {
               className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-6"
             >
               <p className="font-semibold text-white">{method.name}</p>
-              <p className="mt-1 text-xs text-zinc-500">{method.title}</p>
+              <p className="mt-1 text-xs text-zinc-400">{method.title}</p>
               <p className="mt-3 text-sm text-zinc-400">{method.insight}</p>
             </StaggerItem>
           ))}
@@ -200,7 +200,7 @@ export default function PlaybookSalesPage({ config }: Props) {
                 <p className="font-semibold text-white">{section.title}</p>
                 <p className="mt-1 text-sm text-zinc-400">{section.desc}</p>
               </div>
-              <p className="shrink-0 text-sm text-zinc-500 line-through">
+              <p className="shrink-0 text-sm text-zinc-400 line-through">
                 {section.value}
               </p>
             </StaggerItem>
@@ -274,14 +274,14 @@ export default function PlaybookSalesPage({ config }: Props) {
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-bold text-zinc-500">
+            <h3 className="text-lg font-bold text-zinc-400">
               This is NOT for you if...
             </h3>
             <ul className="mt-4 space-y-3">
               {config.audience.notForYou.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-sm text-zinc-500"
+                  className="flex items-start gap-2 text-sm text-zinc-400"
                 >
                   <span className="mt-0.5">&#10007;</span>
                   {item}
@@ -296,7 +296,7 @@ export default function PlaybookSalesPage({ config }: Props) {
       {/* METHODOLOGY DISCLOSURE */}
       <section className="mt-20">
         <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-6">
-          <p className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+          <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
             Important
           </p>
           <p className="mt-3 text-sm text-zinc-400">
@@ -350,7 +350,7 @@ export default function PlaybookSalesPage({ config }: Props) {
       {/* FINAL CTA */}
       <FadeInUp>
       <section className="mt-20 text-center">
-        <p className="text-sm text-zinc-500">{config.comparisonLine}</p>
+        <p className="text-sm text-zinc-400">{config.comparisonLine}</p>
         <p className="mt-2 text-3xl font-extrabold text-white">
           The {tier.name} is{" "}
           <span className="text-amber-400">{tier.priceDisplay}</span>.
@@ -393,7 +393,7 @@ export default function PlaybookSalesPage({ config }: Props) {
             2 payments of ${(tier.price / 200).toFixed(2)}
           </Link>
         </p>
-        <p className="mt-2 text-xs text-zinc-500">
+        <p className="mt-2 text-xs text-zinc-400">
           {config.guarantee.headline}
         </p>
         <div className="mt-4">
@@ -421,7 +421,7 @@ export default function PlaybookSalesPage({ config }: Props) {
               YOUR stage &mdash; plus email templates, phone scripts, and a
               7-day action plan.
             </p>
-            <p className="mt-2 text-xs text-zinc-500">
+            <p className="mt-2 text-xs text-zinc-400">
               Your {tier.priceDisplay} {tier.name} purchase is credited toward
               the {nextTier.name}. Upgrade for {upgrade} within 30 days.
             </p>

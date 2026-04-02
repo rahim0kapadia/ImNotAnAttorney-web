@@ -27,7 +27,7 @@ export function TestimonialSection({ testimonials, variant }: TestimonialSection
               </p>
               <div className="mt-4">
                 <p className="text-sm font-semibold text-white">{t.name}</p>
-                <p className="text-xs text-zinc-500">{t.charge} &middot; {t.outcome}</p>
+                <p className="text-xs text-zinc-400">{t.charge} &middot; {t.outcome}</p>
               </div>
             </div>
           </FadeInUp>
@@ -47,7 +47,7 @@ export function TestimonialSection({ testimonials, variant }: TestimonialSection
             </p>
             <div className="mt-4">
               <p className="text-sm font-semibold text-white">{t.name}</p>
-              <p className="text-xs text-zinc-500">{t.charge} &middot; {t.outcome}</p>
+              <p className="text-xs text-zinc-400">{t.charge} &middot; {t.outcome}</p>
             </div>
           </div>
         </StaggerItem>

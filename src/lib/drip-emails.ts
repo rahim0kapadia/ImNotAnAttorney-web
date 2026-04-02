@@ -416,7 +416,7 @@ export const SCORE_CRISIS_EMAILS: DripEmail[] = [
         <ul style="padding-left: 20px;">
           <li><strong style="color: white;">Preliminary hearing strategy unclear</strong> — the preliminary hearing is your first real opportunity to test the prosecution's case. Your attorney should have a specific plan for what to challenge and which witnesses to cross-examine.</li>
           <li><strong style="color: white;">Discovery incomplete or unreviewed</strong> — felony cases generate significant discovery. If your attorney summarized it rather than walking you through it page by page, important details may have been missed.</li>
-          <li><strong style="color: white;">Sentencing exposure not mapped</strong> — you should know the minimum, maximum, and guideline range for each charge, including how enhancements or prior record affect the math.</li>
+          <li><strong style="color: white;">Sentencing exposure not mapped</strong> — the minimum, maximum, and guideline range for each charge should be on the table, including how enhancements or prior record affect the math.</li>
         </ul>
       </div>
 

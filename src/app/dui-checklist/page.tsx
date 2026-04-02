@@ -48,7 +48,7 @@ export default function DuiChecklistPage() {
 
       {/* 3-ITEM PREVIEW — Ungated proof of value */}
       <div className="mt-10 space-y-4">
-        <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-500">
+        <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-400">
           Inside the checklist
         </h2>
         {[
@@ -111,7 +111,7 @@ export default function DuiChecklistPage() {
         >
           Get the DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} Instant Download
         </Link>
-        <p className="mt-2 text-xs text-zinc-500">
+        <p className="mt-2 text-xs text-zinc-400">
           26 questions, evidence red flag checklist, case stage roadmap, one-page cheat sheet.
           Your {TIER_CORE["dui-first-offense"].priceDisplay} is credited toward the{" "}
           {TIER_CORE["case-decoder"].name} within 30 days.

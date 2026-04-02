@@ -158,7 +158,7 @@ function HomeContent() {
   if (loading && !m) {
     return (
       <div className="p-8">
-        <p className="text-zinc-500 text-sm">Loading dashboard...</p>
+        <p className="text-zinc-400 text-sm">Loading dashboard...</p>
       </div>
     );
   }
@@ -206,7 +206,7 @@ function HomeContent() {
           )}
         </h2>
         {data.reviewCases.length === 0 ? (
-          <p className="text-sm text-zinc-500">No cases awaiting review.</p>
+          <p className="text-sm text-zinc-400">No cases awaiting review.</p>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {data.reviewCases.map((c) => (
@@ -221,14 +221,14 @@ function HomeContent() {
                   </span>
                   <StatusBadge status={c.status} />
                 </div>
-                <div className="flex items-center gap-3 text-xs text-zinc-500">
+                <div className="flex items-center gap-3 text-xs text-zinc-400">
                   <span className="rounded bg-zinc-800 px-2 py-0.5 text-zinc-400 uppercase tracking-wider">
                     {c.tier}
                   </span>
                   <span>{timeAgo(c.created_at)}</span>
                 </div>
                 {c.finding_count > 0 && (
-                  <p className="mt-2 text-xs text-zinc-500">
+                  <p className="mt-2 text-xs text-zinc-400">
                     {c.finding_count} finding{c.finding_count !== 1 ? "s" : ""}
                     {c.witness_count > 0 &&
                       ` / ${c.witness_count} witness${c.witness_count !== 1 ? "es" : ""}`}
@@ -251,12 +251,12 @@ function HomeContent() {
           )}
         </h2>
         {data.failedJobs.length === 0 ? (
-          <p className="text-sm text-zinc-500">No failed jobs.</p>
+          <p className="text-sm text-zinc-400">No failed jobs.</p>
         ) : (
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800 text-left text-xs text-zinc-500 uppercase tracking-wider">
+                <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
                   <th className="px-4 py-3">Job Type</th>
                   <th className="px-4 py-3">Case</th>
                   <th className="px-4 py-3">Error</th>
@@ -279,7 +279,7 @@ function HomeContent() {
                     <td className="px-4 py-3 text-red-400 max-w-xs truncate">
                       {j.error_message ?? "Unknown error"}
                     </td>
-                    <td className="px-4 py-3 text-zinc-500">
+                    <td className="px-4 py-3 text-zinc-400">
                       {j.retry_count}/{j.max_retries}
                     </td>
                     <td className="px-4 py-3 text-right">
@@ -310,12 +310,12 @@ function HomeContent() {
           )}
         </h2>
         {data.tasks.length === 0 ? (
-          <p className="text-sm text-zinc-500">No open tasks.</p>
+          <p className="text-sm text-zinc-400">No open tasks.</p>
         ) : (
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800 text-left text-xs text-zinc-500 uppercase tracking-wider">
+                <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
                   <th className="px-4 py-3">Priority</th>
                   <th className="px-4 py-3">Title</th>
                   <th className="px-4 py-3">Type</th>
@@ -331,7 +331,7 @@ function HomeContent() {
                       <PriorityBadge priority={t.priority} />
                     </td>
                     <td className="px-4 py-3 text-zinc-200">{t.title}</td>
-                    <td className="px-4 py-3 text-zinc-500">{t.task_type}</td>
+                    <td className="px-4 py-3 text-zinc-400">{t.task_type}</td>
                     <td className="px-4 py-3">
                       <Link
                         href={`/operator/cases/${t.case_id}`}
@@ -340,7 +340,7 @@ function HomeContent() {
                         {t.case_id.slice(0, 8)}...
                       </Link>
                     </td>
-                    <td className="px-4 py-3 text-zinc-500">
+                    <td className="px-4 py-3 text-zinc-400">
                       {t.due_at ? formatDate(t.due_at) : "—"}
                     </td>
                     <td className="px-4 py-3">
@@ -362,19 +362,19 @@ function HomeContent() {
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-              <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+              <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
                 Total Cases
               </p>
               <p className="text-3xl font-bold text-white">{m.total_cases}</p>
             </div>
             <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-              <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+              <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
                 Active Jobs
               </p>
               <p className="text-3xl font-bold text-white">{m.active_jobs}</p>
             </div>
             <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-              <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+              <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
                 Revenue
               </p>
               <p className="text-3xl font-bold text-white">
@@ -382,7 +382,7 @@ function HomeContent() {
               </p>
             </div>
             <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-              <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+              <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
                 Open Tasks
               </p>
               <p className="text-3xl font-bold text-white">{m.open_tasks}</p>

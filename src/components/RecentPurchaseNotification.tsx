@@ -45,7 +45,7 @@ export function RecentPurchaseNotification() {
             </p>
             <button
               onClick={() => setDismissed(true)}
-              className="ml-2 text-zinc-500 hover:text-zinc-300"
+              className="ml-2 text-zinc-400 hover:text-zinc-300"
               aria-label="Dismiss"
             >
               <svg className="h-4 w-4" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

@@ -226,23 +226,23 @@ function JobsContent() {
           </button>
         </form>
 
-        <span className="text-sm text-zinc-500">{total} total</span>
+        <span className="text-sm text-zinc-400">{total} total</span>
       </div>
 
       {/* Table */}
       <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
         {loading && jobs.length === 0 ? (
-          <div className="p-8 text-center text-sm text-zinc-500">
+          <div className="p-8 text-center text-sm text-zinc-400">
             Loading jobs...
           </div>
         ) : jobs.length === 0 ? (
-          <div className="p-8 text-center text-sm text-zinc-500">
+          <div className="p-8 text-center text-sm text-zinc-400">
             No jobs found.
           </div>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800 text-left text-xs text-zinc-500 uppercase tracking-wider">
+              <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
                 <th className="px-4 py-3">Type</th>
                 <th className="px-4 py-3">Case</th>
                 <th className="px-4 py-3">Status</th>
@@ -261,7 +261,7 @@ function JobsContent() {
                   <td className="px-4 py-3 text-zinc-200">
                     {j.job_type}
                     {j.job_subtype ? (
-                      <span className="text-zinc-500"> / {j.job_subtype}</span>
+                      <span className="text-zinc-400"> / {j.job_subtype}</span>
                     ) : null}
                   </td>
                   <td className="px-4 py-3">
@@ -283,7 +283,7 @@ function JobsContent() {
                           style={{ width: `${Math.min(100, j.progress)}%` }}
                         />
                       </div>
-                      <span className="text-xs text-zinc-500">
+                      <span className="text-xs text-zinc-400">
                         {j.progress}%
                       </span>
                     </div>
@@ -291,13 +291,13 @@ function JobsContent() {
                   <td className="px-4 py-3 text-right text-zinc-400">
                     {j.items_produced}
                   </td>
-                  <td className="px-4 py-3 text-zinc-500">
+                  <td className="px-4 py-3 text-zinc-400">
                     {j.retry_count}/{j.max_retries}
                   </td>
-                  <td className="px-4 py-3 text-zinc-500 text-xs">
+                  <td className="px-4 py-3 text-zinc-400 text-xs">
                     {j.worker_id ?? "—"}
                   </td>
-                  <td className="px-4 py-3 text-zinc-500">
+                  <td className="px-4 py-3 text-zinc-400">
                     {j.started_at ? formatDate(j.started_at) : "—"}
                   </td>
                   <td className="px-4 py-3 text-red-400 max-w-[200px] truncate">
@@ -331,7 +331,7 @@ function JobsContent() {
           >
             Previous
           </button>
-          <span className="text-sm text-zinc-500">
+          <span className="text-sm text-zinc-400">
             Page {page} of {totalPages}
           </span>
           <button

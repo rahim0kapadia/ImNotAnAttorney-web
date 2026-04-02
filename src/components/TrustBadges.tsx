@@ -56,10 +56,10 @@ export function TrustBadges({ variant }: TrustBadgesProps) {
 
   if (variant === "compact") {
     return (
-      <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-zinc-500">
+      <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-zinc-400">
         {filtered.map((b) => (
           <span key={b.label} className="flex items-center gap-1">
-            <span className="text-zinc-600">{b.icon}</span>
+            <span className="text-zinc-400">{b.icon}</span>
             {b.label}
           </span>
         ))}
@@ -76,7 +76,7 @@ export function TrustBadges({ variant }: TrustBadgesProps) {
               <span className="text-amber-500">{b.icon}</span>
               <span>
                 {b.label}
-                {b.sublabel && <span className="block text-xs text-zinc-500">{b.sublabel}</span>}
+                {b.sublabel && <span className="block text-xs text-zinc-400">{b.sublabel}</span>}
               </span>
             </span>
           ))}

@@ -119,7 +119,7 @@ function ScoreBar({
   label: string;
 }) {
   if (score === null) {
-    return <p className="text-zinc-500 text-sm italic">Calculating...</p>;
+    return <p className="text-zinc-400 text-sm italic">Calculating...</p>;
   }
   const pct = Math.min(100, Math.max(0, (score / max) * 100));
   const color =
@@ -128,7 +128,7 @@ function ScoreBar({
     <div>
       <div className="flex items-baseline gap-2 mb-1">
         <span className="text-3xl font-bold text-white">{score}</span>
-        <span className="text-sm text-zinc-500">/ {max}</span>
+        <span className="text-sm text-zinc-400">/ {max}</span>
       </div>
       <div className="h-2 rounded-full bg-zinc-800 overflow-hidden">
         <div
@@ -136,7 +136,7 @@ function ScoreBar({
           style={{ width: `${pct}%` }}
         />
       </div>
-      <p className="text-xs text-zinc-500 mt-1">{label}</p>
+      <p className="text-xs text-zinc-400 mt-1">{label}</p>
     </div>
   );
 }
@@ -203,7 +203,7 @@ function ProgressStepper({
           ? "text-green-400"
           : isCurrent
             ? "text-amber-400"
-            : "text-zinc-500";
+            : "text-zinc-400";
         const lineColor = isCompleted ? "bg-green-500" : "bg-zinc-700";
 
         return (
@@ -251,12 +251,12 @@ function StatCard({
 }) {
   return (
     <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
-      <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+      <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
         {label}
       </p>
       <p className={`text-2xl font-bold ${color}`}>{value}</p>
       {subtitle && (
-        <p className="text-xs text-zinc-500 mt-1">{subtitle}</p>
+        <p className="text-xs text-zinc-400 mt-1">{subtitle}</p>
       )}
     </div>
   );
@@ -276,7 +276,7 @@ function SectionHeader({ title }: { title: string }) {
  */
 function EmptyState({ message }: { message: string }) {
   return (
-    <p className="text-zinc-500 text-sm italic">{message}</p>
+    <p className="text-zinc-400 text-sm italic">{message}</p>
   );
 }
 
@@ -435,7 +435,7 @@ export default async function MyCasePage({
             <ProgressStepper status={caseData.status} isDiscovery={false} />
           </div>
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mt-4">
-            <p className="text-sm text-zinc-500 uppercase tracking-wider mb-1">
+            <p className="text-sm text-zinc-400 uppercase tracking-wider mb-1">
               Status
             </p>
             <p className="text-xl font-semibold text-white">{statusLabel}</p>
@@ -490,7 +490,7 @@ export default async function MyCasePage({
             </div>
           )}
 
-          <p className="mt-6 text-center text-sm text-zinc-500">
+          <p className="mt-6 text-center text-sm text-zinc-400">
             Questions?{" "}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
@@ -682,7 +682,7 @@ export default async function MyCasePage({
               <span className="text-white font-medium">{statusLabel}</span>
             </span>
             {caseData.phase && (
-              <span className="text-xs text-zinc-500 bg-zinc-800 px-2 py-1 rounded">
+              <span className="text-xs text-zinc-400 bg-zinc-800 px-2 py-1 rounded">
                 Phase: {caseData.phase.replace(/_/g, " ")}
               </span>
             )}
@@ -694,7 +694,7 @@ export default async function MyCasePage({
           <SectionHeader title="Key Dates" />
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <p className="text-xs text-zinc-500 uppercase tracking-wider">
+              <p className="text-xs text-zinc-400 uppercase tracking-wider">
                 Submitted
               </p>
               <p className="text-white font-medium">
@@ -706,7 +706,7 @@ export default async function MyCasePage({
               </p>
             </div>
             <div>
-              <p className="text-xs text-zinc-500 uppercase tracking-wider">
+              <p className="text-xs text-zinc-400 uppercase tracking-wider">
                 Estimated Completion
               </p>
               <p className="text-white font-medium">
@@ -721,7 +721,7 @@ export default async function MyCasePage({
             </div>
             {isDelivered && caseData.delivered_at && (
               <div>
-                <p className="text-xs text-zinc-500 uppercase tracking-wider">
+                <p className="text-xs text-zinc-400 uppercase tracking-wider">
                   Delivered
                 </p>
                 <p className="text-green-400 font-medium">
@@ -744,7 +744,7 @@ export default async function MyCasePage({
               <span className="text-2xl font-bold text-white">
                 {jobsCompleted}
               </span>
-              <span className="text-sm text-zinc-500">/ {jobsTotal} tasks complete</span>
+              <span className="text-sm text-zinc-400">/ {jobsTotal} tasks complete</span>
             </div>
             <div className="h-2 rounded-full bg-zinc-800 overflow-hidden">
               <div
@@ -1010,7 +1010,7 @@ export default async function MyCasePage({
         )}
 
         {/* Contact footer */}
-        <p className="mt-8 text-center text-sm text-zinc-500">
+        <p className="mt-8 text-center text-sm text-zinc-400">
           Questions about your case?{" "}
           <a
             href={`mailto:${CONTACT_EMAIL}`}

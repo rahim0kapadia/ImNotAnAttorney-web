@@ -102,7 +102,7 @@ export default async function StateDuiPage({ params }: PageProps) {
         <section className="mt-12">
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-5 text-center">
-              <p className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+              <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
                 BAC Limit
               </p>
               <p className="mt-2 text-3xl font-extrabold text-amber-400">
@@ -113,22 +113,22 @@ export default async function StateDuiPage({ params }: PageProps) {
               )}
             </div>
             <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-5 text-center">
-              <p className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+              <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
                 Enhanced BAC
               </p>
               <p className="mt-2 text-2xl font-extrabold text-white">
                 {data.enhancedBac}
               </p>
-              <p className="mt-1 text-xs text-zinc-500">Higher penalties above this</p>
+              <p className="mt-1 text-xs text-zinc-400">Higher penalties above this</p>
             </div>
             <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-5 text-center">
-              <p className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+              <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
                 Lookback Period
               </p>
               <p className="mt-2 text-2xl font-extrabold text-white">
                 {data.lookback}
               </p>
-              <p className="mt-1 text-xs text-zinc-500">Prior offenses count within</p>
+              <p className="mt-1 text-xs text-zinc-400">Prior offenses count within</p>
             </div>
           </div>
         </section>
@@ -200,7 +200,7 @@ export default async function StateDuiPage({ params }: PageProps) {
             you&apos;re impaired.
           </p>
           <div className="mt-4 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
-            <p className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+            <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
               Refusal Penalty
             </p>
             <p className="mt-2 text-sm text-white">{data.refusalPenalty}</p>
@@ -270,7 +270,7 @@ export default async function StateDuiPage({ params }: PageProps) {
       {/* DISCLAIMER */}
       <section className="mt-12">
         <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-zinc-400">
             <strong>Important:</strong> This page provides general legal information
             about {data.name} DUI laws as of the date of publication. Laws change
             frequently. This is not legal advice. Consult a {data.name}-licensed

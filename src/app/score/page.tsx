@@ -351,7 +351,7 @@ function CompletionCounter({ target }: { target: number }) {
 
   if (target <= 0) return null;
   return (
-    <p className="mt-2 text-xs text-zinc-500">
+    <p className="mt-2 text-xs text-zinc-400">
       {count.toLocaleString()} defendants have scored their defense
     </p>
   );
@@ -558,7 +558,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               <li>{stats.insights.pctNoComm}% reported zero communication from their attorney</li>
             )}
           </ul>
-          <p className="mt-3 text-xs text-zinc-600">
+          <p className="mt-3 text-xs text-zinc-400">
             Anonymous, aggregated data from {stats.totalCompletions.toLocaleString()} defense assessments.
           </p>
         </div>
@@ -719,7 +719,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 </p>
                 <div className="mt-3 rounded-lg border border-zinc-700 bg-zinc-800/50 p-3">
                   <p className="text-xs font-semibold text-zinc-400">Sample questions inside:</p>
-                  <ul className="mt-1 space-y-1 text-xs text-zinc-500">
+                  <ul className="mt-1 space-y-1 text-xs text-zinc-400">
                     <li>&ldquo;Have the calibration records for the device used in my case been subpoenaed?&rdquo;</li>
                     <li>&ldquo;What motions should have been filed by this stage of my case?&rdquo;</li>
                     <li>&ldquo;Has my attorney identified the specific sentencing enhancements the prosecution will seek?&rdquo;</li>
@@ -897,7 +897,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
       <p className="text-center text-xs text-zinc-400">
         Your answers are not stored, not associated with your name, and cannot be subpoenaed or used as evidence. This tool does not create an attorney-client relationship.
       </p>
-      <p className="text-center text-xs text-zinc-500">
+      <p className="text-center text-xs text-zinc-400">
         Your individual answers are never stored. We track anonymous aggregate statistics to publish research that holds the system accountable.
       </p>
 
@@ -1056,7 +1056,7 @@ export default function ScorePage() {
           <p className="mt-3 text-zinc-400">
             Answer 10 questions. Get your Defense Milestone Score in 60 seconds — free, no email required.
           </p>
-          <p className="mt-2 text-xs text-zinc-500">Your answers are not stored.</p>
+          <p className="mt-2 text-xs text-zinc-400">Your answers are not stored.</p>
           <CompletionCounter target={stats?.totalCompletions ?? 0} />
         </div>
 
@@ -1072,13 +1072,13 @@ export default function ScorePage() {
               },
             ]}
           />
-          <p className="mt-4 text-center text-xs text-zinc-600">
+          <p className="mt-4 text-center text-xs text-zinc-400">
             *Based on real defendant experiences. Names changed for privacy.
           </p>
         </div>
 
         {stats && stats.totalCompletions >= 50 && !result && (
-          <p className="mb-6 text-center text-sm text-zinc-500">
+          <p className="mb-6 text-center text-sm text-zinc-400">
             <span className="font-semibold text-zinc-400">
               {stats.totalCompletions.toLocaleString()}
             </span>{" "}
@@ -1095,7 +1095,7 @@ export default function ScorePage() {
               <li>Charge-specific email template to send your attorney today</li>
               <li>Benchmark data from other defendants in similar situations</li>
             </ul>
-            <p className="mt-2 text-xs text-zinc-500">Free. No email required. Your answers are not stored.</p>
+            <p className="mt-2 text-xs text-zinc-400">Free. No email required. Your answers are not stored.</p>
           </div>
         )}
 
@@ -1114,7 +1114,7 @@ export default function ScorePage() {
                   style={{ width: `${(answeredCount / questions.length) * 100}%` }}
                 />
               </div>
-              <p className="mt-1 text-xs text-zinc-500">{answeredCount} of {questions.length} answered</p>
+              <p className="mt-1 text-xs text-zinc-400">{answeredCount} of {questions.length} answered</p>
             </div>
             {questions.map((q, qIndex) => (
               <fieldset key={q.id}>
@@ -1123,10 +1123,10 @@ export default function ScorePage() {
                   {q.label}
                 </legend>
                 {q.id === "criminalHistory" && (
-                  <p className="mt-1 text-xs text-zinc-500">This affects sentencing risk context in your score, not your attorney&apos;s competence rating.</p>
+                  <p className="mt-1 text-xs text-zinc-400">This affects sentencing risk context in your score, not your attorney&apos;s competence rating.</p>
                 )}
                 {q.id === "licensedProfession" && (
-                  <p className="mt-1 text-xs text-zinc-500">Licensed professionals and students face separate collateral consequences — your score flags this if relevant.</p>
+                  <p className="mt-1 text-xs text-zinc-400">Licensed professionals and students face separate collateral consequences — your score flags this if relevant.</p>
                 )}
                 <div className="mt-3 space-y-2">
                   {q.options.map((opt) => (

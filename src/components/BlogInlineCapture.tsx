@@ -80,7 +80,7 @@ export function BlogInlineCapture({ category = "general-defense" }: BlogInlineCa
       {status === "error" && (
         <p role="alert" className="mt-2 text-xs text-red-400">Something went wrong. Try again.</p>
       )}
-      <p className="mt-2 text-xs text-zinc-500">Free. No spam.</p>
+      <p className="mt-2 text-xs text-zinc-400">Free. No spam.</p>
     </div>
   );
 }

@@ -179,7 +179,7 @@ export default function PartnerDashboard() {
             <span className="text-zinc-400 text-sm">{partner.name}</span>
             <button
               onClick={handleLogout}
-              className="text-sm text-zinc-500 hover:text-white"
+              className="text-sm text-zinc-400 hover:text-white"
             >
               Log out
             </button>
@@ -290,7 +290,7 @@ export default function PartnerDashboard() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="text-zinc-500 border-b border-zinc-800">
+                    <tr className="text-zinc-400 border-b border-zinc-800">
                       <th className="text-left py-2 pr-4">Date</th>
                       <th className="text-right py-2 pr-4">Amount</th>
                       <th className="text-left py-2">Method</th>
@@ -317,7 +317,7 @@ export default function PartnerDashboard() {
         <section className="bg-zinc-900 rounded-xl border border-zinc-800 p-6">
           <h2 className="text-xl font-bold mb-4">Recent Activity</h2>
           {referrals.length === 0 ? (
-            <p className="text-zinc-500">No referrals yet. Share your code to get started.</p>
+            <p className="text-zinc-400">No referrals yet. Share your code to get started.</p>
           ) : (
             <div className="space-y-2">
               {referrals.slice(0, 20).map((r) => (
@@ -434,7 +434,7 @@ export default function PartnerDashboard() {
               <p>{partner.company || "—"}</p>
             </div>
           </div>
-          <p className="text-zinc-500 text-sm mt-4">
+          <p className="text-zinc-400 text-sm mt-4">
             Need to update your info? Email{" "}
             <a href={`mailto:${CONTACT_EMAIL}`} className="text-amber-400 hover:text-amber-300">
               {CONTACT_EMAIL}

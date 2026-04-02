@@ -798,7 +798,7 @@ function IntakeForm() {
                     <option value="other">Other (attorney, advocate, etc.)</option>
                   </select>
                   {(form.filledOutBy === "family" || form.filledOutBy === "friend") && (
-                    <p className="mt-2 text-xs text-zinc-500">
+                    <p className="mt-2 text-xs text-zinc-400">
                       Thank you for supporting them through this. The questions below are about
                       the person facing charges &mdash; answer what you know, and it&apos;s okay
                       to select &ldquo;Don&apos;t know&rdquo; for anything you&apos;re unsure about.
@@ -860,7 +860,7 @@ function IntakeForm() {
                     {jurisdictionOptions.map((opt) => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
                   </select>
                   {form.jurisdictionLevel === "unknown" && (
-                    <p className="mt-2 text-xs text-zinc-500">
+                    <p className="mt-2 text-xs text-zinc-400">
                       Federal cases are prosecuted by the U.S. Attorney&apos;s office.
                       If you were arrested by local or state police, your case is
                       likely in state court. If FBI, DEA, ATF, or other federal
@@ -1014,7 +1014,7 @@ function IntakeForm() {
                 </div>
                 <div className="mt-4">
                   <label htmlFor="county" className={labelClass}>
-                    County {form.jurisdictionLevel === "state" ? <span className="text-red-400">*</span> : <span className="text-zinc-500">(helps us research your specific judge and local court patterns)</span>}
+                    County {form.jurisdictionLevel === "state" ? <span className="text-red-400">*</span> : <span className="text-zinc-400">(helps us research your specific judge and local court patterns)</span>}
                   </label>
                   <input id="county" type="text" value={form.county as string}
                     onChange={(e) => setField("county", e.target.value)}
@@ -1027,7 +1027,7 @@ function IntakeForm() {
                   <input id="caseNumber" type="text" required value={form.caseNumber as string}
                     onChange={(e) => setField("caseNumber", e.target.value)}
                     className={inputClass} placeholder="e.g. 24-00123-CF" />
-                  <p className="mt-1 text-xs text-zinc-500">
+                  <p className="mt-1 text-xs text-zinc-400">
                     Your case number is on any court document &mdash; arraignment papers, bond paperwork, or court notices.
                     It helps us look up your public docket and match your records if you upgrade later.
                   </p>
@@ -1057,7 +1057,7 @@ function IntakeForm() {
                     <option value="sentencing">Sentencing</option>
                     <option value="post-conviction">Post-conviction (appeal / expungement)</option>
                   </select>
-                  <p className="mt-1 text-xs text-zinc-500">
+                  <p className="mt-1 text-xs text-zinc-400">
                     This helps us focus on what matters at your current stage &mdash; an arraignment
                     needs different preparation than a trial.
                   </p>
@@ -1195,7 +1195,7 @@ function IntakeForm() {
                 </div>
                 <div className="mt-4">
                   <label htmlFor="arrestDate" className={labelClass}>
-                    Arrest date <span className="text-zinc-500">(for speedy trial calculation)</span>
+                    Arrest date <span className="text-zinc-400">(for speedy trial calculation)</span>
                   </label>
                   <input id="arrestDate" type="date" value={form.arrestDate as string}
                     onChange={(e) => setField("arrestDate", e.target.value)}
@@ -1243,7 +1243,7 @@ function IntakeForm() {
                 </div>
                 <div className="mt-4">
                   <label htmlFor="courtDate" className={labelClass}>
-                    Next court date <span className="text-zinc-500">(optional)</span>
+                    Next court date <span className="text-zinc-400">(optional)</span>
                   </label>
                   <input id="courtDate" type="date" value={form.courtDate as string}
                     onChange={(e) => setField("courtDate", e.target.value)}
@@ -1255,14 +1255,14 @@ function IntakeForm() {
               {/* Employment & Mental Health — powers collateral consequence analysis */}
               <fieldset>
                 <legend className="text-sm font-semibold text-zinc-300">
-                  Background <span className="text-zinc-500 font-normal">(helps us identify hidden consequences)</span>
+                  Background <span className="text-zinc-400 font-normal">(helps us identify hidden consequences)</span>
                 </legend>
                 <div className="mt-4">
                   <label htmlFor="employmentStatus" className={labelClass}>
                     {form.filledOutBy === "family" || form.filledOutBy === "friend"
                       ? "Their current employment status"
                       : "Current employment status"}
-                    {" "}<span className="text-zinc-500">(optional)</span>
+                    {" "}<span className="text-zinc-400">(optional)</span>
                   </label>
                   <select id="employmentStatus" value={form.employmentStatus as string}
                     onChange={(e) => setField("employmentStatus", e.target.value)}
@@ -1281,14 +1281,14 @@ function IntakeForm() {
                 {(form.employmentStatus === "employed-full-time" || form.employmentStatus === "employed-part-time" || form.employmentStatus === "self-employed") && (
                   <div className="mt-4">
                     <label htmlFor="employmentIndustry" className={labelClass}>
-                      Industry or field <span className="text-zinc-500">(optional)</span>
+                      Industry or field <span className="text-zinc-400">(optional)</span>
                     </label>
                     <input id="employmentIndustry" type="text" value={form.employmentIndustry as string}
                       onChange={(e) => setField("employmentIndustry", e.target.value)}
                       className={inputClass}
                       placeholder="e.g. nursing, teaching, trucking, law enforcement, military, finance"
                       maxLength={100} />
-                    <p className="mt-1 text-xs text-zinc-500">
+                    <p className="mt-1 text-xs text-zinc-400">
                       Some industries have licensing or career consequences that{" "}
                       {form.filledOutBy === "family" || form.filledOutBy === "friend"
                         ? "their attorney should address"
@@ -1301,7 +1301,7 @@ function IntakeForm() {
                     {form.filledOutBy === "family" || form.filledOutBy === "friend"
                       ? "Is mental health or substance treatment relevant to their case?"
                       : "Is mental health or substance treatment relevant to your case?"}
-                    {" "}<span className="text-zinc-500">(optional)</span>
+                    {" "}<span className="text-zinc-400">(optional)</span>
                   </label>
                   <select id="mentalHealthRelevant" value={form.mentalHealthRelevant as string}
                     onChange={(e) => setField("mentalHealthRelevant", e.target.value)}
@@ -1311,7 +1311,7 @@ function IntakeForm() {
                     <option value="no">No</option>
                     <option value="prefer-not-to-say">Prefer not to say</option>
                   </select>
-                  <p className="mt-1 text-xs text-zinc-500">
+                  <p className="mt-1 text-xs text-zinc-400">
                     Many courts offer treatment-based alternatives. This helps us flag those options.
                   </p>
                 </div>
@@ -1380,7 +1380,7 @@ function IntakeForm() {
                     onChange={(e) => setField("specificQuestion", e.target.value)}
                     className={inputClass}
                     placeholder="What's the one thing keeping you up at night about your case?" />
-                  <p className="mt-1 text-xs text-zinc-500">
+                  <p className="mt-1 text-xs text-zinc-400">
                     Optional. If provided, we&apos;ll address this first in your report.
                     <span className="ml-2 tabular-nums">{(form.specificQuestion as string).length}/500</span>
                   </p>

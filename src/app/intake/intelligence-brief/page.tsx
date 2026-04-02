@@ -185,7 +185,7 @@ function Phase2IntakeForm() {
                 className={inputClass}
                 placeholder="e.g. Judge Patricia Smith"
               />
-              <p className="mt-1 text-xs text-zinc-500">
+              <p className="mt-1 text-xs text-zinc-400">
                 We research your judge&apos;s sentencing patterns, rulings, and
                 tendencies for your charge type.
               </p>
@@ -203,14 +203,14 @@ function Phase2IntakeForm() {
                 className={inputClass}
                 placeholder="e.g. Pinellas County"
               />
-              <p className="mt-1 text-xs text-zinc-500">
+              <p className="mt-1 text-xs text-zinc-400">
                 County where your case is being heard. Used for judge research.
               </p>
             </div>
             <div className="mt-4">
               <label htmlFor="caseNumber" className={labelClass}>
                 Court case number{" "}
-                <span className="text-zinc-500">
+                <span className="text-zinc-400">
                   (if different from your initial intake)
                 </span>
               </label>
@@ -349,7 +349,7 @@ function Phase2IntakeForm() {
           <fieldset>
             <legend className="text-sm font-semibold text-zinc-300">
               Personal Context{" "}
-              <span className="font-normal text-zinc-500">
+              <span className="font-normal text-zinc-400">
                 (helps us tailor mitigation strategies)
               </span>
             </legend>
@@ -398,7 +398,7 @@ function Phase2IntakeForm() {
                 <option value="undocumented">Undocumented</option>
                 <option value="prefer-not-to-say">Prefer not to say</option>
               </select>
-              <p className="mt-1 text-xs text-zinc-500">
+              <p className="mt-1 text-xs text-zinc-400">
                 Certain convictions have immigration consequences. This helps
                 us flag them in your brief.
               </p>
@@ -435,7 +435,7 @@ function Phase2IntakeForm() {
                 <option value="both">Yes — Both</option>
                 <option value="unsure">Not sure</option>
               </select>
-              <p className="mt-1 text-xs text-zinc-500">
+              <p className="mt-1 text-xs text-zinc-400">
                 Active supervision affects potential consequences and defense
                 strategy.
               </p>

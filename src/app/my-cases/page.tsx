@@ -133,7 +133,7 @@ export default function MyCasesPage() {
             ImNotAnAttorney
           </Link>
           <div className="flex items-center gap-4">
-            <span className="text-zinc-500 text-sm hidden sm:inline">My Cases</span>
+            <span className="text-zinc-400 text-sm hidden sm:inline">My Cases</span>
             <button
               onClick={handleLogout}
               className="text-zinc-400 text-sm hover:text-white transition-colors"
@@ -173,7 +173,7 @@ export default function MyCasesPage() {
                       <h2 className="text-lg font-semibold">
                         {TIER_DISPLAY[order.tier] || order.tier}
                       </h2>
-                      <p className="text-zinc-500 text-sm mt-0.5">
+                      <p className="text-zinc-400 text-sm mt-0.5">
                         {formatDate(order.paid_at || order.created_at)}
                         {order.priority_delivery && (
                           <span className="ml-2 text-amber-400 text-xs font-medium">Priority</span>

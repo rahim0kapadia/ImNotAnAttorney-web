@@ -100,24 +100,24 @@ export default function SampleXRayPage() {
             </p>
             <div className="mt-6 grid gap-3 text-xs sm:grid-cols-2">
               <div>
-                <span className="text-zinc-500">Charge(s):</span>{" "}
+                <span className="text-zinc-400">Charge(s):</span>{" "}
                 <span className="text-zinc-300">
                   Possession of Controlled Substance, 3rd Degree Felony
                 </span>
               </div>
               <div>
-                <span className="text-zinc-500">Jurisdiction:</span>{" "}
+                <span className="text-zinc-400">Jurisdiction:</span>{" "}
                 <span className="text-zinc-300">Pinellas County, FL</span>
               </div>
               <div>
-                <span className="text-zinc-500">Documents Analyzed:</span>{" "}
+                <span className="text-zinc-400">Documents Analyzed:</span>{" "}
                 <span className="text-zinc-300">47 documents, 312 pages</span>
               </div>
               <div>
-                <span className="text-zinc-500">Red Flags Identified:</span>{" "}
+                <span className="text-zinc-400">Red Flags Identified:</span>{" "}
                 <span className="text-zinc-300">
                   14{" "}
-                  <span className="text-zinc-500">
+                  <span className="text-zinc-400">
                     (Critical: <span className="text-red-400">4</span> /
                     Significant: <span className="text-amber-400">6</span> /
                     Notable: <span className="text-zinc-400">4</span>)
@@ -125,13 +125,13 @@ export default function SampleXRayPage() {
                 </span>
               </div>
               <div>
-                <span className="text-zinc-500">Discovery Strength Rating:</span>{" "}
+                <span className="text-zinc-400">Discovery Strength Rating:</span>{" "}
                 <span className="text-amber-400 font-semibold">62/100</span>{" "}
-                <span className="text-zinc-500">— Grade:</span>{" "}
+                <span className="text-zinc-400">— Grade:</span>{" "}
                 <span className="text-amber-400 font-semibold">C</span>
               </div>
               <div>
-                <span className="text-zinc-500">Targeted Questions Generated:</span>{" "}
+                <span className="text-zinc-400">Targeted Questions Generated:</span>{" "}
                 <span className="text-zinc-300">43</span>
               </div>
             </div>
@@ -272,7 +272,7 @@ export default function SampleXRayPage() {
 
               {/* Redacted block */}
               <div className="mt-4 rounded-lg border border-dashed border-zinc-700 bg-zinc-800/50 p-4 text-center">
-                <p className="text-sm text-zinc-500">
+                <p className="text-sm text-zinc-400">
                   [REDACTED — Attorney questions for this finding included in your report]
                 </p>
               </div>
@@ -307,7 +307,7 @@ export default function SampleXRayPage() {
             >
               Get My X-Ray — {TIER_CORE["x-ray"].priceDisplay}
             </Link>
-            <p className="mt-2 text-xs text-zinc-500">
+            <p className="mt-2 text-xs text-zinc-400">
               Previously purchased Case Decoder or Intelligence Brief? You owe only
               the difference.
             </p>
@@ -557,11 +557,11 @@ export default function SampleXRayPage() {
             </div>
 
             {/* Grayed remaining questions */}
-            <div className="mt-6 space-y-2 text-sm text-zinc-600">
+            <div className="mt-6 space-y-2 text-sm text-zinc-400">
               <p>Q4: Lab analyst certification and training records...</p>
               <p>Q5: Field test reagent lot number and expiration...</p>
               <p>Q6: Evidence room temperature and humidity controls...</p>
-              <p className="text-zinc-500">
+              <p className="text-zinc-400">
                 ... and 37 more, specific to your case details and documents
               </p>
             </div>
@@ -584,7 +584,7 @@ export default function SampleXRayPage() {
               <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-8">
                 <div className="text-center">
                   <p className="text-5xl font-bold text-amber-400">62</p>
-                  <p className="text-sm text-zinc-500">/100</p>
+                  <p className="text-sm text-zinc-400">/100</p>
                 </div>
                 <div className="text-center sm:text-left">
                   <p className="text-2xl font-bold text-white">
@@ -615,22 +615,22 @@ export default function SampleXRayPage() {
                       <td className="py-3 text-zinc-400">Significant gaps</td>
                     </tr>
                     <tr className="border-b border-zinc-800">
-                      <td className="py-3 pr-4 text-zinc-500" colSpan={3}>
+                      <td className="py-3 pr-4 text-zinc-400" colSpan={3}>
                         [In your report]
                       </td>
                     </tr>
                     <tr className="border-b border-zinc-800">
-                      <td className="py-3 pr-4 text-zinc-500" colSpan={3}>
+                      <td className="py-3 pr-4 text-zinc-400" colSpan={3}>
                         [In your report]
                       </td>
                     </tr>
                     <tr className="border-b border-zinc-800">
-                      <td className="py-3 pr-4 text-zinc-500" colSpan={3}>
+                      <td className="py-3 pr-4 text-zinc-400" colSpan={3}>
                         [In your report]
                       </td>
                     </tr>
                     <tr>
-                      <td className="py-3 pr-4 text-zinc-500" colSpan={3}>
+                      <td className="py-3 pr-4 text-zinc-400" colSpan={3}>
                         [In your report]
                       </td>
                     </tr>

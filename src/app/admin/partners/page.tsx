@@ -360,7 +360,7 @@ export default function PartnersAdmin() {
             {/* Referral History */}
             <h2 className="text-lg font-bold mb-3">Referral History</h2>
             {referrals.length === 0 ? (
-              <p className="text-zinc-500">No referrals yet.</p>
+              <p className="text-zinc-400">No referrals yet.</p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
@@ -399,7 +399,7 @@ export default function PartnersAdmin() {
                               Paid {r.paid_at ? formatDate(r.paid_at) : ""}
                             </span>
                           ) : (
-                            <span className="text-zinc-500">Pending</span>
+                            <span className="text-zinc-400">Pending</span>
                           )}
                         </td>
                       </tr>
@@ -570,7 +570,7 @@ export default function PartnersAdmin() {
       {loading ? (
         <p className="text-zinc-400">Loading partners...</p>
       ) : partners.length === 0 ? (
-        <div className="text-center py-12 text-zinc-500">
+        <div className="text-center py-12 text-zinc-400">
           <p className="text-lg">No partners yet.</p>
           <p className="text-sm mt-1">
             Click &quot;+ New Partner&quot; to add your first bondsman.
@@ -602,7 +602,7 @@ export default function PartnersAdmin() {
                       className="text-left hover:text-amber-400"
                     >
                       <p className="font-medium">{p.name}</p>
-                      <p className="text-zinc-500 text-xs">{p.email}</p>
+                      <p className="text-zinc-400 text-xs">{p.email}</p>
                     </button>
                   </td>
                   <td className="py-3 pr-4 font-mono text-amber-400">

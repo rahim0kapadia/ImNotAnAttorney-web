@@ -184,7 +184,7 @@ export default async function DefenseScoreDataPage() {
 
         {/* Key Findings — AI Citation Block */}
         <div className="mt-8 rounded-lg border border-zinc-700 bg-zinc-800/50 p-6">
-          <p className="text-sm font-medium uppercase tracking-wider text-zinc-500">
+          <p className="text-sm font-medium uppercase tracking-wider text-zinc-400">
             Key Findings
           </p>
           <p className="mt-3 leading-relaxed text-zinc-300">
@@ -209,7 +209,7 @@ export default async function DefenseScoreDataPage() {
           <h2 className="text-xl font-bold text-white">
             Overall Defense Gaps — All Charge Types
           </h2>
-          <p className="mt-2 text-sm text-zinc-500">
+          <p className="mt-2 text-sm text-zinc-400">
             Based on {overallTotal.toLocaleString()} scored assessments
           </p>
 
@@ -226,7 +226,7 @@ export default async function DefenseScoreDataPage() {
                       {pct(count, overallTotal)}
                     </p>
                     <p className="mt-1 text-sm text-zinc-400">{label}</p>
-                    <p className="mt-1 text-xs text-zinc-600">
+                    <p className="mt-1 text-xs text-zinc-400">
                       {count.toLocaleString()} of{" "}
                       {overallTotal.toLocaleString()} respondents
                     </p>
@@ -235,7 +235,7 @@ export default async function DefenseScoreDataPage() {
               })}
             </div>
           ) : (
-            <p className="mt-6 text-zinc-500">
+            <p className="mt-6 text-zinc-400">
               No data yet. Be the first to{" "}
               <Link href="/score" className="text-amber-400 hover:underline">
                 take the score quiz
@@ -251,7 +251,7 @@ export default async function DefenseScoreDataPage() {
             <h2 className="text-xl font-bold text-white">
               Breakdown by Charge Type
             </h2>
-            <p className="mt-2 text-sm text-zinc-500">
+            <p className="mt-2 text-sm text-zinc-400">
               Percentage of defendants reporting each defense gap, by charge
               category
             </p>
@@ -267,7 +267,7 @@ export default async function DefenseScoreDataPage() {
                         className="pb-3 px-3 font-medium text-center"
                       >
                         {CHARGE_LABELS[ct] ?? ct}
-                        <span className="block text-xs text-zinc-600">
+                        <span className="block text-xs text-zinc-400">
                           n={totalsByCharge[ct]?.toLocaleString()}
                         </span>
                       </th>
@@ -439,7 +439,7 @@ export default async function DefenseScoreDataPage() {
         </section>
 
         {/* Disclaimer */}
-        <p className="mt-12 text-xs text-zinc-600">
+        <p className="mt-12 text-xs text-zinc-400">
           This is original research published by ImNotAnAttorney. This data is
           legal information, not legal advice. We are not attorneys and do not
           provide legal representation. If you are facing criminal charges,

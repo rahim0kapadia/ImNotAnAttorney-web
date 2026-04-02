@@ -196,7 +196,7 @@ function CaseDetailContent() {
   if (loading && !caseData) {
     return (
       <div className="p-8">
-        <p className="text-sm text-zinc-500">Loading case...</p>
+        <p className="text-sm text-zinc-400">Loading case...</p>
       </div>
     );
   }
@@ -223,7 +223,7 @@ function CaseDetailContent() {
       {/* ===== Back link ===== */}
       <Link
         href="/operator/cases"
-        className="text-sm text-zinc-500 hover:text-white transition-colors"
+        className="text-sm text-zinc-400 hover:text-white transition-colors"
       >
         &larr; All Cases
       </Link>
@@ -239,15 +239,15 @@ function CaseDetailContent() {
               </span>
               <StatusBadge status={c.status} />
               {c.phase && (
-                <span className="text-xs text-zinc-500">
+                <span className="text-xs text-zinc-400">
                   Phase: {c.phase}
                 </span>
               )}
-              <span className="text-xs text-zinc-500">
+              <span className="text-xs text-zinc-400">
                 Created {formatDate(c.created_at)}
               </span>
               {c.delivery_due_at && (
-                <span className="text-xs text-zinc-500">
+                <span className="text-xs text-zinc-400">
                   Due {formatDate(c.delivery_due_at)}
                 </span>
               )}
@@ -284,15 +284,15 @@ function CaseDetailContent() {
           {c.order && (
             <>
               <div>
-                <span className="text-zinc-500">Payment: </span>
+                <span className="text-zinc-400">Payment: </span>
                 <span className="text-zinc-200">
                   {formatCurrency(c.order.amount_cents)}
                 </span>
-                <span className="ml-1 text-zinc-500">({c.order.status})</span>
+                <span className="ml-1 text-zinc-400">({c.order.status})</span>
               </div>
               {c.order.paid_at && (
                 <div>
-                  <span className="text-zinc-500">Paid: </span>
+                  <span className="text-zinc-400">Paid: </span>
                   <span className="text-zinc-200">
                     {formatDate(c.order.paid_at)}
                   </span>
@@ -304,13 +304,13 @@ function CaseDetailContent() {
             <>
               {c.intake.charge_type && (
                 <div>
-                  <span className="text-zinc-500">Charge: </span>
+                  <span className="text-zinc-400">Charge: </span>
                   <span className="text-zinc-200">{c.intake.charge_type}</span>
                 </div>
               )}
               {c.intake.court_state && (
                 <div>
-                  <span className="text-zinc-500">Jurisdiction: </span>
+                  <span className="text-zinc-400">Jurisdiction: </span>
                   <span className="text-zinc-200">
                     {c.intake.court_county
                       ? `${c.intake.court_county}, ${c.intake.court_state}`
@@ -320,13 +320,13 @@ function CaseDetailContent() {
               )}
               {c.intake.judge_name && (
                 <div>
-                  <span className="text-zinc-500">Judge: </span>
+                  <span className="text-zinc-400">Judge: </span>
                   <span className="text-zinc-200">{c.intake.judge_name}</span>
                 </div>
               )}
               {c.intake.attorney_name && (
                 <div>
-                  <span className="text-zinc-500">Attorney: </span>
+                  <span className="text-zinc-400">Attorney: </span>
                   <span className="text-zinc-200">
                     {c.intake.attorney_name}
                   </span>
@@ -334,7 +334,7 @@ function CaseDetailContent() {
               )}
               {c.intake.next_hearing_date && (
                 <div>
-                  <span className="text-zinc-500">Next Hearing: </span>
+                  <span className="text-zinc-400">Next Hearing: </span>
                   <span className="text-zinc-200">
                     {formatDate(c.intake.next_hearing_date)}
                     {c.intake.next_hearing_type &&
@@ -348,7 +348,7 @@ function CaseDetailContent() {
 
         {c.operator_notes && (
           <div className="mt-4 rounded-lg border border-zinc-700 bg-zinc-900 p-3 text-sm text-zinc-300">
-            <span className="text-zinc-500 text-xs uppercase tracking-wider block mb-1">
+            <span className="text-zinc-400 text-xs uppercase tracking-wider block mb-1">
               Operator Notes
             </span>
             {c.operator_notes}
@@ -365,32 +365,32 @@ function CaseDetailContent() {
             className={`px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
               activeTab === tab
                 ? "border-amber-500 text-white"
-                : "border-transparent text-zinc-500 hover:text-zinc-300"
+                : "border-transparent text-zinc-400 hover:text-zinc-300"
             }`}
           >
             {tab}
             {tab === "Documents" && c.documents.length > 0 && (
-              <span className="ml-1.5 text-xs text-zinc-500">
+              <span className="ml-1.5 text-xs text-zinc-400">
                 ({c.documents.length})
               </span>
             )}
             {tab === "Findings" && c.findings.length > 0 && (
-              <span className="ml-1.5 text-xs text-zinc-500">
+              <span className="ml-1.5 text-xs text-zinc-400">
                 ({c.findings.length})
               </span>
             )}
             {tab === "Witnesses" && c.witnesses.length > 0 && (
-              <span className="ml-1.5 text-xs text-zinc-500">
+              <span className="ml-1.5 text-xs text-zinc-400">
                 ({c.witnesses.length})
               </span>
             )}
             {tab === "Jobs" && c.jobs.length > 0 && (
-              <span className="ml-1.5 text-xs text-zinc-500">
+              <span className="ml-1.5 text-xs text-zinc-400">
                 ({c.jobs.length})
               </span>
             )}
             {tab === "Tasks" && c.tasks.length > 0 && (
-              <span className="ml-1.5 text-xs text-zinc-500">
+              <span className="ml-1.5 text-xs text-zinc-400">
                 ({c.tasks.length})
               </span>
             )}
@@ -470,7 +470,7 @@ function OverviewTab({ caseData }: { caseData: CaseDetail }) {
 function MetricCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
-      <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+      <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
         {label}
       </p>
       <p className="text-2xl font-bold text-white">{value}</p>
@@ -484,13 +484,13 @@ function MetricCard({ label, value }: { label: string; value: string }) {
 
 function DocumentsTab({ documents }: { documents: DocumentRow[] }) {
   if (documents.length === 0) {
-    return <p className="text-sm text-zinc-500">No documents uploaded.</p>;
+    return <p className="text-sm text-zinc-400">No documents uploaded.</p>;
   }
   return (
     <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-zinc-800 text-left text-xs text-zinc-500 uppercase tracking-wider">
+          <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
             <th className="px-4 py-3">Name</th>
             <th className="px-4 py-3">Type</th>
             <th className="px-4 py-3">Category</th>
@@ -506,8 +506,8 @@ function DocumentsTab({ documents }: { documents: DocumentRow[] }) {
               <td className="px-4 py-3 text-zinc-200 max-w-[200px] truncate">
                 {d.original_name}
               </td>
-              <td className="px-4 py-3 text-zinc-500">{d.file_type}</td>
-              <td className="px-4 py-3 text-zinc-500">
+              <td className="px-4 py-3 text-zinc-400">{d.file_type}</td>
+              <td className="px-4 py-3 text-zinc-400">
                 {d.doc_type ?? "—"}
                 {d.doc_subtype ? ` / ${d.doc_subtype}` : ""}
               </td>
@@ -520,7 +520,7 @@ function DocumentsTab({ documents }: { documents: DocumentRow[] }) {
               <td className="px-4 py-3">
                 <StatusBadge status={d.status} />
               </td>
-              <td className="px-4 py-3 text-zinc-500">
+              <td className="px-4 py-3 text-zinc-400">
                 {formatDate(d.uploaded_at)}
               </td>
             </tr>
@@ -537,7 +537,7 @@ function DocumentsTab({ documents }: { documents: DocumentRow[] }) {
 
 function FindingsTab({ findings }: { findings: FindingSummary[] }) {
   if (findings.length === 0) {
-    return <p className="text-sm text-zinc-500">No findings yet.</p>;
+    return <p className="text-sm text-zinc-400">No findings yet.</p>;
   }
 
   // Group by severity
@@ -563,7 +563,7 @@ function FindingsTab({ findings }: { findings: FindingSummary[] }) {
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800 text-left text-xs text-zinc-500 uppercase tracking-wider">
+                <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
                   <th className="px-4 py-3">Title</th>
                   <th className="px-4 py-3">Type</th>
                   <th className="px-4 py-3">Category</th>
@@ -575,14 +575,14 @@ function FindingsTab({ findings }: { findings: FindingSummary[] }) {
                 {groups[severity].map((f) => (
                   <tr key={f.id} className="border-b border-zinc-800">
                     <td className="px-4 py-3 text-zinc-200">{f.title}</td>
-                    <td className="px-4 py-3 text-zinc-500">
+                    <td className="px-4 py-3 text-zinc-400">
                       {f.finding_type}
                     </td>
-                    <td className="px-4 py-3 text-zinc-500">{f.category}</td>
+                    <td className="px-4 py-3 text-zinc-400">{f.category}</td>
                     <td className="px-4 py-3">
                       <StatusBadge status={f.verification_status} />
                     </td>
-                    <td className="px-4 py-3 text-zinc-500">
+                    <td className="px-4 py-3 text-zinc-400">
                       {formatDate(f.created_at)}
                     </td>
                   </tr>
@@ -602,13 +602,13 @@ function FindingsTab({ findings }: { findings: FindingSummary[] }) {
 
 function WitnessesTab({ witnesses }: { witnesses: WitnessSummary[] }) {
   if (witnesses.length === 0) {
-    return <p className="text-sm text-zinc-500">No witnesses profiled.</p>;
+    return <p className="text-sm text-zinc-400">No witnesses profiled.</p>;
   }
   return (
     <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-zinc-800 text-left text-xs text-zinc-500 uppercase tracking-wider">
+          <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
             <th className="px-4 py-3">Name</th>
             <th className="px-4 py-3">Type</th>
             <th className="px-4 py-3">Agency</th>
@@ -624,11 +624,11 @@ function WitnessesTab({ witnesses }: { witnesses: WitnessSummary[] }) {
               <td className="px-4 py-3 text-zinc-200 font-medium">
                 {w.name}
               </td>
-              <td className="px-4 py-3 text-zinc-500">
+              <td className="px-4 py-3 text-zinc-400">
                 {w.witness_type}
                 {w.subtype ? ` (${w.subtype})` : ""}
               </td>
-              <td className="px-4 py-3 text-zinc-500">{w.agency ?? "—"}</td>
+              <td className="px-4 py-3 text-zinc-400">{w.agency ?? "—"}</td>
               <td className="px-4 py-3 text-right">
                 {w.credibility_score != null ? (
                   <span
@@ -643,14 +643,14 @@ function WitnessesTab({ witnesses }: { witnesses: WitnessSummary[] }) {
                     {w.credibility_score}/10
                   </span>
                 ) : (
-                  <span className="text-zinc-500">—</span>
+                  <span className="text-zinc-400">—</span>
                 )}
               </td>
               <td className="px-4 py-3">
                 {w.threat_level ? (
                   <SeverityBadge severity={w.threat_level} />
                 ) : (
-                  <span className="text-zinc-500">—</span>
+                  <span className="text-zinc-400">—</span>
                 )}
               </td>
               <td className="px-4 py-3">
@@ -662,7 +662,7 @@ function WitnessesTab({ witnesses }: { witnesses: WitnessSummary[] }) {
                     Ready
                   </span>
                 ) : (
-                  <span className="text-zinc-500 text-xs">Not ready</span>
+                  <span className="text-zinc-400 text-xs">Not ready</span>
                 )}
               </td>
             </tr>
@@ -687,13 +687,13 @@ function JobsTab({
   onRetry: (id: string) => void;
 }) {
   if (jobs.length === 0) {
-    return <p className="text-sm text-zinc-500">No processing jobs.</p>;
+    return <p className="text-sm text-zinc-400">No processing jobs.</p>;
   }
   return (
     <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-zinc-800 text-left text-xs text-zinc-500 uppercase tracking-wider">
+          <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
             <th className="px-4 py-3">Type</th>
             <th className="px-4 py-3">Status</th>
             <th className="px-4 py-3">Progress</th>
@@ -721,16 +721,16 @@ function JobsTab({
                       style={{ width: `${Math.min(100, j.progress)}%` }}
                     />
                   </div>
-                  <span className="text-xs text-zinc-500">{j.progress}%</span>
+                  <span className="text-xs text-zinc-400">{j.progress}%</span>
                 </div>
               </td>
               <td className="px-4 py-3 text-right text-zinc-400">
                 {j.items_produced}
               </td>
-              <td className="px-4 py-3 text-zinc-500">
+              <td className="px-4 py-3 text-zinc-400">
                 {j.retry_count}/{j.max_retries}
               </td>
-              <td className="px-4 py-3 text-zinc-500">
+              <td className="px-4 py-3 text-zinc-400">
                 {j.started_at ? formatDate(j.started_at) : "—"}
               </td>
               <td className="px-4 py-3 text-right">
@@ -758,13 +758,13 @@ function JobsTab({
 
 function TasksTab({ tasks }: { tasks: OperatorTaskRow[] }) {
   if (tasks.length === 0) {
-    return <p className="text-sm text-zinc-500">No operator tasks.</p>;
+    return <p className="text-sm text-zinc-400">No operator tasks.</p>;
   }
   return (
     <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-zinc-800 text-left text-xs text-zinc-500 uppercase tracking-wider">
+          <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
             <th className="px-4 py-3">Priority</th>
             <th className="px-4 py-3">Title</th>
             <th className="px-4 py-3">Type</th>
@@ -780,11 +780,11 @@ function TasksTab({ tasks }: { tasks: OperatorTaskRow[] }) {
                 <PriorityBadge priority={t.priority} />
               </td>
               <td className="px-4 py-3 text-zinc-200">{t.title}</td>
-              <td className="px-4 py-3 text-zinc-500">{t.task_type}</td>
+              <td className="px-4 py-3 text-zinc-400">{t.task_type}</td>
               <td className="px-4 py-3">
                 <StatusBadge status={t.status} />
               </td>
-              <td className="px-4 py-3 text-zinc-500">
+              <td className="px-4 py-3 text-zinc-400">
                 {t.due_at ? formatDate(t.due_at) : "—"}
               </td>
               <td className="px-4 py-3">
@@ -793,7 +793,7 @@ function TasksTab({ tasks }: { tasks: OperatorTaskRow[] }) {
                     BREACH
                   </span>
                 ) : (
-                  <span className="text-xs text-zinc-500">OK</span>
+                  <span className="text-xs text-zinc-400">OK</span>
                 )}
               </td>
             </tr>
@@ -814,7 +814,7 @@ function TimelineTab({ timelineCount }: { timelineCount: number }) {
       <p className="text-lg font-semibold text-white">
         {timelineCount} event{timelineCount !== 1 ? "s" : ""} reconstructed
       </p>
-      <p className="text-sm text-zinc-500 mt-1">
+      <p className="text-sm text-zinc-400 mt-1">
         Timeline details are available in the full case report.
       </p>
     </div>
@@ -840,12 +840,12 @@ function LegalTab({
           Citations ({citations.length})
         </h3>
         {citations.length === 0 ? (
-          <p className="text-sm text-zinc-500">No citations.</p>
+          <p className="text-sm text-zinc-400">No citations.</p>
         ) : (
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800 text-left text-xs text-zinc-500 uppercase tracking-wider">
+                <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
                   <th className="px-4 py-3">Case</th>
                   <th className="px-4 py-3">Citation</th>
                   <th className="px-4 py-3">Court</th>
@@ -861,17 +861,17 @@ function LegalTab({
                       {ct.case_name}
                     </td>
                     <td className="px-4 py-3 text-zinc-400">{ct.citation}</td>
-                    <td className="px-4 py-3 text-zinc-500">
+                    <td className="px-4 py-3 text-zinc-400">
                       {ct.court ?? "—"}
                     </td>
-                    <td className="px-4 py-3 text-zinc-500">
+                    <td className="px-4 py-3 text-zinc-400">
                       {ct.year ?? "—"}
                     </td>
                     <td className="px-4 py-3">
                       {ct.is_binding ? (
                         <span className="text-green-400 text-xs">Yes</span>
                       ) : (
-                        <span className="text-zinc-500 text-xs">No</span>
+                        <span className="text-zinc-400 text-xs">No</span>
                       )}
                     </td>
                     <td className="px-4 py-3">
@@ -895,12 +895,12 @@ function LegalTab({
           Motions ({motions.length})
         </h3>
         {motions.length === 0 ? (
-          <p className="text-sm text-zinc-500">No motions.</p>
+          <p className="text-sm text-zinc-400">No motions.</p>
         ) : (
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800 text-left text-xs text-zinc-500 uppercase tracking-wider">
+                <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
                   <th className="px-4 py-3">Motion</th>
                   <th className="px-4 py-3">Type</th>
                   <th className="px-4 py-3">Severity</th>
@@ -915,7 +915,7 @@ function LegalTab({
                     <td className="px-4 py-3 text-zinc-200 font-medium">
                       {m.motion_name}
                     </td>
-                    <td className="px-4 py-3 text-zinc-500">
+                    <td className="px-4 py-3 text-zinc-400">
                       {m.motion_type}
                     </td>
                     <td className="px-4 py-3">
@@ -927,7 +927,7 @@ function LegalTab({
                     <td className="px-4 py-3 text-right text-zinc-400">
                       {m.strategic_score ?? "—"}
                     </td>
-                    <td className="px-4 py-3 text-zinc-500 max-w-xs truncate">
+                    <td className="px-4 py-3 text-zinc-400 max-w-xs truncate">
                       {m.description}
                     </td>
                   </tr>

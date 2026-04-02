@@ -52,7 +52,7 @@ export function BridgePage({ partnerName, company, promoCode }: BridgePageProps)
             Take Back Control of Your Case
           </Link>
 
-          <p className="text-zinc-500 text-sm mt-8">
+          <p className="text-zinc-400 text-sm mt-8">
             ImNotAnAttorney provides legal information and questions — not legal advice.
           </p>
         </div>

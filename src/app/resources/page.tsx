@@ -176,7 +176,7 @@ export default function ResourcesPage() {
               },
             ]}
           />
-          <p className="mt-4 text-center text-xs text-zinc-600">
+          <p className="mt-4 text-center text-xs text-zinc-400">
             *Based on real defendant experiences. Names changed for privacy.
           </p>
         </section>
@@ -206,7 +206,7 @@ export default function ResourcesPage() {
               successUpsellDescription="The checklist covers the first 72 hours. The Playbook gives you 26 questions with good/bad answer examples, a case stage roadmap, evidence red flag checklist, and a one-page cheat sheet for your attorney meeting. Instant download."
             />
           </div>
-          <p className="mt-4 text-center text-sm text-zinc-500">
+          <p className="mt-4 text-center text-sm text-zinc-400">
             Already know what you need?{" "}
             <Link href="/playbook/dui-first-offense" className="text-amber-400 underline hover:text-amber-300">
               Get the DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} instant download →
@@ -281,7 +281,7 @@ export default function ResourcesPage() {
                 <h3 className="mt-3 text-lg font-bold text-white">
                   26 Questions That Change How Your Next Attorney Meeting Goes
                 </h3>
-                <p className="mt-1 text-xs text-zinc-500">
+                <p className="mt-1 text-xs text-zinc-400">
                   The best defense attorneys want informed clients. These
                   questions help you be one.
                 </p>
@@ -307,7 +307,7 @@ export default function ResourcesPage() {
                     One-page cheat sheet for your attorney meeting
                   </li>
                 </ul>
-                <p className="mt-3 text-xs text-zinc-500">
+                <p className="mt-3 text-xs text-zinc-400">
                   {TIER_CORE["dui-first-offense"].priceDisplay} credited toward {TIER_CORE["case-decoder"].name} within 30 days.
                 </p>
               </div>

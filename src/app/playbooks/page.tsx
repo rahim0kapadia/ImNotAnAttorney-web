@@ -134,7 +134,7 @@ export default function PlaybooksCatalogPage() {
               checklist, attorney scorecard, and emergency guide &mdash;
               delivered instantly.
             </p>
-            <p className="mx-auto mt-3 max-w-2xl text-sm text-zinc-500">
+            <p className="mx-auto mt-3 max-w-2xl text-sm text-zinc-400">
               Join thousands of defendants who refused to go into court
               unprepared.
             </p>
@@ -195,7 +195,7 @@ export default function PlaybooksCatalogPage() {
           {/* Empty state — if no playbooks are live yet */}
           {livePlaybooks.length === 0 && (
             <div className="py-20 text-center">
-              <p className="text-lg text-zinc-500">
+              <p className="text-lg text-zinc-400">
                 Playbooks are coming soon. Check back shortly.
               </p>
             </div>
@@ -239,7 +239,7 @@ export default function PlaybooksCatalogPage() {
       {/* ── UPL Disclaimer ── */}
       <section className="border-t border-zinc-800/50 px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm leading-relaxed text-zinc-500">
+          <p className="text-sm leading-relaxed text-zinc-400">
             These playbooks provide legal information, not legal advice. The
             analysis draws on methods developed by elite defense attorneys,
             applied specifically to your charge type. Your attorney remains the

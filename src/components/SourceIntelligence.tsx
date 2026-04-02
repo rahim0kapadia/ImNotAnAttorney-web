@@ -103,7 +103,7 @@ export function SourceIntelligence({ category }: { category: string }) {
           <div key={a.name} className="text-sm">
             <span className="font-semibold text-white">{a.name}</span>
             <span className="text-zinc-400"> — {a.credential}. </span>
-            <span className="text-zinc-500">{a.method}.</span>
+            <span className="text-zinc-400">{a.method}.</span>
           </div>
         ))}
       </div>

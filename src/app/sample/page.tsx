@@ -411,7 +411,7 @@ export default function SamplePage() {
                   <p>Sarah</p>
                 </div>
               </div>
-              <p className="mt-3 text-xs text-zinc-500">
+              <p className="mt-3 text-xs text-zinc-400">
                 Your full report includes a phone script, follow-up template,
                 and 5-step communication playbook.
               </p>

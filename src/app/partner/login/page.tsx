@@ -62,7 +62,7 @@ export default function PartnerLoginPage() {
               We sent a login link to <strong className="text-white">{email}</strong>.
               It expires in 15 minutes.
             </p>
-            <p className="text-zinc-500 text-xs mt-4">
+            <p className="text-zinc-400 text-xs mt-4">
               If you have a phone number on file, we also sent an SMS.
             </p>
             <button
@@ -102,7 +102,7 @@ export default function PartnerLoginPage() {
         )}
 
         <div className="text-center mt-6">
-          <Link href="/partners" className="text-zinc-500 text-sm hover:text-zinc-400">
+          <Link href="/partners" className="text-zinc-400 text-sm hover:text-zinc-400">
             Not a partner yet? Apply here
           </Link>
         </div>

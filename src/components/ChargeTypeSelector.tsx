@@ -104,7 +104,7 @@ export function ChargeTypeSelector({ onSelect }: ChargeTypeSelectorProps) {
 
   return (
     <div className="mt-6">
-      <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-zinc-400">
         What are you facing?
       </p>
       <div

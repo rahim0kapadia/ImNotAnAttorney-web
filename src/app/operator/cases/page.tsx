@@ -129,7 +129,7 @@ function CaseListContent() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-white">Cases</h1>
-        <span className="text-sm text-zinc-500">
+        <span className="text-sm text-zinc-400">
           {total} total
         </span>
       </div>
@@ -183,17 +183,17 @@ function CaseListContent() {
       {/* Table */}
       <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
         {loading ? (
-          <div className="p-8 text-center text-sm text-zinc-500">
+          <div className="p-8 text-center text-sm text-zinc-400">
             Loading cases...
           </div>
         ) : cases.length === 0 ? (
-          <div className="p-8 text-center text-sm text-zinc-500">
+          <div className="p-8 text-center text-sm text-zinc-400">
             No cases found.
           </div>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800 text-left text-xs text-zinc-500 uppercase tracking-wider">
+              <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
                 <th className="px-4 py-3">Email</th>
                 <th className="px-4 py-3">Tier</th>
                 <th className="px-4 py-3">Status</th>
@@ -223,7 +223,7 @@ function CaseListContent() {
                   <td className="px-4 py-3">
                     <StatusBadge status={c.status} />
                   </td>
-                  <td className="px-4 py-3 text-zinc-500">
+                  <td className="px-4 py-3 text-zinc-400">
                     {c.phase ?? "—"}
                   </td>
                   <td className="px-4 py-3 text-right text-zinc-400">
@@ -237,10 +237,10 @@ function CaseListContent() {
                       ? `${c.discovery_health_score}%`
                       : "—"}
                   </td>
-                  <td className="px-4 py-3 text-zinc-500">
+                  <td className="px-4 py-3 text-zinc-400">
                     {c.delivery_due_at ? formatDate(c.delivery_due_at) : "—"}
                   </td>
-                  <td className="px-4 py-3 text-zinc-500">
+                  <td className="px-4 py-3 text-zinc-400">
                     {formatDate(c.created_at)}
                   </td>
                 </tr>
@@ -260,7 +260,7 @@ function CaseListContent() {
           >
             Previous
           </button>
-          <span className="text-sm text-zinc-500">
+          <span className="text-sm text-zinc-400">
             Page {page} of {totalPages}
           </span>
           <button

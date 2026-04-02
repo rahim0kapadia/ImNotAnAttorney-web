@@ -240,14 +240,14 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
               <p className="mt-2 text-sm font-medium text-amber-400">Best for: {tier.bestFor}</p>
             )}
             {"priorityAvailable" in tier && tier.priorityAvailable && (
-              <p className="mt-1 text-xs text-zinc-500">{tier.priorityAvailable}</p>
+              <p className="mt-1 text-xs text-zinc-400">{tier.priorityAvailable}</p>
             )}
             {tier.valueStack && (
               <div className="mt-4 space-y-1 border-l-2 border-amber-500/30 pl-3">
                 {tier.valueStack.map((vs) => (
                   <div key={vs.item} className="flex items-baseline justify-between text-xs">
                     <span className="text-zinc-400">{vs.item}</span>
-                    <span className="ml-2 text-zinc-500 line-through">{vs.value}</span>
+                    <span className="ml-2 text-zinc-400 line-through">{vs.value}</span>
                   </div>
                 ))}
                 <div className="flex items-baseline justify-between text-xs font-semibold pt-1 border-t border-zinc-800">
@@ -420,7 +420,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
           full cash refund. Satisfaction Guarantee: Not satisfied? 100% credit
           toward any higher tier within 30 days.
         </p>
-        <p className="mt-2 text-xs text-zinc-500">
+        <p className="mt-2 text-xs text-zinc-400">
           Upgrade credits apply to purchases you keep.
         </p>
       </div>

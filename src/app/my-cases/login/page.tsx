@@ -99,7 +99,7 @@ export default function CustomerLoginPage() {
         )}
 
         <div className="text-center mt-6">
-          <Link href="/" className="text-zinc-500 text-sm hover:text-zinc-400">
+          <Link href="/" className="text-zinc-400 text-sm hover:text-zinc-400">
             Back to home
           </Link>
         </div>

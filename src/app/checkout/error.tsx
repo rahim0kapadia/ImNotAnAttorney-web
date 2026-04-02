@@ -21,7 +21,7 @@ export default function CheckoutError({
           We hit an unexpected error loading this page. Your payment was not affected.
         </p>
         {error.digest && (
-          <p className="mt-2 text-xs text-zinc-500">Error: {error.digest}</p>
+          <p className="mt-2 text-xs text-zinc-400">Error: {error.digest}</p>
         )}
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <button

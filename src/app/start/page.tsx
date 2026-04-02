@@ -75,7 +75,7 @@ function CrisisHero({ onDismiss }: { onDismiss: () => void }) {
 
           <button
             onClick={onDismiss}
-            className="mt-10 text-xs text-zinc-600 underline underline-offset-2 hover:text-zinc-400"
+            className="mt-10 text-xs text-zinc-400 underline underline-offset-2 hover:text-zinc-400"
           >
             See all options
           </button>
@@ -83,7 +83,7 @@ function CrisisHero({ onDismiss }: { onDismiss: () => void }) {
       </section>
 
       <div className="px-4 pb-8">
-        <p className="mx-auto max-w-xl text-center text-xs text-zinc-600">
+        <p className="mx-auto max-w-xl text-center text-xs text-zinc-400">
           ImNotAnAttorney provides legal information and research &mdash; not
           legal advice. No attorney-client relationship is created.
         </p>
@@ -136,7 +136,7 @@ function StartContent() {
           <p className="mx-auto mt-6 max-w-md text-base text-zinc-400">
             40+ elite defense attorneys&apos; methodology. Applied to your specific charges.
           </p>
-          <p className="mx-auto mt-2 max-w-md text-xs text-zinc-500">
+          <p className="mx-auto mt-2 max-w-md text-xs text-zinc-400">
             Research frameworks informed by defense pioneers including Lawrence Taylor, Barry Scheck, and Gerry Spence.
           </p>
 
@@ -202,13 +202,13 @@ function StartContent() {
               <p className="mt-4 text-sm text-zinc-400">
                 If we don&apos;t find a gap your attorney hasn&apos;t raised: full refund.
               </p>
-              <p className="mt-2 text-xs text-zinc-500">
+              <p className="mt-2 text-xs text-zinc-400">
                 100% credited when you upgrade. Valid 12 months.
               </p>
 
               <button
                 onClick={() => setDocState(null)}
-                className="mt-4 text-xs text-zinc-500 underline underline-offset-2 hover:text-zinc-400"
+                className="mt-4 text-xs text-zinc-400 underline underline-offset-2 hover:text-zinc-400"
               >
                 &larr; Go back
               </button>
@@ -257,13 +257,13 @@ function StartContent() {
               <p className="mt-4 text-sm text-zinc-400">
                 If we don&apos;t find something your attorney hasn&apos;t raised: full refund.
               </p>
-              <p className="mt-2 text-xs text-zinc-500">
+              <p className="mt-2 text-xs text-zinc-400">
                 100% credited toward deeper intelligence.
               </p>
 
               <button
                 onClick={() => setDocState(null)}
-                className="mt-4 text-xs text-zinc-500 underline underline-offset-2 hover:text-zinc-400"
+                className="mt-4 text-xs text-zinc-400 underline underline-offset-2 hover:text-zinc-400"
               >
                 &larr; Go back
               </button>
@@ -309,7 +309,7 @@ function StartContent() {
                 },
               ]}
             />
-            <p className="mt-4 text-center text-xs text-zinc-600">
+            <p className="mt-4 text-center text-xs text-zinc-400">
               *Based on real defendant experiences. Names changed for privacy.
             </p>
           </div>
@@ -335,7 +335,7 @@ function StartContent() {
       {/* ------------------------------------------------------------------ */}
       <section className="border-t border-zinc-800 px-4 py-8">
         <div className="mx-auto max-w-xl text-center">
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm text-zinc-400">
             Want to compare all options?{" "}
             <Link
               href="/services"
@@ -348,7 +348,7 @@ function StartContent() {
       </section>
 
       <div className="px-4 pb-8">
-        <p className="mx-auto max-w-xl text-center text-xs text-zinc-600">
+        <p className="mx-auto max-w-xl text-center text-xs text-zinc-400">
           ImNotAnAttorney provides legal information and research &mdash; not
           legal advice. No attorney-client relationship is created.
         </p>
@@ -362,7 +362,7 @@ export default function StartPage() {
     <Suspense
       fallback={
         <main className="flex min-h-screen items-center justify-center bg-zinc-950">
-          <p className="text-zinc-500">Loading&hellip;</p>
+          <p className="text-zinc-400">Loading&hellip;</p>
         </main>
       }
     >

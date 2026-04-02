@@ -57,7 +57,7 @@ export default function FamilyPage() {
           >
             Take the Score on Their Behalf &mdash; Free
           </Link>
-          <p className="mt-3 text-xs text-zinc-500">
+          <p className="mt-3 text-xs text-zinc-400">
             No sign-up required. Results are instant and anonymous.
           </p>
         </section>
@@ -181,7 +181,7 @@ export default function FamilyPage() {
               },
             ]}
           />
-          <p className="mt-4 text-center text-xs text-zinc-600">
+          <p className="mt-4 text-center text-xs text-zinc-400">
             *Based on real defendant experiences. Names changed for privacy.
           </p>
         </div>
@@ -202,7 +202,7 @@ export default function FamilyPage() {
               across any charge type. You can take it on their behalf &mdash;
               just answer based on what you know about the case.
             </p>
-            <p className="mt-3 text-xs text-zinc-500">
+            <p className="mt-3 text-xs text-zinc-400">
               Good attorneys welcome a prepared defendant &mdash; and a prepared family.
             </p>
             <Link
@@ -211,7 +211,7 @@ export default function FamilyPage() {
             >
               Take the Defense Milestone Score
             </Link>
-            <p className="mt-3 text-xs text-zinc-500">
+            <p className="mt-3 text-xs text-zinc-400">
               2 minutes. Instant results. No email required.
             </p>
           </div>

@@ -727,7 +727,7 @@ function CheckoutContent() {
           {info.feltExperience && (
             <p className="mt-2 text-sm text-zinc-400 italic">{info.feltExperience}</p>
           )}
-          <p className="mt-1 text-xs text-zinc-500 italic">
+          <p className="mt-1 text-xs text-zinc-400 italic">
             Buying this for someone you love? Everything works the same — the questions, the templates, the action plan. You&apos;re giving them a real advantage.
           </p>
           {info.isDigitalProduct ? (
@@ -827,7 +827,7 @@ function CheckoutContent() {
               <p className="text-sm italic text-zinc-400">
                 &ldquo;{info.pullquote.quote}&rdquo;
               </p>
-              <p className="mt-1 text-xs text-zinc-500">
+              <p className="mt-1 text-xs text-zinc-400">
                 — {info.pullquote.author}
               </p>
             </div>
@@ -905,7 +905,7 @@ function CheckoutContent() {
                   <p className="text-sm leading-relaxed text-zinc-300 italic">
                     &ldquo;{t.quote}&rdquo;
                   </p>
-                  <p className="mt-2 text-xs text-zinc-500">
+                  <p className="mt-2 text-xs text-zinc-400">
                     — {t.name}, {t.charge}
                   </p>
                 </div>
@@ -931,7 +931,7 @@ function CheckoutContent() {
                 {" — "}
                 {info.nudge.unlocks}
               </p>
-              <p className="mt-1 text-xs italic text-zinc-500">
+              <p className="mt-1 text-xs italic text-zinc-400">
                 {info.nudge.bestFor}
               </p>
               <p className="mt-2 text-xs text-zinc-400">
@@ -972,7 +972,7 @@ function CheckoutContent() {
             />
             {emailError && <p className="mt-1 text-xs text-red-400">{emailError}</p>}
             <p className="mt-2 text-xs text-zinc-400">No spam — ever. Just your {info.isDigitalProduct ? "download link" : "report"} and delivery updates.</p>
-            <p className="mt-1 text-xs text-zinc-500">You&apos;ll receive your report at this address &mdash; help@imnotanattorney.com</p>
+            <p className="mt-1 text-xs text-zinc-400">You&apos;ll receive your report at this address &mdash; help@imnotanattorney.com</p>
           </div>
 
           {/* RETURNING CUSTOMER — For IB+ tiers, allow linking to existing CD. */}
@@ -1027,7 +1027,7 @@ function CheckoutContent() {
           {/* COURT DATE — Optional input. Hidden for digital products. */}
           {!info.isDigitalProduct && <div className="mt-4">
             <label htmlFor="courtDate" className="block text-sm font-medium text-zinc-300">
-              Next court date <span className="text-zinc-500">(optional)</span>
+              Next court date <span className="text-zinc-400">(optional)</span>
             </label>
             <input
               id="courtDate"

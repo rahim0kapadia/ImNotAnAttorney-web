@@ -61,8 +61,9 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
       )}
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm text-zinc-400 mb-1">Your Name *</label>
+          <label htmlFor="partner-name" className="block text-sm text-zinc-400 mb-1">Your Name *</label>
           <input
+            id="partner-name"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -71,8 +72,9 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
           />
         </div>
         <div>
-          <label className="block text-sm text-zinc-400 mb-1">Company / Agency</label>
+          <label htmlFor="partner-company" className="block text-sm text-zinc-400 mb-1">Company / Agency</label>
           <input
+            id="partner-company"
             type="text"
             value={company}
             onChange={(e) => setCompany(e.target.value)}
@@ -80,8 +82,9 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
           />
         </div>
         <div>
-          <label className="block text-sm text-zinc-400 mb-1">Email *</label>
+          <label htmlFor="partner-email" className="block text-sm text-zinc-400 mb-1">Email *</label>
           <input
+            id="partner-email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -90,8 +93,9 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
           />
         </div>
         <div>
-          <label className="block text-sm text-zinc-400 mb-1">Phone</label>
+          <label htmlFor="partner-phone" className="block text-sm text-zinc-400 mb-1">Phone</label>
           <input
+            id="partner-phone"
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
@@ -99,8 +103,9 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
           />
         </div>
         <div className="md:col-span-2">
-          <label className="block text-sm text-zinc-400 mb-1">Region / Service Area</label>
+          <label htmlFor="partner-region" className="block text-sm text-zinc-400 mb-1">Region / Service Area</label>
           <input
+            id="partner-region"
             type="text"
             value={region}
             onChange={(e) => setRegion(e.target.value)}
@@ -110,8 +115,9 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
         </div>
         {includeHeardAboutUs && (
           <div className="md:col-span-2">
-            <label className="block text-sm text-zinc-400 mb-1">How did you hear about us?</label>
+            <label htmlFor="partner-heard-about-us" className="block text-sm text-zinc-400 mb-1">How did you hear about us?</label>
             <input
+              id="partner-heard-about-us"
               type="text"
               value={heardAboutUs}
               onChange={(e) => setHeardAboutUs(e.target.value)}
@@ -121,8 +127,9 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
           </div>
         )}
         <div className="md:col-span-2">
-          <label className="block text-sm text-zinc-400 mb-1">Anything else we should know?</label>
+          <label htmlFor="partner-message" className="block text-sm text-zinc-400 mb-1">Anything else we should know?</label>
           <textarea
+            id="partner-message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             rows={3}

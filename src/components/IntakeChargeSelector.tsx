@@ -135,7 +135,7 @@ export function IntakeChargeSelector({
               )}
             </span>
             {charge.description !== null && (
-              <span className="mt-0.5 block text-xs leading-snug text-zinc-500">
+              <span className="mt-0.5 block text-xs leading-snug text-zinc-400">
                 {charge.description}
               </span>
             )}

@@ -114,7 +114,7 @@ export default async function ScoreResultPage({
           Take the Quiz →
         </Link>
       </div>
-      <p className="mt-8 text-center text-xs text-zinc-500">
+      <p className="mt-8 text-center text-xs text-zinc-400">
         This tool does not create an attorney-client relationship. ImNotAnAttorney provides legal information, not legal advice.
       </p>
     </main>
