@@ -407,11 +407,10 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
 
   const isCrisis = result.score <= 50;
   const timeIndex = getTimeIndex(answers.timeSinceArrest);
-  const showAttorneyTemplate = result.score < 60 && answers.motionsFiled !== "yes" && timeIndex >= 1;
-  const showIBNudge = isCrisis && (
+  const showAttorneyTemplate = result.score < 75 && answers.motionsFiled !== "yes";
+  const showIBNudge =
     ["pre-trial", "trial-prep", "sentencing", "post-conviction"].includes(answers.caseStage) ||
-    timeIndex >= 3
-  );
+    (isCrisis && timeIndex >= 3);
 
   // Band-to-color mapping: Critical (red) through Excellent (emerald)
   const bandColors: Record<string, string> = {
@@ -693,7 +692,10 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </div>
       )}
       {emailSent && (
-        <p className="text-center text-sm text-green-400">Sent! Check your inbox for your Defense Gap Report.</p>
+        <div className="rounded-lg border border-green-500/30 bg-green-500/5 p-4 text-center">
+          <p className="text-sm font-semibold text-green-400">Your Defense Gap Report is on its way.</p>
+          <p className="mt-1 text-xs text-zinc-400">Check your inbox (and spam folder). After that: practical information about your case stage, never more than once a week. One-click unsubscribe anytime.</p>
+        </div>
       )}
 
       {/* 8. CTA SECTION — Route to live products; playbook primary when live, Case Decoder when not */}
@@ -715,6 +717,14 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 <p className="mt-2 text-sm text-zinc-400">
                   26 questions that change how your next attorney meeting goes. A roadmap for every stage of your case. Instant download — start reading in 60 seconds.
                 </p>
+                <div className="mt-3 rounded-lg border border-zinc-700 bg-zinc-800/50 p-3">
+                  <p className="text-xs font-semibold text-zinc-400">Sample questions inside:</p>
+                  <ul className="mt-1 space-y-1 text-xs text-zinc-500">
+                    <li>&ldquo;Have the calibration records for the device used in my case been subpoenaed?&rdquo;</li>
+                    <li>&ldquo;What motions should have been filed by this stage of my case?&rdquo;</li>
+                    <li>&ldquo;Has my attorney identified the specific sentencing enhancements the prosecution will seek?&rdquo;</li>
+                  </ul>
+                </div>
                 <p className="mt-2 text-xs text-zinc-400">
                   {playbookTier.priceDisplay}. Less than one hour of the attorney time you already paid for.
                 </p>
@@ -809,6 +819,20 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 {bandCTAButton[result.band] || "See What My Score Misses"} — {TIER_CORE["case-decoder"].priceDisplay} →
               </Link>
             </div>
+            {showIBNudge && (
+              <div className="mt-4 rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
+                <p className="text-sm text-zinc-300">
+                  <span className="font-semibold text-white">Your case stage calls for deeper analysis.</span>{" "}
+                  The Intelligence Brief ({TIER_CORE["intelligence-brief"].priceDisplay}) adds prosecution vulnerability analysis, judge research, and defense theories specific to your jurisdiction.
+                </p>
+                <Link
+                  href={`/checkout?tier=intelligence-brief&charge=${answers.chargeType}&band=${result.band}`}
+                  className="mt-2 inline-block text-sm text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+                >
+                  See what the Intelligence Brief includes →
+                </Link>
+              </div>
+            )}
           </div>
         );
       })()}
@@ -1060,6 +1084,19 @@ export default function ScorePage() {
             </span>{" "}
             defendants have scored their defense.
           </p>
+        )}
+
+        {!result && (
+          <div className="mb-6 rounded-lg border border-zinc-800 bg-zinc-900/30 p-4">
+            <p className="text-xs font-semibold uppercase tracking-wider text-amber-500">What you get</p>
+            <ul className="mt-2 space-y-1 text-sm text-zinc-400">
+              <li>Your 0-100 Defense Milestone Score with band classification</li>
+              <li>Plain-English observations about your defense gaps</li>
+              <li>Charge-specific email template to send your attorney today</li>
+              <li>Benchmark data from other defendants in similar situations</li>
+            </ul>
+            <p className="mt-2 text-xs text-zinc-500">Free. No email required. Your answers are not stored.</p>
+          </div>
         )}
 
         {result ? (
