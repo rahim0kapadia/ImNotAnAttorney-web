@@ -49,10 +49,11 @@ export async function GET(req: NextRequest) {
   try {
     // ── Fetch eligible drafts ──
     // Process 'draft' status OR 'qa-failed' with remaining attempts
+    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
     const { data: drafts, error: fetchError } = await supabase
       .from("blog_drafts")
       .select("*")
-      .or("status.eq.draft,and(status.eq.qa-failed,qa_attempts.lt.3)")
+      .or(`status.eq.draft,and(status.eq.qa-failed,qa_attempts.lt.3),and(status.eq.qa-running,updated_at.lt.${tenMinutesAgo})`)
       .order("created_at", { ascending: true })
       .limit(2);
 
@@ -70,6 +71,12 @@ export async function GET(req: NextRequest) {
     const results: DraftQAResult[] = [];
 
     for (const draft of drafts as BlogDraft[]) {
+      // Claim draft immediately to prevent concurrent runs from picking it up
+      await supabase
+        .from("blog_drafts")
+        .update({ status: "qa-running", updated_at: new Date().toISOString() })
+        .eq("id", draft.id);
+
       const draftResult = await processDraft(draft, supabase);
       results.push(draftResult);
     }

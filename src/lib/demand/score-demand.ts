@@ -206,7 +206,10 @@ async function scoreDimension(
 
   for (const days of WINDOWS) {
     const windowEnd = now;
-    const windowStart = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+    // Round to midnight UTC so the upsert conflict key is stable across daily runs
+    const windowStart = new Date(now);
+    windowStart.setUTCHours(0, 0, 0, 0);
+    windowStart.setUTCDate(windowStart.getUTCDate() - days);
     const prevStart = new Date(windowStart.getTime() - days * 24 * 60 * 60 * 1000);
 
     // Current window signals

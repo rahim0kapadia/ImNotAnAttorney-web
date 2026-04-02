@@ -82,7 +82,7 @@ async function processCDResult(
         subject: `BATCH FAILED: Case Decoder — ${row.email}`,
         html: `<p>Batch error for case ${row.id}: ${reason}</p>
           <p><strong>Retry:</strong></p>
-          <code>curl -X POST ${ctx.siteUrl}/api/generate/case-decoder -H "Content-Type: application/json" -H "Authorization: Bearer ${ctx.operatorSecret}" -d '{"caseId":"${row.id}","force":true}'</code>`,
+          <code>curl -X POST ${ctx.siteUrl}/api/generate/case-decoder -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${row.id}","force":true}'</code>`,
       },
       { category: "operator-alert", case_id: row.id }
     );
@@ -181,7 +181,7 @@ async function processCDResult(
       to: ctx.operatorEmail,
       subject: `Case Decoder Ready — ${meta.firstName} (${meta.charges})`,
       html: `<p>Batch-generated report ready for review.</p>
-        <p><a href="${reportUrl}">Preview Report</a> | <a href="${ctx.siteUrl}/api/deliver?caseId=${row.id}&token=${ctx.operatorSecret}">Approve &amp; Deliver</a></p>`,
+        <p><a href="${reportUrl}">Preview Report</a> | <a href="${ctx.siteUrl}/api/deliver?caseId=${row.id}&token=$OPERATOR_SECRET">Approve &amp; Deliver</a></p>`,
     },
     { category: "operator-alert", case_id: row.id }
   );
@@ -226,7 +226,7 @@ async function processIBPhaseAResult(
         to: ctx.operatorEmail,
         subject: `IB Phase A FAILED (${failures}/5) — ${row.email}`,
         html: `<p>Case ${row.id}: ${failures}/5 Phase A sections failed.</p>
-          <code>curl -X POST ${ctx.siteUrl}/api/generate/intelligence-brief -H "Content-Type: application/json" -H "Authorization: Bearer ${ctx.operatorSecret}" -d '{"caseId":"${row.id}","force":true}'</code>`,
+          <code>curl -X POST ${ctx.siteUrl}/api/generate/intelligence-brief -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${row.id}","force":true}'</code>`,
       },
       { category: "operator-alert", case_id: row.id }
     );

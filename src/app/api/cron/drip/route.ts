@@ -104,21 +104,23 @@ export async function GET(req: NextRequest) {
   try {
     // ── Heartbeat: Detect if cron missed runs (Gap D) ──
     const { data: lastRun } = await supabase
-      .from("cron_runs")
-      .select("ran_at")
-      .order("ran_at", { ascending: false })
+      .from("cron_executions")
+      .select("started_at")
+      .eq("job_name", "drip")
+      .eq("status", "completed")
+      .order("started_at", { ascending: false })
       .limit(1)
       .maybeSingle();
 
-    if (lastRun?.ran_at) {
-      const hoursSinceLastRun = (now.getTime() - new Date(lastRun.ran_at).getTime()) / (1000 * 60 * 60);
+    if (lastRun?.started_at) {
+      const hoursSinceLastRun = (now.getTime() - new Date(lastRun.started_at).getTime()) / (1000 * 60 * 60);
       if (hoursSinceLastRun > 48) {
         await sendEmail({
           to: ctx.operatorEmail,
           subject: `ALERT: Cron missed runs \u2014 last run was ${Math.round(hoursSinceLastRun)} hours ago`,
           html: `<h1 style="color: #EF4444;">Cron Gap Detected</h1>
             <p>The daily cron job hasn't run in <strong>${Math.round(hoursSinceLastRun)} hours</strong>.</p>
-            <p>Last successful run: ${new Date(lastRun.ran_at).toISOString()}</p>
+            <p>Last successful run: ${new Date(lastRun.started_at).toISOString()}</p>
             <p><strong>Action:</strong> Check Vercel cron configuration and logs.</p>`,
         }, { category: "operator-alert", metadata: { reason: "cron-gap", hours_since_last: Math.round(hoursSinceLastRun) } });
       }

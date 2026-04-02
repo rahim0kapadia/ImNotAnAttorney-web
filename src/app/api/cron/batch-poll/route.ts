@@ -8,12 +8,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireCron } from "@/lib/auth/guards";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { acquireCronLock, releaseCronLock } from "@/lib/cron-idempotency";
 import { pollBatchResults } from "@/lib/cron/batch-poller";
 import type { CronContext } from "@/lib/cron/types";
 
 export async function GET(req: NextRequest) {
   const auth = requireCron(req);
   if (!auth.authorized) return auth.error;
+
+  // Idempotency lock — 4min window prevents overlapping 5-min cron runs
+  const lock = await acquireCronLock("batch-poll", 4 * 60 * 1000);
+  if (!lock.shouldRun) {
+    return NextResponse.json({ skipped: true, reason: lock.reason });
+  }
 
   const supabase = createAdminClient();
   const now = new Date();
@@ -28,6 +35,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const result = await pollBatchResults(ctx);
+    await releaseCronLock(lock.executionId, "completed");
     return NextResponse.json({
       success: true,
       ...result,
@@ -36,6 +44,7 @@ export async function GET(req: NextRequest) {
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error("[batch-poll] Fatal:", msg);
+    await releaseCronLock(lock.executionId, "failed");
     return NextResponse.json({ success: false, error: msg }, { status: 500 });
   }
 }
