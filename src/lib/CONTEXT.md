@@ -164,8 +164,8 @@ No passwords. Flow: `POST /api/customer/magic-link` → token stored in `magic_l
 | Magic link TTL | 15 minutes | `customer-auth.ts:28` |
 | Session TTL | 30 days | `customer-auth.ts:29` |
 | **Cron** | | |
-| Stale lock threshold | 5 minutes | `cron-idempotency.ts:92` |
-| Default job interval | 23 hours | `cron-idempotency.ts:59` |
+| Stale lock threshold | 5 min (default); 6 min demand-fetch, 3 min demand-score | `cron-idempotency.ts:96` |
+| Recommended job interval | 23 hours (convention for daily jobs) | `cron-idempotency.ts:58` |
 | **Feature Flags** | | |
 | Cache TTL | 5 minutes | `feature-flags.ts:12` |
 | **Referral** | | |
