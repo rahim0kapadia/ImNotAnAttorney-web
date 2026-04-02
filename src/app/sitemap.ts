@@ -140,6 +140,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     },
+    // DUI defense hub page
+    {
+      url: `${SITE_URL}/dui-defense`,
+      lastModified: new Date("2026-03-20"),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    },
     // State-specific DUI defense pages (50 states)
     ...allStateSlugs().map((slug) => ({
       url: `${SITE_URL}/dui-defense/${slug}`,

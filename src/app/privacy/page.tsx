@@ -39,7 +39,7 @@ export default function PrivacyPage() {
             don&apos;t take that lightly. Here&apos;s the short version: we
             never see your credit card number, we don&apos;t sell your data,
             your case documents are deleted within 90 days of report delivery,
-            and we don&apos;t use tracking cookies. Everything below explains
+            and we minimize tracking to essential analytics. Everything below explains
             this in detail.
           </p>
 
@@ -318,6 +318,21 @@ export default function PrivacyPage() {
                 <strong className="text-zinc-300">Cloudflare</strong> — DNS and
                 CDN services. May process your IP address for routing purposes
               </li>
+              <li>
+                <strong className="text-zinc-300">Google Analytics</strong> —
+                Website traffic analytics via Google Analytics 4 (GA4). Sets{" "}
+                <code className="text-zinc-300">_ga</code> and{" "}
+                <code className="text-zinc-300">_ga_*</code> cookies to
+                distinguish users and sessions. Subject to{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber-400 underline"
+                >
+                  Google&apos;s Privacy Policy
+                </a>
+              </li>
             </ul>
             <p className="mt-2">
               All third-party service providers are based in the United States.
@@ -577,9 +592,13 @@ export default function PrivacyPage() {
               8. Cookies
             </h2>
             <p>
-              Our website does not use tracking cookies or third-party analytics
-              cookies. Vercel Analytics provides anonymized usage data without
-              cookies. Stripe may set essential cookies during the checkout
+              We use Google Analytics 4 (GA4), which sets{" "}
+              <code className="text-zinc-300">_ga</code> and{" "}
+              <code className="text-zinc-300">_ga_*</code> cookies to
+              distinguish unique users and track sessions. These cookies expire
+              after 2 years and 24 hours respectively. Vercel Analytics provides
+              additional anonymized usage data without cookies. Stripe may set
+              essential cookies during the checkout
               process to prevent fraud and process payments — see{" "}
               <a
                 href="https://stripe.com/privacy"

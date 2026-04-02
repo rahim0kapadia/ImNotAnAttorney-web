@@ -80,8 +80,9 @@ export default function PartnerLoginPage() {
               </div>
             )}
 
-            <label className="block text-sm text-zinc-400 mb-1">Email address</label>
+            <label htmlFor="partner-login-email" className="block text-sm text-zinc-400 mb-1">Email address</label>
             <input
+              id="partner-login-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

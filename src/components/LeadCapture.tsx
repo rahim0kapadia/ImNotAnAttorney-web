@@ -141,9 +141,14 @@ export function LeadCapture({
         <button
           type="submit"
           disabled={status === "loading"}
-          className="rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-all hover:scale-[1.01] hover:bg-amber-400 active:scale-[0.99] disabled:opacity-50 sm:w-auto"
+          className="rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-all hover:scale-[1.01] focus-visible:scale-[1.01] hover:bg-amber-400 active:scale-[0.99] disabled:opacity-50 sm:w-auto"
         >
-          {status === "loading" ? "..." : buttonText}
+          {status === "loading" ? (
+            <>
+              <span aria-hidden="true">...</span>
+              <span className="sr-only">Submitting your email</span>
+            </>
+          ) : buttonText}
         </button>
       </form>
       {status === "error" && (

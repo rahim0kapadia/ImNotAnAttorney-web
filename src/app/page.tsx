@@ -311,7 +311,7 @@ export default function Home() {
               <StaggerItem key={item.title}>
                 <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
                   <h3 className="font-bold text-amber-400">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+                  <p className="mt-2 text-base leading-relaxed text-zinc-400">
                     {item.desc}
                   </p>
                 </div>
@@ -415,7 +415,7 @@ export default function Home() {
                     {item.badge}
                   </span>
                 )}
-                <p className="mt-2 text-sm text-zinc-400">{item.desc}</p>
+                <p className="mt-2 text-base text-zinc-400">{item.desc}</p>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -469,12 +469,12 @@ export default function Home() {
               <StaggerItem key={item.name}>
                 <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 h-full">
                   <h3 className="font-bold text-amber-400">{item.name}</h3>
-                  <p className="mt-3 text-sm text-zinc-300">{item.method}</p>
+                  <p className="mt-3 text-base text-zinc-300">{item.method}</p>
                 </div>
               </StaggerItem>
             ))}
           </StaggerContainer>
-          <p className="mt-8 text-center text-sm text-zinc-400">
+          <p className="mt-8 text-center text-base text-zinc-400">
             Built from 40+ elite defense methodologies &mdash; the same frameworks
             used in 375+ exonerations and landmark acquittals, applied to your case.
           </p>
@@ -502,7 +502,7 @@ export default function Home() {
               </div>
             </div>
           </FadeInUp>
-          <p className="mt-4 text-sm text-zinc-400">
+          <p className="mt-4 text-base text-zinc-400">
             Every year, defendants spend $10,000+ and still don&apos;t know whether their attorney has everything they need to fight for them.
           </p>
           <StaggerContainer className="mt-8 grid gap-4 md:grid-cols-3">
@@ -510,7 +510,7 @@ export default function Home() {
               <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
                 <div className="text-2xl font-bold text-red-400">Less than one hour</div>
                 <p className="mt-1 text-xs font-semibold text-zinc-400">of your attorney&apos;s billing rate ($250-$500/hr).</p>
-                <p className="mt-2 text-sm text-zinc-400">
+                <p className="mt-2 text-base text-zinc-400">
                   For a full case analysis with 10-15 targeted questions.
                 </p>
               </div>
@@ -519,7 +519,7 @@ export default function Home() {
               <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
                 <div className="text-2xl font-bold text-red-400">$10K-$100K+</div>
                 <p className="mt-1 text-xs font-semibold text-zinc-400">What you already paid your attorney.</p>
-                <p className="mt-2 text-sm text-zinc-400">
+                <p className="mt-2 text-base text-zinc-400">
                   INAA makes sure that money does what you paid for.
                 </p>
               </div>
@@ -528,7 +528,7 @@ export default function Home() {
               <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
                 <div className="text-2xl font-bold text-amber-400">{TIER_CORE["case-decoder"].priceDisplay}</div>
                 <p className="mt-1 text-xs font-semibold text-zinc-400">Case Decoder. Your charges, your judge, your specific situation.</p>
-                <p className="mt-2 text-sm text-zinc-400">
+                <p className="mt-2 text-base text-zinc-400">
                   10-15 case-specific questions based on your charges, your judge, your discovery.
                 </p>
               </div>
@@ -666,7 +666,7 @@ export default function Home() {
             <div className="mt-6 space-y-4 text-left">
               <div>
                 <p className="text-sm font-semibold text-amber-400">The Discovery Guarantee</p>
-                <p className="mt-1 text-sm text-zinc-300">
+                <p className="mt-1 text-base text-zinc-300">
                   We will identify at least one gap, missed question, or unexamined area
                   in your case that your attorney has not raised — or we refund every
                   dollar. No forms. No arguments. One email to help@imnotanattorney.com.
@@ -674,7 +674,7 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-amber-400">The Delivery Guarantee</p>
-                <p className="mt-1 text-sm text-zinc-300">
+                <p className="mt-1 text-base text-zinc-300">
                   Your {TIER_CORE["case-decoder"].name} in 48 hours. Your {TIER_CORE["intelligence-brief"].name} in 72
                   hours. If we miss the deadline, full refund AND you keep the report
                   when it arrives.
@@ -682,7 +682,7 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-amber-400">100% Upgrade Credit</p>
-                <p className="mt-1 text-sm text-zinc-300">
+                <p className="mt-1 text-base text-zinc-300">
                   Every dollar you spend counts toward the next tier. Buy the {TIER_CORE["case-decoder"].name} for {TIER_CORE["case-decoder"].priceDisplay},
                   upgrade to the {TIER_CORE["intelligence-brief"].name} for just {upgradePrice("case-decoder")}.
                   Credits valid for 12 months.
@@ -785,7 +785,7 @@ export default function Home() {
             <div className="mt-8 flex flex-col items-center gap-4">
               <Link
                 href="/start"
-                className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+                className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
                 Start Your Case Research &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
               </Link>

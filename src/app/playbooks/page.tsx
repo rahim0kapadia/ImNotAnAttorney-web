@@ -25,8 +25,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title:
-    "Defense Playbooks — $97 Instant Download for Every Charge Type | ImNotAnAttorney",
+  title: "Defense Playbooks — $97 Instant Download",
   description:
     "Choose your charge type and get an instant-download defense playbook: 26 questions that change how your next attorney meeting goes, case stage roadmap, red flag checklist, attorney scorecard, and emergency guide. $97.",
   alternates: {
@@ -117,7 +116,7 @@ export default function PlaybooksCatalogPage() {
   );
 
   return (
-    <main className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen bg-zinc-950">
       {/* ── Hero Section ── */}
       <section className="px-4 pt-24 pb-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-5xl text-center">
@@ -247,6 +246,6 @@ export default function PlaybooksCatalogPage() {
           </p>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

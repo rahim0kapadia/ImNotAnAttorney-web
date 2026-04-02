@@ -1087,8 +1087,8 @@ function IntakeForm() {
                     {incidentLocations.map((loc) => <option key={loc} value={loc}>{loc}</option>)}
                   </select>
                 </div>
-                <div className="mt-4">
-                  <label className={labelClass}>How did law enforcement get involved?</label>
+                <fieldset className="mt-4 border-0 p-0 m-0">
+                  <legend className={labelClass}>How did law enforcement get involved?</legend>
                   <div className="mt-2 space-y-2">
                     {arrestCircumstances.map((circ) => (
                       <label key={circ} className="flex items-center gap-3 text-sm text-zinc-400">
@@ -1103,7 +1103,7 @@ function IntakeForm() {
                       </label>
                     ))}
                   </div>
-                </div>
+                </fieldset>
               </fieldset>
 
               <button type="button" onClick={() => setStep(2)}
@@ -1224,8 +1224,8 @@ function IntakeForm() {
                       placeholder="Describe the plea deal terms as you understand them" />
                   </div>
                 )}
-                <div className="mt-4">
-                  <label className={labelClass}>What kind of evidence is involved? (select all that apply)</label>
+                <fieldset className="mt-4 border-0 p-0 m-0">
+                  <legend className={labelClass}>What kind of evidence is involved? (select all that apply)</legend>
                   <div className="mt-2 space-y-2">
                     {evidenceTypeOptions.map((ev) => (
                       <label key={ev} className="flex items-center gap-3 text-sm text-zinc-400">
@@ -1240,7 +1240,7 @@ function IntakeForm() {
                       </label>
                     ))}
                   </div>
-                </div>
+                </fieldset>
                 <div className="mt-4">
                   <label htmlFor="courtDate" className={labelClass}>
                     Next court date <span className="text-zinc-400">(optional)</span>

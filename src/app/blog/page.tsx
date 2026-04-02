@@ -30,7 +30,7 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Criminal Defense Blog — What Defendants Need to Know Before Court",
+  title: "Criminal Defense Blog",
   description:
     "In-depth legal research and defense strategies for criminal defendants — the information that closes the gap between what you know and what everyone else in the courtroom knows.",
   alternates: {

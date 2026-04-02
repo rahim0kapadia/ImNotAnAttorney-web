@@ -273,7 +273,7 @@ export async function POST(req: NextRequest) {
             .from("cases")
             .update({ status: "generating", updated_at: new Date().toISOString() })
             .eq("id", pendingCase.id)
-            .eq("status", "awaiting-intake");
+            .eq("status", "intake");
 
           fetch(`${origin}/api/generate/case-decoder`, {
             method: "POST",

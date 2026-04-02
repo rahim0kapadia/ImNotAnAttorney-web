@@ -42,7 +42,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Defense Intelligence Services — Understand Your Case, Ask Better Questions",
+  title: "Defense Intelligence Services",
   description:
     `Five tiers of defense research — from charge analysis to full trial intelligence. We research your case and give you the questions that change your next attorney meeting. From ${TIER_CORE["case-decoder"].priceDisplay} to ${TIER_CORE["situation-room"].priceDisplay}.`,
   alternates: {
@@ -322,7 +322,7 @@ const serviceSchema = {
 
 export default function ServicesPage() {
   return (
-    <main className="px-4 py-16">
+    <div className="px-4 py-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -874,6 +874,6 @@ export default function ServicesPage() {
           <LeadCapture />
         </div>
       </div>
-    </main>
+    </div>
   );
 }

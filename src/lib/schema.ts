@@ -22,6 +22,7 @@ export function getArticleAboutEntities(
     dui: "DUI Defense",
     "drug-cases": "Drug Defense",
     "white-collar": "White Collar Defense",
+    "sex-offense": "Sex Offense Defense",
     "general-defense": "Criminal Defense",
   };
 
@@ -46,6 +47,10 @@ export function getArticleAboutEntities(
     arraignment: "Arraignment",
     "criminal charges": "Criminal Charges",
     sentencing: "Criminal Sentencing",
+    "sex offense": "Sex Offense Defense",
+    "registry": "Sex Offender Registry",
+    "false accusations": "False Accusations Defense",
+    "digital evidence": "Digital Forensic Evidence",
   };
 
   for (const tag of tags) {
@@ -193,6 +198,11 @@ export function getArticleCitations(
       { name: "NACDL — The Trial Penalty", url: "https://www.nacdl.org/trialpenalty/" },
       { name: "ABA Standards for Criminal Justice", url: "https://www.americanbar.org/groups/criminal_justice/standards/" },
     ],
+    // Sex offense posts
+    "sex-offense-what-every-defendant-needs-to-know": [
+      { name: "Innocence Project — DNA Exonerations", url: "https://innocenceproject.org/dna-exonerations-in-the-united-states/" },
+      { name: "NACDL — The Trial Penalty", url: "https://www.nacdl.org/trialpenalty/" },
+    ],
   };
 
   const postCitations = citations[slug];
@@ -231,7 +241,7 @@ export function generateDefinedTermSet() {
         name: "Chain of Custody",
         description:
           "The documented trail of evidence from the scene to the courtroom. Gaps in the chain — missing logs, unsigned transfers, weight discrepancies — can render evidence inadmissible.",
-        url: `${SITE_URL}/blog/evidence-handling-criminal-cases`,
+        url: `${SITE_URL}/blog/how-to-read-your-discovery`,
       },
       {
         "@type": "DefinedTerm",
@@ -245,7 +255,7 @@ export function generateDefinedTermSet() {
         name: "Suppression Motion",
         description:
           "A motion to exclude evidence obtained in violation of constitutional rights (4th Amendment search, Miranda violations). Must typically be filed within 30 days of arraignment.",
-        url: `${SITE_URL}/blog/motion-to-suppress-evidence`,
+        url: `${SITE_URL}/blog/what-motions-should-your-attorney-be-filing`,
       },
       {
         "@type": "DefinedTerm",
@@ -259,21 +269,21 @@ export function generateDefinedTermSet() {
         name: "Field Sobriety Test",
         description:
           "A series of physical and cognitive tests administered roadside during a DUI stop. These tests have documented error rates — the one-leg stand has a 35% false-positive rate even when administered correctly.",
-        url: `${SITE_URL}/blog/field-sobriety-test-accuracy`,
+        url: `${SITE_URL}/blog/field-sobriety-test-standards`,
       },
       {
         "@type": "DefinedTerm",
         name: "Plea Bargain",
         description:
           "An agreement between the defendant and prosecutor where the defendant pleads guilty to a lesser charge in exchange for a reduced sentence. Over 90% of criminal cases are resolved this way.",
-        url: `${SITE_URL}/blog/plea-bargain-questions`,
+        url: `${SITE_URL}/blog/should-you-take-the-plea-deal`,
       },
       {
         "@type": "DefinedTerm",
         name: "Sentencing Guidelines",
         description:
           "Federal or state frameworks that recommend sentence ranges based on offense severity and criminal history. Judges may depart from guidelines with documented reasons.",
-        url: `${SITE_URL}/blog/federal-sentencing-guidelines`,
+        url: `${SITE_URL}/blog/how-to-prepare-for-sentencing`,
       },
     ],
   };

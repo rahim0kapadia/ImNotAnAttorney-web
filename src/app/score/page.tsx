@@ -514,10 +514,10 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           <AnimatedScoreArc score={result.score} />
         </div>
         <p className={`mt-4 text-lg font-bold ${textClass}`}>{result.band}</p>
-        <p className="mt-1 text-sm text-zinc-300">
+        <p className="mt-1 text-base text-zinc-300">
           {bandIdentity[result.band] || ""}
         </p>
-        <p className="mt-2 text-sm text-zinc-400">
+        <p className="mt-2 text-base text-zinc-400">
           {bandContextLines[result.band] || ""}
         </p>
         <p className="mt-1 text-xs text-zinc-400">
@@ -535,7 +535,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         {result.observations.map((obs, i) => (
           <FadeInUp key={i} delay={i * 0.1}>
             <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
-              <p className="text-sm leading-relaxed text-zinc-300">{obs}</p>
+              <p className="text-base leading-relaxed text-zinc-300">{obs}</p>
             </div>
           </FadeInUp>
         ))}
@@ -567,7 +567,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
       {/* 3. URGENCY BLOCK — for crisis buyers only (score <= 55) */}
       {result.score <= 55 && (
         <div className="rounded-lg border border-rose-500/30 bg-rose-500/5 p-4">
-          <p className="text-sm leading-relaxed text-rose-200/90">
+          <p className="text-base leading-relaxed text-rose-200/90">
             <span className="font-semibold text-rose-400">Time-sensitive:</span>{" "}
             {answers.chargeType === "dui" && answers.motionsFiled !== "yes"
               ? "DUI cases have time-critical evidence — breathalyzer calibration logs and dash cam footage have fixed retention windows. Some agencies delete footage at 30 or 90 days. If your attorney hasn't preserved this evidence, it may already be gone."
@@ -591,7 +591,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
       {/* 3b. "MY ATTORNEY SAYS FINE" HANDLER — for non-crisis scorers */}
       {result.score > 55 && (
         <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
-          <p className="text-sm leading-relaxed text-zinc-300">
+          <p className="text-base leading-relaxed text-zinc-300">
             <span className="font-semibold text-white">If your attorney told you everything is fine:</span>{" "}
             that&apos;s exactly what this tool is designed to check. Attorneys communicate at the level of detail they think you can handle. The Case Decoder gives you the specific benchmarks for your charge type — and the questions already written, built from the same methodology elite defense attorneys use internally.
           </p>
@@ -601,8 +601,8 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
       {/* 4. FREE ATTORNEY EMAIL TEMPLATE — The generous act (Task 1.1) */}
       {showAttorneyTemplate && (
         <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
-          <h3 className="font-semibold text-white">What to do in the next 24 hours — free, no purchase required</h3>
-          <p className="mt-2 text-sm text-zinc-400">
+          <h2 className="font-semibold text-white">What to do in the next 24 hours — free, no purchase required</h2>
+          <p className="mt-2 text-base text-zinc-400">
             Your score flagged gaps that have deadlines attached. Here is an email you can send your attorney today. Copy it exactly.
           </p>
           <div className="relative mt-4 rounded-lg border border-zinc-700 bg-zinc-800/80 p-4">
@@ -623,7 +623,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           <p className="mt-3 text-xs text-zinc-400">
             {ATTORNEY_EMAIL_TEMPLATES[answers.chargeType]?.preservationNote || ATTORNEY_EMAIL_TEMPLATES["other-felony"].preservationNote}
           </p>
-          <p className="mt-3 text-sm text-zinc-400">
+          <p className="mt-3 text-base text-zinc-400">
             Whatever your attorney says — the Case Decoder translates the answers into plain language and tells you whether they add up.
           </p>
         </div>
@@ -631,17 +631,17 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
 
       {/* 5. ORIGIN STORY — Built by a defendant (Task 1.2) */}
       <div className="rounded-lg border border-zinc-800 bg-zinc-900/30 p-4">
-        <p className="text-sm leading-relaxed text-zinc-300">
+        <p className="text-base leading-relaxed text-zinc-300">
           One of our founders spent six weeks in the dark while his attorney said nothing — then opened his own discovery and found 68.3 grams of missing evidence that his attorney had never raised. That case is why this tool exists.
         </p>
       </div>
 
       {/* 6. TRIBE IDENTITY — You're a different kind of defendant (Task 1.2) */}
       <div className="rounded-lg border border-zinc-800 bg-zinc-900/30 p-4">
-        <p className="text-sm leading-relaxed text-zinc-300">
+        <p className="text-base leading-relaxed text-zinc-300">
           Most defendants wait. They wait for their attorney to call. They wait for the court date. They wait to find out what&apos;s happening in their own case.
         </p>
-        <p className="mt-2 text-sm leading-relaxed text-zinc-300">
+        <p className="mt-2 text-base leading-relaxed text-zinc-300">
           You just scored your defense in 60 seconds. That&apos;s a different kind of defendant.
         </p>
         <p className="mt-2 text-sm font-medium text-zinc-200">
@@ -653,7 +653,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
       {!emailSent && (
         <div className="rounded-xl border border-amber-500/40 bg-amber-500/5 p-6">
           <p className="text-lg font-bold text-white">{bandEmailHeadlines[result.band] || "Get your free Defense Gap Report — the 10 questions that change how your next attorney meeting goes."}</p>
-          <p className="mt-2 text-sm text-zinc-300">
+          <p className="mt-2 text-base text-zinc-300">
             Based on your score, we&apos;ll send your personalized Defense Gap Report immediately. No pitch. No sales sequence. After that: practical information about your case stage, never more than once a week. Unsubscribe any time — one click.
           </p>
           <form onSubmit={async (e) => {
@@ -709,12 +709,12 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           return (
             <div className="space-y-4">
               <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
-                <h3 className="font-bold text-white">
+                <h2 className="font-bold text-white">
                   {isCrisis
                     ? `Your score says your defense has gaps. The ${playbookTier.name} shows you exactly where.`
                     : `The score measured 10 surface indicators. The ${playbookTier.name} goes deeper.`}
-                </h3>
-                <p className="mt-2 text-sm text-zinc-400">
+                </h2>
+                <p className="mt-2 text-base text-zinc-400">
                   26 questions that change how your next attorney meeting goes. A roadmap for every stage of your case. Instant download — start reading in 60 seconds.
                 </p>
                 <div className="mt-3 rounded-lg border border-zinc-700 bg-zinc-800/50 p-3">
@@ -742,7 +742,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               </div>
               {/* Case Decoder upsell — secondary, softer */}
               <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
-                <p className="text-sm text-zinc-300">
+                <p className="text-base text-zinc-300">
                   <span className="font-semibold text-white">Need case-specific analysis?</span>{" "}
                   The Case Decoder ({TIER_CORE["case-decoder"].priceDisplay}) analyzes YOUR discovery, YOUR judge, YOUR case stage — 15 calibrated questions built from your exact charge type and case stage. Every playbook dollar applies as credit.
                 </p>
@@ -762,8 +762,8 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           <div className="space-y-4">
             <p className="text-sm font-semibold text-zinc-300">Where to start depends on what you need next.</p>
             <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
-              <h3 className="font-bold text-white">Get your case analyzed by documented defense methodology — {TIER_CORE["case-decoder"].priceDisplay}</h3>
-              <p className="mt-2 text-sm text-zinc-400">
+              <h2 className="font-bold text-white">Get your case analyzed by documented defense methodology — {TIER_CORE["case-decoder"].priceDisplay}</h2>
+              <p className="mt-2 text-base text-zinc-400">
                 15 questions specific to your {getChargeLabel(answers.chargeType)} charges, a 7-day action plan, email templates, and phone scripts. Every question built from the same methods used by elite defense attorneys.
               </p>
               <p className="mt-2 text-xs text-zinc-400">
@@ -783,7 +783,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             </div>
             {showIBNudge && (
               <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
-                <p className="text-sm text-zinc-300">
+                <p className="text-base text-zinc-300">
                   <span className="font-semibold text-white">Need everything now?</span>{" "}
                   The Intelligence Brief ({TIER_CORE["intelligence-brief"].priceDisplay}) adds prosecution vulnerability analysis, judge research, and defense theories specific to your jurisdiction.
                 </p>
@@ -798,14 +798,14 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           </div>
         ) : (
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
-            <h3 className="font-bold text-white">
+            <h2 className="font-bold text-white">
               {result.band === "Adequate"
                 ? "Your defense looks active on the surface. The Case Decoder checks what surface indicators miss — prosecutor patterns, jurisdiction-specific filing windows, and the questions elite attorneys ask that most defendants never think to raise."
                 : result.band === "Excellent"
                 ? "You\u2019re passing the basics. The Case Decoder checks the charge-specific vulnerabilities that don\u2019t show up in 10 questions — the gaps that separate adequate outcomes from the best possible outcome."
                 : "Average isn\u2019t a strategy. The Case Decoder finds what your attorney should be doing that isn\u2019t showing up in basic milestones."}
-            </h3>
-            <p className="mt-2 text-sm text-zinc-400">
+            </h2>
+            <p className="mt-2 text-base text-zinc-400">
               The score measured 10 surface indicators. The Case Decoder goes deeper — analyzing {getChargeLabel(answers.chargeType)}-specific patterns, your exact case stage, and the gaps your score revealed. 15 calibrated questions, email templates, and a 7-day action plan, built from your exact charge type and case stage.
             </p>
             <p className="mt-2 text-xs text-zinc-400">
@@ -821,7 +821,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             </div>
             {showIBNudge && (
               <div className="mt-4 rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
-                <p className="text-sm text-zinc-300">
+                <p className="text-base text-zinc-300">
                   <span className="font-semibold text-white">Your case stage calls for deeper analysis.</span>{" "}
                   The Intelligence Brief ({TIER_CORE["intelligence-brief"].priceDisplay}) adds prosecution vulnerability analysis, judge research, and defense theories specific to your jurisdiction.
                 </p>
@@ -842,7 +842,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
       {/* 9. PLAYBOOK STEP-DOWN — Only shown when playbook is NOT already the primary CTA above */}
       {CHARGE_PLAYBOOK[answers.chargeType] && !TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE]?.live && (
         <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
-          <p className="text-sm text-zinc-300">
+          <p className="text-base text-zinc-300">
             {isCrisis ? (
               <>
                 <span className="font-semibold text-white">Need something right now?</span>{" "}
@@ -1034,7 +1034,7 @@ export default function ScorePage() {
   }, [allAnswered, answers]);
 
   return (
-    <main className="px-4 py-16">
+    <div className="px-4 py-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -1108,7 +1108,14 @@ export default function ScorePage() {
             </p>
             {/* Progress indicator */}
             <div className="sticky top-0 z-10 rounded-b-lg bg-zinc-950/90 pb-3 pt-2 backdrop-blur-sm">
-              <div className="h-1.5 overflow-hidden rounded-full bg-zinc-800">
+              <div
+                role="progressbar"
+                aria-valuenow={answeredCount}
+                aria-valuemin={0}
+                aria-valuemax={questions.length}
+                aria-label={`${answeredCount} of ${questions.length} questions answered`}
+                className="h-1.5 overflow-hidden rounded-full bg-zinc-800"
+              >
                 <div
                   className="h-full rounded-full bg-amber-500 transition-all duration-300"
                   style={{ width: `${(answeredCount / questions.length) * 100}%` }}
@@ -1222,6 +1229,6 @@ export default function ScorePage() {
           </p>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

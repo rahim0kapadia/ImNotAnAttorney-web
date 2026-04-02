@@ -77,8 +77,9 @@ export default function CustomerLoginPage() {
               </div>
             )}
 
-            <label className="block text-sm text-zinc-400 mb-1">Email address</label>
+            <label htmlFor="my-cases-email" className="block text-sm text-zinc-400 mb-1">Email address</label>
             <input
+              id="my-cases-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

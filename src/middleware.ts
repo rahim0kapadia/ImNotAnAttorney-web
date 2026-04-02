@@ -150,6 +150,8 @@ export async function middleware(req: NextRequest) {
     `connect-src 'self' https://api.stripe.com https://vercel.live ${supabaseConnectSrc}`,
     "frame-src https://js.stripe.com https://hooks.stripe.com",
     "frame-ancestors 'none'",
+    "object-src 'none'",
+    "worker-src 'self'",
     "base-uri 'self'",
     "form-action 'self' https://checkout.stripe.com",
   ].join("; ");

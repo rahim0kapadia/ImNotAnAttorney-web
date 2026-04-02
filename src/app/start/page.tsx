@@ -41,7 +41,7 @@ type DocumentState = null | "has-documents" | "no-documents";
 
 function CrisisHero({ onDismiss }: { onDismiss: () => void }) {
   return (
-    <main className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen bg-zinc-950">
       <section className="flex min-h-[100dvh] flex-col items-center justify-center px-6 py-16">
         <div className="mx-auto w-full max-w-md text-center">
           <h1 className="font-display text-4xl font-bold leading-snug tracking-tight text-white sm:text-5xl">
@@ -88,7 +88,7 @@ function CrisisHero({ onDismiss }: { onDismiss: () => void }) {
           legal advice. No attorney-client relationship is created.
         </p>
       </div>
-    </main>
+    </div>
   );
 }
 
@@ -116,7 +116,7 @@ function StartContent() {
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen bg-zinc-950">
       {/* ------------------------------------------------------------------ */}
       {/* ABOVE FOLD — Zero scroll on mobile. Covello Rule of 3:            */}
       {/*   1. Situation validation (headline)                              */}
@@ -174,15 +174,15 @@ function StartContent() {
               </div>
 
               <ul className="mt-5 space-y-3">
-                <li className="flex items-start gap-2 text-sm text-zinc-300">
+                <li className="flex items-start gap-2 text-base text-zinc-300">
                   <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                   We analyze your charges using elite methodology
                 </li>
-                <li className="flex items-start gap-2 text-sm text-zinc-300">
+                <li className="flex items-start gap-2 text-base text-zinc-300">
                   <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                   We research your judge and local patterns
                 </li>
-                <li className="flex items-start gap-2 text-sm text-zinc-300">
+                <li className="flex items-start gap-2 text-base text-zinc-300">
                   <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                   We hand you 15 questions for your next meeting
                 </li>
@@ -199,7 +199,7 @@ function StartContent() {
                 Start for {TIER_CORE["case-decoder"].priceDisplay} &rarr;
               </Link>
 
-              <p className="mt-4 text-sm text-zinc-400">
+              <p className="mt-4 text-base text-zinc-400">
                 If we don&apos;t find a gap your attorney hasn&apos;t raised: full refund.
               </p>
               <p className="mt-2 text-xs text-zinc-400">
@@ -229,15 +229,15 @@ function StartContent() {
               </div>
 
               <ul className="mt-5 space-y-3">
-                <li className="flex items-start gap-2 text-sm text-zinc-300">
+                <li className="flex items-start gap-2 text-base text-zinc-300">
                   <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                   We read every page of your case file
                 </li>
-                <li className="flex items-start gap-2 text-sm text-zinc-300">
+                <li className="flex items-start gap-2 text-base text-zinc-300">
                   <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                   We find what doesn&apos;t match
                 </li>
-                <li className="flex items-start gap-2 text-sm text-zinc-300">
+                <li className="flex items-start gap-2 text-base text-zinc-300">
                   <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                   We hand you the exact questions
                 </li>
@@ -254,7 +254,7 @@ function StartContent() {
                 Start for {TIER_CORE["x-ray"].priceDisplay} &rarr;
               </Link>
 
-              <p className="mt-4 text-sm text-zinc-400">
+              <p className="mt-4 text-base text-zinc-400">
                 If we don&apos;t find something your attorney hasn&apos;t raised: full refund.
               </p>
               <p className="mt-2 text-xs text-zinc-400">
@@ -353,7 +353,7 @@ function StartContent() {
           legal advice. No attorney-client relationship is created.
         </p>
       </div>
-    </main>
+    </div>
   );
 }
 
@@ -361,9 +361,9 @@ export default function StartPage() {
   return (
     <Suspense
       fallback={
-        <main className="flex min-h-screen items-center justify-center bg-zinc-950">
+        <div className="flex min-h-screen items-center justify-center bg-zinc-950">
           <p className="text-zinc-400">Loading&hellip;</p>
-        </main>
+        </div>
       }
     >
       <StartContent />

@@ -92,7 +92,7 @@ export function QRCode({ url, size = 200 }: QRCodeProps) {
         <img
           ref={imgRef}
           src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-          alt="QR Code"
+          alt={`QR code linking to ${url}`}
           width={size}
           height={size}
           className={loading || showCanvas ? "hidden" : "block"}

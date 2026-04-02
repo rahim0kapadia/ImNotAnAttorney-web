@@ -8,11 +8,13 @@
  * Methodology → Urgency → FAQ → Final CTA → Upgrade Path → Schema
  */
 import Link from "next/link";
+import Image from "next/image";
 import { TIER_CORE, upgradePrice, nextTierSlug } from "@/lib/tiers";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 import { TrustBadges } from "@/components/TrustBadges";
 import { LeadCapture } from "@/components/LeadCapture";
+import { FAQAccordion } from "@/components/FAQAccordion";
 import type { PlaybookConfig } from "@/lib/playbook-configs";
 import type { TierSlug } from "@/lib/tiers";
 
@@ -82,7 +84,7 @@ export default function PlaybookSalesPage({ config }: Props) {
         </p>
         <Link
           href={checkoutUrl}
-          className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+          className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
         >
           Get Instant Access &mdash; {tier.priceDisplay}
         </Link>
@@ -100,9 +102,9 @@ export default function PlaybookSalesPage({ config }: Props) {
         </p>
         {config.hero.coverImage && (
           <div className="mt-8 flex justify-center">
-            <img
+            <Image
               src={config.hero.coverImage}
-              alt={`${config.hero.headline} cover`}
+              alt=""
               className="h-auto w-full max-w-xs rounded-lg shadow-2xl"
               width={400}
               height={640}
@@ -121,7 +123,7 @@ export default function PlaybookSalesPage({ config }: Props) {
               Book 1
             </p>
             <p className="mt-2 text-lg font-bold text-white">Emergency Playbook</p>
-            <p className="mt-2 text-sm text-zinc-400">
+            <p className="mt-2 text-base text-zinc-400">
               What to do right now. First 72 Hours checklist, 5 Priority Questions, crisis resources. Read this first.
             </p>
           </div>
@@ -130,7 +132,7 @@ export default function PlaybookSalesPage({ config }: Props) {
               Book 2
             </p>
             <p className="mt-2 text-lg font-bold text-white">Full Defense Playbook</p>
-            <p className="mt-2 text-sm text-zinc-400">
+            <p className="mt-2 text-base text-zinc-400">
               The complete reference. Case stage roadmap, red flag checklist, scorecard, all 26 questions, and more.
             </p>
           </div>
@@ -158,7 +160,7 @@ export default function PlaybookSalesPage({ config }: Props) {
               <p className="text-sm font-semibold text-amber-400">
                 {card.title}
               </p>
-              <p className="mt-2 text-sm text-zinc-400">{card.text}</p>
+              <p className="mt-2 text-base text-zinc-400">{card.text}</p>
             </StaggerItem>
           ))}
         </StaggerContainer>
@@ -179,7 +181,7 @@ export default function PlaybookSalesPage({ config }: Props) {
             >
               <p className="font-semibold text-white">{method.name}</p>
               <p className="mt-1 text-xs text-zinc-400">{method.title}</p>
-              <p className="mt-3 text-sm text-zinc-400">{method.insight}</p>
+              <p className="mt-3 text-base text-zinc-400">{method.insight}</p>
             </StaggerItem>
           ))}
         </StaggerContainer>
@@ -198,7 +200,7 @@ export default function PlaybookSalesPage({ config }: Props) {
             >
               <div>
                 <p className="font-semibold text-white">{section.title}</p>
-                <p className="mt-1 text-sm text-zinc-400">{section.desc}</p>
+                <p className="mt-1 text-base text-zinc-400">{section.desc}</p>
               </div>
               <p className="shrink-0 text-sm text-zinc-400 line-through">
                 {section.value}
@@ -218,7 +220,7 @@ export default function PlaybookSalesPage({ config }: Props) {
           </p>
           <Link
             href={checkoutUrl}
-            className="mt-4 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+            className="mt-4 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
           >
             Get Instant Access &mdash; {tier.priceDisplay}
           </Link>
@@ -248,7 +250,7 @@ export default function PlaybookSalesPage({ config }: Props) {
           <p className="mt-4 text-lg font-semibold text-white">
             {config.guarantee.headline}
           </p>
-          <p className="mt-3 text-sm text-zinc-400">{config.guarantee.body}</p>
+          <p className="mt-3 text-base text-zinc-400">{config.guarantee.body}</p>
         </div>
       </section>
       </FadeInUp>
@@ -265,7 +267,7 @@ export default function PlaybookSalesPage({ config }: Props) {
               {config.audience.forYou.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-sm text-zinc-400"
+                  className="flex items-start gap-2 text-base text-zinc-400"
                 >
                   <span className="mt-0.5 text-amber-400">&#10003;</span>
                   {item}
@@ -281,7 +283,7 @@ export default function PlaybookSalesPage({ config }: Props) {
               {config.audience.notForYou.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-sm text-zinc-400"
+                  className="flex items-start gap-2 text-base text-zinc-400"
                 >
                   <span className="mt-0.5">&#10007;</span>
                   {item}
@@ -299,7 +301,7 @@ export default function PlaybookSalesPage({ config }: Props) {
           <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
             Important
           </p>
-          <p className="mt-3 text-sm text-zinc-400">
+          <p className="mt-3 text-base text-zinc-400">
             {config.methodologyText}
           </p>
         </div>
@@ -321,7 +323,7 @@ export default function PlaybookSalesPage({ config }: Props) {
                   {item.deadline}
                 </p>
               </div>
-              <p className="text-sm text-zinc-400">{item.what}</p>
+              <p className="text-base text-zinc-400">{item.what}</p>
             </div>
           ))}
         </div>
@@ -332,18 +334,8 @@ export default function PlaybookSalesPage({ config }: Props) {
         <h2 className="text-2xl font-bold text-white">
           Frequently asked questions
         </h2>
-        <div className="mt-8 space-y-4">
-          {faqItems.map((faq) => (
-            <details
-              key={faq.q}
-              className="group rounded-lg border border-zinc-800 bg-zinc-900/50"
-            >
-              <summary className="cursor-pointer px-6 py-4 text-sm font-semibold text-white">
-                {faq.q}
-              </summary>
-              <p className="px-6 pb-4 text-sm text-zinc-400">{faq.a}</p>
-            </details>
-          ))}
+        <div className="mt-8">
+          <FAQAccordion items={faqItems.map(f => ({ question: f.q, answer: f.a }))} />
         </div>
       </section>
 
@@ -372,7 +364,7 @@ export default function PlaybookSalesPage({ config }: Props) {
               d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
             />
           </svg>
-          <p className="text-sm text-zinc-300">
+          <p className="text-base text-zinc-300">
             <span className="font-semibold text-emerald-400">100% Money-Back Guarantee</span>
             {" \u2014 "}
             If you read the Playbook and don&apos;t feel more prepared for your attorney meeting, email us within 30 days for a full refund. No questions asked.
@@ -380,7 +372,7 @@ export default function PlaybookSalesPage({ config }: Props) {
         </div>
         <Link
           href={checkoutUrl}
-          className="mt-4 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+          className="mt-4 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
         >
           Get Instant Access &mdash; {tier.priceDisplay}
         </Link>
@@ -409,7 +401,7 @@ export default function PlaybookSalesPage({ config }: Props) {
             <p className="text-xs font-semibold text-zinc-400">
               Need case-specific questions?
             </p>
-            <p className="mt-2 text-sm text-zinc-300">
+            <p className="mt-2 text-base text-zinc-300">
               The{" "}
               <Link
                 href={`/checkout?tier=${nextSlug}`}

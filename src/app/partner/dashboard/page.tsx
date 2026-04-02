@@ -343,10 +343,11 @@ export default function PartnerDashboard() {
           <h2 className="text-xl font-bold mb-4">Payment Settings</h2>
           <form onSubmit={handleSaveSettings} className="space-y-4">
             <div>
-              <label className="block text-sm text-zinc-400 mb-1">
+              <label htmlFor="pay-method" className="block text-sm text-zinc-400 mb-1">
                 Preferred Payment Method
               </label>
               <select
+                id="pay-method"
                 value={payMethod}
                 onChange={(e) => setPayMethod(e.target.value)}
                 className="w-full px-4 py-2 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
@@ -360,10 +361,11 @@ export default function PartnerDashboard() {
 
             {payMethod === "zelle" && (
               <div>
-                <label className="block text-sm text-zinc-400 mb-1">
+                <label htmlFor="pay-zelle" className="block text-sm text-zinc-400 mb-1">
                   Zelle Email or Phone
                 </label>
                 <input
+                  id="pay-zelle"
                   type="text"
                   value={payZelle}
                   onChange={(e) => setPayZelle(e.target.value)}
@@ -375,10 +377,11 @@ export default function PartnerDashboard() {
 
             {payMethod === "venmo" && (
               <div>
-                <label className="block text-sm text-zinc-400 mb-1">
+                <label htmlFor="pay-venmo" className="block text-sm text-zinc-400 mb-1">
                   Venmo Handle
                 </label>
                 <input
+                  id="pay-venmo"
                   type="text"
                   value={payVenmo}
                   onChange={(e) => setPayVenmo(e.target.value)}
@@ -390,10 +393,11 @@ export default function PartnerDashboard() {
 
             {payMethod === "check" && (
               <div>
-                <label className="block text-sm text-zinc-400 mb-1">
+                <label htmlFor="pay-check-address" className="block text-sm text-zinc-400 mb-1">
                   Mailing Address
                 </label>
                 <textarea
+                  id="pay-check-address"
                   value={payCheckAddress}
                   onChange={(e) => setPayCheckAddress(e.target.value)}
                   placeholder="Street, City, State, ZIP"

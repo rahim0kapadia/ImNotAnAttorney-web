@@ -33,6 +33,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { escapeHtml } from "@/lib/email";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIp } from "@/lib/request";
 
 /**
  * Decodes a base64-encoded email parameter and validates it.
@@ -136,6 +138,14 @@ export async function GET(req: NextRequest) {
  * @returns Redirect to /unsubscribe?success=true (always, to prevent email enumeration)
  */
 export async function POST(req: NextRequest) {
+  // Rate limit: 10 requests per IP per minute
+  const supabase = createAdminClient();
+  const ip = getClientIp(req);
+  const { limited } = await checkRateLimit(supabase, `unsubscribe:${ip}`, 10, 60);
+  if (limited) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   const contentType = req.headers.get("content-type") || "";
   let emailParam: string | null = null;
 
@@ -178,8 +188,6 @@ export async function POST(req: NextRequest) {
   // endpoint clears unsubscribed_at on upsert). The drip email cron checks
   // for non-null unsubscribed_at to skip these subscribers.
   // =========================================================================
-  const supabase = createAdminClient();
-
   const { error } = await supabase
     .from("subscribers")
     .update({ unsubscribed_at: new Date().toISOString() })

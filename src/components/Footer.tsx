@@ -55,7 +55,7 @@ export function Footer() {
 
           {/* Pages */}
           <div>
-            <h2 className="mb-3 text-sm font-semibold text-zinc-300">Explore</h2>
+            <h3 className="mb-3 text-sm font-semibold text-zinc-300">Explore</h3>
             <div className="flex flex-col gap-2">
               <Link
                 href="/blog"
@@ -104,9 +104,9 @@ export function Footer() {
 
           {/* Playbooks */}
           <div>
-            <h2 className="mb-3 text-sm font-semibold text-zinc-300">
+            <h3 className="mb-3 text-sm font-semibold text-zinc-300">
               Playbooks
-            </h2>
+            </h3>
             <div className="flex flex-col gap-2">
               <Link href="/playbooks" className="text-sm text-amber-400 hover:text-amber-300">
                 View All Playbooks →
@@ -128,9 +128,9 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h2 className="mb-3 text-sm font-semibold text-zinc-300">
+            <h3 className="mb-3 text-sm font-semibold text-zinc-300">
               Our Services
-            </h2>
+            </h3>
             <div className="flex flex-col gap-2">
               <Link
                 href="/checkout?tier=case-decoder"
@@ -173,9 +173,9 @@ export function Footer() {
 
           {/* Legal & Connect */}
           <div>
-            <h2 className="mb-3 text-sm font-semibold text-zinc-300">
+            <h3 className="mb-3 text-sm font-semibold text-zinc-300">
               Legal
-            </h2>
+            </h3>
             <div className="flex flex-col gap-2">
               <Link
                 href="/terms"
@@ -214,7 +214,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="text-sm text-zinc-400 hover:text-white"
               >
-                X (Twitter)
+                X (Twitter)<span className="sr-only"> (opens in new tab)</span>
               </a>
             </div>
             <p className="mt-4 text-xs text-zinc-400">

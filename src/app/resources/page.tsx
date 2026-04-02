@@ -334,7 +334,7 @@ export default function ResourcesPage() {
           </p>
           <Link
             href="/checkout?tier=case-decoder"
-            className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+            className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
           >
             Get Case-Specific Questions — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
           </Link>

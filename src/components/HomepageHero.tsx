@@ -70,7 +70,7 @@ export function HomepageHero() {
             <div className="mt-8 flex flex-col items-center gap-4">
               <Link
                 href={primaryHref}
-                className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+                className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
                 {primaryLabel} &rarr;
               </Link>

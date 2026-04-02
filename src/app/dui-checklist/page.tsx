@@ -107,7 +107,7 @@ export default function DuiChecklistPage() {
         </p>
         <Link
           href="/playbook/dui-first-offense"
-          className="mt-3 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+          className="mt-3 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
         >
           Get the DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} Instant Download
         </Link>

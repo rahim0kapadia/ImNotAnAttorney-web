@@ -232,7 +232,7 @@ export default async function StateDuiPage({ params }: PageProps) {
           </p>
           <Link
             href="/score?charge=dui"
-            className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+            className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
           >
             Take the Free Defense Score
           </Link>

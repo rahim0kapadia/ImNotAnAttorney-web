@@ -35,7 +35,7 @@
  * SEO: robots noindex/nofollow — case progress should not appear in search engines.
  */
 import { createAdminClient } from "@/lib/supabase/admin";
-import { CONTACT_EMAIL, SITE_URL } from "@/lib/site";
+import { CONTACT_EMAIL, SITE_URL, hashToken } from "@/lib/site";
 import type { Metadata } from "next";
 
 // ============================================================
@@ -82,11 +82,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { token } = await params;
   const supabase = createAdminClient();
+  const tokenHash = hashToken(token);
+  // Query by hash first (new tokens), fall back to plaintext (pre-migration tokens)
   const { data } = await supabase
     .from("cases")
     .select("tier")
-    .eq("report_token", token)
-    .single();
+    .eq("report_token_hash", tokenHash)
+    .single()
+    .then((r) =>
+      r.data ? r : supabase.from("cases").select("tier").eq("report_token", token).single()
+    );
 
   const tierNames: Record<string, string> = {
     "x-ray": "X-Ray",
@@ -336,15 +341,21 @@ export default async function MyCasePage({
 }) {
   const { token } = await params;
   const supabase = createAdminClient();
+  const tokenHash = hashToken(token);
 
-  // ── Step 1: Fetch case by report_token ──────────────────────
+  // ── Step 1: Fetch case by report_token_hash (new) or report_token (migration fallback)
+  const caseSelect =
+    "id, email, tier, status, phase, created_at, delivery_due_at, document_count, finding_count, witness_count, discovery_health_score, defense_opportunity_index, report_token, report_token_expires_at, delivered_at";
   const { data: caseData } = await supabase
     .from("cases")
-    .select(
-      "id, email, tier, status, phase, created_at, delivery_due_at, document_count, finding_count, witness_count, discovery_health_score, defense_opportunity_index, report_token, report_token_expires_at, delivered_at"
-    )
-    .eq("report_token", token)
-    .single();
+    .select(caseSelect)
+    .eq("report_token_hash", tokenHash)
+    .single()
+    .then((r) =>
+      r.data
+        ? r
+        : supabase.from("cases").select(caseSelect).eq("report_token", token).single()
+    );
 
   // ── Step 2: Access controls ─────────────────────────────────
 

@@ -46,13 +46,13 @@ export function BlogCTA({ category }: { category?: string }) {
             <div className="mt-4 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/start"
-                className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+                className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
                 Get Started &mdash; {tier.priceDisplay}+ &rarr;
               </Link>
               <Link
                 href={`/checkout?tier=${playbookSlug}`}
-                className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] hover:border-amber-500"
+                className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:border-amber-500"
               >
                 {tier.name} &mdash; {tier.priceDisplay}
               </Link>
@@ -71,13 +71,13 @@ export function BlogCTA({ category }: { category?: string }) {
             <div className="mt-4 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/score"
-                className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+                className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
                 Take the Defense Milestone Score — Free &rarr;
               </Link>
               <Link
                 href="/checkout?tier=dui-first-offense"
-                className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] hover:border-amber-500"
+                className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:border-amber-500"
               >
                 DUI Playbook — {TIER_CORE["dui-first-offense"].priceDisplay}
               </Link>

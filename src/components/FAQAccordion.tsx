@@ -71,7 +71,7 @@ export function FAQAccordion({ items }: FAQAccordionProps) {
                 className="overflow-hidden"
               >
                 <div className="border-t border-zinc-800 px-6 py-4">
-                  <p className="text-sm leading-relaxed text-zinc-400">
+                  <p className="text-base leading-relaxed text-zinc-400">
                     {item.answer}
                   </p>
                 </div>

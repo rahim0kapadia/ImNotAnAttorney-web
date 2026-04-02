@@ -16,6 +16,7 @@ import {
 import type { BatchResultSucceeded } from "@/lib/batch-api";
 import { renderReportHtml } from "@/lib/report-renderer";
 import { sendEmail } from "@/lib/email";
+import { hashToken } from "@/lib/site";
 
 export async function pollBatchResults(
   ctx: CronContext
@@ -153,6 +154,7 @@ async function processCDResult(
     .update({
       report_html: reportHtml,
       report_token: reportToken,
+      report_token_hash: hashToken(reportToken),
       generated_at: now.toISOString(),
       status: "review",
       charge_type: meta.chargeType,

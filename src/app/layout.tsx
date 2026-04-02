@@ -157,14 +157,6 @@ export default async function RootLayout({
                 name: "ImNotAnAttorney",
                 description: "Defendant preparation intelligence — case research and accountability questions for criminal defendants.",
                 publisher: { "@id": `${SITE_URL}/#organization` },
-                potentialAction: {
-                  "@type": "SearchAction",
-                  target: {
-                    "@type": "EntryPoint",
-                    urlTemplate: `${SITE_URL}/blog?q={search_term_string}`,
-                  },
-                  "query-input": "required name=search_term_string",
-                },
               },
             ]),
           }}

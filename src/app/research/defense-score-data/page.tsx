@@ -6,8 +6,7 @@ import type { Metadata } from "next";
 export const revalidate = 3600; // revalidate every hour
 
 export const metadata: Metadata = {
-  title:
-    "Defense Milestone Score Data — What Defendants Reveal About Attorney Gaps",
+  title: "Defense Score Data — Attorney Gaps",
   description:
     "Original research from anonymous Defense Milestone Score data. See what defendants report about attorney communication, discovery, motions, and defense strategy — broken down by charge type.",
   alternates: {
@@ -166,7 +165,7 @@ export default async function DefenseScoreDataPage() {
         </h1>
         <p className="mt-4 text-lg text-zinc-400">
           Anonymous aggregate data from the{" "}
-          <Link href="/score" className="text-amber-400 hover:underline">
+          <Link href="/score" className="text-amber-400 underline hover:no-underline">
             Defense Milestone Score
           </Link>{" "}
           — a free 10-question self-assessment for criminal defendants. Updated
@@ -237,7 +236,7 @@ export default async function DefenseScoreDataPage() {
           ) : (
             <p className="mt-6 text-zinc-400">
               No data yet. Be the first to{" "}
-              <Link href="/score" className="text-amber-400 hover:underline">
+              <Link href="/score" className="text-amber-400 underline hover:no-underline">
                 take the score quiz
               </Link>
               .
@@ -315,7 +314,7 @@ export default async function DefenseScoreDataPage() {
             <p>
               The Defense Milestone Score is a free, anonymous 10-question
               self-assessment available at{" "}
-              <Link href="/score" className="text-amber-400 hover:underline">
+              <Link href="/score" className="text-amber-400 underline hover:no-underline">
                 imnotanattorney.com/score
               </Link>
               . Respondents answer questions about their charge type, time since
@@ -373,7 +372,7 @@ export default async function DefenseScoreDataPage() {
               statements, or the evidence.{" "}
               <Link
                 href="/blog/what-motions-should-your-attorney-be-filing"
-                className="text-amber-400 hover:underline"
+                className="text-amber-400 underline hover:no-underline"
               >
                 Learn what motions should be filed in your case.
               </Link>
@@ -386,7 +385,7 @@ export default async function DefenseScoreDataPage() {
               them — a fundamental right.{" "}
               <Link
                 href="/blog/how-to-read-your-discovery"
-                className="text-amber-400 hover:underline"
+                className="text-amber-400 underline hover:no-underline"
               >
                 Learn how to read your discovery.
               </Link>
@@ -399,7 +398,7 @@ export default async function DefenseScoreDataPage() {
               nationwide.{" "}
               <Link
                 href="/blog/attorney-not-returning-calls"
-                className="text-amber-400 hover:underline"
+                className="text-amber-400 underline hover:no-underline"
               >
                 Learn what to do when your attorney won't call back.
               </Link>
@@ -411,7 +410,7 @@ export default async function DefenseScoreDataPage() {
               means the defendant does not know the plan for their own case.{" "}
               <Link
                 href="/blog/is-your-attorney-actually-working-your-case"
-                className="text-amber-400 hover:underline"
+                className="text-amber-400 underline hover:no-underline"
               >
                 Learn how to tell if your attorney is working your case.
               </Link>

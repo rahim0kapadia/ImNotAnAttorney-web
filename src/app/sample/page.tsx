@@ -173,7 +173,7 @@ export default function SamplePage() {
               of what you know and what you don&apos;t know — based on what you
               shared with us.
             </p>
-            <div className="mt-4 overflow-x-auto">
+            <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="Defense milestone assessment table">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-zinc-700 text-left text-zinc-400">
@@ -297,7 +297,7 @@ export default function SamplePage() {
                 things, and both are worth asking about.
               </p>
 
-              <div className="mt-4 overflow-x-auto">
+              <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="Prosecution elements table">
                 <p className="text-sm font-semibold text-zinc-300">
                   What the prosecution must prove (elements):
                 </p>
@@ -604,7 +604,7 @@ export default function SamplePage() {
               </p>
             </div>
 
-            <div className="mt-4 overflow-x-auto">
+            <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="7-day action plan table">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-zinc-700 text-left text-zinc-400">

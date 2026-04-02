@@ -135,7 +135,7 @@ export function ChargeTypeSelector({ onSelect }: ChargeTypeSelectorProps) {
                   )?.focus();
                 }
               }}
-              className={`rounded-lg border px-3 py-2 text-sm font-semibold transition-all cursor-pointer ${
+              className={`rounded-lg border px-3 py-3 text-sm font-semibold transition-all cursor-pointer ${
                 isSelected
                   ? "border-amber-500 bg-amber-500/5 text-amber-400"
                   : "border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:border-zinc-600"

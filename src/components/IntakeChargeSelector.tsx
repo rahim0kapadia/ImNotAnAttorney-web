@@ -168,9 +168,11 @@ export function IntakeChargeSelector({
         </span>
 
         {freeTextActive && (
-          <span
-            className="mt-2 block"
+          <div
+            className="mt-2"
+            role="presentation"
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
           >
             <input
               ref={inputRef}
@@ -181,7 +183,7 @@ export function IntakeChargeSelector({
               aria-label="Describe your charge"
               className="w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-200 placeholder-zinc-500 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
-          </span>
+          </div>
         )}
       </div>
     </div>

@@ -79,7 +79,7 @@ export default async function PlaybookPage({ params }: PageProps) {
                 "@type": "ListItem",
                 position: 2,
                 name: "Playbooks",
-                item: `${SITE_URL}/services`,
+                item: `${SITE_URL}/playbooks`,
               },
               {
                 "@type": "ListItem",

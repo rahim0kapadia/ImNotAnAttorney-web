@@ -263,7 +263,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
               {tier.features.map((feature) => (
                 <li
                   key={feature}
-                  className="flex items-start gap-2 text-sm text-zinc-300"
+                  className="flex items-start gap-2 text-base text-zinc-300"
                 >
                   <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                   {feature}
@@ -275,7 +275,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
                 {tier.features.slice(0, 3).map((feature) => (
                   <li
                     key={feature}
-                    className="flex items-start gap-2 text-sm text-zinc-300"
+                    className="flex items-start gap-2 text-base text-zinc-300"
                   >
                     <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                     {feature}
@@ -283,7 +283,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
                 ))}
               </ul>
               {tier.features.length > 3 && (
-                <details className="mt-2">
+                <details className="mt-2" aria-label={`${tier.name} features`}>
                   <summary className="cursor-pointer text-xs font-semibold text-amber-400 hover:text-amber-300">
                     See all {tier.features.length} features &darr;
                   </summary>
@@ -291,7 +291,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
                     {tier.features.slice(3).map((feature) => (
                       <li
                         key={feature}
-                        className="flex items-start gap-2 text-sm text-zinc-300"
+                        className="flex items-start gap-2 text-base text-zinc-300"
                       >
                         <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                         {feature}
@@ -310,8 +310,8 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
               href={`/checkout?tier=${tier.tier}`}
               className={`mt-8 block rounded-lg py-3 text-center text-sm font-semibold transition-all ${
                 tier.featured
-                  ? "bg-amber-500 text-black hover:bg-amber-400 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/20"
-                  : "border border-zinc-700 text-white hover:border-zinc-500 hover:scale-[1.02]"
+                  ? "bg-amber-500 text-black hover:bg-amber-400 hover:scale-[1.02] focus-visible:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/20"
+                  : "border border-zinc-700 text-white hover:border-zinc-500 hover:scale-[1.02] focus-visible:scale-[1.02]"
               }`}
             >
               {tier.cta}
@@ -357,7 +357,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
               {tier.features.map((feature) => (
                 <li
                   key={feature}
-                  className="flex items-start gap-2 text-sm text-zinc-300"
+                  className="flex items-start gap-2 text-base text-zinc-300"
                 >
                   <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                   {feature}

@@ -33,7 +33,7 @@
  * Metadata: Dynamic title based on tier name (e.g., "Your Case Decoder Report").
  */
 import { createAdminClient } from "@/lib/supabase/admin";
-import { CONTACT_EMAIL } from "@/lib/site";
+import { CONTACT_EMAIL, hashToken } from "@/lib/site";
 import sanitizeHtml from "sanitize-html";
 import type { Metadata } from "next";
 import PrintButton from "./PrintButton";
@@ -51,11 +51,16 @@ const TIER_NAMES: Record<string, string> = {
 export async function generateMetadata({ params }: { params: Promise<{ token: string }> }): Promise<Metadata> {
   const { token } = await params;
   const supabase = createAdminClient();
+  const tokenHash = hashToken(token);
+  // Query by hash first (new tokens), fall back to plaintext (pre-migration tokens)
   const { data } = await supabase
     .from("cases")
     .select("tier")
-    .eq("report_token", token)
-    .single();
+    .eq("report_token_hash", tokenHash)
+    .single()
+    .then((r) =>
+      r.data ? r : supabase.from("cases").select("tier").eq("report_token", token).single()
+    );
 
   const tierName = data?.tier ? TIER_NAMES[data.tier] || "Report" : "Report";
   return {
@@ -75,12 +80,23 @@ export default async function ReportPage({
 }) {
   const { token } = await params;
   const supabase = createAdminClient();
+  const tokenHash = hashToken(token);
 
+  // Query by hash first (new tokens), fall back to plaintext (pre-migration tokens)
   const { data: caseData } = await supabase
     .from("cases")
     .select("report_html, status, tier, report_token_expires_at")
-    .eq("report_token", token)
-    .single();
+    .eq("report_token_hash", tokenHash)
+    .single()
+    .then((r) =>
+      r.data
+        ? r
+        : supabase
+            .from("cases")
+            .select("report_html, status, tier, report_token_expires_at")
+            .eq("report_token", token)
+            .single()
+    );
 
   // ACCESS CONTROL 0: Token expiration — reports expire after 12 months.
   if (caseData?.report_token_expires_at && new Date(caseData.report_token_expires_at) < new Date()) {

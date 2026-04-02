@@ -101,7 +101,7 @@ export function Header() {
           ))}
           <Link
             href="/start"
-            className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-black transition-all hover:bg-amber-400 hover:shadow-md hover:shadow-amber-500/30"
+            className="rounded-lg bg-amber-500 px-4 py-3 text-sm font-semibold text-black transition-all hover:bg-amber-400 hover:shadow-md hover:shadow-amber-500/30"
           >
             Get Started
           </Link>

@@ -449,10 +449,11 @@ export default function PartnersAdmin() {
           <h2 className="text-lg font-bold mb-4">Create New Partner</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-zinc-400 mb-1">
+              <label htmlFor="admin-partner-name" className="block text-sm text-zinc-400 mb-1">
                 Name *
               </label>
               <input
+                id="admin-partner-name"
                 type="text"
                 value={formName}
                 onChange={(e) => setFormName(e.target.value)}
@@ -461,10 +462,11 @@ export default function PartnersAdmin() {
               />
             </div>
             <div>
-              <label className="block text-sm text-zinc-400 mb-1">
+              <label htmlFor="admin-partner-company" className="block text-sm text-zinc-400 mb-1">
                 Company
               </label>
               <input
+                id="admin-partner-company"
                 type="text"
                 value={formCompany}
                 onChange={(e) => setFormCompany(e.target.value)}
@@ -472,10 +474,11 @@ export default function PartnersAdmin() {
               />
             </div>
             <div>
-              <label className="block text-sm text-zinc-400 mb-1">
+              <label htmlFor="admin-partner-email" className="block text-sm text-zinc-400 mb-1">
                 Email *
               </label>
               <input
+                id="admin-partner-email"
                 type="email"
                 value={formEmail}
                 onChange={(e) => setFormEmail(e.target.value)}
@@ -484,8 +487,9 @@ export default function PartnersAdmin() {
               />
             </div>
             <div>
-              <label className="block text-sm text-zinc-400 mb-1">Phone</label>
+              <label htmlFor="admin-partner-phone" className="block text-sm text-zinc-400 mb-1">Phone</label>
               <input
+                id="admin-partner-phone"
                 type="tel"
                 value={formPhone}
                 onChange={(e) => setFormPhone(e.target.value)}
@@ -493,10 +497,11 @@ export default function PartnersAdmin() {
               />
             </div>
             <div>
-              <label className="block text-sm text-zinc-400 mb-1">
+              <label htmlFor="admin-partner-region" className="block text-sm text-zinc-400 mb-1">
                 Region
               </label>
               <input
+                id="admin-partner-region"
                 type="text"
                 value={formRegion}
                 onChange={(e) => setFormRegion(e.target.value)}
@@ -505,10 +510,11 @@ export default function PartnersAdmin() {
               />
             </div>
             <div>
-              <label className="block text-sm text-zinc-400 mb-1">
+              <label htmlFor="admin-partner-code" className="block text-sm text-zinc-400 mb-1">
                 Promo Code (optional)
               </label>
               <input
+                id="admin-partner-code"
                 type="text"
                 value={formCode}
                 onChange={(e) => setFormCode(e.target.value)}
@@ -517,8 +523,9 @@ export default function PartnersAdmin() {
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm text-zinc-400 mb-1">Notes</label>
+              <label htmlFor="admin-partner-notes" className="block text-sm text-zinc-400 mb-1">Notes</label>
               <textarea
+                id="admin-partner-notes"
                 value={formNotes}
                 onChange={(e) => setFormNotes(e.target.value)}
                 rows={2}

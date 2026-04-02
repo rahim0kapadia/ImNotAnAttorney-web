@@ -281,13 +281,13 @@ export default function AboutPage() {
           <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/checkout?tier=case-decoder"
-              className="rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+              className="rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
             >
               Get Your Case Analysis — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
             </Link>
             <Link
               href="/blog"
-              className="rounded-lg border border-zinc-700 px-8 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:border-zinc-500"
+              className="rounded-lg border border-zinc-700 px-8 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:border-zinc-500"
             >
               Read the Blog
             </Link>
