@@ -283,8 +283,8 @@ function stripSections(markdown: string, headerKeywords: string[]): string {
         skipping = true;
         continue;
       }
-      // New heading that isn't a skip target — stop skipping
-      if (skipping && (line.startsWith("# ") || line.startsWith("## "))) {
+      // Any heading that isn't a skip target — stop skipping
+      if (skipping && !shouldSkip) {
         skipping = false;
       }
     }

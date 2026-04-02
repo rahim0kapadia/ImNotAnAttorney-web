@@ -24,24 +24,24 @@ export async function cleanupAbandonedIntakes(ctx: CronContext): Promise<CronRes
 
   const { data: oldIntakes } = await ctx.supabase
     .from("intakes")
-    .select("id, email")
+    .select("id")
     .lt("created_at", ninetyDaysAgo.toISOString())
     .limit(500);
 
   if (oldIntakes && oldIntakes.length > 0) {
-    // N+1 FIX: Batch-fetch all cases for these intake emails
-    const intakeEmails = [...new Set(oldIntakes.map((i) => i.email.toLowerCase()))];
-    const { data: casesWithEmails } = await ctx.supabase
+    // Check which intakes have a case pointing at them via FK
+    const intakeIds = oldIntakes.map((i) => i.id);
+    const { data: casesWithIntakes } = await ctx.supabase
       .from("cases")
-      .select("email")
-      .in("email", intakeEmails);
+      .select("intake_id")
+      .in("intake_id", intakeIds);
 
-    const emailsWithCases = new Set(
-      (casesWithEmails ?? []).map((c: { email: string }) => c.email.toLowerCase())
+    const intakeIdsWithCases = new Set(
+      (casesWithIntakes ?? []).map((c: { intake_id: string }) => c.intake_id)
     );
 
-    // Filter to intakes that have no corresponding case
-    const toDelete = oldIntakes.filter((i) => !emailsWithCases.has(i.email.toLowerCase()));
+    // Delete intakes that no case references (FK-based, not email-based)
+    const toDelete = oldIntakes.filter((i) => !intakeIdsWithCases.has(i.id));
 
     if (toDelete.length > 0) {
       const deleteIds = toDelete.map((i) => i.id);
@@ -145,6 +145,31 @@ export async function cleanupDiscoveryDocuments(ctx: CronContext): Promise<CronR
       result.cleaned += c.file_urls.length;
       console.log(`[Drip Cron] Part 14: Deleted ${c.file_urls.length} discovery files for case ${c.id}`);
     }
+  }
+
+  return result;
+}
+
+// ============================================================
+// PART 15: CRON EXECUTIONS TABLE CLEANUP
+// ============================================================
+// Prevent unbounded growth of cron_executions (1 row per cron run).
+// Keep 30 days for debugging, delete older rows.
+
+export async function cleanupCronExecutions(ctx: CronContext): Promise<CronResult> {
+  const result = emptyResult();
+
+  const thirtyDaysAgo = new Date(ctx.now);
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+  const { count } = await ctx.supabase
+    .from("cron_executions")
+    .delete({ count: "exact" })
+    .lt("started_at", thirtyDaysAgo.toISOString());
+
+  if (count && count > 0) {
+    console.log(`[Cron] Part 15: Purged ${count} old cron_executions records`);
+    result.cleaned += count;
   }
 
   return result;

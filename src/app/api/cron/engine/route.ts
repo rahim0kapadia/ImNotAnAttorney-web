@@ -10,7 +10,7 @@
  *   -> GitHub Actions runner -> node src/worker.mjs --once -> processes up to 20 jobs
  *
  * Env vars required:
- *   CRON_SECRET        — Bearer token for cron-job.org auth
+ *   CRON_AUTH_TOKEN     — Bearer token for cron-job.org auth
  *   ENGINE_DISPATCH_PAT  — GitHub PAT with workflow dispatch permission on engine repo
  */
 

@@ -254,7 +254,8 @@ function scoreDimension(
     const trendDirection: TrendDirection = trendPct > 10 ? "rising" : trendPct < -10 ? "falling" : "stable";
 
     // Demand score (1-10)
-    const volumeRank = percentileRank(weightedCount, allPostCounts) * 10;
+    // Use raw postCount for percentile (allPostCounts is unweighted)
+    const volumeRank = percentileRank(postCount, allPostCounts) * 10;
     const engagementRank = Math.min(10, (avgScore + avgComments) / 10);
     const urgencyRank = avgUrgency;
     const questionRank = questionPct * 10;
@@ -497,8 +498,8 @@ async function detectEmergingTopics(supabase: SupabaseClient): Promise<EmergingT
       topic_phrases: [phrase],
       representative_title: posts[0].title,
       post_count: count,
-      first_seen_at: new Date(Math.min(...dates)).toISOString(),
-      last_seen_at: new Date(Math.max(...dates)).toISOString(),
+      first_seen_at: new Date(dates.reduce((min, d) => d < min ? d : min, Infinity)).toISOString(),
+      last_seen_at: new Date(dates.reduce((max, d) => d > max ? d : max, -Infinity)).toISOString(),
       avg_urgency: Math.round(avgUrgency * 100) / 100,
       avg_engagement: Math.round(avgEngagement * 100) / 100,
       status: "detected",

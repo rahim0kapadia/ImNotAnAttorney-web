@@ -15,6 +15,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 
 // ── Constants ──────────────────────────────────────────────
 const BATCH_SIZE = 20;
+const VALID_TONES = new Set(["terrified", "helpless", "angry", "confused", "desperate", "hopeless", "hopeful", "pragmatic"]);
 
 // ── Types ──────────────────────────────────────────────────
 
@@ -61,16 +62,22 @@ interface LLMClassification {
 
 // ── Load reference data ────────────────────────────────────
 async function loadReferenceData(supabase: SupabaseClient): Promise<ReferenceData> {
-  const { data: chargeTypes } = await supabase
+  const { data: chargeTypes, error: ctError } = await supabase
     .from("charge_types")
     .select("slug, label");
 
-  const { data: painPoints } = await supabase
+  if (ctError) throw new Error(`Failed to load charge_types: ${ctError.message}`);
+
+  const { data: painPoints, error: ppError } = await supabase
     .from("content_pain_points")
     .select("blog_slug, title");
 
+  if (ppError) throw new Error(`Failed to load content_pain_points: ${ppError.message}`);
+
   const ctList: ChargeType[] = chargeTypes || [];
   const ppList: PainPoint[] = painPoints || [];
+
+  if (ctList.length === 0) throw new Error("charge_types table returned empty, aborting classification");
 
   return {
     chargeTypeSlugs: ctList.map((ct) => ct.slug),
@@ -130,7 +137,7 @@ ${posts
   )
   .join("\n\n")}
 
-Return ONLY a JSON array of objects, one per post, in order. No explanation.`;
+Return ONLY a JSON object with a single key "results" containing an array of objects, one per post, in order. Example: {"results": [{"charge_types":["dui"],"pain_points":[],"urgency":7,"emotional_tone":"terrified"}]}. No explanation, no code fences.`;
 
   try {
     const msg = await client.messages.create({
@@ -140,13 +147,22 @@ Return ONLY a JSON array of objects, one per post, in order. No explanation.`;
     });
 
     const text = (msg.content[0] as { type: string; text?: string })?.text || "";
-    // Extract JSON from response
-    const jsonMatch = text.match(/\[[\s\S]*\]/);
-    if (!jsonMatch) {
-      console.warn("[demand-classify] Could not parse LLM response as JSON array");
+    // Parse structured JSON response (no regex needed)
+    try {
+      const parsed = JSON.parse(text) as { results: LLMClassification[] };
+      if (parsed.results && Array.isArray(parsed.results)) {
+        return parsed.results;
+      }
+      // Fallback: response might be a raw array
+      if (Array.isArray(parsed)) {
+        return parsed as LLMClassification[];
+      }
+      console.warn("[demand-classify] LLM response is not a valid results object");
+      return null;
+    } catch {
+      console.warn("[demand-classify] Could not parse LLM response as JSON");
       return null;
     }
-    return JSON.parse(jsonMatch[0]) as LLMClassification[];
   } catch (err) {
     console.error("[demand-classify] LLM classification error:", (err as Error).message);
     return null;
@@ -238,7 +254,7 @@ export async function classifyWithLLM(supabase: SupabaseClient): Promise<Classif
       if (typeof result.urgency === "number") {
         row.urgency_score = Math.min(10, Math.max(0, result.urgency));
       }
-      if (result.emotional_tone) {
+      if (result.emotional_tone && VALID_TONES.has(result.emotional_tone)) {
         row.emotional_tone = result.emotional_tone;
       }
 

@@ -33,6 +33,7 @@ import {
   cleanupRateLimits,
   cleanupDripEmailLogs,
   cleanupDiscoveryDocuments,
+  cleanupCronExecutions,
 } from "@/lib/cron/compliance";
 import { reconcileStripePayments, detectOrphanOrders } from "@/lib/cron/reconciliation";
 import { sendReportExpiryWarnings, sendAbandonedCheckoutEmails } from "@/lib/cron/customer-lifecycle";
@@ -66,6 +67,7 @@ const TASKS: { name: string; fn: (ctx: CronContext) => Promise<CronResult> }[] =
   // Compliance cleanup continued (Parts 13-14)
   { name: "drip-log-cleanup", fn: cleanupDripEmailLogs },
   { name: "discovery-doc-cleanup", fn: cleanupDiscoveryDocuments },
+  { name: "cron-executions-cleanup", fn: cleanupCronExecutions },
   // Pipeline health (Parts 15-16)
   { name: "stuck-jobs", fn: detectStuckJobs },
   { name: "pipeline-completion", fn: checkPipelineCompletion },

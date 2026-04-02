@@ -22,7 +22,7 @@ export interface PerformanceRecord {
   charge_type_slug: string | null;
   pain_point_slug: string | null;
   demand_score_at_publish: null;
-  current_demand_score: number | null;
+  current_demand_score: number | null; // Always 7d window (loadDemandScores filters window_label='7d')
   window_start: string;
   window_end: string;
   window_label: string;
@@ -93,8 +93,7 @@ async function loadContentPosts(supabase: SupabaseClient): Promise<ContentPost[]
     .eq("status", "published");
 
   if (error) {
-    console.error("Error loading content_posts:", error.message);
-    return [];
+    throw new Error(`Failed to load content_posts: ${error.message}`);
   }
   return data || [];
 }

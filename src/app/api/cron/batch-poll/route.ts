@@ -3,7 +3,7 @@
  *
  * Lightweight endpoint that only runs the batch poller task.
  * Registered with cron-job.org at every-5-minutes cadence.
- * Protected by CRON_SECRET bearer token.
+ * Protected by CRON_AUTH_TOKEN bearer token.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { requireCron } from "@/lib/auth/guards";

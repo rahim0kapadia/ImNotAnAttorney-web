@@ -12,8 +12,7 @@ import type { BlogDraft } from "@/lib/types/blog-pipeline";
 const GITHUB_OWNER = "rahim0kapadia";
 const GITHUB_REPO = "ImNotAnAttorney-web";
 const GITHUB_API = "https://api.github.com";
-const INDEXNOW_KEY =
-  process.env.INDEXNOW_KEY || "e4052ae08a6601d2550172f078562c00";
+const INDEXNOW_KEY = process.env.INDEXNOW_KEY || "";
 const SITE_URL = "https://imnotanattorney.com";
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -54,13 +53,13 @@ async function resolveUniqueSlug(base: string): Promise<string> {
   if (!(await slugExists(base))) return base;
 
   let n = 2;
-  while (n < 100) {
+  while (n <= 4) {
     const candidate = `${base}-${n}`;
     if (!(await slugExists(candidate))) return candidate;
     n++;
   }
 
-  // Extremely unlikely fallback — use timestamp suffix
+  // Fallback after 3 collision attempts — timestamp suffix is unique enough
   return `${base}-${Date.now()}`;
 }
 
@@ -161,11 +160,15 @@ export async function publishDraft(
 
     // ── 5. IndexNow submission (fire-and-forget) ───────────────────────────
     const pageUrl = `${SITE_URL}/blog/${slug}`;
-    fetch(
-      `https://api.indexnow.org/indexnow?url=${encodeURIComponent(pageUrl)}&key=${INDEXNOW_KEY}`
-    ).catch((err) =>
-      console.warn(`[blog-publish] IndexNow submission failed for "${slug}":`, err)
-    );
+    if (INDEXNOW_KEY) {
+      fetch(
+        `https://api.indexnow.org/indexnow?url=${encodeURIComponent(pageUrl)}&key=${INDEXNOW_KEY}`
+      ).catch((err) =>
+        console.warn(`[blog-publish] IndexNow submission failed for "${slug}":`, err)
+      );
+    } else {
+      console.warn("[blog-publish] INDEXNOW_KEY not set, skipping IndexNow submission");
+    }
 
     return { slug, success: true };
   } catch (err) {

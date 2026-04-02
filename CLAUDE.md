@@ -1,5 +1,26 @@
 # ImNotAnAttorney-web — Claude Code Instructions
 
+## Ecosystem — INAA Project Family
+This project is part of the INAA (ImNotAnAttorney) ecosystem. You may freely read files from sibling repos to answer questions or build features:
+
+| Repo | Path | Role |
+|------|------|------|
+| ImNotAnAttorney | `C:\Users\email\projects\ImNotAnAttorney\` | Business docs, strategy, content engine, templates, eval framework |
+| ImNotAnAttorney-web | `C:\Users\email\projects\ImNotAnAttorney-web\` | Next.js customer-facing site (THIS REPO) |
+| ImNotAnAttorney-engine | `C:\Users\email\projects\ImNotAnAttorney-engine\` | Backend worker pipeline (38 workers, 6 phases, discovery tier processing) |
+| KDP-Publishing (legal only) | `C:\Users\email\projects\KDP-Publishing\books\` | INAA Defense Guides (Jordan Blake). Only legal defense books. |
+
+**Default boundary**: Do NOT read files from projects outside this table unless Rahim explicitly directs you to.
+
+**How the repos connect:**
+- **This repo → Engine:** Stripe webhook creates `cases` + `processing_jobs` rows. Engine polls `processing_jobs` via cron-job.org every 5min. Discovery tiers ($2,497+) processed by engine workers.
+- **This repo → Parent:** Reads `system/EVALUATION-TEAM.md` for audit criteria. Engine reads `system/templates/` for prompt templates at runtime.
+- **Shared Supabase:** All 3 repos share one database (`jxjbjmgdukwkoclydqdr`). Web owns checkout/intake/delivery. Engine owns analysis/research/strategy tables. Parent seeds reference data.
+- **This repo handles:** Playbooks ($97), Case Decoder ($197), Intelligence Brief ($997) generation via Supabase Edge Functions. Blog, checkout, intake, delivery, cron, email.
+- **Engine handles:** X-Ray ($2,497), War Room ($4,997), Situation Room ($9,997) — full discovery analysis pipeline.
+
+**Architecture docs:** Each repo has its own `ARCHITECTURE.md` at root. Read the relevant one before cross-repo work.
+
 ## Identity: Atticus (Atti)
 
 Auto-loaded via `.claude/rules/atti-persona.md` — 6 thinking modes, research-first rule, voice.
@@ -8,7 +29,7 @@ Eval framework: `ImNotAnAttorney/system/EVALUATION-TEAM.md` (11 teams, 164 crite
 
 ## What This Is
 
-A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment for criminal defendants holding their attorneys accountable. 35 blog posts, 14 pages, multi-tier checkout ($97-$4,997).
+A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment for criminal defendants holding their attorneys accountable. 35 blog posts, 28 pages, multi-tier checkout ($97-$9,997).
 
 ## Tech Stack
 
@@ -25,7 +46,8 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment 
 
 | File | Purpose |
 |------|---------|
-| `docs/ARCHITECTURE.md` | Full system architecture, DB schema, case status state machine, env vars |
+| `ARCHITECTURE.md` | System map: invariants, component map, E2E flows, key decisions |
+| `docs/ARCHITECTURE.md` | Deep reference: DB schema, case status state machine, env vars, email sequences |
 | `src/lib/schema.ts` | Structured data generators (about entities, citation mapping) |
 | `src/lib/tiers.ts` | TIER_CORE array — single source of truth for pricing |
 | `src/lib/drip-emails.ts` | 7+ email sequence definitions |
@@ -71,5 +93,6 @@ Read `design-system/brand.md` FIRST. All colors, fonts, and design decisions mus
 
 ## Reference
 
-- Business docs: `C:\Users\email\projects\ImNotAnAttorney\`
+- Business docs + templates: `C:\Users\email\projects\ImNotAnAttorney\`
+- Engine pipeline (discovery tiers): `C:\Users\email\projects\ImNotAnAttorney-engine\`
 - Elite skills: `C:\Users\email\.openclaw\workspace\skills\`

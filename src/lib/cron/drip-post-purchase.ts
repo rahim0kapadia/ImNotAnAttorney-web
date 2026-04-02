@@ -22,15 +22,15 @@ import { emptyResult } from "./types";
 export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResult> {
   const result = emptyResult();
 
-  const thirtyDaysAgo = new Date(ctx.now);
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 90);
+  const ninetyDaysAgo = new Date(ctx.now);
+  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
 
   // Only fetch orders with status "paid" — refunded orders are excluded.
   const { data: orders, error: orderError } = await ctx.supabase
     .from("orders")
     .select("id, email, tier, paid_at")
     .eq("status", "paid")
-    .gte("paid_at", thirtyDaysAgo.toISOString())
+    .gte("paid_at", ninetyDaysAgo.toISOString())
     .order("paid_at", { ascending: true })
     .limit(200);
 
