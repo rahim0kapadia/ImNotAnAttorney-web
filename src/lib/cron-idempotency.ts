@@ -38,8 +38,8 @@
  * ## Stale lock recovery
  *
  * If a previous run crashed mid-execution, its lock row will be stuck in
- * `status = 'running'`. Locks older than 5 minutes are treated as stale
- * and marked `failed`, allowing the new run to proceed.
+ * `status = 'running'`. Locks older than the staleThresholdMs (default 5 minutes)
+ * are treated as stale and marked `failed`, allowing the new run to proceed.
  */
 
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -57,12 +57,16 @@ export interface IdempotencyResult {
  * @param intervalMs - Minimum interval between runs in milliseconds.
  *   Use 23h (23 * 60 * 60 * 1000) for daily jobs to give a 1h buffer against
  *   clock drift and scheduler jitter.
+ * @param options.staleThresholdMs - How long a 'running' lock is considered active
+ *   before being treated as stale (crashed run). Default: 5 minutes. Override for
+ *   long-running jobs — e.g. demand-fetch has maxDuration=300s so use 360_000.
  * @returns IdempotencyResult — if shouldRun is false, the caller must return
  *   immediately without executing job logic.
  */
 export async function acquireCronLock(
   jobName: string,
-  intervalMs: number
+  intervalMs: number,
+  options?: { staleThresholdMs?: number }
 ): Promise<IdempotencyResult> {
   try {
     const supabase = createAdminClient();
@@ -89,7 +93,7 @@ export async function acquireCronLock(
 
       if (entry.status === "running") {
         const ageMs = Date.now() - new Date(entry.started_at).getTime();
-        const staleThresholdMs = 5 * 60 * 1000; // 5 minutes
+        const staleThresholdMs = options?.staleThresholdMs ?? 5 * 60 * 1000; // default 5 minutes
 
         if (ageMs < staleThresholdMs) {
           // Another instance is actively running — skip

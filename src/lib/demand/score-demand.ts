@@ -147,41 +147,46 @@ async function loadPainPointCategories(supabase: SupabaseClient): Promise<PainPo
   return data || [];
 }
 
-// ── Signal query ───────────────────────────────────────────
+// ── Signal types ───────────────────────────────────────────
 
 interface SignalRow {
+  charge_type_slugs: string[] | null;
+  pain_point_slugs: string[] | null;
   score: number | null;
   num_comments: number | null;
   has_question: boolean | null;
   urgency_score: number | null;
   price_sensitivity: boolean | null;
+  reddit_created_at: string;
 }
 
-async function querySignals(
-  supabase: SupabaseClient,
+// ── In-memory signal filter (replaces per-dimension DB queries) ────────────
+
+function filterSignals(
+  allSignals: SignalRow[],
   dimensionType: string,
   dimensionSlug: string,
   windowStart: Date,
   windowEnd: Date
-): Promise<SignalRow[]> {
-  let query = supabase
-    .from("reddit_signals")
-    .select("score, num_comments, has_question, urgency_score, price_sensitivity")
-    .gte("reddit_created_at", windowStart.toISOString())
-    .lte("reddit_created_at", windowEnd.toISOString());
+): SignalRow[] {
+  const startMs = windowStart.getTime();
+  const endMs = windowEnd.getTime();
+  const results: SignalRow[] = [];
 
-  if (dimensionType === "charge_type") {
-    query = query.contains("charge_type_slugs", [dimensionSlug]);
-  } else {
-    query = query.contains("pain_point_slugs", [dimensionSlug]);
+  for (const s of allSignals) {
+    const createdMs = new Date(s.reddit_created_at).getTime();
+    if (createdMs < startMs || createdMs > endMs) continue;
+
+    if (dimensionType === "charge_type") {
+      if (!s.charge_type_slugs || !s.charge_type_slugs.includes(dimensionSlug)) continue;
+    } else {
+      if (!s.pain_point_slugs || !s.pain_point_slugs.includes(dimensionSlug)) continue;
+    }
+
+    results.push(s);
   }
 
-  const { data, error } = await query;
-  if (error) {
-    console.warn(`[score-demand] Error querying signals for ${dimensionSlug}:`, error.message);
-    return [];
-  }
-  return data || [];
+  return results;
 }
 
 // ── Percentile rank ────────────────────────────────────────
@@ -194,14 +199,14 @@ function percentileRank(value: number, allValues: number[]): number {
 
 // ── Score a single dimension across all windows ────────────
 
-async function scoreDimension(
-  supabase: SupabaseClient,
+function scoreDimension(
+  allSignals: SignalRow[],
   dimType: string,
   dimSlug: string,
   dimLabel: string,
-  allPostCounts: number[]
-): Promise<DemandScoreRow[]> {
-  const now = new Date();
+  allPostCounts: number[],
+  now: Date
+): DemandScoreRow[] {
   const results: DemandScoreRow[] = [];
 
   for (const days of WINDOWS) {
@@ -212,10 +217,10 @@ async function scoreDimension(
     windowStart.setUTCDate(windowStart.getUTCDate() - days);
     const prevStart = new Date(windowStart.getTime() - days * 24 * 60 * 60 * 1000);
 
-    // Current window signals
-    const signals = await querySignals(supabase, dimType, dimSlug, windowStart, windowEnd);
-    // Previous window signals (for trend)
-    const prevSignals = await querySignals(supabase, dimType, dimSlug, prevStart, windowStart);
+    // Current window signals — filtered in-memory from bulk fetch
+    const signals = filterSignals(allSignals, dimType, dimSlug, windowStart, windowEnd);
+    // Previous window signals (for trend) — filtered in-memory
+    const prevSignals = filterSignals(allSignals, dimType, dimSlug, prevStart, windowStart);
 
     // Volume metrics (price-sensitive posts weighted 1.5x)
     let weightedCount = 0;
@@ -539,32 +544,54 @@ export async function scoreDemand(supabase: SupabaseClient): Promise<ScoreResult
     dimensionsToScore.push({ type: "pain_point", slug: pp.blog_slug, label: pp.title });
   }
 
-  // Pass 1: Quick count of posts per dimension for 7d window (percentile baseline)
+  // Bulk fetch ALL signals for the last 180 days in a single query.
+  // 90d window + 90d previous period = 180d total coverage.
+  // Replaces 258+ individual Supabase queries (43 dimensions × 3 windows × 2 periods).
   const now = new Date();
-  const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const oneEightyDaysAgo = new Date(now);
+  oneEightyDaysAgo.setUTCHours(0, 0, 0, 0);
+  oneEightyDaysAgo.setUTCDate(oneEightyDaysAgo.getUTCDate() - 180);
+
+  console.log("[score-demand] Fetching all signals for last 180 days (single bulk query)...");
+  const { data: allSignals, error: signalsError } = await supabase
+    .from("reddit_signals")
+    .select("charge_type_slugs, pain_point_slugs, score, num_comments, has_question, urgency_score, price_sensitivity, reddit_created_at")
+    .gte("reddit_created_at", oneEightyDaysAgo.toISOString());
+
+  if (signalsError) {
+    throw new Error(`[score-demand] Failed to bulk-fetch reddit_signals: ${signalsError.message}`);
+  }
+
+  const signals180: SignalRow[] = allSignals || [];
+  console.log(`[score-demand] Bulk fetch: ${signals180.length} signals over 180 days`);
+
+  // Pass 1: Count posts per dimension for 7d window (percentile baseline) — in-memory
+  const weekAgo = new Date(now);
+  weekAgo.setUTCHours(0, 0, 0, 0);
+  weekAgo.setUTCDate(weekAgo.getUTCDate() - 7);
   const preCountList: number[] = [];
 
-  console.log("[score-demand] Pass 1: counting posts for percentile baseline...");
+  console.log("[score-demand] Pass 1: counting posts for percentile baseline (in-memory)...");
   for (const dim of dimensionsToScore) {
-    const signals = await querySignals(supabase, dim.type, dim.slug, weekAgo, now);
-    preCountList.push(signals.length);
+    const dimSignals = filterSignals(signals180, dim.type, dim.slug, weekAgo, now);
+    preCountList.push(dimSignals.length);
   }
   const maxCount = preCountList.length > 0 ? Math.max(...preCountList) : 0;
   console.log(`[score-demand] Baseline: ${preCountList.length} dimensions, max=${maxCount} posts`);
 
-  // Pass 2: Full scoring with complete distribution
+  // Pass 2: Full scoring with complete distribution — all in-memory, no DB queries
   const allScores: DemandScoreRow[] = [];
 
   console.log("[score-demand] Pass 2: scoring charge types...");
   for (const ct of chargeTypes) {
-    const scores = await scoreDimension(supabase, "charge_type", ct.slug, ct.label, preCountList);
+    const scores = scoreDimension(signals180, "charge_type", ct.slug, ct.label, preCountList, now);
     allScores.push(...scores);
   }
 
   console.log("[score-demand] Pass 2: scoring pain points...");
   for (const pp of painPoints) {
     if (!pp.blog_slug) continue;
-    const scores = await scoreDimension(supabase, "pain_point", pp.blog_slug, pp.title, preCountList);
+    const scores = scoreDimension(signals180, "pain_point", pp.blog_slug, pp.title, preCountList, now);
     allScores.push(...scores);
   }
 

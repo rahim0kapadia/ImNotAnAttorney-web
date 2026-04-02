@@ -213,42 +213,47 @@ export async function classifyWithLLM(supabase: SupabaseClient): Promise<Classif
       continue;
     }
 
-    // Update each post
+    // Build upsert payloads for the whole batch, then write in one round-trip
+    const upsertRows: Record<string, unknown>[] = [];
     for (let j = 0; j < batch.length; j++) {
       const post = batch[j];
       const result = results[j];
       if (!result) continue;
 
-      const update: Record<string, unknown> = {
+      const row: Record<string, unknown> = {
+        reddit_id: post.reddit_id,
         classified_by: "haiku",
       };
 
       if (result.charge_types?.length) {
-        update.charge_type_slugs = result.charge_types.filter((s) =>
+        row.charge_type_slugs = result.charge_types.filter((s) =>
           refData.chargeTypeSlugs.includes(s)
         );
       }
       if (result.pain_points?.length) {
-        update.pain_point_slugs = result.pain_points.filter((s) =>
+        row.pain_point_slugs = result.pain_points.filter((s) =>
           refData.painPointSlugs.includes(s)
         );
       }
       if (typeof result.urgency === "number") {
-        update.urgency_score = Math.min(10, Math.max(0, result.urgency));
+        row.urgency_score = Math.min(10, Math.max(0, result.urgency));
       }
       if (result.emotional_tone) {
-        update.emotional_tone = result.emotional_tone;
+        row.emotional_tone = result.emotional_tone;
       }
 
+      upsertRows.push(row);
+    }
+
+    if (upsertRows.length > 0) {
       const { error } = await supabase
         .from("reddit_signals")
-        .update(update)
-        .eq("reddit_id", post.reddit_id);
+        .upsert(upsertRows, { onConflict: "reddit_id" });
 
       if (error) {
-        console.warn(`[demand-classify]   Error updating ${post.reddit_id}: ${error.message}`);
+        console.warn(`[demand-classify]   Batch upsert error: ${error.message}`);
       } else {
-        classified++;
+        classified += upsertRows.length;
       }
     }
   }

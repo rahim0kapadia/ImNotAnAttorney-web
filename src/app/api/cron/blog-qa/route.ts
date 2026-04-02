@@ -15,7 +15,7 @@
  * Idempotency lock: "blog-qa", 23h window.
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { requireCron } from "@/lib/auth/guards";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { acquireCronLock, releaseCronLock } from "@/lib/cron-idempotency";
@@ -44,50 +44,50 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ skipped: true, reason: lock.reason });
   }
 
-  const supabase = createAdminClient();
+  // Return 200 immediately so cron-job.org (30s free-plan cap) doesn't
+  // report a false timeout. The actual work runs post-response via after().
+  after(async () => {
+    const supabase = createAdminClient();
 
-  try {
-    // ── Fetch eligible drafts ──
-    // Process 'draft' status OR 'qa-failed' with remaining attempts
-    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
-    const { data: drafts, error: fetchError } = await supabase
-      .from("blog_drafts")
-      .select("*")
-      .or(`status.eq.draft,and(status.eq.qa-failed,qa_attempts.lt.3),and(status.eq.qa-running,updated_at.lt.${tenMinutesAgo})`)
-      .order("created_at", { ascending: true })
-      .limit(2);
-
-    if (fetchError) {
-      console.error("[Cron/blog-qa] Failed to fetch drafts:", fetchError.message);
-      await releaseCronLock(lock.executionId, "failed");
-      return NextResponse.json({ error: "Failed to fetch drafts" }, { status: 500 });
-    }
-
-    if (!drafts || drafts.length === 0) {
-      await releaseCronLock(lock.executionId, "completed");
-      return NextResponse.json({ processed: 0, results: [] });
-    }
-
-    const results: DraftQAResult[] = [];
-
-    for (const draft of drafts as BlogDraft[]) {
-      // Claim draft immediately to prevent concurrent runs from picking it up
-      await supabase
+    try {
+      // ── Fetch eligible drafts ──
+      const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+      const { data: drafts, error: fetchError } = await supabase
         .from("blog_drafts")
-        .update({ status: "qa-running", updated_at: new Date().toISOString() })
-        .eq("id", draft.id);
+        .select("*")
+        .or(`status.eq.draft,and(status.eq.qa-failed,qa_attempts.lt.3),and(status.eq.qa-running,updated_at.lt.${tenMinutesAgo})`)
+        .order("created_at", { ascending: true })
+        .limit(2);
 
-      const draftResult = await processDraft(draft, supabase);
-      results.push(draftResult);
+      if (fetchError) {
+        console.error("[Cron/blog-qa] Failed to fetch drafts:", fetchError.message);
+        await releaseCronLock(lock.executionId, "failed");
+        return;
+      }
+
+      if (!drafts || drafts.length === 0) {
+        await releaseCronLock(lock.executionId, "completed");
+        return;
+      }
+
+      for (const draft of drafts as BlogDraft[]) {
+        // Claim draft immediately to prevent concurrent runs from picking it up
+        await supabase
+          .from("blog_drafts")
+          .update({ status: "qa-running", updated_at: new Date().toISOString() })
+          .eq("id", draft.id);
+
+        await processDraft(draft, supabase);
+      }
+
+      await releaseCronLock(lock.executionId, "completed");
+    } catch (err) {
+      console.error("[Cron/blog-qa] Fatal error:", err);
+      await releaseCronLock(lock.executionId, "failed");
     }
+  });
 
-    await releaseCronLock(lock.executionId, "completed");
-    return NextResponse.json({ processed: drafts.length, results });
-  } catch (err) {
-    console.error("[Cron/blog-qa] Fatal error:", err);
-    await releaseCronLock(lock.executionId, "failed");
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
-  }
+  return NextResponse.json({ status: "started", executionId: lock.executionId });
 }
 
 /**

@@ -311,7 +311,15 @@ export async function fetchRedditSignals(supabase: SupabaseClient): Promise<Dema
   const allPosts = new Map<string, SignalRow>(); // reddit_id → row (dedup)
   let requestCount = 0;
 
+  const wallTimeStart = Date.now();
+
   for (const sub of subs) {
+    // Wall-time guard: stop before maxDuration (300s) to avoid silent timeout
+    if (Date.now() - wallTimeStart > 240_000) {
+      console.warn(`[demand-fetch] Approaching maxDuration, stopping early after ${sub}`);
+      break;
+    }
+
     const chargeGroups = getChargeTypesForSub(sub);
 
     // Search by charge type terms (first 2 terms per group to limit requests)

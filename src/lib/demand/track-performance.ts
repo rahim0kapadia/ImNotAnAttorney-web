@@ -3,6 +3,9 @@
  *
  * Ported from scripts/demand/track-content-performance.mjs.
  * Called weekly (Sundays) by /api/cron/demand-performance.
+ *
+ * Performance note: all attribution is computed in memory from two bulk queries
+ * (one for subscribers, one for paid orders). No per-post DB round-trips.
  */
 
 import { SupabaseClient } from "@supabase/supabase-js";
@@ -31,6 +34,14 @@ export interface PerformanceResult {
   recordsUpserted: number;
   errors: number;
 }
+
+// ── Constants ──────────────────────────────────────────────────
+
+/**
+ * Sentinel date used as window_start for the "all-time" window.
+ * Predates any content post or subscriber row in the system.
+ */
+const ALL_TIME_START = new Date("2024-01-01");
 
 // ── Time windows ───────────────────────────────────────────────
 
@@ -62,6 +73,19 @@ interface DemandScore {
   window_label: string;
 }
 
+interface SubscriberRow {
+  email: string;
+  source: string | null;
+  referral_url: string | null;
+  created_at: string;
+}
+
+interface OrderRow {
+  email: string;
+  amount: number | null;
+  created_at: string;
+}
+
 async function loadContentPosts(supabase: SupabaseClient): Promise<ContentPost[]> {
   const { data, error } = await supabase
     .from("content_posts")
@@ -91,66 +115,92 @@ async function loadDemandScores(supabase: SupabaseClient): Promise<DemandScore[]
   return data || [];
 }
 
-// ── Attribution queries ────────────────────────────────────────
-
-async function countSubscriberSignups(
-  supabase: SupabaseClient,
-  blogSlug: string,
-  windowStart: Date | null
-): Promise<number> {
-  let query = supabase
+/**
+ * Bulk-loads all subscribers. Attribution filtering is done in memory per post.
+ */
+async function loadAllSubscribers(supabase: SupabaseClient): Promise<SubscriberRow[]> {
+  const { data, error } = await supabase
     .from("subscribers")
-    .select("id", { count: "exact", head: true })
-    .or(`source.ilike.%${blogSlug}%,referral_url.ilike.%${blogSlug}%`);
+    .select("email, source, referral_url, created_at");
 
-  if (windowStart) {
-    query = query.gte("created_at", windowStart.toISOString());
+  if (error) {
+    console.error("[demand-performance] Error loading subscribers:", error.message);
+    return [];
   }
-
-  const { count, error } = await query;
-  if (error) return 0;
-  return count || 0;
+  return data || [];
 }
 
-async function countOrdersAndRevenue(
-  supabase: SupabaseClient,
-  blogSlug: string,
-  windowStart: Date | null
-): Promise<{ orders: number; revenue: number }> {
-  // Get subscriber emails who came from this blog post
-  let subQuery = supabase
-    .from("subscribers")
-    .select("email")
-    .or(`source.ilike.%${blogSlug}%,referral_url.ilike.%${blogSlug}%`);
-
-  if (windowStart) {
-    subQuery = subQuery.gte("created_at", windowStart.toISOString());
-  }
-
-  const { data: subscribers } = await subQuery;
-  if (!subscribers?.length) return { orders: 0, revenue: 0 };
-
-  const emails = subscribers.map((s: { email: string }) => s.email);
-
-  // Match orders by email
-  let orderQuery = supabase
+/**
+ * Bulk-loads all paid orders. Attribution filtering is done in memory per post.
+ */
+async function loadAllPaidOrders(supabase: SupabaseClient): Promise<OrderRow[]> {
+  const { data, error } = await supabase
     .from("orders")
-    .select("amount")
-    .in("email", emails)
+    .select("email, amount, created_at")
     .eq("status", "paid");
 
-  if (windowStart) {
-    orderQuery = orderQuery.gte("created_at", windowStart.toISOString());
+  if (error) {
+    console.error("[demand-performance] Error loading paid orders:", error.message);
+    return [];
+  }
+  return data || [];
+}
+
+// ── In-memory attribution ──────────────────────────────────────
+
+/**
+ * Counts subscribers whose source or referral_url contains the blog slug,
+ * optionally restricted to those created on or after windowStart.
+ */
+function countSubscribersInMemory(
+  subscribers: SubscriberRow[],
+  blogSlug: string,
+  windowStart: Date | null
+): number {
+  let count = 0;
+  for (const sub of subscribers) {
+    if (windowStart && sub.created_at < windowStart.toISOString()) continue;
+    const matchesSource = sub.source !== null && sub.source.includes(blogSlug);
+    const matchesReferral = sub.referral_url !== null && sub.referral_url.includes(blogSlug);
+    if (matchesSource || matchesReferral) count++;
+  }
+  return count;
+}
+
+/**
+ * Sums orders and revenue for subscribers attributed to this blog slug,
+ * optionally restricted to those created on or after windowStart.
+ *
+ * Attribution chain: subscriber source/referral_url → email → orders.
+ */
+function aggregateOrdersInMemory(
+  subscribers: SubscriberRow[],
+  orders: OrderRow[],
+  blogSlug: string,
+  windowStart: Date | null
+): { orders: number; revenue: number } {
+  // Collect emails of attributed subscribers within the window
+  const attributedEmails = new Set<string>();
+  for (const sub of subscribers) {
+    if (windowStart && sub.created_at < windowStart.toISOString()) continue;
+    const matchesSource = sub.source !== null && sub.source.includes(blogSlug);
+    const matchesReferral = sub.referral_url !== null && sub.referral_url.includes(blogSlug);
+    if (matchesSource || matchesReferral) attributedEmails.add(sub.email);
   }
 
-  const { data: orders } = await orderQuery;
-  if (!orders?.length) return { orders: 0, revenue: 0 };
+  if (attributedEmails.size === 0) return { orders: 0, revenue: 0 };
 
-  const revenue = orders.reduce(
-    (sum: number, o: { amount: number | null }) => sum + (o.amount || 0),
-    0
-  );
-  return { orders: orders.length, revenue: revenue / 100 }; // amount in cents
+  // Sum paid orders from those emails within the window
+  let orderCount = 0;
+  let revenueTotal = 0;
+  for (const order of orders) {
+    if (!attributedEmails.has(order.email)) continue;
+    if (windowStart && order.created_at < windowStart.toISOString()) continue;
+    orderCount++;
+    revenueTotal += order.amount || 0;
+  }
+
+  return { orders: orderCount, revenue: revenueTotal / 100 }; // amount in cents
 }
 
 // ── Main export ────────────────────────────────────────────────
@@ -163,6 +213,9 @@ async function countOrdersAndRevenue(
  *   - orders + revenue from those subscribers
  *   - current demand score for the post's charge type
  *
+ * Uses two bulk DB queries (all subscribers, all paid orders) and resolves
+ * attribution in memory — replacing the prior pattern of 9 queries per post.
+ *
  * Upserts to content_performance table, keyed on (blog_slug, window_label, window_start).
  *
  * @throws {Error} If a fatal DB error occurs during upsert batching.
@@ -170,11 +223,18 @@ async function countOrdersAndRevenue(
 export async function trackContentPerformance(
   supabase: SupabaseClient
 ): Promise<PerformanceResult> {
-  const posts = await loadContentPosts(supabase);
-  const painPoints = await loadPainPoints(supabase);
-  const demandScores = await loadDemandScores(supabase);
+  const [posts, painPoints, demandScores, allSubscribers, allPaidOrders] = await Promise.all([
+    loadContentPosts(supabase),
+    loadPainPoints(supabase),
+    loadDemandScores(supabase),
+    loadAllSubscribers(supabase),
+    loadAllPaidOrders(supabase),
+  ]);
 
-  console.log(`[demand-performance] Tracking ${posts.length} published blog posts`);
+  console.log(
+    `[demand-performance] Tracking ${posts.length} published blog posts` +
+    ` (${allSubscribers.length} subscribers, ${allPaidOrders.length} paid orders loaded)`
+  );
 
   // Build lookups
   const ppById: Record<string, PainPoint> = {};
@@ -199,21 +259,27 @@ export async function trackContentPerformance(
         ? new Date(now.getTime() - window.days * 24 * 60 * 60 * 1000)
         : null;
 
-      const signups = await countSubscriberSignups(supabase, post.blog_slug, windowStart);
-      const { orders, revenue } = await countOrdersAndRevenue(supabase, post.blog_slug, windowStart);
+      const signups = countSubscribersInMemory(allSubscribers, post.blog_slug, windowStart);
+      const { orders, revenue } = aggregateOrdersInMemory(
+        allSubscribers,
+        allPaidOrders,
+        post.blog_slug,
+        windowStart
+      );
 
       results.push({
         content_post_id: post.id,
         blog_slug: post.blog_slug,
         subscriber_signups: signups,
-        score_submissions: 0, // TODO: track when score page adds referral_source
+        // TODO: track when score page adds referral_source; query score_results by referral_source
+        score_submissions: 0,
         orders_attributed: orders,
         revenue_attributed: revenue,
         charge_type_slug: chargeType,
         pain_point_slug: pp?.blog_slug || null,
         demand_score_at_publish: null, // would need historical data
         current_demand_score: currentDemand,
-        window_start: (windowStart || new Date("2024-01-01")).toISOString(),
+        window_start: (windowStart || ALL_TIME_START).toISOString(),
         window_end: windowEnd.toISOString(),
         window_label: window.label,
         computed_at: now.toISOString(),

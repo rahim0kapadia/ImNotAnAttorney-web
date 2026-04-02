@@ -12,7 +12,7 @@
  * Idempotency lock: "blog-publish", 23h window.
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { requireCron } from "@/lib/auth/guards";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { acquireCronLock, releaseCronLock } from "@/lib/cron-idempotency";
@@ -33,40 +33,42 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ skipped: true, reason: lock.reason });
   }
 
-  const supabase = createAdminClient();
+  // Return 200 immediately so cron-job.org (30s free-plan cap) doesn't
+  // report a false timeout. The actual work runs post-response via after().
+  after(async () => {
+    const supabase = createAdminClient();
 
-  try {
-    // ── Fetch up to 3 qa-passed drafts, oldest first ──
-    const { data: drafts, error: fetchErr } = await supabase
-      .from("blog_drafts")
-      .select("*, content_gaps!blog_drafts_content_gap_id_fkey(charge_type_slug)")
-      .eq("status", "qa-passed")
-      .order("qa_passed_at", { ascending: true })
-      .limit(3);
+    try {
+      // ── Fetch up to 3 qa-passed drafts, oldest first ──
+      const { data: drafts, error: fetchErr } = await supabase
+        .from("blog_drafts")
+        .select("*, content_gaps!blog_drafts_content_gap_id_fkey(charge_type_slug)")
+        .eq("status", "qa-passed")
+        .order("qa_passed_at", { ascending: true })
+        .limit(3);
 
-    if (fetchErr) {
-      throw new Error(`Failed to fetch drafts: ${fetchErr.message}`);
-    }
+      if (fetchErr) {
+        console.error("[Cron/blog-publish] Failed to fetch drafts:", fetchErr.message);
+        await releaseCronLock(lock.executionId, "failed");
+        return;
+      }
 
-    if (!drafts || drafts.length === 0) {
+      if (!drafts || drafts.length === 0) {
+        await releaseCronLock(lock.executionId, "completed");
+        return;
+      }
+
+      // ── Publish each draft sequentially (GitHub rate-limit friendly) ──
+      for (const draft of drafts as (BlogDraft & { content_gaps: { charge_type_slug: string } })[]) {
+        await publishDraft(draft, supabase);
+      }
+
       await releaseCronLock(lock.executionId, "completed");
-      return NextResponse.json({ published: 0, results: [] });
+    } catch (err) {
+      console.error("[Cron/blog-publish] Fatal error:", err);
+      await releaseCronLock(lock.executionId, "failed");
     }
+  });
 
-    // ── Publish each draft sequentially (GitHub rate-limit friendly) ──
-    const results = [];
-    for (const draft of drafts as (BlogDraft & { content_gaps: { charge_type_slug: string } })[]) {
-      const result = await publishDraft(draft, supabase);
-      results.push({ slug: result.slug, success: result.success });
-    }
-
-    const publishedCount = results.filter((r) => r.success).length;
-
-    await releaseCronLock(lock.executionId, "completed");
-    return NextResponse.json({ published: publishedCount, results });
-  } catch (err) {
-    console.error("[Cron/blog-publish] Fatal error:", err);
-    await releaseCronLock(lock.executionId, "failed");
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
-  }
+  return NextResponse.json({ status: "started", executionId: lock.executionId });
 }

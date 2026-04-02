@@ -150,6 +150,15 @@ export async function detectStuckGenerating(ctx: CronContext): Promise<CronResul
         : stuck.tier === 'war-room' ? 'war-room'
         : stuck.tier === 'situation-room' ? 'situation-room'
         : 'case-decoder';
+      // Transition state unconditionally — email is FYI, not a gate
+      await ctx.supabase
+        .from("cases")
+        .update({
+          status: "generation-failed",
+          updated_at: ctx.now.toISOString(),
+        })
+        .eq("id", stuck.id);
+
       const sendResult = await sendEmail({
         to: ctx.operatorEmail,
         subject: `ALERT: Report generation stuck for ${minutesStuck}+ min — ${stuck.email}`,
@@ -164,18 +173,11 @@ export async function detectStuckGenerating(ctx: CronContext): Promise<CronResul
           <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${ctx.siteUrl}/api/generate/${endpoint} -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${stuck.id}","force":true}'</code>`,
       }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-generation", minutes: minutesStuck } });
 
-      // Only transition status if alert was actually sent
       if (sendResult.success) {
-        await ctx.supabase
-          .from("cases")
-          .update({
-            status: "generation-failed",
-            updated_at: ctx.now.toISOString(),
-          })
-          .eq("id", stuck.id);
         result.sent++;
       } else {
-        result.errors++;
+        console.error(`[operator-alerts] Email failed for stuck case ${stuck.id}, but status already transitioned`);
+        result.sent++; // State transition succeeded even if email didn't
       }
     }
   }
@@ -205,6 +207,12 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
       const minutesStuck = Math.round(
         (ctx.now.getTime() - new Date(stuck.updated_at).getTime()) / (1000 * 60)
       );
+      // Transition state unconditionally — email is FYI, not a gate
+      await ctx.supabase
+        .from("cases")
+        .update({ status: "generation-failed", updated_at: ctx.now.toISOString() })
+        .eq("id", stuck.id);
+
       const sendResult = await sendEmail({
         to: ctx.operatorEmail,
         subject: `ALERT: IB Phase A stuck for ${minutesStuck}+ min — ${stuck.email}`,
@@ -220,13 +228,10 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
       }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-auto-generating", minutes: minutesStuck } });
 
       if (sendResult.success) {
-        await ctx.supabase
-          .from("cases")
-          .update({ status: "generation-failed", updated_at: ctx.now.toISOString() })
-          .eq("id", stuck.id);
         result.sent++;
       } else {
-        result.errors++;
+        console.error(`[operator-alerts] Email failed for stuck IB Phase A case ${stuck.id}, but status already transitioned`);
+        result.sent++;
       }
     }
   }
@@ -243,6 +248,12 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
       const minutesStuck = Math.round(
         (ctx.now.getTime() - new Date(stuck.updated_at).getTime()) / (1000 * 60)
       );
+      // Transition state unconditionally — email is FYI, not a gate
+      await ctx.supabase
+        .from("cases")
+        .update({ status: "generation-failed", updated_at: ctx.now.toISOString() })
+        .eq("id", stuck.id);
+
       const compileResult = await sendEmail({
         to: ctx.operatorEmail,
         subject: `ALERT: IB Phase B stuck for ${minutesStuck}+ min — ${stuck.email}`,
@@ -257,13 +268,10 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
       }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-compiling", minutes: minutesStuck } });
 
       if (compileResult.success) {
-        await ctx.supabase
-          .from("cases")
-          .update({ status: "generation-failed", updated_at: ctx.now.toISOString() })
-          .eq("id", stuck.id);
         result.sent++;
       } else {
-        result.errors++;
+        console.error(`[operator-alerts] Email failed for stuck Phase B case ${stuck.id}, but status already transitioned`);
+        result.sent++;
       }
     }
   }

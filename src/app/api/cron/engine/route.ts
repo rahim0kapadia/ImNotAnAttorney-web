@@ -16,7 +16,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { requireCron } from "@/lib/auth/guards";
-import { createClient } from "@supabase/supabase-js";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { acquireCronLock, releaseCronLock } from "@/lib/cron-idempotency";
 
 export const runtime = "nodejs";
 export const maxDuration = 10;
@@ -29,9 +30,16 @@ export async function GET(req: NextRequest) {
   const auth = requireCron(req);
   if (!auth.authorized) return auth.error;
 
+  // Idempotency lock — 4min window prevents overlapping 5-min cron runs
+  const lock = await acquireCronLock("engine", 4 * 60 * 1000);
+  if (!lock.shouldRun) {
+    return NextResponse.json({ skipped: true, reason: lock.reason });
+  }
+
   const githubPat = process.env.ENGINE_DISPATCH_PAT;
   if (!githubPat) {
     console.error("[Cron:Engine] ENGINE_DISPATCH_PAT not configured");
+    await releaseCronLock(lock.executionId, "failed");
     return NextResponse.json(
       { error: "Server misconfigured: missing ENGINE_DISPATCH_PAT" },
       { status: 500 }
@@ -58,10 +66,7 @@ export async function GET(req: NextRequest) {
     if (response.status === 204) {
       // Log dispatch to cron_runs for monitoring (Brandur: monitor by absence)
       try {
-        const supabase = createClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL!,
-          process.env.SUPABASE_SERVICE_ROLE_KEY!
-        );
+        const supabase = createAdminClient();
         await supabase.from("cron_runs").insert({
           result: { job: "engine-worker", dispatched: true },
         });
@@ -69,6 +74,7 @@ export async function GET(req: NextRequest) {
         console.warn("[Cron:Engine] Failed to log dispatch:", logErr);
       }
 
+      await releaseCronLock(lock.executionId, "completed");
       return NextResponse.json({
         ok: true,
         message: "Engine workflow dispatched",
@@ -81,6 +87,7 @@ export async function GET(req: NextRequest) {
       `[Cron:Engine] GitHub dispatch failed: ${response.status} ${errorBody}`
     );
 
+    await releaseCronLock(lock.executionId, "failed");
     return NextResponse.json(
       { error: "GitHub dispatch failed", status: response.status, detail: errorBody },
       { status: 502 }
@@ -88,6 +95,7 @@ export async function GET(req: NextRequest) {
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error(`[Cron:Engine] Dispatch error: ${message}`);
+    await releaseCronLock(lock.executionId, "failed");
     return NextResponse.json(
       { error: "Failed to dispatch engine workflow", detail: message },
       { status: 500 }

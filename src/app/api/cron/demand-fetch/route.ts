@@ -25,7 +25,8 @@ export async function GET(req: NextRequest) {
   if (!auth.authorized) return auth.error;
 
   // ── Idempotency guard (prevent duplicate runs within 23h window) ──
-  const lock = await acquireCronLock('demand-fetch', 23 * 60 * 60 * 1000);
+  // staleThresholdMs=360_000 (6min) because maxDuration=300s — default 5min would false-expire live runs
+  const lock = await acquireCronLock('demand-fetch', 23 * 60 * 60 * 1000, { staleThresholdMs: 360_000 });
   if (!lock.shouldRun) {
     return NextResponse.json({ skipped: true, reason: lock.reason });
   }
