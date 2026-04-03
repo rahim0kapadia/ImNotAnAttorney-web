@@ -9,41 +9,16 @@ import { ShareButtons } from "@/components/ShareButtons";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { copyToClipboard } from "@/lib/clipboard";
 import { TestimonialSection } from "@/components/TestimonialSection";
+import { useReducedMotion, AnimatePresence, motion } from "framer-motion";
 
 /**
  * The 10 scoring questions. Each has a unique id (used as the key in the
  * answers object sent to /api/score) and radio-button options.
- * Question order is deliberate: starts with charge type (context),
- * then probes defense milestones, and finally collateral risk factors.
+ * Question order: easy/validating first (attorney relationship), then case
+ * details, sensitive last (charge type, criminal history, profession).
+ * Builds momentum before asking harder questions — maximizes completion.
  */
 const questions = [
-  {
-    id: "chargeType",
-    label: "What are you charged with?",
-    options: [
-      { value: "dui", label: "DUI / DWI" },
-      { value: "drug-possession", label: "Drug possession" },
-      { value: "drug-trafficking", label: "Drug trafficking / distribution" },
-      { value: "probation-violation", label: "Probation violation" },
-      { value: "white-collar", label: "White collar / fraud" },
-      { value: "sex-offense", label: "Sex offense" },
-      { value: "federal-criminal", label: "Federal criminal charge" },
-      { value: "self-defense", label: "Self-defense / justifiable force" },
-      { value: "other-felony", label: "Other felony" },
-      { value: "other-misdemeanor", label: "Other misdemeanor" },
-    ],
-  },
-  {
-    id: "timeSinceArrest",
-    label: "How long ago were you arrested or charged?",
-    options: [
-      { value: "less-than-1-month", label: "Less than 1 month" },
-      { value: "1-3-months", label: "1-3 months" },
-      { value: "3-6-months", label: "3-6 months" },
-      { value: "6-12-months", label: "6-12 months" },
-      { value: "12-plus-months", label: "12+ months" },
-    ],
-  },
   {
     id: "hasAttorney",
     label: "Do you have an attorney?",
@@ -52,24 +27,6 @@ const questions = [
       { value: "public-defender", label: "Yes — public defender" },
       { value: "no", label: "No" },
       { value: "not-sure", label: "Not sure" },
-    ],
-  },
-  {
-    id: "motionsFiled",
-    label: "Has your attorney filed any motions?",
-    options: [
-      { value: "yes", label: "Yes" },
-      { value: "no", label: "No" },
-      { value: "dont-know", label: "I don't know" },
-    ],
-  },
-  {
-    id: "hasDiscovery",
-    label: "Have you received discovery documents?",
-    options: [
-      { value: "yes", label: "Yes" },
-      { value: "no", label: "No" },
-      { value: "dont-know", label: "I don't know what that is" },
     ],
   },
   {
@@ -92,13 +49,14 @@ const questions = [
     ],
   },
   {
-    id: "criminalHistory",
-    label: "Do you have prior convictions?",
+    id: "timeSinceArrest",
+    label: "How long ago were you arrested or charged?",
     options: [
-      { value: "none", label: "No prior convictions" },
-      { value: "misdemeanor", label: "Prior misdemeanor(s)" },
-      { value: "felony", label: "Prior felony conviction" },
-      { value: "multiple", label: "Multiple prior convictions" },
+      { value: "less-than-1-month", label: "Less than 1 month" },
+      { value: "1-3-months", label: "1-3 months" },
+      { value: "3-6-months", label: "3-6 months" },
+      { value: "6-12-months", label: "6-12 months" },
+      { value: "12-plus-months", label: "12+ months" },
     ],
   },
   {
@@ -112,6 +70,50 @@ const questions = [
       { value: "trial-prep", label: "Preparing for trial" },
       { value: "sentencing", label: "Sentencing" },
       { value: "post-conviction", label: "Post-conviction (appeal/expungement)" },
+    ],
+  },
+  {
+    id: "motionsFiled",
+    label: "Has your attorney filed any motions?",
+    options: [
+      { value: "yes", label: "Yes" },
+      { value: "no", label: "No" },
+      { value: "dont-know", label: "I don't know" },
+    ],
+  },
+  {
+    id: "hasDiscovery",
+    label: "Have you received discovery documents?",
+    options: [
+      { value: "yes", label: "Yes" },
+      { value: "no", label: "No" },
+      { value: "dont-know", label: "I don't know what that is" },
+    ],
+  },
+  {
+    id: "chargeType",
+    label: "What are you charged with?",
+    options: [
+      { value: "dui", label: "DUI / DWI" },
+      { value: "drug-possession", label: "Drug possession" },
+      { value: "drug-trafficking", label: "Drug trafficking / distribution" },
+      { value: "probation-violation", label: "Probation violation" },
+      { value: "white-collar", label: "White collar / fraud" },
+      { value: "sex-offense", label: "Sex offense" },
+      { value: "federal-criminal", label: "Federal criminal charge" },
+      { value: "self-defense", label: "Self-defense / justifiable force" },
+      { value: "other-felony", label: "Other felony" },
+      { value: "other-misdemeanor", label: "Other misdemeanor" },
+    ],
+  },
+  {
+    id: "criminalHistory",
+    label: "Do you have prior convictions?",
+    options: [
+      { value: "none", label: "No prior convictions" },
+      { value: "misdemeanor", label: "Prior misdemeanor(s)" },
+      { value: "felony", label: "Prior felony conviction" },
+      { value: "multiple", label: "Multiple prior convictions" },
     ],
   },
   {
@@ -819,33 +821,69 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </div>
       )}
 
-      {/* 10. SHARE YOUR SCORE — personalized viral share */}
+      {/* 10. SAVE & SHARE — save results for later upgrade + viral share */}
       {!shareToken ? (
         <FadeInUp>
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6 text-center">
-            <p className="text-sm font-bold text-white">Know someone facing charges?</p>
+            <p className="text-sm font-bold text-white">Save your results</p>
             <p className="mt-1 text-xs text-zinc-400">
-              Send them this — 60 seconds, free, no email required.
+              Get a personal link to your score. Come back anytime — your results stay on file if you decide to upgrade later.
             </p>
             <button
               onClick={handleShare}
               disabled={shareLoading}
               className="mt-4 rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black hover:bg-amber-400 disabled:opacity-50 transition-colors"
             >
-              {shareLoading ? "Creating link..." : "Share Your Score"}
+              {shareLoading ? "Saving..." : "Save & Get My Link"}
             </button>
             {shareError && <p role="alert" className="mt-2 text-xs text-red-400">{shareError}</p>}
           </div>
         </FadeInUp>
       ) : (
-        <ShareButtons
-          url={shareUrl!}
-          title={`Defense Milestone Score: ${result.band}`}
-          heading="Share your score"
-          subheading="Your score link is ready. Pick how you want to share it."
-          shareText={`I just scored my criminal defense in 60 seconds — free, no email. Worth checking if you have a case: ${shareUrl}`}
-          emailBody={`I used this free tool to check if my attorney is hitting basic defense milestones. Takes 60 seconds, no email required: ${shareUrl}`}
-        />
+        <FadeInUp>
+          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-6">
+            <div className="text-center">
+              <p className="text-sm font-bold text-emerald-400">Your results are saved</p>
+              <p className="mt-1 text-xs text-zinc-400">
+                Bookmark this link — your score, observations, and charge details are stored. If you upgrade later, we&apos;ll use these results so you don&apos;t repeat anything.
+              </p>
+              <div className="mt-3 flex items-center gap-2 justify-center">
+                <input
+                  readOnly
+                  value={shareUrl!}
+                  aria-label="Your saved results link"
+                  className="flex-1 max-w-sm rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-xs text-zinc-300 select-all"
+                  onFocus={(e) => e.target.select()}
+                />
+                <button
+                  onClick={async () => {
+                    const ok = await copyToClipboard(shareUrl!);
+                    if (ok) {
+                      const btn = document.activeElement as HTMLButtonElement;
+                      btn.textContent = "Copied";
+                      setTimeout(() => { btn.textContent = "Copy"; }, 2000);
+                    }
+                  }}
+                  aria-label="Copy results link to clipboard"
+                  className="rounded-lg bg-zinc-700 px-3 py-2 text-xs font-medium text-zinc-300 hover:bg-zinc-600 transition-colors"
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+            <div className="mt-4 pt-4 border-t border-zinc-800">
+              <p className="text-center text-xs text-zinc-400 mb-3">Know someone facing charges? Send them the free quiz.</p>
+              <ShareButtons
+                url={shareUrl!}
+                title={`Defense Milestone Score: ${result.band}`}
+                heading=""
+                subheading=""
+                shareText={`I just scored my criminal defense in 60 seconds — free, no email. Worth checking if you have a case: ${shareUrl}`}
+                emailBody={`I used this free tool to check if my attorney is hitting basic defense milestones. Takes 60 seconds, no email required: ${shareUrl}`}
+              />
+            </div>
+          </div>
+        </FadeInUp>
       )}
 
       {/* 11. PRIVACY + AGGREGATE NOTICE */}
@@ -892,8 +930,16 @@ export default function ScoreClient() {
   } | null>(null);
   const scoreRef = useRef<HTMLDivElement>(null);
 
+  // Wizard state
+  const [currentStep, setCurrentStep] = useState(0);
+  const [direction, setDirection] = useState<"forward" | "back">("forward");
+  const autoAdvanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const questionContainerRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
   const answeredCount = Object.keys(answers).length;
   const allAnswered = answeredCount === questions.length;
+  const currentQuestion = questions[currentStep];
 
   // Fetch DAI stats on mount (includes totalCompletions — single source of truth)
   useEffect(() => {
@@ -901,6 +947,108 @@ export default function ScoreClient() {
       .then((r) => r.json())
       .then(setStats)
       .catch(() => {});
+  }, []);
+
+  // Focus management: move focus to question container on step change
+  useEffect(() => {
+    if (!result && questionContainerRef.current) {
+      questionContainerRef.current.focus();
+    }
+  }, [currentStep, result]);
+
+  // Cancel auto-advance on keyboard navigation
+  const handleWizardKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (["Tab", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+      if (autoAdvanceTimer.current) {
+        clearTimeout(autoAdvanceTimer.current);
+        autoAdvanceTimer.current = null;
+      }
+    }
+  }, []);
+
+  /** Select an answer and auto-advance to next step (300ms delay, respects reduced motion) */
+  const handleSelect = useCallback((qId: string, value: string) => {
+    const newAnswers = { ...answers, [qId]: value };
+    setAnswers(newAnswers);
+
+    if (autoAdvanceTimer.current) {
+      clearTimeout(autoAdvanceTimer.current);
+    }
+
+    // Skip auto-advance for reduced motion users — they use Next button
+    if (shouldReduceMotion) return;
+
+    // Don't auto-advance on last step — user submits manually
+    if (currentStep >= questions.length - 1) return;
+
+    autoAdvanceTimer.current = setTimeout(() => {
+      setDirection("forward");
+      setCurrentStep((s) => s + 1);
+      autoAdvanceTimer.current = null;
+    }, 300);
+  }, [answers, currentStep, shouldReduceMotion]);
+
+  /** Submit score — extracted from form handler for programmatic use */
+  const submitScore = useCallback(async (submittedAnswers: Record<string, string>) => {
+    if (Object.keys(submittedAnswers).length !== questions.length) return;
+
+    setLoading(true);
+    setLoadingStep(0);
+    setError(null);
+
+    const steps = getLoadingSteps(submittedAnswers.chargeType);
+    let stepIndex = 0;
+    const stepTimer = setInterval(() => {
+      stepIndex++;
+      if (stepIndex < steps.length) {
+        setLoadingStep(stepIndex);
+      }
+    }, 800);
+
+    const startTime = Date.now();
+
+    try {
+      const res = await fetch("/api/score", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(submittedAnswers),
+      });
+
+      if (!res.ok) {
+        clearInterval(stepTimer);
+        setLoadingStep(0);
+        setError("Something went wrong. Please try again.");
+        return;
+      }
+
+      const data = await res.json();
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, 3000 - elapsed);
+      await new Promise((resolve) => setTimeout(resolve, remaining));
+      clearInterval(stepTimer);
+
+      setResult(data);
+
+      try {
+        sessionStorage.setItem("inna-score", JSON.stringify({
+          ...data,
+          chargeType: submittedAnswers.chargeType,
+          answers: submittedAnswers,
+        }));
+      } catch {
+        // sessionStorage might be full or unavailable
+      }
+
+      setTimeout(() => {
+        scoreRef.current?.focus();
+        scoreRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    } catch {
+      clearInterval(stepTimer);
+      setError("Could not connect. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   // Restore score from sessionStorage on mount
@@ -919,74 +1067,20 @@ export default function ScoreClient() {
     }
   }, []);
 
-  /** Submit answers to /api/score for server-side scoring. Answers are not persisted. */
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!allAnswered) return;
-
-    setLoading(true);
-    setLoadingStep(0);
-    setError(null);
-
-    // Personalized loading animation — cycle through steps
-    const steps = getLoadingSteps(answers.chargeType);
-    let stepIndex = 0;
-    const stepTimer = setInterval(() => {
-      stepIndex++;
-      if (stepIndex < steps.length) {
-        setLoadingStep(stepIndex);
-      }
-    }, 800);
-
-    const startTime = Date.now();
-
-    try {
-      const res = await fetch("/api/score", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(answers),
-      });
-
-      if (!res.ok) {
-        clearInterval(stepTimer);
-        setLoadingStep(0);
-        setError("Something went wrong. Please try again.");
-        return;
-      }
-
-      const data = await res.json();
-
-      // Ensure minimum 3 second display for the loading animation
-      const elapsed = Date.now() - startTime;
-      const remaining = Math.max(0, 3000 - elapsed);
-
-      await new Promise((resolve) => setTimeout(resolve, remaining));
-      clearInterval(stepTimer);
-
-      setResult(data);
-
-      // Persist to sessionStorage (score + answers for context restoration)
-      try {
-        sessionStorage.setItem("inna-score", JSON.stringify({
-          ...data,
-          chargeType: answers.chargeType,
-          answers,
-        }));
-      } catch {
-        // sessionStorage might be full or unavailable
-      }
-
-      setTimeout(() => {
-        scoreRef.current?.focus();
-        scoreRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 100);
-    } catch {
-      clearInterval(stepTimer);
-      setError("Could not connect. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  }, [allAnswered, answers]);
+  /** Wizard animation variants */
+  const stepVariants = shouldReduceMotion
+    ? { enter: {}, center: {}, exit: {} }
+    : {
+        enter: (dir: "forward" | "back") => ({
+          opacity: 0,
+          x: dir === "forward" ? 60 : -60,
+        }),
+        center: { opacity: 1, x: 0 },
+        exit: (dir: "forward" | "back") => ({
+          opacity: 0,
+          x: dir === "forward" ? -60 : 60,
+        }),
+      };
 
   return (
     <div className="px-4 py-16">
@@ -1004,177 +1098,213 @@ export default function ScoreClient() {
         }}
       />
       <div className="mx-auto max-w-2xl">
+        {/* Pre-quiz hero — compact: badge + H1 + subtitle only */}
         <div className="text-center">
           <span className="mb-4 inline-block rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-emerald-400">
             Free — 60 seconds, no email required
           </span>
-          <h1 className="text-3xl font-bold text-white md:text-4xl">
+          <h1 className="font-display text-3xl font-bold text-white md:text-4xl">
             Is Your Attorney Actually Working Your Case?
           </h1>
           <p className="mt-3 text-base text-zinc-300">
             Find out in 60 seconds. 10 questions, instant score, anonymous — nothing stored, nothing sold.
           </p>
-          <CompletionCounter target={stats?.totalCompletions ?? 0} />
         </div>
 
-        <div className="mt-6">
-          <TestimonialSection
-            variant="inline"
-            testimonials={[
-              {
-                quote: "The score showed me my attorney hadn't filed a single motion in 4 months. I brought the report to our next meeting. He filed three motions that week.",
-                name: "David R.",
-                charge: "Federal Drug Conspiracy",
-                outcome: "3 motions filed after confrontation",
-              },
-            ]}
-          />
-          <p className="mt-4 text-center text-xs text-zinc-400">
-            *Based on real defendant experiences. Names changed for privacy.
-          </p>
+        {/* Screen reader live region for step announcements */}
+        <div aria-live="polite" aria-atomic="true" className="sr-only" role="status">
+          {!result && !loading && `Question ${currentStep + 1} of ${questions.length}: ${currentQuestion.label}`}
+          {loading && getLoadingSteps(answers.chargeType)[loadingStep]}
         </div>
-
-        {stats && stats.totalCompletions >= 50 && !result && (
-          <p className="mb-6 text-center text-sm text-zinc-400">
-            <span className="font-semibold text-zinc-400">
-              {stats.totalCompletions.toLocaleString()}
-            </span>{" "}
-            defendants have scored their defense.
-          </p>
-        )}
-
-        {!result && (
-          <div className="mb-6 rounded-lg border border-zinc-800 bg-zinc-900/30 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wider text-amber-500">What you get</p>
-            <ul className="mt-2 space-y-1 text-sm text-zinc-400">
-              <li>Your 0-100 Defense Milestone Score with band classification</li>
-              <li>Plain-English observations about your defense gaps</li>
-              <li>Charge-specific email template to send your attorney today</li>
-              <li>Benchmark data from other defendants in similar situations</li>
-            </ul>
-            <p className="mt-2 text-xs text-zinc-400">Free. No email required. Your answers are not stored.</p>
-          </div>
-        )}
 
         {result ? (
-          <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} scoreRef={scoreRef} onAdjust={() => setResult(null)} onReset={() => { setResult(null); setAnswers({}); setEmailSent(false); try { sessionStorage.removeItem("inna-score"); } catch {} }} stats={stats} />
-        ) : (
-          <form onSubmit={handleSubmit} className="mt-10 space-y-8">
-            <p className="text-sm text-zinc-400">
-              We built this because one of us had an attorney go silent for six weeks before a critical hearing. We didn&apos;t know what questions to ask — this tool tells you what we wish we&apos;d known. Answer honestly — there are no wrong answers.
+          <>
+            <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} scoreRef={scoreRef} onAdjust={() => { setResult(null); setCurrentStep(0); }} onReset={() => { setResult(null); setAnswers({}); setEmailSent(false); setCurrentStep(0); try { sessionStorage.removeItem("inna-score"); } catch {} }} stats={stats} />
+
+            {/* Post-quiz testimonial — social proof near CTAs */}
+            <div className="mt-8">
+              <TestimonialSection
+                variant="inline"
+                testimonials={[
+                  {
+                    quote: "The score showed me my attorney hadn't filed a single motion in 4 months. I brought the report to our next meeting. He filed three motions that week.",
+                    name: "David R.",
+                    charge: "Federal Drug Conspiracy",
+                    outcome: "3 motions filed after confrontation",
+                  },
+                ]}
+              />
+              <p className="mt-4 text-center text-xs text-zinc-400">
+                *Based on real defendant experiences. Names changed for privacy.
+              </p>
+            </div>
+          </>
+        ) : loading ? (
+          /* Loading screen — centered, with role="status" for a11y */
+          <div role="status" className="mt-12 text-center py-12">
+            <svg
+              className="mx-auto h-8 w-8 animate-spin text-amber-500"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+            <p className="mt-4 text-base text-zinc-300 transition-opacity duration-300">
+              {getLoadingSteps(answers.chargeType)[loadingStep]}
             </p>
-            {/* Progress indicator */}
-            <div className="sticky top-0 z-10 rounded-b-lg bg-zinc-950/90 pb-3 pt-2 backdrop-blur-sm">
+            <p className="mt-2 text-xs text-zinc-400">Your answers are not stored.</p>
+          </div>
+        ) : (
+          /* Wizard — one question at a time */
+          <div className="mt-8" onKeyDown={handleWizardKeyDown}>
+            {/* Progress bar — tracks position, not completion */}
+            <div className="mb-6">
               <div
                 role="progressbar"
-                aria-valuenow={answeredCount}
-                aria-valuemin={0}
+                aria-valuenow={currentStep + 1}
+                aria-valuemin={1}
                 aria-valuemax={questions.length}
-                aria-label={`${answeredCount} of ${questions.length} questions answered`}
+                aria-label={`Question ${currentStep + 1} of ${questions.length}`}
                 className="h-1.5 overflow-hidden rounded-full bg-zinc-800"
               >
                 <div
                   className="h-full rounded-full bg-amber-500 transition-all duration-300"
-                  style={{ width: `${(answeredCount / questions.length) * 100}%` }}
+                  style={{ width: `${((currentStep + 1) / questions.length) * 100}%` }}
                 />
               </div>
-              <p className="mt-1 text-xs text-zinc-400">{answeredCount} of {questions.length} answered</p>
+              <p className="mt-1.5 text-sm text-zinc-400">
+                Question {currentStep + 1} of {questions.length}
+              </p>
             </div>
-            {questions.map((q, qIndex) => (
-              <fieldset key={q.id}>
-                <legend className="text-base font-semibold text-zinc-300">
-                  <span className="mr-2 text-amber-400">{qIndex + 1}.</span>
-                  {q.label}
-                </legend>
-                {q.id === "criminalHistory" && (
-                  <p className="mt-1 text-xs text-zinc-400">This affects sentencing risk context in your score, not your attorney&apos;s competence rating.</p>
-                )}
-                {q.id === "licensedProfession" && (
-                  <p className="mt-1 text-xs text-zinc-400">Licensed professionals and students face separate collateral consequences — your score flags this if relevant.</p>
-                )}
-                <div className="mt-3 space-y-2">
-                  {q.options.map((opt) => (
-                    <label
-                      key={opt.value}
-                      className={`flex min-h-[44px] cursor-pointer items-center gap-3 rounded-lg border px-3 py-3 text-base transition-colors ${
-                        answers[q.id] === opt.value
-                          ? "border-amber-500/50 bg-amber-500/5 text-white"
-                          : "border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:border-zinc-700"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name={q.id}
-                        value={opt.value}
-                        checked={answers[q.id] === opt.value}
-                        onChange={() =>
-                          setAnswers((prev) => ({
-                            ...prev,
-                            [q.id]: opt.value,
-                          }))
-                        }
-                        className="h-5 w-5 border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
-                      />
-                      {opt.label}
-                    </label>
-                  ))}
-                </div>
-              </fieldset>
-            ))}
 
-            {/* "TOO SCARED TO FINISH" — reassurance for hesitating users (Task 1.5) */}
-            {answeredCount >= 7 && !allAnswered && (
-              <div className="rounded-lg border border-zinc-700 bg-zinc-900/30 p-4">
+            {/* Question card with slide animation */}
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={currentStep}
+                custom={direction}
+                variants={stepVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2, ease: "easeInOut" }}
+              >
+                <div
+                  ref={questionContainerRef}
+                  tabIndex={-1}
+                  role="group"
+                  aria-labelledby={`question-label-${currentStep}`}
+                  className="outline-none"
+                >
+                  <fieldset>
+                    <legend
+                      id={`question-label-${currentStep}`}
+                      className="text-lg font-semibold text-zinc-200"
+                    >
+                      {currentQuestion.label}
+                    </legend>
+                    {currentQuestion.id === "criminalHistory" && (
+                      <p className="mt-1 text-xs text-zinc-400">This affects sentencing risk context in your score, not your attorney&apos;s competence rating.</p>
+                    )}
+                    {currentQuestion.id === "licensedProfession" && (
+                      <p className="mt-1 text-xs text-zinc-400">Licensed professionals and students face separate collateral consequences — your score flags this if relevant.</p>
+                    )}
+                    <div className="mt-4 space-y-3">
+                      {currentQuestion.options.map((opt) => (
+                        <label
+                          key={opt.value}
+                          className={`flex min-h-[48px] cursor-pointer items-center gap-3 rounded-lg border px-4 py-3.5 text-base transition-all duration-150 ${
+                            answers[currentQuestion.id] === opt.value
+                              ? "border-amber-500 bg-amber-500/10 text-white shadow-[0_0_12px_rgba(245,158,11,0.15)]"
+                              : "border-zinc-600 bg-zinc-900/60 text-zinc-300 hover:border-zinc-400 hover:bg-zinc-800/80"
+                          } has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-amber-400 has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-zinc-950`}
+                        >
+                          <input
+                            type="radio"
+                            name={currentQuestion.id}
+                            value={opt.value}
+                            checked={answers[currentQuestion.id] === opt.value}
+                            onChange={() => handleSelect(currentQuestion.id, opt.value)}
+                            className="h-5 w-5 border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
+                          />
+                          {opt.label}
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Hesitation nudge on later questions */}
+            {currentStep >= 7 && !answers[currentQuestion.id] && (
+              <div className="mt-4 rounded-lg border border-zinc-700 bg-zinc-900/30 p-3">
                 <p className="text-sm leading-relaxed text-zinc-400">
                   If you&apos;re hesitating — that hesitation is information. The score doesn&apos;t create the gaps in your defense. It just shows you where they are. You&apos;re better off knowing.
                 </p>
               </div>
             )}
 
+            {/* Navigation: Back / Next / Submit */}
+            <div className="mt-6 flex items-center justify-between">
+              {currentStep > 0 ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (autoAdvanceTimer.current) {
+                      clearTimeout(autoAdvanceTimer.current);
+                      autoAdvanceTimer.current = null;
+                    }
+                    setDirection("back");
+                    setCurrentStep((s) => s - 1);
+                  }}
+                  className="rounded-lg px-4 py-2.5 text-sm text-zinc-400 transition-colors hover:text-white"
+                >
+                  &larr; Back
+                </button>
+              ) : (
+                <div />
+              )}
+
+              {currentStep < questions.length - 1 ? (
+                <button
+                  type="button"
+                  disabled={!answers[currentQuestion.id]}
+                  onClick={() => {
+                    if (autoAdvanceTimer.current) {
+                      clearTimeout(autoAdvanceTimer.current);
+                      autoAdvanceTimer.current = null;
+                    }
+                    setDirection("forward");
+                    setCurrentStep((s) => s + 1);
+                  }}
+                  className="rounded-lg bg-zinc-800 px-5 py-2.5 text-sm font-medium text-zinc-300 transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-30"
+                >
+                  Next &rarr;
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  disabled={!allAnswered}
+                  onClick={() => submitScore(answers)}
+                  className={`rounded-lg px-6 py-3 text-sm font-bold text-black transition-all ${
+                    allAnswered
+                      ? "bg-amber-500 hover:bg-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.3)]"
+                      : "bg-amber-500/50 cursor-not-allowed opacity-50"
+                  }`}
+                >
+                  Get My Score
+                </button>
+              )}
+            </div>
+
             {error && (
-              <div role="alert" className="rounded-lg border border-red-500/50 bg-red-500/10 p-3">
+              <div role="alert" className="mt-4 rounded-lg border border-red-500/50 bg-red-500/10 p-3">
                 <p className="text-sm text-red-400">{error}</p>
               </div>
             )}
-
-            <button
-              type="submit"
-              disabled={!allAnswered || loading}
-              className="w-full rounded-lg bg-amber-500 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {loading ? (
-                <span className="inline-flex items-center gap-2">
-                  <svg
-                    className="h-4 w-4 animate-spin"
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                    />
-                  </svg>
-                  <span className="transition-opacity duration-300">
-                    {getLoadingSteps(answers.chargeType)[loadingStep]}
-                  </span>
-                </span>
-              ) : (
-                "Get My Score"
-              )}
-            </button>
-
-            {/* Privacy notice moved to subtitle area above */}
-          </form>
+          </div>
         )}
 
         {/* Disclaimer */}
