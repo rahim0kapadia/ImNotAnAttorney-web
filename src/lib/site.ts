@@ -143,7 +143,7 @@ export function signOperatorToken(caseId: string): string {
   if (!secret) throw new Error("OPERATOR_SECRET not configured");
 
   const timestamp = Math.floor(Date.now() / 1000);
-  const payload = `${caseId}:${timestamp}`;
+  const payload = `operator:${caseId}:${timestamp}`;
   const hmac = createHmac("sha256", secret).update(payload).digest("hex");
   return `${timestamp}.${hmac}`;
 }
@@ -175,18 +175,19 @@ export function verifyOperatorToken(
   const now = Math.floor(Date.now() / 1000);
   if (now - timestamp > ttlSeconds) return false;
 
-  // Recompute HMAC and compare
-  const payload = `${caseId}:${timestamp}`;
-  const expectedHmac = createHmac("sha256", secret)
-    .update(payload)
-    .digest("hex");
+  // Try namespaced format first (new), then legacy format (30-day migration)
+  const namespacedPayload = `operator:${caseId}:${timestamp}`;
+  const legacyPayload = `${caseId}:${timestamp}`;
+  const namespacedHmac = createHmac("sha256", secret).update(namespacedPayload).digest("hex");
+  const legacyHmac = createHmac("sha256", secret).update(legacyPayload).digest("hex");
 
   // Constant-time comparison using HMAC-then-timingSafeEqual to prevent
   // length oracle attacks (matches auth/guards.ts pattern).
   // HMAC digests are always 32 bytes regardless of input length.
-  const hmacA = createHmac("sha256", "inna-guard-compare").update(providedHmac).digest();
-  const hmacB = createHmac("sha256", "inna-guard-compare").update(expectedHmac).digest();
-  return timingSafeEqual(hmacA, hmacB);
+  const hmacProvided = createHmac("sha256", "inna-guard-compare").update(providedHmac).digest();
+  const hmacNamespaced = createHmac("sha256", "inna-guard-compare").update(namespacedHmac).digest();
+  const hmacLegacy = createHmac("sha256", "inna-guard-compare").update(legacyHmac).digest();
+  return timingSafeEqual(hmacProvided, hmacNamespaced) || timingSafeEqual(hmacProvided, hmacLegacy);
 }
 
 /**
@@ -203,7 +204,7 @@ export function signPhase2Token(caseId: string): string {
   if (!secret) throw new Error("OPERATOR_SECRET not configured");
 
   const timestamp = Math.floor(Date.now() / 1000);
-  const payload = `${caseId}:${timestamp}`;
+  const payload = `phase2:${caseId}:${timestamp}`;
   const hmac = createHmac("sha256", secret).update(payload).digest("hex");
   return `${timestamp}.${hmac}`;
 }
@@ -217,7 +218,29 @@ export function signPhase2Token(caseId: string): string {
  * @returns true if the token is valid and not expired
  */
 export function verifyPhase2Token(token: string, caseId: string): boolean {
-  return verifyOperatorToken(token, caseId, PHASE2_TOKEN_TTL_SECONDS);
+  const secret = process.env.OPERATOR_SECRET;
+  if (!secret) return false;
+
+  const parts = token.split(".");
+  if (parts.length !== 2) return false;
+
+  const [timestampStr, providedHmac] = parts;
+  const timestamp = parseInt(timestampStr, 10);
+  if (isNaN(timestamp)) return false;
+
+  const now = Math.floor(Date.now() / 1000);
+  if (now - timestamp > PHASE2_TOKEN_TTL_SECONDS) return false;
+
+  // Try namespaced format first (new), then legacy format (30-day migration)
+  const namespacedPayload = `phase2:${caseId}:${timestamp}`;
+  const legacyPayload = `${caseId}:${timestamp}`;
+  const namespacedHmac = createHmac("sha256", secret).update(namespacedPayload).digest("hex");
+  const legacyHmac = createHmac("sha256", secret).update(legacyPayload).digest("hex");
+
+  const hmacProvided = createHmac("sha256", "inna-guard-compare").update(providedHmac).digest();
+  const hmacNamespaced = createHmac("sha256", "inna-guard-compare").update(namespacedHmac).digest();
+  const hmacLegacy = createHmac("sha256", "inna-guard-compare").update(legacyHmac).digest();
+  return timingSafeEqual(hmacProvided, hmacNamespaced) || timingSafeEqual(hmacProvided, hmacLegacy);
 }
 
 /**

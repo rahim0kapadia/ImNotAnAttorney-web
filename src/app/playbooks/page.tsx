@@ -235,6 +235,15 @@ export default function PlaybooksCatalogPage() {
         </div>
       </section>
 
+      {/* ── Contact Callout ── */}
+      <p className="mt-8 text-center text-sm text-zinc-400">
+        Questions before you start?{" "}
+        <a href="mailto:help@imnotanattorney.com" className="text-amber-400 underline hover:text-amber-300">
+          help@imnotanattorney.com
+        </a>{" "}
+        — usually same day.
+      </p>
+
       {/* ── UPL Disclaimer ── */}
       <section className="border-t border-zinc-800/50 px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">

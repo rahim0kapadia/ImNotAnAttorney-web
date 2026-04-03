@@ -19,7 +19,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "DUI Defense Resources by State | ImNotAnAttorney",
+  title: "DUI Defense Resources by State",
   description:
     "State-specific DUI defense resources for all 50 states. BAC limits, penalties, DMV deadlines, and the questions to ask your attorney — by state.",
   alternates: {

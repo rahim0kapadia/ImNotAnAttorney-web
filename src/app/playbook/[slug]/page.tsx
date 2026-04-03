@@ -33,7 +33,7 @@ export async function generateMetadata({
   if (!config) return {};
 
   const tier = TIER_CORE[config.slug as TierSlug];
-  const title = `${tier.name} — ${tier.priceDisplay} Instant Download | ImNotAnAttorney`;
+  const title = `${tier.name} — ${tier.priceDisplay} Instant Download`;
 
   return {
     title,

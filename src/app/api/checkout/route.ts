@@ -205,9 +205,9 @@ export async function POST(req: NextRequest) {
     if (existingCaseNumber && existingCaseState) {
       // Validate input lengths to prevent metadata pollution
       trimmedCaseNumber = String(existingCaseNumber).trim().slice(0, 50);
-      trimmedCaseState = String(existingCaseState).trim().slice(0, 2).toUpperCase();
+      trimmedCaseState = String(existingCaseState).trim().slice(0, 50);
 
-      if (trimmedCaseNumber && /^[A-Z]{2}$/.test(trimmedCaseState)) {
+      if (trimmedCaseNumber && trimmedCaseState.length >= 2) {
         const { data: matchedCase } = await supabase
           .from("cases")
           .select("email")
