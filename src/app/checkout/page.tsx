@@ -430,11 +430,20 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Motion landscape report",
       "Case preservation protocol",
       "10-15 targeted questions across all sections + Appendix D",
-      "Included: Judge Intelligence Card — one-page print reference for hearings",
+      "Included: Judge Intelligence Profile — jurisdiction patterns and tendencies",
       "Included: Plea Decision Checklist — before you sign anything, run this",
+      "7-Day Follow-Up Window — 1 clarifying question answered within 24 hours",
+      "Attorney Script Pack — 5 scripts for common attorney conversations",
+      "Brady/Giglio Checklist — evidence disclosure obligations your attorney must meet",
+      "Next Court Date Prep — hearing-specific preparation for your next appearance",
+      "Your Rights in [State] — jurisdiction-specific rights reference",
+      "Realistic Outcome Map — sentencing outcomes from similar cases in your jurisdiction",
+      "Defense Theory Landscape — viable defense strategies applicable to your charges",
+      "Prosecution Pressure Tactics Decoder — common pressure tactics and how to recognize them",
+      "8-Domain Life Impact Map — immigration, employment, housing, family, financial, licensing, civil rights, future legal",
     ],
     guarantee:
-      "Delivered within 72 hours with 10-15 targeted questions — or your money back.",
+      "The Clarity or It's Free: Delivered within 72 hours with 10-15 targeted questions — or your money back.",
     story: "Three transactions in a federal indictment pre-dated the business relationship the government claimed created fraudulent intent. The attorney had never mapped the timeline. Federal cases generate sprawling document sets that exceed what any single attorney can manually cross-reference — our systematic approach surfaces what manual review naturally misses. That's why judge intelligence and prosecution analysis matter.",
     validation:
       "Everything you need to understand your case — without needing discovery yet.",
@@ -466,7 +475,6 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Contradictions, missing evidence, and rights violations documented with exact page numbers",
       "35-50 specific questions for your attorney meeting — each one tied to a finding in your file",
       "For every question: what a solid answer looks like, and what a red flag answer looks like",
-      "One-page summary formatted to hand directly to your attorney at your next meeting",
       "Discovery Strength Rating — your evidence graded by category, so you know exactly where the gaps are",
       "Prosecution Case Weakness Analysis — the defense angles in your case, organized by charge, so nothing gets missed",
     ],
@@ -514,7 +522,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Ongoing intelligence from now through resolution. Most clients stay in this tier for the life of their case.",
     whyThisWorks:
-      "Witness analysis using informant credibility methodology — proven in high-profile federal defense cases. Officer dossiers built on investigator accountability frameworks. Updated weekly as your case develops.",
+      "Witness analysis using informant credibility methodology — proven in high-profile federal defense cases. Judge & prosecution dossiers built on investigator accountability frameworks. Updated weekly as your case develops.",
     story: "Three prosecution witnesses gave depositions placing the defendant in different locations at different times. Our weekly witness analysis cross-referenced all three accounts and identified 11 contradictions the prosecution would need to reconcile at trial. The defendant's attorney used those contradictions in cross-examination preparation. Two of the three witnesses were struck.",
     pullquote: {
       quote:
@@ -536,7 +544,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "JOA research brief — every applicable standard, formatted for your attorney",
       "Trial morning cheat sheets",
       "Priority Response Line — 2hr response during trial prep, 4hr during trial",
-      "Direct access channel",
+      "Priority email with 2-4 hour response",
       "All scored deliverables from lower tiers included",
     ],
     guarantee:
@@ -799,7 +807,7 @@ function CheckoutContent() {
             {!(band === "Critical" || band === "Concerning") && tier !== "situation-room" && (
               <p className="mt-2 text-sm text-zinc-300">
                 Upgrade Credit: 100% of your purchase credited
-                toward any higher tier within 30 days.
+                toward Case Decoder within 30 days.
               </p>
             )}
             {tier !== "situation-room" && (
@@ -1054,9 +1062,9 @@ function CheckoutContent() {
               />
               <div>
                 <span className="text-sm font-semibold text-white">
-                  Priority 24-Hour Delivery — +{info.priorityPrice}
+                  Priority {info.priorityDesc} Delivery — +{info.priorityPrice}
                 </span>
-                <p className="mt-0.5 text-xs text-zinc-400">Your standard 48-hour delivery starts when you submit case details. Add priority and get your analysis in 24 hours instead. One fewer day of not knowing.</p>
+                <p className="mt-0.5 text-xs text-zinc-400">Your standard {info.delivery} delivery starts when you submit case details. Add priority for {info.priorityDesc} delivery instead. One fewer day of not knowing.</p>
                 {courtDateUrgent && (
                   <p className="mt-1 text-xs font-medium text-amber-400">
                     Your court date is {daysUntilCourt} days away — standard delivery may not arrive in time.

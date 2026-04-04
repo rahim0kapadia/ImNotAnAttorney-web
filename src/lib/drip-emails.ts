@@ -308,7 +308,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p><strong style="color: white;">${TIER_CORE["case-decoder"].priceDisplay}. ${TIER_CORE["case-decoder"].delivery}.</strong> The cost of not knowing is higher.</p>
       ${cta(`Find What's in My Case — ${TIER_CORE["case-decoder"].priceDisplay} →`, "/checkout?tier=case-decoder")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">DUI charges?</strong> Start with the ${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay} instant download. 26 questions + attorney scorecard. The ${TIER_CORE["dui-first-offense"].priceDisplay} counts toward any service tier — you never pay it twice. ${link("Get the Playbook", "/playbook/dui-first-offense")}
+        <strong style="color: white;">DUI charges?</strong> Start with the ${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay} instant download. 26 questions + attorney scorecard. The ${TIER_CORE["dui-first-offense"].priceDisplay} counts toward any service tier within 30 days — you never pay it twice. ${link("Get the Playbook", "/playbook/dui-first-offense")}
       </p>
     `,
   },
@@ -936,7 +936,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">Your Questions Are Good — But There's Context They're Missing</h1>
       <p>Your Case Decoder gave you 15 questions built from what you told us. The Intelligence Brief adds what you <em>can't</em> tell us — your judge's actual patterns, your prosecutor's track record, and jurisdiction-specific leverage points.</p>
-      <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("case-decoder", "intelligence-brief")}.</strong></p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("case-decoder", "intelligence-brief")} — credit applies within 12 months.</strong></p>
       ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
     `,
   },
@@ -965,7 +965,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">There Are Questions Your Case Decoder Can't Answer</h1>
       <p>Your report identified areas that need your judge's actual patterns and your prosecutor's track record to answer properly. Your Case Decoder can't provide that — it was built from what you told us, not from jurisdiction data.</p>
-      <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("case-decoder", "intelligence-brief")}.</strong></p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("case-decoder", "intelligence-brief")} — credit applies within 12 months.</strong></p>
       ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
       <p style="margin-top: 16px; color: #A1A1AA;">Motion deadlines, evidence preservation windows, and plea negotiation leverage all erode with time.</p>
       <p style="margin-top: 16px; color: #71717A;">If budget is a factor and you want the full picture later, you can always upgrade from the Intelligence Brief to the X-Ray — your payment applies as credit. ${link("Compare tiers", "/services")}</p>
@@ -1017,7 +1017,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">When Your Case Documents Land, This Is the Hour That Matters</h1>
       <p>If your discovery package just arrived — or your attorney told you it is being compiled — that moment changes the texture of your case. For the first time, you can see what the prosecution actually has. That should feel like relief. For most defendants, it feels like the opposite: hundreds of pages of reports written in law enforcement shorthand, lab results with methodology codes nobody explains, witness statements that seem straightforward until you realize two of them describe the same event in ways that cannot both be true.</p>
       <p>In a real trafficking case we analyzed: the police inventory showed 93.9 grams seized. The lab report showed 25.59 grams tested — a 68.3-gram discrepancy that the defendant's attorney had not raised. The charging document said "amphetamine." The lab confirmed MDMA. 21 fingerprints collected at the scene. Zero matched the defendant. None of these were flagged before the case was researched page by page. Discovery errors like these do not announce themselves. They are visible only if someone reads the documents with a specific methodology looking for them.</p>
-      <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The X-Ray costs ${upgradeCostBetween("case-decoder", "x-ray")}.</strong> That covers every page of your discovery — contradictions flagged with page citations, chain-of-custody gaps documented, constitutional issues identified, 35-50 questions for your attorney based on what the documents actually show. Not patterns. Not jurisdiction estimates. Your specific documents.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The X-Ray costs ${upgradeCostBetween("case-decoder", "x-ray")} — credit applies within 12 months.</strong> That covers every page of your discovery — contradictions flagged with page citations, chain-of-custody gaps documented, constitutional issues identified, 35-50 questions for your attorney based on what the documents actually show. Not patterns. Not jurisdiction estimates. Your specific documents.</p>
       ${cta(`Get the X-Ray — ${upgradeCostBetween("case-decoder", "x-ray")} after credit`, "/checkout?tier=x-ray")}
       <p style="margin-top: 16px; padding: 12px 16px; background: #1C1917; border-left: 3px solid #F59E0B; color: #F59E0B; font-weight: bold;">Motion deadlines and evidence preservation windows are calculated from arrest and arraignment dates — not from when you read your discovery. Some of those windows may already be closing. Analysis completed now preserves options that will not exist in 30 days.</p>
     `,
@@ -1099,7 +1099,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>Your Intelligence Brief has everything you need for your next attorney meeting. Here's how to make the most of it:</p>
       <ol>
         <li><strong style="color: white;">Start with the 48-Hour Priority List</strong> — three actions, in order. Priority 1 first.</li>
-        <li><strong style="color: white;">Print the Judge Intelligence Card (Appendix F)</strong> — one page, designed for the meeting. Bring it.</li>
+        <li><strong style="color: white;">Print the Judge Intelligence Profile (Appendix F)</strong> — one page, designed for the meeting. Bring it.</li>
         <li><strong style="color: white;">Pick your top 5 questions from Appendix D</strong> — the Golden Question is marked. Start there.</li>
         <li><strong style="color: white;">Review the Plea Decision Checklist (Appendix G)</strong> — if a plea is on the table, this is your pre-signing checklist.</li>
       </ol>

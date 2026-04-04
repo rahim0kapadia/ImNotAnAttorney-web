@@ -166,6 +166,37 @@ export async function POST(req: NextRequest) {
     }
 
     // =========================================================================
+    // 5. SITUATION ROOM PREREQUISITE CHECK
+    // The Situation Room ($9,997) requires a delivered War Room purchase.
+    // This is enforced here so the prerequisite cannot be bypassed by
+    // constructing a direct POST to this endpoint.
+    // =========================================================================
+    if (tier === "situation-room") {
+      const { data: warRoomOrder, error: warRoomError } = await supabase
+        .from("orders")
+        .select("id")
+        .eq("email", normalizedEmail)
+        .eq("tier", "war-room")
+        .eq("status", "delivered")
+        .limit(1)
+        .maybeSingle();
+
+      if (warRoomError) {
+        console.error("[Checkout] War Room prerequisite check error:", warRoomError);
+        return NextResponse.json(
+          { error: "Unable to verify prerequisite order" },
+          { status: 500 }
+        );
+      }
+      if (!warRoomOrder) {
+        return NextResponse.json(
+          { error: "The Situation Room requires a completed War Room purchase. Please purchase the War Room first." },
+          { status: 400 }
+        );
+      }
+    }
+
+    // =========================================================================
     // 6. SERVER-SIDE CONSENT VALIDATION
     // All non-digital tiers require the customer to check a consent box
     // acknowledging they understand the service provides legal INFORMATION,

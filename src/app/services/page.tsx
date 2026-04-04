@@ -96,7 +96,7 @@ const caseTypes = [
         name: TIER_CORE["war-room"].name,
         slug: "war-room",
         price: TIER_CORE["war-room"].priceDisplay,
-        desc: "Everything above + officer dossiers, witness analysis (up to 8), motion timing questions for your attorney, case law package, weekly updates. Includes Evidence Chain Audit — was every piece of evidence handled properly? Every item traced through custody, gaps flagged. And Witness Reliability Rankings — how trustworthy is each witness? Scored across 7 credibility dimensions.",
+        desc: "Everything above + Judge &amp; prosecution dossiers, witness analysis (up to 8), motion timing questions for your attorney, case law package, weekly updates. Includes Evidence Chain Audit — was every piece of evidence handled properly? Every item traced through custody, gaps flagged. And Witness Reliability Rankings — how trustworthy is each witness? Scored across 7 credibility dimensions.",
         discovery: TIER_CORE["war-room"].requiresDiscovery,
         stageLabel: "Building your defense",
       },
@@ -106,7 +106,7 @@ const caseTypes = [
         price: TIER_CORE["situation-room"].priceDisplay,
         desc: "Full trial intelligence cycle: nightly testimony analysis, morning prep brief with cross-examination angles, witness impeachment research — every trial day. All witnesses researched, JOA research brief, Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
-        requiresWarRoom: true,
+        requiresWarRoom: TIER_CORE["situation-room"].requiresWarRoom,
         stageLabel: "Trial confirmed",
       },
     ],
@@ -145,7 +145,7 @@ const caseTypes = [
         name: TIER_CORE["war-room"].name,
         slug: "war-room",
         price: TIER_CORE["war-room"].priceDisplay,
-        desc: "Officer dossiers, expert witness challenges, motion timing questions for your attorney, case law package, weekly updates until resolution. Includes Evidence Chain Audit — was every piece of evidence handled properly? Every item traced through custody, gaps flagged. And Witness Reliability Rankings — how trustworthy is each witness? Scored across 7 credibility dimensions.",
+        desc: "Judge &amp; prosecution dossiers, expert witness challenges, motion timing questions for your attorney, case law package, weekly updates until resolution. Includes Evidence Chain Audit — was every piece of evidence handled properly? Every item traced through custody, gaps flagged. And Witness Reliability Rankings — how trustworthy is each witness? Scored across 7 credibility dimensions.",
         discovery: TIER_CORE["war-room"].requiresDiscovery,
         stageLabel: "Building your defense",
       },
@@ -155,7 +155,7 @@ const caseTypes = [
         price: TIER_CORE["situation-room"].priceDisplay,
         desc: "Full trial intelligence cycle: nightly testimony analysis, morning prep brief with cross-examination angles, witness impeachment research — every trial day. Officer research, expert credibility questions, jury selection research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
-        requiresWarRoom: true,
+        requiresWarRoom: TIER_CORE["situation-room"].requiresWarRoom,
         stageLabel: "Trial confirmed",
       },
     ],
@@ -204,7 +204,7 @@ const caseTypes = [
         price: TIER_CORE["situation-room"].priceDisplay,
         desc: "Full trial intelligence cycle: nightly testimony analysis, morning prep brief with cross-examination angles, witness impeachment research — every trial day. Expert credibility research, cooperator background questions, guidelines research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
-        requiresWarRoom: true,
+        requiresWarRoom: TIER_CORE["situation-room"].requiresWarRoom,
         stageLabel: "Trial confirmed",
       },
     ],
@@ -283,7 +283,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["intelligence-brief"].name,
-        description: "Judge intelligence, prosecution vulnerability report, 15-25 questions, jurisdiction analysis",
+        description: "Judge intelligence, prosecution vulnerability report, 10-15 questions, jurisdiction analysis",
         price: "997.00",
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -817,7 +817,7 @@ export default function ServicesPage() {
             <div className="space-y-2 text-sm text-zinc-400">
               <p>
                 <span className="font-semibold text-white">{TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay}):</span>{" "}
-                10+ targeted questions researched from your specific charge details. Delivered within 48 hours of intake.
+                15 calibrated questions researched from your specific charge details. Delivered within 48 hours of intake.
               </p>
               <p>
                 <span className="font-semibold text-white">

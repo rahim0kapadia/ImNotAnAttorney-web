@@ -569,7 +569,7 @@ function SuccessContent() {
                 </p>
 
                 <p className="mt-3 text-xs text-zinc-400">
-                  War Room adds: witness analysis (up to 8), officer dossiers, motion timing analysis, wave strategy overview, case law reference package, evidence chain audit, weekly intelligence updates, attorney delivery package.
+                  War Room adds: witness analysis (up to 8), judge & prosecution dossiers, motion timing analysis, wave strategy overview, case law reference package, evidence chain audit, weekly intelligence updates, attorney delivery package.
                 </p>
               </div>
             )}

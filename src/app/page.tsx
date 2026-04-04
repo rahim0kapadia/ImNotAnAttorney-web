@@ -190,7 +190,7 @@ export default function Home() {
                 {
                   "@type": "Offer",
                   name: "Case Decoder",
-                  description: "Charge analysis + 10-15 targeted questions for your attorney",
+                  description: "Charge analysis + 15 calibrated questions for your attorney",
                   price: "197.00",
                   priceCurrency: "USD",
                 },
@@ -401,7 +401,7 @@ export default function Home() {
                 step: "03",
                 title: "Walk in prepared",
                 desc: "A custom report with pointed, case-specific questions already formatted for your attorney meeting. When you show up with these, your attorney knows you\u2019re paying attention.",
-                badge: "10-15 questions",
+                badge: "15 calibrated questions",
                 border: "border-l-2 border-amber-400",
               },
             ].map((item) => (
@@ -511,7 +511,7 @@ export default function Home() {
                 <div className="text-2xl font-bold text-red-400">Less than one hour</div>
                 <p className="mt-1 text-xs font-semibold text-zinc-400">of your attorney&apos;s billing rate ($250-$500/hr).</p>
                 <p className="mt-2 text-base text-zinc-400">
-                  For a full case analysis with 10-15 targeted questions.
+                  For a full case analysis with 15 calibrated questions.
                 </p>
               </div>
             </StaggerItem>
@@ -529,7 +529,7 @@ export default function Home() {
                 <div className="text-2xl font-bold text-amber-400">{TIER_CORE["case-decoder"].priceDisplay}</div>
                 <p className="mt-1 text-xs font-semibold text-zinc-400">Case Decoder. Your charges, your judge, your specific situation.</p>
                 <p className="mt-2 text-base text-zinc-400">
-                  10-15 case-specific questions based on your charges, your judge, your discovery.
+                  15 calibrated questions based on your charges, your judge, your discovery.
                 </p>
               </div>
             </StaggerItem>
@@ -735,7 +735,7 @@ export default function Home() {
           <LeadCapture
             successUpsellHref="/start"
             successUpsellLabel={`Ready to go deeper? Get your Case Decoder \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`}
-            successUpsellDescription="Case-specific research with 10-15 targeted questions built from elite defense methodology. Every dollar credited toward higher tiers."
+            successUpsellDescription="Case-specific research with 15 calibrated questions built from elite defense methodology. Every dollar credited toward higher tiers."
           />
           <p className="mt-6 text-center text-sm text-zinc-400">
             Want a quick answer?{" "}

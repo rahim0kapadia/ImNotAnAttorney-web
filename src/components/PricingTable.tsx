@@ -52,7 +52,7 @@ const tiers: TierCard[] = [
       "Plain-English charge breakdown — the equivalent of a $500 consultation, in writing",
       "15 calibrated questions for your attorney (6-part format) — $200+ if scripted by a paralegal",
       "Ready-to-send email template + phone script + follow-up template",
-      "Your Advocacy Steps — 8-step communication playbook",
+      "Your Advocacy Steps — 5-step communication playbook",
       "Where Things Stand — 4-area diagnostic",
       "Your Next 7 Days — one action per day with Meeting Ready Sheet",
       "Expert methodology from elite defense attorneys",
@@ -86,8 +86,14 @@ const tiers: TierCard[] = [
       "Case preservation protocol",
       "10-15 targeted questions",
       "Prosecution Case Vulnerability Report",
-      "Judge Intelligence Card",
+      "Judge Intelligence Profile — jurisdiction patterns and tendencies",
       "Plea Decision Checklist",
+      "7-Day Follow-Up Window",
+      "Attorney Script Pack (5 scripts)",
+      "Brady/Giglio Checklist",
+      "Realistic Outcome Map",
+      "Defense Theory Landscape",
+      "8-Domain Life Impact Map",
     ],
     cta: "Get Your Intelligence Brief",
     featured: false,
@@ -418,7 +424,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
         <p className="mt-2 text-base text-zinc-400">
           Delivery Guarantee: On time with the stated question count — or a
           full cash refund. Satisfaction Guarantee: Not satisfied? 100% credit
-          toward any higher tier within 30 days.
+          toward Case Decoder within 30 days. Service credit: 12 months toward any higher tier.
         </p>
         <p className="mt-2 text-xs text-zinc-400">
           Upgrade credits apply to purchases you keep.
