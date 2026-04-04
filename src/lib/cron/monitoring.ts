@@ -1,9 +1,10 @@
 /**
- * @file Parts 17, 18, 19 — Monitoring and reporting
+ * @file Parts 17, 18, 19, 20 — Monitoring and reporting
  *
  * Part 17: SLA breach detection (delivery_due_at passed)
  * Part 18: Weekly progress emails (War Room + Situation Room)
  * Part 19: Engine heartbeat (stale queued jobs -> operator alert)
+ * Part 20: Guarantee escalation (tier-specific thresholds + guarantee_invocations)
  */
 
 import { sendEmail, sendEmailWithRetry, escapeHtml } from "@/lib/email";
@@ -270,6 +271,282 @@ export async function checkEngineHeartbeat(ctx: CronContext): Promise<CronResult
       result.errors++;
     }
     console.log(`[Drip Cron] Part 19: ${staleQueued.length} stale queued jobs detected`);
+  }
+
+  return result;
+}
+
+// ============================================================
+// PART 20: GUARANTEE ESCALATION (tier-specific thresholds)
+// ============================================================
+
+/**
+ * Count business days (Mon–Fri) between two dates.
+ * Returns a positive integer when `end` is after `start`.
+ */
+function businessDaysBetween(start: Date, end: Date): number {
+  if (end <= start) return 0;
+  let count = 0;
+  const cursor = new Date(start);
+  // Advance to start of the next calendar day so the due-date itself is not counted
+  cursor.setDate(cursor.getDate() + 1);
+  cursor.setHours(0, 0, 0, 0);
+  const endDay = new Date(end);
+  endDay.setHours(23, 59, 59, 999);
+  while (cursor <= endDay) {
+    const dow = cursor.getDay();
+    if (dow !== 0 && dow !== 6) count++;
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return count;
+}
+
+interface GuaranteeThreshold {
+  businessDays: number;
+  guaranteeType: string;       // written to guarantee_invocations.guarantee_type
+  resolutionType: string | null; // null = warning-only, no invocation record inserted
+  amountRefunded: number | null;
+  taskType: string;            // stored in operator_tasks.task_type for dedup
+  taskTitle: string;
+  taskPriority: "CRITICAL" | "URGENT" | "HIGH" | "NORMAL";
+  priorityRank: number;
+  emailColor: "red" | "amber";
+}
+
+interface GuaranteeEscalationSpec {
+  tier: string;
+  tierLabel: string;
+  thresholds: GuaranteeThreshold[];
+}
+
+const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
+  {
+    tier: "x-ray",
+    tierLabel: "X-Ray ($2,497)",
+    thresholds: [
+      {
+        businessDays: 10,
+        guaranteeType: "xray-delivery",
+        resolutionType: "20pct_refund",
+        amountRefunded: 499.40,
+        taskType: "guarantee_xray_20pct",
+        taskTitle: "GUARANTEE TRIGGERED: X-Ray 20% delivery refund due",
+        taskPriority: "URGENT",
+        priorityRank: 1,
+        emailColor: "amber",
+      },
+      {
+        businessDays: 15,
+        guaranteeType: "xray-delivery",
+        resolutionType: "full_refund",
+        amountRefunded: 2497.00,
+        taskType: "guarantee_xray_full",
+        taskTitle: "GUARANTEE TRIGGERED: X-Ray FULL refund due — 15 day breach",
+        taskPriority: "CRITICAL",
+        priorityRank: 0,
+        emailColor: "red",
+      },
+    ],
+  },
+  {
+    tier: "war-room",
+    tierLabel: "War Room ($4,997)",
+    thresholds: [
+      {
+        businessDays: 25,
+        guaranteeType: "warroom-delivery-warning",
+        resolutionType: null,
+        amountRefunded: null,
+        taskType: "guarantee_warroom_warning",
+        taskTitle: "WARNING: War Room approaching 28-day guarantee deadline",
+        taskPriority: "HIGH",
+        priorityRank: 2,
+        emailColor: "amber",
+      },
+      {
+        businessDays: 28,
+        guaranteeType: "warroom-delivery",
+        resolutionType: "full_refund",
+        amountRefunded: 4997.00,
+        taskType: "guarantee_warroom_full",
+        taskTitle: "GUARANTEE TRIGGERED: War Room FULL refund due — 28 day breach",
+        taskPriority: "CRITICAL",
+        priorityRank: 0,
+        emailColor: "red",
+      },
+    ],
+  },
+  {
+    tier: "situation-room",
+    tierLabel: "Situation Room ($9,997)",
+    thresholds: [
+      {
+        businessDays: 25,
+        guaranteeType: "sr-delivery-warning",
+        resolutionType: null,
+        amountRefunded: null,
+        taskType: "guarantee_sr_warning",
+        taskTitle: "WARNING: Situation Room approaching 28-day guarantee deadline",
+        taskPriority: "CRITICAL",
+        priorityRank: 0,
+        emailColor: "amber",
+      },
+      {
+        businessDays: 28,
+        guaranteeType: "sr-delivery",
+        resolutionType: "full_refund",
+        amountRefunded: 9997.00,
+        taskType: "guarantee_sr_full",
+        taskTitle: "GUARANTEE TRIGGERED: Situation Room FULL refund due — 28 day breach",
+        taskPriority: "CRITICAL",
+        priorityRank: 0,
+        emailColor: "red",
+      },
+    ],
+  },
+];
+
+export async function escalateGuarantees(ctx: CronContext): Promise<CronResult> {
+  const result = emptyResult();
+
+  // Fetch all active cases for guarantee-eligible tiers that are already past due
+  const eligibleTiers = GUARANTEE_SPECS.map((s) => s.tier);
+  const { data: cases } = await ctx.supabase
+    .from("cases")
+    .select("id, email, tier, delivery_due_at")
+    .in("tier", eligibleTiers)
+    .not("status", "in", '("delivered","refunded","cancelled","generation-failed","intake-stalled")')
+    .not("delivery_due_at", "is", null)
+    .lt("delivery_due_at", ctx.now.toISOString())
+    .limit(200);
+
+  if (!cases || cases.length === 0) return result;
+
+  const caseIds = cases.map((c) => c.id);
+
+  // ── Batch-fetch existing guarantee_invocations for all cases ──
+  const { data: existingInvocations } = await ctx.supabase
+    .from("guarantee_invocations")
+    .select("case_id, guarantee_type")
+    .in("case_id", caseIds);
+  // Key: `${case_id}:${guarantee_type}`
+  const invocationSet = new Set(
+    (existingInvocations ?? []).map(
+      (r: { case_id: string; guarantee_type: string }) => `${r.case_id}:${r.guarantee_type}`
+    )
+  );
+
+  // ── Batch-fetch existing open/in-progress guarantee operator tasks ──
+  const allTaskTypes = GUARANTEE_SPECS.flatMap((s) => s.thresholds.map((t) => t.taskType));
+  const { data: existingTasks } = await ctx.supabase
+    .from("operator_tasks")
+    .select("case_id, task_type")
+    .in("case_id", caseIds)
+    .in("task_type", allTaskTypes)
+    .in("status", ["open", "in_progress"]);
+  // Key: `${case_id}:${task_type}`
+  const taskSet = new Set(
+    (existingTasks ?? []).map(
+      (t: { case_id: string; task_type: string }) => `${t.case_id}:${t.task_type}`
+    )
+  );
+
+  for (const c of cases) {
+    const spec = GUARANTEE_SPECS.find((s) => s.tier === c.tier);
+    if (!spec) continue;
+
+    const businessDaysOver = businessDaysBetween(
+      new Date(c.delivery_due_at!),
+      ctx.now
+    );
+
+    for (const threshold of spec.thresholds) {
+      if (businessDaysOver < threshold.businessDays) continue;
+
+      const taskKey = `${c.id}:${threshold.taskType}`;
+      const invocationKey = `${c.id}:${threshold.guaranteeType}`;
+      const isRealTrigger = threshold.resolutionType !== null;
+
+      // ── Dedup: skip if operator task already exists ──
+      if (taskSet.has(taskKey)) continue;
+
+      // ── Dedup: skip if invocation record already exists (real triggers only) ──
+      if (isRealTrigger && invocationSet.has(invocationKey)) continue;
+
+      // ── Insert guarantee_invocations record (real triggers only) ──
+      if (isRealTrigger) {
+        await ctx.supabase.from("guarantee_invocations").insert({
+          case_id: c.id,
+          customer_email: c.email,
+          tier: c.tier,
+          guarantee_type: threshold.guaranteeType,
+          triggered_at: ctx.now.toISOString(),
+          resolution_type: threshold.resolutionType,
+          amount_refunded: threshold.amountRefunded,
+          escalated: false,
+          notes: `Auto-triggered by cron after ${businessDaysOver} business days overdue (threshold: ${threshold.businessDays})`,
+        });
+        invocationSet.add(invocationKey);
+      }
+
+      // ── Create operator task ──
+      await ctx.supabase.from("operator_tasks").insert({
+        case_id: c.id,
+        task_type: threshold.taskType,
+        title: threshold.taskTitle,
+        description: `Customer: ${c.email} | Tier: ${spec.tierLabel} | ${businessDaysOver} business days overdue (threshold: ${threshold.businessDays})${isRealTrigger ? ` | Refund due: $${threshold.amountRefunded!.toFixed(2)}` : ""}`,
+        priority: threshold.taskPriority,
+        priority_rank: threshold.priorityRank,
+        sla_breach: true,
+        due_at: ctx.now.toISOString(),
+      });
+      taskSet.add(taskKey);
+
+      // ── Send operator email ──
+      const accentColor = threshold.emailColor === "red" ? "#EF4444" : "#F59E0B";
+      const headingText = threshold.emailColor === "red"
+        ? "Guarantee Triggered — Refund Required"
+        : "Guarantee Warning — Action Required";
+
+      await sendEmail({
+        to: ctx.operatorEmail,
+        subject: threshold.taskTitle,
+        html: `<h1 style="color: ${accentColor};">${headingText}</h1>
+          <p>${isRealTrigger
+            ? `This case has breached the <strong>${escapeHtml(spec.tierLabel)}</strong> delivery guarantee and a refund must be issued.`
+            : `This case is approaching the <strong>${escapeHtml(spec.tierLabel)}</strong> delivery guarantee deadline. Delivery must occur within ${threshold.businessDays} business days or a full refund is owed.`
+          }</p>
+          <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid ${accentColor};">
+            <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(c.email)}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(spec.tierLabel)}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Business Days Overdue:</strong> ${businessDaysOver}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Threshold:</strong> ${threshold.businessDays} business days</p>
+            ${isRealTrigger
+              ? `<p style="margin: 8px 0 0; color: ${accentColor};"><strong style="color: ${accentColor};">Refund Due:</strong> $${threshold.amountRefunded!.toFixed(2)}</p>`
+              : ""}
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${c.id}</p>
+          </div>
+          <p><strong>Action:</strong> ${isRealTrigger
+            ? `Process the ${threshold.resolutionType === "full_refund" ? "full" : "partial"} refund immediately via the Stripe dashboard.`
+            : "Prioritize delivery of this case before the guarantee deadline is reached."
+          }</p>`,
+      }, {
+        category: "operator-alert",
+        case_id: c.id,
+        metadata: {
+          reason: "guarantee-escalation",
+          tier: c.tier,
+          guarantee_type: threshold.guaranteeType,
+          business_days_overdue: businessDaysOver,
+          amount_refunded: threshold.amountRefunded,
+        },
+      });
+
+      result.errors++;
+      console.log(
+        `[Drip Cron] Part 20: ${threshold.taskType} triggered for case ${c.id} (${businessDaysOver} business days overdue)`
+      );
+    }
   }
 
   return result;
