@@ -72,7 +72,7 @@ const tiers: TierCard[] = [
       { item: "Second-opinion attorney review", value: "$1,500" },
       { item: "Jurisdiction intelligence report", value: "$300" },
       { item: "Motion landscape analysis", value: "$400" },
-      { item: "Prosecution vulnerability assessment", value: "$200" },
+      { item: "Prosecution pattern analysis", value: "$200" },
     ],
     description:
       "Jurisdiction intelligence + 10-15 targeted questions. No discovery needed.",
