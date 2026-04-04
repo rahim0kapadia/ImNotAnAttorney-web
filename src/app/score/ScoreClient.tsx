@@ -742,7 +742,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
                 <p className="text-base text-zinc-300">
                   <span className="font-semibold text-white">Need everything now?</span>{" "}
-                  The Intelligence Brief ({TIER_CORE["intelligence-brief"].priceDisplay}) adds prosecution vulnerability analysis, judge research, and defense theories specific to your jurisdiction.
+                  The Intelligence Brief ({TIER_CORE["intelligence-brief"].priceDisplay}) adds prosecution pattern analysis, jurisdiction intelligence, and defense theories specific to your jurisdiction.
                 </p>
                 <Link
                   href={`/checkout?tier=intelligence-brief&charge=${answers.chargeType}&band=${result.band}`}
@@ -780,7 +780,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               <div className="mt-4 rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
                 <p className="text-base text-zinc-300">
                   <span className="font-semibold text-white">Your case stage calls for deeper analysis.</span>{" "}
-                  The Intelligence Brief ({TIER_CORE["intelligence-brief"].priceDisplay}) adds prosecution vulnerability analysis, judge research, and defense theories specific to your jurisdiction.
+                  The Intelligence Brief ({TIER_CORE["intelligence-brief"].priceDisplay}) adds prosecution pattern analysis, jurisdiction intelligence, and defense theories specific to your jurisdiction.
                 </p>
                 <Link
                   href={`/checkout?tier=intelligence-brief&charge=${answers.chargeType}&band=${result.band}`}

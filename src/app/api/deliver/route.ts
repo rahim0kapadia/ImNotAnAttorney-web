@@ -697,7 +697,7 @@ export async function POST(req: NextRequest) {
               <p>Your Case Decoder report is ready — <a href="${reportUrl}" style="color: #F59E0B;">view it here</a>.</p>
               <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
                 <p style="margin: 0; color: white; font-weight: bold;">Next Step: Complete Your ${escapeHtml(siblingTierName)}</p>
-                <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${escapeHtml(siblingTierName)} includes judge intelligence, motion landscape analysis, and 10-15 targeted questions — but we need a few more details about your case.</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${escapeHtml(siblingTierName)} includes jurisdiction intelligence, motion landscape analysis, and 10-15 targeted questions — but we need a few more details about your case.</p>
                 <a href="${origin}/intake/intelligence-brief?case=${sibling.id}&token=${signPhase2Token(sibling.id)}" style="display: inline-block; margin-top: 16px; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Intelligence Brief Details</a>
               </div>
               <p style="color: #A1A1AA;">This takes about 3-5 minutes. Your full ${escapeHtml(siblingTierName)} will be delivered within 72 hours after you complete this form.</p>

@@ -84,7 +84,7 @@ const tiers: TierCard[] = [
       "Motion landscape report",
       "Case preservation protocol",
       "10-15 targeted questions",
-      "Prosecution Case Vulnerability Report",
+      "Prosecution Pattern Summary",
       "Jurisdiction Intelligence Summary — local patterns and tendencies",
       "Plea Decision Checklist",
       "7-Day Follow-Up Window",

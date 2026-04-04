@@ -422,7 +422,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Case Decoder report delivered within 48 hours",
       "Everything in Case Decoder, plus:",
       "Case Progress Score — 6-dimension tracking with milestone timeline",
-      "Prosecution Case Vulnerability Report — where their case is weakest, informed by court records and sentencing trends in your jurisdiction",
+      "Prosecution Pattern Summary — where their case is weakest, informed by court records and sentencing trends in your jurisdiction",
       "Charge exposure map",
       "Jurisdiction intelligence summary",
       "Jurisdiction profile",
@@ -444,7 +444,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     ],
     guarantee:
       "The Clarity or It's Free: Delivered within 72 hours with 10-15 targeted questions — or your money back.",
-    story: "Three transactions in a federal indictment pre-dated the business relationship the government claimed created fraudulent intent. The attorney had never mapped the timeline. Federal cases generate sprawling document sets that exceed what any single attorney can manually cross-reference — our systematic approach surfaces what manual review naturally misses. That's why judge intelligence and prosecution analysis matter.",
+    story: "Three transactions in a federal indictment pre-dated the business relationship the government claimed created fraudulent intent. The attorney had never mapped the timeline. Federal cases generate sprawling document sets that exceed what any single attorney can manually cross-reference — our systematic approach surfaces what manual review naturally misses. That's why jurisdiction intelligence and prosecution analysis matter.",
     validation:
       "Everything you need to understand your case — without needing discovery yet.",
     whyThisWorks:

@@ -96,7 +96,7 @@ export default async function BlogPage({
             Legal information that actually helps. No jargon, no fluff.
           </p>
           <p className="mt-4 text-sm leading-relaxed text-zinc-400">
-            97% of criminal cases end in plea deals (Bureau of Justice Statistics). In most of those cases, nobody gave the defendant the questions before it was too late. That&apos;s what this blog is for. Every article below is built on documented defense methodologies from attorneys like Lawrence Taylor (DUI defense), Barry Scheck (forensic evidence), and Gerry Spence (jury persuasion) &mdash; applied to the situations defendants actually face.
+            97% of criminal cases end in plea deals (Bureau of Justice Statistics). In most of those cases, nobody gave the defendant the questions before it was too late. That&apos;s what this blog is for. Every article below is built on documented defense methodologies from 40+ elite defense pioneers &mdash; applied to the situations defendants actually face.
           </p>
         </FadeInUp>
 

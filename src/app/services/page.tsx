@@ -275,7 +275,7 @@ const serviceSchema = {
         "@type": "Offer",
         name: TIER_CORE["case-decoder"].name,
         description: "Charge analysis, 15 targeted questions, 7-day action plan, email templates",
-        price: "197.00",
+        price: (TIER_CORE["case-decoder"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
         url: `${SITE_URL}/checkout?tier=case-decoder`,
@@ -284,7 +284,7 @@ const serviceSchema = {
         "@type": "Offer",
         name: TIER_CORE["intelligence-brief"].name,
         description: "Jurisdiction intelligence, Prosecution Pattern Summary, 10-15 questions, jurisdiction analysis",
-        price: "997.00",
+        price: (TIER_CORE["intelligence-brief"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
         url: `${SITE_URL}/checkout?tier=intelligence-brief`,
@@ -293,7 +293,7 @@ const serviceSchema = {
         "@type": "Offer",
         name: TIER_CORE["x-ray"].name,
         description: "Full discovery analysis, 35-50 questions, Judge Intelligence Profile, Prosecutor Research Profile, Discovery Strength Rating",
-        price: "2497.00",
+        price: (TIER_CORE["x-ray"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
         url: `${SITE_URL}/checkout?tier=x-ray`,
@@ -302,7 +302,7 @@ const serviceSchema = {
         "@type": "Offer",
         name: TIER_CORE["war-room"].name,
         description: "Ongoing intelligence operation with weekly updates, witness analysis, motion timing, case law package",
-        price: "4997.00",
+        price: (TIER_CORE["war-room"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
         url: `${SITE_URL}/checkout?tier=war-room`,
@@ -311,7 +311,7 @@ const serviceSchema = {
         "@type": "Offer",
         name: TIER_CORE["situation-room"].name,
         description: "Trial Intelligence Operations — evening debrief, morning prep, priority response, all witnesses researched",
-        price: "9997.00",
+        price: (TIER_CORE["situation-room"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
         url: `${SITE_URL}/checkout?tier=situation-room`,
@@ -754,8 +754,12 @@ export default function ServicesPage() {
                 </div>
                 <p className="mt-2 text-sm text-zinc-400">{ct.tiers[4].desc}</p>
                 <p className="mt-2 text-xs text-amber-400/80">
-                  {/* Prices from tiers.ts — update if pricing changes */}
-                  Includes all tiers ($18,685 value) — {TIER_CORE["situation-room"].priceDisplay}
+                  {/* Total computed dynamically from tiers.ts */}
+                  Includes all tiers ({(() => {
+                    const total = (["case-decoder", "intelligence-brief", "x-ray", "war-room", "situation-room"] as const)
+                      .reduce((sum, slug) => sum + TIER_CORE[slug].price, 0) / 100;
+                    return `$${total.toLocaleString("en-US")}`;
+                  })()} value) — {TIER_CORE["situation-room"].priceDisplay}
                 </p>
                 {ct.tiers[4].discovery && (
                   <p className="mt-2 text-xs text-zinc-400">
@@ -825,7 +829,7 @@ export default function ServicesPage() {
                 <span className="font-semibold text-white">
                   {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay}):
                 </span>{" "}
-                10-15 targeted questions with judge intelligence and jurisdiction analysis. Delivered within 72 hours of intake.
+                10-15 targeted questions with jurisdiction intelligence and jurisdiction analysis. Delivered within 72 hours of intake.
               </p>
               <p>
                 <span className="font-semibold text-white">

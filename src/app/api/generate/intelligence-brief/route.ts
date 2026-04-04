@@ -138,7 +138,7 @@ export async function POST(req: NextRequest) {
         <h1 style="color: #F59E0B;">Your Intelligence Brief Is Being Built</h1>
         <p>Your Case Decoder has been delivered. We're now generating your full Intelligence Brief — including:</p>
         <ul style="padding-left: 20px;">
-          <li><strong style="color: white;">Judge intelligence</strong> — your judge's actual sentencing patterns and tendencies</li>
+          <li><strong style="color: white;">Jurisdiction intelligence</strong> — local sentencing patterns and court tendencies</li>
           <li><strong style="color: white;">Motion landscape</strong> — every motion that applies to your case, with deadlines</li>
           <li><strong style="color: white;">Defense theory analysis</strong> — established defense strategies for your charge type</li>
           <li><strong style="color: white;">Priority questions</strong> — 10-15 targeted questions with follow-up probes</li>

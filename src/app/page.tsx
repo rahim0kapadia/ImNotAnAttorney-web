@@ -191,28 +191,35 @@ export default function Home() {
                   "@type": "Offer",
                   name: "Case Decoder",
                   description: "Charge analysis + 15 calibrated questions for your attorney",
-                  price: "197.00",
+                  price: (TIER_CORE["case-decoder"].price / 100).toFixed(2),
                   priceCurrency: "USD",
                 },
                 {
                   "@type": "Offer",
                   name: "Case Intelligence Brief",
                   description: "Jurisdiction intelligence + prosecution pattern analysis + 10-15 questions",
-                  price: "997.00",
+                  price: (TIER_CORE["intelligence-brief"].price / 100).toFixed(2),
                   priceCurrency: "USD",
                 },
                 {
                   "@type": "Offer",
                   name: "The X-Ray",
                   description: "Full discovery analysis + 35-50 questions + Judge Intelligence Profile + Prosecutor Research Profile + Discovery Strength Rating",
-                  price: "2497.00",
+                  price: (TIER_CORE["x-ray"].price / 100).toFixed(2),
                   priceCurrency: "USD",
                 },
                 {
                   "@type": "Offer",
                   name: "The War Room",
                   description: "Ongoing intelligence operation with weekly updates",
-                  price: "4997.00",
+                  price: (TIER_CORE["war-room"].price / 100).toFixed(2),
+                  priceCurrency: "USD",
+                },
+                {
+                  "@type": "Offer",
+                  name: "The Situation Room",
+                  description: "Trial Intelligence Operations — evening debrief, morning prep, priority response, all witnesses researched",
+                  price: (TIER_CORE["situation-room"].price / 100).toFixed(2),
                   priceCurrency: "USD",
                 },
               ],
@@ -710,7 +717,7 @@ export default function Home() {
             </h2>
           </FadeInUp>
           <p className="mt-3 text-center text-zinc-400">
-            A second attorney consultation costs $500. Judge research costs $300.
+            A second attorney consultation costs $500. Jurisdiction research costs $300.
             Question scripts cost $200. Assembling all of it yourself would run $1,000+.
             Your Case Decoder: {TIER_CORE["case-decoder"].priceDisplay}. Every tier
             draws from the same intelligence base &mdash; 40+ elite defense
