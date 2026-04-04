@@ -22,6 +22,7 @@
  *
  * Data source: `src/lib/blog.ts` -- reads MDX files from `content/blog/`.
  */
+import Link from "next/link";
 import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { BlogCTA } from "@/components/BlogCTA";
 import { BlogCard } from "@/components/BlogCard";
