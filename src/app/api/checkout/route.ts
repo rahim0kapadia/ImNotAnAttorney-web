@@ -12,7 +12,7 @@
  * - Email normalization (lowercase + trim) for consistent Supabase lookups
  * - Upgrade credit calculation: 100% of prior lower-tier purchases applied as a
  *   one-time Stripe coupon, with a 12-month expiration window
- * - Situation Room ($9,997): no prerequisite gate — pipeline delivers tiers sequentially
+ * - Situation Room ($9,997): requires active War Room — API validates prerequisite before creating session
  * - Consent checkbox required server-side for tiers >= $2,497 (legal risk mitigation)
  * - Redirect URLs sourced from NEXT_PUBLIC_SITE_URL env var, never from the request
  *   Origin header, to prevent open-redirect attacks

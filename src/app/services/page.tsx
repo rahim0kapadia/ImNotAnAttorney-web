@@ -292,7 +292,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["x-ray"].name,
-        description: "Full discovery analysis, 35-50 questions, Discovery Strength Rating, Prosecution Case Weakness Analysis",
+        description: "Full discovery analysis, 35-50 questions, Judge Intelligence Profile, Prosecutor Research Profile, Discovery Strength Rating",
         price: "2497.00",
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -851,7 +851,7 @@ export default function ServicesPage() {
             >
               help@imnotanattorney.com
             </a>
-            {" "}&mdash; we respond within 4 hours.
+            {" "}&mdash; we respond within one business day.
           </p>
         </div>
 

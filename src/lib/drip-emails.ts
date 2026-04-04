@@ -274,7 +274,8 @@ export const NURTURE_EMAILS: DripEmail[] = [
         <li>Included: Scripts for when the conversation gets difficult</li>
       </ul>
       <p>Every question generated using tactics from elite defense attorneys — elite defense attorneys with decades of trial experience.</p>
-      <p>Delivered within 48 hours with 15 calibrated questions + communication tools — or full cash refund. Delivered and not satisfied? 100% credit toward any higher tier.</p>
+      <p>Delivered within 48 hours with 15 calibrated questions + communication tools — or your money back.</p>
+      <p>Not the right fit? 100% credit toward any higher tier within 30 days.</p>
       <p><strong style="color: white;">${TIER_CORE["case-decoder"].priceDisplay}.</strong> Less than one hour of your attorney's time.</p>
       ${cta(`Find What's in My Case — ${TIER_CORE["case-decoder"].priceDisplay} →`, "/checkout?tier=case-decoder")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
@@ -1273,7 +1274,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>What the X-Ray cannot do is turn those findings into pressure. It cannot tell you whether the witnesses behind those contradictions have credibility problems that a competent cross-examination would expose. It cannot tell you whether your judge grants the type of suppression motions your chain-of-custody gaps might support — or whether they routinely deny them. Those questions require a different kind of research — specific, ongoing, and built around what your documents actually showed.</p>
       <p><strong style="color: white;">You have already paid ${TIER_CORE["x-ray"].priceDisplay}. The War Room costs ${upgradeCostBetween("x-ray", "war-room")}.</strong> That covers witness dossiers on up to 8 witnesses, a full judge intelligence dossier, prosecution team profiles, a motion landscape analysis, and weekly updates as your case evolves. Witnesses&rsquo; memories fade. Motion windows close. Discovery findings have a shelf life.</p>
       ${cta(`Get the War Room — ${upgradeCostBetween("x-ray", "war-room")} after credit`, "/checkout?tier=war-room")}
-      <p style="color: #71717A; margin-top: 12px;">The Witness Pack is a different product for a different question — targeted witness credibility research only (up to 3 witnesses, $297, 3-5 business days). It does not include motion analysis, evidence chain review, or weekly case updates. One option if witness credibility is the most time-sensitive piece and your next hearing is soon. <a href="${getSiteUrl()}/checkout?tier=witness-pack" style="color: #A1A1AA;">Learn more</a></p>
+      <p style="color: #71717A; margin-top: 12px;">The Witness Pack is a different product for a different question — targeted witness credibility research only (up to 3 witnesses, ${TIER_CORE["witness-pack"].priceDisplay}, 3-5 business days). It does not include motion analysis, evidence chain review, or weekly case updates. One option if witness credibility is the most time-sensitive piece and your next hearing is soon. <a href="${getSiteUrl()}/checkout?tier=witness-pack" style="color: #A1A1AA;">Learn more</a></p>
     `,
   },
   // --- X-Ray Referral (14 days after delivery) ---
@@ -1309,7 +1310,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li><strong style="color: white;">Timeline reconstruction</strong> — building a chronological map of events from all documents</li>
         <li><strong style="color: white;">Evidence chain analysis</strong> — tracking every piece of evidence from seizure to present</li>
         <li><strong style="color: white;">Cross-document comparison</strong> — looking for contradictions between documents</li>
-        <li><strong style="color: white;">Pattern detection</strong> — running 15 forensic detection patterns used by elite defense teams</li>
+        <li><strong style="color: white;">Pattern detection</strong> — running forensic detection patterns used by elite defense teams</li>
       </ol>
       <p>This is not a quick scan — it's a systematic, document-by-document analysis that takes 4-5 hours of focused work.</p>
       <p style="color: #71717A;">You don't need to do anything right now. We'll reach out if we need clarification on any documents.</p>
@@ -2065,17 +2066,17 @@ export function personalizeEmailHtml(
     case "post_case_decoder_upsell":
       if (isFamilyBuyer && industry) {
         return html + calloutBox(`
-          <p style="color: #D4D4D8; margin: 0;">You did the research for ${name}. The X-Ray reads every page of the discovery — including how these charges could affect ${escapeHtml(industry)} licensing. You have already paid $197.</p>
+          <p style="color: #D4D4D8; margin: 0;">You did the research for ${name}. The X-Ray reads every page of the discovery — including how these charges could affect ${escapeHtml(industry)} licensing. You have already paid ${TIER_CORE["case-decoder"].priceDisplay}.</p>
         `);
       }
       if (isFamilyBuyer) {
         return html + calloutBox(`
-          <p style="color: #D4D4D8; margin: 0;">You did the research for ${name}. The X-Ray picks up where the Case Decoder left off — reading the actual discovery documents for contradictions, missing evidence, and defense angles. You have already paid $197.</p>
+          <p style="color: #D4D4D8; margin: 0;">You did the research for ${name}. The X-Ray picks up where the Case Decoder left off — reading the actual discovery documents for contradictions, missing evidence, and defense angles. You have already paid ${TIER_CORE["case-decoder"].priceDisplay}.</p>
         `);
       }
       if (industry) {
         return html + calloutBox(`
-          <p style="color: #D4D4D8; margin: 0;">The X-Ray includes career-specific analysis — how your discovery evidence relates to ${escapeHtml(industry)} licensing exposure and what questions to raise with your attorney. You have already paid $197.</p>
+          <p style="color: #D4D4D8; margin: 0;">The X-Ray includes career-specific analysis — how your discovery evidence relates to ${escapeHtml(industry)} licensing exposure and what questions to raise with your attorney. You have already paid ${TIER_CORE["case-decoder"].priceDisplay}.</p>
         `);
       }
       return html;
