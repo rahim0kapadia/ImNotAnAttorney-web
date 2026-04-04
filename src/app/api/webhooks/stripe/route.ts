@@ -1045,7 +1045,7 @@ export async function POST(req: NextRequest) {
             html: `
               <h1 style="color: #F59E0B;">Partial Refund Issued</h1>
               <p>We've issued a partial refund of <strong>$${partialRefundAmount}</strong> to your original payment method.</p>
-              <p>You should see this reflected in 1-3 business days depending on your bank.</p>
+              <p>This is typically reflected in 1-3 business days depending on your bank.</p>
               <p style="color: #A1A1AA;">Your report access and any upgrade credits remain active.</p>
             `,
           }, `partial refund notification for ${refundedOrder.email}`, { category: "refund-notification", order_id: refundedOrder.id, metadata: { amount: charge.amount_refunded, tier: refundedOrder.tier } });

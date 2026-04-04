@@ -123,7 +123,7 @@ export default async function RootLayout({
             __html: JSON.stringify([
               {
                 "@context": "https://schema.org",
-                "@type": ["Organization", "ProfessionalService"],
+                "@type": "Organization",
                 "@id": `${SITE_URL}/#organization`,
                 name: "ImNotAnAttorney",
                 url: SITE_URL,
