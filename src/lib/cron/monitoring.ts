@@ -319,12 +319,26 @@ interface GuaranteeEscalationSpec {
   thresholds: GuaranteeThreshold[];
 }
 
+/**
+ * Guarantee thresholds. Each `businessDays` value means:
+ * "business days PAST delivery_due_at before this guarantee triggers."
+ *
+ * delivery_due_at is set when processing begins:
+ *   CD: intake linked, generation starts -> +2 calendar days (48hr promise)
+ *   IB: auto-generation starts -> +3 calendar days (72hr promise)
+ *   X-Ray: discovery uploaded -> +14 calendar days (~10 biz days)
+ *   War Room: discovery uploaded -> +40 calendar days (~28 biz days)
+ *   SR: discovery uploaded -> +2 calendar days (24-48hr priority)
+ *
+ * businessDays: 0 = fire immediately when deadline passes
+ * businessDays: 5 = fire 5 business days after deadline
+ */
 const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
   {
     tier: "case-decoder",
     tierLabel: "Case Decoder ($197)",
     thresholds: [{
-      businessDays: 2,
+      businessDays: 0,
       guaranteeType: "cd-delivery",
       resolutionType: "full_refund",
       amountRefunded: tierPriceNum("case-decoder"),
@@ -339,7 +353,7 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
     tier: "intelligence-brief",
     tierLabel: "Intelligence Brief ($997)",
     thresholds: [{
-      businessDays: 3,
+      businessDays: 0,
       guaranteeType: "ib-delivery",
       resolutionType: "full_refund",
       amountRefunded: tierPriceNum("intelligence-brief"),
@@ -355,7 +369,7 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
     tierLabel: "X-Ray ($2,497)",
     thresholds: [
       {
-        businessDays: 10,
+        businessDays: 0,
         guaranteeType: "xray-delivery-20pct",
         resolutionType: "20pct_refund",
         amountRefunded: Math.round(tierPriceNum("x-ray") * 0.20 * 100) / 100,
@@ -366,12 +380,12 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
         emailColor: "amber",
       },
       {
-        businessDays: 15,
+        businessDays: 5,
         guaranteeType: "xray-delivery-full",
         resolutionType: "full_refund",
         amountRefunded: tierPriceNum("x-ray"),
         taskType: "guarantee_xray_full",
-        taskTitle: "GUARANTEE TRIGGERED: X-Ray FULL refund due — 15 day breach",
+        taskTitle: "GUARANTEE TRIGGERED: X-Ray FULL refund due — 5 days past deadline",
         taskPriority: "CRITICAL",
         priorityRank: 0,
         emailColor: "red",
@@ -383,23 +397,23 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
     tierLabel: "War Room ($4,997)",
     thresholds: [
       {
-        businessDays: 25,
+        businessDays: 0,
         guaranteeType: "warroom-delivery-warning",
         resolutionType: null,
         amountRefunded: null,
         taskType: "guarantee_warroom_warning",
-        taskTitle: "WARNING: War Room approaching 28-day guarantee deadline",
+        taskTitle: "WARNING: War Room delivery deadline reached",
         taskPriority: "HIGH",
         priorityRank: 2,
         emailColor: "amber",
       },
       {
-        businessDays: 28,
+        businessDays: 3,
         guaranteeType: "warroom-delivery",
         resolutionType: "full_refund",
         amountRefunded: tierPriceNum("war-room"),
         taskType: "guarantee_warroom_full",
-        taskTitle: "GUARANTEE TRIGGERED: War Room FULL refund due — 28 day breach",
+        taskTitle: "GUARANTEE TRIGGERED: War Room FULL refund due — 3 days past deadline",
         taskPriority: "CRITICAL",
         priorityRank: 0,
         emailColor: "red",
@@ -411,23 +425,23 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
     tierLabel: "Situation Room ($9,997)",
     thresholds: [
       {
-        businessDays: 25,
+        businessDays: 0,
         guaranteeType: "sr-delivery-warning",
         resolutionType: null,
         amountRefunded: null,
         taskType: "guarantee_sr_warning",
-        taskTitle: "WARNING: Situation Room approaching 28-day guarantee deadline",
+        taskTitle: "WARNING: Situation Room delivery deadline reached",
         taskPriority: "CRITICAL",
         priorityRank: 0,
         emailColor: "amber",
       },
       {
-        businessDays: 28,
+        businessDays: 3,
         guaranteeType: "sr-delivery",
         resolutionType: "full_refund",
         amountRefunded: tierPriceNum("situation-room"),
         taskType: "guarantee_sr_full",
-        taskTitle: "GUARANTEE TRIGGERED: Situation Room FULL refund due — 28 day breach",
+        taskTitle: "GUARANTEE TRIGGERED: Situation Room FULL refund due — 3 days past deadline",
         taskPriority: "CRITICAL",
         priorityRank: 0,
         emailColor: "red",

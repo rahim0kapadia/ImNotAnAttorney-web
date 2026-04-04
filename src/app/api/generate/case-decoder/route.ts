@@ -205,9 +205,16 @@ export async function POST(req: NextRequest) {
   // When force=true, skip the status filter so stuck-generating or failed
   // cases can be retried immediately. Without this, the atomic guard rejects
   // force retries because the case is already in "generating" status.
+  const deliveryDue = new Date();
+  deliveryDue.setDate(deliveryDue.getDate() + 2); // CD promise: 48 hours (2 calendar days)
+
   let guardQuery = supabase
     .from("cases")
-    .update({ status: "generating", updated_at: new Date().toISOString() })
+    .update({
+      status: "generating",
+      updated_at: new Date().toISOString(),
+      delivery_due_at: deliveryDue.toISOString(),
+    })
     .eq("id", caseId);
 
   if (!force) {

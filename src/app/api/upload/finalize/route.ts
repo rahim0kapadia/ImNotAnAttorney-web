@@ -150,9 +150,9 @@ export async function POST(req: NextRequest) {
     //   x-ray: 10 business days, war-room: 28 days, situation-room: 2 days
     // =========================================================================
     const deliveryDays: Record<string, number> = {
-      "x-ray": 14, // 10 business days ≈ 14 calendar days
-      "war-room": 28,
-      "situation-room": 2, // 24-48 hour priority
+      "x-ray": 14,         // 10 business days ≈ 14 calendar days
+      "war-room": 40,      // 28 business days ≈ 40 calendar days (conservative)
+      "situation-room": 2,  // 24-48 hour priority (per-stage, not overall)
     };
     const daysToAdd = deliveryDays[caseRecord.tier] || 14;
     const deliveryDue = new Date();
