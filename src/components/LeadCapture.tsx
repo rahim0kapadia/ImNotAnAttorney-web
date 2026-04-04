@@ -48,6 +48,8 @@ interface LeadCaptureProps {
   successUpsellLabel?: string;
   /** Description text above the upsell CTA. */
   successUpsellDescription?: string;
+  /** When true, skips the email gate and shows the download directly with a /score CTA. */
+  ungated?: boolean;
 }
 
 export function LeadCapture({
@@ -62,6 +64,7 @@ export function LeadCapture({
   successUpsellHref,
   successUpsellLabel,
   successUpsellDescription,
+  ungated,
 }: LeadCaptureProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -84,6 +87,50 @@ export function LeadCapture({
       setStatus("error");
     }
   };
+
+  // Ungated: show download directly, no email required
+  if (ungated) {
+    return (
+      <FadeInUp>
+        <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-center">
+          <h3 className="text-lg font-bold text-white">
+            {title}
+          </h3>
+          <p className="mt-2 text-sm text-zinc-400">
+            {description}
+          </p>
+          <a
+            href={downloadHref}
+            download
+            className="mt-6 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
+          >
+            {downloadLabel}
+          </a>
+          <div className="mt-4">
+            <a
+              href="/score"
+              className="text-sm text-zinc-400 hover:text-amber-400 transition-colors"
+            >
+              Check your Defense Milestone Score — free, no email required
+            </a>
+          </div>
+          {successUpsellHref && (
+            <div className="mt-6 border-t border-zinc-800 pt-6">
+              {successUpsellDescription && (
+                <p className="mb-3 text-sm text-zinc-300">{successUpsellDescription}</p>
+              )}
+              <a
+                href={successUpsellHref}
+                className="inline-block rounded-lg border-2 border-amber-500 px-6 py-3 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500 hover:text-black"
+              >
+                {successUpsellLabel}
+              </a>
+            </div>
+          )}
+        </div>
+      </FadeInUp>
+    );
+  }
 
   if (status === "success") {
     return (

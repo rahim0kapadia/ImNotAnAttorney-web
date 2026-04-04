@@ -1,14 +1,14 @@
 /**
- * DUI Checklist Squeeze Page (/dui-checklist)
+ * DUI Checklist Landing Page (/dui-checklist)
  *
  * Single-purpose landing page for Reddit/social links. Minimal layout —
- * headline, 3-item preview (ungated), LeadCapture for the 72-hour checklist,
+ * headline, 3-item checklist (fully ungated), /score CTA,
  * and a direct Playbook buy link.
  *
- * User journey: Reddit/social post -> THIS PAGE -> email capture (dui-72-hours)
+ * User journey: Reddit/social post -> THIS PAGE -> read checklist freely
+ *                                                -> /score (free quiz)
  *                                                -> /playbook/dui-first-offense
  */
-import { LeadCapture } from "@/components/LeadCapture";
 import { SITE_URL } from "@/lib/site";
 import { TIER_CORE } from "@/lib/tiers";
 import Link from "next/link";
@@ -83,21 +83,21 @@ export default function DuiChecklistPage() {
         ))}
       </div>
 
-      {/* LEAD CAPTURE */}
-      <div className="mt-10">
-        <LeadCapture
-          source="dui-72-hours"
-          title="Get the full 72-Hour Emergency Checklist — free"
-          description="The 3 things to do tonight, the DMV deadline that could cost you your license, and the 6 questions to ask at your attorney consultation. Printable PDF. Takes 5 minutes."
-          buttonText="Send Me the Checklist"
-          successTitle="Your checklist is ready — download it now."
-          successDescription="Handle the 3 urgent items tonight. Then prepare for your attorney meeting:"
-          downloadHref="/guides/dui-first-72-hours-checklist.pdf"
-          downloadLabel="Download 72-Hour Checklist →"
-          successUpsellHref="/playbook/dui-first-offense"
-          successUpsellLabel={`Get the Full DUI Defense Playbook \u2014 ${TIER_CORE["dui-first-offense"].priceDisplay}`}
-          successUpsellDescription="The checklist covers the first 72 hours. The Playbook gives you 26 questions with good/bad answer examples, a case stage roadmap, evidence red flag checklist, and a one-page cheat sheet for your attorney meeting. Instant download."
-        />
+      {/* SCORE CTA — Free defense quiz */}
+      <div className="mt-10 rounded-xl border border-amber-500/30 bg-amber-500/5 p-8 text-center">
+        <h2 className="text-lg font-bold text-white">
+          Want to see how your DUI defense scores?
+        </h2>
+        <p className="mt-2 text-sm text-zinc-400">
+          10 questions. 60 seconds. See how your case measures up against
+          the milestones that matter.
+        </p>
+        <Link
+          href="/score"
+          className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+        >
+          Take the Defense Milestone Score — Free
+        </Link>
       </div>
 
       {/* DIRECT BUY LINK */}

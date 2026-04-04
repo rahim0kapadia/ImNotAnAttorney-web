@@ -410,7 +410,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       nextTierPrice: TIER_CORE["intelligence-brief"].priceDisplay,
       upgradeCost: upgradePrice("case-decoder")!,
       unlocks:
-        "Adds your judge's actual sentencing patterns, a motion landscape report, and 10-15 targeted questions.",
+        "Adds jurisdiction sentencing patterns, a motion landscape report, and 10-15 targeted questions.",
       bestFor:
         "Worth it if you already have an attorney and want to evaluate how they're handling your specific judge.",
     },
@@ -424,13 +424,13 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Case Progress Score — 6-dimension tracking with milestone timeline",
       "Prosecution Case Vulnerability Report — where their case is weakest, informed by court records and sentencing trends in your jurisdiction",
       "Charge exposure map",
-      "Judge intelligence profile",
+      "Jurisdiction intelligence summary",
       "Jurisdiction profile",
       "Attorney accountability timeline",
       "Motion landscape report",
       "Case preservation protocol",
       "10-15 targeted questions across all sections + Appendix D",
-      "Included: Judge Intelligence Profile — jurisdiction patterns and tendencies",
+      "Included: Jurisdiction Intelligence Summary — local patterns and tendencies",
       "Included: Plea Decision Checklist — before you sign anything, run this",
       "7-Day Follow-Up Window — 1 clarifying question answered within 24 hours",
       "Attorney Script Pack — 5 scripts for common attorney conversations",
@@ -448,7 +448,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Everything you need to understand your case — without needing discovery yet.",
     whyThisWorks:
-      "Your judge's actual sentencing patterns. Your jurisdiction's plea statistics. Built on elite jury psychology methodology and constitutional appellate frameworks. A single hour with an attorney who knows this costs $500+. You're getting a complete intelligence file.",
+      "Your jurisdiction's sentencing patterns. Your jurisdiction's plea statistics. Built on elite jury psychology methodology and constitutional appellate frameworks. A single hour with an attorney who knows this costs $500+. You're getting a complete intelligence file.",
     pullquote: {
       quote:
         "If you're not filing suppression motions, you're not defending.",
@@ -477,6 +477,8 @@ const TIER_INFO: Record<string, TierInfo> = {
       "For every question: what a solid answer looks like, and what a red flag answer looks like",
       "Discovery Strength Rating — your evidence graded by category, so you know exactly where the gaps are",
       "Prosecution Case Weakness Analysis — the defense angles in your case, organized by charge, so nothing gets missed",
+      "Judge Intelligence Profile — your judge's actual sentencing patterns and tendencies",
+      "Prosecutor Research Profile — prosecution track record and strategy patterns",
     ],
     guarantee:
       "Three Guarantees: (1) The Discovery Guarantee — if we don't find at least one concrete issue your attorney can act on, every dollar back. (2) The Attorney Meeting Guarantee — if your attorney says there's nothing there, we add a second round at no charge. (3) The Delivery Commitment — delivered within 10 business days or 20% refund automatic; past 15 days, full refund.",
@@ -800,14 +802,15 @@ function CheckoutContent() {
               Our Guarantee
             </p>
             <p className="mt-1 text-sm text-zinc-300">
-              {band === "Critical" || band === "Concerning"
-                ? "If the analysis and questions we deliver aren't specific to your charges, your case stage, and the gaps your attorney hasn't addressed — we'll rebuild it from scratch at no charge. If the rebuild still doesn't fit your situation, you get a full refund. No questions. No forms. One email."
-                : "If the questions we deliver don't surface at least one gap your attorney hasn't addressed — every dollar back. No explanation required. No forms. One email."}
+              {info.guarantee}
             </p>
-            {!(band === "Critical" || band === "Concerning") && tier !== "situation-room" && (
+            {tier !== "situation-room" && (
               <p className="mt-2 text-sm text-zinc-300">
-                Upgrade Credit: 100% of your purchase credited
-                toward Case Decoder within 30 days.
+                Upgrade Credit: 100% of your purchase credited toward{" "}
+                {info.isDigitalProduct
+                  ? `${info.nudge?.nextTierName || "Case Decoder"} within 30 days`
+                  : "any higher tier within 12 months"}
+                .
               </p>
             )}
             {tier !== "situation-room" && (

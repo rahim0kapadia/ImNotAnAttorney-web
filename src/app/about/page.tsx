@@ -337,7 +337,7 @@ export default function AboutPage() {
 
         {/* LEAD CAPTURE — Email opt-in fallback for visitors not ready to buy */}
         <div className="mt-16">
-          <LeadCapture />
+          <LeadCapture ungated />
         </div>
       </div>
     </div>

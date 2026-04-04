@@ -180,7 +180,7 @@ function StartContent() {
                 </li>
                 <li className="flex items-start gap-2 text-base text-zinc-300">
                   <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
-                  We research your judge and local patterns
+                  We research your jurisdiction and local patterns
                 </li>
                 <li className="flex items-start gap-2 text-base text-zinc-300">
                   <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>

@@ -201,7 +201,7 @@ export async function POST(req: NextRequest) {
         <p>Your Intelligence Brief is now being prepared with the additional information you provided.</p>
         <p>Here's what happens next:</p>
         <ul style="color: #D4D4D8; padding-left: 20px;">
-          <li>We research Judge ${escapeHtml(formData.judgeName)}'s sentencing patterns and rulings</li>
+          <li>We research sentencing patterns in your jurisdiction</li>
           <li>We analyze your legal options based on your specific situation</li>
           <li>We build your personalized 48-Hour Priority Action Plan</li>
         </ul>

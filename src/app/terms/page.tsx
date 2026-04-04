@@ -200,11 +200,13 @@ export default function TermsPage() {
               </li>
               <li>
                 <strong className="text-zinc-300">Upgrade credits:</strong> 100%
-                of any prior purchase is credited toward a higher service tier,
-                provided the upgrade is purchased within 12 months of the
-                original purchase date. Upgrade credits are non-transferable and
-                have no cash value. Refunded purchases forfeit any associated
-                upgrade credit.
+                of any prior purchase is credited toward a higher service tier.
+                For Defense Playbooks ($97), upgrade credits toward the Case
+                Decoder are valid for 30 days from purchase. For all other
+                service tiers ($197+), upgrade credits are valid for 12 months
+                from the original purchase date. Upgrade credits are
+                non-transferable and have no cash value. Refunded purchases
+                forfeit any associated upgrade credit.
               </li>
               <li>
                 <strong className="text-zinc-300">Disputes:</strong> If

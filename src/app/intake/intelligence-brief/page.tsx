@@ -186,8 +186,7 @@ function Phase2IntakeForm() {
                 placeholder="e.g. Judge Patricia Smith"
               />
               <p className="mt-1 text-xs text-zinc-400">
-                We research your judge&apos;s sentencing patterns, rulings, and
-                tendencies for your charge type.
+                We research your jurisdiction&apos;s sentencing patterns and local trends.
               </p>
             </div>
             <div className="mt-4">

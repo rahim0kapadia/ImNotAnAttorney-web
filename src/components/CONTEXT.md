@@ -29,8 +29,8 @@
 | `PlaybookSalesPage.tsx` | Shared long-form sales layout: Hero→Agitate→Proof→Value Stack→FAQ→CTA | No |
 | `PlaybookCTA.tsx` | In-playbook CTA. Routes to live playbook or free Score Quiz | No |
 | `BlogCTA.tsx` | Post-article CTA. CATEGORY_PLAYBOOK map routes to matching playbook | No |
-| `LeadCapture.tsx` | Email form with multi-state UX. POSTs to `/api/subscribe` | Yes |
-| `BlogInlineCapture.tsx` | Inline email capture for blog posts | Yes |
+| `LeadCapture.tsx` | Email form with multi-state UX. POSTs to `/api/subscribe`. Only used in /score post-quiz flow | Yes |
+| `BlogInlineCapture.tsx` | Inline content card with category-specific checklist info + /score CTA (ungated, no email) | No |
 
 ### Blog & Content
 | File | Purpose | Client |
@@ -112,7 +112,7 @@
 
 **Consumed by pages:**
 - Homepage → HomepageHero, ChargeTypeSelector, PricingTable, TrustBadges, TestimonialSection, StickyMobileCTA
-- Blog → BlogCard, BlogCategoryFilter, LeadCapture, BlogCTA, SourceIntelligence, ShareButtons
+- Blog → BlogCard, BlogCategoryFilter, BlogInlineCapture, BlogCTA, SourceIntelligence, ShareButtons
 - Playbooks → PlaybookSalesPage
 - Admin/Operator → AdminNav, StatusBadge, OperatorShell
 - Partner → partner/* components
@@ -128,7 +128,7 @@
 
 4. **FileUpload is sequential, not parallel.** Large batches upload one-at-a-time. No per-file progress bars.
 
-5. **LeadCapture requires `source` prop for attribution.** Missing source = lost attribution tracking. Always pass it.
+5. **LeadCapture only used in /score flow.** All other pages use ungated content + /score CTA links. Never add LeadCapture to blog, resources, or landing pages (Invariant #9: No Email Gatekeeping).
 
 6. **Motion components respect `prefers-reduced-motion`.** They return plain divs when reduced motion is on. This is correct behavior, not a bug.
 

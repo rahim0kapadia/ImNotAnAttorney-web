@@ -1,36 +1,23 @@
 /**
  * Resources Page (/resources)
  *
- * Free resources hub providing educational content and lead magnets.
- * Serves two purposes: SEO content for organic traffic and lead generation
- * for visitors not ready to purchase.
+ * Free resources hub — everything ungated. No email required for any content.
+ * Email capture happens at /score quiz after value is delivered.
  *
- * User journey position:
- *   Nav / footer / blog -> THIS PAGE -> LeadCapture (email for downloads)
+ * User journey:
+ *   Nav / footer / blog -> THIS PAGE -> read guides freely
+ *                                    -> /score (free quiz, email captured after results)
  *                                    -> /services (paid service CTA)
  *
  * Page structure:
  *   1. Header — "Free Resources" with empowerment framing
- *   2. Guides & Templates — Two downloadable lead magnets (email-gated):
- *      a. "The Discovery Checklist: 7 Evidence Problems Real Cases Hide"
- *         (based on the real trafficking case findings)
- *      b. "10 Questions That Change How Your Next Attorney Meeting Goes"
- *         (the original accountability questions)
- *      Lead capture component handles email collection.
- *   3. Know Your Rights by Charge Type — Three charge categories:
- *      a. Drug Possession / Trafficking — 5 rights (discovery, Franks, lab, CI, suppress)
- *      b. DUI / DWI — 5 rights (breathalyzer, dashcam, FST, DMV, training)
- *      c. White Collar / Federal — 5 rights (discovery, Brady/Giglio, guidelines,
- *         proffer, loss calculations)
- *      No email required — pure value, builds trust and SEO authority.
- *   4. CTA — Links to /services for case-specific paid analysis
- *
- * Conversion logic:
- *   - Downloadable guides are email-gated (LeadCapture component)
- *   - Rights guides are NOT gated — builds trust and SEO content
- *   - Page naturally funnels: free resources -> "need case-specific?" -> services
+ *   2. Guides & Templates — Two free guides (ungated, inline descriptions)
+ *   3. DUI 72-Hour Checklist — Key actions shown directly, no email gate
+ *   4. Score CTA — free defense quiz
+ *   5. Know Your Rights by Charge Type — Three charge categories
+ *   6. DUI Playbook paid product CTA
+ *   7. Services CTA
  */
-import { LeadCapture } from "@/components/LeadCapture";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 import { TrustBadges } from "@/components/TrustBadges";
@@ -49,19 +36,17 @@ export const metadata: Metadata = {
   },
 };
 
-/** Downloadable lead magnets — email-gated via LeadCapture component. */
+/** Free guides — ungated. No email required. */
 const resources = [
   {
     title: "The Discovery Checklist: 7 Evidence Problems Real Cases Actually Hide",
     desc: "Based on defense frameworks from attorneys who\u2019ve handled thousands of cases. 7 evidence problems real cases hide, the questions that expose each one, and a printable accountability checklist.",
     type: "Free Guide",
-    gated: true,
   },
   {
     title: "10 Questions That Change How Your Next Attorney Meeting Goes",
     desc: "The original questions that separate informed defendants from easy clients. Good attorneys welcome these questions \u2014 they show you\u2019re paying attention to your own case.",
     type: "Free Guide",
-    gated: true,
   },
 ];
 
@@ -132,14 +117,14 @@ export default function ResourcesPage() {
         </p>
         </FadeInUp>
 
-        {/* DOWNLOADABLE GUIDES — Email-gated lead magnets */}
+        {/* FREE GUIDES — Ungated, no email required */}
         <FadeInUp>
         <section className="mt-12">
           <h2 className="font-display text-xl font-bold text-white">
             Guides &amp; Templates
           </h2>
           <p className="mt-1 text-sm text-zinc-400">
-            Enter your email to get access. No spam. No selling your data.
+            Free. No email required. Read them right now.
           </p>
           <StaggerContainer className="mt-6 grid gap-4 md:grid-cols-2">
             {resources.map((r) => (
@@ -155,11 +140,6 @@ export default function ResourcesPage() {
               </StaggerItem>
             ))}
           </StaggerContainer>
-
-          {/* LEAD CAPTURE — Email collection for guide downloads */}
-          <div className="mt-8">
-            <LeadCapture />
-          </div>
         </section>
         </FadeInUp>
 
@@ -182,7 +162,7 @@ export default function ResourcesPage() {
         </section>
         </FadeInUp>
 
-        {/* DUI 72-HOUR CHECKLIST — DUI-specific email-gated lead magnet */}
+        {/* DUI 72-HOUR CHECKLIST — Ungated, key actions shown directly */}
         <FadeInUp>
         <section className="mt-12">
           <h2 className="font-display text-xl font-bold text-white">
@@ -191,20 +171,22 @@ export default function ResourcesPage() {
           <p className="mt-1 text-sm text-zinc-400">
             There are three things worth doing immediately before your window closes — one has a deadline as short as 7 days.
           </p>
-          <div className="mt-6">
-            <LeadCapture
-              source="dui-72-hours"
-              title="First 72 Hours After a DUI Arrest — Emergency Checklist"
-              description="The 3 things to do tonight, the DMV deadline that could cost you your license, and the 6 questions to ask at your attorney consultation. Printable. Takes 5 minutes."
-              buttonText="Send Me the Checklist"
-              successTitle="Your checklist is ready — download it now."
-              successDescription="Handle the 3 urgent items tonight. Then prepare for your attorney meeting:"
-              downloadHref="/guides/dui-first-72-hours-checklist.pdf"
-              downloadLabel="Download 72-Hour Checklist →"
-              successUpsellHref="/playbook/dui-first-offense"
-              successUpsellLabel={`Get the Full DUI Defense Playbook \u2014 ${TIER_CORE["dui-first-offense"].priceDisplay}`}
-              successUpsellDescription="The checklist covers the first 72 hours. The Playbook gives you 26 questions with good/bad answer examples, a case stage roadmap, evidence red flag checklist, and a one-page cheat sheet for your attorney meeting. Instant download."
-            />
+          <div className="mt-6 space-y-3">
+            {[
+              { n: "1", title: "Check your state\u2019s DMV hearing deadline", desc: "Some states give you as few as 7 days from arrest. Miss the window and your license is automatically suspended." },
+              { n: "2", title: "Document everything while it\u2019s fresh", desc: "What happened before the stop. What the officer said. Whether you were read your rights. Your memory fades — write it down now." },
+              { n: "3", title: "Know what to ask before you hire an attorney", desc: "6 questions that help you find a DUI specialist who\u2019s the right fit. Ask these before you sign anything." },
+            ].map((item) => (
+              <div key={item.n} className="flex items-start gap-4 rounded-lg border border-zinc-800 bg-zinc-900/50 p-5">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-500/10 text-sm font-bold text-amber-400">
+                  {item.n}
+                </div>
+                <div>
+                  <p className="font-semibold text-white">{item.title}</p>
+                  <p className="mt-1 text-sm text-zinc-400">{item.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
           <p className="mt-4 text-center text-sm text-zinc-400">
             Already know what you need?{" "}
@@ -212,6 +194,25 @@ export default function ResourcesPage() {
               Get the DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} instant download →
             </Link>
           </p>
+        </section>
+        </FadeInUp>
+
+        {/* SCORE CTA — Free defense quiz, THE email capture point */}
+        <FadeInUp>
+        <section className="mt-16 rounded-xl border border-amber-500/30 bg-amber-500/5 p-8 text-center">
+          <h2 className="font-display text-2xl font-bold text-white">
+            Want to see how your defense scores?
+          </h2>
+          <p className="mt-2 text-zinc-400">
+            10 questions. 60 seconds. See how your case measures up against
+            the milestones that matter — no email required to start.
+          </p>
+          <Link
+            href="/score"
+            className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+          >
+            Take the Defense Milestone Score — Free
+          </Link>
         </section>
         </FadeInUp>
 
@@ -242,7 +243,7 @@ export default function ResourcesPage() {
                       key={right}
                       className="flex items-start gap-2 text-sm text-zinc-300"
                     >
-                      <span className="mt-0.5 text-amber-400">&#10003;</span>
+                      <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                       {right}
                     </li>
                   ))}
@@ -287,23 +288,23 @@ export default function ResourcesPage() {
                 </p>
                 <ul className="mt-3 space-y-1 text-sm text-zinc-300">
                   <li className="flex items-start gap-2">
-                    <span className="mt-0.5 text-amber-400">&#10003;</span>
+                    <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                     26 attorney-sourced questions with good/bad answer examples
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="mt-0.5 text-amber-400">&#10003;</span>
+                    <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                     12-point evidence red flag checklist
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="mt-0.5 text-amber-400">&#10003;</span>
+                    <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                     DUI case stage roadmap (arrest → resolution)
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="mt-0.5 text-amber-400">&#10003;</span>
+                    <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                     Case Progress Scorecard
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="mt-0.5 text-amber-400">&#10003;</span>
+                    <span className="mt-0.5 text-amber-400" aria-hidden="true">&#10003;</span>
                     One-page cheat sheet for your attorney meeting
                   </li>
                 </ul>

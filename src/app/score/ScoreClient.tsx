@@ -701,7 +701,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
                 <p className="text-base text-zinc-300">
                   <span className="font-semibold text-white">Need case-specific analysis?</span>{" "}
-                  The Case Decoder ({TIER_CORE["case-decoder"].priceDisplay}) analyzes YOUR discovery, YOUR judge, YOUR case stage — 15 calibrated questions built from your exact charge type and case stage. Every playbook dollar applies as credit.
+                  The Case Decoder ({TIER_CORE["case-decoder"].priceDisplay}) analyzes YOUR discovery, YOUR specific charges, YOUR case stage — 15 calibrated questions built from your exact charge type and case stage. Every playbook dollar applies as credit.
                 </p>
                 <Link
                   href={`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`}

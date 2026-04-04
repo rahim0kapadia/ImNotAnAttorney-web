@@ -80,7 +80,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "Your judge's sentencing patterns, prosecution tendencies, and realistic outcome range — researched from public records and 40+ attorney methodology.",
+        desc: "Your jurisdiction's sentencing patterns, prosecution tendencies, and realistic outcome range — researched from public records and 40+ attorney methodology.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
         stageLabel: "30-90 days in",
       },
@@ -129,7 +129,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "Your judge's DUI sentencing patterns, local diversion programs, and realistic outcome range — researched from public records and 40+ attorney methodology.",
+        desc: "Your jurisdiction's DUI sentencing patterns, local diversion programs, and realistic outcome range — researched from public records and 40+ attorney methodology.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
         stageLabel: "30-90 days in",
       },
@@ -178,7 +178,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "Your judge's sentencing patterns, AUSA profile and track record, guidelines calculation review, and cooperation decision questions — researched from public records and 40+ attorney methodology.",
+        desc: "Your jurisdiction's sentencing patterns, prosecution patterns and track record, guidelines calculation review, and cooperation decision questions — researched from public records and 40+ attorney methodology.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
         stageLabel: "30-90 days in",
       },
@@ -283,7 +283,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["intelligence-brief"].name,
-        description: "Judge intelligence, prosecution vulnerability report, 10-15 questions, jurisdiction analysis",
+        description: "Jurisdiction intelligence, prosecution vulnerability report, 10-15 questions, jurisdiction analysis",
         price: "997.00",
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -292,7 +292,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["x-ray"].name,
-        description: "Full discovery analysis, 35-50 questions, Discovery Strength Rating, evidence chain audit",
+        description: "Full discovery analysis, 35-50 questions, Discovery Strength Rating, Prosecution Case Weakness Analysis",
         price: "2497.00",
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -709,7 +709,7 @@ export default function ServicesPage() {
                   )}
                   {tier.slug === "war-room" && (
                     <p className="mt-2 text-xs text-amber-400/80">
-                      Includes Case Decoder + Intelligence Brief + X-Ray ($8,688 value) — $4,997
+                      Includes Case Decoder + Intelligence Brief + X-Ray — everything in one package
                     </p>
                   )}
                   <Link
@@ -761,7 +761,7 @@ export default function ServicesPage() {
                   </p>
                 )}
                 <Link
-                  href={`/checkout?tier=${ct.tiers[4].slug}`}
+                  href="/intake?interest=situation-room"
                   className="mt-4 block rounded-lg border border-zinc-700 py-2 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
                 >
                   Get {ct.tiers[4].name}
@@ -871,7 +871,7 @@ export default function ServicesPage() {
 
         {/* LEAD CAPTURE — Fallback email opt-in for visitors not ready to buy. */}
         <div className="mt-16">
-          <LeadCapture />
+          <LeadCapture ungated />
         </div>
       </div>
     </div>

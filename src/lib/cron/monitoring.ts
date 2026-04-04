@@ -8,7 +8,7 @@
  */
 
 import { sendEmail, sendEmailWithRetry, escapeHtml } from "@/lib/email";
-import { tierDisplayName } from "@/lib/tiers";
+import { tierDisplayName, tierPriceNum } from "@/lib/tiers";
 import { caseThreadId } from "@/lib/site";
 import type { CronContext, CronResult } from "./types";
 import { emptyResult } from "./types";
@@ -321,14 +321,44 @@ interface GuaranteeEscalationSpec {
 
 const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
   {
+    tier: "case-decoder",
+    tierLabel: "Case Decoder ($197)",
+    thresholds: [{
+      businessDays: 2,
+      guaranteeType: "cd-delivery",
+      resolutionType: "full_refund",
+      amountRefunded: tierPriceNum("case-decoder"),
+      taskType: "guarantee_cd_delivery",
+      taskTitle: "GUARANTEE TRIGGERED: Case Decoder delivery overdue",
+      taskPriority: "URGENT",
+      priorityRank: 1,
+      emailColor: "red",
+    }],
+  },
+  {
+    tier: "intelligence-brief",
+    tierLabel: "Intelligence Brief ($997)",
+    thresholds: [{
+      businessDays: 3,
+      guaranteeType: "ib-delivery",
+      resolutionType: "full_refund",
+      amountRefunded: tierPriceNum("intelligence-brief"),
+      taskType: "guarantee_ib_delivery",
+      taskTitle: "GUARANTEE TRIGGERED: Intelligence Brief delivery overdue",
+      taskPriority: "URGENT",
+      priorityRank: 1,
+      emailColor: "red",
+    }],
+  },
+  {
     tier: "x-ray",
     tierLabel: "X-Ray ($2,497)",
     thresholds: [
       {
         businessDays: 10,
-        guaranteeType: "xray-delivery",
+        guaranteeType: "xray-delivery-20pct",
         resolutionType: "20pct_refund",
-        amountRefunded: 499.40,
+        amountRefunded: Math.round(tierPriceNum("x-ray") * 0.20 * 100) / 100,
         taskType: "guarantee_xray_20pct",
         taskTitle: "GUARANTEE TRIGGERED: X-Ray 20% delivery refund due",
         taskPriority: "URGENT",
@@ -337,9 +367,9 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
       },
       {
         businessDays: 15,
-        guaranteeType: "xray-delivery",
+        guaranteeType: "xray-delivery-full",
         resolutionType: "full_refund",
-        amountRefunded: 2497.00,
+        amountRefunded: tierPriceNum("x-ray"),
         taskType: "guarantee_xray_full",
         taskTitle: "GUARANTEE TRIGGERED: X-Ray FULL refund due — 15 day breach",
         taskPriority: "CRITICAL",
@@ -367,7 +397,7 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
         businessDays: 28,
         guaranteeType: "warroom-delivery",
         resolutionType: "full_refund",
-        amountRefunded: 4997.00,
+        amountRefunded: tierPriceNum("war-room"),
         taskType: "guarantee_warroom_full",
         taskTitle: "GUARANTEE TRIGGERED: War Room FULL refund due — 28 day breach",
         taskPriority: "CRITICAL",
@@ -395,7 +425,7 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
         businessDays: 28,
         guaranteeType: "sr-delivery",
         resolutionType: "full_refund",
-        amountRefunded: 9997.00,
+        amountRefunded: tierPriceNum("situation-room"),
         taskType: "guarantee_sr_full",
         taskTitle: "GUARANTEE TRIGGERED: Situation Room FULL refund due — 28 day breach",
         taskPriority: "CRITICAL",
@@ -406,53 +436,63 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
   },
 ];
 
+// Pre-computed static arrays from GUARANTEE_SPECS (avoids re-allocation on every cron run)
+const ELIGIBLE_TIERS = GUARANTEE_SPECS.map((s) => s.tier);
+const GUARANTEE_TASK_TYPES = GUARANTEE_SPECS.flatMap((s) => s.thresholds.map((t) => t.taskType));
+const SPEC_BY_TIER = new Map(GUARANTEE_SPECS.map((s) => [s.tier, s]));
+
 export async function escalateGuarantees(ctx: CronContext): Promise<CronResult> {
   const result = emptyResult();
 
-  // Fetch all active cases for guarantee-eligible tiers that are already past due
-  const eligibleTiers = GUARANTEE_SPECS.map((s) => s.tier);
+  // ── Query 1: Fetch overdue cases for guarantee-eligible tiers ──
   const { data: cases } = await ctx.supabase
     .from("cases")
     .select("id, email, tier, delivery_due_at")
-    .in("tier", eligibleTiers)
+    .in("tier", ELIGIBLE_TIERS)
     .not("status", "in", '("delivered","refunded","cancelled","generation-failed","intake-stalled")')
     .not("delivery_due_at", "is", null)
     .lt("delivery_due_at", ctx.now.toISOString())
     .limit(200);
 
   if (!cases || cases.length === 0) return result;
+  if (cases.length === 200) {
+    console.warn("[Drip Cron] Part 20: hit 200-case limit — some guarantees may be deferred");
+  }
 
   const caseIds = cases.map((c) => c.id);
 
-  // ── Batch-fetch existing guarantee_invocations for all cases ──
-  const { data: existingInvocations } = await ctx.supabase
-    .from("guarantee_invocations")
-    .select("case_id, guarantee_type")
-    .in("case_id", caseIds);
-  // Key: `${case_id}:${guarantee_type}`
+  // ── Queries 2+3: Batch-fetch dedup data in parallel ──
+  const [{ data: existingInvocations }, { data: existingTasks }] = await Promise.all([
+    ctx.supabase
+      .from("guarantee_invocations")
+      .select("case_id, guarantee_type")
+      .in("case_id", caseIds),
+    ctx.supabase
+      .from("operator_tasks")
+      .select("case_id, task_type")
+      .in("case_id", caseIds)
+      .in("task_type", GUARANTEE_TASK_TYPES)
+      .in("status", ["open", "in_progress"]),
+  ]);
+
   const invocationSet = new Set(
     (existingInvocations ?? []).map(
       (r: { case_id: string; guarantee_type: string }) => `${r.case_id}:${r.guarantee_type}`
     )
   );
-
-  // ── Batch-fetch existing open/in-progress guarantee operator tasks ──
-  const allTaskTypes = GUARANTEE_SPECS.flatMap((s) => s.thresholds.map((t) => t.taskType));
-  const { data: existingTasks } = await ctx.supabase
-    .from("operator_tasks")
-    .select("case_id, task_type")
-    .in("case_id", caseIds)
-    .in("task_type", allTaskTypes)
-    .in("status", ["open", "in_progress"]);
-  // Key: `${case_id}:${task_type}`
   const taskSet = new Set(
     (existingTasks ?? []).map(
       (t: { case_id: string; task_type: string }) => `${t.case_id}:${t.task_type}`
     )
   );
 
+  // ── Collect rows for batch insert + emails for parallel send ──
+  const invocationRows: Record<string, unknown>[] = [];
+  const taskRows: Record<string, unknown>[] = [];
+  const emailPromises: Promise<unknown>[] = [];
+
   for (const c of cases) {
-    const spec = GUARANTEE_SPECS.find((s) => s.tier === c.tier);
+    const spec = SPEC_BY_TIER.get(c.tier);
     if (!spec) continue;
 
     const businessDaysOver = businessDaysBetween(
@@ -467,15 +507,11 @@ export async function escalateGuarantees(ctx: CronContext): Promise<CronResult> 
       const invocationKey = `${c.id}:${threshold.guaranteeType}`;
       const isRealTrigger = threshold.resolutionType !== null;
 
-      // ── Dedup: skip if operator task already exists ──
       if (taskSet.has(taskKey)) continue;
-
-      // ── Dedup: skip if invocation record already exists (real triggers only) ──
       if (isRealTrigger && invocationSet.has(invocationKey)) continue;
 
-      // ── Insert guarantee_invocations record (real triggers only) ──
       if (isRealTrigger) {
-        await ctx.supabase.from("guarantee_invocations").insert({
+        invocationRows.push({
           case_id: c.id,
           customer_email: c.email,
           tier: c.tier,
@@ -489,8 +525,7 @@ export async function escalateGuarantees(ctx: CronContext): Promise<CronResult> 
         invocationSet.add(invocationKey);
       }
 
-      // ── Create operator task ──
-      await ctx.supabase.from("operator_tasks").insert({
+      taskRows.push({
         case_id: c.id,
         task_type: threshold.taskType,
         title: threshold.taskTitle,
@@ -502,13 +537,12 @@ export async function escalateGuarantees(ctx: CronContext): Promise<CronResult> 
       });
       taskSet.add(taskKey);
 
-      // ── Send operator email ──
       const accentColor = threshold.emailColor === "red" ? "#EF4444" : "#F59E0B";
       const headingText = threshold.emailColor === "red"
         ? "Guarantee Triggered — Refund Required"
         : "Guarantee Warning — Action Required";
 
-      await sendEmail({
+      emailPromises.push(sendEmail({
         to: ctx.operatorEmail,
         subject: threshold.taskTitle,
         html: `<h1 style="color: ${accentColor};">${headingText}</h1>
@@ -540,7 +574,7 @@ export async function escalateGuarantees(ctx: CronContext): Promise<CronResult> 
           business_days_overdue: businessDaysOver,
           amount_refunded: threshold.amountRefunded,
         },
-      });
+      }));
 
       result.errors++;
       console.log(
@@ -548,6 +582,16 @@ export async function escalateGuarantees(ctx: CronContext): Promise<CronResult> 
       );
     }
   }
+
+  // ── Batch inserts + parallel emails ──
+  const dbOps: PromiseLike<unknown>[] = [];
+  if (invocationRows.length > 0) {
+    dbOps.push(ctx.supabase.from("guarantee_invocations").insert(invocationRows));
+  }
+  if (taskRows.length > 0) {
+    dbOps.push(ctx.supabase.from("operator_tasks").insert(taskRows));
+  }
+  await Promise.all([...dbOps, ...emailPromises]);
 
   return result;
 }

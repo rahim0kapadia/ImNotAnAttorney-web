@@ -11,7 +11,7 @@
  *   4. MDX content rendered via `next-mdx-remote/rsc` (server-side, no client JS).
  *   5. Share buttons (SMS, WhatsApp, Email, Twitter/X, Facebook) -- growth loop.
  *   6. BlogCTA -- conversion CTA for Case Decoder.
- *   7. LeadCapture -- email capture for discovery checklist.
+ *   7. Score CTA -- free defense quiz link to /score.
  *   8. Related posts (up to 2, same category) rendered as BlogCard components.
  *
  * SEO: Dynamic `generateMetadata()` sets per-post title, description, canonical URL,
@@ -23,7 +23,6 @@
  * Data source: `src/lib/blog.ts` -- reads MDX files from `content/blog/`.
  */
 import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
-import { LeadCapture } from "@/components/LeadCapture";
 import { BlogCTA } from "@/components/BlogCTA";
 import { BlogCard } from "@/components/BlogCard";
 import { PlaybookCTA } from "@/components/PlaybookCTA";
@@ -282,20 +281,20 @@ export default async function BlogPostPage({ params }: PageProps) {
           <BlogCTA category={post.category} />
         </div>
 
-        {/* Lead Capture */}
-        <div className="mt-8">
-          {post.category === "dui" ? (
-            <LeadCapture
-              source="dui-72-hours"
-              title="Get the 72-Hour Emergency Checklist — free"
-              description="The 3 things to do tonight, the DMV deadline that could cost you your license, and the 6 questions to ask at your attorney consultation. Printable PDF. Takes 5 minutes."
-              buttonText="Send Me the Checklist"
-              downloadHref="/guides/dui-first-72-hours-checklist.pdf"
-              downloadLabel="Download 72-Hour Checklist →"
-            />
-          ) : (
-            <LeadCapture />
-          )}
+        {/* Score CTA — Free defense quiz */}
+        <div className="mt-8 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6 text-center">
+          <p className="text-sm font-bold text-white">
+            Want to see how your defense measures up?
+          </p>
+          <p className="mt-1 text-sm text-zinc-400">
+            10 questions. 60 seconds. Free — no email required to start.
+          </p>
+          <Link
+            href="/score"
+            className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+          >
+            Take the Defense Milestone Score — Free
+          </Link>
         </div>
 
         {/* Related Posts */}

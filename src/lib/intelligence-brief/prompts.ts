@@ -596,7 +596,7 @@ OUTPUT STRUCTURE:
 ### 3b. Defense Theory Landscape (~400 words)
 ### 3c. Prosecution Strategy Preview (~400 words, 2-3 arguments with attorney questions)
 ### 3d. How to Think About Your Case (~200 words, reframe table)
-### 3e. Judge Intelligence Profile (~500 words)
+### 3e. Jurisdiction Intelligence Summary (~500 words)
 ### 3f. Jurisdiction Profile (~200 words)
 ### Bottom Line Right Now (~50 words)
 ### Upgrade Callout (blockquote, ~50 words)

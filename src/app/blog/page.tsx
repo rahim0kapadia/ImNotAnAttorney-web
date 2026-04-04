@@ -129,7 +129,7 @@ export default async function BlogPage({
 
         {/* Lead capture */}
         <div className="mt-16">
-          <LeadCapture />
+          <LeadCapture ungated />
         </div>
       </div>
     </div>

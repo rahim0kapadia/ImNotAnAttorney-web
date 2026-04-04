@@ -98,7 +98,7 @@ const homeFaqs = [
   {
     question: "What if I don't have my discovery documents yet?",
     answer:
-      `That's fine — our ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}) and ${TIER_CORE["intelligence-brief"].name} (${TIER_CORE["intelligence-brief"].priceDisplay}) don't require discovery. We can analyze your charges, research your judge, and generate targeted questions with just your case information. When you get discovery, upgrade to The X-Ray with full credit.`,
+      `That's fine — our ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}) and ${TIER_CORE["intelligence-brief"].name} (${TIER_CORE["intelligence-brief"].priceDisplay}) don't require discovery. We can analyze your charges, research your jurisdiction, and generate targeted questions with just your case information. When you get discovery, upgrade to The X-Ray with full credit.`,
   },
   {
     question: "How fast do I get my report?",
@@ -197,7 +197,7 @@ export default function Home() {
                 {
                   "@type": "Offer",
                   name: "Case Intelligence Brief",
-                  description: "Judge intel + accountability research + 15-25 questions",
+                  description: "Judge intel + accountability research + 10-15 questions",
                   price: "997.00",
                   priceCurrency: "USD",
                 },
@@ -437,7 +437,7 @@ export default function Home() {
           </FadeInUp>
           <p className="mt-3 text-center text-zinc-400">
             Every question we generate comes from documented defense methodologies
-            used in 375+ exonerations and landmark acquittals.
+            from attorneys involved in landmark exonerations and acquittals.
           </p>
           <StaggerContainer className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[
@@ -476,7 +476,7 @@ export default function Home() {
           </StaggerContainer>
           <p className="mt-8 text-center text-base text-zinc-400">
             Built from 40+ elite defense methodologies &mdash; the same frameworks
-            used in 375+ exonerations and landmark acquittals, applied to your case.
+            from attorneys involved in landmark exonerations and acquittals, applied to your case.
           </p>
         </div>
       </section>
@@ -527,9 +527,9 @@ export default function Home() {
             <StaggerItem>
               <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
                 <div className="text-2xl font-bold text-amber-400">{TIER_CORE["case-decoder"].priceDisplay}</div>
-                <p className="mt-1 text-xs font-semibold text-zinc-400">Case Decoder. Your charges, your judge, your specific situation.</p>
+                <p className="mt-1 text-xs font-semibold text-zinc-400">Case Decoder. Your charges, your case stage, your specific situation.</p>
                 <p className="mt-2 text-base text-zinc-400">
-                  15 calibrated questions based on your charges, your judge, your discovery.
+                  15 calibrated questions based on your charges, your case stage, your discovery.
                 </p>
               </div>
             </StaggerItem>
@@ -733,6 +733,7 @@ export default function Home() {
       <section className="border-t border-zinc-800 px-4 py-20">
         <div className="mx-auto max-w-2xl">
           <LeadCapture
+            ungated
             successUpsellHref="/start"
             successUpsellLabel={`Ready to go deeper? Get your Case Decoder \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`}
             successUpsellDescription="Case-specific research with 15 calibrated questions built from elite defense methodology. Every dollar credited toward higher tiers."

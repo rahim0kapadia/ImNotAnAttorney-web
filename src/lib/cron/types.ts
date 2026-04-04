@@ -13,6 +13,7 @@ export interface CronContext {
 export interface CronResult {
   sent: number;
   skipped: number;
+  /** Counts both runtime failures AND detected anomalies/alerts requiring operator action. */
   errors: number;
   cleaned: number;
 }

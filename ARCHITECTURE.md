@@ -6,7 +6,7 @@
 
 ## System Overview
 
-Legal empowerment platform for criminal defendants. "We Research. You Ask." Combines a content funnel (35+ MDX blog posts, free lead magnets) with e-commerce (8 playbooks at $97, 5 service tiers at $197–$9,997) and automated case processing (Claude AI report generation). Live at imnotanattorney.com.
+Legal empowerment platform for criminal defendants. "We Research. You Ask." Combines a content funnel (35+ MDX blog posts, free ungated resources) with e-commerce (8 playbooks at $97, 5 service tiers at $197–$9,997) and automated case processing (Claude AI report generation). Live at imnotanattorney.com.
 
 One of three repos in the INAA ecosystem: `ImNotAnAttorney` (business docs/templates), `ImNotAnAttorney-web` (this, customer-facing), `ImNotAnAttorney-engine` (background job workers). All three share the same Supabase database.
 
@@ -30,6 +30,8 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 
 8. **Atomic claim-then-mutate.** Operations risking TOCTOU races atomically update status BEFORE side effects. Uses conditional UPDATE (`.eq("status", "review")`) as mutex. Only first request wins.
 
+9. **No email gatekeeping.** Never gate content or resources behind email capture. All guides, checklists, and templates are free and ungated. The `/score` quiz is the ONLY pre-purchase email capture point — after the defendant has already received value (score, observations, attorney email template). Crisis buyers in a 7-day decision window don't trade emails for help — they bounce. Give first, capture after value delivered.
+
 ## Component Map
 
 | Subsystem | What It Does | Details |
@@ -48,7 +50,7 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 ```
 FUNNEL → CAPTURE → PURCHASE → INTAKE → PROCESSING → DELIVERY
 
-Blog/SEO → Score Tool / DUI 72h Checklist (lead magnet, email captured)
+Blog/SEO → Free resources (ungated) → Score Quiz (/score, email captured after results)
          → Playbook Checkout ($97) → Stripe webhook → download_token → PDF email
          → Service Checkout ($197–$9,997) → Stripe webhook → Case created
            → Intake form → Report generation (Edge Function / Engine workers)

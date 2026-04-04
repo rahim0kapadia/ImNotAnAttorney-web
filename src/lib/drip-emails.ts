@@ -252,7 +252,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
       <p>The charging document said "amphetamine." The lab confirmed MDMA/MDA — a completely different substance.</p>
       <p>21 latent fingerprints. Zero matched the defendant.</p>
       <p><strong style="color: white;">The attorney had raised none of these issues.</strong></p>
-      <p>We found all of them in the discovery documents. We generated 15 specific questions — each traced to a documented winning method from attorneys like Barry Scheck, Jeffrey Lichtman, and Alan Dershowitz.</p>
+      <p>We found all of them in the discovery documents. We generated 15 specific questions — each traced to a documented winning method from attorneys like elite defense attorneys who've won landmark acquittals.</p>
       ${cta("See the full sample report →", "/sample")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
         <strong style="color: white;">DUI charges?</strong> Get the ${TIER_CORE["dui-first-offense"].name} — ${TIER_CORE["dui-first-offense"].priceDisplay}, instant download. 26 questions that change how your next attorney meeting goes + breathalyzer checklist + attorney scorecard. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
@@ -262,7 +262,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
   {
     key: "nurture_day7",
     delayDays: 7,
-    subject: `10 questions, ${TIER_CORE["case-decoder"].priceDisplay}, 48 hours — here's exactly what you get`,
+    subject: `15 questions, ${TIER_CORE["case-decoder"].priceDisplay}, 48 hours — here's exactly what you get`,
     html: `
       <h1 style="color: #F59E0B;">Here's What a Case Decoder Includes</h1>
       <ul style="padding-left: 20px;">
@@ -273,12 +273,12 @@ export const NURTURE_EMAILS: DripEmail[] = [
         <li>Your Next 7 Days — one action per day with Meeting Ready Sheet</li>
         <li>Included: Scripts for when the conversation gets difficult</li>
       </ul>
-      <p>Every question generated using tactics from elite defense attorneys — Barry Scheck, Jeffrey Lichtman, F. Lee Bailey.</p>
+      <p>Every question generated using tactics from elite defense attorneys — elite defense attorneys with decades of trial experience.</p>
       <p>Delivered within 48 hours with 15 calibrated questions + communication tools — or full cash refund. Delivered and not satisfied? 100% credit toward any higher tier.</p>
       <p><strong style="color: white;">${TIER_CORE["case-decoder"].priceDisplay}.</strong> Less than one hour of your attorney's time.</p>
       ${cta(`Find What's in My Case — ${TIER_CORE["case-decoder"].priceDisplay} →`, "/checkout?tier=case-decoder")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">Not ready for case-specific?</strong> The ${TIER_CORE["dui-first-offense"].name} (${TIER_CORE["dui-first-offense"].priceDisplay}) gives you 23 general DUI questions instantly. Full credit toward Case Decoder within 30 days. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
+        <strong style="color: white;">Not ready for case-specific?</strong> The ${TIER_CORE["dui-first-offense"].name} (${TIER_CORE["dui-first-offense"].priceDisplay}) gives you 26 general DUI questions instantly. Full credit toward Case Decoder within 30 days. ${link("Get the Playbook →", "/playbook/dui-first-offense")}
       </p>
     `,
   },
@@ -935,7 +935,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Your questions are good — but there's context they're missing",
     html: `
       <h1 style="color: #F59E0B;">Your Questions Are Good — But There's Context They're Missing</h1>
-      <p>Your Case Decoder gave you 15 questions built from what you told us. The Intelligence Brief adds what you <em>can't</em> tell us — your judge's actual patterns, your prosecutor's track record, and jurisdiction-specific leverage points.</p>
+      <p>Your Case Decoder gave you 15 questions built from what you told us. The Intelligence Brief adds what you <em>can't</em> tell us — your jurisdiction's actual patterns, your prosecutor's track record, and jurisdiction-specific leverage points.</p>
       <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("case-decoder", "intelligence-brief")} — credit applies within 12 months.</strong></p>
       ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
     `,
@@ -964,7 +964,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "There are questions your Case Decoder can't answer",
     html: `
       <h1 style="color: #F59E0B;">There Are Questions Your Case Decoder Can't Answer</h1>
-      <p>Your report identified areas that need your judge's actual patterns and your prosecutor's track record to answer properly. Your Case Decoder can't provide that — it was built from what you told us, not from jurisdiction data.</p>
+      <p>Your report identified areas that need your jurisdiction's actual patterns and your prosecutor's track record to answer properly. Your Case Decoder can't provide that — it was built from what you told us, not from jurisdiction data.</p>
       <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("case-decoder", "intelligence-brief")} — credit applies within 12 months.</strong></p>
       ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
       <p style="margin-top: 16px; color: #A1A1AA;">Motion deadlines, evidence preservation windows, and plea negotiation leverage all erode with time.</p>
@@ -1082,7 +1082,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p><strong style="color: white;">It takes about 5 minutes.</strong> Once you submit, your Intelligence Brief will be generated within 72 hours — including judge intelligence, motion landscape, and your priority questions.</p>
       ${cta("Complete Intelligence Brief Details →", "/intake/intelligence-brief")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">Your Case Decoder gave you the foundation.</strong> The Intelligence Brief goes deeper — your judge's actual patterns, defense theories specific to your charge, and a 14-day action plan with scripts for difficult conversations.
+        <strong style="color: white;">Your Case Decoder gave you the foundation.</strong> The Intelligence Brief goes deeper — your jurisdiction's actual patterns, defense theories specific to your charge, and a 14-day action plan with scripts for difficult conversations.
       </p>
     `,
   },
@@ -1099,7 +1099,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>Your Intelligence Brief has everything you need for your next attorney meeting. Here's how to make the most of it:</p>
       <ol>
         <li><strong style="color: white;">Start with the 48-Hour Priority List</strong> — three actions, in order. Priority 1 first.</li>
-        <li><strong style="color: white;">Print the Judge Intelligence Profile (Appendix F)</strong> — one page, designed for the meeting. Bring it.</li>
+        <li><strong style="color: white;">Print the Jurisdiction Intelligence Summary (Appendix F)</strong> — one page, designed for the meeting. Bring it.</li>
         <li><strong style="color: white;">Pick your top 5 questions from Appendix D</strong> — the Golden Question is marked. Start there.</li>
         <li><strong style="color: white;">Review the Plea Decision Checklist (Appendix G)</strong> — if a plea is on the table, this is your pre-signing checklist.</li>
       </ol>
@@ -1586,7 +1586,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>In most states, you have <strong style="color: white;">10 days from your arrest</strong> to request a hearing to fight the automatic license suspension. If your attorney hasn't requested it, that window may already be closing.</p>
       <p>Open your Playbook to the <strong style="color: white;">Case Stage Roadmap</strong> section. The DMV deadline is the first item. If you haven't acted on it yet, today is the day.</p>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">You have already paid ${TIER_CORE["dui-first-offense"].priceDisplay}. The ${TIER_CORE["case-decoder"].name} costs ${upgradeCostBetween("dui-first-offense", "case-decoder")}.</strong> We research YOUR judge, YOUR jurisdiction, and generate 15 questions specific to your case.
+        <strong style="color: white;">You have already paid ${TIER_CORE["dui-first-offense"].priceDisplay}. The ${TIER_CORE["case-decoder"].name} costs ${upgradeCostBetween("dui-first-offense", "case-decoder")}.</strong> We research YOUR charges, YOUR jurisdiction, and generate 15 questions specific to your case.
       </p>
       ${cta(`Get the ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween("dui-first-offense", "case-decoder")}`, "/checkout?tier=case-decoder")}
     `,
@@ -1630,7 +1630,6 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>If someone you know just got pulled over — or is about to go to court — forward them this email.</p>
       <p>The DUI Defense Playbook is the thing I wish existed when I was in their position. 26 questions, a case stage roadmap, a red flag checklist, and an attorney scorecard. ${TIER_CORE["dui-first-offense"].priceDisplay}, instant download.</p>
       ${cta("Share the DUI Defense Playbook →", "/playbook/dui-first-offense")}
-      <p style="margin-top: 16px; color: #71717A;">If they buy through your link, send me a receipt and I'll credit you $20 toward any of our services.</p>
     `,
   },
 
