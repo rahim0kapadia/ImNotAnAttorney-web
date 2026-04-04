@@ -463,8 +463,9 @@ export async function POST(req: NextRequest) {
     }
 
     // =========================================================================
-    // 8c. BUILD DISCOUNT STRATEGY (4-way conditional)
+    // 8c. BUILD DISCOUNT STRATEGY (5-way conditional)
     // Stripe Checkout mode:"payment" allows only 1 entry in discounts[].
+    // - internal QA: discounts: [{ coupon: INTERNAL_QA_COUPON_ID }]
     // - referral only: discounts: [{ promotion_code: stripePromoCodeId }]
     // - upgrade only: discounts: [{ coupon: stripeCouponId }]
     // - both: create combined amount_off coupon, track referral via metadata
@@ -472,7 +473,11 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     let discountConfig: { discounts?: Array<{ coupon?: string; promotion_code?: string }>; allow_promotion_codes?: boolean } = {};
 
-    if (referralStripePromoId && stripeCouponId) {
+    const internalQaCouponId = process.env.INTERNAL_QA_COUPON_ID;
+    const internalQaEmail = process.env.INTERNAL_QA_EMAIL;
+    if (internalQaCouponId && internalQaEmail && email.toLowerCase() === internalQaEmail.toLowerCase()) {
+      discountConfig = { discounts: [{ coupon: internalQaCouponId }] };
+    } else if (referralStripePromoId && stripeCouponId) {
       // BOTH: combined coupon (referral 10% + upgrade credit)
       const referralDiscount = Math.floor(
         (tierConfig.price + (priorityDelivery && tierConfig.priorityPrice ? tierConfig.priorityPrice : 0)) * 0.1
