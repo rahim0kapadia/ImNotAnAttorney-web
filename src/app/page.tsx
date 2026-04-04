@@ -78,7 +78,7 @@ const homeFaqs = [
   {
     question: "Is this legal? Am I allowed to do this?",
     answer:
-      "Absolutely. You have a constitutional right to understand your own case. INAA provides legal research and questions — the same information available in any law library. We do not provide legal advice. Your attorney provides legal advice. We provide the information — so you know what they know.",
+      "Absolutely. You have a constitutional right to understand your own case. INAA provides legal research and questions — documented defense methodologies applied to your specific charges. We do not provide legal advice. Your attorney provides legal advice. We provide the information — so you know what they know.",
   },
   {
     question: "Can I get a refund?",
@@ -197,14 +197,14 @@ export default function Home() {
                 {
                   "@type": "Offer",
                   name: "Case Intelligence Brief",
-                  description: "Judge intel + accountability research + 10-15 questions",
+                  description: "Jurisdiction intelligence + prosecution pattern analysis + 10-15 questions",
                   price: "997.00",
                   priceCurrency: "USD",
                 },
                 {
                   "@type": "Offer",
                   name: "The X-Ray",
-                  description: "Full discovery analysis + 35-50 questions + Discovery Strength Rating",
+                  description: "Full discovery analysis + 35-50 questions + Judge Intelligence Profile + Prosecutor Research Profile + Discovery Strength Rating",
                   price: "2497.00",
                   priceCurrency: "USD",
                 },
@@ -619,7 +619,7 @@ export default function Home() {
                         {cat.description}
                       </p>
                       <p className="mt-3 text-xs font-semibold text-amber-500 group-hover:text-amber-400">
-                        {cat.playbook ? "Defense Playbook \u2014 $97 \u2192" : "Case Research \u2014 $197 \u2192"}
+                        {cat.playbook ? `Defense Playbook \u2014 ${TIER_CORE["dui-first-offense"].priceDisplay} \u2192` : `Case Research \u2014 ${TIER_CORE["case-decoder"].priceDisplay} \u2192`}
                       </p>
                     </Link>
                   </StaggerItem>

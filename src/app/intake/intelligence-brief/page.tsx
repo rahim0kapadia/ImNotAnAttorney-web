@@ -153,7 +153,7 @@ function Phase2IntakeForm() {
           <p className="text-sm text-amber-400">
             <strong>Phase 2 of 2:</strong> Your Case Decoder report has been
             delivered. These additional details allow us to build your full
-            Intelligence Brief with judge research, legal options analysis, and
+            Intelligence Brief with jurisdiction intelligence, legal options analysis, and
             a personalized action plan.
           </p>
         </div>
@@ -203,7 +203,7 @@ function Phase2IntakeForm() {
                 placeholder="e.g. Pinellas County"
               />
               <p className="mt-1 text-xs text-zinc-400">
-                County where your case is being heard. Used for judge research.
+                County where your case is being heard. Used for jurisdiction intelligence.
               </p>
             </div>
             <div className="mt-4">

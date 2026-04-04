@@ -46,7 +46,7 @@ export default function EditorialPolicyPage() {
           <section>
             <h2 className="text-xl font-bold text-white">How We Research</h2>
             <p className="mt-3 leading-relaxed">
-              Our content is built on published attorney methodologies, verified court records, and primary legal sources. We do not generate content from general knowledge or AI training data alone. Every claim is traced to a source.
+              Our content is built on published attorney methodologies, verified court records, and primary legal sources. We do not generate content from general knowledge alone. Every claim is traced to a source.
             </p>
             <ul className="mt-4 list-disc space-y-2 pl-6 text-zinc-400">
               <li>

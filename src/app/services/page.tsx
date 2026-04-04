@@ -221,7 +221,7 @@ const faqs = [
   {
     question: "What exactly do I get in my report?",
     answer:
-      "Every report includes a plain-English charge breakdown, calibrated questions in 6-part format (context, question, why it matters, good answer, bad answer, follow-up), and a communication toolkit. Higher tiers add judge intelligence, discovery analysis, witness research, and weekly updates.",
+      "Every report includes a plain-English charge breakdown, calibrated questions in 6-part format (context, question, why it matters, good answer, bad answer, follow-up), and a communication toolkit. Higher tiers add jurisdiction intelligence, discovery analysis, witness research, and weekly updates.",
   },
   {
     question: "Can you guarantee my charges get dropped?",
@@ -283,7 +283,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["intelligence-brief"].name,
-        description: "Jurisdiction intelligence, prosecution vulnerability report, 10-15 questions, jurisdiction analysis",
+        description: "Jurisdiction intelligence, Prosecution Pattern Summary, 10-15 questions, jurisdiction analysis",
         price: "997.00",
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -371,10 +371,11 @@ export default function ServicesPage() {
             of that — to make sure you understand every decision they&apos;re making, and why.
           </p>
           <StaggerContainer className="mt-6 grid gap-4 md:grid-cols-3">
+            {/* Prices from tiers.ts — update TIER_CORE there if pricing changes */}
             {[
-              { attorney: "$10K", ours: "$197-$2,497", pct: "2-25%" },
-              { attorney: "$30K", ours: "$997-$4,997", pct: "3-17%" },
-              { attorney: "$100K", ours: "$2,497-$9,997", pct: "2-10%" },
+              { attorney: "$10K", ours: `${TIER_CORE["case-decoder"].priceDisplay}–${TIER_CORE["x-ray"].priceDisplay}`, pct: "2-25%" },
+              { attorney: "$30K", ours: `${TIER_CORE["intelligence-brief"].priceDisplay}–${TIER_CORE["war-room"].priceDisplay}`, pct: "3-17%" },
+              { attorney: "$100K", ours: `${TIER_CORE["x-ray"].priceDisplay}–${TIER_CORE["situation-room"].priceDisplay}`, pct: "2-10%" },
             ].map((row) => (
               <StaggerItem key={row.attorney} className="rounded-lg bg-zinc-800/50 p-4">
                 <div className="text-xs text-zinc-400">You paid attorney</div>
@@ -753,7 +754,8 @@ export default function ServicesPage() {
                 </div>
                 <p className="mt-2 text-sm text-zinc-400">{ct.tiers[4].desc}</p>
                 <p className="mt-2 text-xs text-amber-400/80">
-                  Includes all tiers ($18,685 value) — $9,997
+                  {/* Prices from tiers.ts — update if pricing changes */}
+                  Includes all tiers ($18,685 value) — {TIER_CORE["situation-room"].priceDisplay}
                 </p>
                 {ct.tiers[4].discovery && (
                   <p className="mt-2 text-xs text-zinc-400">

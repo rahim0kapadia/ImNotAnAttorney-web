@@ -83,7 +83,7 @@ export default async function BlogPage({
               url: "https://imnotanattorney.com",
               sameAs: [
                 "https://www.reddit.com/r/imnotanattorney/",
-                "https://twitter.com/imnotanattorney",
+                "https://x.com/ImNotAnAttorney",
               ],
             },
           }),

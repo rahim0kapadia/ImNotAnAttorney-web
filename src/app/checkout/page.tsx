@@ -590,7 +590,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Credibility and background questions",
       "Impeachment opportunities",
     ],
-    guarantee: "Delivered within 5 business days.",
+    guarantee: "Delivered within 3-5 business days.",
   },
 };
 

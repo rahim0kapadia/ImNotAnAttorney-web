@@ -702,7 +702,7 @@ export const ABANDONED_SCORE_EMAILS: DripEmail[] = [
       <p>But here's what you're missing: <strong style="color: white;">a baseline</strong>. Without knowing where your defense stands right now, you can't tell if it's improving or slipping. Motion deadlines pass quietly. Discovery sits unreviewed. Conversations with your attorney feel one-sided because you don't know what questions to ask.</p>
       <p>The score gives you a starting point. A number. Something concrete to work with instead of guessing.</p>
       ${cta("Finish My Score \u2014 60 Seconds", "/score")}
-      <p style="margin-top: 20px; color: #A1A1AA;">P.S. Over 400 defendants have taken the score this month. Average score is 38/100. Most people are surprised by their result.</p>
+      <p style="margin-top: 20px; color: #A1A1AA;">P.S. Defendants who take the score are often surprised by their result.</p>
     `,
   },
   {
@@ -785,23 +785,13 @@ export const WINBACK_EMAILS: DripEmail[] = [
   {
     key: "winback_3",
     delayDays: 82,
-    subject: "247 defendants asked this question last month",
+    subject: "The most common question defendants ask us",
     html: `
-      <h1 style="color: #F59E0B;">247 Defendants Asked This Question Last Month</h1>
+      <h1 style="color: #F59E0B;">The Most Common Question We Hear</h1>
       <p>"Is my attorney actually doing everything they should be doing?"</p>
-      <p>That's the question. And here's what the data shows:</p>
-      <div style="margin: 20px 0; padding: 16px; border: 1px solid #27272A; border-radius: 8px; background: #1C1917;">
-        <p style="margin: 4px 0; color: #D4D4D8;"><strong style="color: white;">247</strong> defendants took the Case Progress Score last month</p>
-        <p style="margin: 4px 0; color: #D4D4D8;"><strong style="color: white;">Average score: 38/100</strong> — most defenses are missing key milestones</p>
-        <p style="margin: 4px 0; color: #D4D4D8;"><strong style="color: white;">89%</strong> didn't know whether motions had been filed in their case</p>
-      </div>
-      <p style="margin: 20px 0; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; border-radius: 4px;">
-        <em style="color: #D4D4D8;">"I thought everything was fine until I scored a 22. My attorney hadn't filed a single motion in 4 months."</em>
-      </p>
-      <p style="margin: 20px 0; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; border-radius: 4px;">
-        <em style="color: #D4D4D8;">"The questions from the Case Decoder made my attorney take my case seriously for the first time."</em>
-      </p>
-      ${cta("Take the Free Defense Score \u2014 60 Seconds", "/score")}
+      <p>The most common question we hear from defendants is whether they're actually prepared for what's ahead.</p>
+      <p>Most don't know what they don't know — motion deadlines, discovery gaps, plea pressure they can't evaluate. The Defense Milestone Score takes 3 minutes and shows you exactly where your case stands.</p>
+      ${cta("Take the Defense Milestone Score \u2014 3 Minutes", "/score")}
       <p style="margin-top: 16px;">Ready to go further? ${link("Case Decoder \u2014 " + TIER_CORE["case-decoder"].priceDisplay + ", delivered in 48 hours", "/checkout?tier=case-decoder")}</p>
     `,
   },
@@ -1042,7 +1032,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li><strong style="color: white;">Send the email from "Exactly What to Say"</strong> — it's already written, just copy-paste</li>
       </ol>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">What's next:</strong> Check your email for details on completing your full Intelligence Brief intake — a few more questions so we can build your complete report with judge intelligence, motion landscape, and more.
+        <strong style="color: white;">What's next:</strong> Check your email for details on completing your full Intelligence Brief intake — a few more questions so we can build your complete report with jurisdiction intelligence, motion landscape, and more.
       </p>
     `,
   },
@@ -1080,7 +1070,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">Your Case Decoder Is Ready — Next Step Inside</h1>
       <p>Your Case Decoder report has been delivered. To generate your full Intelligence Brief, we need a few more details about your judge, jurisdiction, and case stage.</p>
-      <p><strong style="color: white;">It takes about 5 minutes.</strong> Once you submit, your Intelligence Brief will be generated within 72 hours — including judge intelligence, motion landscape, and your priority questions.</p>
+      <p><strong style="color: white;">It takes about 5 minutes.</strong> Once you submit, your Intelligence Brief will be generated within 72 hours — including jurisdiction intelligence, prosecution patterns, and your priority questions.</p>
       ${cta("Complete Intelligence Brief Details →", "/intake/intelligence-brief")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
         <strong style="color: white;">Your Case Decoder gave you the foundation.</strong> The Intelligence Brief goes deeper — your jurisdiction's actual patterns, defense theories specific to your charge, and a 14-day action plan with scripts for difficult conversations.
@@ -1119,7 +1109,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">One Quick Question</h1>
       <p>Whether you've already met with your attorney or you're still preparing — I have one question:</p>
       <p style="font-size: 18px; color: white;"><strong>Which part of your Intelligence Brief has been most useful so far?</strong></p>
-      <p>Was it the judge intelligence? The priority questions? The 14-day action plan? The difficult conversation scripts?</p>
+      <p>Was it the jurisdiction intelligence? The priority questions? The 14-day action plan? The difficult conversation scripts?</p>
       <p>Just reply to this email. One sentence is fine. Your experience helps us build better reports for every defendant who comes after you.</p>
     `,
   },

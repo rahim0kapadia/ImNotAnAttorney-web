@@ -147,6 +147,9 @@ export default async function RootLayout({
                 serviceType: "Legal Information Research",
                 sameAs: [
                   "https://x.com/ImNotAnAttorney",
+                  "https://www.instagram.com/im_not_an_attorney/",
+                  "https://www.youtube.com/@imnotanattorney",
+                  "https://www.facebook.com/ImnotanAttorney",
                 ],
               },
               {

@@ -12,6 +12,7 @@
  */
 import type { Metadata } from "next";
 import { SITE_URL, CONTACT_EMAIL } from "@/lib/site";
+import { TIER_CORE } from "@/lib/tiers";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -201,9 +202,9 @@ export default function TermsPage() {
               <li>
                 <strong className="text-zinc-300">Upgrade credits:</strong> 100%
                 of any prior purchase is credited toward a higher service tier.
-                For Defense Playbooks ($97), upgrade credits toward the Case
+                For Defense Playbooks ({TIER_CORE["dui-first-offense"].priceDisplay}), upgrade credits toward the Case
                 Decoder are valid for 30 days from purchase. For all other
-                service tiers ($197+), upgrade credits are valid for 12 months
+                service tiers ({TIER_CORE["case-decoder"].priceDisplay}+), upgrade credits are valid for 12 months
                 from the original purchase date. Upgrade credits are
                 non-transferable and have no cash value. Refunded purchases
                 forfeit any associated upgrade credit.

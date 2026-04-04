@@ -70,16 +70,15 @@ const tiers: TierCard[] = [
     anchor: "vs. $1,500+ for a second-opinion attorney",
     valueStack: [
       { item: "Second-opinion attorney review", value: "$1,500" },
-      { item: "Judge research report", value: "$300" },
+      { item: "Jurisdiction intelligence report", value: "$300" },
       { item: "Motion landscape analysis", value: "$400" },
       { item: "Prosecution vulnerability assessment", value: "$200" },
     ],
     description:
-      "Judge intel + 10-15 targeted questions. No discovery needed.",
+      "Jurisdiction intelligence + 10-15 targeted questions. No discovery needed.",
     features: [
       "Everything in Case Decoder",
       "Charge exposure map",
-      "Jurisdiction intelligence summary",
       "Jurisdiction profile",
       "Attorney accountability timeline",
       "Motion landscape report",
@@ -98,7 +97,7 @@ const tiers: TierCard[] = [
     cta: "Get Your Intelligence Brief",
     featured: false,
     tier: "intelligence-brief",
-    bestFor: "Pre-trial, want judge intel + questions",
+    bestFor: "Pre-trial, want jurisdiction intelligence + questions",
     priorityAvailable: `Priority: ${TIER_CORE["intelligence-brief"].priorityDelivery} (+$${TIER_CORE["intelligence-brief"].priorityPrice! / 100})`,
   },
   {
@@ -425,8 +424,9 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
         <p className="text-lg font-bold text-white">Deliverable Guarantee</p>
         <p className="mt-2 text-base text-zinc-400">
           Delivery Guarantee: On time with the stated question count — or a
-          full cash refund. Satisfaction Guarantee: Not satisfied? 100% credit
-          toward Case Decoder within 30 days. Service credit: 12 months toward any higher tier.
+          full cash refund. Satisfaction Guarantee: Defense Playbooks — 100%
+          credit toward Case Decoder within 30 days. Service tiers ($197+) —
+          100% credit toward any higher tier, valid 12 months.
         </p>
         <p className="mt-2 text-xs text-zinc-400">
           Upgrade credits apply to purchases you keep.
