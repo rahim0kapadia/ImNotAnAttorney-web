@@ -76,12 +76,12 @@ export function getArticleCitations(
   > = {
     // DUI posts
     "field-sobriety-test-standards": [
-      { name: "NHTSA Standardized Field Sobriety Testing Manual", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/documents/sfst_full_instructor_manual_2023.pdf" },
+      { name: "NHTSA Standardized Field Sobriety Testing Manual", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/2023-03/15911-SFST_Participant_Manual_2023-tag.pdf" },
       { name: "ABA Model Rules of Professional Conduct", url: "https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/" },
     ],
     "complete-dui-defense-guide": [
       { name: "NHTSA Standardized Field Sobriety Testing", url: "https://www.nhtsa.gov/risky-driving/drunk-driving" },
-      { name: "NHTSA DWI Detection and Standardized Field Sobriety Testing", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/documents/sfst_full_instructor_manual_2023.pdf" },
+      { name: "NHTSA DWI Detection and Standardized Field Sobriety Testing", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/2023-03/15911-SFST_Participant_Manual_2023-tag.pdf" },
     ],
     "breathalyzer-calibration-records": [
       { name: "NHTSA Conforming Products List for Evidential Breath Alcohol Measurement Devices", url: "https://www.ecfr.gov/current/title-49/subtitle-B/chapter-V/part-571" },
@@ -118,12 +118,12 @@ export function getArticleCitations(
       { name: "18 U.S.C. § 1341 — Mail Fraud", url: "https://www.law.cornell.edu/uscode/text/18/1341" },
     ],
     "cooperation-agreement-federal-case": [
-      { name: "United States Sentencing Commission — Federal Sentencing Guidelines", url: "https://www.ussc.gov/guidelines/guidelines-manual" },
-      { name: "USSC § 5K1.1 — Substantial Assistance to Authorities", url: "https://www.ussc.gov/guidelines/guidelines-manual/2024/5k11" },
+      { name: "United States Sentencing Commission — Federal Sentencing Guidelines", url: "https://www.ussc.gov/guidelines" },
+      { name: "USSC § 5K1.1 — Substantial Assistance to Authorities", url: "https://www.ussc.gov/guidelines/2024-guidelines-manual-annotated" },
     ],
     "complete-white-collar-defense-guide": [
       { name: "18 U.S.C. § 1343 — Wire Fraud", url: "https://www.law.cornell.edu/uscode/text/18/1343" },
-      { name: "United States Sentencing Commission", url: "https://www.ussc.gov/guidelines/guidelines-manual" },
+      { name: "United States Sentencing Commission", url: "https://www.ussc.gov/guidelines" },
     ],
     "federal-investigation-what-to-expect": [
       { name: "DOJ Justice Manual — Federal Grand Jury Practice", url: "https://www.justice.gov/jm/jm-9-11000-grand-jury" },
