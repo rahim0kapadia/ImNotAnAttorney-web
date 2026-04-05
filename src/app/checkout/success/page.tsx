@@ -204,6 +204,8 @@ function SuccessContent() {
   const [customerEmail, setCustomerEmail] = useState<string>("");
   const [sessionCreated, setSessionCreated] = useState<number | null>(null);
   const [priorityDelivery, setPriorityDelivery] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const [emergencyDownloadUrl, setEmergencyDownloadUrl] = useState<string | null>(null);
 
   // Verify the Stripe checkout session server-side via /api/checkout/verify.
   // This confirms the payment actually completed (prevents URL spoofing).
@@ -220,6 +222,8 @@ function SuccessContent() {
         if (data.email) setCustomerEmail(data.email);
         if (data.sessionCreated) setSessionCreated(data.sessionCreated);
         if (data.priorityDelivery) setPriorityDelivery(true);
+        if (data.downloadUrl) setDownloadUrl(data.downloadUrl);
+        if (data.emergencyDownloadUrl) setEmergencyDownloadUrl(data.emergencyDownloadUrl);
       })
       .catch(() => setVerified(false));
   }, [sessionId]);
@@ -329,17 +333,45 @@ function SuccessContent() {
           <>
             <p className="mt-3 text-lg text-amber-400">{info.name}</p>
 
-            {/* DIGITAL PRODUCT — download links delivered via email */}
+            {/* DIGITAL PRODUCT — show download buttons if URLs available, else email fallback */}
             {info.isDigitalProduct ? (
               <div className="mt-6">
-                <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
-                  <p className="text-zinc-400">
-                    Your playbook download link has been sent to <span className="text-zinc-300">{customerEmail}</span>
-                  </p>
-                  <p className="mt-2 text-sm text-zinc-400">
-                    Check your inbox — if you don&apos;t see it in 5 minutes, check spam.
-                  </p>
-                </div>
+                {downloadUrl ? (
+                  <div className="space-y-3">
+                    <div className="rounded-xl border border-red-500/30 bg-red-500/5 p-5">
+                      <p className="text-sm font-semibold text-red-400">Start Here — Emergency Playbook</p>
+                      <p className="mt-1 text-xs text-zinc-400">Your First 72 Hours checklist, 5 Priority Questions, and what to do right now.</p>
+                      <a
+                        href={emergencyDownloadUrl || downloadUrl}
+                        className="mt-3 inline-block rounded-lg bg-red-500 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-red-400"
+                      >
+                        Download Emergency Playbook
+                      </a>
+                    </div>
+                    <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-5">
+                      <p className="text-sm font-semibold text-amber-400">Full Defense Playbook</p>
+                      <p className="mt-1 text-xs text-zinc-400">Complete reference — case stage roadmap, red flag checklist, scorecard, all 26 questions.</p>
+                      <a
+                        href={downloadUrl}
+                        className="mt-3 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
+                      >
+                        Download Full Playbook
+                      </a>
+                    </div>
+                    <p className="text-xs text-zinc-500">
+                      Download links also sent to {customerEmail}. Links expire in 72 hours.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
+                    <p className="text-zinc-400">
+                      Your playbook download link has been sent to <span className="text-zinc-300">{customerEmail}</span>
+                    </p>
+                    <p className="mt-2 text-sm text-zinc-400">
+                      Check your inbox — if you don&apos;t see it in 5 minutes, check spam.
+                    </p>
+                  </div>
+                )}
               </div>
             ) : (
               <>
