@@ -79,10 +79,10 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ verified: false });
     }
 
-    // Only treat "paid" as verified. Stripe sessions can also be "unpaid"
-    // (abandoned) or "no_payment_required" (100% coupon). We require "paid"
-    // because all our tiers have a non-zero price after any applicable credit.
-    if (session.payment_status !== "paid") {
+    // Treat "paid" and "no_payment_required" as verified. "no_payment_required"
+    // occurs with 100% coupons (e.g., internal QA coupon for E2E testing).
+    // "unpaid" means the customer abandoned — reject that.
+    if (session.payment_status !== "paid" && session.payment_status !== "no_payment_required") {
       return NextResponse.json({ verified: false });
     }
 
@@ -102,9 +102,26 @@ export async function GET(req: NextRequest) {
       priorityDelivery: session.metadata?.priority_delivery === "true",
     };
 
-    // Download URLs are delivered via webhook email (token-based, 72hr expiry,
-    // refund-revocable). Not generated here — this endpoint is unauthenticated
-    // and session_ids are not secret enough to gate file access.
+    // For digital products, look up the download token from the order record.
+    // The webhook creates the token async — it may not exist yet if the customer
+    // hits the success page before the webhook fires. Return null gracefully;
+    // the success page shows "check email" as fallback.
+    const tierSlug = session.metadata?.tier;
+    if (session.metadata?.product_type === "digital-product" ||
+        (tierSlug && !["case-decoder","intelligence-brief","x-ray","war-room","situation-room","extra-witness","witness-pack"].includes(tierSlug))) {
+      const { data: order } = await supabase
+        .from("orders")
+        .select("download_token, download_token_expires_at")
+        .eq("stripe_session_id", sessionId)
+        .eq("product_type", "digital-product")
+        .maybeSingle();
+
+      if (order?.download_token) {
+        const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+        response.downloadUrl = `${origin}/api/download/${order.download_token}`;
+        response.emergencyDownloadUrl = `${origin}/api/download/${order.download_token}?doc=emergency`;
+      }
+    }
 
     return NextResponse.json(response);
   } catch {
