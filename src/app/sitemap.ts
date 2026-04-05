@@ -133,6 +133,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
     ...blogEntries,
+    // Start (crisis entry)
+    {
+      url: `${SITE_URL}/start`,
+      lastModified: new Date("2026-04-04"),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    // DUI checklist resource
+    {
+      url: `${SITE_URL}/dui-checklist`,
+      lastModified: new Date("2026-04-04"),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    },
+    // Sample X-Ray report
+    {
+      url: `${SITE_URL}/sample-xray`,
+      lastModified: new Date("2026-04-04"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
     // Family landing page
     {
       url: `${SITE_URL}/family`,

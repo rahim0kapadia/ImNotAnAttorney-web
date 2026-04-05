@@ -622,13 +622,13 @@ export const WHITE_COLLAR: PlaybookConfig = {
         name: "Exhaustive Case Analysis",
         title: "Foundation of every defense strategy",
         insight:
-          "NACDL Lifetime Achievement-level methodology that analyzes every detail from day one \u2014 simultaneously challenging evidence, legal theories, and procedural issues across multiple fronts.",
+          "A thorough approach that challenges evidence, legal theories, and procedural issues from day one — across every front at once.",
       },
       {
         name: "Asset Forfeiture Defense",
         title: "Protecting what the government wants to seize",
         insight:
-          "The definitive forfeiture defense methodology \u2014 innocent owner defenses, proportionality challenges under Timbs v. Indiana, tracing challenges, and CAFRA procedural protections.",
+          "Proven forfeiture defense methods — innocent owner claims, challenges to excessive seizures, asset tracing disputes, and procedural protections under federal law.",
       },
       {
         name: "Cross-Examination Methodology",
@@ -787,19 +787,19 @@ export const SEX_OFFENSE: PlaybookConfig = {
         name: "Forensic Interview Analysis",
         title: "Foundation of the evidence challenge section",
         insight:
-          "Systematic analysis of forensic interview protocol compliance \u2014 identifying suggestive questioning, NICHD protocol deviations, and interviewer bias that can undermine the reliability of child witness statements.",
+          "Checks whether forensic interviews followed proper protocols. Spots leading questions, interviewer bias, and deviations from best-practice guidelines that can weaken witness reliability.",
       },
       {
         name: "DNA and Digital Evidence Challenge",
         title: "Applied to every forensic evidence question",
         insight:
-          "Independent re-analysis methodology for DNA profiles, chain of custody verification, digital attribution challenges, and SANE exam finding review \u2014 the techniques that expose what prosecution experts overlook.",
+          "Independent review of DNA results, evidence handling records, digital device attribution, and medical exam findings. These are the checks that catch what prosecution experts miss.",
       },
       {
         name: "Full Consequence Mapping",
         title: "Beyond the courtroom sentence",
         insight:
-          "Registration tiers, residency restrictions, employment bars, custody impacts, immigration consequences, international travel restrictions, and civil commitment risk \u2014 every consequence mapped before any plea decision.",
+          "Registration length, where you can live, employment limits, custody impact, immigration consequences, travel restrictions, and involuntary commitment risk — every consequence mapped before any plea decision.",
       },
     ],
   },
@@ -952,7 +952,7 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
         name: "Sentencing Guidelines Analysis",
         title: "Foundation of the outcome assessment section",
         insight:
-          "Independent guideline calculation methodology \u2014 challenging base offense levels, specific offense characteristics, relevant conduct scope, and criminal history scoring. Data-driven sentencing forecasts using analytics from 1.6 million federal cases.",
+          "Independent sentencing guideline calculation — challenging offense severity scores, conduct scope, and criminal history points. Sentencing forecasts built from 1.6 million federal case outcomes.",
       },
       {
         name: "Government Evidence Verification",
@@ -964,7 +964,7 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
         name: "Federal Consequence Mapping",
         title: "Beyond the prison sentence",
         insight:
-          "BOP designation, RDAP eligibility, First Step Act credits, supervised release, restitution, forfeiture, immigration consequences, professional license impacts \u2014 every consequence mapped before any plea decision.",
+          "Prison facility assignment, drug treatment program eligibility, early release credits, supervised release, restitution, asset seizure, immigration impact, and professional license effects — every consequence mapped before any plea decision.",
       },
     ],
   },
@@ -1142,7 +1142,7 @@ export const DRUG_TRAFFICKING: PlaybookConfig = {
       },
       {
         title: "Trafficking Charge Reality Report",
-        desc: "How the system actually works \u2014 mandatory minimum quantity tables, conspiracy and Pinkerton liability, enhancement factors, safety valve eligibility, cooperation mechanics. Everything your attorney assumes you already know.",
+        desc: "How the system actually works \u2014 mandatory minimum quantity tables, conspiracy liability (being held responsible for others' actions), enhancement factors, safety valve eligibility, cooperation mechanics. Everything your attorney assumes you already know.",
         value: "$297",
       },
       {

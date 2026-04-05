@@ -44,13 +44,13 @@ function CrisisHero({ onDismiss }: { onDismiss: () => void }) {
     <div className="min-h-screen bg-zinc-950">
       <section className="flex min-h-[100dvh] flex-col items-center justify-center px-6 py-16">
         <div className="mx-auto w-full max-w-md text-center">
-          <h2 className="font-display text-4xl font-bold leading-snug tracking-tight text-white sm:text-5xl">
+          <h1 className="font-display text-4xl font-bold leading-snug tracking-tight text-white sm:text-5xl">
             You were just arrested.
             <br />
             <span className="text-amber-400">
               Here&apos;s what to do right now.
             </span>
-          </h2>
+          </h1>
 
           <p className="mx-auto mt-8 max-w-sm text-lg leading-relaxed text-zinc-300">
             Free. Anonymous. Takes 60 seconds.

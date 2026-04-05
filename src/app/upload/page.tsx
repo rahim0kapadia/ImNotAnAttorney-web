@@ -143,6 +143,7 @@ function UploadContent() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
+            aria-invalid={!!submitError}
             className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none"
           />
           <p className="mt-1 text-xs text-zinc-400">Must match the email you used at checkout.</p>
@@ -193,7 +194,7 @@ function UploadContent() {
                 : `Submit ${fileCount} Document${fileCount !== 1 ? "s" : ""} for Analysis`}
             </button>
             {submitError && (
-              <div className="mt-3 rounded-lg border border-red-500/50 bg-red-500/10 p-3">
+              <div role="alert" className="mt-3 rounded-lg border border-red-500/50 bg-red-500/10 p-3">
                 <p className="text-sm text-red-400">{submitError}</p>
               </div>
             )}

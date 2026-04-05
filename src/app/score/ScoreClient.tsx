@@ -639,13 +639,15 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           }} className="mt-4 flex gap-2">
             <input name="scoreEmail" type="email" required placeholder="you@example.com"
               aria-label="Email address"
+              aria-invalid={!!emailError}
+              aria-describedby={emailError ? "score-email-error" : undefined}
               className="flex-1 rounded-lg border border-amber-500/30 bg-zinc-800 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none" />
             <button type="submit" disabled={emailSubmitting}
               className="rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black hover:bg-amber-400 disabled:opacity-50">
               {emailSubmitting ? "..." : "Send My Report"}
             </button>
           </form>
-          {emailError && <p role="alert" className="mt-2 text-sm text-red-400">{emailError}</p>}
+          {emailError && <p id="score-email-error" role="alert" className="mt-2 text-sm text-red-400">{emailError}</p>}
         </div>
       )}
       {emailSent && (

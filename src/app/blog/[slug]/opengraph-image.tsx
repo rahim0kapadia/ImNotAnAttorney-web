@@ -16,11 +16,25 @@
  * it runs in the default Node.js runtime at build time.
  */
 import { ImageResponse } from "next/og";
-import { getPostBySlug } from "@/lib/blog";
+import { getAllPosts, getPostBySlug } from "@/lib/blog";
 
 export const alt = "ImNotAnAttorney — Criminal Defense Research Blog";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+
+/**
+ * Pre-generate OG images for every blog post at build time.
+ *
+ * Without this, Next.js treats the OG image as a dynamic serverless function.
+ * On Vercel, the serverless runtime doesn't bundle the `content/blog/` directory,
+ * so `fs.readFileSync()` in `getPostBySlug()` fails with ENOENT -> HTTP 500.
+ *
+ * By exporting `generateStaticParams` (matching the sibling `page.tsx`), Next.js
+ * renders every OG image during `next build` and serves them as static assets.
+ */
+export async function generateStaticParams() {
+  return getAllPosts().map((post) => ({ slug: post.slug }));
+}
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -42,6 +56,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
       >
         <div
           style={{
+            display: "flex",
             fontSize: 24,
             color: "#f59e0b",
             fontWeight: 700,

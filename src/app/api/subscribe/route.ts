@@ -42,7 +42,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
 
-    const body = await req.json();
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    }
     const { email } = body;
     const ALLOWED_SOURCES = ["lead-capture", "checkout", "blog", "score", "score-page", "resources", "dui-72-hours", "blog-inline-drug-cases", "blog-inline-white-collar", "blog-inline-general-defense"];
     const source = ALLOWED_SOURCES.includes(body.source) ? body.source : "lead-capture";

@@ -131,7 +131,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by DUI defendants within 60 seconds of purchase.",
     whyThisWorks:
-      "Built from documented defense strategies used by elite DUI defense attorneys, forensic evidence methodology, and NHTSA field sobriety test standards. 26 specific questions derived from 40+ elite DUI defense attorneys' techniques.",
+      "Built from proven DUI defense methods. Covers breathalyzer challenges, field sobriety test standards, and forensic evidence review. 26 questions from 40+ elite attorneys' techniques.",
     pullquote: {
       quote:
         "The breathalyzer reading is not the case. The maintenance records are.",
@@ -164,7 +164,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
-      "Built from documented defense strategies used by elite drug defense attorneys, lab analysis challenge methodology, and search & seizure protocols. 26 specific questions derived from 40+ elite defense attorneys' techniques.",
+      "Built from proven drug defense methods. Covers lab analysis challenges, search and seizure issues, and evidence chain review. 26 questions from 40+ elite attorneys' techniques.",
     pullquote: {
       quote:
         "The lab report is only as reliable as the chain of custody that produced it.",
@@ -197,7 +197,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
-      "Built from landmark case law (Bearden v. Georgia, Gagnon v. Scarpelli) and elite defense methodology. 26 specific questions covering willfulness defenses, alternatives to revocation, and due process rights.",
+      "Grounded in Supreme Court rulings that protect your rights. Covers willfulness defenses, alternatives to revocation, and your due process rights. 26 questions built from proven defense methods.",
     pullquote: {
       quote:
         "You cannot be revoked for inability to comply. That's the law.",
@@ -230,7 +230,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
-      "Built from documented defense strategies used by elite white collar defense attorneys, including loss calculation challenge methodology, asset forfeiture defense, and federal sentencing guidelines analysis. 26 specific questions derived from 40+ elite defense attorneys' techniques.",
+      "Built from proven white collar defense methods. Covers loss calculation challenges, asset forfeiture defense, and sentencing guidelines analysis. 26 questions from 40+ elite attorneys' techniques.",
     pullquote: {
       quote:
         "The loss amount is not the sentence. Challenge the math.",
@@ -263,7 +263,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
-      "Built from documented defense strategies used by elite sex offense defense attorneys, including forensic interview analysis, DNA and digital evidence challenge methodology, and full consequence mapping (registration tiers, residency restrictions, collateral consequences). 26 specific questions derived from 40+ elite defense attorneys' techniques.",
+      "Built from proven sex offense defense methods. Covers forensic interview analysis, DNA and digital evidence challenges, and full consequence mapping — registration, residency, and more. 26 questions from 40+ elite attorneys' techniques.",
     pullquote: {
       quote:
         "The accusation is not the conviction. Challenge the evidence.",
@@ -296,7 +296,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
-      "Built from documented defense strategies used by elite federal criminal defense attorneys, including sentencing guidelines analysis, government evidence verification, and federal consequence mapping (BOP designation, RDAP eligibility, First Step Act credits). 26 specific questions derived from 40+ elite defense attorneys' techniques.",
+      "Built from proven federal defense methods. Covers sentencing guidelines analysis, government evidence verification, and federal consequence mapping — prison designation, program eligibility, and sentence credits. 26 questions from 40+ elite attorneys' techniques.",
     pullquote: {
       quote:
         "The sentencing guidelines are a formula. Challenge every variable.",
@@ -329,7 +329,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
-      "Built from documented defense strategies used by elite drug trafficking defense attorneys, including informant credibility analysis, drug quantity verification methodology, and conspiracy exposure mapping. 26 specific questions derived from 40+ elite defense attorneys' techniques.",
+      "Built from proven drug trafficking defense methods. Covers informant credibility challenges, drug quantity verification, and conspiracy exposure mapping. 26 questions from 40+ elite attorneys' techniques.",
     pullquote: {
       quote:
         "The informant has a deal. Do you know yours?",
@@ -362,7 +362,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Instant PDF. No intake form, no wait. Downloaded by defendants within 60 seconds of purchase.",
     whyThisWorks:
-      "Built from the nationally recognized five-element self-defense framework, use-of-force analysis methodology, and Stand Your Ground litigation strategy. 26 specific questions covering innocence, imminence, proportionality, avoidance, and reasonableness.",
+      "Built from the five-element self-defense framework used nationwide. Covers use-of-force analysis and Stand Your Ground strategy. 26 questions targeting innocence, imminence, proportionality, avoidance, and reasonableness.",
     pullquote: {
       quote:
         "You defended yourself. Now defend your freedom.",
@@ -398,7 +398,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "The right place to start. Understand exactly what you are facing before your next attorney meeting.",
     whyThisWorks:
-      `Every question generated using documented tactics from elite defense attorneys — chain of custody protocols, informant reliability methodology, drug forensic frameworks. 15 calibrated questions + ready-to-send email templates + a 7-day action plan. You're getting a communication playbook informed by the same methodologies elite defense attorneys use — for ${TIER_CORE["case-decoder"].priceDisplay}.`,
+      `Every question built from proven defense tactics — evidence chain review, informant reliability checks, and forensic analysis methods. 15 calibrated questions + email templates + a 7-day action plan. A communication playbook using the same methods elite attorneys use — for ${TIER_CORE["case-decoder"].priceDisplay}.`,
     pullquote: {
       quote:
         "Forensic evidence is only as reliable as the humans who handle it.",
@@ -448,7 +448,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Everything to understand your case — without needing discovery yet.",
     whyThisWorks:
-      "Your jurisdiction's sentencing patterns. Your jurisdiction's plea statistics. Built on elite jury psychology methodology and constitutional appellate frameworks. A single hour with an attorney who knows this costs $500+. You're getting a complete intelligence file.",
+      "Your jurisdiction's sentencing patterns and plea statistics. Built on proven jury psychology methods and constitutional defense frameworks. One hour with an attorney who knows this costs $500+. You're getting a complete intelligence file.",
     pullquote: {
       quote:
         "If you're not filing suppression motions, you're not defending.",
@@ -486,7 +486,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "The most thorough analysis available without a multi-week engagement. Full discovery, full picture.",
     whyThisWorks:
-      "Every page of your discovery analyzed using chain of custody protocols and drug forensic frameworks developed by elite defense attorneys. We found a 73% weight discrepancy in the case that built this system. Your discovery has its own story — we'll find it.",
+      "Every page of your discovery analyzed using evidence chain protocols and forensic methods from elite defense attorneys. We found a 73% weight discrepancy in the case that built this system. Your discovery has its own story — we'll find it.",
     pullquote: {
       quote:
         "The absence of physical evidence is itself evidence.",
@@ -524,7 +524,7 @@ const TIER_INFO: Record<string, TierInfo> = {
     validation:
       "Ongoing intelligence from now through resolution. Most clients stay in this tier for the life of their case.",
     whyThisWorks:
-      "Witness analysis using informant credibility methodology — proven in high-profile federal defense cases. Judge & prosecution dossiers built on investigator accountability frameworks. Updated weekly as your case develops.",
+      "Witness analysis using proven informant credibility methods from federal defense cases. Judge and prosecution dossiers built on investigator accountability standards. Updated weekly as your case develops.",
     story: "Three prosecution witnesses gave depositions placing the defendant in different locations at different times. Our weekly witness analysis cross-referenced all three accounts and identified 11 contradictions the prosecution would need to reconcile at trial. The defendant's attorney used those contradictions in cross-examination preparation. Two of the three witnesses were struck.",
     pullquote: {
       quote:
@@ -566,7 +566,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       },
     ],
     whyThisWorks:
-      "Trial prep built on elite preparation standards, cross-examination design, and precision strike methodology — from attorneys who defined modern trial practice. Trial Intelligence Operations means evening debrief + morning prep brief every trial day — because trial doesn't wait.",
+      "Trial prep built on elite preparation standards and cross-examination design. Evening debrief + morning prep brief every trial day. Trial doesn't wait — neither does your intelligence.",
     pullquote: {
       quote:
         "Preparation is the be-all of good trial work.",
