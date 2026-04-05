@@ -262,6 +262,7 @@ export default function DemandDashboard() {
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
             placeholder="Admin password"
+            aria-label="Demand intelligence password"
             className="w-full p-3 rounded bg-zinc-800 border border-zinc-700 text-white mb-4"
             autoFocus
           />

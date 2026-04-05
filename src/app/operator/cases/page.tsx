@@ -140,6 +140,7 @@ function CaseListContent() {
         <select
           value={statusFilter}
           onChange={(e) => handleFilterChange(setStatusFilter, e.target.value)}
+          aria-label="Filter by status"
           className="rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2 text-sm text-white focus:border-amber-500 focus:outline-none"
         >
           {STATUSES.map((s) => (
@@ -153,6 +154,7 @@ function CaseListContent() {
         <select
           value={tierFilter}
           onChange={(e) => handleFilterChange(setTierFilter, e.target.value)}
+          aria-label="Filter by tier"
           className="rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2 text-sm text-white focus:border-amber-500 focus:outline-none"
         >
           {TIERS.map((t) => (

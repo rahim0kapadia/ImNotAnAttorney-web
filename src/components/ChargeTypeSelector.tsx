@@ -135,12 +135,17 @@ export function ChargeTypeSelector({ onSelect }: ChargeTypeSelectorProps) {
                   )?.focus();
                 }
               }}
-              className={`rounded-lg border px-3 py-3 text-sm font-semibold transition-all cursor-pointer ${
+              className={`flex items-center justify-center gap-1.5 rounded-lg border-2 px-3 py-3 text-sm font-semibold transition-all cursor-pointer ${
                 isSelected
-                  ? "border-amber-500 bg-amber-500/5 text-amber-400"
-                  : "border-zinc-500 bg-zinc-900/50 text-zinc-400 hover:border-zinc-500"
+                  ? "border-amber-500 bg-amber-500/5 text-amber-400 font-bold"
+                  : "border-zinc-700 bg-zinc-900/50 text-zinc-400 hover:border-zinc-500"
               }`}
             >
+              {isSelected && (
+                <svg className="h-4 w-4 shrink-0" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              )}
               {category.label}
             </button>
           );

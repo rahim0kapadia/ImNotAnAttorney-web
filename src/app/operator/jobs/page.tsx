@@ -189,6 +189,7 @@ function JobsContent() {
         <select
           value={statusFilter}
           onChange={(e) => handleFilterChange(setStatusFilter, e.target.value)}
+          aria-label="Filter by job status"
           className="rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2 text-sm text-white focus:border-amber-500 focus:outline-none"
         >
           {JOB_STATUSES.map((s) => (
@@ -201,6 +202,7 @@ function JobsContent() {
         <select
           value={typeFilter}
           onChange={(e) => handleFilterChange(setTypeFilter, e.target.value)}
+          aria-label="Filter by job type"
           className="rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2 text-sm text-white focus:border-amber-500 focus:outline-none"
         >
           {JOB_TYPES.map((t) => (

@@ -26,6 +26,7 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const mobileNavRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -46,6 +47,17 @@ export function Header() {
       document.body.style.overflow = "";
     }
     return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
+  // Move focus to first mobile menu link when menu opens
+  useEffect(() => {
+    if (mobileOpen) {
+      // Small delay to allow animation to start and DOM to render
+      const timer = setTimeout(() => {
+        firstMobileLinkRef.current?.focus();
+      }, 50);
+      return () => clearTimeout(timer);
+    }
   }, [mobileOpen]);
 
   // Focus trap for mobile menu
@@ -162,10 +174,11 @@ export function Header() {
               { href: "/resources", label: "Resources" },
               { href: "/about", label: "About" },
               { href: "/sample", label: "Sample Report" },
-            ].map((link) => (
+            ].map((link, idx) => (
               <Link
                 key={link.href}
                 href={link.href}
+                ref={idx === 0 ? firstMobileLinkRef : undefined}
                 onClick={() => setMobileOpen(false)}
                 aria-current={pathname === link.href || pathname?.startsWith(link.href + "/") ? "page" : undefined}
                 className={`text-sm transition-colors ${

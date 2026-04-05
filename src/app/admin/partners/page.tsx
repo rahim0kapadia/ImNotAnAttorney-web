@@ -236,6 +236,7 @@ export default function PartnersAdmin() {
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
             placeholder="Admin password"
+            aria-label="Partner admin password"
             className="w-full px-4 py-2 bg-zinc-800 text-white rounded-lg border border-zinc-700 mb-4"
           />
           <button

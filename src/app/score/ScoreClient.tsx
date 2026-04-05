@@ -1213,26 +1213,37 @@ export default function ScoreClient() {
                       <p className="mt-1 text-xs text-zinc-400">Licensed professionals and students face separate collateral consequences — your score flags this if relevant.</p>
                     )}
                     <div className="mt-4 space-y-3">
-                      {currentQuestion.options.map((opt) => (
+                      {currentQuestion.options.map((opt) => {
+                        const isChecked = answers[currentQuestion.id] === opt.value;
+                        return (
                         <label
                           key={opt.value}
-                          className={`flex min-h-[48px] cursor-pointer items-center gap-3 rounded-lg border px-4 py-3.5 text-base transition-all duration-150 ${
-                            answers[currentQuestion.id] === opt.value
-                              ? "border-amber-500 bg-amber-500/10 text-white shadow-[0_0_12px_rgba(245,158,11,0.15)]"
-                              : "border-zinc-500 bg-zinc-900/60 text-zinc-300 hover:border-zinc-400 hover:bg-zinc-800/80"
+                          className={`flex min-h-[48px] cursor-pointer items-center gap-3 rounded-lg border-2 px-4 py-3.5 text-base transition-all duration-150 ${
+                            isChecked
+                              ? "border-amber-500 bg-amber-500/10 text-white font-medium shadow-[0_0_12px_rgba(245,158,11,0.15)]"
+                              : "border-zinc-700 bg-zinc-900/60 text-zinc-300 hover:border-zinc-400 hover:bg-zinc-800/80"
                           } has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-amber-400 has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-zinc-950`}
                         >
+                          {/* Custom radio indicator -- filled circle beyond color */}
+                          <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors ${
+                            isChecked ? "border-amber-500 bg-amber-500" : "border-zinc-500 bg-zinc-800"
+                          }`} aria-hidden="true">
+                            {isChecked && (
+                              <span className="h-2 w-2 rounded-full bg-black" />
+                            )}
+                          </span>
                           <input
                             type="radio"
                             name={currentQuestion.id}
                             value={opt.value}
-                            checked={answers[currentQuestion.id] === opt.value}
+                            checked={isChecked}
                             onChange={() => handleSelect(currentQuestion.id, opt.value)}
-                            className="h-5 w-5 border-zinc-500 bg-zinc-800 text-amber-500 focus:ring-amber-500"
+                            className="sr-only"
                           />
                           {opt.label}
                         </label>
-                      ))}
+                        );
+                      })}
                     </div>
                   </fieldset>
                 </div>

@@ -34,9 +34,60 @@ function loadGA4(gaId: string) {
   gtag("config", gaId);
 }
 
+function loadMetaPixel(pixelId: string) {
+  if (document.querySelector('script[src*="fbevents.js"]')) return;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const w = window as any;
+  if (w.fbq) return;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const n: any = (w.fbq = function () {
+    // eslint-disable-next-line prefer-rest-params
+    n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+  });
+  if (!w._fbq) w._fbq = n;
+  n.push = n;
+  n.loaded = true;
+  n.version = "2.0";
+  n.queue = [];
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = "https://connect.facebook.net/en_US/fbevents.js";
+  document.head.appendChild(script);
+  w.fbq("init", pixelId);
+  w.fbq("track", "PageView");
+}
+
+function loadGoogleAds(adsId: string) {
+  if (
+    document.querySelector(
+      `script[src*="googletagmanager.com/gtag/js?id=${adsId}"]`
+    )
+  ) {
+    return;
+  }
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${adsId}`;
+  document.head.appendChild(script);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const w = window as any;
+  w.dataLayer = w.dataLayer || [];
+  // gtag must use the arguments object per Google's spec
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function gtag(..._args: any[]) {
+    // eslint-disable-next-line prefer-rest-params
+    w.dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", adsId);
+}
+
 export function CookieConsent() {
   const [showBanner, setShowBanner] = useState(false);
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+  const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
   const declineBtnRef = useRef<HTMLButtonElement>(null);
   const acceptBtnRef = useRef<HTMLButtonElement>(null);
   const prevFocusRef = useRef<HTMLElement | null>(null);
@@ -44,13 +95,15 @@ export function CookieConsent() {
   useEffect(() => {
     const consent = localStorage.getItem(CONSENT_KEY);
 
-    if (consent === ACCEPTED && gaId) {
-      loadGA4(gaId);
+    if (consent === ACCEPTED) {
+      if (gaId) loadGA4(gaId);
+      if (metaPixelId) loadMetaPixel(metaPixelId);
+      if (googleAdsId) loadGoogleAds(googleAdsId);
     } else if (!consent) {
       setShowBanner(true);
     }
     // "declined" -- do nothing
-  }, [gaId]);
+  }, [gaId, metaPixelId, googleAdsId]);
 
   // Focus management: move focus into dialog on mount, restore on dismiss
   useEffect(() => {
@@ -70,10 +123,10 @@ export function CookieConsent() {
   const handleAccept = useCallback(() => {
     localStorage.setItem(CONSENT_KEY, ACCEPTED);
     setShowBanner(false);
-    if (gaId) {
-      loadGA4(gaId);
-    }
-  }, [gaId]);
+    if (gaId) loadGA4(gaId);
+    if (metaPixelId) loadMetaPixel(metaPixelId);
+    if (googleAdsId) loadGoogleAds(googleAdsId);
+  }, [gaId, metaPixelId, googleAdsId]);
 
   const handleDecline = useCallback(() => {
     localStorage.setItem(CONSENT_KEY, DECLINED);
