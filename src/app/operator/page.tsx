@@ -213,7 +213,7 @@ function HomeContent() {
               <Link
                 key={c.id}
                 href={`/operator/cases/${c.id}`}
-                className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-5 hover:border-amber-500/40 transition-colors group"
+                className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-5 hover:border-amber-500/40 transition-colors group"
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-sm font-medium text-white truncate max-w-[60%]">
@@ -253,10 +253,10 @@ function HomeContent() {
         {data.failedJobs.length === 0 ? (
           <p className="text-sm text-zinc-400">No failed jobs.</p>
         ) : (
-          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 overflow-hidden">
+          <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-600 text-left text-xs text-zinc-400 uppercase tracking-wider">
+                <tr className="border-b border-zinc-500 text-left text-xs text-zinc-400 uppercase tracking-wider">
                   <th className="px-4 py-3">Job Type</th>
                   <th className="px-4 py-3">Case</th>
                   <th className="px-4 py-3">Error</th>
@@ -266,7 +266,7 @@ function HomeContent() {
               </thead>
               <tbody>
                 {data.failedJobs.map((j) => (
-                  <tr key={j.id} className="border-b border-zinc-600">
+                  <tr key={j.id} className="border-b border-zinc-500">
                     <td className="px-4 py-3 text-zinc-200">{j.job_type}</td>
                     <td className="px-4 py-3">
                       <Link
@@ -312,10 +312,10 @@ function HomeContent() {
         {data.tasks.length === 0 ? (
           <p className="text-sm text-zinc-400">No open tasks.</p>
         ) : (
-          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 overflow-hidden">
+          <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-600 text-left text-xs text-zinc-400 uppercase tracking-wider">
+                <tr className="border-b border-zinc-500 text-left text-xs text-zinc-400 uppercase tracking-wider">
                   <th className="px-4 py-3">Priority</th>
                   <th className="px-4 py-3">Title</th>
                   <th className="px-4 py-3">Type</th>
@@ -326,7 +326,7 @@ function HomeContent() {
               </thead>
               <tbody>
                 {data.tasks.map((t) => (
-                  <tr key={t.id} className="border-b border-zinc-600">
+                  <tr key={t.id} className="border-b border-zinc-500">
                     <td className="px-4 py-3">
                       <PriorityBadge priority={t.priority} />
                     </td>
@@ -361,19 +361,19 @@ function HomeContent() {
             Quick Stats
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+            <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
               <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
                 Total Cases
               </p>
               <p className="text-3xl font-bold text-white">{m.total_cases}</p>
             </div>
-            <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+            <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
               <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
                 Active Jobs
               </p>
               <p className="text-3xl font-bold text-white">{m.active_jobs}</p>
             </div>
-            <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+            <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
               <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
                 Revenue
               </p>
@@ -381,7 +381,7 @@ function HomeContent() {
                 {formatCurrency(m.total_revenue_cents)}
               </p>
             </div>
-            <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+            <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
               <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
                 Open Tasks
               </p>

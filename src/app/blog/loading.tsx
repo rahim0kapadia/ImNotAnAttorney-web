@@ -11,7 +11,7 @@ export default function BlogLoading() {
         </div>
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+            <div key={i} className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
               <div className="h-4 w-16 animate-pulse rounded bg-zinc-800" />
               <div className="mt-3 h-6 w-full animate-pulse rounded bg-zinc-800" />
               <div className="mt-2 h-4 w-3/4 animate-pulse rounded bg-zinc-800/60" />

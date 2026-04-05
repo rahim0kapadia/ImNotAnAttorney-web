@@ -170,7 +170,7 @@ export default function PartnerDashboard() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       {/* Header */}
-      <header className="border-b border-zinc-600">
+      <header className="border-b border-zinc-500">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="text-amber-400 font-bold text-lg">
             ImNotAnAttorney
@@ -198,7 +198,7 @@ export default function PartnerDashboard() {
         )}
 
         {/* ── Section 1: Your Toolkit ── */}
-        <section className="bg-zinc-900 rounded-xl border border-zinc-600 p-6">
+        <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
           <h2 className="text-xl font-bold mb-4">Your Toolkit</h2>
           {referralUrl ? (
             <div className="grid md:grid-cols-2 gap-6">
@@ -249,7 +249,7 @@ export default function PartnerDashboard() {
         </section>
 
         {/* ── Section 2: Ready-to-Send Messages ── */}
-        <section className="bg-zinc-900 rounded-xl border border-zinc-600 p-6">
+        <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
           <h2 className="text-xl font-bold mb-4">Ready-to-Send Messages</h2>
           <MessageTemplates
             promoCode={partner.promo_code || ""}
@@ -258,7 +258,7 @@ export default function PartnerDashboard() {
         </section>
 
         {/* ── Section 3: Your Earnings ── */}
-        <section className="bg-zinc-900 rounded-xl border border-zinc-600 p-6">
+        <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
           <h2 className="text-xl font-bold mb-4">Your Earnings</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
@@ -290,7 +290,7 @@ export default function PartnerDashboard() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="text-zinc-400 border-b border-zinc-600">
+                    <tr className="text-zinc-400 border-b border-zinc-500">
                       <th className="text-left py-2 pr-4">Date</th>
                       <th className="text-right py-2 pr-4">Amount</th>
                       <th className="text-left py-2">Method</th>
@@ -298,7 +298,7 @@ export default function PartnerDashboard() {
                   </thead>
                   <tbody>
                     {payouts.map((p) => (
-                      <tr key={p.id} className="border-b border-zinc-600/50">
+                      <tr key={p.id} className="border-b border-zinc-500/50">
                         <td className="py-2 pr-4">{formatDate(p.created_at)}</td>
                         <td className="py-2 pr-4 text-right text-green-400">
                           {formatCents(p.amount)}
@@ -314,7 +314,7 @@ export default function PartnerDashboard() {
         </section>
 
         {/* ── Section 4: Recent Activity ── */}
-        <section className="bg-zinc-900 rounded-xl border border-zinc-600 p-6">
+        <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
           <h2 className="text-xl font-bold mb-4">Recent Activity</h2>
           {referrals.length === 0 ? (
             <p className="text-zinc-400">No referrals yet. Share your code to get started.</p>
@@ -323,7 +323,7 @@ export default function PartnerDashboard() {
               {referrals.slice(0, 20).map((r) => (
                 <div
                   key={r.id}
-                  className="flex items-center justify-between py-2 border-b border-zinc-600/50"
+                  className="flex items-center justify-between py-2 border-b border-zinc-500/50"
                 >
                   <div>
                     <span className="text-zinc-400 text-sm">{formatDate(r.created_at)}</span>
@@ -339,7 +339,7 @@ export default function PartnerDashboard() {
         </section>
 
         {/* ── Section 5: Payment Settings ── */}
-        <section className="bg-zinc-900 rounded-xl border border-zinc-600 p-6">
+        <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
           <h2 className="text-xl font-bold mb-4">Payment Settings</h2>
           <form onSubmit={handleSaveSettings} className="space-y-4">
             <div>
@@ -418,7 +418,7 @@ export default function PartnerDashboard() {
         </section>
 
         {/* ── Section 6: Profile ── */}
-        <section className="bg-zinc-900 rounded-xl border border-zinc-600 p-6">
+        <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
           <h2 className="text-xl font-bold mb-4">Profile</h2>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>

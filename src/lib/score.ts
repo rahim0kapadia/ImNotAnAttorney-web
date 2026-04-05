@@ -150,7 +150,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     if (timeIndex >= 2) {
       score -= 15;
       observations.push(
-        "Discovery should be in your attorney's hands by now. Without it, the defense is being built blind — and you can't challenge evidence you haven't reviewed."
+        "At this stage, discovery is typically part of the defense file. Without it, the defense is being built blind — and you can't challenge evidence you haven't reviewed. Worth asking: \"Have we received all discovery materials?\""
       );
     } else {
       score -= 3;
@@ -159,7 +159,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     // "dont-know"
     score -= 10;
     observations.push(
-      "Discovery is evidence the prosecution must share — police reports, lab results, witness statements. Ask your attorney: \"Have we received all discovery?\""
+      "Discovery is evidence the prosecution must share — police reports, lab results, witness statements. A key question: \"Have we received all discovery?\""
     );
   }
 
@@ -195,7 +195,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.strategyDiscussed === "briefly") {
     score += 2;
     observations.push(
-      "A brief strategy discussion isn't enough. Your attorney should be able to explain their theory of defense, which motions they plan to file, and why."
+      "A brief strategy discussion isn't enough. Key questions worth asking: \"What is the theory of defense, which motions are planned, and why?\""
     );
   } else if (input.strategyDiscussed === "no") {
     score -= 12;
@@ -224,7 +224,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.criminalHistory === "misdemeanor") {
     score -= 2;
     observations.push(
-      "Prior misdemeanor convictions can affect plea negotiations and diversion eligibility. Ask your attorney: \"How are my priors affecting our options for diversion or reduced charges?\""
+      "Prior misdemeanor convictions can affect plea negotiations and diversion eligibility. Worth asking: \"How are priors affecting options for diversion or reduced charges?\""
     );
   } else if (input.criminalHistory === "felony" || input.criminalHistory === "multiple") {
     score -= 5;
@@ -238,11 +238,11 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   // =========================================================================
   if (input.caseStage === "sentencing") {
     observations.push(
-      "At the sentencing stage, mitigation preparation is critical — character letters, treatment documentation, and a sentencing memorandum. Ask your attorney what they're preparing."
+      "At the sentencing stage, mitigation preparation is critical — character letters, treatment documentation, and a sentencing memorandum. Worth asking: \"What mitigation materials are being prepared?\""
     );
   } else if (input.caseStage === "post-conviction") {
     observations.push(
-      "Post-conviction cases have strict appeal deadlines. One question worth exploring: has your attorney identified all available remedies (direct appeal, PCR, habeas) and their filing deadlines."
+      "Post-conviction cases have strict appeal deadlines. One question worth exploring: \"Have all available remedies been identified — direct appeal, PCR, habeas — and what are their filing deadlines?\""
     );
   } else if (input.caseStage === "pre-arrest") {
     score += 3;
@@ -257,7 +257,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   if (input.caseStage === "pre-trial" && input.motionsFiled !== "yes") {
     score -= 5;
     observations.push(
-      "Pre-trial phase with no motions filed. This is when suppression and discovery motions are expected. Ask your attorney: \"What motions are we filing before trial?\""
+      "Pre-trial phase with no motions filed. This is when suppression and discovery motions are typically expected. Worth asking: \"What motions are being filed before trial?\""
     );
   }
   if (input.caseStage === "trial-prep" && input.strategyDiscussed !== "yes-detail") {
@@ -269,7 +269,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   if (input.caseStage === "arraigned" && input.hasDiscovery !== "yes" && timeIndex >= 1) {
     score -= 3;
     observations.push(
-      "Arraigned but no discovery yet. After arraignment, your attorney should be requesting or following up on the prosecution's evidence your defense needs to review."
+      "Arraigned but no discovery yet. After arraignment, defense attorneys typically request the prosecution's evidence promptly. A question worth asking: \"Has discovery been requested, and when do we expect to receive it?\""
     );
   }
 
@@ -278,7 +278,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   // =========================================================================
   if (input.licensedProfession === "yes-licensed") {
     observations.push(
-      "A conviction could trigger licensing board action, suspension, or revocation — separate from the criminal case. Confirm your attorney is addressing licensing consequences too."
+      "A conviction could trigger licensing board action, suspension, or revocation — separate from the criminal case. Licensing consequences are worth raising as a distinct issue in your defense."
     );
   } else if (input.licensedProfession === "yes-other") {
     observations.push(
@@ -286,7 +286,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     );
   } else if (input.licensedProfession === "student") {
     observations.push(
-      "A conviction can affect financial aid, campus housing, and academic standing. For drug offenses, federal law ties FAFSA eligibility to conviction status. Confirm your attorney knows."
+      "A conviction can affect financial aid, campus housing, and academic standing. For drug offenses, federal law ties FAFSA eligibility to conviction status. Worth raising with your attorney."
     );
   }
 
@@ -372,8 +372,8 @@ export function getChargeSpecificObservation(chargeType: string, timeIndex: numb
         return "For DUI cases, the right attorney will immediately request breathalyzer calibration records, dash/body cam footage, and the arresting officer's field sobriety certification. These are the first questions to ask when you retain counsel.";
       }
       return timeIndex >= 2
-        ? "For DUI cases at this stage, your attorney should have already requested breathalyzer calibration records and the arresting officer's field sobriety certification. Ask: \"Have we received the breathalyzer maintenance logs?\""
-        : "For DUI cases, early priorities include requesting the dash/body cam footage and the breathalyzer calibration records. Ask your attorney if these have been requested.";
+        ? "In DUI cases at this stage, defense attorneys typically have already requested breathalyzer calibration records and the arresting officer's field sobriety certification. Ask: \"Have we received the breathalyzer maintenance logs?\""
+        : "For DUI cases, early priorities include requesting the dash/body cam footage and the breathalyzer calibration records. A question worth asking: \"Have these been requested?\"";
     case "drug":
     case "drug-possession":
       if (noAttorney) {
@@ -381,21 +381,21 @@ export function getChargeSpecificObservation(chargeType: string, timeIndex: numb
       }
       return timeIndex >= 2
         ? "For drug possession cases at this stage, lab report review is critical — weight calculation errors and chain-of-custody gaps have led to charge reductions. Ask: \"Have you reviewed the lab report for accuracy?\""
-        : "For drug possession cases, your attorney should be examining how the evidence was obtained — search warrant validity, informant reliability, and chain of custody. Ask what their plan is for challenging the evidence.";
+        : "For drug possession cases, defense attorneys typically examine how the evidence was obtained — search warrant validity, informant reliability, and chain of custody. Ask: \"What is the plan for challenging the evidence?\"";
     case "drug-trafficking":
       if (noAttorney) {
         return "For trafficking charges, the right attorney will examine whether you're charged based on quantity thresholds or actual distribution evidence, whether confidential informant testimony is involved, and whether wiretap evidence was properly authorized. Mandatory minimums make early intervention critical.";
       }
       return timeIndex >= 2
-        ? "For trafficking cases at this stage, your attorney should have reviewed all wiretap authorizations, CI reliability records, and co-defendant statements. Conspiracy charges can extend liability to others' actions. Ask: \"Have you challenged the CI's reliability and the basis for the quantity calculation?\""
-        : "For trafficking cases, your attorney should be examining the basis for the charge — quantity-based thresholds vs. actual distribution evidence, and whether conspiracy exposure applies. Ask: \"Am I exposed to mandatory minimums, and what is the quantity at issue?\"";
+        ? "For trafficking cases at this stage, defense attorneys typically review all wiretap authorizations, CI reliability records, and co-defendant statements. Conspiracy charges can extend liability to others' actions. Ask: \"Have the CI's reliability and the basis for the quantity calculation been challenged?\""
+        : "For trafficking cases, key questions include the basis for the charge — quantity-based thresholds vs. actual distribution evidence, and whether conspiracy exposure applies. Ask: \"Am I exposed to mandatory minimums, and what is the quantity at issue?\"";
     case "probation-violation":
       if (noAttorney) {
         return "Probation violation hearings use a lower standard of proof — preponderance of evidence, not beyond reasonable doubt. The right attorney will determine whether this is a technical or substantive violation and whether graduated sanctions or alternatives to revocation are available.";
       }
       return timeIndex >= 2
-        ? "For probation violations at this stage, your attorney should have a clear strategy for the revocation hearing — including mitigating evidence, compliance documentation, and alternative sanctions. Ask: \"What evidence are we presenting at the hearing, and have we explored graduated sanctions?\""
-        : "For probation violations, the distinction between technical and substantive violations matters — technical violations often have alternatives to revocation. Ask your attorney: \"Is this a technical or substantive violation, and what alternatives to jail time exist?\"";
+        ? "For probation violations at this stage, defense attorneys typically prepare a clear strategy for the revocation hearing — including mitigating evidence, compliance documentation, and alternative sanctions. Ask: \"What evidence are we presenting at the hearing, and have we explored graduated sanctions?\""
+        : "For probation violations, the distinction between technical and substantive violations matters — technical violations often have alternatives to revocation. A question worth asking: \"Is this a technical or substantive violation, and what alternatives to jail time exist?\"";
     case "white-collar":
       if (noAttorney) {
         return "White collar cases often have parallel civil or regulatory exposure on a separate timeline. When you retain an attorney, one of the first questions to ask is whether there is civil liability connected to the charges.";
@@ -406,37 +406,37 @@ export function getChargeSpecificObservation(chargeType: string, timeIndex: numb
         return "Sex offense cases carry severe collateral consequences beyond the criminal sentence — mandatory registry under SORNA, residency restrictions, and employment limitations that can last decades. The right attorney will scrutinize forensic evidence procedures, digital evidence handling, and Brady material before anything else.";
       }
       return timeIndex >= 2
-        ? "For sex offense cases at this stage, your attorney should have reviewed all forensic reports, challenged evidence handling procedures, and assessed Brady material. Registry consequences make every decision high-stakes. Ask: \"Have you identified any issues with how the evidence was collected, and what is our defense theory?\""
-        : "For sex offense cases, your attorney should be scrutinizing forensic evidence collection, digital evidence preservation, and interview procedures. Ask: \"What are the registration requirements if convicted, and what is your strategy to avoid them?\"";
+        ? "For sex offense cases at this stage, defense attorneys typically review all forensic reports, challenge evidence handling procedures, and assess Brady material. Registry consequences make every decision high-stakes. Ask: \"Have any issues been identified with how the evidence was collected, and what is the defense theory?\""
+        : "For sex offense cases, defense attorneys typically scrutinize forensic evidence collection, digital evidence preservation, and interview procedures. Ask: \"What are the registration requirements if convicted, and what is the strategy to avoid them?\"";
     case "federal-criminal":
       if (noAttorney) {
         return "Federal cases move faster and carry harsher penalties than state cases. Federal sentencing guidelines, mandatory minimums, and cooperation agreements make early attorney involvement critical. The right attorney will immediately assess your exposure under the USSG and explore pre-indictment intervention.";
       }
       return timeIndex >= 2
-        ? "For federal cases at this stage, your attorney should have filed all pre-trial motions, obtained Rule 16 discovery, and have a clear sentencing strategy. Ask: \"Have we received all Rule 16 discovery, and what is our sentencing exposure under the guidelines?\""
-        : "For federal cases, your attorney should be calculating your sentencing guideline range and examining grand jury materials. Ask: \"What is my estimated guideline range, and what has been discussed with the AUSA?\"";
+        ? "For federal cases at this stage, defense attorneys typically file all pre-trial motions, obtain Rule 16 discovery, and develop a clear sentencing strategy. Ask: \"Have we received all Rule 16 discovery, and what is our sentencing exposure under the guidelines?\""
+        : "For federal cases, defense attorneys typically calculate the sentencing guideline range and examine grand jury materials early. Ask: \"What is my estimated guideline range, and what has been discussed with the AUSA?\"";
     case "self-defense":
       if (noAttorney) {
         return "Self-defense is an affirmative defense — you're admitting the act but arguing it was justified. The right attorney will examine whether your jurisdiction follows 'stand your ground' or 'duty to retreat,' the proportionality of force used, and the timeline of events. Witness statements and surveillance footage are time-critical.";
       }
       return timeIndex >= 2
-        ? "For self-defense cases at this stage, your attorney should have a clear theory of justification, preserved all surveillance and witness evidence, and prepared for force proportionality arguments. Ask: \"What is our theory of justification, and have we preserved all evidence of the threat?\""
-        : "For self-defense cases, your attorney should be preserving all evidence of the threat — witness statements, surveillance footage, medical records, and 911 recordings. Ask: \"What evidence supports my reasonable belief of imminent harm, and has it been preserved?\"";
+        ? "For self-defense cases at this stage, defense attorneys typically have a clear theory of justification, preserved all surveillance and witness evidence, and prepared for force proportionality arguments. Ask: \"What is the theory of justification, and has all evidence of the threat been preserved?\""
+        : "For self-defense cases, preserving all evidence of the threat is critical — witness statements, surveillance footage, medical records, and 911 recordings. Ask: \"What evidence supports a reasonable belief of imminent harm, and has it been preserved?\"";
     case "other-felony":
       if (noAttorney) {
-        return "For felony cases, the right attorney will build a defense theory by identifying which elements of the charge are weakest. This should be one of the first conversations you have with counsel.";
+        return "For felony cases, the right attorney will build a defense theory by identifying which elements of the charge are weakest. This is typically one of the first conversations when retaining counsel.";
       }
       return timeIndex >= 2
-        ? "For felony cases at this stage, your attorney should have a clear theory of defense and be preparing for key evidentiary hearings. Ask: \"What is our defense theory and what motions are we filing?\""
-        : `For felony cases, your attorney should be building a defense theory and identifying which elements of the charge are weakest. Ask: "What is our theory of defense?"`;
+        ? "For felony cases at this stage, defense attorneys typically have a clear theory of defense and are preparing for key evidentiary hearings. Ask: \"What is our defense theory and what motions are we filing?\""
+        : `For felony cases, building a defense theory and identifying which elements of the charge are weakest is a key early step. Ask: "What is the theory of defense?"`;
     case "other-misdemeanor":
       if (noAttorney) {
         return "Even for misdemeanor charges, a conviction creates a permanent record that can affect employment, housing, and professional licensing. Many misdemeanor charges qualify for diversion or deferred adjudication — programs that can result in dismissal. When you retain an attorney, ask specifically about eligibility.";
       }
       return timeIndex >= 2
-        ? "Even for misdemeanor charges, a conviction creates a permanent record. At this stage, your attorney should have explored diversion or deferred adjudication options and be actively preparing for hearings. Ask: \"Have we explored every alternative to a conviction on my record?\""
-        : "Even for misdemeanor charges, a conviction creates a permanent record that can affect employment, housing, and professional licensing. Ask your attorney about diversion or deferred adjudication — programs that can result in dismissal instead of conviction.";
+        ? "Even for misdemeanor charges, a conviction creates a permanent record. At this stage, diversion or deferred adjudication options are worth exploring. Ask: \"Have we explored every alternative to a conviction on my record?\""
+        : "Even for misdemeanor charges, a conviction creates a permanent record that can affect employment, housing, and professional licensing. A question worth asking: are diversion or deferred adjudication programs available — options that can result in dismissal instead of conviction?";
     default:
-      return `For ${getChargeLabel(chargeType)} cases, understanding which elements the prosecution must prove — and which ones are weakest — is a key conversation to have with your attorney.`;
+      return `For ${getChargeLabel(chargeType)} cases, understanding which elements the prosecution must prove — and which ones are weakest — is a key question worth exploring.`;
   }
 }

@@ -37,7 +37,7 @@ export function FAQAccordion({ items }: FAQAccordionProps) {
       {items.map((item, i) => (
         <div
           key={i}
-          className="rounded-lg border border-zinc-600 bg-zinc-900/50"
+          className="rounded-lg border border-zinc-500 bg-zinc-900/50"
         >
           <button
             id={`faq-question-${i}`}
@@ -70,7 +70,7 @@ export function FAQAccordion({ items }: FAQAccordionProps) {
                 transition={{ duration: 0.25, ease: "easeInOut" }}
                 className="overflow-hidden"
               >
-                <div className="border-t border-zinc-600 px-6 py-4">
+                <div className="border-t border-zinc-500 px-6 py-4">
                   <p className="text-base leading-relaxed text-zinc-400">
                     {item.answer}
                   </p>

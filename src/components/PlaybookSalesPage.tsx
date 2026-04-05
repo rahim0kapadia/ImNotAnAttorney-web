@@ -155,7 +155,7 @@ export default function PlaybookSalesPage({ config }: Props) {
           {config.agitate.cards.map((card) => (
             <StaggerItem
               key={card.title}
-              className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-5"
+              className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-5"
             >
               <p className="text-sm font-semibold text-amber-400">
                 {card.title}
@@ -177,7 +177,7 @@ export default function PlaybookSalesPage({ config }: Props) {
           {config.proof.methods.map((method) => (
             <StaggerItem
               key={method.name}
-              className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-6"
+              className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-6"
             >
               <p className="font-semibold text-white">{method.name}</p>
               <p className="mt-1 text-xs text-zinc-400">{method.title}</p>
@@ -196,7 +196,7 @@ export default function PlaybookSalesPage({ config }: Props) {
           {config.valueStack.sections.map((section) => (
             <StaggerItem
               key={section.title}
-              className="flex items-start justify-between gap-4 rounded-lg border border-zinc-600 bg-zinc-900/50 p-5"
+              className="flex items-start justify-between gap-4 rounded-lg border border-zinc-500 bg-zinc-900/50 p-5"
             >
               <div>
                 <p className="font-semibold text-white">{section.title}</p>
@@ -297,7 +297,7 @@ export default function PlaybookSalesPage({ config }: Props) {
 
       {/* METHODOLOGY DISCLOSURE */}
       <section className="mt-20">
-        <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-6">
+        <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-6">
           <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
             Important
           </p>
@@ -316,7 +316,7 @@ export default function PlaybookSalesPage({ config }: Props) {
           {urgencyItems.map((item) => (
             <div
               key={item.deadline}
-              className="flex items-start gap-4 rounded-lg border border-zinc-600 bg-zinc-900/50 p-5"
+              className="flex items-start gap-4 rounded-lg border border-zinc-500 bg-zinc-900/50 p-5"
             >
               <div className="shrink-0 rounded bg-amber-500/10 px-3 py-1">
                 <p className="text-xs font-bold text-amber-400">
@@ -397,7 +397,7 @@ export default function PlaybookSalesPage({ config }: Props) {
       {/* UPGRADE PATH */}
       {nextTier && upgrade && (
         <section className="mt-16">
-          <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-6">
+          <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-6">
             <p className="text-xs font-semibold text-zinc-400">
               Need case-specific questions?
             </p>
@@ -424,7 +424,7 @@ export default function PlaybookSalesPage({ config }: Props) {
       {/* EXIT CAPTURE — Free checklist for non-buyers (DUI only) */}
       {config.slug === "dui-first-offense" && (
         <section className="mt-16">
-          <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-6">
+          <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-6">
             <p className="mb-4 text-sm text-zinc-400">
               Not ready for the full Playbook? Start with the free 72-Hour Emergency Checklist.
             </p>

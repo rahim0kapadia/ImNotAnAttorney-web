@@ -72,8 +72,8 @@ export default function FamilyPage() {
           <div className="mt-6 space-y-4 text-zinc-400">
             <p>
               Maybe it was a phone call at 2 AM. Maybe you watched it happen.
-              Either way, you&apos;re in a fog of disbelief and you need to do
-              <em> something</em>.
+              Either way, you&apos;re in a fog of disbelief and doing
+              <em> something</em> feels urgent.
             </p>
             <p>
               The legal system doesn&apos;t come with instructions for family
@@ -128,7 +128,7 @@ export default function FamilyPage() {
             ].map((item) => (
               <StaggerItem
                 key={item.num}
-                className="flex items-start gap-4 rounded-lg border border-zinc-600 bg-zinc-900/50 p-5"
+                className="flex items-start gap-4 rounded-lg border border-zinc-500 bg-zinc-900/50 p-5"
               >
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-500/10 text-sm font-bold text-amber-400">
                   {item.num}
@@ -147,14 +147,14 @@ export default function FamilyPage() {
       <FadeInUp>
         <section className="mt-20">
           <h2 className="font-display text-2xl font-bold text-white">
-            What NOT to do
+            Things that can hurt the case
           </h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {[
-              "Don't discuss the case on social media",
-              "Don't contact witnesses or alleged victims",
-              "Don't pressure them to accept or reject a plea",
-              "Don't talk about the case on jail phone calls — they're recorded",
+              "Social media posts about the case can be used as evidence by prosecutors",
+              "Contact with witnesses or alleged victims can result in additional charges",
+              "Pressuring someone to accept or reject a plea can backfire — that decision belongs to the defendant and their attorney",
+              "Jail phone calls are recorded and can be used by prosecutors",
             ].map((item) => (
               <div
                 key={item}
@@ -220,7 +220,7 @@ export default function FamilyPage() {
 
       {/* DEEPER RESOURCES */}
       <section className="mt-16">
-        <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-6">
+        <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-6">
           <p className="text-xs font-semibold text-zinc-400">
             Want the full guide?
           </p>

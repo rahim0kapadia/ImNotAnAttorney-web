@@ -69,7 +69,7 @@ export default function ContactPage() {
 
         <div className="mt-10 space-y-8">
           {/* EMAIL — Primary contact method (includes response time) */}
-          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+          <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
             <h2 className="text-lg font-semibold text-white">Email</h2>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
@@ -82,7 +82,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+          <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
             <h2 className="text-lg font-semibold text-white">Can&apos;t Wait?</h2>
             <p className="mt-2 text-sm text-zinc-400">
               Take the free{" "}
@@ -97,7 +97,7 @@ export default function ContactPage() {
           </div>
 
           {/* ADDRESS — Physical mailing address (CAN-SPAM compliance requirement) */}
-          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+          <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
             <h2 className="text-lg font-semibold text-white">Mailing Address</h2>
             <p className="mt-2 text-sm text-zinc-400">
               ImNotAnAttorney
@@ -127,7 +127,7 @@ export default function ContactPage() {
         </div>
 
         {/* LEGAL DISCLAIMER — UPL compliance. Do not remove without attorney review. */}
-        <div className="mt-8 rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
+        <div className="mt-8 rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
           <p className="text-xs text-zinc-400">
             ImNotAnAttorney provides legal information and research — not legal
             advice. We are not a law firm and do not create an attorney-client

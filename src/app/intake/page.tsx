@@ -933,7 +933,7 @@ function IntakeForm() {
                     )}
 
                     {dbQuestions.length > 0 && (
-                      <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
+                      <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
                         <p className="mb-3 text-xs font-semibold text-amber-500">
                           A few questions specific to your charge type
                         </p>
@@ -980,7 +980,7 @@ function IntakeForm() {
                     )}
 
                     {currentChargeQuestions.length > 0 && (
-                      <div className="mt-6 rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
+                      <div className="mt-6 rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
                         <p className="mb-3 text-xs font-semibold text-amber-500">
                           A few questions specific to your charge type
                         </p>
@@ -1098,7 +1098,7 @@ function IntakeForm() {
                             setField("arrestCircumstances",
                               e.target.checked ? [...curr, circ] : curr.filter((c) => c !== circ));
                           }}
-                          className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500" />
+                          className="h-4 w-4 rounded border-zinc-500 bg-zinc-800 text-amber-500 focus:ring-amber-500" />
                         {circ}
                       </label>
                     ))}
@@ -1235,7 +1235,7 @@ function IntakeForm() {
                             setField("evidenceType",
                               e.target.checked ? [...curr, ev] : curr.filter((c) => c !== ev));
                           }}
-                          className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500" />
+                          className="h-4 w-4 rounded border-zinc-500 bg-zinc-800 text-amber-500 focus:ring-amber-500" />
                         {ev}
                       </label>
                     ))}
@@ -1291,8 +1291,8 @@ function IntakeForm() {
                     <p className="mt-1 text-xs text-zinc-400">
                       Some industries have licensing or career consequences that{" "}
                       {form.filledOutBy === "family" || form.filledOutBy === "friend"
-                        ? "their attorney should address"
-                        : "your attorney should address"}.
+                        ? "may be worth discussing with their attorney"
+                        : "may be worth discussing with your attorney"}.
                     </p>
                   </div>
                 )}
@@ -1331,7 +1331,7 @@ function IntakeForm() {
                           setField("services",
                             e.target.checked ? [...curr, svc] : curr.filter((s) => s !== svc));
                         }}
-                        className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500" />
+                        className="h-4 w-4 rounded border-zinc-500 bg-zinc-800 text-amber-500 focus:ring-amber-500" />
                       {svc}
                     </label>
                   ))}
@@ -1388,7 +1388,7 @@ function IntakeForm() {
               </fieldset>
 
               {/* Disclaimer */}
-              <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
+              <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
                 <p className="text-xs text-zinc-400">
                   By submitting this form, you understand that ImNotAnAttorney
                   provides legal information and research &mdash; not legal advice. We are

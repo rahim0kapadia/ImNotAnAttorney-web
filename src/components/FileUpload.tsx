@@ -179,7 +179,7 @@ export function FileUpload({ caseId, email, onUploadComplete }: FileUploadProps)
           {files.map((f) => (
             <div
               key={f.url}
-              className="flex items-center justify-between rounded-lg border border-zinc-600 bg-zinc-900/50 px-4 py-2"
+              className="flex items-center justify-between rounded-lg border border-zinc-500 bg-zinc-900/50 px-4 py-2"
             >
               <span className="text-sm text-white">{f.name}</span>
               <span className="text-xs text-zinc-400">

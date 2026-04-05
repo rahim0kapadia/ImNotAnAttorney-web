@@ -92,7 +92,7 @@ export function LeadCapture({
   if (ungated) {
     return (
       <FadeInUp>
-        <div className="rounded-xl border border-zinc-600 bg-zinc-900 p-8 text-center">
+        <div className="rounded-xl border border-zinc-500 bg-zinc-900 p-8 text-center">
           <h3 className="text-lg font-bold text-white">
             {title}
           </h3>
@@ -115,7 +115,7 @@ export function LeadCapture({
             </a>
           </div>
           {successUpsellHref && (
-            <div className="mt-6 border-t border-zinc-600 pt-6">
+            <div className="mt-6 border-t border-zinc-500 pt-6">
               {successUpsellDescription && (
                 <p className="mb-3 text-sm text-zinc-300">{successUpsellDescription}</p>
               )}
@@ -134,7 +134,7 @@ export function LeadCapture({
 
   if (status === "success") {
     return (
-      <div role="status" className="rounded-xl border border-zinc-600 bg-zinc-900 p-8 text-center">
+      <div role="status" className="rounded-xl border border-zinc-500 bg-zinc-900 p-8 text-center">
         <div className="mb-2 text-2xl">&#10003;</div>
         <h3 className="text-lg font-semibold text-white">
           {successTitle}
@@ -150,7 +150,7 @@ export function LeadCapture({
           {downloadLabel}
         </a>
         {successUpsellHref && (
-          <div className="mt-6 border-t border-zinc-600 pt-6">
+          <div className="mt-6 border-t border-zinc-500 pt-6">
             {successUpsellDescription && (
               <p className="mb-3 text-sm text-zinc-300">{successUpsellDescription}</p>
             )}
@@ -168,7 +168,7 @@ export function LeadCapture({
 
   return (
     <FadeInUp>
-    <div className="rounded-xl border border-zinc-600 bg-zinc-900 p-8">
+    <div className="rounded-xl border border-zinc-500 bg-zinc-900 p-8">
       <h3 className="text-lg font-bold text-white">
         {title}
       </h3>

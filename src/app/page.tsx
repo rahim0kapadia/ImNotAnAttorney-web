@@ -316,7 +316,7 @@ export default function Home() {
               },
             ].map((item) => (
               <StaggerItem key={item.title}>
-                <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+                <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
                   <h3 className="font-bold text-amber-400">{item.title}</h3>
                   <p className="mt-2 text-base leading-relaxed text-zinc-400">
                     {item.desc}
@@ -360,7 +360,7 @@ export default function Home() {
 
       {/* BRIDGE — Identity statement. Transitions from pain to action by    */}
       {/* creating an in-group ("people like us") before the how-it-works.  */}
-      <section className="border-t border-zinc-600 px-4 py-10">
+      <section className="border-t border-zinc-500 px-4 py-10">
         <p className="text-center text-lg font-semibold text-white">
           People like us don&apos;t just trust the system.{" "}
           <span className="text-amber-400">
@@ -376,7 +376,7 @@ export default function Home() {
       {/*   Step 03: You ask the questions (bring report to attorney)       */}
       {/* Anchor id="how-it-works" for in-page linking from nav.           */}
       {/* ------------------------------------------------------------------ */}
-      <section id="how-it-works" className="border-t border-zinc-600 px-4 py-20 section-alt">
+      <section id="how-it-works" className="border-t border-zinc-500 px-4 py-20 section-alt">
         <div className="mx-auto max-w-4xl">
           <FadeInUp>
             <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
@@ -400,7 +400,7 @@ export default function Home() {
               {
                 step: "02",
                 title: "We research overnight",
-                desc: "Your case analyzed through 40+ elite defense methodologies. Chain of custody. Informant credibility. Constitutional frameworks. Every angle your attorney should be covering. Delivered in 48 hours.",
+                desc: "Your case analyzed through 40+ elite defense methodologies. Chain of custody. Informant credibility. Constitutional frameworks. Every angle that elite defense attorneys cover. Delivered in 48 hours.",
                 badge: "40+ methodologies",
                 border: "border-l-2 border-amber-500/50",
               },
@@ -435,7 +435,7 @@ export default function Home() {
       {/* claiming "40+ named." Defendant voice is more honest and more     */}
       {/* conversion-effective for crisis buyers.)                          */}
       {/* ------------------------------------------------------------------ */}
-      <section className="border-t border-zinc-600 px-4 py-20">
+      <section className="border-t border-zinc-500 px-4 py-20">
         <div className="mx-auto max-w-5xl">
           <FadeInUp>
             <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
@@ -474,7 +474,7 @@ export default function Home() {
               },
             ].map((item) => (
               <StaggerItem key={item.name}>
-                <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 h-full">
+                <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6 h-full">
                   <h3 className="font-bold text-amber-400">{item.name}</h3>
                   <p className="mt-3 text-base text-zinc-300">{item.method}</p>
                 </div>
@@ -491,7 +491,7 @@ export default function Home() {
       {/* VALUE ANCHOR — Stakes comparison. Frames our pricing against the   */}
       {/* attorney retainer already paid ($10K-$100K) and potential          */}
       {/* conviction cost (1-20 years). Makes $197-$9,997 feel small.       */}
-      <section className="border-t border-zinc-600 px-4 py-16 section-alt">
+      <section className="border-t border-zinc-500 px-4 py-16 section-alt">
         <div className="mx-auto max-w-3xl text-center">
           <FadeInUp>
             <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
@@ -514,7 +514,7 @@ export default function Home() {
           </p>
           <StaggerContainer className="mt-8 grid gap-4 md:grid-cols-3">
             <StaggerItem>
-              <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+              <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
                 <div className="text-2xl font-bold text-red-400">Less than one hour</div>
                 <p className="mt-1 text-xs font-semibold text-zinc-400">of your attorney&apos;s billing rate ($250-$500/hr).</p>
                 <p className="mt-2 text-base text-zinc-400">
@@ -523,7 +523,7 @@ export default function Home() {
               </div>
             </StaggerItem>
             <StaggerItem>
-              <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+              <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
                 <div className="text-2xl font-bold text-red-400">$10K-$100K+</div>
                 <p className="mt-1 text-xs font-semibold text-zinc-400">What you already paid your attorney.</p>
                 <p className="mt-2 text-base text-zinc-400">
@@ -604,7 +604,7 @@ export default function Home() {
           { slug: "other", label: "Other Charges", description: "We research any criminal charge type", playbook: null },
         ] as const;
         return (
-          <section className="border-t border-zinc-600 px-4 py-20 section-alt">
+          <section className="border-t border-zinc-500 px-4 py-20 section-alt">
             <div className="mx-auto max-w-5xl">
               <FadeInUp>
                 <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
@@ -619,7 +619,7 @@ export default function Home() {
                   <StaggerItem key={cat.slug}>
                     <Link
                       href={cat.playbook ? `/checkout?tier=${cat.playbook}` : "/start"}
-                      className="group block rounded-lg border border-zinc-600 bg-zinc-900 p-5 transition-all hover:border-zinc-600 h-full cursor-pointer"
+                      className="group block rounded-lg border border-zinc-500 bg-zinc-900 p-5 transition-all hover:border-zinc-500 h-full cursor-pointer"
                     >
                       <p className="text-sm font-bold text-zinc-200">{cat.label}</p>
                       <p className="mt-2 text-xs leading-relaxed text-zinc-400">
@@ -642,7 +642,7 @@ export default function Home() {
       <section className="px-4 py-10">
         <div className="mx-auto max-w-3xl">
           <FadeInUp>
-            <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 text-center">
+            <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6 text-center">
               <p className="text-sm font-semibold uppercase tracking-wider text-amber-400">
                 Who we are
               </p>
@@ -658,7 +658,7 @@ export default function Home() {
       </section>
 
       {/* GUARANTEE SECTION — Named guarantee, cash refund first.             */}
-      <section className="border-t border-zinc-600 px-4 py-16">
+      <section className="border-t border-zinc-500 px-4 py-16">
         <div className="mx-auto max-w-3xl text-center">
           <FadeInUp>
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-8">
@@ -709,7 +709,7 @@ export default function Home() {
       {/* Anchor id="pricing" for direct linking from nav + CTAs.          */}
       {/* Upgrade credit messaging reinforces "start small, grow later."   */}
       {/* ------------------------------------------------------------------ */}
-      <section id="pricing" className="border-t border-zinc-600 px-4 py-20 section-alt">
+      <section id="pricing" className="border-t border-zinc-500 px-4 py-20 section-alt">
         <div className="mx-auto max-w-5xl">
           <FadeInUp>
             <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
@@ -737,7 +737,7 @@ export default function Home() {
 
       {/* LEAD CAPTURE — Email opt-in for visitors not ready to buy.         */}
       {/* Falls back to free score link for zero-friction engagement.       */}
-      <section className="border-t border-zinc-600 px-4 py-20">
+      <section className="border-t border-zinc-500 px-4 py-20">
         <div className="mx-auto max-w-2xl">
           <LeadCapture
             ungated
@@ -760,7 +760,7 @@ export default function Home() {
       {/* FAQ — Renders the homeFaqs array via FAQAccordion component.       */}
       {/* Handles remaining objections. Schema markup is injected above     */}
       {/* via faqSchema JSON-LD for Google rich snippet eligibility.        */}
-      <section className="border-t border-zinc-600 px-4 py-20">
+      <section className="border-t border-zinc-500 px-4 py-20">
         <div className="mx-auto max-w-3xl">
           <FadeInUp>
             <h2 className="font-display mb-8 text-center text-2xl font-bold text-white md:text-3xl">
@@ -773,7 +773,7 @@ export default function Home() {
 
       {/* FINAL CTA — Fear → empowerment close (Wolf). Opens with their     */}
       {/* 2am emotional state, closes with empowered identity.             */}
-      <section className="border-t border-zinc-600 px-4 py-20 text-center">
+      <section className="border-t border-zinc-500 px-4 py-20 text-center">
         <div className="mx-auto max-w-2xl">
           <FadeInUp>
             <h2 className="font-display text-2xl font-bold text-white md:text-3xl">

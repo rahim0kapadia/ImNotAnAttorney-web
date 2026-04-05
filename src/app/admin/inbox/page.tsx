@@ -277,7 +277,7 @@ function InboxContent() {
                     selected?.id === email.id
                       ? "border-amber-500 bg-zinc-900"
                       : email.read
-                        ? "border-zinc-600 bg-zinc-900/30 opacity-70"
+                        ? "border-zinc-500 bg-zinc-900/30 opacity-70"
                         : "border-zinc-700 bg-zinc-900/50"
                   }`}
                 >
@@ -337,7 +337,7 @@ function InboxContent() {
           </div>
 
           {/* Email detail */}
-          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 min-h-[400px]">
+          <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6 min-h-[400px]">
             {selected ? (
               <div>
                 <div className="flex items-start justify-between mb-4">
@@ -378,7 +378,7 @@ function InboxContent() {
                 </div>
                 {/* Reply compose */}
                 {replying && (
-                  <div className="border-t border-zinc-600 pt-4 mb-4">
+                  <div className="border-t border-zinc-500 pt-4 mb-4">
                     <p className="text-xs text-zinc-400 mb-2">
                       Replying to {selected.from_email}
                     </p>
@@ -422,7 +422,7 @@ function InboxContent() {
                 )}
 
                 {/* Email body — sanitized to prevent XSS from malicious inbound emails */}
-                <div className="border-t border-zinc-600 pt-4">
+                <div className="border-t border-zinc-500 pt-4">
                   {selected.body_html ? (
                     <div
                       className="prose prose-invert prose-sm max-w-none"

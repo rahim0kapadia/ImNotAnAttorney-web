@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 const CONSENT_KEY = "cookie-consent";
 const ACCEPTED = "accepted";
@@ -37,6 +37,9 @@ function loadGA4(gaId: string) {
 export function CookieConsent() {
   const [showBanner, setShowBanner] = useState(false);
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const declineBtnRef = useRef<HTMLButtonElement>(null);
+  const acceptBtnRef = useRef<HTMLButtonElement>(null);
+  const prevFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const consent = localStorage.getItem(CONSENT_KEY);
@@ -48,6 +51,21 @@ export function CookieConsent() {
     }
     // "declined" -- do nothing
   }, [gaId]);
+
+  // Focus management: move focus into dialog on mount, restore on dismiss
+  useEffect(() => {
+    if (showBanner) {
+      prevFocusRef.current = document.activeElement as HTMLElement | null;
+      // Delay slightly so the DOM has rendered
+      const id = requestAnimationFrame(() => {
+        declineBtnRef.current?.focus();
+      });
+      return () => cancelAnimationFrame(id);
+    } else if (prevFocusRef.current) {
+      prevFocusRef.current.focus();
+      prevFocusRef.current = null;
+    }
+  }, [showBanner]);
 
   const handleAccept = useCallback(() => {
     localStorage.setItem(CONSENT_KEY, ACCEPTED);
@@ -62,6 +80,37 @@ export function CookieConsent() {
     setShowBanner(false);
   }, []);
 
+  // Focus trap: Tab cycles between Decline and Accept; Escape declines
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        handleDecline();
+        return;
+      }
+
+      if (e.key !== "Tab") return;
+
+      const focusable = [
+        declineBtnRef.current,
+        acceptBtnRef.current,
+      ].filter(Boolean) as HTMLElement[];
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    },
+    [handleDecline]
+  );
+
   if (!showBanner) return null;
 
   return (
@@ -69,6 +118,7 @@ export function CookieConsent() {
       role="dialog"
       aria-label="Cookie consent"
       aria-describedby="cookie-consent-description"
+      onKeyDown={handleKeyDown}
       className="fixed bottom-0 left-0 right-0 z-50 border-t border-zinc-700 bg-zinc-900 px-4 py-4 sm:px-6 sm:py-5"
     >
       <div className="mx-auto flex max-w-5xl flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
@@ -78,12 +128,14 @@ export function CookieConsent() {
         </p>
         <div className="flex shrink-0 gap-3">
           <button
+            ref={declineBtnRef}
             onClick={handleDecline}
             className="rounded-md bg-zinc-700 px-4 py-2 text-sm font-medium text-zinc-200 transition-colors hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
           >
             Decline
           </button>
           <button
+            ref={acceptBtnRef}
             onClick={handleAccept}
             className="rounded-md bg-amber-500 px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
           >

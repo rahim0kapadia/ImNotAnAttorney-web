@@ -157,7 +157,7 @@ export default function PlaybooksCatalogPage() {
                 <FadeInUp key={slug} delay={i * 0.08}>
                   <Link
                     href={`/playbook/${slug}`}
-                    className="group flex h-full flex-col rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 transition-all duration-200 hover:border-amber-400/60 hover:bg-zinc-900/80"
+                    className="group flex h-full flex-col rounded-xl border border-zinc-500 bg-zinc-900/50 p-6 transition-all duration-200 hover:border-amber-400/60 hover:bg-zinc-900/80"
                   >
                     {/* Charge type label */}
                     <h2 className="text-lg font-bold text-white group-hover:text-amber-400 transition-colors duration-200">
@@ -170,7 +170,7 @@ export default function PlaybooksCatalogPage() {
                     </p>
 
                     {/* Price + delivery */}
-                    <div className="mt-5 flex items-center justify-between border-t border-zinc-600 pt-4">
+                    <div className="mt-5 flex items-center justify-between border-t border-zinc-500 pt-4">
                       <span className="text-xl font-bold text-white">
                         {tier.priceDisplay}
                       </span>
@@ -203,7 +203,7 @@ export default function PlaybooksCatalogPage() {
       </section>
 
       {/* ── Value Props: What's Inside Every Playbook ── */}
-      <section className="border-t border-zinc-600/50 px-4 py-20 sm:px-6 lg:px-8">
+      <section className="border-t border-zinc-500/50 px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-5xl">
           <FadeInUp>
             <h2 className="text-center text-3xl font-bold text-white sm:text-4xl">
@@ -220,7 +220,7 @@ export default function PlaybooksCatalogPage() {
           <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {VALUE_PROPS.map((prop, i) => (
               <FadeInUp key={prop.title} delay={i * 0.06}>
-                <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+                <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
                   <div className="mb-3 text-2xl">{prop.icon}</div>
                   <h3 className="text-lg font-semibold text-white">
                     {prop.title}
@@ -245,7 +245,7 @@ export default function PlaybooksCatalogPage() {
       </p>
 
       {/* ── UPL Disclaimer ── */}
-      <section className="border-t border-zinc-600/50 px-4 py-12 sm:px-6 lg:px-8">
+      <section className="border-t border-zinc-500/50 px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm leading-relaxed text-zinc-400">
             These playbooks provide legal information, not legal advice. The

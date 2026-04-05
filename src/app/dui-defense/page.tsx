@@ -109,7 +109,7 @@ export default function DuiDefenseHubPage() {
             <Link
               key={s.slug}
               href={`/dui-defense/${s.slug}`}
-              className="flex items-center justify-between rounded-lg border border-zinc-600 bg-zinc-900/50 px-4 py-3 text-sm transition-colors hover:border-amber-500/30 hover:bg-zinc-900"
+              className="flex items-center justify-between rounded-lg border border-zinc-500 bg-zinc-900/50 px-4 py-3 text-sm transition-colors hover:border-amber-500/30 hover:bg-zinc-900"
             >
               <span className="font-medium text-zinc-300">{s.name}</span>
               <span className="text-xs text-zinc-400">{s.abbr}</span>
@@ -131,7 +131,7 @@ export default function DuiDefenseHubPage() {
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <Link
               href="/score?charge=dui"
-              className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 transition-colors hover:border-amber-500/30"
+              className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6 transition-colors hover:border-amber-500/30"
             >
               <p className="font-semibold text-amber-400">
                 Defense Milestone Score
@@ -143,7 +143,7 @@ export default function DuiDefenseHubPage() {
             </Link>
             <Link
               href="/playbook/dui-first-offense"
-              className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 transition-colors hover:border-amber-500/30"
+              className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6 transition-colors hover:border-amber-500/30"
             >
               <p className="font-semibold text-amber-400">
                 DUI Defense Playbook &mdash; {TIER_CORE["dui-first-offense"].priceDisplay}
@@ -161,7 +161,7 @@ export default function DuiDefenseHubPage() {
 
       {/* DISCLAIMER */}
       <section className="mt-12">
-        <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
+        <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
           <p className="text-xs text-zinc-400">
             <strong>Important:</strong> This page provides general legal
             information about DUI laws across the United States. Laws change

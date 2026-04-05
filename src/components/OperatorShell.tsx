@@ -118,8 +118,8 @@ export function OperatorShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-200 flex">
       {/* Sidebar */}
-      <aside className="w-56 shrink-0 border-r border-zinc-600 bg-zinc-950 flex flex-col">
-        <div className="p-4 border-b border-zinc-600">
+      <aside className="w-56 shrink-0 border-r border-zinc-500 bg-zinc-950 flex flex-col">
+        <div className="p-4 border-b border-zinc-500">
           <h2 className="text-sm font-bold text-white tracking-wide">
             INNA Operator
           </h2>
@@ -148,7 +148,7 @@ export function OperatorShell({ children }: { children: ReactNode }) {
             );
           })}
         </nav>
-        <div className="p-4 border-t border-zinc-600">
+        <div className="p-4 border-t border-zinc-500">
           <button
             onClick={handleLogout}
             className="w-full text-left text-sm text-zinc-400 hover:text-white transition-colors"

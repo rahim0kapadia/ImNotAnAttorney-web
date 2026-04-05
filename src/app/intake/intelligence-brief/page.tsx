@@ -457,7 +457,7 @@ function Phase2IntakeForm() {
           </fieldset>
 
           {/* Disclaimer */}
-          <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
+          <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
             <p className="text-xs text-zinc-400">
               This information is used solely to generate your Intelligence
               Brief. ImNotAnAttorney provides legal information and research

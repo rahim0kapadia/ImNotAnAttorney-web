@@ -4,7 +4,7 @@ export default function CheckoutLoading() {
       <div className="mx-auto max-w-2xl">
         <div className="h-10 w-48 animate-pulse rounded bg-zinc-800" />
         <div className="mt-3 h-5 w-72 animate-pulse rounded bg-zinc-800/60" />
-        <div className="mt-8 rounded-xl border border-zinc-600 bg-zinc-900/50 p-8">
+        <div className="mt-8 rounded-xl border border-zinc-500 bg-zinc-900/50 p-8">
           <div className="h-8 w-40 animate-pulse rounded bg-zinc-800" />
           <div className="mt-6 space-y-4">
             <div className="h-12 w-full animate-pulse rounded bg-zinc-800" />

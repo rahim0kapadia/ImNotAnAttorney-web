@@ -136,7 +136,7 @@ export default function ResourcesPage() {
             {resources.map((r) => (
               <StaggerItem
                 key={r.title}
-                className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6"
+                className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6"
               >
                 <span className="inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                   {r.type}
@@ -183,7 +183,7 @@ export default function ResourcesPage() {
               { n: "2", title: "Document everything while it\u2019s fresh", desc: "What happened before the stop. What the officer said. Whether you were read your rights. Your memory fades — write it down now." },
               { n: "3", title: "Know what to ask before you hire an attorney", desc: "6 questions that help you find a DUI specialist who\u2019s the right fit. Ask these before you sign anything." },
             ].map((item) => (
-              <div key={item.n} className="flex items-start gap-4 rounded-lg border border-zinc-600 bg-zinc-900/50 p-5">
+              <div key={item.n} className="flex items-start gap-4 rounded-lg border border-zinc-500 bg-zinc-900/50 p-5">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-500/10 text-sm font-bold text-amber-400">
                   {item.n}
                 </div>
@@ -238,7 +238,7 @@ export default function ResourcesPage() {
             {rightsGuides.map((guide) => (
               <StaggerItem
                 key={guide.charge}
-                className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6"
+                className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6"
               >
                 <h3 className="text-lg font-bold text-amber-400">
                   {guide.charge}

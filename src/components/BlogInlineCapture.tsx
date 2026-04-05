@@ -35,7 +35,7 @@ export function BlogInlineCapture({ category = "general-defense" }: BlogInlineCa
   const checklist = CHECKLIST_BY_CATEGORY[category] || CHECKLIST_BY_CATEGORY["general-defense"];
 
   return (
-    <div className="my-8 rounded-lg border border-zinc-600 bg-zinc-900/80 p-5">
+    <div className="my-8 rounded-lg border border-zinc-500 bg-zinc-900/80 p-5">
       <p className="text-sm font-bold text-white">{checklist.title}</p>
       <p className="mt-1 text-xs text-zinc-400">{checklist.hook}</p>
       <div className="mt-3">

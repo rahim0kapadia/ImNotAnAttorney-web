@@ -46,7 +46,7 @@ export default function IntakeChargeQuestions({
                     "px-3 py-1.5 rounded-full border text-sm cursor-pointer transition-all",
                     isSelected
                       ? "border-amber-500 bg-amber-500/10 text-amber-400"
-                      : "border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-600",
+                      : "border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-500",
                   ].join(" ")}
                 >
                   {option}

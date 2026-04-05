@@ -365,7 +365,7 @@ export default function ServicesPage() {
         </FadeInUp>
 
         <FadeInUp>
-        <div className="mt-16 rounded-xl border border-zinc-600 bg-zinc-900/50 p-8 text-center">
+        <div className="mt-16 rounded-xl border border-zinc-500 bg-zinc-900/50 p-8 text-center">
           <h2 className="font-display text-lg font-bold text-white">
             Smart defendants don&apos;t just hire an attorney.{" "}
             <span className="text-amber-400">
@@ -648,7 +648,7 @@ export default function ServicesPage() {
               {ct.tiers.slice(0, 2).map((tier) => (
                 <div
                   key={tier.name}
-                  className="flex h-full flex-col rounded-xl border border-zinc-600 bg-zinc-900/50 p-6"
+                  className="flex h-full flex-col rounded-xl border border-zinc-500 bg-zinc-900/50 p-6"
                 >
                   {tier.stageLabel && (
                     <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
@@ -691,7 +691,7 @@ export default function ServicesPage() {
                 <div
                   key={tier.name}
                   id={tier.slug}
-                  className="flex h-full flex-col rounded-xl border border-zinc-600 bg-zinc-900/50 p-6"
+                  className="flex h-full flex-col rounded-xl border border-zinc-500 bg-zinc-900/50 p-6"
                 >
                   {tier.stageLabel && (
                     <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
@@ -744,7 +744,7 @@ export default function ServicesPage() {
               <div className="mb-4 text-center">
                 <p className="text-sm font-semibold text-zinc-300">For defendants with a confirmed trial date</p>
               </div>
-              <div id="situation-room" className="flex h-full flex-col rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+              <div id="situation-room" className="flex h-full flex-col rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
                 {ct.tiers[4].stageLabel && (
                   <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                     {ct.tiers[4].stageLabel}
@@ -792,7 +792,7 @@ export default function ServicesPage() {
         {/* GUARANTEE — Per-tier delivery commitments with deadlines.          */}
         {/* Reinforces risk reversal at the point of maximum hesitation.      */}
         <FadeInUp>
-        <section className="mt-20 rounded-xl border border-zinc-600 bg-zinc-900/50 p-8 text-center">
+        <section className="mt-20 rounded-xl border border-zinc-500 bg-zinc-900/50 p-8 text-center">
           <h2 className="font-display text-2xl font-bold text-white">
             Our Guarantee
           </h2>
@@ -804,19 +804,19 @@ export default function ServicesPage() {
           <div className="mx-auto mt-8 max-w-2xl text-left">
             <h3 className="text-lg font-bold text-amber-400 mb-4">{TIER_CORE["x-ray"].name} — Three Guarantees. Zero Exceptions.</h3>
             <div className="space-y-4">
-              <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-5">
+              <div className="rounded-lg border border-zinc-500 bg-zinc-950/50 p-5">
                 <p className="font-semibold text-white mb-2">The Discovery Guarantee</p>
                 <p className="text-sm text-zinc-400">
                   Every piece of discovery we have analyzed has contained at least one discrepancy, gap, or constitutional vulnerability. Every single one. That is not marketing language — it is the nature of police work and prosecutorial preparation. If we analyze your discovery documents and do not identify at least one concrete issue your attorney can act on — a contradiction, a chain of custody gap, a constitutional question, a missing piece of evidence that should be there — you get every dollar back. No forms. No phone calls. No waiting. Just email us and it&apos;s done.
                 </p>
               </div>
-              <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-5">
+              <div className="rounded-lg border border-zinc-500 bg-zinc-950/50 p-5">
                 <p className="font-semibold text-white mb-2">The Attorney Meeting Guarantee</p>
                 <p className="text-sm text-zinc-400">
                   Every X-Ray comes with an Attorney Delivery Package — a formatted summary of findings your attorney can read in 10 minutes, with every claim sourced back to a specific page in your discovery. If your attorney reviews our findings and tells you there is nothing there, send us the response and we will add a second round of analysis at no charge.
                 </p>
               </div>
-              <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-5">
+              <div className="rounded-lg border border-zinc-500 bg-zinc-950/50 p-5">
                 <p className="font-semibold text-white mb-2">The Delivery Commitment</p>
                 <p className="text-sm text-zinc-400">
                   Delivered within 10 business days of document receipt or you receive a 20% refund automatically — no request required. Past 15 business days for any reason: full refund. Your case moves on a schedule. So do we.

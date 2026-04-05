@@ -127,7 +127,7 @@ export default function MyCasesPage() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       {/* Header */}
-      <header className="border-b border-zinc-600 px-4 py-4">
+      <header className="border-b border-zinc-500 px-4 py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link href="/" className="text-amber-400 font-bold text-lg">
             ImNotAnAttorney
@@ -149,7 +149,7 @@ export default function MyCasesPage() {
         <h1 className="text-2xl font-bold mb-6">My Orders & Cases</h1>
 
         {orders.length === 0 ? (
-          <div className="bg-zinc-900 rounded-xl border border-zinc-600 p-8 text-center">
+          <div className="bg-zinc-900 rounded-xl border border-zinc-500 p-8 text-center">
             <p className="text-zinc-400">No orders found.</p>
             <Link
               href="/"
@@ -165,7 +165,7 @@ export default function MyCasesPage() {
               return (
                 <div
                   key={order.id}
-                  className="bg-zinc-900 rounded-xl border border-zinc-600 p-5"
+                  className="bg-zinc-900 rounded-xl border border-zinc-500 p-5"
                 >
                   {/* Order header */}
                   <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
@@ -190,7 +190,7 @@ export default function MyCasesPage() {
 
                   {/* Associated cases */}
                   {orderCases.length > 0 && (
-                    <div className="border-t border-zinc-600 pt-3 mt-3 space-y-2">
+                    <div className="border-t border-zinc-500 pt-3 mt-3 space-y-2">
                       {orderCases.map((c) => (
                         <div
                           key={c.id}

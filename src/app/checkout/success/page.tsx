@@ -421,7 +421,7 @@ function SuccessContent() {
                     : tier === "federal-criminal"
                     ? "Federal cases move on a different timeline — grand jury strategy, cooperation pressure, and sentencing guidelines create layers that general questions can't reach. The Case Decoder breaks down the federal-specific questions that change outcomes."
                     : tier === "white-collar"
-                    ? "White collar cases are document-heavy — forensic accounting gaps, transaction timelines, and asset protection questions require charge-specific analysis. The Case Decoder identifies the financial evidence questions your attorney should be asking."
+                    ? "White collar cases are document-heavy — forensic accounting gaps, transaction timelines, and asset protection questions require charge-specific analysis. The Case Decoder identifies the financial evidence questions worth asking in your attorney meeting."
                     : "The Playbook gives you the general framework. The Case Decoder applies it to YOUR specific charges, YOUR jurisdiction, and YOUR attorney's track record."}
                 </p>
                 <p className="mt-1 text-xs text-zinc-400">
@@ -475,7 +475,7 @@ function SuccessContent() {
                   </p>
                   <Link
                     href="/checkout?tier=intelligence-brief"
-                    className="mt-3 inline-block rounded-lg border border-zinc-600 px-6 py-2 text-sm font-semibold text-zinc-300 transition-colors hover:border-zinc-400"
+                    className="mt-3 inline-block rounded-lg border border-zinc-500 px-6 py-2 text-sm font-semibold text-zinc-300 transition-colors hover:border-zinc-400"
                   >
                     Get Intelligence Brief — {upgradeCostBetween("case-decoder", "intelligence-brief")} &rarr;
                   </Link>

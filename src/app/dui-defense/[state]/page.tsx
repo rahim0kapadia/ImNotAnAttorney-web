@@ -101,7 +101,7 @@ export default async function StateDuiPage({ params }: PageProps) {
       <FadeInUp>
         <section className="mt-12">
           <div className="grid gap-4 sm:grid-cols-3">
-            <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-5 text-center">
+            <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-5 text-center">
               <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
                 BAC Limit
               </p>
@@ -112,7 +112,7 @@ export default async function StateDuiPage({ params }: PageProps) {
                 <p className="mt-1 text-xs text-red-400">Lowest in the nation</p>
               )}
             </div>
-            <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-5 text-center">
+            <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-5 text-center">
               <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
                 Enhanced BAC
               </p>
@@ -121,7 +121,7 @@ export default async function StateDuiPage({ params }: PageProps) {
               </p>
               <p className="mt-1 text-xs text-zinc-400">Higher penalties above this</p>
             </div>
-            <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-5 text-center">
+            <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-5 text-center">
               <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
                 Lookback Period
               </p>
@@ -173,7 +173,7 @@ export default async function StateDuiPage({ params }: PageProps) {
             ].map((item) => (
               <div
                 key={item.label}
-                className="flex items-start justify-between gap-4 rounded-lg border border-zinc-600 bg-zinc-900/50 p-4"
+                className="flex items-start justify-between gap-4 rounded-lg border border-zinc-500 bg-zinc-900/50 p-4"
               >
                 <span className="text-sm font-semibold text-zinc-300">
                   {item.label}
@@ -199,7 +199,7 @@ export default async function StateDuiPage({ params }: PageProps) {
             test (breath, blood, or urine) if an officer has probable cause to believe
             you&apos;re impaired.
           </p>
-          <div className="mt-4 rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
+          <div className="mt-4 rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
             <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
               Refusal Penalty
             </p>
@@ -241,7 +241,7 @@ export default async function StateDuiPage({ params }: PageProps) {
 
       {/* CTA — DUI PLAYBOOK */}
       <section className="mt-12">
-        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
+        <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
           <p className="text-xs font-semibold text-amber-400">
             {duiPlaybook.name} &mdash; {duiPlaybook.priceDisplay}
           </p>
@@ -259,7 +259,7 @@ export default async function StateDuiPage({ params }: PageProps) {
             </Link>
             <Link
               href="/blog/complete-dui-defense-guide"
-              className="inline-block rounded-lg border border-zinc-700 px-6 py-3 text-sm font-semibold text-zinc-300 transition-all hover:border-zinc-600 hover:text-white"
+              className="inline-block rounded-lg border border-zinc-700 px-6 py-3 text-sm font-semibold text-zinc-300 transition-all hover:border-zinc-500 hover:text-white"
             >
               Read the Free DUI Guide
             </Link>
@@ -269,12 +269,12 @@ export default async function StateDuiPage({ params }: PageProps) {
 
       {/* DISCLAIMER */}
       <section className="mt-12">
-        <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
+        <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
           <p className="text-xs text-zinc-400">
             <strong>Important:</strong> This page provides general legal information
             about {data.name} DUI laws as of the date of publication. Laws change
-            frequently. This is not legal advice. Consult a {data.name}-licensed
-            attorney for guidance specific to your case.
+            frequently. This is not legal advice. For guidance specific to your case,
+            speaking with a {data.name}-licensed attorney is one option — or take the free Defense Milestone Score to see where your case stands.
           </p>
         </div>
       </section>

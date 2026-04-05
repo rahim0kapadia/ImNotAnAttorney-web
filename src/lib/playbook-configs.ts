@@ -492,7 +492,7 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
       },
       {
         title: "Revocation Hearing Roadmap",
-        desc: "From alleged violation through disposition \u2014 every stage, what your attorney should have done, and what red flags to watch for.",
+        desc: "From alleged violation through disposition \u2014 every stage, what typically happens, and what questions to ask at each step.",
         value: "$97",
       },
       {
@@ -535,11 +535,11 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
     items: [
       {
         deadline: "Immediately after learning of the violation",
-        what: "Contact your attorney. If your original attorney won\u2019t help, you need a new one before the hearing. Do NOT avoid your PO \u2014 that turns a technical violation into absconding.",
+        what: "Contacting an attorney promptly is critical at this stage. Avoiding a probation officer after a violation allegation can escalate a technical violation into an absconding charge.",
       },
       {
         deadline: "Before the revocation hearing",
-        what: "Gather every document that proves compliance \u2014 receipts, certificates, sign-in sheets, communication with your PO. Your compliance history is your strongest defense.",
+        what: "Gather every document that proves compliance \u2014 receipts, certificates, sign-in sheets, communication with your PO. Compliance documentation is often central to revocation hearings.",
       },
     ],
   },
@@ -700,11 +700,11 @@ export const WHITE_COLLAR: PlaybookConfig = {
     items: [
       {
         deadline: "Immediately upon contact from agents",
-        what: "Exercise your Fifth Amendment rights. Do NOT answer questions, even casually. Do NOT destroy any documents \u2014 that\u2019s a separate federal crime (18 U.S.C. \u00A7 1519).",
+        what: "Defendants have the constitutional right to remain silent under the Fifth Amendment. Many defense attorneys advise saying nothing to investigators without counsel present. Destroying documents is a separate federal crime (18 U.S.C. \u00A7 1519).",
       },
       {
         deadline: "Before any plea or cooperation decision",
-        what: "Ensure your attorney has calculated your sentencing guideline range, reviewed all discovery, and challenged the loss calculation. These decisions are irreversible.",
+        what: "Before any plea or cooperation decision, questions worth asking: Has my sentencing guideline range been calculated? Has all discovery been reviewed? Has the loss calculation been challenged? These decisions are irreversible.",
       },
     ],
   },
@@ -865,7 +865,7 @@ export const SEX_OFFENSE: PlaybookConfig = {
     items: [
       {
         deadline: "Immediately",
-        what: "Do NOT contact the accuser or any witnesses. Do NOT delete any digital evidence. Exercise your Fifth Amendment right \u2014 say nothing to investigators without your attorney present.",
+        what: "Contact with the accuser or any witnesses can result in additional charges. Deleting digital evidence can constitute obstruction. Most defense attorneys advise exercising your Fifth Amendment right and saying nothing to investigators without counsel present.",
       },
       {
         deadline: "Within 72 hours of arrest",
@@ -1030,7 +1030,7 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
     items: [
       {
         deadline: "Immediately",
-        what: "Do NOT speak to federal agents without your attorney present. Do NOT destroy any documents, emails, texts, or financial records. Destruction of evidence is a separate federal crime.",
+        what: "Speaking to federal agents without counsel present carries significant risk. Destroying documents, emails, texts, or financial records can constitute a separate federal crime (obstruction, 18 U.S.C. § 1519).",
       },
       {
         deadline: "Within 72 hours",
@@ -1195,11 +1195,11 @@ export const DRUG_TRAFFICKING: PlaybookConfig = {
     items: [
       {
         deadline: "Immediately",
-        what: "Say NOTHING to anyone about your case \u2014 not law enforcement, not cellmates, not friends, not on the phone. Every jail call is recorded. Exercise your Fifth Amendment right.",
+        what: "Anything said about your case \u2014 to law enforcement, cellmates, friends, or on the phone \u2014 can be used as evidence. Every jail call is recorded. Most defense attorneys advise exercising your Fifth Amendment right in this situation.",
       },
       {
         deadline: "Within 72 hours",
-        what: "Write down everything you remember about the arrest, the events leading to it, and anyone involved. Do NOT contact co-defendants or destroy any evidence. Memory and evidence quality degrade fast.",
+        what: "Write down everything you remember about the arrest, the events leading to it, and anyone involved. Contacting co-defendants can create legal complications, and destroying evidence can result in additional charges. Memory and evidence quality degrade fast.",
       },
     ],
   },
@@ -1316,7 +1316,7 @@ export const SELF_DEFENSE: PlaybookConfig = {
       },
       {
         title: "11-Stage Case Roadmap",
-        desc: "From incident through immunity hearing, trial, sentencing, and appeal \u2014 what your attorney should do at each stage",
+        desc: "From incident through immunity hearing, trial, sentencing, and appeal \u2014 what typically happens at each stage and what questions to ask",
         value: "$125",
       },
       {

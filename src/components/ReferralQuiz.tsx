@@ -141,7 +141,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
           </h2>
           <p className="text-zinc-400 text-center mb-8">{rec.reason}</p>
 
-          <div className="bg-zinc-900 rounded-xl border border-zinc-600 p-6">
+          <div className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
             <h3 className="text-xl font-bold text-amber-400 mb-2">{tier.name}</h3>
             <p className="text-zinc-400 text-sm mb-4">{tier.delivery}</p>
 
@@ -203,7 +203,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
               <button
                 key={opt.slug}
                 onClick={() => selectCharge(opt.slug)}
-                className="w-full text-left px-5 py-4 bg-zinc-900 rounded-xl border border-zinc-600 hover:border-amber-500 hover:bg-zinc-800 transition-colors"
+                className="w-full text-left px-5 py-4 bg-zinc-900 rounded-xl border border-zinc-500 hover:border-amber-500 hover:bg-zinc-800 transition-colors"
               >
                 {opt.label}
               </button>
@@ -245,7 +245,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
             <button
               key={opt.value}
               onClick={() => selectFollowUp(opt.value)}
-              className="w-full text-left px-5 py-4 bg-zinc-900 rounded-xl border border-zinc-600 hover:border-amber-500 hover:bg-zinc-800 transition-colors"
+              className="w-full text-left px-5 py-4 bg-zinc-900 rounded-xl border border-zinc-500 hover:border-amber-500 hover:bg-zinc-800 transition-colors"
             >
               {opt.label}
             </button>

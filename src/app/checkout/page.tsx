@@ -737,7 +737,7 @@ function CheckoutContent() {
           </div>
         )}
 
-        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-8">
+        <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-8">
           <h1 className="text-2xl font-bold text-white">{info.name}</h1>
           {info.feltExperience && (
             <p className="mt-2 text-sm text-zinc-400 italic">{info.feltExperience}</p>
@@ -747,7 +747,7 @@ function CheckoutContent() {
           </p>
           {info.isDigitalProduct ? (
             <div className="mt-4 space-y-2">
-              <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 p-3 transition-colors hover:border-zinc-600 has-[:checked]:border-amber-500/50 has-[:checked]:bg-amber-500/5">
+              <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 p-3 transition-colors hover:border-zinc-500 has-[:checked]:border-amber-500/50 has-[:checked]:bg-amber-500/5">
                 <input
                   type="radio"
                   name="paymentOption"
@@ -759,7 +759,7 @@ function CheckoutContent() {
                   <span className="text-sm font-semibold text-white">Pay in full &mdash; {info.price}</span>
                 </div>
               </label>
-              <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 p-3 transition-colors hover:border-zinc-600 has-[:checked]:border-amber-500/50 has-[:checked]:bg-amber-500/5">
+              <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 p-3 transition-colors hover:border-zinc-500 has-[:checked]:border-amber-500/50 has-[:checked]:bg-amber-500/5">
                 <input
                   type="radio"
                   name="paymentOption"
@@ -1004,7 +1004,7 @@ function CheckoutContent() {
                   type="checkbox"
                   checked={returningCustomer}
                   onChange={(e) => setReturningCustomer(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
+                  className="mt-0.5 h-4 w-4 rounded border-zinc-500 bg-zinc-800 text-amber-500 focus:ring-amber-500"
                 />
                 <div>
                   <span className="text-sm font-semibold text-white">Already have a Case Decoder?</span>
@@ -1069,7 +1069,7 @@ function CheckoutContent() {
                 type="checkbox"
                 checked={priorityDelivery}
                 onChange={(e) => setPriorityDelivery(e.target.checked)}
-                className="mt-0.5 h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
+                className="mt-0.5 h-4 w-4 rounded border-zinc-500 bg-zinc-800 text-amber-500 focus:ring-amber-500"
               />
               <div>
                 <span className="text-sm font-semibold text-white">
@@ -1100,7 +1100,7 @@ function CheckoutContent() {
                   aria-required="true"
                   aria-invalid={consentError && !consentChecked}
                   aria-describedby={consentError && !consentChecked ? "consent-error" : undefined}
-                  className="mt-0.5 h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
+                  className="mt-0.5 h-4 w-4 rounded border-zinc-500 bg-zinc-800 text-amber-500 focus:ring-amber-500"
                 />
                 <span className="text-xs text-zinc-400">
                   I understand this product provides legal information and research — not legal advice. No attorney-client relationship is created.
@@ -1160,7 +1160,7 @@ function CheckoutContent() {
         {/* UPGRADE CREDITS REMINDER — Outside the main card, reinforces that */}
         {/* every dollar spent counts toward future upgrades. Reduces "what  */}
         {/* if I pick the wrong tier?" anxiety.                              */}
-        <div className="mt-6 rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 text-center">
+        <div className="mt-6 rounded-xl border border-zinc-500 bg-zinc-900/50 p-6 text-center">
           <p className="text-sm font-semibold text-amber-400">
             100% Upgrade Credit
           </p>

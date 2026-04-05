@@ -240,7 +240,7 @@ export default function DemandDashboard() {
     return (
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
         <form
-          className="bg-zinc-900 p-8 rounded-lg border border-zinc-600 w-full max-w-sm"
+          className="bg-zinc-900 p-8 rounded-lg border border-zinc-500 w-full max-w-sm"
           onSubmit={async (e) => {
             e.preventDefault();
             // Test auth
@@ -361,7 +361,7 @@ export default function DemandDashboard() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-600 text-left text-zinc-400">
+                <tr className="border-b border-zinc-500 text-left text-zinc-400">
                   <th className="pb-2 pr-4">{dimension === "charge_type" ? "Charge Type" : "Pain Point"}</th>
                   <th className="pb-2 pr-4 text-right">Posts</th>
                   <th className="pb-2 pr-4 text-right">Questions</th>
@@ -374,7 +374,7 @@ export default function DemandDashboard() {
               </thead>
               <tbody>
                 {scores.map(s => (
-                  <tr key={s.id} className="border-b border-zinc-600/50 hover:bg-zinc-900/50">
+                  <tr key={s.id} className="border-b border-zinc-500/50 hover:bg-zinc-900/50">
                     <td className="py-2 pr-4 font-medium text-white">{s.dimension_label}</td>
                     <td className="py-2 pr-4 text-right font-mono">{s.post_count}</td>
                     <td className="py-2 pr-4 text-right font-mono">{s.question_count}</td>
@@ -404,7 +404,7 @@ export default function DemandDashboard() {
           <h2 className="text-lg font-semibold text-white mb-3">Content Gaps ({gaps.length})</h2>
           <div className="space-y-2">
             {gaps.map(g => (
-              <div key={g.id} className="flex items-center justify-between bg-zinc-900 rounded-lg p-3 border border-zinc-600">
+              <div key={g.id} className="flex items-center justify-between bg-zinc-900 rounded-lg p-3 border border-zinc-500">
                 <div>
                   <div className="font-medium text-white">{g.charge_type_slug}{g.pain_point_slug ? ` / ${g.pain_point_slug}` : ""}</div>
                   {g.suggested_title && <div className="text-sm text-zinc-400 mt-0.5">{g.suggested_title}</div>}
@@ -434,7 +434,7 @@ export default function DemandDashboard() {
           <h2 className="text-lg font-semibold text-white mb-3">Emerging Topics ({emerging.length})</h2>
           <div className="space-y-2">
             {emerging.map(t => (
-              <div key={t.id} className="flex items-center justify-between bg-zinc-900 rounded-lg p-3 border border-zinc-600">
+              <div key={t.id} className="flex items-center justify-between bg-zinc-900 rounded-lg p-3 border border-zinc-500">
                 <div>
                   <div className="font-medium text-white">{t.topic_phrases.join(" + ")}</div>
                   {t.representative_title && <div className="text-sm text-zinc-400 mt-0.5 truncate max-w-lg">{t.representative_title}</div>}
@@ -463,7 +463,7 @@ export default function DemandDashboard() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-600 text-left text-zinc-400">
+                <tr className="border-b border-zinc-500 text-left text-zinc-400">
                   <th className="pb-2 pr-4">Blog Post</th>
                   <th className="pb-2 pr-4 text-right">Subscribers</th>
                   <th className="pb-2 pr-4 text-right">Orders</th>
@@ -473,7 +473,7 @@ export default function DemandDashboard() {
               </thead>
               <tbody>
                 {performance.slice(0, 15).map(p => (
-                  <tr key={p.id} className="border-b border-zinc-600/50 hover:bg-zinc-900/50">
+                  <tr key={p.id} className="border-b border-zinc-500/50 hover:bg-zinc-900/50">
                     <td className="py-2 pr-4 font-medium text-white truncate max-w-xs">{p.blog_slug}</td>
                     <td className="py-2 pr-4 text-right font-mono">{p.subscriber_signups}</td>
                     <td className="py-2 pr-4 text-right font-mono">{p.orders_attributed}</td>
@@ -494,7 +494,7 @@ export default function DemandDashboard() {
           <h2 className="text-lg font-semibold text-white mb-3">Discovered Subreddits ({subreddits.length})</h2>
           <div className="space-y-2">
             {subreddits.map(s => (
-              <div key={s.id} className="flex items-center justify-between bg-zinc-900 rounded-lg p-3 border border-zinc-600">
+              <div key={s.id} className="flex items-center justify-between bg-zinc-900 rounded-lg p-3 border border-zinc-500">
                 <div>
                   <div className="font-medium text-white">r/{s.display_name || s.subreddit}</div>
                   <div className="flex gap-3 mt-1 text-xs text-zinc-400">

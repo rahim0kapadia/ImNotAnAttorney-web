@@ -133,7 +133,7 @@ export default function EditorialPolicyPage() {
           <section>
             <h2 className="text-xl font-bold text-white">Legal Disclaimer</h2>
             <p className="mt-3 leading-relaxed text-zinc-400">
-              The information provided by ImNotAnAttorney is for general informational purposes only. All information on the site is provided in good faith, however we make no representation or warranty of any kind regarding the accuracy, adequacy, validity, reliability, or completeness of any information on the site. Nothing on this website constitutes legal advice. Consider consulting a licensed attorney in your jurisdiction for advice regarding your specific legal situation.
+              The information provided by ImNotAnAttorney is for general informational purposes only. All information on the site is provided in good faith, however we make no representation or warranty of any kind regarding the accuracy, adequacy, validity, reliability, or completeness of any information on the site. Nothing on this website constitutes legal advice. If you are facing criminal charges, speaking with a licensed attorney in your jurisdiction about your specific situation is one option to explore.
             </p>
           </section>
 

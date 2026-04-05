@@ -275,7 +275,7 @@ export default async function DefenseScoreDataPage() {
                 </thead>
                 <tbody className="text-zinc-300">
                   {Object.entries(METRIC_LABELS).map(([metric, label]) => (
-                    <tr key={metric} className="border-b border-zinc-600">
+                    <tr key={metric} className="border-b border-zinc-500">
                       <td className="py-3 pr-4 text-zinc-400">{label}</td>
                       {chargeTypes.map((ct) => {
                         const count = metricsByCharge[ct]?.[metric] ?? 0;
@@ -442,7 +442,7 @@ export default async function DefenseScoreDataPage() {
           This is original research published by ImNotAnAttorney. This data is
           legal information, not legal advice. We are not attorneys and do not
           provide legal representation. If you are facing criminal charges,
-          consult a licensed attorney in your jurisdiction.
+          speaking with a licensed attorney in your jurisdiction is worth considering.
         </p>
       </div>
     </div>
