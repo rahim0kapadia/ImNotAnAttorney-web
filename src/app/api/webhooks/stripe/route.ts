@@ -542,7 +542,7 @@ export async function POST(req: NextRequest) {
           .select("id, order_id")
           .eq("email", email)
           .in("tier", discoveryTiers)
-          .not("status", "in", '("refunded")')
+          .not("status", "in", "(refunded)")
           .order("created_at", { ascending: false })
           .limit(1)
           .maybeSingle();
@@ -604,7 +604,7 @@ export async function POST(req: NextRequest) {
             .select("id")
             .eq("email", email)
             .eq("tier", includedTier)
-            .not("status", "in", '("cancelled","refunded")')
+            .not("status", "in", "(cancelled,refunded)")
             .limit(1)
             .maybeSingle();
 
@@ -622,7 +622,7 @@ export async function POST(req: NextRequest) {
               .eq("court_case_number", existingCaseNumber)
               .eq("court_state", existingCaseState)
               .eq("tier", includedTier)
-              .not("status", "in", '("cancelled","refunded")')
+              .not("status", "in", "(cancelled,refunded)")
               .limit(1)
               .maybeSingle();
 
