@@ -1,29 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring" as const,
-      stiffness: 100,
-      damping: 20,
-    },
-  },
-};
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 interface StaggerContainerProps {
   children: ReactNode;
@@ -31,22 +8,35 @@ interface StaggerContainerProps {
 }
 
 export function StaggerContainer({ children, className }: StaggerContainerProps) {
-  const shouldReduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
 
-  if (shouldReduce) {
-    return <div className={className}>{children}</div>;
-  }
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
-      className={className}
-    >
+    <div ref={ref} className={className} data-stagger-visible={visible ? "" : undefined}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
@@ -56,15 +46,5 @@ interface StaggerItemProps {
 }
 
 export function StaggerItem({ children, className }: StaggerItemProps) {
-  const shouldReduce = useReducedMotion();
-
-  if (shouldReduce) {
-    return <div className={className}>{children}</div>;
-  }
-
-  return (
-    <motion.div variants={itemVariants} className={className}>
-      {children}
-    </motion.div>
-  );
+  return <div className={className}>{children}</div>;
 }

@@ -18,7 +18,6 @@
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 
 
 export function Header() {
@@ -154,18 +153,14 @@ export function Header() {
       </div>
 
       {/* Mobile nav */}
-      <AnimatePresence>
-      {mobileOpen && (
-        <motion.nav
-          ref={mobileNavRef}
-          aria-label="Mobile navigation"
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ type: "spring" as const, stiffness: 300, damping: 30 }}
-          className="overflow-hidden border-t border-zinc-500 md:hidden"
-          onKeyDown={handleMobileKeyDown}
-        >
+      <nav
+        ref={mobileNavRef}
+        aria-label="Mobile navigation"
+        className="grid border-t border-zinc-500 md:hidden transition-[grid-template-rows] duration-300 ease-in-out"
+        style={{ gridTemplateRows: mobileOpen ? "1fr" : "0fr" }}
+        onKeyDown={handleMobileKeyDown}
+      >
+        <div className="overflow-hidden">
           <div className="flex flex-col gap-4 px-4 py-4">
             {[
               { href: "/blog", label: "Blog" },
@@ -198,9 +193,8 @@ export function Header() {
               Get Started
             </Link>
           </div>
-        </motion.nav>
-      )}
-      </AnimatePresence>
+        </div>
+      </nav>
     </header>
   );
 }

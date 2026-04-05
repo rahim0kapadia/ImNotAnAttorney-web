@@ -1,13 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
-import {
-  type MotionValue,
-  motion,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-} from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -52,53 +45,118 @@ const findings = [
 ];
 
 interface FindingCardProps {
-  opacity?: MotionValue<number>;
+  visible: boolean;
   tag: string;
   children: React.ReactNode;
-  animated?: boolean;
 }
 
-function FindingCard({ opacity, tag, children, animated = true }: FindingCardProps) {
-  const content = (
-    <div className="mt-3 rounded border-l-4 border-amber-500 bg-amber-500/10 px-4 py-3">
+function FindingCard({ visible, tag, children }: FindingCardProps) {
+  return (
+    <div
+      className="mt-3 rounded border-l-4 border-amber-500 bg-amber-500/10 px-4 py-3"
+      style={{
+        opacity: visible ? 1 : 0,
+        transition: "opacity 0.5s ease",
+      }}
+    >
       <div className="text-sm text-zinc-300">{children}</div>
       <div className="mt-1.5 text-xs font-bold text-amber-400">{tag}</div>
     </div>
   );
-
-  if (!animated || !opacity) return content;
-
-  return <motion.div style={{ opacity }}>{content}</motion.div>;
 }
 
 export function DiscoveryReveal() {
-  const shouldReduce = useReducedMotion();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const [showAllMobile, setShowAllMobile] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [cardVisible, setCardVisible] = useState<boolean[]>([false, false, false, false]);
+  const findingRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [findingVisible, setFindingVisible] = useState<boolean[]>([false, false, false, false]);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setReducedMotion(true);
+      setHeaderVisible(true);
+      setCardVisible([true, true, true, true]);
+      setFindingVisible([true, true, true, true]);
+      return;
+    }
 
-  const f1Opacity = useTransform(scrollYProgress, [0.08, 0.14], [0, 1]);
-  const f2Opacity = useTransform(scrollYProgress, [0.22, 0.28], [0, 1]);
-  const f3Opacity = useTransform(scrollYProgress, [0.36, 0.42], [0, 1]);
-  const f4Opacity = useTransform(scrollYProgress, [0.50, 0.56], [0, 1]);
+    // Header observer
+    const headerEl = headerRef.current;
+    if (headerEl) {
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setHeaderVisible(true);
+            obs.unobserve(headerEl);
+          }
+        },
+        { threshold: 0.2 }
+      );
+      obs.observe(headerEl);
+    }
 
-  const opacities = [f1Opacity, f2Opacity, f3Opacity, f4Opacity];
+    // Card observers (each finding card fades in on scroll)
+    const cardObservers: IntersectionObserver[] = [];
+    cardRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setCardVisible(prev => {
+              const next = [...prev];
+              next[i] = true;
+              return next;
+            });
+            obs.unobserve(el);
+          }
+        },
+        { threshold: 0.1 }
+      );
+      obs.observe(el);
+      cardObservers.push(obs);
+    });
+
+    // Finding card observers (reveal findings as you scroll past the image)
+    const findingObservers: IntersectionObserver[] = [];
+    findingRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setFindingVisible(prev => {
+              const next = [...prev];
+              next[i] = true;
+              return next;
+            });
+            obs.unobserve(el);
+          }
+        },
+        { threshold: 0.3 }
+      );
+      obs.observe(el);
+      findingObservers.push(obs);
+    });
+
+    return () => {
+      cardObservers.forEach(obs => obs.disconnect());
+      findingObservers.forEach(obs => obs.disconnect());
+    };
+  }, []);
 
   return (
-    <section
-      ref={shouldReduce ? undefined : containerRef}
-      className="border-t border-zinc-500 px-4 py-20 section-alt"
-    >
+    <section className="border-t border-zinc-500 px-4 py-20 section-alt">
       <div className="mx-auto max-w-4xl">
-        <motion.div
-          initial={shouldReduce ? undefined : { opacity: 0, y: 24 }}
-          whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5, type: "spring", stiffness: 100, damping: 20 }}
+        <div
+          ref={headerRef}
+          style={{
+            opacity: headerVisible ? 1 : 0,
+            transform: headerVisible ? "translateY(0)" : "translateY(24px)",
+            transition: "opacity 0.5s ease, transform 0.5s ease",
+          }}
         >
           <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
             What we actually found in a real case
@@ -106,7 +164,7 @@ export function DiscoveryReveal() {
           <p className="mt-3 text-center text-zinc-400">
             Real pages from real PCSO discovery. Real findings the attorney never raised.
           </p>
-        </motion.div>
+        </div>
 
         <div
           className="mx-auto mt-10 max-w-2xl space-y-8"
@@ -114,13 +172,15 @@ export function DiscoveryReveal() {
           aria-label="Excerpts from real PCSO discovery reports showing critical findings: CI phone dual attribution, 68.3g weight discrepancy, and drug type mismatch"
         >
           {findings.map((f, i) => (
-            <motion.div
+            <div
               key={f.image}
-              initial={shouldReduce ? undefined : { opacity: 0, y: 20 }}
-              whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.5 }}
+              ref={el => { cardRefs.current[i] = el; }}
               className={i >= 2 && !showAllMobile ? "hidden md:block" : undefined}
+              style={{
+                opacity: cardVisible[i] ? 1 : 0,
+                transform: cardVisible[i] ? "translateY(0)" : "translateY(20px)",
+                transition: "opacity 0.5s ease, transform 0.5s ease",
+              }}
             >
               <div className="overflow-hidden rounded-sm shadow-xl">
                 <Image
@@ -133,14 +193,15 @@ export function DiscoveryReveal() {
                   quality={90}
                 />
               </div>
-              <FindingCard
-                opacity={shouldReduce ? undefined : opacities[i]}
-                tag={f.tag}
-                animated={!shouldReduce}
-              >
-                {f.text}
-              </FindingCard>
-            </motion.div>
+              <div ref={el => { findingRefs.current[i] = el; }}>
+                <FindingCard
+                  visible={reducedMotion || findingVisible[i]}
+                  tag={f.tag}
+                >
+                  {f.text}
+                </FindingCard>
+              </div>
+            </div>
           ))}
           {!showAllMobile && (
             <button

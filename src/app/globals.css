@@ -76,3 +76,33 @@ body {
 .section-alt {
   background: linear-gradient(to bottom, rgba(24, 24, 27, 0.3), transparent);
 }
+
+/* Stagger animation - children fade in sequentially */
+[data-stagger-visible] > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+[data-stagger-visible=""] > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-stagger-visible=""] > *:nth-child(1) { transition-delay: 0s; }
+[data-stagger-visible=""] > *:nth-child(2) { transition-delay: 0.1s; }
+[data-stagger-visible=""] > *:nth-child(3) { transition-delay: 0.15s; }
+[data-stagger-visible=""] > *:nth-child(4) { transition-delay: 0.2s; }
+[data-stagger-visible=""] > *:nth-child(5) { transition-delay: 0.25s; }
+[data-stagger-visible=""] > *:nth-child(6) { transition-delay: 0.3s; }
+[data-stagger-visible=""] > *:nth-child(7) { transition-delay: 0.35s; }
+[data-stagger-visible=""] > *:nth-child(8) { transition-delay: 0.4s; }
+[data-stagger-visible=""] > *:nth-child(n+9) { transition-delay: 0.45s; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-stagger-visible] > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

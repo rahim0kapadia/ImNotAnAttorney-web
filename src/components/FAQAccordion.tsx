@@ -18,7 +18,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface FAQItem {
   question: string;
@@ -49,35 +48,29 @@ export function FAQAccordion({ items }: FAQAccordionProps) {
             <span className="text-base font-semibold text-white">
               {item.question}
             </span>
-            <motion.span
-              className="ml-4 text-zinc-400"
+            <span
+              className="ml-4 text-zinc-400 transition-transform duration-200"
               aria-hidden="true"
-              animate={{ rotate: openIndex === i ? 45 : 0 }}
-              transition={{ duration: 0.2 }}
+              style={{ transform: openIndex === i ? "rotate(45deg)" : "rotate(0deg)" }}
             >
               +
-            </motion.span>
+            </span>
           </button>
-          <AnimatePresence initial={false}>
-            {openIndex === i && (
-              <motion.div
-                id={`faq-answer-${i}`}
-                role="region"
-                aria-labelledby={`faq-question-${i}`}
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
-                className="overflow-hidden"
-              >
-                <div className="border-t border-zinc-500 px-6 py-4">
-                  <p className="text-base leading-relaxed text-zinc-400">
-                    {item.answer}
-                  </p>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <div
+            id={`faq-answer-${i}`}
+            role="region"
+            aria-labelledby={`faq-question-${i}`}
+            className="grid transition-[grid-template-rows] duration-250 ease-in-out"
+            style={{ gridTemplateRows: openIndex === i ? "1fr" : "0fr" }}
+          >
+            <div className="overflow-hidden">
+              <div className="border-t border-zinc-500 px-6 py-4">
+                <p className="text-base leading-relaxed text-zinc-400">
+                  {item.answer}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       ))}
     </div>

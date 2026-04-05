@@ -1,7 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 interface FadeInUpProps {
   children: ReactNode;
@@ -19,27 +18,43 @@ export function FadeInUp({
   duration = 0.5,
   y = 24,
 }: FadeInUpProps) {
-  const shouldReduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
 
-  if (shouldReduce) {
-    return <div className={className}>{children}</div>;
-  }
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    // Respect prefers-reduced-motion
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{
-        duration,
-        delay,
-        type: "spring",
-        stiffness: 100,
-        damping: 20,
-      }}
+    <div
+      ref={ref}
       className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : `translateY(${y}px)`,
+        transition: `opacity ${duration}s ease ${delay}s, transform ${duration}s ease ${delay}s`,
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

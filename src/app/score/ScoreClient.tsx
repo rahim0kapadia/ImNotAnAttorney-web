@@ -9,7 +9,7 @@ import { ShareButtons } from "@/components/ShareButtons";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { copyToClipboard } from "@/lib/clipboard";
 import { TestimonialSection } from "@/components/TestimonialSection";
-import { useReducedMotion, AnimatePresence, motion } from "framer-motion";
+import { useReducedMotion, AnimatePresence, motion, LazyMotion, domAnimation } from "framer-motion";
 
 /**
  * The 10 scoring questions. Each has a unique id (used as the key in the
@@ -1182,6 +1182,7 @@ export default function ScoreClient() {
             </div>
 
             {/* Question card with slide animation */}
+            <LazyMotion features={domAnimation}>
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={currentStep}
@@ -1249,6 +1250,7 @@ export default function ScoreClient() {
                 </div>
               </motion.div>
             </AnimatePresence>
+            </LazyMotion>
 
             {/* Hesitation nudge on later questions */}
             {currentStep >= 7 && !answers[currentQuestion.id] && (
