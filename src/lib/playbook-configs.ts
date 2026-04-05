@@ -92,7 +92,7 @@ export interface PlaybookConfig {
 // DUI First Offense
 // ---------------------------------------------------------------------------
 
-export const DUI_FIRST_OFFENSE: PlaybookConfig = {
+const DUI_FIRST_OFFENSE: PlaybookConfig = {
   slug: "dui-first-offense",
   seoTitle: "26 questions that change how your next attorney meeting goes. Breathalyzer checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download.",
   seoDescription:
@@ -249,7 +249,7 @@ export const DUI_FIRST_OFFENSE: PlaybookConfig = {
 // Drug Possession
 // ---------------------------------------------------------------------------
 
-export const DRUG_POSSESSION: PlaybookConfig = {
+const DRUG_POSSESSION: PlaybookConfig = {
   slug: "drug-possession",
   seoTitle:
     "26 questions that change how your next attorney meeting goes. Lab analysis checklist, case stage roadmap, red flag checklist, attorney scorecard. Instant PDF download.",
@@ -414,7 +414,7 @@ export const DRUG_POSSESSION: PlaybookConfig = {
 // Probation Violation
 // ---------------------------------------------------------------------------
 
-export const PROBATION_VIOLATION: PlaybookConfig = {
+const PROBATION_VIOLATION: PlaybookConfig = {
   slug: "probation-violation",
   seoTitle:
     "26 questions that change how your next attorney meeting goes. Revocation hearing guide, alternatives to revocation, red flag checklist, attorney scorecard. Instant PDF download.",
@@ -579,7 +579,7 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
 // White Collar / Fraud
 // ---------------------------------------------------------------------------
 
-export const WHITE_COLLAR: PlaybookConfig = {
+const WHITE_COLLAR: PlaybookConfig = {
   slug: "white-collar",
   seoTitle:
     "26 questions that change how your next attorney meeting goes. Loss calculation guide, sentencing guidelines, forfeiture defense, red flag checklist, attorney scorecard. Instant PDF download.",
@@ -744,7 +744,7 @@ export const WHITE_COLLAR: PlaybookConfig = {
 // Sex Offense
 // ---------------------------------------------------------------------------
 
-export const SEX_OFFENSE: PlaybookConfig = {
+const SEX_OFFENSE: PlaybookConfig = {
   slug: "sex-offense",
   seoTitle:
     "26 questions that change how your next attorney meeting goes. Forensic evidence checklist, registration guide, red flag checklist, attorney scorecard. Instant PDF download.",
@@ -909,7 +909,7 @@ export const SEX_OFFENSE: PlaybookConfig = {
 // Federal Criminal
 // ---------------------------------------------------------------------------
 
-export const FEDERAL_CRIMINAL: PlaybookConfig = {
+const FEDERAL_CRIMINAL: PlaybookConfig = {
   slug: "federal-criminal",
   seoTitle:
     "26 questions that change how your next attorney meeting goes. Sentencing guidelines calculator, cooperation decisions, BOP designation guide, red flag checklist. Instant PDF download.",
@@ -1074,7 +1074,7 @@ export const FEDERAL_CRIMINAL: PlaybookConfig = {
 // Drug Trafficking
 // ---------------------------------------------------------------------------
 
-export const DRUG_TRAFFICKING: PlaybookConfig = {
+const DRUG_TRAFFICKING: PlaybookConfig = {
   slug: "drug-trafficking",
   seoTitle:
     "26 questions that change how your next attorney meeting goes. Mandatory minimums, informant challenges, quantity disputes, cooperation strategy, red flag checklist. Instant PDF download.",
@@ -1239,7 +1239,7 @@ export const DRUG_TRAFFICKING: PlaybookConfig = {
 // Self-Defense / Justifiable Force
 // ---------------------------------------------------------------------------
 
-export const SELF_DEFENSE: PlaybookConfig = {
+const SELF_DEFENSE: PlaybookConfig = {
   slug: "self-defense",
   seoTitle:
     "Self-Defense Playbook: 26 Questions for Murder, Assault & Justifiable Force Cases",

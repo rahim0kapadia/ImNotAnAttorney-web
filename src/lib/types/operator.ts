@@ -186,7 +186,7 @@ export interface CaseMetrics {
 // ============================================================
 
 /** What the customer sees in their portal — tier-gated. */
-export interface PortalCaseView {
+interface PortalCaseView {
   // Always visible
   status: string;
   tier: string;
@@ -242,7 +242,7 @@ export interface PortalCaseView {
  *
  * Terminal statuses: delivered, refunded, cancelled
  */
-export type CaseStatus =
+type CaseStatus =
   // Pre-intake
   | "awaiting-intake"
   | "intake"
@@ -267,7 +267,7 @@ export type CaseStatus =
   | "cancelled";
 
 /** @deprecated Use CaseStatus instead. Kept for backward compatibility. */
-export type DiscoveryStatus =
+type DiscoveryStatus =
   | "pending"
   | "uploaded"
   | "submitted"

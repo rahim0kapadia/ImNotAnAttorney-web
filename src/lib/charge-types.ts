@@ -39,7 +39,7 @@ const LEGACY_SLUG_MAP: Record<string, string> = {
   "other-misdemeanor": "other",
 };
 
-export function resolveLegacyChargeSlug(slug: string): string {
+function resolveLegacyChargeSlug(slug: string): string {
   return LEGACY_SLUG_MAP[slug] ?? slug;
 }
 
@@ -71,7 +71,7 @@ export const ALLOWED_CHARGE_TYPES = [
   "fraud",
 ] as const;
 
-export type ChargeType = (typeof ALLOWED_CHARGE_TYPES)[number];
+type ChargeType = (typeof ALLOWED_CHARGE_TYPES)[number];
 
 export function isValidChargeType(value: string): value is ChargeType {
   return (ALLOWED_CHARGE_TYPES as readonly string[]).includes(value);

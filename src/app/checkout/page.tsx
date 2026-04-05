@@ -545,7 +545,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Research-based questions about jury selection and trial strategy for your attorney",
       "JOA research brief — every applicable standard, formatted for your attorney",
       "Trial morning cheat sheets",
-      "Priority Response Line — 2hr response during trial prep, 4hr during trial",
+      "Priority Response Line — 2hr response during trial, 4hr during trial prep",
       "Priority email with 2-4 hour response",
       "All scored deliverables from lower tiers included",
     ],

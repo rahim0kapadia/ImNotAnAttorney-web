@@ -1811,7 +1811,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
  *
  * @returns The full array of nurture drip email templates.
  */
-export function getNurtureEmails(): DripEmail[] {
+function getNurtureEmails(): DripEmail[] {
   return NURTURE_EMAILS;
 }
 
@@ -1928,7 +1928,7 @@ export function getNextDui72hEmail(
  * converted by Day 7 are gone. Sending Day 10/14 generic nurture
  * to resolved crisis buyers burns sender reputation for zero conversion.
  */
-export function getDui72hNurtureOffset(): number {
+function getDui72hNurtureOffset(): number {
   return -1;
 }
 

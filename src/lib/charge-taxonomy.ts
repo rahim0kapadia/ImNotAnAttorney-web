@@ -246,7 +246,7 @@ export async function getChargeQuestions(
  * @param supabaseKey - Service role key.
  * @returns The current common_charge slug, or null if not found.
  */
-export async function resolveLegacySlug(
+async function resolveLegacySlug(
   legacySlug: string,
   supabaseUrl: string,
   supabaseKey: string
@@ -282,7 +282,7 @@ export async function resolveLegacySlug(
  * @param chargeSpecificData - Key/value pairs from charge-specific intake fields.
  * @returns Formatted context string ready for prompt injection.
  */
-export function buildEnrichedChargeContext(
+function buildEnrichedChargeContext(
   statute: JurisdictionStatute | null,
   commonCharge: CommonCharge,
   experts: Expert[],

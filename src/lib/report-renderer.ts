@@ -8,6 +8,8 @@
  * Matches the existing pattern in scripts/generate-worker.mjs lines 613-670.
  */
 
+import { escapeHtml } from "./email";
+
 export interface ReportMeta {
   firstName: string;
   charges: string;
@@ -21,13 +23,6 @@ export interface ReportMeta {
   expertNames: string;
 }
 
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
 
 /**
  * Converts markdown report content to branded HTML.

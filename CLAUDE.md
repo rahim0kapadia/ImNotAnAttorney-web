@@ -7,7 +7,7 @@ This project is part of the INAA (ImNotAnAttorney) ecosystem. You may freely rea
 |------|------|------|
 | ImNotAnAttorney | `C:\Users\email\projects\ImNotAnAttorney\` | Business docs, strategy, content engine, templates, eval framework |
 | ImNotAnAttorney-web | `C:\Users\email\projects\ImNotAnAttorney-web\` | Next.js customer-facing site (THIS REPO) |
-| ImNotAnAttorney-engine | `C:\Users\email\projects\ImNotAnAttorney-engine\` | Backend worker pipeline (38 workers, 6 phases, discovery tier processing) |
+| ImNotAnAttorney-engine | `C:\Users\email\projects\ImNotAnAttorney-engine\` | Backend worker pipeline (41 workers, 6 phases, discovery tier processing) |
 | KDP-Publishing (legal only) | `C:\Users\email\projects\KDP-Publishing\books\` | INAA Defense Guides (Jordan Blake). Only legal defense books. |
 
 **Default boundary**: Do NOT read files from projects outside this table unless Rahim explicitly directs you to.
@@ -23,13 +23,13 @@ This project is part of the INAA (ImNotAnAttorney) ecosystem. You may freely rea
 
 ## Identity: Atticus (Atti)
 
-Auto-loaded via `.claude/rules/atti-persona.md` — 6 thinking modes, research-first rule, voice.
+Auto-loaded via `.claude/rules/atti-persona.md` — 10 thinking modes (6 shared + 4 project-specific), research-first rule, voice.
 Rules auto-loaded: `brand-voice`, `fix-engine`, `product-tiers`.
 Eval framework: `ImNotAnAttorney/system/EVALUATION-TEAM.md` (11 teams, 164 criteria).
 
 ## What This Is
 
-A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment for criminal defendants holding their attorneys accountable. 35 blog posts, 28 pages, multi-tier checkout ($97-$9,997).
+A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment for criminal defendants holding their attorneys accountable. 43 blog posts, 48 pages, multi-tier checkout ($97-$9,997).
 
 ## Tech Stack
 
@@ -37,7 +37,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment 
 - **Styling:** Tailwind CSS
 - **CMS:** MDX files in `content/blog/`
 - **Database:** Supabase (cases, orders, drip email tracking, discovery documents, counters, score_aggregates)
-- **Payments:** Stripe Checkout — dual-mode (live flag per tier in `tiers.ts`). DUI is LIVE. See `.claude/rules/product-tiers.md`
+- **Payments:** Stripe Checkout — all tiers LIVE since Mar 28 2026 (live flag per tier in `tiers.ts`). Using `STRIPE_SECRET_KEY_LIVE`. See `.claude/rules/product-tiers.md`
 - **Email:** Resend (drip sequences, delivery notifications, admin digests)
 - **Hosting:** Vercel — production domain served by project **`imnotanattorney`** (ID: `prj_zqxNgG9xcM235bnKRoEgP5kBOEEr`), NOT `imnotanattorney-web`. Deploy via `git push origin master` ONLY (GitHub integration). NEVER use `vercel deploy` CLI.
 - **Schema:** FAQ, Service, Organization, Article, HowTo, BreadcrumbList (with `speakable`, `@id` binding, `citation`, `about`, `educationalLevel`, `audience`, `isBasedOn`)
@@ -55,7 +55,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment 
 | `src/lib/email.ts` | Resend integration |
 | `src/app/api/cron/drip/route.ts` | 22-part drip dispatcher |
 | `src/lib/intelligence-brief/prompts.ts` | 9 prompt builders for report generation |
-| `src/lib/playbook-configs.ts` | 5 charge-type playbook configs |
+| `src/lib/playbook-configs.ts` | 8 charge-type playbook configs |
 
 ## Important Notes
 

@@ -22,16 +22,13 @@
  */
 
 import { createAdminClient } from "./supabase/admin";
-import { normalizeEmail } from "./site";
+import { normalizeEmail, hashToken } from "./site";
 import crypto from "crypto";
 
 const MAGIC_LINK_EXPIRY_MINUTES = 15;
 const SESSION_EXPIRY_DAYS = 30;
 
-/** Hash a token with SHA-256 for storage. Raw token stays in cookie/URL only. */
-function hashToken(token: string): string {
-  return crypto.createHash("sha256").update(token).digest("hex");
-}
+
 
 /**
  * Generates a magic link token for a customer.

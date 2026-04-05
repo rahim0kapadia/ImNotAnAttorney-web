@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { TIER_CORE } from "@/lib/tiers";
 import { SITE_URL } from "@/lib/site";
+import { getChargeLabel } from "@/lib/score";
 import Link from "next/link";
 import { AnimatedScoreArc } from "@/components/motion/AnimatedScoreArc";
 import { ShareButtons } from "@/components/ShareButtons";
@@ -141,23 +142,7 @@ const CHARGE_PLAYBOOK: Record<string, string> = {
   "self-defense": "self-defense",
 };
 
-/** Converts chargeType slug to display label */
-function getChargeLabel(charge: string): string {
-  const labels: Record<string, string> = {
-    drug: "drug offense",
-    "drug-possession": "drug possession",
-    "drug-trafficking": "drug trafficking",
-    dui: "DUI/DWI",
-    "probation-violation": "probation violation",
-    "white-collar": "white collar",
-    "sex-offense": "sex offense",
-    "federal-criminal": "federal criminal",
-    "self-defense": "self-defense",
-    "other-felony": "felony",
-    "other-misdemeanor": "misdemeanor",
-  };
-  return labels[charge] ?? charge;
-}
+
 
 /** Shape of the response from /api/score. */
 type ScoreResult = {

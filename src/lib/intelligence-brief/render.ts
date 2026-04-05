@@ -8,19 +8,12 @@
  * Design: dependency-free for Deno Edge Function compatibility.
  */
 
+import { escapeHtml } from "../email";
+
 // ============================================================
 // MARKDOWN → HTML CONVERSION
 // ============================================================
 
-/** Escape HTML special characters to prevent XSS */
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
 
 /**
  * Convert markdown text to styled HTML.

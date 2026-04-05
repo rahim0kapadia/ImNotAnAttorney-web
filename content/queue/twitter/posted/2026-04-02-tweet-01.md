@@ -1,0 +1,20 @@
+---
+platform: twitter
+type: single-tweet
+project: inna
+status: pending
+created: 2026-03-10T22:36:56.647Z
+agent: seed-script
+title: "Single Tweet: Discovery Access"
+suggested_time: "Weekday 9:00 AM EST"
+---
+
+You have the right to see the evidence being used against you.
+
+Your discovery. Your case. Your right.
+
+If your attorney says "you don't need to worry about that" — that's your signal to worry.
+
+Request your discovery. Read it. Understand it.
+
+Your defense depends on it.

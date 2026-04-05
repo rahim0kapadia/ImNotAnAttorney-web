@@ -172,7 +172,7 @@ export async function runUPLCheck(mdxContent: string): Promise<{
  * @param mdxContent - The original MDX content that failed.
  * @param failures   - Array of UPLCriterionResult entries where result === "FAIL".
  */
-export function buildUPLFixPrompt(
+function buildUPLFixPrompt(
   mdxContent: string,
   failures: UPLCriterionResult[]
 ): string {
