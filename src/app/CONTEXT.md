@@ -95,7 +95,6 @@
 |--------|-------|---------|
 | GET | `/api/score` | Fetch score by token |
 | POST | `/api/score/route` | Submit quiz responses |
-| POST | `/api/score/count` | Aggregate score counts |
 | POST | `/api/score/share` | Social share lead capture |
 
 ### Cron Tasks (13 routes — see lib/CONTEXT.md for task list)
