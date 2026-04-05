@@ -128,7 +128,9 @@ export async function POST(req: NextRequest) {
       amount = session.amount_total ?? 0;
     }
 
-    if (!tier || !email || amount == null || amount < 50) {
+    // Allow $0 amount for internal QA orders (100% coupon for E2E testing)
+    const isInternalQa = process.env.INTERNAL_QA_EMAIL && email === process.env.INTERNAL_QA_EMAIL.toLowerCase();
+    if (!tier || !email || amount == null || (amount < 50 && !isInternalQa)) {
       console.error("[Stripe Webhook] Missing metadata:", { tier, email, amount });
       await sendEmail({
         to: OPERATOR_EMAIL,
