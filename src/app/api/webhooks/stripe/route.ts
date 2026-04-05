@@ -432,8 +432,8 @@ export async function POST(req: NextRequest) {
           <p><strong style="color: white;">Step 3:</strong> Read the 5 Priority Questions before your next attorney conversation. Most people can only answer 1 or 2. The blanks are what your next meeting is for.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
             <p style="margin: 0; color: white; font-weight: bold;">Want case-specific questions?</p>
-            <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${TIER_CORE[upgradeTierSlug].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}). Get 15 questions built from YOUR charges, YOUR state, YOUR stage.</p>
-            <a href="${origin}/checkout?tier=case-decoder" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: transparent; color: #F59E0B; font-weight: bold; text-decoration: none; border: 1px solid #F59E0B; border-radius: 8px;">${upgradeCost ? `Upgrade for ${upgradeCost} →` : "Upgrade to Case Decoder →"}</a>
+            <p style="margin: 8px 0 0; color: #D4D4D8;">The ${TIER_CORE["case-decoder"].name} is ${TIER_CORE["case-decoder"].priceDisplay} — your ${TIER_CORE[upgradeTierSlug].priceDisplay} is fully credited, so you pay just ${upgradeCost}. Every dollar moves upward. Get 15 questions built from YOUR charges, YOUR state, YOUR stage.</p>
+            <a href="${origin}/checkout?tier=case-decoder" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: transparent; color: #F59E0B; font-weight: bold; text-decoration: none; border: 1px solid #F59E0B; border-radius: 8px;">${upgradeCost ? `Upgrade for ${upgradeCost} (your ${TIER_CORE[upgradeTierSlug].priceDisplay} credited) →` : "Upgrade to Case Decoder →"}</a>
           </div>
           <p style="color: #A1A1AA;">These download links expire in 72 hours. Reply to this email if you have questions.</p>
         `,
