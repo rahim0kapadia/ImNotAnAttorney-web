@@ -208,7 +208,7 @@ export async function POST(req: NextRequest) {
 
   // Idempotency: if already delivered or monitoring, return success without re-processing
   if (caseData.status === "delivered" || caseData.status === "monitoring") {
-    console.log(`[Engine-Delivery] Case ${caseId} already in terminal state (${caseData.status}) — skipping`);
+    console.warn(`[Engine-Delivery] Case ${caseId} already in terminal state (${caseData.status}) — skipping`);
     return NextResponse.json({
       success: true,
       skipped: true,

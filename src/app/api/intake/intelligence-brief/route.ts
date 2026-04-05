@@ -19,7 +19,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
-import { SITE_URL, CONTACT_EMAIL, verifyPhase2Token } from "@/lib/site";
+import { CONTACT_EMAIL, verifyPhase2Token } from "@/lib/site";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
 

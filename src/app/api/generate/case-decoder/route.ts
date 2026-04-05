@@ -88,7 +88,7 @@ async function scheduleAutoDelivery(caseId: string): Promise<void> {
       .single();
 
     const status = data?.status;
-    console.log(`[CD-AutoDeliver] Poll ${attempt}/${MAX_ATTEMPTS} — case ${caseId} status: ${status}`);
+    console.warn(`[CD-AutoDeliver] Poll ${attempt}/${MAX_ATTEMPTS} — case ${caseId} status: ${status}`);
 
     if (status === "delivered") {
       console.log(`[CD-AutoDeliver] Case ${caseId} already delivered — stopping poll`);

@@ -420,7 +420,7 @@ export default function ServicesPage() {
         {/* INSTANT PRODUCTS — Track A (pre-discovery). Hidden when post-discovery selected. */}
         <TrackA>
         <FadeInUp>
-        <section className="mt-20">
+        <section className="mt-12">
           <div className="mb-8">
             <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
               Instant Products
@@ -434,11 +434,11 @@ export default function ServicesPage() {
               service with full credit.
             </p>
           </div>
-          <StaggerContainer className="grid gap-4 md:grid-cols-3">
+          <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <StaggerItem>
             <Link
               href="/checkout?tier=dui-first-offense"
-              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+              className="flex h-full flex-col rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
             >
               <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                 Available Now
@@ -449,7 +449,7 @@ export default function ServicesPage() {
                 </h3>
                 <span className="text-lg font-bold text-amber-400">{TIER_CORE["dui-first-offense"].priceDisplay}</span>
               </div>
-              <p className="mt-2 text-sm text-zinc-400">
+              <p className="mt-2 flex-1 text-sm text-zinc-400">
                 26 questions that change how your next attorney meeting goes.
                 Breathalyzer calibration checklist, case stage roadmap, 12 red
                 flags, Case Progress Scorecard. Instant PDF.
@@ -462,7 +462,7 @@ export default function ServicesPage() {
             <StaggerItem>
             <Link
               href="/checkout?tier=drug-possession"
-              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+              className="flex h-full flex-col rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
             >
               <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                 Available Now
@@ -473,7 +473,7 @@ export default function ServicesPage() {
                 </h3>
                 <span className="text-lg font-bold text-amber-400">{TIER_CORE["drug-possession"].priceDisplay}</span>
               </div>
-              <p className="mt-2 text-sm text-zinc-400">
+              <p className="mt-2 flex-1 text-sm text-zinc-400">
                 26 questions that expose weak evidence. Chain of custody,
                 lab analysis challenges, search &amp; seizure, CI reliability.
                 Built from real cases.
@@ -486,7 +486,7 @@ export default function ServicesPage() {
             <StaggerItem>
             <Link
               href="/checkout?tier=probation-violation"
-              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+              className="flex h-full flex-col rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
             >
               <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                 Available Now
@@ -497,7 +497,7 @@ export default function ServicesPage() {
                 </h3>
                 <span className="text-lg font-bold text-amber-400">{TIER_CORE["probation-violation"].priceDisplay}</span>
               </div>
-              <p className="mt-2 text-sm text-zinc-400">
+              <p className="mt-2 flex-1 text-sm text-zinc-400">
                 26 questions for revocation hearings. Willfulness defense,
                 state cap laws, alternatives to revocation, graduated sanctions.
                 Built from the case-specific arguments that keep defendants out of revocation.
@@ -510,7 +510,7 @@ export default function ServicesPage() {
             <StaggerItem>
             <Link
               href="/checkout?tier=white-collar"
-              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+              className="flex h-full flex-col rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
             >
               <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                 Available Now
@@ -521,7 +521,7 @@ export default function ServicesPage() {
                 </h3>
                 <span className="text-lg font-bold text-amber-400">{TIER_CORE["white-collar"].priceDisplay}</span>
               </div>
-              <p className="mt-2 text-sm text-zinc-400">
+              <p className="mt-2 flex-1 text-sm text-zinc-400">
                 26 questions for fraud, embezzlement, and federal charges. Wire fraud elements, cooperation decisions, sentencing guidelines, AUSA profiling. Instant PDF.
               </p>
               <p className="mt-2 text-xs text-zinc-400">
@@ -532,7 +532,7 @@ export default function ServicesPage() {
             <StaggerItem>
             <Link
               href="/checkout?tier=sex-offense"
-              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+              className="flex h-full flex-col rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
             >
               <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                 Available Now
@@ -543,7 +543,7 @@ export default function ServicesPage() {
                 </h3>
                 <span className="text-lg font-bold text-amber-400">{TIER_CORE["sex-offense"].priceDisplay}</span>
               </div>
-              <p className="mt-2 text-sm text-zinc-400">
+              <p className="mt-2 flex-1 text-sm text-zinc-400">
                 26 questions covering registry implications, evidence preservation, accusation analysis, and constitutional protections. Instant PDF.
               </p>
               <p className="mt-2 text-xs text-zinc-400">
@@ -554,7 +554,7 @@ export default function ServicesPage() {
             <StaggerItem>
             <Link
               href="/checkout?tier=federal-criminal"
-              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+              className="flex h-full flex-col rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
             >
               <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                 Available Now
@@ -565,7 +565,7 @@ export default function ServicesPage() {
                 </h3>
                 <span className="text-lg font-bold text-amber-400">{TIER_CORE["federal-criminal"].priceDisplay}</span>
               </div>
-              <p className="mt-2 text-sm text-zinc-400">
+              <p className="mt-2 flex-1 text-sm text-zinc-400">
                 26 questions on federal procedure, sentencing guidelines, cooperation agreements, and AUSA tactics. Instant PDF.
               </p>
               <p className="mt-2 text-xs text-zinc-400">
@@ -576,7 +576,7 @@ export default function ServicesPage() {
             <StaggerItem>
             <Link
               href="/checkout?tier=drug-trafficking"
-              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+              className="flex h-full flex-col rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
             >
               <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                 Available Now
@@ -587,7 +587,7 @@ export default function ServicesPage() {
                 </h3>
                 <span className="text-lg font-bold text-amber-400">{TIER_CORE["drug-trafficking"].priceDisplay}</span>
               </div>
-              <p className="mt-2 text-sm text-zinc-400">
+              <p className="mt-2 flex-1 text-sm text-zinc-400">
                 26 questions on conspiracy charges, mandatory minimums, informant reliability, and wiretap challenges. Instant PDF.
               </p>
               <p className="mt-2 text-xs text-zinc-400">
@@ -598,7 +598,7 @@ export default function ServicesPage() {
             <StaggerItem>
             <Link
               href="/checkout?tier=self-defense"
-              className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+              className="flex h-full flex-col rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
             >
               <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                 Available Now
@@ -609,7 +609,7 @@ export default function ServicesPage() {
                 </h3>
                 <span className="text-lg font-bold text-amber-400">{TIER_CORE["self-defense"].priceDisplay}</span>
               </div>
-              <p className="mt-2 text-sm text-zinc-400">
+              <p className="mt-2 flex-1 text-sm text-zinc-400">
                 26 questions on use of force standards, stand your ground, castle doctrine, and witness credibility. Instant PDF.
               </p>
               <p className="mt-2 text-xs text-zinc-400">
@@ -627,7 +627,7 @@ export default function ServicesPage() {
         {/* track is visible.                                                 */}
         {caseTypes.map((ct) => (
           <FadeInUp key={ct.title}>
-          <section className="mt-20">
+          <section className="mt-12">
             <div className="mb-8">
               <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
                 {ct.title}
@@ -642,7 +642,7 @@ export default function ServicesPage() {
               {ct.tiers.slice(0, 2).map((tier) => (
                 <div
                   key={tier.name}
-                  className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
+                  className="flex h-full flex-col rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
                 >
                   {tier.stageLabel && (
                     <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
@@ -655,7 +655,7 @@ export default function ServicesPage() {
                       {tier.price}
                     </span>
                   </div>
-                  <p className="mt-2 text-sm text-zinc-400">{tier.desc}</p>
+                  <p className="mt-2 flex-1 text-sm text-zinc-400">{tier.desc}</p>
                   <Link
                     href={`/checkout?tier=${tier.slug}`}
                     className="mt-4 block rounded-lg border border-zinc-700 py-2 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
@@ -684,7 +684,8 @@ export default function ServicesPage() {
               {ct.tiers.slice(2, 4).map((tier) => (
                 <div
                   key={tier.name}
-                  className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
+                  id={tier.slug}
+                  className="flex h-full flex-col rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
                 >
                   {tier.stageLabel && (
                     <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
@@ -697,7 +698,7 @@ export default function ServicesPage() {
                       {tier.price}
                     </span>
                   </div>
-                  <p className="mt-2 text-sm text-zinc-400">{tier.desc}</p>
+                  <p className="mt-2 flex-1 text-sm text-zinc-400">{tier.desc}</p>
                   {tier.slug === "x-ray" && (
                     <p className="mt-3 text-xs text-zinc-400">
                       Analysis powered by 7 defense methodologies: evidence chain integrity, drug forensic analysis, constitutional compliance mapping, witness statement cross-referencing, suppression opportunity detection, investigation quality assessment, and 15-pattern forensic detection.
@@ -737,7 +738,7 @@ export default function ServicesPage() {
               <div className="mb-4 text-center">
                 <p className="text-sm font-semibold text-zinc-300">For defendants with a confirmed trial date</p>
               </div>
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+              <div id="situation-room" className="flex h-full flex-col rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
                 {ct.tiers[4].stageLabel && (
                   <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                     {ct.tiers[4].stageLabel}

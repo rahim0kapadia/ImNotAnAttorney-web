@@ -39,7 +39,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment 
 - **Database:** Supabase (cases, orders, drip email tracking, discovery documents, counters, score_aggregates)
 - **Payments:** Stripe Checkout — dual-mode (live flag per tier in `tiers.ts`). DUI is LIVE. See `.claude/rules/product-tiers.md`
 - **Email:** Resend (drip sequences, delivery notifications, admin digests)
-- **Hosting:** Vercel — `rahim-kapadias-projects/imnotanattorney-web`. Deploy via `git push origin master` ONLY (GitHub integration). NEVER use `vercel deploy` CLI.
+- **Hosting:** Vercel — production domain served by project **`imnotanattorney`** (ID: `prj_zqxNgG9xcM235bnKRoEgP5kBOEEr`), NOT `imnotanattorney-web`. Deploy via `git push origin master` ONLY (GitHub integration). NEVER use `vercel deploy` CLI.
 - **Schema:** FAQ, Service, Organization, Article, HowTo, BreadcrumbList (with `speakable`, `@id` binding, `citation`, `about`, `educationalLevel`, `audience`, `isBasedOn`)
 
 ## Key Architectural Files
@@ -61,6 +61,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment 
 
 - Repo: github.com/rahim0kapadia/ImNotAnAttorney-web
 - Vercel account: `rahim0kapadia-1967` / team: `rahim-kapadias-projects`
+- **CRITICAL: Production Vercel project is `imnotanattorney` (prj_zqxNgG9xcM235bnKRoEgP5kBOEEr), NOT `imnotanattorney-web`.** Env vars and CLI commands must target the production project. `.vercel/project.json` is set correctly — verify with `vercel env ls`.
 - Deploy: `git push origin master` → auto-deploy. NEVER `vercel deploy`, `vercel env pull`, or `vercel domains` commands
 - Domain: imnotanattorney.com — Cloudflare A records → Vercel. Already configured. DO NOT touch domain settings.
 - Twitter: @ImNotAnAttorney (live: https://x.com/ImNotAnAttorney)

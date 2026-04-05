@@ -112,7 +112,7 @@ export async function POST(req: NextRequest) {
     }
 
     const result = await res.json();
-    console.log(`[Admin Reply] Sent reply — id: ${result.id}`);
+    console.warn(`[Admin Reply] Sent reply — id: ${result.id}`);
     return NextResponse.json({ ok: true, id: result.id });
   } catch (err) {
     console.error("[Admin Reply] Send error:", err);

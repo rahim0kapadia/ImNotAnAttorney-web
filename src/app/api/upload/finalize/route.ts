@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
 
     if (caseError || !caseRecord) {
       return NextResponse.json(
-        { error: "Invalid case ID" },
+        { error: "Invalid case ID or email" },
         { status: 403 }
       );
     }
@@ -103,7 +103,7 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     if (caseRecord.email.toLowerCase() !== email.toLowerCase().trim()) {
       return NextResponse.json(
-        { error: "Email does not match this case" },
+        { error: "Invalid case ID or email" },
         { status: 403 }
       );
     }

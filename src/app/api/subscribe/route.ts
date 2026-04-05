@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 
     // Score page passes additional context for segmented nurture sequences
     const VALID_BANDS = ["Critical", "Concerning", "Average", "Adequate", "Excellent"];
-    const VALID_CHARGES = ["drug", "dui", "white-collar", "other-felony", "other-misdemeanor"];
+    const VALID_CHARGES = ["drug", "dui", "white-collar", "other-felony", "other-misdemeanor", "drug-possession", "drug-trafficking", "probation-violation", "sex-offense", "federal-criminal", "self-defense"];
     const scoreBand = typeof body.scoreBand === "string" && VALID_BANDS.includes(body.scoreBand) ? body.scoreBand : null;
     const scoreValue = typeof body.scoreValue === "number" && body.scoreValue >= 0 && body.scoreValue <= 100 ? body.scoreValue : null;
     const chargeType = typeof body.chargeType === "string" && VALID_CHARGES.includes(body.chargeType) ? body.chargeType : null;

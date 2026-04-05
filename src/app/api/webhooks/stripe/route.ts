@@ -735,7 +735,7 @@ export async function POST(req: NextRequest) {
             <h1 style="color: #F59E0B;">Your Upgrade is Active</h1>
             <p>Since you already have your Case Decoder report, we can start building your ${escapeHtml(productName)} right away.</p>
             <p>We just need a few additional details about your judge, your attorney, and your case situation:</p>
-            <a href="${origin}/intake/${escapeHtml(tier)}?case=${caseId}&token=${phase2Token}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete ${escapeHtml(productName)} Details</a>
+            <a href="${origin}/intake?tier=${encodeURIComponent(tier)}&case=${caseId}&token=${phase2Token}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete ${escapeHtml(productName)} Details</a>
             <p style="color: #A1A1AA;">This takes about 5 minutes. Your ${escapeHtml(productName)} will be delivered within 72 hours after you submit.</p>
           `,
         }, `phase 2 intake for upgrade ${email} (${tier})`, { category: "phase2-intake", case_id: caseId!, metadata: { tier } });

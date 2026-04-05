@@ -22,7 +22,7 @@
  * the order, case, and trigger downstream emails without re-querying business logic.
  */
 import { NextRequest, NextResponse } from "next/server";
-import { stripe, stripeForTier, TIERS, isValidTier, type TierSlug } from "@/lib/stripe";
+import { stripeForTier, TIERS, isValidTier, type TierSlug } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { normalizeEmail } from "@/lib/site";

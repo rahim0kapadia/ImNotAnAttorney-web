@@ -117,7 +117,7 @@ export async function POST(req: NextRequest) {
     if (error) {
       console.error(`[Resend Webhook] Failed to unsubscribe ${normalizedEmail}:`, error.message);
     } else {
-      console.log(`[Resend Webhook] Auto-unsubscribed ${normalizedEmail} (${type})`);
+      console.warn(`[Resend Webhook] Auto-unsubscribed ${normalizedEmail} (${type})`);
     }
   }
 

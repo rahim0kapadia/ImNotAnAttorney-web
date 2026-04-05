@@ -15,47 +15,52 @@ export async function GET(req: NextRequest) {
 
   const supabase = createAdminClient();
 
-  // Fetch recent referrals (no PII — just tier, date, commission)
-  const { data: referrals } = await supabase
-    .from("referrals")
-    .select("id, tier, sale_amount, commission_amount, commission_paid, created_at")
-    .eq("partner_id", partner.id)
-    .order("created_at", { ascending: false })
-    .limit(50);
+  try {
+    // Fetch recent referrals (no PII — just tier, date, commission)
+    const { data: referrals } = await supabase
+      .from("referrals")
+      .select("id, tier, sale_amount, commission_amount, commission_paid, created_at")
+      .eq("partner_id", partner.id)
+      .order("created_at", { ascending: false })
+      .limit(50);
 
-  // Fetch payout history
-  const { data: payouts } = await supabase
-    .from("partner_payouts")
-    .select("id, amount, payment_method, created_at")
-    .eq("partner_id", partner.id)
-    .order("created_at", { ascending: false })
-    .limit(20);
+    // Fetch payout history
+    const { data: payouts } = await supabase
+      .from("partner_payouts")
+      .select("id, amount, payment_method, created_at")
+      .eq("partner_id", partner.id)
+      .order("created_at", { ascending: false })
+      .limit(20);
 
-  // Use the maintained partner totals (accurate even with >50 referrals)
-  const totalEarned = partner.total_commission || 0;
-  const totalPaid = partner.total_paid_out || 0;
+    // Use the maintained partner totals (accurate even with >50 referrals)
+    const totalEarned = partner.total_commission || 0;
+    const totalPaid = partner.total_paid_out || 0;
 
-  return NextResponse.json({
-    partner: {
-      id: partner.id,
-      name: partner.name,
-      email: partner.email,
-      phone: partner.phone,
-      company: partner.company,
-      promo_code: partner.promo_code,
-      commission_rate: partner.commission_rate,
-      preferred_payment_method: partner.preferred_payment_method,
-      payment_zelle: partner.payment_zelle,
-      payment_venmo: partner.payment_venmo,
-      payment_check_address: partner.payment_check_address,
-    },
-    earnings: {
-      total_earned: totalEarned,
-      total_paid: totalPaid,
-      pending_payout: totalEarned - totalPaid,
-      total_referrals: partner.total_referrals || 0,
-    },
-    referrals: referrals || [],
-    payouts: payouts || [],
-  });
+    return NextResponse.json({
+      partner: {
+        id: partner.id,
+        name: partner.name,
+        email: partner.email,
+        phone: partner.phone,
+        company: partner.company,
+        promo_code: partner.promo_code,
+        commission_rate: partner.commission_rate,
+        preferred_payment_method: partner.preferred_payment_method,
+        payment_zelle: partner.payment_zelle,
+        payment_venmo: partner.payment_venmo,
+        payment_check_address: partner.payment_check_address,
+      },
+      earnings: {
+        total_earned: totalEarned,
+        total_paid: totalPaid,
+        pending_payout: totalEarned - totalPaid,
+        total_referrals: partner.total_referrals || 0,
+      },
+      referrals: referrals || [],
+      payouts: payouts || [],
+    });
+  } catch (err) {
+    console.error("[partner/dashboard] Failed to fetch partner data:", err);
+    return NextResponse.json({ error: "Failed to fetch partner data" }, { status: 500 });
+  }
 }

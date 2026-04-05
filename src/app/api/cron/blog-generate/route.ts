@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
 
   try {
     // Query gap counts by status
-    const { data: statusCounts, error } = await supabase
+    const { data: statusCounts, error: _error } = await supabase
       .from("content_gaps")
       .select("status");
 
@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Also count blog_drafts by status
-    const { data: draftCounts, error: draftError } = await supabase
+    const { data: draftCounts, error: _draftError } = await supabase
       .from("blog_drafts")
       .select("status");
 

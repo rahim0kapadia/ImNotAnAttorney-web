@@ -539,7 +539,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               : answers.chargeType === "federal-criminal"
               ? "Federal cases move faster and carry substantially longer sentences than state cases. Federal sentencing guidelines and mandatory minimums make early guideline calculation and cooperation assessment critical — the window for pre-indictment intervention is narrow."
               : answers.chargeType === "self-defense"
-              ? "Self-defense cases depend on evidence that degrades quickly — surveillance footage, 911 recordings, and witness memories. If this evidence isn't preserved now, it may not exist by trial. Your attorney should have preservation requests filed immediately."
+              ? "Evidence preservation requests are time-sensitive in self-defense cases — surveillance footage, 911 recordings, and witness memories degrade quickly. This is a critical topic to discuss with your attorney."
               : "Motion deadlines in criminal cases run from the date of arrest — not from when you decide to act. Suppression motions, speedy trial demands, and diversion applications all have filing windows that close permanently."}
           </p>
         </div>
@@ -760,7 +760,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 ? "Your defense looks active on the surface. The Case Decoder checks what surface indicators miss — prosecutor patterns, jurisdiction-specific filing windows, and the questions elite attorneys ask that most defendants never think to raise."
                 : result.band === "Excellent"
                 ? "You\u2019re passing the basics. The Case Decoder checks the charge-specific vulnerabilities that don\u2019t show up in 10 questions — the gaps that separate adequate outcomes from the best possible outcome."
-                : "Average isn\u2019t a strategy. The Case Decoder finds what your attorney should be doing that isn\u2019t showing up in basic milestones."}
+                : "Average isn\u2019t a strategy. The Case Decoder identifies charge-specific patterns and filing windows that basic milestones don\u2019t capture — so you know which questions matter most."}
             </h2>
             <p className="mt-2 text-base text-zinc-400">
               The score measured 10 surface indicators. The Case Decoder goes deeper — analyzing {getChargeLabel(answers.chargeType)}-specific patterns, your exact case stage, and the gaps your score revealed. 15 calibrated questions, email templates, and a 7-day action plan, built from your exact charge type and case stage.

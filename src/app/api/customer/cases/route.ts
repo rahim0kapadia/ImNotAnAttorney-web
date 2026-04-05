@@ -15,22 +15,27 @@ export async function GET(req: NextRequest) {
 
   const supabase = createAdminClient();
 
-  // Fetch orders for this customer
-  const { data: orders } = await supabase
-    .from("orders")
-    .select("id, tier, amount, status, paid_at, created_at, priority_delivery")
-    .eq("email", customer.email)
-    .order("created_at", { ascending: false });
+  try {
+    // Fetch orders for this customer
+    const { data: orders } = await supabase
+      .from("orders")
+      .select("id, tier, amount, status, paid_at, created_at, priority_delivery")
+      .eq("email", customer.email)
+      .order("created_at", { ascending: false });
 
-  // Fetch cases for this customer
-  const { data: cases } = await supabase
-    .from("cases")
-    .select("id, order_id, tier, status, report_token, delivered_at, created_at")
-    .eq("email", customer.email)
-    .order("created_at", { ascending: false });
+    // Fetch cases for this customer
+    const { data: cases } = await supabase
+      .from("cases")
+      .select("id, order_id, tier, status, delivered_at, created_at")
+      .eq("email", customer.email)
+      .order("created_at", { ascending: false });
 
-  return NextResponse.json({
-    orders: orders || [],
-    cases: cases || [],
-  });
+    return NextResponse.json({
+      orders: orders || [],
+      cases: cases || [],
+    });
+  } catch (err) {
+    console.error("[customer/cases] Failed to fetch customer data:", err);
+    return NextResponse.json({ error: "Failed to fetch customer data" }, { status: 500 });
+  }
 }

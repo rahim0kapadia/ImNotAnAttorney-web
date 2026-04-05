@@ -37,14 +37,6 @@ import { getClientIp } from "@/lib/request";
  * @returns JSON with verified (boolean), and if true: tier, email, amount (cents), productName
  */
 export async function GET(req: NextRequest) {
-  // Rate limit: 20 requests per minute per IP
-  const ip = getClientIp(req);
-  const supabase = createAdminClient();
-  const { limited } = await checkRateLimit(supabase, `checkout-verify:${ip}`, 20, 60);
-  if (limited) {
-    return NextResponse.json({ verified: false });
-  }
-
   const sessionId = req.nextUrl.searchParams.get("session_id");
   if (!sessionId) {
     return NextResponse.json({ error: "Missing session_id" }, { status: 400 });
@@ -54,7 +46,16 @@ export async function GET(req: NextRequest) {
   if (sessionId.length > 200 || !/^cs_/.test(sessionId)) {
     return NextResponse.json({ verified: false });
   }
+
   try {
+    // Rate limit: 20 requests per minute per IP
+    const ip = getClientIp(req);
+    const supabase = createAdminClient();
+    const { limited } = await checkRateLimit(supabase, `checkout-verify:${ip}`, 20, 60);
+    if (limited) {
+      return NextResponse.json({ verified: false });
+    }
+
     // Try the matching Stripe client based on session ID prefix to avoid
     // double-latency. cs_live_ sessions can only be retrieved by the live
     // client, cs_test_ by the test client.

@@ -20,12 +20,10 @@
 
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
-import { FadeInUp } from "@/components/motion/FadeInUp";
 
 export function Footer() {
   return (
     <footer className="border-t border-zinc-800 bg-zinc-950">
-      <FadeInUp>
       <div className="mx-auto max-w-6xl px-4 py-12">
         <div className="mb-8 rounded-lg border border-amber-500/20 bg-amber-500/5 px-6 py-4 text-center">
           <p className="text-sm text-zinc-300">
@@ -240,7 +238,6 @@ export function Footer() {
           © {new Date().getFullYear()} ImNotAnAttorney. All rights reserved.
         </div>
       </div>
-      </FadeInUp>
     </footer>
   );
 }

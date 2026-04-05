@@ -446,7 +446,7 @@ export const PROBATION_VIOLATION: PlaybookConfig = {
       },
       {
         title: "\u201CNothing We Can Do\u201D Is a Lie",
-        text: "16 states cap incarceration for technical violations. Graduated sanctions exist. Modification of conditions exists. Early termination exists. Your attorney should know all of this.",
+        text: "16 states cap incarceration for technical violations. Graduated sanctions exist. Modification of conditions exists. Early termination exists. These are worth discussing with your attorney.",
       },
     ],
   },

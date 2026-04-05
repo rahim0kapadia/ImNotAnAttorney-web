@@ -215,10 +215,10 @@ export const NURTURE_EMAILS: DripEmail[] = [
   {
     key: "nurture_day1",
     delayDays: 1,
-    subject: "3 things your attorney should have done by now",
+    subject: "3 milestones that should be done by now",
     html: `
-      <h1 style="color: #F59E0B;">3 Things Your Attorney Should Have Done By Now</h1>
-      <p>If you're past arraignment, your attorney should have done three things by now:</p>
+      <h1 style="color: #F59E0B;">3 Milestones That Should Be Done By Now</h1>
+      <p>If you're past arraignment, three things are typically expected to have happened by now:</p>
       <p><strong style="color: white;">1. Reviewed ALL discovery with you</strong> — not summarized it. Reviewed every page and explained what matters.</p>
       <p><strong style="color: white;">2. Identified at least one issue</strong> — weight discrepancies, witness contradictions, procedural errors. Every case has them.</p>
       <p><strong style="color: white;">3. Filed or discussed motions</strong> — suppression, dismissal, compelling discovery. If none have been discussed, ask why.</p>
@@ -406,8 +406,8 @@ export const SCORE_CRISIS_EMAILS: DripEmail[] = [
       <div class="charge-variant-white-collar" style="display:none;">
         <p><strong style="color: white;">White collar defendants</strong> in your score range often have one or more of these gaps:</p>
         <ul style="padding-left: 20px;">
-          <li><strong style="color: white;">Intent not adequately challenged</strong> — white collar charges almost always require proving intent. Your attorney should be building a narrative around legitimate business purpose, good-faith reliance on advisors, or lack of knowledge.</li>
-          <li><strong style="color: white;">Document volume used against you</strong> — prosecutors cherry-pick from thousands of pages. Your attorney should be identifying the documents that show the full context, not just the ones the prosecution highlighted.</li>
+          <li><strong style="color: white;">Intent not adequately challenged</strong> — white collar charges almost always require proving intent. At this stage, defendants often explore whether a narrative around legitimate business purpose, good-faith reliance on advisors, or lack of knowledge is being developed.</li>
+          <li><strong style="color: white;">Document volume used against you</strong> — prosecutors cherry-pick from thousands of pages. One area to explore with your attorney: whether the documents that show the full context — not just the ones the prosecution highlighted — are being identified and preserved.</li>
           <li><strong style="color: white;">Restitution strategy not started</strong> — voluntary restitution before sentencing dramatically affects outcomes. If your attorney hasn't discussed this, ask about the timeline.</li>
         </ul>
       </div>
@@ -415,7 +415,7 @@ export const SCORE_CRISIS_EMAILS: DripEmail[] = [
       <div class="charge-variant-felony" style="display:none;">
         <p><strong style="color: white;">Felony defendants</strong> in your score range often have one or more of these gaps:</p>
         <ul style="padding-left: 20px;">
-          <li><strong style="color: white;">Preliminary hearing strategy unclear</strong> — the preliminary hearing is your first real opportunity to test the prosecution's case. Your attorney should have a specific plan for what to challenge and which witnesses to cross-examine.</li>
+          <li><strong style="color: white;">Preliminary hearing strategy unclear</strong> — the preliminary hearing is your first real opportunity to test the prosecution's case. At this stage, a specific plan for what to challenge and which witnesses to cross-examine is typically expected to be in place.</li>
           <li><strong style="color: white;">Discovery incomplete or unreviewed</strong> — felony cases generate significant discovery. If your attorney summarized it rather than walking you through it page by page, important details may have been missed.</li>
           <li><strong style="color: white;">Sentencing exposure not mapped</strong> — the minimum, maximum, and guideline range for each charge should be on the table, including how enhancements or prior record affect the math.</li>
         </ul>
@@ -425,8 +425,8 @@ export const SCORE_CRISIS_EMAILS: DripEmail[] = [
         <p><strong style="color: white;">Misdemeanor defendants</strong> in your score range often have one or more of these gaps:</p>
         <ul style="padding-left: 20px;">
           <li><strong style="color: white;">Diversion or deferred adjudication not explored</strong> — many misdemeanor charges qualify for programs that can result in dismissal. If your attorney hasn't discussed these options, ask specifically about eligibility.</li>
-          <li><strong style="color: white;">Collateral consequences not addressed</strong> — a misdemeanor conviction can affect employment, housing, professional licenses, and immigration status. Your attorney should be considering these beyond just the criminal penalty.</li>
-          <li><strong style="color: white;">Witness statements not obtained</strong> — misdemeanor cases often rely heavily on one or two witnesses. Your attorney should be getting statements or depositions before memories fade or witnesses become unavailable.</li>
+          <li><strong style="color: white;">Collateral consequences not addressed</strong> — a misdemeanor conviction can affect employment, housing, professional licenses, and immigration status. These impacts beyond the criminal penalty are an important area to explore with your attorney.</li>
+          <li><strong style="color: white;">Witness statements not obtained</strong> — misdemeanor cases often rely heavily on one or two witnesses. Defendants at this stage often ask about obtaining statements or depositions before memories fade or witnesses become unavailable.</li>
         </ul>
       </div>
 
@@ -522,7 +522,7 @@ export const SCORE_REENGAGE_EMAILS: DripEmail[] = [
       </div>
 
       <div class="charge-variant-white-collar" style="display:none;">
-        <p>For white collar cases, the motion most often missed is a <strong style="color: white;">motion to compel discovery of exculpatory documents</strong>. Prosecutors are required to disclose evidence favorable to the defense (Brady material), but they don't always do it proactively. Your attorney should be filing motions to ensure the full picture — including documents that support your defense — is on the table.</p>
+        <p>For white collar cases, the motion most often missed is a <strong style="color: white;">motion to compel discovery of exculpatory documents</strong>. Prosecutors are required to disclose evidence favorable to the defense (Brady material), but they don't always do it proactively. Filing motions to ensure the full picture — including documents that support the defense — is on the table is a critical step defendants often ask about.</p>
       </div>
 
       <div class="charge-variant-felony" style="display:none;">
@@ -989,7 +989,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">Most Defendants Receive Their Case Documents Around Now</h1>
       <p>If you're thirty days past arraignment and your case feels like it has gone quiet — that's normal. Criminal cases move in bursts: the arrest, the arraignment, then a long period where hearings are scheduled, discovery is compiled, and attorneys file initial motions. The silence feels like nothing is happening. Usually, the opposite is true.</p>
-      <p>Somewhere in the next 30-60 days, your attorney should receive your discovery package — the police reports, lab results, witness statements, body camera logs, and phone records that make up the prosecution's case file. Some attorneys walk clients through every document. Most summarize it. A few don't mention it at all. When yours arrives, one question defendants often ask at this stage: <em>"Can I see a copy of the discovery?"</em> Defendants generally have a right to review the evidence compiled against them.</p>
+      <p>Somewhere in the next 30-60 days, discovery packages typically arrive — the police reports, lab results, witness statements, body camera logs, and phone records that make up the prosecution's case file. Some attorneys walk clients through every document. Most summarize it. A few don't mention it at all. When yours arrives, one question defendants often ask at this stage: <em>"Can I see a copy of the discovery?"</em> Defendants generally have a right to review the evidence compiled against them.</p>
       <p>Your Case Decoder gave you questions to ask before discovery. Those questions get sharper once you can see the actual documents. When your case file arrives, there's a way to have every page read systematically — contradictions flagged, chain-of-custody gaps documented, rights violations identified. That analysis is available when you're ready.</p>
       ${cta("Learn what discovery analysis finds", "/services#x-ray")}
     `,

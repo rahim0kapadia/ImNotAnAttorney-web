@@ -133,6 +133,8 @@ export function FileUpload({ caseId, email, onUploadComplete }: FileUploadProps)
             uploadFiles(e.dataTransfer.files);
           }
         }}
+        role="region"
+        aria-label="File drop zone — or use the Browse Files button below"
         className={`rounded-xl border-2 border-dashed p-8 text-center transition-colors ${
           dragOver
             ? "border-amber-500 bg-amber-500/5"

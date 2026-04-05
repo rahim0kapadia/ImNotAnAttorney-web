@@ -200,7 +200,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.strategyDiscussed === "no") {
     score -= 12;
     observations.push(
-      "An attorney who hasn't explained their defense theory either doesn't have one or doesn't think you need to know. Neither is acceptable when freedom is at stake."
+      "If your defense theory hasn't been explained, that's a question worth asking: \"What is your theory of defense, and how does it address the prosecution's strongest evidence?\""
     );
   }
 
@@ -242,7 +242,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     );
   } else if (input.caseStage === "post-conviction") {
     observations.push(
-      "Post-conviction cases have strict appeal deadlines. Make sure your attorney has identified all available remedies (direct appeal, PCR, habeas) and their filing deadlines."
+      "Post-conviction cases have strict appeal deadlines. One question worth exploring: has your attorney identified all available remedies (direct appeal, PCR, habeas) and their filing deadlines."
     );
   } else if (input.caseStage === "pre-arrest") {
     score += 3;
@@ -282,7 +282,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     );
   } else if (input.licensedProfession === "yes-other") {
     observations.push(
-      "A conviction affects background checks, security clearances, and professional opportunities — even without a license at stake. Make sure your attorney is considering collateral employment consequences."
+      "A conviction affects background checks, security clearances, and professional opportunities — even without a license at stake. Collateral employment consequences are worth discussing with your attorney."
     );
   } else if (input.licensedProfession === "student") {
     observations.push(
@@ -437,6 +437,6 @@ export function getChargeSpecificObservation(chargeType: string, timeIndex: numb
         ? "Even for misdemeanor charges, a conviction creates a permanent record. At this stage, your attorney should have explored diversion or deferred adjudication options and be actively preparing for hearings. Ask: \"Have we explored every alternative to a conviction on my record?\""
         : "Even for misdemeanor charges, a conviction creates a permanent record that can affect employment, housing, and professional licensing. Ask your attorney about diversion or deferred adjudication — programs that can result in dismissal instead of conviction.";
     default:
-      return `For ${getChargeLabel(chargeType)} cases, make sure your attorney has explained the specific elements the prosecution must prove and which ones are weakest.`;
+      return `For ${getChargeLabel(chargeType)} cases, understanding which elements the prosecution must prove — and which ones are weakest — is a key conversation to have with your attorney.`;
   }
 }

@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Get Started — ImNotAnAttorney",
+  title: "Get Started",
   description:
     "You have an attorney. You don't understand your case. That's the gap we fill. 40+ elite defense attorneys' methodology applied to your specific charges.",
   alternates: {

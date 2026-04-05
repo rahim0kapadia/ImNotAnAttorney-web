@@ -145,7 +145,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "DB insert failed" }, { status: 500 });
   }
 
-  console.log(`[Resend Inbound] Stored email from ${emailData.from || data.from} — ${emailData.subject || data.subject}`);
+  console.warn(`[Resend Inbound] Stored email from ${emailData.from || data.from} — ${emailData.subject || data.subject}`);
   return NextResponse.json({ received: true, stored: true });
 }
 

@@ -348,7 +348,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "self-defense": {
     ...coreTier("self-defense"),
-    feltExperience: "You protected yourself or someone you love. Now you need to protect your freedom.",
+    feltExperience: "You protected yourself or someone you love. Now it's time to protect your freedom.",
     features: [
       "Charge Reality Report — self-defense elements and justifiable force explained in plain English",
       "26 Questions That Change How Your Next Attorney Meeting Goes (6-part format)",
@@ -417,7 +417,7 @@ const TIER_INFO: Record<string, TierInfo> = {
   },
   "intelligence-brief": {
     ...coreTier("intelligence-brief"),
-    feltExperience: "You need to understand your case — not just trust that someone else does.",
+    feltExperience: "Understanding your case changes everything — not just trust that someone else does.",
     features: [
       "Case Decoder report delivered within 48 hours",
       "Everything in Case Decoder, plus:",
@@ -446,7 +446,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "The Clarity or It's Free: Delivered within 72 hours with 10-15 targeted questions — or your money back.",
     story: "Three transactions in a federal indictment pre-dated the business relationship the government claimed created fraudulent intent. The attorney had never mapped the timeline. Federal cases generate sprawling document sets that exceed what any single attorney can manually cross-reference — our systematic approach surfaces what manual review naturally misses. That's why jurisdiction intelligence and prosecution analysis matter.",
     validation:
-      "Everything you need to understand your case — without needing discovery yet.",
+      "Everything to understand your case — without needing discovery yet.",
     whyThisWorks:
       "Your jurisdiction's sentencing patterns. Your jurisdiction's plea statistics. Built on elite jury psychology methodology and constitutional appellate frameworks. A single hour with an attorney who knows this costs $500+. You're getting a complete intelligence file.",
     pullquote: {
@@ -672,6 +672,11 @@ function CheckoutContent() {
     // Show feedback if email entered but consent not checked
     if (email && !info.isDigitalProduct && !consentChecked) {
       setConsentError(true);
+      return;
+    }
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailError("Please enter a valid email address");
       return;
     }
 
@@ -979,9 +984,12 @@ function CheckoutContent() {
               }}
               placeholder="you@example.com"
               required
+              aria-required="true"
+              aria-invalid={!!emailError}
+              aria-describedby={emailError ? "email-error" : undefined}
               className={`mt-2 w-full rounded-lg border-2 ${emailError ? "border-red-500" : "border-amber-500/50"} bg-white px-4 py-3 text-base text-zinc-900 placeholder-zinc-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30`}
             />
-            {emailError && <p role="alert" className="mt-1 text-xs text-red-400">{emailError}</p>}
+            {emailError && <p id="email-error" role="alert" className="mt-1 text-xs text-red-400">{emailError}</p>}
             <p className="mt-2 text-xs text-zinc-400">No spam — ever. Just your {info.isDigitalProduct ? "download link" : "report"} and delivery updates.</p>
             <p className="mt-1 text-xs text-zinc-400">You&apos;ll receive your report at this address &mdash; help@imnotanattorney.com</p>
           </div>
@@ -1089,6 +1097,7 @@ function CheckoutContent() {
                   type="checkbox"
                   checked={consentChecked}
                   onChange={(e) => { setConsentChecked(e.target.checked); if (e.target.checked) setConsentError(false); }}
+                  aria-required="true"
                   className="mt-0.5 h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
                 />
                 <span className="text-xs text-zinc-400">
@@ -1097,7 +1106,7 @@ function CheckoutContent() {
                 </span>
               </label>
               {consentError && !consentChecked && (
-                <p className="mt-1 text-xs text-red-400">Please check the box above to continue.</p>
+                <p role="alert" className="mt-1 text-xs text-red-400">Please check the box above to continue.</p>
               )}
             </>
           )}

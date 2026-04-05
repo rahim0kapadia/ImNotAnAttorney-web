@@ -68,7 +68,7 @@ const OPERATOR_EMAIL =
  * Returns the site origin URL for constructing absolute links.
  * Falls back to production URL if NEXT_PUBLIC_SITE_URL is not set.
  */
-function getOrigin(req: NextRequest): string {
+function getOrigin(_req: NextRequest): string {
   return process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
 }
 
@@ -616,7 +616,7 @@ export async function POST(req: NextRequest) {
     `,
   }, deliveryLogContext);
 
-  let customerNotified = true;
+  let _customerNotified = true;
 
   // ──────────────────────────────────────────────────────────────
   // STEP 1b: RETRY with simplified email if first attempt failed
@@ -643,7 +643,7 @@ export async function POST(req: NextRequest) {
       // Mark customerNotified=false so the operator knows to send manually.
       // The case will still be marked "delivered" so the report URL works —
       // the operator just needs to get the URL to the customer another way.
-      customerNotified = false;
+      _customerNotified = false;
       await sendEmail({
         to: OPERATOR_EMAIL,
         subject: `ALERT: Delivery email failed for ${escapeHtml(caseData.email)}`,
