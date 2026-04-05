@@ -21,7 +21,7 @@ import { createContext, useContext, useState } from "react";
 
 export type TrackFilter = "all" | "pre-discovery" | "post-discovery";
 
-const FilterContext = createContext<TrackFilter>("all");
+const FilterContext = createContext<TrackFilter>("pre-discovery");
 
 /** Hook to read the current discovery filter from any client child. */
 export function useDiscoveryFilter(): TrackFilter {
@@ -33,7 +33,7 @@ interface DiscoveryGateProps {
 }
 
 export function DiscoveryGate({ children }: DiscoveryGateProps) {
-  const [filter, setFilter] = useState<TrackFilter>("all");
+  const [filter, setFilter] = useState<TrackFilter>("pre-discovery");
 
   return (
     <FilterContext.Provider value={filter}>

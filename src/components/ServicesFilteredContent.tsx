@@ -23,6 +23,20 @@ export function TrackB({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+/** Shows contextual guidance copy based on the active discovery filter. */
+export function GateContextCopy() {
+  const filter = useDiscoveryFilter();
+  if (filter === "all") return null;
+
+  return (
+    <p className="mt-4 text-center text-sm text-zinc-400">
+      {filter === "pre-discovery"
+        ? "Showing services that work from your case details alone — no documents needed."
+        : "Showing services that analyze your police reports and case documents."}
+    </p>
+  );
+}
+
 /** TrackDivider that reads filter from context (no prop needed). */
 export function FilteredTrackDivider() {
   const filter = useDiscoveryFilter();

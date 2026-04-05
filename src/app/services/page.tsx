@@ -30,7 +30,7 @@
  * SEO: FAQ schema (FAQPage) + ProfessionalService schema for rich snippets.
  */
 import { DiscoveryGate } from "@/components/DiscoveryGate";
-import { TrackA, TrackB, FilteredTrackDivider } from "@/components/ServicesFilteredContent";
+import { TrackA, TrackB, FilteredTrackDivider, GateContextCopy } from "@/components/ServicesFilteredContent";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { LeadCapture } from "@/components/LeadCapture";
 import { FadeInUp } from "@/components/motion/FadeInUp";
@@ -422,6 +422,7 @@ export default function ServicesPage() {
         {/* Uses "police reports / case documents" not "discovery" per Covello.*/}
         {/* Wraps Instant Products + Case Type sections to control visibility.*/}
         <DiscoveryGate>
+        <GateContextCopy />
 
         {/* INSTANT PRODUCTS — Track A (pre-discovery). Hidden when post-discovery selected. */}
         <TrackA>
@@ -648,8 +649,13 @@ export default function ServicesPage() {
               {ct.tiers.slice(0, 2).map((tier) => (
                 <div
                   key={tier.name}
-                  className="flex h-full flex-col rounded-xl border border-zinc-500 bg-zinc-900/50 p-6"
+                  className={`flex h-full flex-col rounded-xl p-6 ${tier.slug === "case-decoder" ? "border-2 border-amber-500 bg-zinc-900/50" : "border border-zinc-500 bg-zinc-900/50"}`}
                 >
+                  {tier.slug === "case-decoder" && (
+                    <span className="mb-2 inline-block rounded-full bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-400">
+                      Recommended First Step
+                    </span>
+                  )}
                   {tier.stageLabel && (
                     <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                       {tier.stageLabel}
@@ -691,8 +697,13 @@ export default function ServicesPage() {
                 <div
                   key={tier.name}
                   id={tier.slug}
-                  className="flex h-full flex-col rounded-xl border border-zinc-500 bg-zinc-900/50 p-6"
+                  className={`flex h-full flex-col rounded-xl p-6 ${tier.slug === "x-ray" ? "border-2 border-amber-500 bg-zinc-900/50" : "border border-zinc-500 bg-zinc-900/50"}`}
                 >
+                  {tier.slug === "x-ray" && (
+                    <span className="mb-2 inline-block rounded-full bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-400">
+                      Recommended First Step
+                    </span>
+                  )}
                   {tier.stageLabel && (
                     <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                       {tier.stageLabel}
