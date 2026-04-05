@@ -119,7 +119,7 @@ function UploadContent() {
           Word documents, images, audio, and video files. Maximum 50MB per file.
         </p>
 
-        <div className="mt-4 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+        <div className="mt-4 rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
           <p className="text-sm font-semibold text-zinc-300">
             What to upload:
           </p>
@@ -200,7 +200,7 @@ function UploadContent() {
           </>
         )}
 
-        <div className="mt-8 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+        <div className="mt-8 rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
           <p className="text-xs text-zinc-400">
             ImNotAnAttorney provides legal information and research — not legal advice. No attorney-client relationship is created.
           </p>

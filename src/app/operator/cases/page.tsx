@@ -181,7 +181,7 @@ function CaseListContent() {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+      <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 overflow-hidden">
         {loading ? (
           <div className="p-8 text-center text-sm text-zinc-400">
             Loading cases...
@@ -193,7 +193,7 @@ function CaseListContent() {
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
+              <tr className="border-b border-zinc-600 text-left text-xs text-zinc-400 uppercase tracking-wider">
                 <th className="px-4 py-3">Email</th>
                 <th className="px-4 py-3">Tier</th>
                 <th className="px-4 py-3">Status</th>
@@ -212,7 +212,7 @@ function CaseListContent() {
                   tabIndex={0}
                   onClick={() => router.push(`/operator/cases/${c.id}`)}
                   onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); router.push(`/operator/cases/${c.id}`); } }}
-                  className="border-b border-zinc-800 cursor-pointer hover:bg-zinc-800/50 transition-colors"
+                  className="border-b border-zinc-600 cursor-pointer hover:bg-zinc-800/50 transition-colors"
                 >
                   <td className="px-4 py-3 text-zinc-200 font-medium max-w-[200px] truncate">
                     {c.email}

@@ -91,7 +91,7 @@ export function DiscoveryReveal() {
   return (
     <section
       ref={shouldReduce ? undefined : containerRef}
-      className="border-t border-zinc-800 px-4 py-20 section-alt"
+      className="border-t border-zinc-600 px-4 py-20 section-alt"
     >
       <div className="mx-auto max-w-4xl">
         <motion.div

@@ -229,7 +229,7 @@ function CaseDetailContent() {
       </Link>
 
       {/* ===== Header ===== */}
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+      <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-white">{c.email}</h1>
@@ -357,7 +357,7 @@ function CaseDetailContent() {
       </div>
 
       {/* ===== Tabs ===== */}
-      <div className="border-b border-zinc-800 flex gap-1 overflow-x-auto">
+      <div className="border-b border-zinc-600 flex gap-1 overflow-x-auto">
         {TABS.map((tab) => (
           <button
             key={tab}
@@ -469,7 +469,7 @@ function OverviewTab({ caseData }: { caseData: CaseDetail }) {
 
 function MetricCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
+    <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-5">
       <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
         {label}
       </p>
@@ -487,10 +487,10 @@ function DocumentsTab({ documents }: { documents: DocumentRow[] }) {
     return <p className="text-sm text-zinc-400">No documents uploaded.</p>;
   }
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+    <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 overflow-hidden">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
+          <tr className="border-b border-zinc-600 text-left text-xs text-zinc-400 uppercase tracking-wider">
             <th className="px-4 py-3">Name</th>
             <th className="px-4 py-3">Type</th>
             <th className="px-4 py-3">Category</th>
@@ -502,7 +502,7 @@ function DocumentsTab({ documents }: { documents: DocumentRow[] }) {
         </thead>
         <tbody>
           {documents.map((d) => (
-            <tr key={d.id} className="border-b border-zinc-800">
+            <tr key={d.id} className="border-b border-zinc-600">
               <td className="px-4 py-3 text-zinc-200 max-w-[200px] truncate">
                 {d.original_name}
               </td>
@@ -560,10 +560,10 @@ function FindingsTab({ findings }: { findings: FindingSummary[] }) {
           <h3 className="text-sm font-semibold text-zinc-300 uppercase tracking-wider mb-3">
             {severity} ({groups[severity].length})
           </h3>
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
+                <tr className="border-b border-zinc-600 text-left text-xs text-zinc-400 uppercase tracking-wider">
                   <th className="px-4 py-3">Title</th>
                   <th className="px-4 py-3">Type</th>
                   <th className="px-4 py-3">Category</th>
@@ -573,7 +573,7 @@ function FindingsTab({ findings }: { findings: FindingSummary[] }) {
               </thead>
               <tbody>
                 {groups[severity].map((f) => (
-                  <tr key={f.id} className="border-b border-zinc-800">
+                  <tr key={f.id} className="border-b border-zinc-600">
                     <td className="px-4 py-3 text-zinc-200">{f.title}</td>
                     <td className="px-4 py-3 text-zinc-400">
                       {f.finding_type}
@@ -605,10 +605,10 @@ function WitnessesTab({ witnesses }: { witnesses: WitnessSummary[] }) {
     return <p className="text-sm text-zinc-400">No witnesses profiled.</p>;
   }
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+    <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 overflow-hidden">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
+          <tr className="border-b border-zinc-600 text-left text-xs text-zinc-400 uppercase tracking-wider">
             <th className="px-4 py-3">Name</th>
             <th className="px-4 py-3">Type</th>
             <th className="px-4 py-3">Agency</th>
@@ -620,7 +620,7 @@ function WitnessesTab({ witnesses }: { witnesses: WitnessSummary[] }) {
         </thead>
         <tbody>
           {witnesses.map((w) => (
-            <tr key={w.id} className="border-b border-zinc-800">
+            <tr key={w.id} className="border-b border-zinc-600">
               <td className="px-4 py-3 text-zinc-200 font-medium">
                 {w.name}
               </td>
@@ -690,10 +690,10 @@ function JobsTab({
     return <p className="text-sm text-zinc-400">No processing jobs.</p>;
   }
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+    <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 overflow-hidden">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
+          <tr className="border-b border-zinc-600 text-left text-xs text-zinc-400 uppercase tracking-wider">
             <th className="px-4 py-3">Type</th>
             <th className="px-4 py-3">Status</th>
             <th className="px-4 py-3">Progress</th>
@@ -705,7 +705,7 @@ function JobsTab({
         </thead>
         <tbody>
           {jobs.map((j) => (
-            <tr key={j.id} className="border-b border-zinc-800">
+            <tr key={j.id} className="border-b border-zinc-600">
               <td className="px-4 py-3 text-zinc-200">
                 {j.job_type}
                 {j.job_subtype ? ` / ${j.job_subtype}` : ""}
@@ -761,10 +761,10 @@ function TasksTab({ tasks }: { tasks: OperatorTaskRow[] }) {
     return <p className="text-sm text-zinc-400">No operator tasks.</p>;
   }
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+    <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 overflow-hidden">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
+          <tr className="border-b border-zinc-600 text-left text-xs text-zinc-400 uppercase tracking-wider">
             <th className="px-4 py-3">Priority</th>
             <th className="px-4 py-3">Title</th>
             <th className="px-4 py-3">Type</th>
@@ -775,7 +775,7 @@ function TasksTab({ tasks }: { tasks: OperatorTaskRow[] }) {
         </thead>
         <tbody>
           {tasks.map((t) => (
-            <tr key={t.id} className="border-b border-zinc-800">
+            <tr key={t.id} className="border-b border-zinc-600">
               <td className="px-4 py-3">
                 <PriorityBadge priority={t.priority} />
               </td>
@@ -810,7 +810,7 @@ function TasksTab({ tasks }: { tasks: OperatorTaskRow[] }) {
 
 function TimelineTab({ timelineCount }: { timelineCount: number }) {
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+    <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
       <p className="text-lg font-semibold text-white">
         {timelineCount} event{timelineCount !== 1 ? "s" : ""} reconstructed
       </p>
@@ -842,10 +842,10 @@ function LegalTab({
         {citations.length === 0 ? (
           <p className="text-sm text-zinc-400">No citations.</p>
         ) : (
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
+                <tr className="border-b border-zinc-600 text-left text-xs text-zinc-400 uppercase tracking-wider">
                   <th className="px-4 py-3">Case</th>
                   <th className="px-4 py-3">Citation</th>
                   <th className="px-4 py-3">Court</th>
@@ -856,7 +856,7 @@ function LegalTab({
               </thead>
               <tbody>
                 {citations.map((ct) => (
-                  <tr key={ct.id} className="border-b border-zinc-800">
+                  <tr key={ct.id} className="border-b border-zinc-600">
                     <td className="px-4 py-3 text-zinc-200">
                       {ct.case_name}
                     </td>
@@ -897,10 +897,10 @@ function LegalTab({
         {motions.length === 0 ? (
           <p className="text-sm text-zinc-400">No motions.</p>
         ) : (
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
+                <tr className="border-b border-zinc-600 text-left text-xs text-zinc-400 uppercase tracking-wider">
                   <th className="px-4 py-3">Motion</th>
                   <th className="px-4 py-3">Type</th>
                   <th className="px-4 py-3">Severity</th>
@@ -911,7 +911,7 @@ function LegalTab({
               </thead>
               <tbody>
                 {motions.map((m) => (
-                  <tr key={m.id} className="border-b border-zinc-800">
+                  <tr key={m.id} className="border-b border-zinc-600">
                     <td className="px-4 py-3 text-zinc-200 font-medium">
                       {m.motion_name}
                     </td>

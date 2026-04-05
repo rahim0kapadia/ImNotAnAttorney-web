@@ -491,7 +491,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </h2>
         {result.observations.map((obs, i) => (
           <FadeInUp key={i} delay={i * 0.1}>
-            <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+            <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
               <p className="text-base leading-relaxed text-zinc-300">{obs}</p>
             </div>
           </FadeInUp>
@@ -500,7 +500,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
 
       {/* 2b. DAI BENCHMARK INSIGHTS — aggregate data from prior completions */}
       {stats && stats.insights.pctNoMotions !== null && (
-        <div className="mt-6 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+        <div className="mt-6 rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
           <p className="text-xs font-semibold uppercase tracking-wider text-amber-500">
             What our data shows
           </p>
@@ -547,7 +547,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
 
       {/* 3b. "MY ATTORNEY SAYS FINE" HANDLER — for non-crisis scorers */}
       {result.score > 55 && (
-        <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+        <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
           <p className="text-base leading-relaxed text-zinc-300">
             <span className="font-semibold text-white">If your attorney told you everything is fine:</span>{" "}
             that&apos;s exactly what this tool is designed to check. Attorneys communicate at the level of detail they think you can handle. The Case Decoder gives you the specific benchmarks for your charge type — and the questions already written, built from the same methodology elite defense attorneys use internally.
@@ -587,14 +587,14 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
       )}
 
       {/* 5. ORIGIN STORY — Built by a defendant (Task 1.2) */}
-      <div className="rounded-lg border border-zinc-800 bg-zinc-900/30 p-4">
+      <div className="rounded-lg border border-zinc-600 bg-zinc-900/30 p-4">
         <p className="text-base leading-relaxed text-zinc-300">
           One of our founders spent six weeks in the dark while his attorney said nothing — then opened his own discovery and found 68.3 grams of missing evidence that his attorney had never raised. That case is why this tool exists.
         </p>
       </div>
 
       {/* 6. TRIBE IDENTITY — You're a different kind of defendant (Task 1.2) */}
-      <div className="rounded-lg border border-zinc-800 bg-zinc-900/30 p-4">
+      <div className="rounded-lg border border-zinc-600 bg-zinc-900/30 p-4">
         <p className="text-base leading-relaxed text-zinc-300">
           Most defendants wait. They wait for their attorney to call. They wait for the court date. They wait to find out what&apos;s happening in their own case.
         </p>
@@ -871,7 +871,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 </button>
               </div>
             </div>
-            <div className="mt-4 pt-4 border-t border-zinc-800">
+            <div className="mt-4 pt-4 border-t border-zinc-600">
               <p className="text-center text-xs text-zinc-400 mb-3">Know someone facing charges? Send them the free quiz.</p>
               <ShareButtons
                 url={shareUrl!}
@@ -1308,7 +1308,7 @@ export default function ScoreClient() {
         )}
 
         {/* Disclaimer */}
-        <div className="mt-12 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+        <div className="mt-12 rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
           <p className="text-xs text-zinc-400">
             This score is an educational tool based on 10 critical defense
             milestones identified across thousands of criminal cases &mdash; informed by the procedural standards established by defense methodologists. This is not legal advice. Every case is different. Your attorney remains the final authority on strategy decisions

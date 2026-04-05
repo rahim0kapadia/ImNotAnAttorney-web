@@ -275,7 +275,7 @@ export default async function DefenseScoreDataPage() {
                 </thead>
                 <tbody className="text-zinc-300">
                   {Object.entries(METRIC_LABELS).map(([metric, label]) => (
-                    <tr key={metric} className="border-b border-zinc-800">
+                    <tr key={metric} className="border-b border-zinc-600">
                       <td className="py-3 pr-4 text-zinc-400">{label}</td>
                       {chargeTypes.map((ct) => {
                         const count = metricsByCharge[ct]?.[metric] ?? 0;

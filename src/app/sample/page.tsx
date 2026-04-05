@@ -184,7 +184,7 @@ export default function SamplePage() {
                   </tr>
                 </thead>
                 <tbody className="text-zinc-300">
-                  <tr className="border-b border-zinc-800">
+                  <tr className="border-b border-zinc-600">
                     <td className="py-3 pr-4 font-semibold text-amber-400">
                       Communication
                     </td>
@@ -199,7 +199,7 @@ export default function SamplePage() {
                     </td>
                     <td className="py-3 text-amber-400">→ Q1, Q2</td>
                   </tr>
-                  <tr className="border-b border-zinc-800">
+                  <tr className="border-b border-zinc-600">
                     <td className="py-3 pr-4 font-semibold text-amber-400">
                       Preparation
                     </td>
@@ -213,7 +213,7 @@ export default function SamplePage() {
                     </td>
                     <td className="py-3 text-amber-400">→ Q3, Q7</td>
                   </tr>
-                  <tr className="border-b border-zinc-800">
+                  <tr className="border-b border-zinc-600">
                     <td className="py-3 pr-4 font-semibold text-amber-400">
                       Strategy
                     </td>
@@ -310,7 +310,7 @@ export default function SamplePage() {
                     </tr>
                   </thead>
                   <tbody className="text-zinc-300">
-                    <tr className="border-b border-zinc-800">
+                    <tr className="border-b border-zinc-600">
                       <td className="py-2 pr-4">Operation of motor vehicle</td>
                       <td className="py-2 pr-4 text-zinc-400">
                         You were driving or in physical control of the vehicle
@@ -320,7 +320,7 @@ export default function SamplePage() {
                         operating the vehicle?&rdquo;
                       </td>
                     </tr>
-                    <tr className="border-b border-zinc-800">
+                    <tr className="border-b border-zinc-600">
                       <td className="py-2 pr-4">In a public place</td>
                       <td className="py-2 pr-4 text-zinc-400">
                         On a road, parking lot, or other publicly accessible area
@@ -614,7 +614,7 @@ export default function SamplePage() {
                   </tr>
                 </thead>
                 <tbody className="text-zinc-300">
-                  <tr className="border-b border-zinc-800">
+                  <tr className="border-b border-zinc-600">
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 1
                     </td>
@@ -623,7 +623,7 @@ export default function SamplePage() {
                       Pre-written in Exactly What to Say — copy, paste, send.
                     </td>
                   </tr>
-                  <tr className="border-b border-zinc-800">
+                  <tr className="border-b border-zinc-600">
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 2
                     </td>
@@ -632,7 +632,7 @@ export default function SamplePage() {
                       Already in order — review when ready.
                     </td>
                   </tr>
-                  <tr className="border-b border-zinc-800">
+                  <tr className="border-b border-zinc-600">
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 3
                     </td>
@@ -641,7 +641,7 @@ export default function SamplePage() {
                       Pre-written in Your Advocacy Steps — built for this scenario.
                     </td>
                   </tr>
-                  <tr className="border-b border-zinc-800">
+                  <tr className="border-b border-zinc-600">
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 4
                     </td>
@@ -650,7 +650,7 @@ export default function SamplePage() {
                       Everything you need for the meeting is on one page.
                     </td>
                   </tr>
-                  <tr className="border-b border-zinc-800">
+                  <tr className="border-b border-zinc-600">
                     <td className="py-2 pr-4 font-semibold text-amber-400">
                       Day 5
                     </td>

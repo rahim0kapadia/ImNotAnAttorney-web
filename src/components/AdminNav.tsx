@@ -17,7 +17,7 @@ export function AdminNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="border-b border-zinc-800 mb-6 pb-3 flex items-center gap-6">
+    <nav className="border-b border-zinc-600 mb-6 pb-3 flex items-center gap-6">
       <span className="text-zinc-400 text-sm font-medium mr-2">Admin</span>
       {ADMIN_LINKS.map((link) => (
         <Link

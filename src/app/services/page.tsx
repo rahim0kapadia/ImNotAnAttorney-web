@@ -48,6 +48,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${SITE_URL}/services`,
   },
+  openGraph: {
+    title: "Defense Intelligence Services",
+    description:
+      `Five tiers of defense research — from charge analysis to full trial intelligence. We research your case and give you the questions that change your next attorney meeting. From ${TIER_CORE["case-decoder"].priceDisplay} to ${TIER_CORE["situation-room"].priceDisplay}.`,
+    url: `${SITE_URL}/services`,
+  },
 };
 
 /**
@@ -66,13 +72,13 @@ const caseTypes = [
     title: "Drug Cases",
     subtitle: "Possession, trafficking, distribution",
     description:
-      "We analyze your case using chain of custody protocols — tracking every person who touched the evidence, weight discrepancy frameworks — checking if the amount at arrest matches the lab, and informant credibility methodology — investigating whether the snitch was reliable. The same approaches used in landmark federal defense cases and 375+ exonerations.",
+      "We track every person who touched the evidence. We check if the amount at arrest matches the lab report. We investigate whether any informant was reliable. These are the same approaches used in landmark defense cases and 375+ exonerations.",
     tiers: [
       {
         name: TIER_CORE["case-decoder"].name,
         slug: "case-decoder",
         price: TIER_CORE["case-decoder"].priceDisplay,
-        desc: "15 calibrated attorney questions, ready-to-send email templates, and a 7-day action plan — built from elite defense methodology for drug cases.",
+        desc: "15 specific questions to ask your attorney about your drug case. Includes ready-to-send email templates and a 7-day action plan.",
         discovery: TIER_CORE["case-decoder"].requiresDiscovery,
         stageLabel: "First 30 days",
       },
@@ -80,7 +86,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "Your jurisdiction's sentencing patterns, prosecution tendencies, and realistic outcome range — researched from public records and 40+ attorney methodology.",
+        desc: "How judges in your area sentence drug cases. How your prosecutor handles them. What outcomes are realistic — all researched from public records.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
         stageLabel: "30-90 days in",
       },
@@ -88,7 +94,7 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "We read every page of your discovery looking for what doesn't add up — documents that contradict each other, evidence that's missing, rights that may have been violated. Every finding comes with page references and 35-50 specific questions to bring to your attorney, including what a solid answer looks like and what a red flag answer looks like. Includes your Intelligence Brief delivered first, Discovery Strength Rating, and Prosecution Case Weakness Analysis.",
+        desc: "We read every page of your discovery and flag what doesn't add up. Missing evidence. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references. Each question shows what a good answer looks like — and what a red flag looks like. Also includes your Intelligence Brief, a Discovery Strength Rating, and a Prosecution Weakness Analysis.",
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
         stageLabel: "When you have your case documents",
       },
@@ -96,7 +102,7 @@ const caseTypes = [
         name: TIER_CORE["war-room"].name,
         slug: "war-room",
         price: TIER_CORE["war-room"].priceDisplay,
-        desc: "Everything above + Judge &amp; prosecution dossiers, witness analysis (up to 8), motion timing questions for your attorney, case law package, weekly updates. Includes Evidence Chain Audit — was every piece of evidence handled properly? Every item traced through custody, gaps flagged. And Witness Reliability Rankings — how trustworthy is each witness? Scored across 7 credibility dimensions.",
+        desc: "Everything above, plus profiles on your judge and prosecutor. Witness analysis for up to 8 witnesses. Motion timing questions for your attorney. Case law package. Weekly updates. We also audit the evidence chain — was every item handled properly? And we rank each witness across 7 trust factors.",
         discovery: TIER_CORE["war-room"].requiresDiscovery,
         stageLabel: "Building your defense",
       },
@@ -104,7 +110,7 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "Full trial intelligence cycle: nightly testimony analysis, morning prep brief with cross-examination angles, witness impeachment research — every trial day. All witnesses researched, JOA research brief, Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room.",
+        desc: "During trial, you get nightly analysis of each day's testimony. Every morning, a prep brief with cross-examination angles. All witnesses researched. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Requires War Room.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: TIER_CORE["situation-room"].requiresWarRoom,
         stageLabel: "Trial confirmed",
@@ -115,13 +121,13 @@ const caseTypes = [
     title: "DUI / DWI",
     subtitle: "First offense through felony DUI",
     description:
-      "From breathalyzer calibration to field sobriety compliance, we apply forensic evidence methodology and cross-examination frameworks — the same approaches used to destroy prosecution witnesses in landmark retrials and acquittals.",
+      "We check breathalyzer calibration records and field sobriety test compliance. We apply the same evidence review and cross-examination approaches used to win landmark retrials and acquittals.",
     tiers: [
       {
         name: TIER_CORE["case-decoder"].name,
         slug: "case-decoder",
         price: TIER_CORE["case-decoder"].priceDisplay,
-        desc: "15 calibrated attorney questions, ready-to-send email templates, and a 7-day action plan — built from elite defense methodology for DUI cases.",
+        desc: "15 specific questions to ask your attorney about your DUI case. Includes ready-to-send email templates and a 7-day action plan.",
         discovery: TIER_CORE["case-decoder"].requiresDiscovery,
         stageLabel: "First 30 days",
       },
@@ -129,7 +135,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "Your jurisdiction's DUI sentencing patterns, local diversion programs, and realistic outcome range — researched from public records and 40+ attorney methodology.",
+        desc: "How judges in your area handle DUI cases. What diversion programs exist near you. What outcomes are realistic — all researched from public records.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
         stageLabel: "30-90 days in",
       },
@@ -137,7 +143,7 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "We read every page of your discovery looking for what doesn't add up — documents that contradict each other, evidence that's missing, rights that may have been violated. Every finding comes with page references and 35-50 specific questions to bring to your attorney, including what a solid answer looks like and what a red flag answer looks like. Includes your Intelligence Brief delivered first, Discovery Strength Rating, and Prosecution Case Weakness Analysis.",
+        desc: "We read every page of your discovery and flag what doesn't add up. Missing evidence. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references. Each question shows what a good answer looks like — and what a red flag looks like. Also includes your Intelligence Brief, a Discovery Strength Rating, and a Prosecution Weakness Analysis.",
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
         stageLabel: "When you have your case documents",
       },
@@ -145,7 +151,7 @@ const caseTypes = [
         name: TIER_CORE["war-room"].name,
         slug: "war-room",
         price: TIER_CORE["war-room"].priceDisplay,
-        desc: "Judge &amp; prosecution dossiers, expert witness challenges, motion timing questions for your attorney, case law package, weekly updates until resolution. Includes Evidence Chain Audit — was every piece of evidence handled properly? Every item traced through custody, gaps flagged. And Witness Reliability Rankings — how trustworthy is each witness? Scored across 7 credibility dimensions.",
+        desc: "Profiles on your judge and prosecutor. Expert witness challenges. Motion timing questions for your attorney. Case law package. Weekly updates until your case resolves. We also audit the evidence chain — was every item handled properly? And we rank each witness across 7 trust factors.",
         discovery: TIER_CORE["war-room"].requiresDiscovery,
         stageLabel: "Building your defense",
       },
@@ -153,7 +159,7 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "Full trial intelligence cycle: nightly testimony analysis, morning prep brief with cross-examination angles, witness impeachment research — every trial day. Officer research, expert credibility questions, jury selection research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room.",
+        desc: "During trial, you get nightly analysis of each day's testimony. Every morning, a prep brief with cross-examination angles. Officer research. Expert credibility questions. Jury selection research. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Requires War Room.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: TIER_CORE["situation-room"].requiresWarRoom,
         stageLabel: "Trial confirmed",
@@ -164,13 +170,13 @@ const caseTypes = [
     title: "White Collar",
     subtitle: "Fraud, embezzlement, federal charges",
     description:
-      "Federal cases are a different game. We apply constitutional appellate frameworks — legal arguments based on your constitutional rights, jury psychology methodology, and RICO dismantling approaches — drawn from attorneys who have handled the highest-profile federal cases — to help you understand complex charges and evaluate every strategic decision.",
+      "Federal cases are a different game. We review your constitutional rights arguments, jury selection factors, and complex charge structures. Our approaches come from attorneys who have handled the highest-profile federal cases — helping you understand the charges and evaluate every strategic decision.",
     tiers: [
       {
         name: TIER_CORE["case-decoder"].name,
         slug: "case-decoder",
         price: TIER_CORE["case-decoder"].priceDisplay,
-        desc: "15 calibrated attorney questions, ready-to-send email templates, and a 7-day action plan — built from elite defense methodology for federal cases.",
+        desc: "15 specific questions to ask your attorney about your federal case. Includes ready-to-send email templates and a 7-day action plan.",
         discovery: TIER_CORE["case-decoder"].requiresDiscovery,
         stageLabel: "First 30 days",
       },
@@ -178,7 +184,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "Your jurisdiction's sentencing patterns, prosecution patterns and track record, guidelines calculation review, and cooperation decision questions — researched from public records and 40+ attorney methodology.",
+        desc: "How judges in your area sentence federal cases. Your prosecutor's track record. A review of your sentencing guidelines. Questions to help you think through cooperation decisions — all researched from public records.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
         stageLabel: "30-90 days in",
       },
@@ -186,7 +192,7 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "We read every page of your discovery looking for what doesn't add up — documents that contradict each other, evidence that's missing, rights that may have been violated. Every finding comes with page references and 35-50 specific questions to bring to your attorney, including what a solid answer looks like and what a red flag answer looks like. Includes your Intelligence Brief delivered first, Discovery Strength Rating, and Prosecution Case Weakness Analysis.",
+        desc: "We read every page of your discovery and flag what doesn't add up. Missing evidence. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references. Each question shows what a good answer looks like — and what a red flag looks like. Also includes your Intelligence Brief, a Discovery Strength Rating, and a Prosecution Weakness Analysis.",
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
         stageLabel: "When you have your case documents",
       },
@@ -194,7 +200,7 @@ const caseTypes = [
         name: TIER_CORE["war-room"].name,
         slug: "war-room",
         price: TIER_CORE["war-room"].priceDisplay,
-        desc: "Full intelligence operation — AUSA dossier, cooperator analysis, sentencing guidelines deep dive, case law package, weekly updates. Includes Evidence Chain Audit — was every piece of evidence handled properly? Every item traced through custody, gaps flagged. And Witness Reliability Rankings — how trustworthy is each witness? Scored across 7 credibility dimensions.",
+        desc: "Full research operation. Profile on your federal prosecutor. Cooperator analysis. Deep dive into your sentencing guidelines. Case law package. Weekly updates. We also audit the evidence chain — was every item handled properly? And we rank each witness across 7 trust factors.",
         discovery: TIER_CORE["war-room"].requiresDiscovery,
         stageLabel: "Building your defense",
       },
@@ -202,7 +208,7 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "Full trial intelligence cycle: nightly testimony analysis, morning prep brief with cross-examination angles, witness impeachment research — every trial day. Expert credibility research, cooperator background questions, guidelines research. Priority Response Line (2hr during trial prep, 4hr during trial). Requires War Room.",
+        desc: "During trial, you get nightly analysis of each day's testimony. Every morning, a prep brief with cross-examination angles. Expert credibility research. Cooperator background questions. Guidelines research. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Requires War Room.",
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: TIER_CORE["situation-room"].requiresWarRoom,
         stageLabel: "Trial confirmed",
@@ -359,7 +365,7 @@ export default function ServicesPage() {
         </FadeInUp>
 
         <FadeInUp>
-        <div className="mt-16 rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 text-center">
+        <div className="mt-16 rounded-xl border border-zinc-600 bg-zinc-900/50 p-8 text-center">
           <h2 className="font-display text-lg font-bold text-white">
             Smart defendants don&apos;t just hire an attorney.{" "}
             <span className="text-amber-400">
@@ -642,7 +648,7 @@ export default function ServicesPage() {
               {ct.tiers.slice(0, 2).map((tier) => (
                 <div
                   key={tier.name}
-                  className="flex h-full flex-col rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
+                  className="flex h-full flex-col rounded-xl border border-zinc-600 bg-zinc-900/50 p-6"
                 >
                   {tier.stageLabel && (
                     <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
@@ -685,7 +691,7 @@ export default function ServicesPage() {
                 <div
                   key={tier.name}
                   id={tier.slug}
-                  className="flex h-full flex-col rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
+                  className="flex h-full flex-col rounded-xl border border-zinc-600 bg-zinc-900/50 p-6"
                 >
                   {tier.stageLabel && (
                     <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
@@ -738,7 +744,7 @@ export default function ServicesPage() {
               <div className="mb-4 text-center">
                 <p className="text-sm font-semibold text-zinc-300">For defendants with a confirmed trial date</p>
               </div>
-              <div id="situation-room" className="flex h-full flex-col rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+              <div id="situation-room" className="flex h-full flex-col rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
                 {ct.tiers[4].stageLabel && (
                   <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                     {ct.tiers[4].stageLabel}
@@ -786,7 +792,7 @@ export default function ServicesPage() {
         {/* GUARANTEE — Per-tier delivery commitments with deadlines.          */}
         {/* Reinforces risk reversal at the point of maximum hesitation.      */}
         <FadeInUp>
-        <section className="mt-20 rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 text-center">
+        <section className="mt-20 rounded-xl border border-zinc-600 bg-zinc-900/50 p-8 text-center">
           <h2 className="font-display text-2xl font-bold text-white">
             Our Guarantee
           </h2>
@@ -798,19 +804,19 @@ export default function ServicesPage() {
           <div className="mx-auto mt-8 max-w-2xl text-left">
             <h3 className="text-lg font-bold text-amber-400 mb-4">{TIER_CORE["x-ray"].name} — Three Guarantees. Zero Exceptions.</h3>
             <div className="space-y-4">
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-5">
+              <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-5">
                 <p className="font-semibold text-white mb-2">The Discovery Guarantee</p>
                 <p className="text-sm text-zinc-400">
                   Every piece of discovery we have analyzed has contained at least one discrepancy, gap, or constitutional vulnerability. Every single one. That is not marketing language — it is the nature of police work and prosecutorial preparation. If we analyze your discovery documents and do not identify at least one concrete issue your attorney can act on — a contradiction, a chain of custody gap, a constitutional question, a missing piece of evidence that should be there — you get every dollar back. No forms. No phone calls. No waiting. Just email us and it&apos;s done.
                 </p>
               </div>
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-5">
+              <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-5">
                 <p className="font-semibold text-white mb-2">The Attorney Meeting Guarantee</p>
                 <p className="text-sm text-zinc-400">
                   Every X-Ray comes with an Attorney Delivery Package — a formatted summary of findings your attorney can read in 10 minutes, with every claim sourced back to a specific page in your discovery. If your attorney reviews our findings and tells you there is nothing there, send us the response and we will add a second round of analysis at no charge.
                 </p>
               </div>
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-5">
+              <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-5">
                 <p className="font-semibold text-white mb-2">The Delivery Commitment</p>
                 <p className="text-sm text-zinc-400">
                   Delivered within 10 business days of document receipt or you receive a 20% refund automatically — no request required. Past 15 business days for any reason: full refund. Your case moves on a schedule. So do we.

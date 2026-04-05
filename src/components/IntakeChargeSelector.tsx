@@ -121,7 +121,7 @@ export function IntakeChargeSelector({
             className={`w-full cursor-pointer rounded-lg border px-4 py-3 text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 ${
               isSelected
                 ? "border-amber-500 bg-amber-500/5"
-                : "border-zinc-800 bg-zinc-900/50 hover:border-zinc-600"
+                : "border-zinc-600 bg-zinc-900/50 hover:border-zinc-600"
             }`}
           >
             <span className="flex items-center justify-between gap-4">

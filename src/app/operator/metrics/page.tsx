@@ -102,7 +102,7 @@ function MetricsContent() {
 
       {/* ===== Top-level cards ===== */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
           <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             Total Revenue
           </p>
@@ -110,13 +110,13 @@ function MetricsContent() {
             {formatCurrency(m.total_revenue_cents)}
           </p>
         </div>
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
           <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             Total Cases
           </p>
           <p className="text-3xl font-bold text-white">{m.total_cases}</p>
         </div>
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
           <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             Avg Delivery Time
           </p>
@@ -126,7 +126,7 @@ function MetricsContent() {
               : "—"}
           </p>
         </div>
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
           <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             SLA Compliance
           </p>
@@ -146,13 +146,13 @@ function MetricsContent() {
 
       {/* ===== Pipeline Health ===== */}
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
           <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             Active Jobs
           </p>
           <p className="text-3xl font-bold text-white">{m.active_jobs}</p>
         </div>
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
           <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             Failed Jobs
           </p>
@@ -164,7 +164,7 @@ function MetricsContent() {
             {m.failed_jobs}
           </p>
         </div>
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
           <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
             Open Tasks
           </p>
@@ -189,7 +189,7 @@ function MetricsContent() {
         <h2 className="text-lg font-semibold text-white mb-4">
           Cases by Status
         </h2>
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 space-y-3">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 space-y-3">
           {statusEntries.length === 0 ? (
             <p className="text-sm text-zinc-400">No cases yet.</p>
           ) : (
@@ -220,7 +220,7 @@ function MetricsContent() {
         <h2 className="text-lg font-semibold text-white mb-4">
           Cases by Tier
         </h2>
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 space-y-3">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 space-y-3">
           {tierEntries.length === 0 ? (
             <p className="text-sm text-zinc-400">No cases yet.</p>
           ) : (

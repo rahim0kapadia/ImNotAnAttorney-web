@@ -128,7 +128,7 @@ export default function FamilyPage() {
             ].map((item) => (
               <StaggerItem
                 key={item.num}
-                className="flex items-start gap-4 rounded-lg border border-zinc-800 bg-zinc-900/50 p-5"
+                className="flex items-start gap-4 rounded-lg border border-zinc-600 bg-zinc-900/50 p-5"
               >
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-500/10 text-sm font-bold text-amber-400">
                   {item.num}
@@ -220,7 +220,7 @@ export default function FamilyPage() {
 
       {/* DEEPER RESOURCES */}
       <section className="mt-16">
-        <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-6">
+        <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-6">
           <p className="text-xs font-semibold text-zinc-400">
             Want the full guide?
           </p>

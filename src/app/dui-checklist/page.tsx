@@ -70,7 +70,7 @@ export default function DuiChecklistPage() {
         ].map((item) => (
           <div
             key={item.number}
-            className="flex items-start gap-4 rounded-lg border border-zinc-800 bg-zinc-900/50 p-5"
+            className="flex items-start gap-4 rounded-lg border border-zinc-600 bg-zinc-900/50 p-5"
           >
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-500/10 text-sm font-bold text-amber-400">
               {item.number}
@@ -101,7 +101,7 @@ export default function DuiChecklistPage() {
       </div>
 
       {/* DIRECT BUY LINK */}
-      <div className="mt-10 rounded-lg border border-zinc-800 bg-zinc-900/50 p-6 text-center">
+      <div className="mt-10 rounded-lg border border-zinc-600 bg-zinc-900/50 p-6 text-center">
         <p className="text-sm text-zinc-400">
           Already know you need more than a checklist?
         </p>

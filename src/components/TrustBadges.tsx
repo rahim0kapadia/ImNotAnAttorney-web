@@ -70,7 +70,7 @@ export function TrustBadges({ variant }: TrustBadgesProps) {
   if (variant === "checkout") {
     return (
       <FadeInUp>
-        <div className="flex flex-wrap items-center justify-center gap-6 rounded-lg border border-zinc-800 bg-zinc-900/50 px-6 py-4">
+        <div className="flex flex-wrap items-center justify-center gap-6 rounded-lg border border-zinc-600 bg-zinc-900/50 px-6 py-4">
           {filtered.map((b) => (
             <span key={b.label} className="flex items-center gap-2 text-sm text-zinc-400">
               <span className="text-amber-500">{b.icon}</span>

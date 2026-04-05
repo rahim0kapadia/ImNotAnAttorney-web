@@ -36,7 +36,7 @@ import { Geist, Playfair_Display } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { CookieConsent } from "@/components/CookieConsent";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -168,9 +168,7 @@ export default async function RootLayout({
         <main id="main-content" className="min-h-screen">{children}</main>
         <Footer />
         <Analytics />
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-        )}
+        <CookieConsent />
         {/* Meta Pixel — env var guard: set NEXT_PUBLIC_META_PIXEL_ID when account is created */}
         {process.env.NEXT_PUBLIC_META_PIXEL_ID && /^\d+$/.test(process.env.NEXT_PUBLIC_META_PIXEL_ID) && (
           <script

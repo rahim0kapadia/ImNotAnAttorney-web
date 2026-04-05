@@ -31,7 +31,7 @@ export default function PartnersPage() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       {/* Header */}
-      <header className="border-b border-zinc-800">
+      <header className="border-b border-zinc-600">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="font-bold text-lg text-amber-400">
             ImNotAnAttorney
@@ -68,7 +68,7 @@ export default function PartnersPage() {
       </section>
 
       {/* How It Works */}
-      <section className="bg-zinc-900 border-t border-b border-zinc-800 py-16">
+      <section className="bg-zinc-900 border-t border-b border-zinc-600 py-16">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             How It Works
@@ -91,7 +91,7 @@ export default function PartnersPage() {
             { title: "Court Reporters", desc: "You see defendants every day. Give them a tool that helps." },
             { title: "Anyone", desc: "Know someone facing charges? That's all it takes." },
           ].map((item) => (
-            <div key={item.title} className="bg-zinc-900 rounded-xl border border-zinc-800 p-5">
+            <div key={item.title} className="bg-zinc-900 rounded-xl border border-zinc-600 p-5">
               <p className="font-bold text-amber-400 mb-1">{item.title}</p>
               <p className="text-zinc-400 text-sm">{item.desc}</p>
             </div>
@@ -116,7 +116,7 @@ export default function PartnersPage() {
       </section>
 
       {/* Why This Works */}
-      <section className="bg-zinc-900 border-t border-b border-zinc-800 py-16">
+      <section className="bg-zinc-900 border-t border-b border-zinc-600 py-16">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-6">
             Why Defendants Buy
@@ -159,7 +159,7 @@ export default function PartnersPage() {
       {/* Application Form */}
       <section
         id="apply"
-        className="bg-zinc-900 border-t border-zinc-800 py-16"
+        className="bg-zinc-900 border-t border-zinc-600 py-16"
       >
         <div className="max-w-2xl mx-auto px-6">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-2">
@@ -173,7 +173,7 @@ export default function PartnersPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-800 py-8">
+      <footer className="border-t border-zinc-600 py-8">
         <div className="max-w-5xl mx-auto px-6 text-center text-zinc-400 text-sm">
           <p>
             ImNotAnAttorney provides legal information, not legal advice.

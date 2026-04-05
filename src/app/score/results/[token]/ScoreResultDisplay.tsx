@@ -36,7 +36,7 @@ export function ScoreResultDisplay({ score, band, observations }: ScoreResultDis
         <h3 className="text-sm font-semibold text-zinc-300">Key findings:</h3>
         {observations.map((obs, i) => (
           <FadeInUp key={i} delay={i * 0.1}>
-            <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+            <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
               <p className="text-sm leading-relaxed text-zinc-300">{obs}</p>
             </div>
           </FadeInUp>

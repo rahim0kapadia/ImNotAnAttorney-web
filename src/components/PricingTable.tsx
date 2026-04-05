@@ -205,7 +205,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
   return (
     <div>
       {/* Anchor */}
-      <div className="mb-8 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
+      <div className="mb-8 rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 text-center">
         <p className="text-sm text-zinc-400">
           The average criminal defense retainer is{" "}
           <span className="font-bold text-white">$5,000-$25,000</span>. A
@@ -225,7 +225,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
             className={`flex flex-col rounded-xl border p-8 h-full ${
               tier.featured
                 ? "border-amber-500 bg-zinc-900 relative ring-2 ring-amber-500/50 shadow-lg shadow-amber-500/10 scale-[1.02]"
-                : "border-zinc-800 bg-zinc-900/50"
+                : "border-zinc-600 bg-zinc-900/50"
             }`}
           >
             {tier.featured && (
@@ -257,7 +257,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
                     <span className="ml-2 text-zinc-400 line-through">{vs.value}</span>
                   </div>
                 ))}
-                <div className="flex items-baseline justify-between text-xs font-semibold pt-1 border-t border-zinc-800">
+                <div className="flex items-baseline justify-between text-xs font-semibold pt-1 border-t border-zinc-600">
                   <span className="text-zinc-300">Total value</span>
                   <span className="text-amber-400">
                     ${tier.valueStack.reduce((sum, vs) => sum + parseInt(vs.value.replace(/[^0-9]/g, ""), 10), 0).toLocaleString()}+
@@ -345,7 +345,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
         {tiers.slice(3).map((tier) => (
           <div
             key={tier.name}
-            className="flex flex-col rounded-xl border border-zinc-800 bg-zinc-900/50 p-8"
+            className="flex flex-col rounded-xl border border-zinc-600 bg-zinc-900/50 p-8"
           >
             <h3 className="text-xl font-bold text-white">{tier.name}</h3>
             <div className="mt-2">
@@ -386,7 +386,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
         {addons.map((addon) => (
           <div
             key={addon.name}
-            className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
+            className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6"
           >
             <div className="flex items-baseline justify-between">
               <h4 className="font-semibold text-white">{addon.name}</h4>
@@ -420,7 +420,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
       </div>
 
       {/* Guarantee */}
-      <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
+      <div className="mt-6 rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 text-center">
         <p className="text-lg font-bold text-white">Deliverable Guarantee</p>
         <p className="mt-2 text-base text-zinc-400">
           Delivery Guarantee: On time with the stated question count — or a

@@ -39,7 +39,7 @@ export function DiscoveryGate({ children }: DiscoveryGateProps) {
     <FilterContext.Provider value={filter}>
       <div>
         {/* Interactive discovery gate */}
-        <div className="mt-8 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
+        <div className="mt-8 rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 text-center">
           <p className="text-sm font-bold text-white">
             Have you received police reports or case documents?
           </p>

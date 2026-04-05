@@ -933,7 +933,7 @@ function IntakeForm() {
                     )}
 
                     {dbQuestions.length > 0 && (
-                      <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+                      <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
                         <p className="mb-3 text-xs font-semibold text-amber-500">
                           A few questions specific to your charge type
                         </p>
@@ -980,7 +980,7 @@ function IntakeForm() {
                     )}
 
                     {currentChargeQuestions.length > 0 && (
-                      <div className="mt-6 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+                      <div className="mt-6 rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
                         <p className="mb-3 text-xs font-semibold text-amber-500">
                           A few questions specific to your charge type
                         </p>
@@ -1388,7 +1388,7 @@ function IntakeForm() {
               </fieldset>
 
               {/* Disclaimer */}
-              <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+              <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
                 <p className="text-xs text-zinc-400">
                   By submitting this form, you understand that ImNotAnAttorney
                   provides legal information and research &mdash; not legal advice. We are

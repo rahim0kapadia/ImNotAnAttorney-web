@@ -737,7 +737,7 @@ function CheckoutContent() {
           </div>
         )}
 
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-8">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-8">
           <h1 className="text-2xl font-bold text-white">{info.name}</h1>
           {info.feltExperience && (
             <p className="mt-2 text-sm text-zinc-400 italic">{info.feltExperience}</p>
@@ -1098,6 +1098,8 @@ function CheckoutContent() {
                   checked={consentChecked}
                   onChange={(e) => { setConsentChecked(e.target.checked); if (e.target.checked) setConsentError(false); }}
                   aria-required="true"
+                  aria-invalid={consentError && !consentChecked}
+                  aria-describedby={consentError && !consentChecked ? "consent-error" : undefined}
                   className="mt-0.5 h-4 w-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500"
                 />
                 <span className="text-xs text-zinc-400">
@@ -1106,7 +1108,7 @@ function CheckoutContent() {
                 </span>
               </label>
               {consentError && !consentChecked && (
-                <p role="alert" className="mt-1 text-xs text-red-400">Please check the box above to continue.</p>
+                <p id="consent-error" role="alert" className="mt-1 text-xs text-red-400">Please check the box above to continue.</p>
               )}
             </>
           )}
@@ -1158,7 +1160,7 @@ function CheckoutContent() {
         {/* UPGRADE CREDITS REMINDER — Outside the main card, reinforces that */}
         {/* every dollar spent counts toward future upgrades. Reduces "what  */}
         {/* if I pick the wrong tier?" anxiety.                              */}
-        <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
+        <div className="mt-6 rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 text-center">
           <p className="text-sm font-semibold text-amber-400">
             100% Upgrade Credit
           </p>

@@ -230,7 +230,7 @@ function JobsContent() {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+      <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 overflow-hidden">
         {loading && jobs.length === 0 ? (
           <div className="p-8 text-center text-sm text-zinc-400">
             Loading jobs...
@@ -242,7 +242,7 @@ function JobsContent() {
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800 text-left text-xs text-zinc-400 uppercase tracking-wider">
+              <tr className="border-b border-zinc-600 text-left text-xs text-zinc-400 uppercase tracking-wider">
                 <th className="px-4 py-3">Type</th>
                 <th className="px-4 py-3">Case</th>
                 <th className="px-4 py-3">Status</th>
@@ -257,7 +257,7 @@ function JobsContent() {
             </thead>
             <tbody>
               {jobs.map((j) => (
-                <tr key={j.id} className="border-b border-zinc-800">
+                <tr key={j.id} className="border-b border-zinc-600">
                   <td className="px-4 py-3 text-zinc-200">
                     {j.job_type}
                     {j.job_subtype ? (

@@ -70,7 +70,7 @@ export default function CustomerLoginPage() {
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-xl border border-zinc-800 p-6">
+          <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-xl border border-zinc-600 p-6">
             {error && (
               <div className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-2 rounded-lg mb-4 text-sm">
                 {error}

@@ -23,7 +23,7 @@ import { TIER_CORE } from "@/lib/tiers";
 
 export function Footer() {
   return (
-    <footer className="border-t border-zinc-800 bg-zinc-950">
+    <footer className="border-t border-zinc-600 bg-zinc-950">
       <div className="mx-auto max-w-6xl px-4 py-12">
         <div className="mb-8 rounded-lg border border-amber-500/20 bg-amber-500/5 px-6 py-4 text-center">
           <p className="text-sm text-zinc-300">
@@ -224,7 +224,7 @@ export function Footer() {
         </div>
 
         {/* Disclaimer */}
-        <div className="mt-8 rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+        <div className="mt-8 rounded-lg border border-zinc-600 bg-zinc-900/50 p-4">
           <p className="text-xs text-zinc-400">
             <strong className="text-zinc-400">Disclaimer:</strong>{" "}
             ImNotAnAttorney provides legal information and research services,
@@ -234,7 +234,7 @@ export function Footer() {
           </p>
         </div>
 
-        <div className="mt-8 border-t border-zinc-800 pt-8 text-center text-xs text-zinc-400">
+        <div className="mt-8 border-t border-zinc-600 pt-8 text-center text-xs text-zinc-400">
           © {new Date().getFullYear()} ImNotAnAttorney. All rights reserved.
         </div>
       </div>

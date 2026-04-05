@@ -31,7 +31,7 @@ const HOW_IT_WORKS_STEPS = [
 export default function BondsmanPartnersPage() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
-      <header className="border-b border-zinc-800">
+      <header className="border-b border-zinc-600">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="font-bold text-lg text-amber-400">
             ImNotAnAttorney
@@ -66,7 +66,7 @@ export default function BondsmanPartnersPage() {
         </a>
       </section>
 
-      <section className="bg-zinc-900 border-t border-b border-zinc-800 py-16">
+      <section className="bg-zinc-900 border-t border-b border-zinc-600 py-16">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">How It Works</h2>
           <PartnerHowItWorks steps={HOW_IT_WORKS_STEPS} />
@@ -81,7 +81,7 @@ export default function BondsmanPartnersPage() {
         </p>
       </section>
 
-      <section className="bg-zinc-900 border-t border-b border-zinc-800 py-16">
+      <section className="bg-zinc-900 border-t border-b border-zinc-600 py-16">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-6">Why Defendants Buy</h2>
           <p className="text-zinc-300 text-lg mb-8">
@@ -116,7 +116,7 @@ export default function BondsmanPartnersPage() {
         <FAQAccordion items={PARTNER_FAQS} />
       </section>
 
-      <section id="apply" className="bg-zinc-900 border-t border-zinc-800 py-16">
+      <section id="apply" className="bg-zinc-900 border-t border-zinc-600 py-16">
         <div className="max-w-2xl mx-auto px-6">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-2">Apply Now</h2>
           <p className="text-center text-zinc-400 mb-8">
@@ -126,7 +126,7 @@ export default function BondsmanPartnersPage() {
         </div>
       </section>
 
-      <footer className="border-t border-zinc-800 py-8">
+      <footer className="border-t border-zinc-600 py-8">
         <div className="max-w-5xl mx-auto px-6 text-center text-zinc-400 text-sm">
           <p>ImNotAnAttorney provides legal information, not legal advice.</p>
           <p className="mt-2">

@@ -184,7 +184,7 @@ export default function SampleXRayPage() {
               </h3>
 
               <div className="mt-4 space-y-3 text-sm">
-                <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4">
+                <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-4">
                   <p className="text-zinc-400">
                     <span className="font-semibold text-zinc-300">
                       Field Report (Officer Martinez, pg 4):
@@ -192,7 +192,7 @@ export default function SampleXRayPage() {
                     &ldquo;White powder substance, approximately 28.3 grams&rdquo;
                   </p>
                 </div>
-                <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4">
+                <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-4">
                   <p className="text-zinc-400">
                     <span className="font-semibold text-zinc-300">
                       Lab Report (Forensic Sciences, Report #FSL-2023-4471, pg 2):
@@ -200,7 +200,7 @@ export default function SampleXRayPage() {
                     &ldquo;Off-white powder substance, net weight 7.2 grams&rdquo;
                   </p>
                 </div>
-                <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4">
+                <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-4">
                   <p className="text-zinc-400">
                     <span className="font-semibold text-zinc-300">
                       Cross-Reference: Evidence Room Intake Log (pg 1):
@@ -215,7 +215,7 @@ export default function SampleXRayPage() {
                 the highest (28.3g) and lowest (7.2g) measurement.
               </p>
 
-              <div className="mt-4 rounded-lg border border-zinc-800 bg-zinc-800/30 p-4">
+              <div className="mt-4 rounded-lg border border-zinc-600 bg-zinc-800/30 p-4">
                 <p className="text-xs text-zinc-400">
                   <span className="font-semibold text-zinc-300">Framework:</span>{" "}
                   Chapman II Drug Forensic Analysis — weight discrepancies between
@@ -252,7 +252,7 @@ export default function SampleXRayPage() {
               </h3>
 
               <div className="mt-4 space-y-3 text-sm">
-                <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4">
+                <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-4">
                   <p className="text-zinc-400">
                     <span className="font-semibold text-zinc-300">
                       Arrest Report (pg 2):
@@ -260,7 +260,7 @@ export default function SampleXRayPage() {
                     &ldquo;Miranda rights administered at 14:32&rdquo;
                   </p>
                 </div>
-                <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4">
+                <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-4">
                   <p className="text-zinc-400">
                     <span className="font-semibold text-zinc-300">
                       Booking Record (pg 1):
@@ -341,7 +341,7 @@ export default function SampleXRayPage() {
                   </tr>
                 </thead>
                 <tbody className="text-zinc-300">
-                  <tr className="border-b border-zinc-800">
+                  <tr className="border-b border-zinc-600">
                     <td className="py-3 pr-4 font-semibold text-amber-400">
                       Officer Martinez
                     </td>
@@ -385,7 +385,7 @@ export default function SampleXRayPage() {
 
             {/* Mobile stacked cards */}
             <div className="mt-6 space-y-4 md:hidden">
-              <div className="rounded-lg border border-zinc-800 bg-zinc-900 p-4">
+              <div className="rounded-lg border border-zinc-600 bg-zinc-900 p-4">
                 <div className="space-y-2 text-sm">
                   <p>
                     <span className="font-semibold text-amber-400">Officer Martinez:</span>{" "}
@@ -404,7 +404,7 @@ export default function SampleXRayPage() {
                   </p>
                 </div>
               </div>
-              <div className="rounded-lg border border-zinc-800 bg-zinc-900 p-4">
+              <div className="rounded-lg border border-zinc-600 bg-zinc-900 p-4">
                 <div className="space-y-2 text-sm">
                   <p>
                     <span className="font-semibold text-amber-400">Lab Analyst Chen:</span>{" "}
@@ -579,7 +579,7 @@ export default function SampleXRayPage() {
               Discovery Strength Rating
             </h2>
 
-            <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900 p-6">
+            <div className="mt-6 rounded-xl border border-zinc-600 bg-zinc-900 p-6">
               {/* Score display */}
               <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-8">
                 <div className="text-center">
@@ -604,27 +604,27 @@ export default function SampleXRayPage() {
                     </tr>
                   </thead>
                   <tbody className="text-zinc-300">
-                    <tr className="border-b border-zinc-800">
+                    <tr className="border-b border-zinc-600">
                       <td className="py-3 pr-4">Police/Arrest Reports</td>
                       <td className="py-3 pr-4 font-semibold text-green-400">B</td>
                       <td className="py-3 text-zinc-400">Mostly complete</td>
                     </tr>
-                    <tr className="border-b border-zinc-800">
+                    <tr className="border-b border-zinc-600">
                       <td className="py-3 pr-4">Lab/Forensic Reports</td>
                       <td className="py-3 pr-4 font-semibold text-red-400">D</td>
                       <td className="py-3 text-zinc-400">Significant gaps</td>
                     </tr>
-                    <tr className="border-b border-zinc-800">
+                    <tr className="border-b border-zinc-600">
                       <td className="py-3 pr-4 text-zinc-400" colSpan={3}>
                         [In your report]
                       </td>
                     </tr>
-                    <tr className="border-b border-zinc-800">
+                    <tr className="border-b border-zinc-600">
                       <td className="py-3 pr-4 text-zinc-400" colSpan={3}>
                         [In your report]
                       </td>
                     </tr>
-                    <tr className="border-b border-zinc-800">
+                    <tr className="border-b border-zinc-600">
                       <td className="py-3 pr-4 text-zinc-400" colSpan={3}>
                         [In your report]
                       </td>
@@ -638,7 +638,7 @@ export default function SampleXRayPage() {
                 </table>
               </div>
 
-              <div className="mt-4 rounded-lg border border-zinc-800 bg-zinc-800/30 p-4">
+              <div className="mt-4 rounded-lg border border-zinc-600 bg-zinc-800/30 p-4">
                 <p className="text-sm text-zinc-300">
                   <span className="font-semibold text-white">
                     What a C means:
@@ -658,7 +658,7 @@ export default function SampleXRayPage() {
             BLOCK 9: PROCESS TRANSPARENCY
             ============================================================ */}
         <FadeInUp>
-          <section className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+          <section className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
             <h2 className="text-lg font-bold text-white">How Every X-Ray Is Built</h2>
             <p className="mt-3 text-sm leading-relaxed text-zinc-400">
               Every X-Ray is built the same way: document-by-document analysis using
@@ -683,7 +683,7 @@ export default function SampleXRayPage() {
             </h2>
 
             <div className="mt-6 space-y-4">
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+              <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
                 <p className="font-semibold text-white">
                   &ldquo;{TIER_CORE["x-ray"].priceDisplay} is a lot of money.&rdquo;
                 </p>
@@ -696,7 +696,7 @@ export default function SampleXRayPage() {
                 </p>
               </div>
 
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+              <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
                 <p className="font-semibold text-white">
                   &ldquo;I don&apos;t have all my discovery yet.&rdquo;
                 </p>
@@ -708,7 +708,7 @@ export default function SampleXRayPage() {
                 </p>
               </div>
 
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+              <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
                 <p className="font-semibold text-white">
                   &ldquo;My attorney already reviewed my discovery.&rdquo;
                 </p>
@@ -720,7 +720,7 @@ export default function SampleXRayPage() {
                 </p>
               </div>
 
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+              <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
                 <p className="font-semibold text-white">
                   &ldquo;Is this legal advice?&rdquo;
                 </p>
@@ -750,7 +750,7 @@ export default function SampleXRayPage() {
 
             {/* Guarantee stack */}
             <div className="mx-auto mt-8 max-w-2xl space-y-3 text-left">
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4">
+              <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-4">
                 <p className="text-sm font-semibold text-white">
                   The Discovery Guarantee
                 </p>
@@ -761,7 +761,7 @@ export default function SampleXRayPage() {
                   back. No forms. No phone calls.
                 </p>
               </div>
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4">
+              <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-4">
                 <p className="text-sm font-semibold text-white">
                   The Attorney Meeting Guarantee
                 </p>
@@ -772,7 +772,7 @@ export default function SampleXRayPage() {
                   response — second round of analysis at no charge.
                 </p>
               </div>
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4">
+              <div className="rounded-lg border border-zinc-600 bg-zinc-950/50 p-4">
                 <p className="text-sm font-semibold text-white">
                   The Delivery Commitment
                 </p>

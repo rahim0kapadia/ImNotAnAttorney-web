@@ -228,7 +228,7 @@ export default function PartnersAdmin() {
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
         <form
           onSubmit={handleLogin}
-          className="bg-zinc-900 p-8 rounded-xl border border-zinc-800 w-full max-w-sm"
+          className="bg-zinc-900 p-8 rounded-xl border border-zinc-600 w-full max-w-sm"
         >
           <h1 className="text-xl font-bold text-white mb-4">Partner Admin</h1>
           <input
@@ -268,7 +268,7 @@ export default function PartnersAdmin() {
           <p className="text-zinc-400">Loading...</p>
         ) : (
           <>
-            <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-6 mb-6">
+            <div className="bg-zinc-900 rounded-xl border border-zinc-600 p-6 mb-6">
               <div className="flex items-center justify-between mb-4">
                 <h1 className="text-2xl font-bold">{selectedPartner.name}</h1>
                 <span
@@ -365,7 +365,7 @@ export default function PartnersAdmin() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="text-zinc-400 border-b border-zinc-800">
+                    <tr className="text-zinc-400 border-b border-zinc-600">
                       <th className="text-left py-2 pr-4">Date</th>
                       <th className="text-left py-2 pr-4">Tier</th>
                       <th className="text-right py-2 pr-4">Sale</th>
@@ -378,7 +378,7 @@ export default function PartnersAdmin() {
                     {referrals.map((r) => (
                       <tr
                         key={r.id}
-                        className="border-b border-zinc-800/50"
+                        className="border-b border-zinc-600/50"
                       >
                         <td className="py-2 pr-4">
                           {formatDate(r.created_at)}
@@ -444,7 +444,7 @@ export default function PartnersAdmin() {
       {showCreate && (
         <form
           onSubmit={handleCreate}
-          className="bg-zinc-900 rounded-xl border border-zinc-800 p-6 mb-6"
+          className="bg-zinc-900 rounded-xl border border-zinc-600 p-6 mb-6"
         >
           <h2 className="text-lg font-bold mb-4">Create New Partner</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -546,23 +546,23 @@ export default function PartnersAdmin() {
       {/* Summary Stats */}
       {partners.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
+          <div className="bg-zinc-900 rounded-xl border border-zinc-600 p-4">
             <p className="text-zinc-400 text-sm">Total Partners</p>
             <p className="text-2xl font-bold">{partners.length}</p>
           </div>
-          <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
+          <div className="bg-zinc-900 rounded-xl border border-zinc-600 p-4">
             <p className="text-zinc-400 text-sm">Active</p>
             <p className="text-2xl font-bold text-green-400">
               {partners.filter((p) => p.status === "approved").length}
             </p>
           </div>
-          <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
+          <div className="bg-zinc-900 rounded-xl border border-zinc-600 p-4">
             <p className="text-zinc-400 text-sm">Total Referrals</p>
             <p className="text-2xl font-bold">
               {partners.reduce((sum, p) => sum + (p.total_referrals || 0), 0)}
             </p>
           </div>
-          <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
+          <div className="bg-zinc-900 rounded-xl border border-zinc-600 p-4">
             <p className="text-zinc-400 text-sm">Unpaid Commission</p>
             <p className="text-2xl font-bold text-amber-400">
               {formatCents(
@@ -587,7 +587,7 @@ export default function PartnersAdmin() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-zinc-400 border-b border-zinc-800">
+              <tr className="text-zinc-400 border-b border-zinc-600">
                 <th className="text-left py-3 pr-4">Partner</th>
                 <th className="text-left py-3 pr-4">Code</th>
                 <th className="text-left py-3 pr-4">Status</th>
@@ -601,7 +601,7 @@ export default function PartnersAdmin() {
               {partners.map((p) => (
                 <tr
                   key={p.id}
-                  className="border-b border-zinc-800/50 hover:bg-zinc-900/50"
+                  className="border-b border-zinc-600/50 hover:bg-zinc-900/50"
                 >
                   <td className="py-3 pr-4">
                     <button

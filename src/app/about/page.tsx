@@ -47,6 +47,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${SITE_URL}/about`,
   },
+  openGraph: {
+    title: "About — Built by Defendants, for Defendants",
+    description:
+      "ImNotAnAttorney was built by defendants, for defendants. We provide legal research and questions — not legal advice.",
+    url: `${SITE_URL}/about`,
+  },
 };
 
 export default function AboutPage() {
@@ -172,7 +178,7 @@ export default function AboutPage() {
 
         <FadeInUp>
         <section className="mt-12">
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
             <p className="text-zinc-300 leading-relaxed">
               The attorneys in our stories weren&apos;t all bad lawyers. Some were overworked. Some were under-resourced. What was missing in every case wasn&apos;t effort — it was information. The right questions, asked at the right time.
             </p>
@@ -223,7 +229,7 @@ export default function AboutPage() {
             ].map((item) => (
               <StaggerItem
                 key={item.title}
-                className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"
+                className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6"
               >
                 <h3 className="font-bold text-amber-400">{item.title}</h3>
                 <p className="mt-2 text-sm text-zinc-400">{item.desc}</p>
@@ -299,15 +305,15 @@ export default function AboutPage() {
         <section className="mt-16">
           <h2 className="font-display text-xl font-bold text-white mb-4">Recommended Reading</h2>
           <div className="space-y-3">
-            <Link href="/blog/trafficking-charges-constructive-possession" className="block rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
+            <Link href="/blog/trafficking-charges-constructive-possession" className="block rounded-lg border border-zinc-600 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
               <p className="text-sm font-semibold text-amber-400">Drug Trafficking & Constructive Possession</p>
               <p className="mt-1 text-xs text-zinc-400">The defense strategy that could apply to your case.</p>
             </Link>
-            <Link href="/blog/how-your-attorney-makes-money" className="block rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
+            <Link href="/blog/how-your-attorney-makes-money" className="block rounded-lg border border-zinc-600 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
               <p className="text-sm font-semibold text-amber-400">How Your Attorney Makes Money</p>
               <p className="mt-1 text-xs text-zinc-400">The economics of criminal defense — what every defendant should understand before their first meeting.</p>
             </Link>
-            <Link href="/blog/attorney-not-returning-calls" className="block rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
+            <Link href="/blog/attorney-not-returning-calls" className="block rounded-lg border border-zinc-600 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
               <p className="text-sm font-semibold text-amber-400">Your Attorney Won&apos;t Return Your Calls</p>
               <p className="mt-1 text-xs text-zinc-400">The exact problem that started all of this — and what you can do about it.</p>
             </Link>
@@ -319,7 +325,7 @@ export default function AboutPage() {
         {/* checkers with decent attorneys) and positions product as         */}
         {/* complementary, not competitive.                                 */}
         <FadeInUp>
-        <section className="mt-16 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+        <section className="mt-16 rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
           <h2 className="font-display text-lg font-bold text-white">
             For defense attorneys
           </h2>

@@ -255,7 +255,7 @@ function StatCard({
   color?: string;
 }) {
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
+    <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-4">
       <p className="text-xs text-zinc-400 uppercase tracking-wider mb-1">
         {label}
       </p>
@@ -442,10 +442,10 @@ export default async function MyCasePage({
           <h1 className="text-2xl font-bold text-white mb-2">
             Your {tierName}
           </h1>
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mt-6">
+          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mt-6">
             <ProgressStepper status={caseData.status} isDiscovery={false} />
           </div>
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mt-4">
+          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mt-4">
             <p className="text-sm text-zinc-400 uppercase tracking-wider mb-1">
               Status
             </p>
@@ -474,7 +474,7 @@ export default async function MyCasePage({
           </div>
 
           {/* What to Do Next */}
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mt-4">
+          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mt-4">
             <h2 className="text-lg font-semibold text-white mb-3">What to Do Next</h2>
             {isDelivered ? (
               <ul className="space-y-2 text-sm text-zinc-300">
@@ -685,7 +685,7 @@ export default async function MyCasePage({
         </div>
 
         {/* Progress Stepper */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mb-6">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mb-6">
           <ProgressStepper status={caseData.status} isDiscovery={true} />
           <div className="mt-4 flex items-center justify-between">
             <span className="text-sm text-zinc-400">
@@ -701,7 +701,7 @@ export default async function MyCasePage({
         </div>
 
         {/* Key Dates */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mb-6">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mb-6">
           <SectionHeader title="Key Dates" />
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
@@ -749,7 +749,7 @@ export default async function MyCasePage({
 
         {/* Processing Progress */}
         {jobsTotal > 0 && (
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mb-6">
+          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mb-6">
             <SectionHeader title="Processing Progress" />
             <div className="flex items-baseline gap-2 mb-2">
               <span className="text-2xl font-bold text-white">
@@ -770,14 +770,14 @@ export default async function MyCasePage({
 
         {/* Scores Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
             <SectionHeader title="Discovery Strength Rating" />
             <ScoreBar
               score={caseData.discovery_health_score}
               label="Overall health of the prosecution's discovery package"
             />
           </div>
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+          <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6">
             <SectionHeader title="Prosecution Case Weakness Analysis" />
             <ScoreBar
               score={doiValue}
@@ -787,7 +787,7 @@ export default async function MyCasePage({
         </div>
 
         {/* Document Tracker */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mb-6">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mb-6">
           <SectionHeader title="Document Tracker" />
           {docsTotal === 0 ? (
             <EmptyState message="No documents uploaded yet" />
@@ -813,7 +813,7 @@ export default async function MyCasePage({
         </div>
 
         {/* Finding Severity Breakdown */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mb-6">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mb-6">
           <SectionHeader title="Findings" />
           {findingsTotal === 0 ? (
             <EmptyState message="Analysis in progress..." />
@@ -850,7 +850,7 @@ export default async function MyCasePage({
         </div>
 
         {/* Evidence Chain Status */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mb-6">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mb-6">
           <SectionHeader title="Evidence Chain Status" />
           {evidenceTotal === 0 ? (
             <EmptyState message="Evidence inventory in progress..." />
@@ -885,7 +885,7 @@ export default async function MyCasePage({
         {isWarRoom && (
           <>
             {/* Witnesses */}
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mb-6">
+            <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mb-6">
               <SectionHeader title="Witnesses" />
               {witnessCount === 0 ? (
                 <EmptyState message="Witness identification in progress..." />
@@ -900,7 +900,7 @@ export default async function MyCasePage({
             </div>
 
             {/* Case Law Citations */}
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mb-6">
+            <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mb-6">
               <SectionHeader title="Case Law Citations" />
               {citationCount === 0 ? (
                 <EmptyState message="Case law research in progress..." />
@@ -922,7 +922,7 @@ export default async function MyCasePage({
             </div>
 
             {/* Motion Recommendations */}
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mb-6">
+            <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mb-6">
               <SectionHeader title="Motion Recommendations" />
               {motionCount === 0 ? (
                 <EmptyState message="Motion analysis in progress..." />
@@ -942,7 +942,7 @@ export default async function MyCasePage({
         {isSitRoom && (
           <>
             {/* Attack Intelligence */}
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mb-6">
+            <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mb-6">
               <SectionHeader title="Attack Intelligence" />
               {attackFindingCount === 0 ? (
                 <EmptyState message="Attack analysis in progress..." />
@@ -957,7 +957,7 @@ export default async function MyCasePage({
             </div>
 
             {/* Trial Prep Documents */}
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mb-6">
+            <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mb-6">
               <SectionHeader title="Trial Preparation" />
               {trialMaterialCount === 0 ? (
                 <EmptyState message="Trial materials being prepared..." />
@@ -992,7 +992,7 @@ export default async function MyCasePage({
         )}
 
         {/* What to Do Next */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 mb-6">
+        <div className="rounded-xl border border-zinc-600 bg-zinc-900/50 p-6 mb-6">
           <h2 className="text-lg font-semibold text-white mb-3">What to Do Next</h2>
           {isDelivered ? (
             <ul className="space-y-2 text-sm text-zinc-300">

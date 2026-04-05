@@ -70,7 +70,7 @@ export function Header() {
   if (pathname === "/") return null;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950">
+    <header className="sticky top-0 z-50 border-b border-zinc-600 bg-zinc-950">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         <Link href="/" className="text-xl font-bold tracking-tight">
           Im<span className="text-amber-400">Not</span>AnAttorney
@@ -151,7 +151,7 @@ export function Header() {
           animate={{ height: "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ type: "spring" as const, stiffness: 300, damping: 30 }}
-          className="overflow-hidden border-t border-zinc-800 md:hidden"
+          className="overflow-hidden border-t border-zinc-600 md:hidden"
           onKeyDown={handleMobileKeyDown}
         >
           <div className="flex flex-col gap-4 px-4 py-4">

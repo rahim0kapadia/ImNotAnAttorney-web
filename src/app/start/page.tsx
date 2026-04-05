@@ -63,7 +63,7 @@ function CrisisHero({ onDismiss }: { onDismiss: () => void }) {
             Check Your Defense Position &rarr;
           </Link>
 
-          <div className="mt-14 border-t border-zinc-800 pt-8">
+          <div className="mt-14 border-t border-zinc-600 pt-8">
             <Link
               href="/checkout?tier=dui-first-offense"
               className="text-sm text-zinc-400 underline underline-offset-2 hover:text-amber-400"
@@ -276,22 +276,22 @@ function StartContent() {
       {/* BELOW FOLD — Trust items (3 only, per Covello)                    */}
       {/* Dynamic delivery time based on selection state.                    */}
       {/* ------------------------------------------------------------------ */}
-      <section className="border-t border-zinc-800 px-4 py-12">
+      <section className="border-t border-zinc-600 px-4 py-12">
         <div className="mx-auto max-w-xl">
           <div className="grid gap-4 sm:grid-cols-3">
-            <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 text-center">
+            <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-4 text-center">
               <p className="text-sm font-semibold text-amber-400">
                 {docState === "has-documents"
                   ? "Delivered in 10 business days"
                   : "Delivered in 48 hours"}
               </p>
             </div>
-            <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 text-center">
+            <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-4 text-center">
               <p className="text-sm font-semibold text-amber-400">
                 We found 68.3g of missing evidence in our own case
               </p>
             </div>
-            <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 text-center">
+            <div className="rounded-lg border border-zinc-600 bg-zinc-900/50 p-4 text-center">
               <p className="text-sm font-semibold text-amber-400">
                 Full refund if we don&apos;t deliver
               </p>
@@ -333,7 +333,7 @@ function StartContent() {
       {/* ------------------------------------------------------------------ */}
       {/* SERVICES LINK — For deliberate browsers who want the full menu     */}
       {/* ------------------------------------------------------------------ */}
-      <section className="border-t border-zinc-800 px-4 py-8">
+      <section className="border-t border-zinc-600 px-4 py-8">
         <div className="mx-auto max-w-xl text-center">
           <p className="text-sm text-zinc-400">
             Want to compare all options?{" "}

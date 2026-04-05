@@ -138,7 +138,7 @@ export function ChargeTypeSelector({ onSelect }: ChargeTypeSelectorProps) {
               className={`rounded-lg border px-3 py-3 text-sm font-semibold transition-all cursor-pointer ${
                 isSelected
                   ? "border-amber-500 bg-amber-500/5 text-amber-400"
-                  : "border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:border-zinc-600"
+                  : "border-zinc-600 bg-zinc-900/50 text-zinc-400 hover:border-zinc-600"
               }`}
             >
               {category.label}
