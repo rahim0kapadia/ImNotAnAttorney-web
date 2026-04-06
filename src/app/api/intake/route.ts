@@ -281,7 +281,7 @@ export async function POST(req: NextRequest) {
               "Content-Type": "application/json",
               Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
             },
-            body: JSON.stringify({ caseId: pendingCase.id }),
+            body: JSON.stringify({ caseId: pendingCase.id, skipEmail: true }),
           }).then((res) => {
             if (res && !res.ok) console.error(`[Intake] Auto-trigger report generation HTTP error: ${res.status}`);
           }).catch((err) => console.error("[Intake] Auto-trigger report generation failed:", err));

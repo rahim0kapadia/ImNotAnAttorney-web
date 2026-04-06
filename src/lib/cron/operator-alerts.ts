@@ -10,7 +10,7 @@
  * Part 6b: Intake escalation (72h + 7d operator alerts)
  */
 
-import { sendEmail, sendEmailWithRetry, escapeHtml } from "@/lib/email";
+import { sendEmail, sendEmailWithRetry, sendCustomerFailureNotification, escapeHtml } from "@/lib/email";
 import { signOperatorToken, signPhase2Token, caseThreadId } from "@/lib/site";
 import { tierDisplayName } from "@/lib/tiers";
 import type { CronContext, CronResult } from "./types";
@@ -172,6 +172,19 @@ export async function detectStuckGenerating(ctx: CronContext): Promise<CronResul
           <p><strong>Retry command:</strong></p>
           <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${ctx.siteUrl}/api/generate/${endpoint} -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${stuck.id}","force":true}'</code>`,
       }, { category: "operator-alert", case_id: stuck.id, metadata: { reason: "stuck-generation", minutes: minutesStuck } });
+
+      // Notify customer so they know we're working on it (deduped per case)
+      const productName = stuck.tier === 'intelligence-brief' ? 'Intelligence Brief'
+        : stuck.tier === 'x-ray' ? 'X-Ray Analysis'
+        : stuck.tier === 'war-room' ? 'War Room Report'
+        : stuck.tier === 'situation-room' ? 'Situation Room Report'
+        : 'Case Decoder';
+      await sendCustomerFailureNotification({
+        supabase: ctx.supabase,
+        caseId: stuck.id,
+        email: stuck.email,
+        productName,
+      });
 
       if (sendResult.success) {
         result.sent++;

@@ -15,7 +15,7 @@ import {
 } from "@/lib/batch-api";
 import type { BatchResultSucceeded } from "@/lib/batch-api";
 import { renderReportHtml } from "@/lib/report-renderer";
-import { sendEmail } from "@/lib/email";
+import { sendEmail, sendCustomerFailureNotification } from "@/lib/email";
 import { hashToken, signOperatorToken } from "@/lib/site";
 
 export async function pollBatchResults(
@@ -26,7 +26,7 @@ export async function pollBatchResults(
   // Find cases with active batches
   const { data: pending } = await ctx.supabase
     .from("cases")
-    .select("id, email, tier, status, batch_id, charge_type, intake_id")
+    .select("id, email, tier, status, batch_id, charge_type, intake_id, report_token")
     .not("batch_id", "is", null)
     .in("status", ["generating", "auto-generating"])
     .limit(20);
@@ -61,7 +61,7 @@ export async function pollBatchResults(
 
 async function processCDResult(
   ctx: CronContext,
-  row: { id: string; email: string; batch_id: string; charge_type: string; intake_id: string },
+  row: { id: string; email: string; batch_id: string; charge_type: string; intake_id: string; report_token: string | null },
   results: Awaited<ReturnType<typeof fetchBatchResults>>
 ) {
   const cdResult = results.find((r) => r.custom_id === `cd-${row.id}`);
@@ -87,6 +87,14 @@ async function processCDResult(
       },
       { category: "operator-alert", case_id: row.id }
     );
+
+    // Notify customer so they know we're on it (deduped — one email per case)
+    await sendCustomerFailureNotification({
+      supabase: ctx.supabase,
+      caseId: row.id,
+      email: row.email,
+      productName: "Case Decoder",
+    });
     return;
   }
 
@@ -96,6 +104,13 @@ async function processCDResult(
       .from("cases")
       .update({ status: "generation-failed", batch_id: null, updated_at: new Date().toISOString() })
       .eq("id", row.id);
+
+    await sendCustomerFailureNotification({
+      supabase: ctx.supabase,
+      caseId: row.id,
+      email: row.email,
+      productName: "Case Decoder",
+    });
     return;
   }
 
@@ -115,7 +130,8 @@ async function processCDResult(
     .single();
 
   const now = new Date();
-  const reportToken = crypto.randomUUID();
+  // Reuse token created at purchase time (Fix 6) so customer's progress link stays stable
+  const reportToken = row.report_token || crypto.randomUUID();
   const tokenExpiry = new Date(now);
   tokenExpiry.setFullYear(tokenExpiry.getFullYear() + 1);
 
@@ -183,7 +199,7 @@ async function processCDResult(
       to: ctx.operatorEmail,
       subject: `Case Decoder Ready — ${meta.firstName} (${meta.charges})`,
       html: `<p>Batch-generated report ready for review.</p>
-        <p><a href="${reportUrl}">Preview Report</a> | <a href="${ctx.siteUrl}/api/deliver?caseId=${row.id}&token=${signOperatorToken(row.id)}">Approve &amp; Deliver</a></p>`,
+        <p><a href="${reportUrl}">Preview Report</a> | <a href="${ctx.siteUrl}/api/deliver?case=${row.id}&token=${signOperatorToken(row.id)}">Approve &amp; Deliver</a></p>`,
     },
     { category: "operator-alert", case_id: row.id }
   );
@@ -232,6 +248,13 @@ async function processIBPhaseAResult(
       },
       { category: "operator-alert", case_id: row.id }
     );
+
+    await sendCustomerFailureNotification({
+      supabase: ctx.supabase,
+      caseId: row.id,
+      email: row.email,
+      productName: "Intelligence Brief",
+    });
     return;
   }
 

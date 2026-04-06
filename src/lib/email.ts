@@ -334,6 +334,74 @@ export async function sendEmailWithOperatorAlert(
 }
 
 // ============================================================
+// CUSTOMER FAILURE NOTIFICATION
+// ============================================================
+
+/**
+ * Notifies a customer that their report hit a technical issue and the team
+ * is working on it. Deduplicates via drip_emails so the customer never
+ * receives more than one failure notification per case.
+ *
+ * Called from batch-poller (generation failure) and operator-alerts (stuck detection).
+ */
+export async function sendCustomerFailureNotification(opts: {
+  supabase: ReturnType<typeof createAdminClient>;
+  caseId: string;
+  email: string;
+  productName: string;
+  caseThreadId?: string;
+}): Promise<void> {
+  const dedupKey = `generation_failed_${opts.caseId}`;
+
+  // Check dedup — only send once per case
+  const { data: existing } = await opts.supabase
+    .from("drip_emails")
+    .select("id")
+    .eq("email_key", dedupKey)
+    .limit(1);
+
+  if (existing && existing.length > 0) return;
+
+  const result = await sendEmailWithOperatorAlert({
+    to: opts.email,
+    subject: `Update on Your ${opts.productName}`,
+    unsubscribeEmail: opts.email,
+    threadingHeaders: opts.caseThreadId ? {
+      inReplyTo: opts.caseThreadId,
+      references: opts.caseThreadId,
+    } : undefined,
+    html: `
+      <h1 style="color: #F59E0B;">Update on Your Report</h1>
+      <p>We hit a technical issue while generating your ${escapeHtml(opts.productName)}. Our team has been notified and is working on it.</p>
+      <p><strong style="color: white;">You don't need to do anything.</strong> We'll have your report ready within a revised timeline and will email you as soon as it's available.</p>
+      <p>If you have questions in the meantime, reply to this email — we read every response.</p>
+    `,
+  }, `failure notification for ${opts.email} (case ${opts.caseId})`, {
+    category: "failure-notification",
+    case_id: opts.caseId,
+    email_key: dedupKey,
+  });
+
+  if (result.success) {
+    // Record dedup marker — use subscriber lookup for consistency
+    const { data: subscriber } = await opts.supabase
+      .from("subscribers")
+      .select("id")
+      .eq("email", opts.email)
+      .maybeSingle();
+
+    if (subscriber) {
+      // Dedup race is safe to ignore (unique constraint handles it)
+      const { error: dedupErr } = await opts.supabase.from("drip_emails").insert({
+        subscriber_id: subscriber.id,
+        email_key: dedupKey,
+      });
+      if (dedupErr) console.warn("[Email] Dedup insert (expected on race):", dedupErr.message);
+    }
+  }
+}
+
+// ============================================================
 // CUSTOMER MAGIC LINK EMAIL
 // ============================================================
 

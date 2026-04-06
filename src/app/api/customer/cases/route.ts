@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
     // Fetch cases for this customer
     const { data: cases } = await supabase
       .from("cases")
-      .select("id, order_id, tier, status, delivered_at, created_at")
+      .select("id, order_id, tier, status, delivered_at, created_at, report_token")
       .eq("email", customer.email)
       .order("created_at", { ascending: false });
 

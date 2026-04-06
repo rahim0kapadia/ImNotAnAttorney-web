@@ -42,7 +42,7 @@ import { TIER_CORE, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, sendEmailWithOperatorAlert, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
-import { signOperatorToken, signPhase2Token, caseThreadId, normalizeEmail } from "@/lib/site";
+import { signOperatorToken, signPhase2Token, caseThreadId, normalizeEmail, hashToken } from "@/lib/site";
 import { calculateCommission, getPartnerByStripePromoId, getPartnerByPromoCode } from "@/lib/referral";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
@@ -501,6 +501,12 @@ export async function POST(req: NextRequest) {
         ? (requiresDiscovery ? "pending" : "intake")
         : "awaiting-intake";
 
+      // Generate report_token at purchase time so customer can track progress
+      // from the moment they pay — even before generation completes.
+      const reportToken = crypto.randomUUID();
+      const reportTokenExpiry = new Date();
+      reportTokenExpiry.setFullYear(reportTokenExpiry.getFullYear() + 1);
+
       const { error: caseError } = await supabase.from("cases").insert({
         id: caseId,
         order_id: orderData.id,
@@ -510,6 +516,9 @@ export async function POST(req: NextRequest) {
         intake_id: linkedIntake?.id || null,
         charge_type: chargeType,
         file_urls: [],
+        report_token: reportToken,
+        report_token_hash: hashToken(reportToken),
+        report_token_expires_at: reportTokenExpiry.toISOString(),
       });
 
       if (caseError) {
@@ -1035,9 +1044,24 @@ export async function POST(req: NextRequest) {
           }
         }
 
-        // ── CUSTOMER NOTIFICATION (partial refunds only) ──
-        // Full refunds: Stripe sends its own receipt. Partial refunds: customer
-        // gets no notification from Stripe, so we send one.
+        // ── CUSTOMER NOTIFICATION ──
+        // Full refunds: confirm to customer that refund is processed.
+        // Partial refunds: customer gets no notification from Stripe, so we send one.
+        if (isFullRefund) {
+          const fullRefundAmount = (charge.amount_refunded / 100).toFixed(2);
+          await sendEmailWithOperatorAlert({
+            to: refundedOrder.email,
+            subject: `Your Refund Has Been Processed — $${fullRefundAmount}`,
+            unsubscribeEmail: refundedOrder.email,
+            html: `
+              <h1 style="color: #F59E0B;">Refund Processed</h1>
+              <p>Your refund of <strong>$${fullRefundAmount}</strong> has been processed and sent to your original payment method.</p>
+              <p>You'll typically see it reflected in <strong style="color: white;">5-10 business days</strong> depending on your bank.</p>
+              <p style="color: #A1A1AA;">If you have any questions, reply to this email.</p>
+            `,
+          }, `full refund notification for ${refundedOrder.email}`, { category: "refund-notification", order_id: refundedOrder.id, metadata: { amount: charge.amount_refunded, tier: refundedOrder.tier } });
+        }
+
         if (!isFullRefund) {
           const partialRefundAmount = (charge.amount_refunded / 100).toFixed(2);
           await sendEmailWithOperatorAlert({

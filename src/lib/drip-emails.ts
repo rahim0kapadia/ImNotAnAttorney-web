@@ -275,7 +275,7 @@ export const NURTURE_EMAILS: DripEmail[] = [
       </ul>
       <p>Every question generated using tactics from elite defense attorneys — elite defense attorneys with decades of trial experience.</p>
       <p>Delivered within 48 hours with 15 calibrated questions + communication tools — or your money back.</p>
-      <p>Not the right fit? 100% credit toward any higher tier within 30 days.</p>
+      <p>Not the right fit? 100% credit toward any higher tier within 12 months.</p>
       <p><strong style="color: white;">${TIER_CORE["case-decoder"].priceDisplay}.</strong> Less than one hour of your attorney's time.</p>
       ${cta(`Find What's in My Case — ${TIER_CORE["case-decoder"].priceDisplay} →`, "/checkout?tier=case-decoder")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
@@ -675,7 +675,7 @@ export const DUI_72_HOUR_EMAILS: DripEmail[] = [
       <p><strong style="color: white;">2. You've met with your attorney</strong> and the answers were vague. "We're working on it." "Let's see what they offer." No specifics. That's information — and the DUI Defense Playbook (${TIER_CORE["dui-first-offense"].priceDisplay}) gives you 26 ways to get specifics.</p>
       <p><strong style="color: white;">3. You haven't met with your attorney yet.</strong> If your attorney hasn't made time for you in a week, that's a pattern worth noting.</p>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">You have already paid ${TIER_CORE["dui-first-offense"].priceDisplay}. The ${TIER_CORE["case-decoder"].name} costs ${upgradeCostBetween("dui-first-offense", "case-decoder")}.</strong> 15 questions specific to YOUR charges, YOUR jurisdiction, and YOUR case stage — with a pre-written email template for your attorney. Delivered within 48 hours.
+        <strong style="color: white;">The ${TIER_CORE["case-decoder"].name} is ${TIER_CORE["case-decoder"].priceDisplay}.</strong> 15 questions specific to YOUR charges, YOUR jurisdiction, and YOUR case stage — with a pre-written email template for your attorney. Delivered within 48 hours. DUI Defense Playbook buyers get full credit — you'd only pay the difference.
       </p>
       ${cta("Get Case-Specific Questions \u2014 " + TIER_CORE["case-decoder"].priceDisplay, "/checkout?tier=case-decoder")}
       <p style="margin-top: 16px; color: #A1A1AA;">This is the last email in this sequence. If you ever need us, reply to any email — we read every response.</p>
@@ -1090,9 +1090,9 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>Your Intelligence Brief has everything you need for your next attorney meeting. Here's how to make the most of it:</p>
       <ol>
         <li><strong style="color: white;">Start with the 48-Hour Priority List</strong> — three actions, in order. Priority 1 first.</li>
-        <li><strong style="color: white;">Print the Jurisdiction Intelligence Summary (Appendix F)</strong> — one page, designed for the meeting. Bring it.</li>
-        <li><strong style="color: white;">Pick your top 5 questions from Appendix D</strong> — the Golden Question is marked. Start there.</li>
-        <li><strong style="color: white;">Review the Plea Decision Checklist (Appendix G)</strong> — if a plea is on the table, this is your pre-signing checklist.</li>
+        <li><strong style="color: white;">Print the Jurisdiction Intelligence Summary</strong> — one page, designed for the meeting. Bring it.</li>
+        <li><strong style="color: white;">Pick your top 5 questions from the Questions section</strong> — the Golden Question is marked. Start there.</li>
+        <li><strong style="color: white;">Review the Plea Decision Framework</strong> — if a plea is on the table, this is your pre-signing checklist.</li>
       </ol>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
         <strong style="color: white;">Pro tip:</strong> Don't share the full report with your attorney. Share your <em>questions</em>, not the analysis. The Meeting Ready Sheet in Section 6 is designed to be safe if your attorney sees it. Let them read the full report on their own time — if you choose to share it at all.

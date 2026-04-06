@@ -152,7 +152,7 @@ export async function POST(req: NextRequest) {
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
-  const { caseId, force, auto_deliver } = body;
+  const { caseId, force, auto_deliver, skipEmail } = body;
   if (!caseId) {
     return NextResponse.json({ error: "caseId required" }, { status: 400 });
   }
@@ -265,16 +265,18 @@ export async function POST(req: NextRequest) {
 
   // ──────────────────────────────────────────────────────────────
   // "WE'VE STARTED" TRANSACTIONAL EMAIL
-  // ──────────────────────────────────────────────────────────────
+  // ────────────────────────────────────────────────────────���─────
   // Let the customer know their CD is being generated. Same pattern as IB route.
   // Fire-and-forget — don't block the response on email delivery.
+  // skipEmail: when triggered by intake route (which sends its own confirmation),
+  // skip this email to avoid sending near-identical "analyzing" emails (Fix 4).
   const { data: caseForEmail } = await supabase
     .from("cases")
     .select("email")
     .eq("id", caseId)
     .single();
 
-  if (caseForEmail?.email) {
+  if (caseForEmail?.email && !skipEmail) {
     sendEmail({
       to: caseForEmail.email,
       subject: "We're analyzing your case now",
