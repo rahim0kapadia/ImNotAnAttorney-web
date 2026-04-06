@@ -113,6 +113,7 @@ function CaseDetailContent() {
   const [activeTab, setActiveTab] = useState<TabName>("Overview");
   const [transitioning, setTransitioning] = useState(false);
   const [retrying, setRetrying] = useState<string | null>(null);
+  const [retryingGeneration, setRetryingGeneration] = useState(false);
 
   const loadCase = useCallback(async () => {
     if (!caseId) return;
@@ -192,6 +193,32 @@ function CaseDetailContent() {
     }
   }
 
+  async function retryGeneration() {
+    if (!caseData) return;
+    setRetryingGeneration(true);
+    const endpoint =
+      caseData.tier === "intelligence-brief"
+        ? "intelligence-brief"
+        : "case-decoder";
+    try {
+      const res = await fetch(`/api/generate/${endpoint}`, {
+        method: "POST",
+        headers: operatorHeaders(password),
+        body: JSON.stringify({ caseId: caseData.id, force: true }),
+      });
+      if (res.status === 401) {
+        sessionStorage.removeItem("admin-password");
+        window.location.reload();
+        return;
+      }
+      if (res.ok) await loadCase();
+    } catch {
+      // silent
+    } finally {
+      setRetryingGeneration(false);
+    }
+  }
+
   // ---- Loading / Error states ----
   if (loading && !caseData) {
     return (
@@ -266,6 +293,16 @@ function CaseDetailContent() {
                 {transitioning ? "..." : `Move to ${next}`}
               </button>
             ))}
+            {(c.status === "generation-failed" || c.status === "intake-stalled") &&
+              (c.tier === "case-decoder" || c.tier === "intelligence-brief") && (
+              <button
+                onClick={retryGeneration}
+                disabled={retryingGeneration}
+                className="rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white hover:bg-red-400 transition-colors disabled:opacity-50"
+              >
+                {retryingGeneration ? "Retrying..." : "Retry Generation"}
+              </button>
+            )}
             {c.report_token && (
               <a
                 href={`/report/${c.report_token}`}

@@ -547,8 +547,9 @@ export async function POST(req: NextRequest) {
             cleanupCouponId = repeatingCoupon.id;
             installmentDiscountConfig = { discounts: [{ coupon: repeatingCoupon.id }] };
           }
-        } catch {
-          // Coupon conversion failed — proceed with original config
+        } catch (err) {
+          console.error("[Checkout] Installment coupon conversion failed:", err);
+          // Proceed with original one-time discount — customer still gets the discount on first payment
         }
       }
 

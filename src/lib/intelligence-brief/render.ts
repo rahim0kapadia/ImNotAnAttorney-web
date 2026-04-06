@@ -305,6 +305,8 @@ export function renderIntelligenceBriefHtml(
 ): string {
   // Assemble sections in report order
   const sections = [
+    // Personal letter (no heading — sets emotional tone)
+    sectionOutputs["letter-to-you"] || "",
     // Page 2: 48-Hour Priority List (before everything)
     sectionOutputs["48hr-priorities"] || "",
     // Table of Contents (static)
@@ -325,10 +327,12 @@ export function renderIntelligenceBriefHtml(
     buildBradyGiglioChecklist(),
     // Appendix B: Court Prep
     sectionOutputs["court-prep"] || "",
-    // Appendix C: Your Rights (static)
-    buildYourRights(meta.stateCounty.split(",")[0]?.trim() || "your state"),
+    // Appendix C: Attorney Script Pack (static reference to Section 6 scripts)
+    buildAttorneyScriptPack(),
     // Appendix D: Questions
     sectionOutputs["questions"] || "",
+    // Appendix E: Your Rights (static)
+    buildYourRights(meta.stateCounty.split(",")[0]?.trim() || "your state"),
   ];
 
   const bodyHtml = sections
@@ -403,8 +407,9 @@ function buildTableOfContents(): string {
 - **Section 6: Your Plan** — Email template, phone script, 14-day plan, meeting prep, difficult conversations
 - **Appendix A: Brady/Giglio Checklist** — Evidence the prosecution must disclose
 - **Appendix B: Next Court Date Prep** — What to expect, wear, bring, and do
-- **Appendix C: Your Rights** — Key rights during criminal proceedings
-- **Appendix D: Questions for Your Attorney** — 10-15 targeted, gap-based questions`;
+- **Appendix C: Attorney Script Pack** — 5 ready-to-use communication scripts
+- **Appendix D: Questions for Your Attorney** — 10-15 targeted, gap-based questions
+- **Appendix E: Your Rights** — Key rights during criminal proceedings`;
 }
 
 function buildBradyGiglioChecklist(): string {
@@ -437,8 +442,31 @@ function buildBradyGiglioChecklist(): string {
 4. "Are there any witnesses the prosecution hasn't disclosed?"`;
 }
 
+function buildAttorneyScriptPack(): string {
+  return `## Appendix C: Attorney Script Pack
+
+**What This Is:** Five ready-to-use communication scripts from Section 6 of your brief, collected here for easy printing and reference.
+
+### Script 1: Email Template (Section 6b)
+Your personalized email to your attorney is in **Section 6b**. It covers your specific questions, references your case details, and is ready to send. Copy it directly.
+
+### Script 2: Phone Call Script (Section 6c)
+A structured phone call framework is in **Section 6c**. Includes what to say, how to document the call, and how to follow up if you don't get answers.
+
+### Script 3: Follow-Up Template (Section 6e)
+If your attorney doesn't respond to Script 1 within 5 business days, use the follow-up template in **Section 6e**.
+
+### Script 4: Difficult Conversation Scripts (Section 6i)
+Real scenarios with word-for-word responses for when conversations get challenging — fee disputes, strategy disagreements, communication breakdowns. See **Section 6i**.
+
+### Script 5: Self-Advocacy Steps (Section 6j)
+If you've exhausted communication attempts, **Section 6j** provides escalation steps including bar complaints, substitution of counsel, and Marsden/Strickland motions.
+
+**Tip:** Print this appendix and the referenced sections. Keep them accessible before your next call or meeting with your attorney.`;
+}
+
 function buildYourRights(state: string): string {
-  return `## Appendix C: Your Rights During Criminal Proceedings
+  return `## Appendix E: Your Rights During Criminal Proceedings
 
 **These rights exist regardless of your charge, your attorney, or your county.**
 

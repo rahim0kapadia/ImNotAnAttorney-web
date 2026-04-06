@@ -1109,7 +1109,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">One Quick Question</h1>
       <p>Whether you've already met with your attorney or you're still preparing — I have one question:</p>
       <p style="font-size: 18px; color: white;"><strong>Which part of your Intelligence Brief has been most useful so far?</strong></p>
-      <p>Was it the jurisdiction intelligence? The priority questions? The 14-day action plan? The difficult conversation scripts?</p>
+      <p>Was it the Jurisdiction Intelligence Summary? The Questions for Your Attorney? The 14-Day Action Plan? The Difficult Conversation Scripts?</p>
       <p>Just reply to this email. One sentence is fine. Your experience helps us build better reports for every defendant who comes after you.</p>
     `,
   },

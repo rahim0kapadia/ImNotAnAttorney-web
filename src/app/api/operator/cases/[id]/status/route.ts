@@ -9,10 +9,11 @@
  * Auth: ADMIN_PASSWORD via X-Admin-Password header (timing-safe comparison).
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "@/lib/auth/guards";
 import { ALLOWED_TRANSITIONS } from "@/lib/types/operator";
+import { SITE_URL } from "@/lib/site";
 
 type RouteContext = { params: Promise<{ id: string }> };
 
@@ -42,10 +43,10 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
 
   const supabase = createAdminClient();
 
-  // Fetch current status
+  // Fetch current status and tier (tier needed for auto-trigger logic)
   const { data: caseRow, error: fetchError } = await supabase
     .from("cases")
-    .select("status")
+    .select("status, tier")
     .eq("id", id)
     .single();
 
@@ -97,6 +98,37 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
       { error: "Status was changed by another process. Refresh and try again." },
       { status: 409 }
     );
+  }
+
+  // Auto-trigger report generation when operator moves case to "generating"
+  if (newStatus === "generating" && caseRow.tier === "case-decoder") {
+    after(async () => {
+      await fetch(`${SITE_URL}/api/generate/case-decoder`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ caseId: id, force: true, skipEmail: true }),
+      }).catch((err) =>
+        console.error("[Operator/Status] Auto-trigger CD generation failed:", err)
+      );
+    });
+  }
+
+  if (newStatus === "generating" && caseRow.tier === "intelligence-brief") {
+    after(async () => {
+      await fetch(`${SITE_URL}/api/generate/intelligence-brief`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.OPERATOR_SECRET}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ caseId: id, force: true }),
+      }).catch((err) =>
+        console.error("[Operator/Status] Auto-trigger IB generation failed:", err)
+      );
+    });
   }
 
   return NextResponse.json({ ok: true, status: newStatus });

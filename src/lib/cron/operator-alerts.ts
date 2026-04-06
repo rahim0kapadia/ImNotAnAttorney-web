@@ -125,20 +125,20 @@ export async function detectStuckIntakes(ctx: CronContext): Promise<CronResult> 
 }
 
 // ============================================================
-// PART 5: STUCK "GENERATING" DETECTION (2h threshold — accounts for Batch API latency)
+// PART 5: STUCK "GENERATING" DETECTION (30min threshold — faster failure detection)
 // ============================================================
 
 export async function detectStuckGenerating(ctx: CronContext): Promise<CronResult> {
   const result = emptyResult();
 
-  const twoHoursAgo = new Date(ctx.now);
-  twoHoursAgo.setHours(twoHoursAgo.getHours() - 2);
+  const thirtyMinAgo = new Date(ctx.now);
+  thirtyMinAgo.setMinutes(thirtyMinAgo.getMinutes() - 30);
 
   const { data: stuckGenerating } = await ctx.supabase
     .from("cases")
     .select("id, email, charge_type, tier, batch_id, updated_at")
     .eq("status", "generating")
-    .lt("updated_at", twoHoursAgo.toISOString());
+    .lt("updated_at", thirtyMinAgo.toISOString());
 
   if (stuckGenerating && stuckGenerating.length > 0) {
     for (const stuck of stuckGenerating) {
@@ -249,12 +249,15 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
     }
   }
 
-  // Stuck compiling (Phase B timeout — >2h, accounts for Batch API latency)
+  // Stuck compiling (Phase B timeout — >30min, synchronous so no Batch API latency)
+  const thirtyMinAgo = new Date(ctx.now);
+  thirtyMinAgo.setMinutes(thirtyMinAgo.getMinutes() - 30);
+
   const { data: stuckCompiling } = await ctx.supabase
     .from("cases")
     .select("id, email, charge_type, tier, batch_id, updated_at")
     .eq("status", "compiling")
-    .lt("updated_at", twoHoursAgo.toISOString());
+    .lt("updated_at", thirtyMinAgo.toISOString());
 
   if (stuckCompiling && stuckCompiling.length > 0) {
     for (const stuck of stuckCompiling) {

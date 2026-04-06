@@ -4079,6 +4079,7 @@ async function handleIBPhaseB(
 
   // Phase B sections (sequential — each may depend on prior outputs)
   const phaseBSections = [
+    { key: "letter-to-you", system: buildIBPrompt("letter-to-you", v).system, user: buildIBPrompt("letter-to-you", v).user, model: "claude-sonnet-4-6", temp: 0.4, max: 800 },
     { key: "case-intelligence", system: buildIBPrompt("case-intelligence", v).system, user: buildIBPrompt("case-intelligence", v).user, model: "claude-sonnet-4-6", temp: 0.3, max: 3500 },
     { key: "your-plan", system: buildIBPrompt("your-plan", v).system, user: buildIBPrompt("your-plan", v).user, model: "claude-sonnet-4-6", temp: 0.3, max: 5000 },
     { key: "questions", system: buildIBPrompt("questions", v).system, user: buildIBPrompt("questions", v).user, model: "claude-sonnet-4-6", temp: 0.4, max: 3000 },
@@ -4434,6 +4435,25 @@ Every collateral consequence MUST cite a specific statute, regulation, or named 
 Unsourced claims about employment, housing, immigration, voting, firearms, or civil rights consequences are audit failures.`;
 
   const prompts: Record<string, { system: string; user: string }> = {
+    "letter-to-you": {
+      system: `You are writing a personal letter to a criminal defendant as the opening of their Case Intelligence Brief.
+
+Write a warm, specific, personal letter that makes the defendant feel seen. Maximum 200 words.
+
+RULES:
+1. NO heading — start directly with the defendant's first name and a comma.
+2. Reference specific facts from intake — charge type, situation, what they told us.
+3. Include overwhelm permission: "You don't have to read this all at once. Start with the 48-Hour Priority List on the next page."
+4. Insider vulnerability signal: "This service was founded by a defendant who went through exactly what you are going through."
+5. If they mentioned their profession, acknowledge that their career IS at stake.
+6. If a family member filled this out, address both the defendant and support person.
+7. End with forward momentum — evidence that preparation matters, not sympathy.${BANNED}${WARM_LANG}
+
+TONE: Direct warmth. Like someone who's been through the system talking to someone going through it now.
+
+SEQUENCE: (1) Insider vulnerability (1-2 sentences) (2) Specific acknowledgment of THEIR situation (2-3 sentences) (3) What this report gives them (1-2 sentences) (4) Overwhelm permission (1 sentence) (5) Forward momentum close (1 sentence)${NO_DISCLAIMER}`,
+      user: `Write the personal letter.\n\n<intake>\nFirst name: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Attorney: ${v.attorney_type} — ${v.attorney_name} | Last communication: ${v.last_communication} | Frustration: ${v.frustration_level} | Biggest concern: ${v.biggest_concern} | Employment: ${v.employment_detail} | Plea status: ${v.plea_status} | Filled out by: ${v.filled_out_by} | Family buyer: ${v.is_family_buyer} | Mental health: ${v.mental_health_relevant} | Case stage: ${v.case_stage_raw}\n</intake>\n\nRemember: NO heading. Start with "${v.first_name}," — just the name and comma.`,
+    },
     "case-roadmap": {
       system: `You are an elite criminal defense research analyst generating Section 1: Your Case Roadmap for a Case Intelligence Brief.
 
@@ -4523,9 +4543,11 @@ motion to sever prior convictions from current trial. These gain urgency with pr
 Output: ## Section 4
 ### 4a. Motion Landscape (~700w)
 ### 4b. Deadline Calendar (~300w)
-### 4c-4g. Plea Framework (conditional: ${v.plea_status}) (~800-1000w)
+### 4c-4d. Plea Framework (conditional depth: full if plea offered/discussed, condensed if not)
+### 4e. Prosecution Pressure Tactics Decoder (ALWAYS PRESENT ~200w — overcharging, bail conditions, continuances, discovery delay, informal plea signals. Name and defuse. Chris Voss: "When you name a tactic, it loses most of its power.")
+### 4f-4g. (If plea active: Before You Sign + Decision Checklist)
 ### Bottom Line (~50w)
-Word budget: ~2,200.`,
+Word budget: ~2,400.`,
       user: `Generate Section 4.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Court: ${v.next_court_date} | Plea: ${v.plea_status} | Plea terms: ${v.plea_terms} | Discovery: ${v.discovery_status} | Attorney: ${v.attorney_type} | Priors: ${v.prior_convictions} | Criminal history: ${v.criminal_history_label} | Case stage (raw): ${v.case_stage_raw} | Mental health: ${v.mental_health_relevant}\nCharge context: ${v.charge_specific_data}\n</intake>\n${v.prior_section_outputs_xml}`,
     },
     "protection": {
@@ -4798,8 +4820,9 @@ function buildTableOfContents(): string {
 - **Section 6: Your Plan** — Email template, phone script, 14-day plan, meeting prep, difficult conversations
 - **Appendix A: Brady/Giglio Checklist** — Evidence the prosecution must disclose
 - **Appendix B: Next Court Date Prep** — What to expect, wear, bring, and do
-- **Appendix C: Your Rights** — Key rights during criminal proceedings
-- **Appendix D: Questions for Your Attorney** — 10-15 targeted, gap-based questions`;
+- **Appendix C: Attorney Script Pack** — 5 ready-to-use communication scripts
+- **Appendix D: Questions for Your Attorney** — 10-15 targeted, gap-based questions
+- **Appendix E: Your Rights** — Key rights during criminal proceedings`;
 }
 
 function buildBradyGiglioChecklist(): string {
@@ -4832,8 +4855,31 @@ function buildBradyGiglioChecklist(): string {
 4. "Are there any witnesses the prosecution hasn't disclosed?"`;
 }
 
+function buildAttorneyScriptPack(): string {
+  return `## Appendix C: Attorney Script Pack
+
+**What This Is:** Five ready-to-use communication scripts from Section 6 of your brief, collected here for easy printing and reference.
+
+### Script 1: Email Template (Section 6b)
+Your personalized email to your attorney is in **Section 6b**. It covers your specific questions, references your case details, and is ready to send. Copy it directly.
+
+### Script 2: Phone Call Script (Section 6c)
+A structured phone call framework is in **Section 6c**. Includes what to say, how to document the call, and how to follow up if you don't get answers.
+
+### Script 3: Follow-Up Template (Section 6e)
+If your attorney doesn't respond to Script 1 within 5 business days, use the follow-up template in **Section 6e**.
+
+### Script 4: Difficult Conversation Scripts (Section 6i)
+Real scenarios with word-for-word responses for when conversations get challenging — fee disputes, strategy disagreements, communication breakdowns. See **Section 6i**.
+
+### Script 5: Self-Advocacy Steps (Section 6j)
+If you've exhausted communication attempts, **Section 6j** provides escalation steps including bar complaints, substitution of counsel, and Marsden/Strickland motions.
+
+**Tip:** Print this appendix and the referenced sections. Keep them accessible before your next call or meeting with your attorney.`;
+}
+
 function buildYourRights(state: string): string {
-  return `## Appendix C: Your Rights During Criminal Proceedings
+  return `## Appendix E: Your Rights During Criminal Proceedings
 
 **These rights exist regardless of your charge, your attorney, or your county.**
 
@@ -4947,6 +4993,7 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
 
   const stateForRights = meta.stateCounty.split(",")[0]?.trim() || "your state";
   const sections = [
+    sectionOutputs["letter-to-you"] || "",
     sectionOutputs["48hr-priorities"] || "",
     buildTableOfContents(),
     sectionOutputs["case-roadmap"] || "",
@@ -4957,8 +5004,9 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
     sectionOutputs["your-plan"] || "",
     buildBradyGiglioChecklist(),
     sectionOutputs["court-prep"] || "",
-    buildYourRights(stateForRights),
+    buildAttorneyScriptPack(),
     sectionOutputs["questions"] || "",
+    buildYourRights(stateForRights),
   ].filter((s) => s.trim()).map((s) => md2html(s)).join('\n<div class="page-break"></div>\n');
 
   return `<!DOCTYPE html>

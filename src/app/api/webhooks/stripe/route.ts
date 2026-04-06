@@ -507,6 +507,20 @@ export async function POST(req: NextRequest) {
       const reportTokenExpiry = new Date();
       reportTokenExpiry.setFullYear(reportTokenExpiry.getFullYear() + 1);
 
+      // Compute delivery SLA from purchase time (Fix 13)
+      const DELIVERY_SLA_DAYS: Record<string, number> = {
+        "case-decoder": 2,           // 48 hours
+        "intelligence-brief": 3,     // 72 hours
+        "x-ray": 10,                 // 10 business days
+        "war-room": 28,              // 25-28 days
+        "situation-room": 2,         // 24-48 hours priority
+        "extra-witness": 3,          // Next update cycle
+        "witness-pack": 5,           // 3-5 days
+      };
+      const slaDays = DELIVERY_SLA_DAYS[tier] ?? 7;
+      const deliveryDue = new Date();
+      deliveryDue.setDate(deliveryDue.getDate() + slaDays);
+
       const { error: caseError } = await supabase.from("cases").insert({
         id: caseId,
         order_id: orderData.id,
@@ -519,6 +533,7 @@ export async function POST(req: NextRequest) {
         report_token: reportToken,
         report_token_hash: hashToken(reportToken),
         report_token_expires_at: reportTokenExpiry.toISOString(),
+        delivery_due_at: deliveryDue.toISOString(),
       });
 
       if (caseError) {

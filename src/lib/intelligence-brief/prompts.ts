@@ -310,10 +310,14 @@ OUTPUT STRUCTURE:
 ## Section 4: Legal Options & Deadlines
 ### 4a. Motion Landscape (constitutional, procedural, evidence, charge-specific, ~700 words)
 ### 4b. Deadline Calendar (30/60/90-day, ~300 words)
-### 4c-4g. Plea Decision Framework (CONDITIONAL, ~800-1000 words if active)
+### 4c-4d. Plea Decision Framework (CONDITIONAL depth — full if plea offered/discussed, condensed if not)
+### 4e. Prosecution Pressure Tactics Decoder (ALWAYS PRESENT, ~200 words)
+### 4f-4g. (If plea active: Before You Sign + Decision Checklist)
 ### Bottom Line Right Now (~50 words)
 
-Word budget: ~2,200 total.`,
+IMPORTANT: Section 4e (Pressure Tactics Decoder) is ALWAYS generated regardless of plea status. Prosecution pressure exists whether or not a plea is on the table — overcharging, bail conditions, continuance pressure, discovery delay, informal plea signals. Name and defuse these tactics. "When you name a tactic, it loses most of its power." (Chris Voss)
+
+Word budget: ~2,400 total.`,
     userPrompt: `Generate Section 4: Legal Options & Deadlines.
 
 <intake_data>
@@ -341,8 +345,9 @@ ${v.prior_section_outputs_xml ? `<prior_case_decoder>\n${v.prior_section_outputs
 
 CONDITIONAL LOGIC:
 - Plea status = "${v.plea_status}"
-- If "offered" or "discussing": Generate FULL plea framework (4c-4g)
-- If "not yet": Generate CONDENSED version
+- If "offered" or "discussing": Generate FULL plea framework (4c-4d, 4f-4g)
+- If "not yet": Generate CONDENSED plea overview (4c-4d only)
+- Section 4e (Pressure Tactics Decoder): ALWAYS GENERATE regardless of plea status
 
 SELF-VERIFICATION:
 - [ ] Every motion has: what it does, legal basis, relevant factors, deadline, status, attorney question
@@ -532,6 +537,64 @@ SELF-VERIFICATION:
 // ============================================================
 // PHASE B PROMPTS (sequential, require Phase A outputs)
 // ============================================================
+
+export function buildLetterToYou(v: IBVariables): PromptConfig {
+  return {
+    sectionKey: "letter-to-you",
+    model: "claude-sonnet-4-6",
+    temperature: 0.4,
+    maxTokens: 800,
+    systemPrompt: `You are writing a personal letter to a criminal defendant as the opening of their Case Intelligence Brief.
+
+YOUR ROLE: Write a warm, specific, personal letter that makes the defendant feel seen and understood. This is the first thing they read after the cover page. It sets the emotional tone for the entire 25-page report.
+
+CRITICAL RULES:
+1. NO section heading — do NOT write "## A Letter to You" or any heading. A letter doesn't announce itself. Start directly with the defendant's first name followed by a comma (e.g., "Jennifer,").
+2. Maximum 200 words. Every word must earn its place.
+3. Reference specific facts from their intake — charge type, situation, what they told us. Show you read every word.
+4. Include the overwhelm permission: "You don't have to read this all at once. Start with the 48-Hour Priority List on the next page. The rest will be here when you're ready."
+5. Insider vulnerability signal: "This service was founded by a defendant who went through exactly what you are going through."
+6. End with forward momentum — not sympathy, but evidence that preparation matters.
+7. If they mentioned their profession, acknowledge that their career IS at stake.
+8. If a family member filled this out, address both the defendant and the support person.
+${BANNED_PHRASES_BLOCK}
+
+TONE: Direct warmth. Not clinical, not saccharine. Like someone who's been through the system talking to someone going through it now.
+
+SEQUENCE:
+1. Insider vulnerability signal (1-2 sentences)
+2. Specific acknowledgment of THEIR situation from intake data (2-3 sentences)
+3. What this report will give them (1-2 sentences)
+4. Overwhelm permission (1 sentence)
+5. Forward momentum close (1 sentence)`,
+    userPrompt: `Write the personal letter.
+
+<intake_data>
+- First name: ${v.first_name}
+- Charges: ${v.charges}
+- State/County: ${v.state_county}
+- Attorney: ${v.attorney_type} — ${v.attorney_name}
+- Last communication: ${v.last_communication}
+- Frustration: ${v.frustration}
+- Biggest concern: ${v.biggest_concern}
+- Attorney statements: ${v.attorney_statements}
+- Employment: ${v.employment}
+- Plea status: ${v.plea_status}
+- Filled out by: ${v.filled_out_by}
+- Family buyer: ${v.is_family_buyer}
+- Mental health: ${v.mental_health_relevant}
+- Case stage: ${v.case_stage_raw}
+</intake_data>
+
+<phase_a_context>
+Key findings from case analysis (reference but don't repeat verbatim):
+- Roadmap: ${v.case_roadmap_output ? v.case_roadmap_output.slice(0, 300) : "Pending"}
+- What's working: ${v.whats_working_output ? v.whats_working_output.slice(0, 200) : "Pending"}
+</phase_a_context>
+
+Remember: NO heading. Start with "${v.first_name}," — just the name and comma.`,
+  };
+}
 
 export function buildCaseIntelligence(v: IBVariables): PromptConfig {
   return {
@@ -976,6 +1039,7 @@ export const PHASE_A_BUILDERS = [
 
 /** Phase B prompts — run sequentially (each may depend on prior outputs) */
 export const PHASE_B_BUILDERS = [
+  buildLetterToYou,
   buildCaseIntelligence,
   buildYourPlan,
   buildQuestions,
@@ -989,6 +1053,7 @@ export const PROMPT_BUILDERS: Record<string, (v: IBVariables) => PromptConfig> =
   "legal-options": buildLegalOptions,
   "protection": buildProtection,
   "court-prep": buildCourtPrep,
+  "letter-to-you": buildLetterToYou,
   "case-intelligence": buildCaseIntelligence,
   "your-plan": buildYourPlan,
   "questions": buildQuestions,

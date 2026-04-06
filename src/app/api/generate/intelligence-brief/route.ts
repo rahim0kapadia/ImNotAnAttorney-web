@@ -79,15 +79,11 @@ export async function POST(req: NextRequest) {
 
   // ── ATOMIC GUARD ───────────────────────────────────────────
   // Conditional UPDATE prevents race conditions from duplicate triggers.
-  const deliveryDue = new Date();
-  deliveryDue.setDate(deliveryDue.getDate() + 3); // IB promise: 72 hours (3 calendar days)
-
   let guardQuery = supabase
     .from("cases")
     .update({
       status: "auto-generating",
       updated_at: new Date().toISOString(),
-      delivery_due_at: deliveryDue.toISOString(),
     })
     .eq("id", caseId);
 

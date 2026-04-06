@@ -165,6 +165,45 @@ async function processCDResult(
 
   const reportHtml = renderReportHtml(cleaned, meta);
 
+  // PG-12: Section enforcement — verify critical sections are present before transitioning to review
+  const CD_REQUIRED_SECTIONS = [
+    "Where Things Stand",
+    "What's Working",
+    "Case Progress Score",
+    "Your Attorney Meeting Toolkit",
+    "Your Next 7 Days",
+  ];
+  const missingSections = CD_REQUIRED_SECTIONS.filter(
+    (section) => !reportHtml.includes(section)
+  );
+  if (missingSections.length > 0) {
+    console.error(`[batch-poller] CD missing ${missingSections.length} sections: ${missingSections.join(", ")} — case ${row.id}`);
+    await ctx.supabase
+      .from("cases")
+      .update({ status: "generation-failed", batch_id: null, updated_at: new Date().toISOString() })
+      .eq("id", row.id);
+
+    await sendEmail(
+      {
+        to: ctx.operatorEmail,
+        subject: `SECTION MISSING: Case Decoder — ${row.email}`,
+        html: `<p>Generated report for case ${row.id} is missing critical sections:</p>
+          <ul>${missingSections.map((s) => `<li>${s}</li>`).join("")}</ul>
+          <p><strong>Retry:</strong></p>
+          <code>curl -X POST ${ctx.siteUrl}/api/generate/case-decoder -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${row.id}","force":true}'</code>`,
+      },
+      { category: "operator-alert", case_id: row.id }
+    );
+
+    await sendCustomerFailureNotification({
+      supabase: ctx.supabase,
+      caseId: row.id,
+      email: row.email,
+      productName: "Case Decoder",
+    });
+    return;
+  }
+
   await ctx.supabase
     .from("cases")
     .update({
