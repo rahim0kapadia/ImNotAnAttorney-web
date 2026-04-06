@@ -7,14 +7,22 @@
  * and redirects to the Stripe-hosted checkout page. Saves pasting long
  * Stripe URLs — just open this URL in a browser.
  *
- * Security: Only works when the request email matches INTERNAL_QA_EMAIL.
- * Not linked from any page. The tier defaults to dui-first-offense if omitted.
+ * Security: Requires ?key= matching OPERATOR_SECRET. Without the correct
+ * key, returns 404 (looks like the route doesn't exist). Not linked from
+ * any page. The tier defaults to dui-first-offense if omitted.
  */
 import { NextRequest, NextResponse } from "next/server";
 
 const QA_EMAIL = process.env.INTERNAL_QA_EMAIL;
+const OPERATOR_SECRET = process.env.OPERATOR_SECRET;
 
 export async function GET(req: NextRequest) {
+  // Gate on operator secret — return 404 to avoid revealing the route exists
+  const key = req.nextUrl.searchParams.get("key");
+  if (!OPERATOR_SECRET || key !== OPERATOR_SECRET) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
   if (!QA_EMAIL) {
     return NextResponse.json({ error: "QA not configured" }, { status: 500 });
   }
