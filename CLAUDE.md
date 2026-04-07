@@ -46,8 +46,9 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment 
 
 | File | Purpose |
 |------|---------|
-| `ARCHITECTURE.md` | System map: invariants, component map, E2E flows, key decisions |
-| `docs/ARCHITECTURE.md` | Deep reference: DB schema, case status state machine, env vars, email sequences |
+| `ARCHITECTURE.md` | System map: invariants, component map, E2E flows, env vars, architecture patterns, tier inclusion, deploy guardrails |
+| `supabase/SCHEMA.md` | Full column-level DB schema reference (tables, RPCs, indexes, triggers) |
+| `supabase/CONTEXT.md` | Case status state machine (19 statuses), Edge Functions, Storage buckets |
 | `src/lib/schema.ts` | Structured data generators (about entities, citation mapping) |
 | `src/lib/tiers.ts` | TIER_CORE array — single source of truth for pricing |
 | `src/lib/drip-emails.ts` | 7+ email sequence definitions |

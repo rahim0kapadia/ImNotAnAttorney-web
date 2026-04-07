@@ -42,7 +42,7 @@
 | `blog_pipeline_jobs` | Tracked blog generation runs (topic, status, output path) |
 
 ### Key Schema Notes
-- `cases.status` is the primary state machine. Valid transitions enforced at app layer, not DB. See `docs/ARCHITECTURE.md` for full transition diagram.
+- `cases.status` is the primary state machine. Valid transitions enforced at app layer, not DB. Full diagram + 19-status definitions + `ALLOWED_TRANSITIONS` below in the "Case Status State Machine" section.
 - `processing_jobs.case_id` links engine jobs back to `cases`. Engine never writes to `cases` directly — it writes job results; web cron reads them.
 - RLS: all tables have RLS enabled. Service role key (bypasses RLS) used only in server-side API routes via `supabase/admin.ts`. Anon key never used server-side.
 

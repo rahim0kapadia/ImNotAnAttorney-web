@@ -339,4 +339,7 @@ There is no "analysis commenced" flag or time-gated refund window implemented in
 
 ## Related Documentation
 
-- `docs/ARCHITECTURE.md` -- Full system architecture, database schema, state machine, cron jobs
+- `ARCHITECTURE.md` (root) — system map, architecture patterns, tier inclusion, env vars
+- `supabase/SCHEMA.md` — full column-level database schema
+- `supabase/CONTEXT.md` — case status state machine (19 statuses)
+- `src/lib/CONTEXT.md` — cron orchestrator 26-task breakdown, drip sequences

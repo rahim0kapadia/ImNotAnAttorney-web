@@ -340,4 +340,6 @@ All drip emails are deduplicated via the `drip_emails` table, which stores `(sub
 | `src/lib/drip-emails.ts` | Delivery + story harvest email templates |
 | `src/lib/email.ts` | Resend API wrapper, CAN-SPAM footer |
 | `src/lib/site.ts` | Shared constants (SITE_URL, normalizeEmail) |
-| `docs/ARCHITECTURE.md` | Database schema, case status state machine, system overview |
+| `supabase/SCHEMA.md` | Full column-level database schema reference |
+| `supabase/CONTEXT.md` | Case status state machine (19 statuses, ALLOWED_TRANSITIONS) |
+| `ARCHITECTURE.md` (root) | System overview, architecture patterns, tier inclusion model |

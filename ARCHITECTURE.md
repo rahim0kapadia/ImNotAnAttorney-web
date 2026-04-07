@@ -1,8 +1,8 @@
 # Architecture — ImNotAnAttorney-web
 
-> Living document. Updated: 2026-03-31. Read this before making any change.
+> Living document. Updated: 2026-04-07. Read this before making any change.
 > Subsystem details live in `CONTEXT.md` files next to the code. This file is the system map.
-> For deep detail (DB schema, env vars, state machines, email sequences): see `docs/ARCHITECTURE.md`.
+> For column-level DB schema: `supabase/SCHEMA.md`. For state machines: `supabase/CONTEXT.md`. For email sequences: `src/lib/CONTEXT.md`.
 
 ## System Overview
 
@@ -292,7 +292,7 @@ Historical rules — violating any of these has broken production before. Rules 
 - **On invariant change:** Update Architectural Invariants (major event — requires review)
 - **On new cross-cutting pattern:** Update Cross-Cutting Concerns
 - **New gotcha discovered:** Add to Gotchas (most impactful first)
-- **Deep detail needed:** See `docs/ARCHITECTURE.md` (DB schema, state machines, env vars, email sequences)
+- **Deep detail needed:** DB schema → `supabase/SCHEMA.md`; case status state machine → `supabase/CONTEXT.md`; email sequences → `src/lib/CONTEXT.md`; env vars → this file
 - **On any code change:** `node docs/verify-architecture.js` (automated via CI on pull requests)
 - **Verification script:** `docs/verify-architecture.js` — auto-generated, do not edit manually
 - **Last full verification:** 2026-04-01
