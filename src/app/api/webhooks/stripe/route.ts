@@ -39,11 +39,13 @@
 import { NextRequest, NextResponse, after } from "next/server";
 import { stripe, TIERS, isValidTier, stripeForTier } from "@/lib/stripe";
 import { TIER_CORE, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
+import { getProduct } from "@/lib/products";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, sendEmailWithOperatorAlert, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
 import { signOperatorToken, signPhase2Token, caseThreadId, normalizeEmail, hashToken } from "@/lib/site";
 import { calculateCommission, getPartnerByStripePromoId, getPartnerByPromoCode } from "@/lib/referral";
+import { randomBytes } from "crypto";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
@@ -103,6 +105,115 @@ export async function POST(req: NextRequest) {
   // flows through here.
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
+
+    // ──────────────────────────────────────────────────────────────
+    // STANDALONE PRODUCT FAST PATH
+    // ──────────────────────────────────────────────────────────────
+    // Standalone products (Employment Impact, License Risk, etc.) skip
+    // case/intake creation. They write directly to orders with
+    // tier: "standalone" sentinel + standalone_product_slug, and email
+    // the customer a tokenized intake link.
+    const standaloneSlug = session.metadata?.standalone_product_slug;
+    if (session.metadata?.product_type === "standalone" && standaloneSlug) {
+      const product = getProduct(standaloneSlug);
+      if (!product) {
+        console.error(`[Webhook] Unknown standalone product: ${standaloneSlug}`);
+        await sendEmail({
+          to: OPERATOR_EMAIL,
+          subject: `[ERROR] Standalone webhook — unknown product ${escapeHtml(standaloneSlug)}`,
+          html: `<p>Session: ${escapeHtml(session.id)}</p><p>Slug: ${escapeHtml(standaloneSlug)}</p>`,
+        });
+        return NextResponse.json({ error: "Unknown product" }, { status: 400 });
+      }
+
+      const standaloneSupabase = createAdminClient();
+      const rawStandaloneEmail =
+        session.metadata.email ||
+        session.customer_email ||
+        session.customer_details?.email ||
+        "";
+      const customerStandaloneEmail = normalizeEmail(rawStandaloneEmail);
+      if (!customerStandaloneEmail) {
+        console.error("[Webhook] Standalone missing email:", session.id);
+        return NextResponse.json({ error: "Missing email" }, { status: 500 });
+      }
+
+      // Cryptographic intake token — only the customer gets this via email
+      const intakeToken = randomBytes(24).toString("base64url");
+
+      // Use tier: "standalone" (sentinel). The slug lives in standalone_product_slug.
+      // This prevents contaminating the tier column used by upgrade credit queries.
+      const { error: standaloneOrderError } = await standaloneSupabase
+        .from("orders")
+        .insert({
+          email: customerStandaloneEmail,
+          tier: "standalone",
+          amount: session.amount_total,
+          status: "paid",
+          stripe_session_id: session.id,
+          stripe_payment_intent_id:
+            typeof session.payment_intent === "string"
+              ? session.payment_intent
+              : (session.payment_intent as { id?: string } | null)?.id ?? null,
+          paid_at: new Date().toISOString(),
+          product_type: "standalone",
+          standalone_product_slug: standaloneSlug,
+          standalone_intake_token: intakeToken,
+        });
+
+      if (standaloneOrderError) {
+        if (standaloneOrderError.code === "23505") {
+          return NextResponse.json({ received: true });
+        }
+        console.error(
+          "[Webhook] Standalone order insert error:",
+          standaloneOrderError
+        );
+        await sendEmail({
+          to: OPERATOR_EMAIL,
+          subject: `[ERROR] Standalone order insert failed — ${standaloneSlug}`,
+          html: `<p>Payment collected but order record failed.</p>
+                 <p>Email: ${escapeHtml(customerStandaloneEmail)}</p>
+                 <p>Product: ${escapeHtml(standaloneSlug)}</p>
+                 <p>Session: ${escapeHtml(session.id)}</p>
+                 <p>Error: ${escapeHtml(JSON.stringify(standaloneOrderError))}</p>`,
+        });
+        return NextResponse.json({ error: "Order creation failed" }, { status: 500 });
+      }
+
+      const siteOrigin =
+        process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+      await sendEmailWithOperatorAlert(
+        {
+          to: customerStandaloneEmail,
+          subject: `Your ${product.name} — Complete Your Details`,
+          html: `
+            <p>Thank you for your purchase.</p>
+            <p>To generate your personalized ${escapeHtml(product.name)}, we need a few details about your situation.</p>
+            <p style="margin: 24px 0;">
+              <a href="${siteOrigin}/intake/standalone/${standaloneSlug}?token=${intakeToken}"
+                 style="background: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">
+                Complete Your Details
+              </a>
+            </p>
+            <p>This takes about 2 minutes. Your report is generated within 60 seconds of submission.</p>
+          `,
+        },
+        `standalone intake email for ${customerStandaloneEmail}`,
+        {
+          category: "standalone-intake-invite",
+          metadata: { standalone_product_slug: standaloneSlug },
+        }
+      );
+
+      await sendEmail({
+        to: OPERATOR_EMAIL,
+        subject: `[SALE] ${product.name} — $${((session.amount_total || 0) / 100).toFixed(2)}`,
+        html: `<p>New standalone purchase: ${escapeHtml(product.name)} by ${escapeHtml(customerStandaloneEmail)}</p>`,
+      });
+
+      return NextResponse.json({ received: true });
+    }
 
     // ──────────────────────────────────────────────────────────────
     // EXTRACT & NORMALIZE METADATA

@@ -23,11 +23,13 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { stripeForTier, TIERS, isValidTier, type TierSlug } from "@/lib/stripe";
+import { stripeLive } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { normalizeEmail } from "@/lib/site";
 import { isValidChargeType } from "@/lib/charge-types";
 import { getClientIp } from "@/lib/request";
+import { isValidProduct, getProduct } from "@/lib/products";
 
 /**
  * Creates a Stripe Checkout session for a given product tier.
@@ -57,7 +59,112 @@ export async function POST(req: NextRequest) {
     } catch {
       return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
     }
-    const { tier, email, consent, priorityDelivery, courtDate, chargeType, existingCaseNumber, existingCaseState, productType, promoCode, paymentPlan } = body;
+    const { tier, email, consent, priorityDelivery, courtDate, chargeType, existingCaseNumber, existingCaseState, productType, promoCode, paymentPlan, standaloneProduct } = body;
+
+    // =========================================================================
+    // 1a. STANDALONE PRODUCT CHECKOUT
+    // Runs BEFORE tier validation. Standalone products (Employment Impact
+    // Assessment, License Risk, etc.) do NOT participate in the tier upgrade
+    // ladder — they have independent pricing, no upgrade credits, no case
+    // creation, and a separate post-purchase intake flow.
+    // The webhook writes tier: "standalone" (sentinel) to prevent
+    // contaminating tier-based queries.
+    // =========================================================================
+    if (standaloneProduct !== undefined && standaloneProduct !== null && standaloneProduct !== "") {
+      // Type check first — prevent array/object injection
+      if (typeof standaloneProduct !== "string") {
+        return NextResponse.json({ error: "Invalid product" }, { status: 400 });
+      }
+      if (!isValidProduct(standaloneProduct)) {
+        return NextResponse.json({ error: "Invalid product" }, { status: 400 });
+      }
+      const product = getProduct(standaloneProduct)!;
+      if (product.price === 0) {
+        return NextResponse.json(
+          { error: "Free products do not require checkout" },
+          { status: 400 }
+        );
+      }
+      if (!product.isActive) {
+        return NextResponse.json({ error: "Product not available" }, { status: 400 });
+      }
+
+      // Email validation — match tier checkout's regex pattern
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        return NextResponse.json(
+          { error: "Valid email required" },
+          { status: 400 }
+        );
+      }
+      const normalizedEmailStandalone = normalizeEmail(email);
+      const supabaseStandalone = createAdminClient();
+
+      // Duplicate purchase detection
+      const { data: existing } = await supabaseStandalone
+        .from("orders")
+        .select("id")
+        .eq("email", normalizedEmailStandalone)
+        .eq("standalone_product_slug", standaloneProduct)
+        .eq("status", "paid")
+        .limit(1);
+      if (existing && existing.length > 0) {
+        return NextResponse.json(
+          {
+            error:
+              "You have already purchased this product. Check your email for the report link, or contact help@imnotanattorney.com.",
+          },
+          { status: 409 }
+        );
+      }
+
+      // Validate chargeType if provided
+      if (chargeType && !isValidChargeType(chargeType)) {
+        return NextResponse.json({ error: "Invalid charge type" }, { status: 400 });
+      }
+
+      const siteUrlStandalone =
+        process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+
+      // Standalone products are always live — use live Stripe client explicitly
+      if (!stripeLive) {
+        return NextResponse.json(
+          { error: "Payment not configured" },
+          { status: 500 }
+        );
+      }
+
+      // Inline price_data (same pattern as tier checkout) — products.ts is
+      // the single source of truth for pricing, no pre-created Stripe Prices
+      const standaloneSession = await stripeLive.checkout.sessions.create({
+        mode: "payment",
+        payment_method_types: ["card"],
+        line_items: [
+          {
+            price_data: {
+              currency: "usd",
+              unit_amount: product.price,
+              product_data: {
+                name: product.name,
+                description: product.description,
+              },
+            },
+            quantity: 1,
+          },
+        ],
+        customer_email: normalizedEmailStandalone,
+        success_url: `${siteUrlStandalone}/checkout/success?session_id={CHECKOUT_SESSION_ID}&product=${standaloneProduct}`,
+        cancel_url: `${siteUrlStandalone}/services/${standaloneProduct}`,
+        metadata: {
+          product_type: "standalone",
+          standalone_product_slug: standaloneProduct,
+          email: normalizedEmailStandalone,
+          charge_type: chargeType && isValidChargeType(chargeType) ? chargeType : "",
+          state: typeof body.state === "string" ? body.state.slice(0, 10) : "",
+        },
+      });
+
+      return NextResponse.json({ url: standaloneSession.url });
+    }
 
     // =========================================================================
     // 1. TIER VALIDATION
