@@ -273,7 +273,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "dui-first-offense",
     upsellText: "Get charge-specific preparation with the Defense Playbook.",
     dripSequenceKey: null,
-    isActive: false,
+    isActive: true,
   },
   "family-action-plan": {
     name: "Post-Arrest Family Action Plan",
