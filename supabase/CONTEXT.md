@@ -86,6 +86,14 @@ supabase/functions/
 - If PASS: sets `cases.evaluation_status = 'passed'`, operator can deliver
 - If FAIL: sets `cases.evaluation_status = 'failed'`, blocks delivery, creates operator task with flagged passages
 
+### evaluate-report — teams in production vs CLI
+
+The `evaluate-report` Edge Function in production implements only **2 teams** from the INAA evaluation framework: UPL compliance + Psychological Intelligence. This is intentional — both run inside a shared 150s Edge Function budget, and adding the other 5 teams (Legal, Defendant Experience, Conversion, Rendering, System Truth) would push total runtime past the hard kill.
+
+The full **7-team framework** lives in the CLI tool at `ImNotAnAttorney/scripts/evaluate-report.mjs` (sibling business-docs repo). Invocation: `node evaluate-report.mjs --file <report.html> --teams upl,legal --model sonnet`. Use the CLI for pre-launch audits, post-fix re-runs, or any time the 5 missing teams matter. Source of truth for criteria and team definitions: `ImNotAnAttorney/system/EVALUATION-TEAM.md`.
+
+If UPL eval exceeds 100s inside the Edge Function, the Psych eval is skipped and partial results are saved — both evals share the same 150s timeout.
+
 ### generate-standalone
 - Called via fire-and-forget POST from `/api/intake/standalone/[slug]` (customer path) or `/api/generate/standalone` (operator retry)
 - Loads order + intake data from `orders` table (standalone_product_slug, standalone_intake)
@@ -133,6 +141,106 @@ For tables with no user-level access (operator-only like `processing_jobs`): no 
 - **Add a new table:** Write migration SQL with RLS enabled (`ALTER TABLE x ENABLE ROW LEVEL SECURITY`). Add policies for customer access if needed. Add service role policy if operator-only. Reference from web via `supabase/admin.ts` (service role client).
 - **Debug a failing Edge Function:** Check Supabase dashboard → Edge Functions → Logs. Common failures: missing env var (`ANTHROPIC_API_KEY` not set in Supabase secrets), timeout (Opus calls can take 60s+, set timeout to 150s), CORS (add origin header on non-browser calls).
 - **Add Supabase secret (env var):** `npx supabase secrets set VAR_NAME=value --project-ref jxjbjmgdukwkoclydqdr`
+
+## Case Status State Machine
+
+`cases.status` is the primary state machine for every paid service order. Valid transitions are enforced at the app layer (`src/lib/types/operator.ts`), not at the database — the DB stores the status as a plain string. Engine pipeline phases were added in the v4 restructure (March 2026) so the state machine covers Case Decoder, Intelligence Brief, and the full X-Ray / War Room / Situation Room discovery flow.
+
+```
+                                    ┌──────────────┐
+                                    │ awaiting-     │ ← webhook: no intake found
+                                    │ intake        │
+                                    └──────┬───────┘
+                                           │ intake submitted
+                                           ▼
+    webhook (has intake) ──────────► ┌─────────────┐
+                                     │   intake     │ ← ready for generation
+                                     └──────┬──────┘
+                                            │ dispatcher (atomic guard)
+                                            ▼
+                                     ┌─────────────────┐
+                                     │  generating      │ ← CD: edge function
+                                     │  auto-generating │ ← IB: Phase A running
+                                     └──────┬──────────┘
+                                      ╱            ╲
+                                success            failure / timeout
+                                  ╱                    ╲
+                      ┌──────────┐              ┌────────────────┐
+                      │  review  │              │ generation-    │
+                      │          │              │ failed         │
+                      └────┬─────┘              └────────────────┘
+                           │ operator approves
+                           ▼
+                      ┌──────────┐
+                      │ delivered │──► monitoring (War Room post-delivery)
+                      └──────────┘
+
+    IB-specific statuses:
+      intake → auto-generating (Phase A) → compiling (Phase B) → review
+      intake → auto-generating → researching (judge research pending) → compiling → review
+
+    Discovery-tier statuses (X-Ray+):
+      pending → uploaded → submitted → processing → intelligence → strategy → packaging → review → delivered
+
+    From any status:
+      (refund webhook) → refunded
+      (cron Part 4, 2h) → intake-stalled (from intake, CD only)
+      (cron Part 5, 30m) → generation-failed (from generating)
+```
+
+### Status Definitions
+
+| Status | Meaning | Tier(s) | Next Step |
+|--------|---------|---------|-----------|
+| `awaiting-intake` | Paid but no intake form yet | All services | Customer fills intake |
+| `intake` | Intake linked, ready for processing | CD, IB | Auto-generates report |
+| `generating` | Edge function running (CD) | case-decoder | Wait (30min max) |
+| `auto-generating` | IB Phase A running | intelligence-brief | Wait (30min max) |
+| `compiling` | IB Phase B running | intelligence-brief | Wait (30min max) |
+| `researching` | Judge research pending | intelligence-brief | Optional — Phase B can proceed |
+| `generation-failed` | Generation crashed / timed out | CD, IB | Operator retries |
+| `pending` | Discovery tier, waiting for upload | X-Ray+ | Customer uploads files |
+| `uploaded` | Files uploaded, not yet finalized | X-Ray+ | Customer finalizes |
+| `submitted` | Files finalized, ready for processing | X-Ray+ | Engine claims the job |
+| `processing` | Discovery pipeline running | X-Ray+ | Jobs complete → intelligence phase |
+| `intelligence` | Engine pipeline — intelligence extraction phase | X-Ray+ | → strategy or back to processing |
+| `strategy` | Engine pipeline — strategy synthesis phase | X-Ray+ | → packaging or back to intelligence |
+| `packaging` | Engine pipeline — final report packaging | X-Ray+ | → review or back to strategy |
+| `review` | Report generated, awaiting operator approval | CD, IB, discovery | Operator reviews + delivers |
+| `delivered` | Report sent to customer | All | Drip sequence begins; War Room advances to `monitoring` |
+| `monitoring` | War Room post-delivery continuous updates | War Room, Situation Room | Weekly progress emails via cron Part 18 |
+| `intake-stalled` | Stuck in `intake` for 2+ hours | case-decoder | Operator investigates |
+| `refunded` | Full refund processed | All | Report access revoked |
+| `cancelled` | Order cancelled pre-delivery | All | Terminal |
+
+### Operator Status Transitions (ALLOWED_TRANSITIONS)
+
+Source: `src/lib/types/operator.ts`. Operators can only trigger transitions listed here from the UI; pipeline code bypasses this map for system-initiated state changes.
+
+```typescript
+export const ALLOWED_TRANSITIONS: Record<string, string[]> = {
+  // Pre-intake
+  "awaiting-intake": ["intake"],
+  // CD / IB path
+  intake: ["generating", "pending"],
+  generating: ["review"],
+  // Discovery upload path
+  pending: ["uploaded"],
+  uploaded: ["submitted"],
+  submitted: ["processing"],
+  // Engine pipeline phases
+  processing: ["intelligence", "review", "submitted"], // back to submitted if issues found
+  intelligence: ["strategy", "processing"],
+  strategy: ["packaging", "intelligence"],
+  packaging: ["review", "strategy"],
+  // Review / delivery
+  review: ["delivered", "processing"], // back to processing if more work needed
+  // War Room post-delivery monitoring
+  delivered: ["monitoring"],
+};
+```
+
+The 4 engine pipeline phases (`intelligence`, `strategy`, `packaging`, `monitoring`) were added when the X-Ray pipeline moved in-house in v4. `refunded` and `cancelled` are not in the manual transitions map — they are set only by the Stripe webhook and the admin order-cancel flow respectively.
 
 ## Data Flow
 

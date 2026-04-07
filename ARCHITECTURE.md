@@ -77,6 +77,38 @@ STANDALONE PRODUCT SYSTEMS (src/lib/products.ts is source of truth):
 6. **Delivery** — Operator approves → `/api/deliver` sends email + sets `delivered_at`. Customer accesses report at `/report/[token]`.
 7. **Post-purchase drip** — `src/lib/cron/drip-post-purchase.ts` fires upgrade-path emails at days 3, 7, 14.
 
+## Tier Inclusion Model
+
+Upper-tier purchases create multiple `cases` rows — one primary plus one included deliverable per entry in `includesTiers` (`src/lib/tiers.ts`). Included deliverables are fully-generated reports that ship before the primary deliverable, not previews.
+
+**Inclusion Map** (verified against `src/lib/tiers.ts`):
+
+| Purchased Tier | Cases Created | Included Deliverables |
+|----------------|---------------|----------------------|
+| Case Decoder ($197) | 1 case | None |
+| Intelligence Brief ($997) | 2 cases | Case Decoder (`is_included_deliverable=true`) |
+| X-Ray ($2,497) | 3 cases | Case Decoder + Intelligence Brief |
+| War Room ($4,997) | 4 cases | CD + IB + X-Ray |
+| Situation Room ($9,997) | 5 cases | CD + IB + X-Ray + War Room |
+
+**How It Works:**
+
+1. Webhook creates the primary case AND loops through `tierConfig.includesTiers` to create additional cases with `is_included_deliverable=true` and `parent_order_id` set.
+2. **Upgrade dedup:** Before creating an included case, checks if the customer already has a delivered case for that tier (by email OR court case number match). If so, skips creation.
+3. Included CD auto-generates immediately if intake exists (same fire-and-forget pattern as standalone CD).
+4. **CD delivery triggers Phase 2 email:** When an included CD is delivered, the deliver route finds sibling cases still awaiting intake and sends the Phase 2 intake email.
+5. **Refund cascade:** `cases.eq("order_id")` catches all cases on the order.
+
+**Two-Phase Intake Flow:**
+
+- **Phase 1** (standard intake) — Collected post-purchase. Used to generate the included Case Decoder.
+- **Phase 2** (IB-specific intake) — After CD delivery, customer receives email with HMAC-signed link to `/intake/intelligence-brief`. Collects judge, attorney, hearing details.
+
+**Customer Identity:**
+
+- `court_case_number` + `court_state` on the `cases` table (required intake field)
+- Checkout page "Returning customer?" section for IB+ tiers
+
 ## Cross-Cutting Concerns
 
 Patterns that span multiple subsystems:
@@ -87,6 +119,37 @@ Patterns that span multiple subsystems:
 - **HTML escaping.** All user strings in email/report HTML pass through `escapeHtml()` before interpolation. Prevents XSS in transactional emails and reports.
 - **Fire-and-forget logging.** Email sends, cron results, analytics events logged to DB asynchronously. Failures logged to console but never break the response.
 - **Client IP extraction.** Prefers Cloudflare `cf-connecting-ip`, falls back to `x-real-ip`, then `x-forwarded-for` (first entry). Used for rate limiting and analytics.
+
+## Architecture Patterns
+
+Reusable implementation patterns referenced by routes and background jobs. These are the "how" behind the invariants above.
+
+**1. Fire-and-Forget Delegation**
+API routes validate + perform atomic state change, then POST to Edge Functions without await. Keeps response time <500ms. The Edge Function runs asynchronously; if it fails, cron Parts 5/5b detect stuck cases. Used by: `generate/case-decoder`, `generate/intelligence-brief`, `evaluate/case-decoder`, webhook generation triggers.
+
+**2. Atomic Claim-Then-Email**
+Conditional UPDATE with WHERE clause as database-level mutex. The UPDATE happens BEFORE the email send. Losing request gets zero rows updated, returns early. Prevents duplicate emails from concurrent requests.
+
+```sql
+UPDATE cases SET status = 'delivered', delivered_at = now()
+WHERE id = $1 AND status = 'review'
+RETURNING *;
+-- If 0 rows returned → another request already delivered → return early
+```
+
+Used by: deliver route, generation triggers, cron parts.
+
+**3. Email Retry with Operator Fallback**
+First attempt (rich HTML) → 2s delay → retry (simplified HTML) → operator alert with report URL for manual forwarding. Case status already updated so report URL works even without email. Used by: all email-sending routes via `sendEmailWithRetry()`.
+
+**4. Idempotency via Status Checks + Unique Constraints**
+Status-based check first (skip if already processing), then atomic guard (DB-level). Stripe webhook retries return 200 on duplicate `stripe_session_id` (PostgreSQL error code 23505 = unique violation). Used by: webhook handler, cron parts, generation dispatchers.
+
+**5. HMAC Token Signing**
+Operator delivery links use `signOperatorToken(caseId)` with 24h TTL. Phase 2 intake links use `signPhase2Token(caseId)` with 30-day TTL. Token format: `"timestamp.hmac_hex"` where payload = `"${caseId}:${timestamp}"`, signed with HMAC-SHA256 using `OPERATOR_SECRET`. Verification uses constant-time comparison. Source: `src/lib/site.ts`.
+
+**6. Score-Band Routing**
+Subscribers who complete the Defense Milestone Score get `score_band` stored on their subscriber record. Cron Part 1 routes them to band-specific drip sequences FIRST, then falls through to standard nurture with a day offset. Crisis/Concerning get urgency sequences; Adequate/Excellent get validation.
 
 ## Life of a Blog Post (End-to-End)
 
@@ -163,6 +226,43 @@ Patterns that span multiple subsystems:
 - NEVER touch Cloudflare/domain settings — already configured
 - NEVER read TasteDrop, Cloud Culture, video-factory, or marketing-hq repos
 
+## Environment Variables
+
+All vars verified present in `src/` via `process.env.*` grep. Common trap: the cron bearer token is `CRON_AUTH_TOKEN`, NOT `CRON_SECRET` (middleware.ts:80, guards.ts:74, all cron routes).
+
+| Variable | Used By | Purpose |
+|----------|---------|---------|
+| `NEXT_PUBLIC_SUPABASE_URL` | All API routes | Supabase project URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | All API routes | Full DB access (bypasses RLS) |
+| `STRIPE_SECRET_KEY` | checkout, webhook (test mode) | Stripe API access (test) |
+| `STRIPE_SECRET_KEY_LIVE` | checkout, webhook (live mode) | Stripe API access (live) — required when any tier has `live: true` |
+| `STRIPE_WEBHOOK_SECRET` | webhook | Verify Stripe webhook signatures (test) |
+| `STRIPE_WEBHOOK_SECRET_LIVE` | webhook | Verify Stripe webhook signatures (live) |
+| `RESEND_API_KEY` | email.ts, admin/reply, resend-inbound | Send transactional emails |
+| `RESEND_FROM_EMAIL` | email.ts | Sender address (default `noreply@imnotanattorney.com`) |
+| `RESEND_INBOUND_WEBHOOK_SECRET` | resend-inbound webhook | Verify inbound email webhook |
+| `RESEND_WEBHOOK_SECRET` | resend webhook | Verify delivery/bounce webhook |
+| `OPERATOR_EMAIL` | All alert routes | Where operator notifications go (default `rahim0kapadia@gmail.com`) |
+| `OPERATOR_SECRET` | generate, deliver, evaluate, qa-checkout | Bearer auth for operator-only endpoints + HMAC signing |
+| `ADMIN_PASSWORD` | middleware, auth/guards | Admin password for `/api/admin/*` + `/api/operator/*` (timing-safe compare) |
+| `NEXT_PUBLIC_SITE_URL` | Email links, redirects | Canonical site URL (default `https://imnotanattorney.com`) |
+| `ANTHROPIC_API_KEY` | Edge Function, blog-generation, demand/classify-llm, batch-api | Claude API for report/content generation |
+| `CRON_AUTH_TOKEN` | middleware, auth/guards, all cron routes | Bearer auth for cron requests (NOT `CRON_SECRET` — common confusion) |
+| `SUPABASE_ACCESS_TOKEN` | Supabase CLI, scripts | Edge function + migration deployment (from `../ImNotAnAttorney/.env.local`) |
+| `CRONJOB_API_KEY` | scripts/setup-cronjob-org.js | cron-job.org job registration |
+| `INDEXNOW_KEY` | blog-generation/publish, /api/indexnow | IndexNow search engine ping |
+| `GITHUB_TOKEN` | blog-generation/publish | Git commit of generated blog posts |
+| `TWILIO_ACCOUNT_SID` | twilio.ts | Twilio auth for operator SMS alerts |
+| `TWILIO_AUTH_TOKEN` | twilio.ts | Twilio auth |
+| `TWILIO_PHONE_NUMBER` | twilio.ts | Twilio sender number |
+| `NEXT_PUBLIC_GA_ID` | CookieConsent | Google Analytics ID |
+| `NEXT_PUBLIC_META_PIXEL_ID` | CookieConsent | Meta (FB) pixel ID |
+| `NEXT_PUBLIC_GOOGLE_ADS_ID` | CookieConsent | Google Ads ID |
+| `INTERNAL_QA_EMAIL` | checkout, qa-checkout, stripe webhook | Email allowlist for free QA checkout |
+| `INTERNAL_QA_COUPON_ID` | checkout | 100%-off Stripe coupon ID for QA |
+| `ENGINE_DISPATCH_PAT` | cron/generate-backup | GitHub PAT to dispatch engine workflow |
+| `VERCEL_TOKEN` | scripts, CLI | Vercel API/CLI auth |
+
 ## Deployment
 
 - **Trigger:** `git push origin master` → GitHub integration → Vercel auto-deploy
@@ -171,6 +271,16 @@ Patterns that span multiple subsystems:
 - **DO NOT USE:** `imnotanattorney-web` (prj_fgx7OUbudHbS2WrfoaLKb07jJAnB) — duplicate project, unlinked from GitHub Apr 4 2026
 - **Edge Functions:** Deploy separately via Supabase CLI (`supabase functions deploy`)
 - **Env vars:** `vercel env add VAR_NAME production --token $VERCEL_TOKEN` (CLI targets correct project via `.vercel/project.json`)
+
+### Deploy Guardrails
+
+Historical rules — violating any of these has broken production before. Rules 2/6/7 from the original 7 are already covered in Forbidden and Deployment above.
+
+- **NEVER deploy to `tastedrops-projects`** — that is TasteDrop's account, completely separate business.
+- **NEVER run `vercel env pull`** — it overwrites `.env.local` with only the vars in Vercel (drops any local-only vars).
+- **NEVER delete `.vercel/` directory** — it links the CLI to the correct project (`imnotanattorney`, not `imnotanattorney-web`).
+- **NEVER touch domain settings** — `imnotanattorney.com` is routed via Cloudflare A records, already configured.
+- **Verify account before any Vercel CLI operation:** `npx vercel whoami` must show `rahim0kapadia-1967`.
 
 ## Maintenance Rules
 

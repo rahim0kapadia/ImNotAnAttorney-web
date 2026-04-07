@@ -172,6 +172,42 @@ Content queue integrates with the Atlas-wide Postiz publishing pipeline:
 
 8. **Expert Attribution Rule.** All expert references must exist in `ImNotAnAttorney/system/EXPERT-REFERENCE.md` and be web-verified. The Victor Knapp incident (March 2026) established this as a hard rule.
 
+## Schema.org / GEO Enhancements
+
+Structured data is emitted inline from the page components (not centrally via `src/lib/schema.ts` — that file holds helpers for `about`, `citation`, and `DefinedTerm` entities only). Blog post JSON-LD lives in `src/app/blog/[slug]/page.tsx`; site-wide Organization schema lives in `src/app/layout.tsx` and `src/app/page.tsx`; service schemas live in `src/app/services/page.tsx`.
+
+### Schema Types Emitted
+
+| Schema Type | Where | Purpose |
+|-------------|-------|---------|
+| `Article` | All blog posts (`src/app/blog/[slug]/page.tsx`) | Core article entity with `@id` binding back to the page URL |
+| `FAQPage` | Posts that declare `faqs` in frontmatter | FAQ rich results, linked to the Article via `mainEntity` / `isPartOf` |
+| `HowTo` | Posts that declare `howToSteps` in frontmatter | Step-by-step rich results |
+| `BreadcrumbList` | All blog posts + the `/score` page | Navigation hierarchy for Google |
+| `Organization` | Site-wide (`layout.tsx`, `page.tsx`) | Publisher entity — anonymous (no personal names, per project rule) |
+| `Service` / `LegalService` | `/services` page | Product listings with `OfferCatalog` for each tier |
+
+### .01% GEO Enhancements (applied to blog Article JSON-LD)
+
+| Property | Applied To | Signal |
+|----------|-----------|--------|
+| `speakable` | All posts — `cssSelector: [".tldr-box"]` | Makes TLDRBox content AI-extractable for voice / summarization |
+| `@id` entity binding | Article ↔ FAQPage ↔ Organization | Closes the entity graph so Google / LLMs see one coherent entity per post |
+| `citation` | Posts that reference `.gov` or `.edu` sources | Classifies the post as backed by authoritative reference material (list built by `getArticleCitations` in `src/lib/schema.ts`) |
+| `isBasedOn` | Research-style posts with primary source URLs | Classifies the post as a "research article" for GEO retrieval |
+| `educationalLevel` | All posts (`"beginner"`) | Content classifier — signals to AI that the audience is non-specialist |
+| `audience` | All posts — `@type: Audience, audienceType: "criminal defendant"` | Audience targeting, helps LLMs route the content to the right query intent |
+| `about` | All posts — derived from `category + tags` via `getArticleAboutEntities` | Topic entity mapping (Thing entities) — ties the post to named concepts rather than raw keywords |
+
+### Content GEO Features
+
+- **TLDRBoxes**: targeted at roughly 57% coverage across the blog. Every high-traffic post has one, with the `speakable` selector pointing at it. Verify actual coverage before citing a percentage — blog post count drifts.
+- **Internal linking**: cross-linked posts use semantic anchor text variation (not the same exact phrase twice) so the link graph doesn't look mechanical to LLMs.
+- **DefinedTerm blocks**: hard-coded in `src/lib/schema.ts` for concepts like constructive possession, proffer session, etc. — emitted as `DefinedTermSet` JSON-LD so AI systems can surface definitions as direct answers.
+- **Numbered Q+A format**: FAQPage schema pairs with visually-distinct numbered question blocks in the MDX, so AI retrieval gets both structured data AND direct-answer paragraphs that are already written in answer form.
+
+Verified: `Article`, `FAQPage`, `HowTo`, `BreadcrumbList`, `Organization` schema types all present in `src/app/blog/[slug]/page.tsx`; `speakable`, `isBasedOn`, `educationalLevel`, and `audience` properties all confirmed via grep in the same file.
+
 ## Maintenance Triggers
 
 - **New blog post created** → Ensure unique lowercase slug, validate frontmatter, test render at `/blog/{slug}`

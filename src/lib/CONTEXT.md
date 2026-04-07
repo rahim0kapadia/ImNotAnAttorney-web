@@ -250,3 +250,150 @@ DEMAND:   fetch-signals.ts (Reddit/search) → classify-signal.ts → classify-l
 - **New env var** → Add to Integration Points shared state
 - **Score algorithm change** → Update Key Constants (weights, bands)
 - **Auth TTL change** → Update Key Constants
+
+---
+
+## Intelligence Brief — Full Detail
+
+Source of truth: `src/lib/intelligence-brief/prompts.ts`. The IB has 9 sections generated in two phases — Phase A runs 5 sections in parallel, Phase B runs 4 sections sequentially using Phase A output as context.
+
+### Phase A (5 parallel sections)
+| Section | Key | Emotion | Output |
+|---------|-----|---------|--------|
+| Case Roadmap | `case-roadmap` | Orientation | Timeline table + stages + two paths (plea/trial) |
+| What's Working | `whats-working` | Grounding | Good news + attorney decoded + gaps as CLARIFY + Case Progress Score |
+| Legal Options | `legal-options` | Empowerment | Motion landscape + deadline calendar + plea framework |
+| Protection | `protection` | Security | Collateral consequences + life impact map |
+| Court Prep | `court-prep` | Readiness | Static appendix template |
+
+### Phase B (4 sequential sections)
+| Section | Key | Depends On | Output |
+|---------|-----|-----------|--------|
+| Case Intelligence | `case-intelligence` | Sections 1-2 gaps | Outcome map + defense theories + judge profile + prosecution preview |
+| Your Plan | `your-plan` | Sections 1-2 + motions | Email template + phone script + 14-day plan with daily actions |
+| Questions | `questions` | All Phase A | 10-15 targeted questions based on gaps (v3 quality-over-quantity; v1 generated 35-50) |
+| 48hr Priorities | `48hr-priorities` | All sections | Top 3 actions ranked by urgency |
+
+### Case Progress Score (internal to Section 2 "What's Working")
+0-100 score with 6 weighted dimensions:
+| Dimension | Weight |
+|-----------|--------|
+| Communication | 25% |
+| Case Review | 15% |
+| Discovery | 20% |
+| Motion Activity | 15% |
+| Strategy | 15% |
+| Court Prep | 10% |
+
+### IB Variables (`IBVariables` interface — 65 fields in 9 categories)
+| Category | Examples |
+|----------|---------|
+| Core Identity | first_name, charges, state, county, jurisdiction_level, case_number |
+| Timeline | case_stage, arrest_date, months_since_arrest, next_court_date, motion_deadlines |
+| Attorney Context | attorney_type (derived), attorney_name, attorney_firm, last_communication |
+| Case Details | discovery_status, plea_status, plea_terms, charge_specific_data |
+| Personal Context | frustration, biggest_concern, employment, family_situation, has_children, immigration_status |
+| Computed (Phase A→B) | gaps_from_section_2, progress_score, applicable_motions, urgent_deadlines |
+| Section Outputs | case_roadmap_output, whats_working_output, case_intelligence_output (for 48hr-priorities) |
+
+---
+
+## Drip Sequences — Full Detail
+
+Source of truth: `src/lib/drip-emails.ts`. Exports 9 top-level email arrays (one per sequence category). Each email has `key`, `delayDays`, `subject`, `template`, and optional `tier`/`relativeToDelivery` flags.
+
+### Sequence Categories
+| Category | Export | Typical Cadence | Trigger |
+|----------|--------|-----------------|---------|
+| Nurture | `NURTURE_EMAILS` | Days 1, 3, 5, 7, 10, 14 | Days since subscribe (non-purchaser baseline) |
+| Score Crisis | `SCORE_CRISIS_EMAILS` | Days 1, 2, 3 (+ transition) | Critical/Concerning score band — urgency messaging |
+| Score Adequate | `SCORE_ADEQUATE_EMAILS` | Day 1 | Adequate/Excellent band — validation messaging |
+| Score Re-engage | `SCORE_REENGAGE_EMAILS` | Days 7, 14, 21, 30 | Score-captured subscribers who didn't purchase |
+| DUI 72-hour crisis | `DUI_72_HOUR_EMAILS` | Days 1, 3, 5, 7 | Source `dui-72-hours` — tight crisis cadence; falls to standard nurture at Day 10+ |
+| Abandoned Score | `ABANDONED_SCORE_EMAILS` | Days 1, 2, 5 | Score taken, no purchase follow-up |
+| Win-back | `WINBACK_EMAILS` | Days 75, 78, 82, 89, 96 | Long-dormant purchasers |
+| Post-purchase | `POST_PURCHASE_EMAILS` | Varies by tier | CD/IB/X-Ray/War Room/SR/Playbook/Witness — tier-specific chains (intake → delivery → meeting_prep → story_harvest → upsell → referral) |
+| Abandoned checkout | (part of post-purchase set) | 24-48h | Email captured at checkout with no purchase |
+
+### Timing Models
+| Model | Measured From | Used By |
+|-------|--------------|---------|
+| Standard (default) | `orders.paid_at` | Most post-purchase emails |
+| `relativeToDelivery` | `cases.delivered_at` | Post-delivery follow-ups (meeting prep, story harvest, upsell) |
+| `relativeToSubmission` | Case status → "submitted" | Active-wait discovery emails (X-Ray/War Room status updates) |
+
+### Design Decisions
+- **Day-0 emails** (`delayDays=0`) sent synchronously by webhook/delivery endpoint, NOT cron. Cron skips day-0 to prevent duplicates.
+- **Dedup** via `drip_emails` table (`subscriber_id` + `email_key` unique constraint).
+- **Placeholder resolution:** `{{CASE_ID}}`, `{{EMAIL}}`, `{{REPORT_URL}}`, `{{DOCUMENT_COUNT}}` interpolated at send time.
+- **Personalization** via intake data (family_buyer, stage_aware, career_aware variant blocks).
+- **Email threading:** `caseThreadId(caseId)` generates RFC 2822 Message-ID so replies thread.
+- **CAN-SPAM:** Physical address + unsubscribe link + List-Unsubscribe headers (RFC 8058).
+- **Manual-trigger pattern:** `delayDays: 9999` prevents cron auto-send (operator manually releases — e.g., war_room_trial_confirmed).
+- **Email styling:** dark bg (#0C0A09), zinc text (#D4D4D8), amber accent (#F59E0B).
+
+---
+
+## Cron Drip Orchestrator — Task Breakdown
+
+Source of truth: `src/app/api/cron/drip/route.ts`. The orchestrator runs a `TASKS` array sequentially with isolated error handling. Currently **26 task functions** split across 6 groups (comments annotate them as Parts 1-20, with several tasks sharing a part number — e.g., Parts 3-5c, 6-7).
+
+| Part | Task (function) | Threshold / Target | Action |
+|------|-----------------|-------------------|--------|
+| 1 | `sendNurtureEmails` | Days since subscribe | Send next unsent email (DUI-72h routing → score-band routing → standard nurture) |
+| 2 | `sendPostPurchaseEmails` | Days since purchase/delivery/submission | Tier-specific follow-ups (3 timing models, status guards) |
+| 3 | `sendReviewReminders` | 12h in "review" | Alert operator (48h guarantee at risk) |
+| 4 | `detectStuckIntakes` | 2h in "intake" (CD, non-included) | Mark intake-stalled, alert operator |
+| 5 | `detectStuckGenerating` | 30min in "generating" | Mark generation-failed, alert operator |
+| 5a | `detectStuckIBGeneration` | auto-generating >30min, compiling >30min, researching >24h | Re-trigger Phase A/B, 72h escalation |
+| 5b | `sendPhase2IntakeReminders` | 48h in "intake" (IB, phase2_data NULL) | Customer reminder, 7-day operator escalation |
+| 5c | `sendAwaitingIntakeReminders` | 24h in "awaiting-intake" | Customer reminder email |
+| 5d | `escalateStuckIntakes` | 72h / 7 days no intake | Operator alert, consider refund |
+| 5e | `detectStuckStandaloneReports` | Standalone report generation stalled | Mark failed, operator alert |
+| 6 | `cleanupAbandonedIntakes` | >90 days, no case | Purge orphaned intakes |
+| 7 | `cleanupRateLimits` | >1 hour old | Remove expired rate_limit rows |
+| 9 | `reconcileStripePayments` | Paid sessions, no order | Auto-create missing order + case, alert operator |
+| 10 | `detectOrphanOrders` | Order exists, no case | Auto-create case, alert operator |
+| 11 | `sendReportExpiryWarnings` | 30-31 days before 12-month expiry | Warn customer |
+| 11b | `sendAbandonedCheckoutEmails` | 24-48h, source="checkout", no purchase | Recovery email |
+| 12 | `retriggerMissedEvaluations` | 15min in "review", eval_results NULL | Re-trigger evaluation (limit 5/run) |
+| 13 | `cleanupDripEmailLogs` | >90 days | Delete stale send records (Privacy Policy §6) |
+| 14 | `cleanupDiscoveryDocuments` | 90 days post-delivery | Delete from Storage + clear file_urls (Privacy Policy §4) |
+| 14b | `cleanupCronExecutions` | Old cron_executions rows | Retention cleanup |
+| 15 | `detectStuckJobs` | processing_jobs >30min in "processing" | Mark failed, create HIGH priority operator task |
+| 16 | `checkPipelineCompletion` | All jobs done for a case | Transition case to "review", email operator with scores |
+| 17 | `detectSLABreaches` | delivery_due_at passed, not delivered/refunded | Create URGENT operator task (deduped) |
+| 18 | `sendWeeklyProgressEmails` | War Room + Situation Room active cases | Weekly customer update (week-number dedup) |
+| 19 | `checkEngineHeartbeat` | processing_jobs "queued" >1 hour | URGENT operator task — engine may be down (daily dedup) |
+| 20 | `escalateGuarantees` | Guarantee windows approaching breach | Operator escalation chain |
+
+**Drift note (Apr 7, 2026):** Prior doc referenced "19 parts + 3 sub-parts = 22". Current code imports 26 task functions. The comment annotations in `route.ts` still number through Part 20 (some tasks share a numeric group). Trust the code — count task entries in the `TASKS` array for the true number.
+
+**Idempotency guard:** `acquireCronLock("drip", 23 * 60 * 60 * 1000)` via `cron_executions` table prevents double-runs within a 23h window across serverless instances (replaces unreliable `pg_try_advisory_lock`).
+
+---
+
+## Score Algorithm — Category Detail
+
+Source of truth: `src/lib/score.ts`. Algorithm starts at 50 (neutral midpoint) and applies weighted adjustments across 10 categories, clamped to 0-100.
+
+| Category | Weight | Scoring Logic |
+|----------|--------|--------------|
+| Time Since Arrest | 30% | Drives `timeIndex` (0-4) used by other categories as severity multiplier |
+| Motions Filed | 20% | Yes +15; No: -20 if timeIndex≥2, -5 if <2; Don't Know -10 |
+| Discovery Received | 15% | Yes +10; No: -15 if timeIndex≥2, -3 if <2; Don't Know -10 |
+| Communication Frequency | 15% | Weekly +10, Monthly 0, Rarely -10, Never -20 |
+| Attorney Type | 10% | Private +5, Public Defender 0, No Attorney -15, Not Sure -10 |
+| Strategy Discussion | 10% | Yes in Detail +10, Briefly +2, No -12 |
+| Criminal History | — | -2 to -5 (misdemeanor vs felony/multiple) |
+| Case Stage | — | Contextual observations + stage-specific penalties |
+| Licensed Profession | — | Collateral consequence warnings (no score impact) |
+| Charge Type | — | Mandatory charge-specific observation (always included) |
+
+**Compound penalty:** If `timeIndex ≥ 3` AND no motions AND no discovery → additional -10.
+
+**Time Index:** <1mo=0, 1-3mo=1, 3-6mo=2, 6-12mo=3, 12+mo=4.
+
+**Final clamp:** `Math.max(0, Math.min(100, score))` — see `score.ts:294`.
+
+**Verified weights** (Apr 7, 2026): Motions 20% / Discovery 15% / Communication 15% / Attorney 10% / Strategy 10% / Time 30% match `src/lib/score.ts` header comments (lines 8-13) and existing Key Constants table above.

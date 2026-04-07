@@ -29,6 +29,19 @@
 | `legal-research-all.mjs` | All-state statute verification: FL via Online Sunshine, federal via Cornell LII, other states via Justia URL + CourtListener case law. Rate-limited 1.5s/request. Supports single jurisdiction, single statute, dry-run, summary modes |
 | `classify-case-law.mjs` | Case law classifier: fetches CourtListener opinions, extracts outcome, classifies DEFENSE/PROSECUTION/NEUTRAL, determines binding authority. Rate-limited 750ms/request |
 
+#### Citation Verification — Offline vs Runtime
+
+The web pipeline does **NOT** verify citations at runtime. All citation verification happens **offline** through the scripts above before anything ships to a customer:
+
+1. `legal-research-all.mjs` searches CourtListener for real cases citing each statute and populates `statute_case_law` with verified rows (`case_name`, `citation`, `court`, `year`, `holding`, `courtlistener_cluster_id`, `source_urls`).
+2. `classify-case-law.mjs` fetches actual opinion text from CourtListener, classifies each case as DEFENSE / PROSECUTION / NEUTRAL, then runs `checkNegativeTreatment()` against the CourtListener citing-opinions endpoint to set `is_good_law` — cases that have been overruled or negatively treated are flagged.
+
+The `generate-report` Edge Function only **filters** on `statute_case_law.is_good_law=eq.true` — it does not verify Claude-generated citations against any live source. If a case is not in the table with `is_good_law=true`, it never appears in a report.
+
+The full multi-source verification cascade (Harvard CAP, GovInfo, eCFR, Cornell LII statutes) lives in the engine repo at `ImNotAnAttorney-engine/integrations/legal-verifier.mjs`, not in this web repo. Web only consumes the already-verified rows.
+
+**Why this split matters:** Per the project's `no-hallucinated-legal-data` rule, any case citation that ships to a defendant must have a stored `source_urls[]` pointing at the opinion we actually read. The offline scripts enforce that invariant at write time; runtime reads can trust the flag.
+
 ### Charge Taxonomy
 | File | Purpose |
 |------|---------|

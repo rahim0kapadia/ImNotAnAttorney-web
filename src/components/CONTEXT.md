@@ -83,6 +83,7 @@
 | `FAQAccordion.tsx` | Accessible accordion (aria-expanded, single-expand) | Yes |
 | `MessageTemplates.tsx` | Message template display | No |
 | `BridgePage.tsx` | Bridge/transition page | No |
+| `CookieConsent.tsx` | GDPR/CCPA consent banner. Loads GA4, Meta Pixel, Google Ads only after accept. localStorage-backed decision (`cookie-consent` key) | Yes |
 
 ## Key Constants
 
