@@ -1,6 +1,6 @@
 # Pages & Routes — src/app/
 
-> Next.js App Router: 55 pages and 70 API routes. All routes are server components by default; client components marked `"use client"`.
+> Next.js App Router: 55 pages and 71 API routes. All routes are server components by default; client components marked `"use client"`.
 
 ## Page Map
 
@@ -20,7 +20,19 @@
 | `/playbook/[slug]` | `playbook/[slug]/page.tsx` | Long-form sales page (configurable via `playbook-configs.ts`) |
 | `/score` | `score/page.tsx` | Defense Strength Score quiz |
 | `/score/results/[token]` | `score/results/[token]/page.tsx` | Score visualization + lead capture |
+| `/dui-defense` | `dui-defense/page.tsx` | DUI defense overview landing page |
 | `/dui-defense/[state]` | `dui-defense/[state]/page.tsx` | State-specific DUI content pages |
+| `/dui-checklist` | `dui-checklist/page.tsx` | Ungated DUI first-72-hours checklist |
+| `/sample` | `sample/page.tsx` | Sample Case Decoder report preview |
+| `/sample-xray` | `sample-xray/page.tsx` | Sample X-Ray discovery report preview |
+| `/start` | `start/page.tsx` | Entry router — charge-type selector → tier |
+| `/family` | `family/page.tsx` | Family/loved-one landing page |
+| `/partners` | `partners/page.tsx` | Partner program overview |
+| `/partners/bondsman` | `partners/bondsman/page.tsx` | Bondsman referral landing page |
+| `/unsubscribe` | `unsubscribe/page.tsx` | Email unsubscribe confirmation |
+| `/r/[code]` | `r/[code]/page.tsx` | Short referral link redirect |
+| `/r/[code]/quiz` | `r/[code]/quiz/page.tsx` | Referral-tracked score quiz entry |
+| `/research/defense-score-data` | `research/defense-score-data/page.tsx` | Aggregate score stats (ISR 1h) |
 
 ### Standalone Products (Phase 0-3 product expansion, catalog: `src/lib/products.ts`)
 | Route | File | Purpose |
@@ -36,9 +48,13 @@
 | Route | File | Purpose |
 |-------|------|---------|
 | `/checkout/success` | `checkout/success/page.tsx` | Post-purchase confirmation |
-| `/checkout/error` | `checkout/error/page.tsx` | Checkout failure recovery |
 | `/intake` | `intake/page.tsx` | Case Decoder intake form |
 | `/intake/intelligence-brief` | `intake/intelligence-brief/page.tsx` | IB Phase 2 intake |
+| `/upload` | `upload/page.tsx` | Discovery document upload (tier-gated) |
+| `/my-cases/login` | `my-cases/login/page.tsx` | Customer magic-link login request |
+| `/my-cases/login/verify` | `my-cases/login/verify/page.tsx` | Customer magic-link token exchange |
+| `/partner/login` | `partner/login/page.tsx` | Partner magic-link login request |
+| `/partner/login/verify` | `partner/login/verify/page.tsx` | Partner magic-link token exchange |
 
 ### Protected (Customer Portal)
 | Route | File | Purpose |
@@ -52,6 +68,8 @@
 |-------|------|---------|
 | `/operator` | `operator/page.tsx` | Dashboard: active cases, queue, metrics |
 | `/operator/cases/[id]` | `operator/cases/[id]/page.tsx` | Case detail + status controls |
+| `/operator/jobs` | `operator/jobs/page.tsx` | Job queue viewer + retry controls |
+| `/operator/metrics` | `operator/metrics/page.tsx` | System metrics dashboard |
 | `/admin/demand` | `admin/demand/page.tsx` | Market demand intelligence |
 | `/admin/inbox` | `admin/inbox/page.tsx` | Inbound email management |
 | `/admin/partners` | `admin/partners/page.tsx` | Partner application review |
@@ -59,11 +77,12 @@
 
 ## API Route Groups
 
-### Checkout & Payments (4 routes)
+### Checkout & Payments (3 routes)
 | Method | Route | Purpose |
 |--------|-------|---------|
 | POST | `/api/checkout` | Create Stripe session; uses `tiers.ts` + dual-mode live flag |
 | POST | `/api/checkout/verify` | Verify session + webhook idempotency |
+| GET | `/api/qa-checkout` | Operator-only $0 webhook trigger for E2E testing |
 
 #### Checkout Flow — 10 Steps
 
@@ -134,21 +153,22 @@ Email normalization is critical: all customer emails lowercased + trimmed before
 | POST | `/api/customer/logout` | Clear session cookie |
 | GET | `/api/customer/cases` | List user's cases |
 
-### Intake & Case Management (7 routes)
+### Intake & Case Management (4 routes)
 | Method | Route | Purpose |
 |--------|-------|---------|
 | POST | `/api/intake` | Submit intake → create processing jobs |
 | POST | `/api/intake/intelligence-brief` | IB-specific intake (Phase 2) |
 | POST | `/api/upload` | Begin multipart document upload |
 | POST | `/api/upload/finalize` | Complete upload → trigger OCR job |
-| POST | `/api/operator/cases` | Admin case CRUD |
-| PATCH | `/api/operator/cases/[id]/status` | Update case status (state machine transition) |
 
-### Report Generation & Delivery (5 routes)
+(Operator case CRUD + status transitions live under "Operator Dashboard" below.)
+
+### Report Generation & Delivery (6 routes)
 | Method | Route | Purpose |
 |--------|-------|---------|
 | POST | `/api/generate/case-decoder` | Trigger Case Decoder Edge Function |
 | POST | `/api/generate/intelligence-brief/*` | Trigger IB phases (5 parallel + 4 sequential) |
+| POST | `/api/generate/intelligence-brief/judge-research` | Targeted judge research sub-phase |
 | POST | `/api/generate/standalone` | Operator retry for standalone research products (fires `generate-standalone` Edge Function) |
 | POST | `/api/evaluate/case-decoder` | UPL compliance evaluation |
 | POST | `/api/deliver` | Email report to customer + set `delivered_at` |
@@ -161,31 +181,54 @@ Email normalization is critical: all customer emails lowercased + trimmed before
 | POST | `/api/tools/save-results` | Save calculator results with email for shareable link |
 | GET | `/api/tools/[slug]` | Dynamic calculator compute endpoint |
 
-### Scoring & Free Tools (5 routes)
+### Scoring & Free Tools (3 routes)
 | Method | Route | Purpose |
 |--------|-------|---------|
-| GET | `/api/score` | Fetch score by token |
-| POST | `/api/score/route` | Submit quiz responses |
+| GET/POST | `/api/score` | Fetch score by token (GET) + submit quiz responses (POST) |
 | POST | `/api/score/share` | Social share lead capture |
+| GET | `/api/stats/score-summary` | Aggregate score stats (ISR 5min) |
 
-### Cron Tasks (13 routes — see lib/CONTEXT.md for task list)
+### Cron Tasks (12 routes — see lib/CONTEXT.md for task list)
 All cron routes: `GET /api/cron/*` — authenticated via `CRON_SECRET` header.
 Main orchestrator: `/api/cron/drip` — runs all 22 tasks sequentially.
+Routes: `drip`, `engine`, `batch-poll`, `generate-backup`, `blog-generate`, `blog-generate-queue`, `blog-qa`, `blog-publish`, `demand-fetch`, `demand-score`, `demand-classify`, `demand-performance`.
 
-### Admin-Only (8 routes)
+### Admin-Only (12 routes)
 | Method | Route | Purpose |
 |--------|-------|---------|
-| GET/POST | `/api/admin/demand/*` | Market intelligence CRUD |
+| GET/POST | `/api/admin/demand/scores` | Demand score read + regenerate |
+| GET/POST | `/api/admin/demand/gaps` | Content gap CRUD |
+| GET/POST | `/api/admin/demand/emerging` | Emerging topic tracker |
+| GET/POST | `/api/admin/demand/performance` | Content performance metrics |
+| GET/POST | `/api/admin/demand/subreddits` | Discovered subreddit list |
+| GET | `/api/admin/emails` | Inbound email inbox |
+| POST | `/api/admin/reply` | Reply to inbound email via Resend |
+| GET/POST | `/api/admin/partners` | Partner application list |
+| PATCH | `/api/admin/partners/[id]` | Approve/reject partner application |
 | POST | `/api/admin/blog-pipeline` | Trigger blog generation |
+| GET | `/api/admin/blog-pipeline/[id]` | Blog pipeline job status |
 | POST | `/api/admin/feature-flags` | Toggle feature flags |
 
-### Partner Portal (8 routes)
+### Operator Dashboard (7 routes)
 | Method | Route | Purpose |
 |--------|-------|---------|
-| POST | `/api/partner/magic-link` | Partner login |
-| GET | `/api/partner/dashboard` | Commission stats |
-| PATCH | `/api/partner/settings` | Profile update |
-| POST | `/api/partners/apply` | Referral application |
+| GET/POST | `/api/operator/cases` | Case list + case CRUD |
+| GET | `/api/operator/cases/[id]` | Single case detail |
+| PATCH | `/api/operator/cases/[id]/status` | Case status transition (state machine) |
+| GET | `/api/operator/jobs` | Processing job queue viewer |
+| POST | `/api/operator/jobs/[id]/retry` | Retry a failed job |
+| GET | `/api/operator/metrics` | System metrics snapshot |
+| GET | `/api/operator/tasks` | Operator task queue |
+
+### Partner Portal (6 routes)
+| Method | Route | Purpose |
+|--------|-------|---------|
+| POST | `/api/partner/magic-link` | Send partner login magic link |
+| POST | `/api/partner/magic-link/verify` | Exchange token for partner session |
+| POST | `/api/partner/logout` | Clear partner session cookie |
+| GET | `/api/partner/dashboard` | Commission stats + referral list |
+| PATCH | `/api/partner/settings` | Profile/payout update |
+| POST | `/api/partners/apply` | Referral program application (public) |
 
 ### Charge Taxonomy (3 routes)
 `GET /api/charge-taxonomy/{categories,charges,questions}` — serves `charge-taxonomy.ts` data.
@@ -240,8 +283,8 @@ The per-request nonce is base64-encoded `crypto.randomUUID()`, written to the `x
 graph TD
     Browser[Browser / External] --> MW[middleware.ts — Edge]
     MW -->|CSP nonce + auth check| Router[App Router]
-    Router --> Pages[28 Pages]
-    Router --> API[68+ API Routes]
+    Router --> Pages[55 Pages]
+    Router --> API[71 API Routes]
     Router --> Special[sitemap.ts / robots.ts / OG images]
     
     API --> Guards[auth/guards.ts]

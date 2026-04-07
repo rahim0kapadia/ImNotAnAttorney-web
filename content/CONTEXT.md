@@ -52,39 +52,22 @@ All expert references must exist in `ImNotAnAttorney/system/EXPERT-REFERENCE.md`
 
 ## Content Queue — content/queue/
 
-Multi-platform social content staging directory. Content moves from `pending/` to `published/` after posting via Postiz.
+Multi-platform social content staging directory. Content moves `pending/` → `approved/` → `posted/` via Postiz publishing pipeline.
 
 ### Directory Structure
 
 ```
 content/queue/
-  email/
-    pending/      ← Drafts ready to send
-    published/    ← Sent (archived)
-  facebook/
-    pending/
-    published/
-  quora/
-    pending/
-    published/
-  reddit/
-    pending/
-    published/
-  tiktok/
-    pending/
-    published/
-  twitter/
-    pending/
-    published/
-  youtube/
-    pending/
-    published/
-  pinterest/
-    pending/
-    published/
-  growth/         ← Strategy + growth docs (not platform-specific)
-    pending/
-    published/
+  email/          pending/  approved/  posted/
+  facebook/       pending/  approved/  posted/
+  instagram/      pending/  approved/  posted/
+  pinterest/      pending/  approved/  posted/
+  reddit/         pending/  approved/  posted/  (+ reddit-sop.md)
+  tiktok/         pending/  approved/  posted/
+  twitter/        pending/  approved/  posted/
+  youtube/        pending/  approved/  posted/
+  quora/          pending/    (no approved/posted yet — manual workflow)
+  growth/         pending/    (strategy + growth docs, not platform-specific)
 ```
 
 ### File Format
@@ -109,8 +92,8 @@ Content body here...
 
 Content queue integrates with the Atlas-wide Postiz publishing pipeline:
 1. Draft created in `content/queue/{platform}/pending/`
-2. Telegram approval via `@ClaborBot` (operator reviews before publish)
-3. Post via Postiz API → status updated to `published`, file moved to `published/`
+2. Telegram approval via `@ClaborBot` — file moves `pending/` → `approved/`
+3. Post via Postiz API → file moves `approved/` → `posted/`
 4. Postiz is self-hosted at `localhost:5100` (marketing-hq project)
 
 ## How To
@@ -151,8 +134,9 @@ Content queue integrates with the Atlas-wide Postiz publishing pipeline:
 
 **Shared state (filesystem only):**
 - `content/blog/*.mdx` — 35+ blog post files (no DB sync)
-- `content/queue/{platform}/pending/` — staged content
-- `content/queue/{platform}/published/` — archived published content
+- `content/queue/{platform}/pending/` — drafts awaiting review
+- `content/queue/{platform}/approved/` — reviewed drafts awaiting publish
+- `content/queue/{platform}/posted/` — archived after publish
 
 ## Gotchas
 
@@ -168,7 +152,7 @@ Content queue integrates with the Atlas-wide Postiz publishing pipeline:
 
 6. **Related posts matching:** Category matching is case-insensitive, tag matching is exact. If no related posts found for a category, returns empty array.
 
-7. **Content queue directory structure is strict.** Each platform must have `/pending/`, `/published/` subdirs. Files in wrong directory won't be discovered by Postiz.
+7. **Content queue directory structure is strict.** Each platform must have `/pending/`, `/approved/`, `/posted/` subdirs (except `quora/` and `growth/`, which only have `/pending/`). Files in wrong directory won't be discovered by Postiz.
 
 8. **Expert Attribution Rule.** All expert references must exist in `ImNotAnAttorney/system/EXPERT-REFERENCE.md` and be web-verified. The Victor Knapp incident (March 2026) established this as a hard rule.
 

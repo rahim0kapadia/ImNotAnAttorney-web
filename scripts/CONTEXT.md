@@ -1,6 +1,6 @@
 # Scripts — scripts/
 
-> 35+ utility scripts: cron setup, tier validation, report backup, legal research, charge taxonomy generation, E2E tests, enrichment pipelines, social scheduling.
+> 40+ utility scripts: cron setup, tier validation, report backup, legal research, charge taxonomy generation, enrichment pipelines, E2E tests, QA purchase flow, social scheduling.
 
 ## Script Inventory
 
@@ -9,7 +9,9 @@
 |------|---------|
 | `setup-cronjob-org.js` | Registers cron-job.org jobs for Vercel routes (drip, batch-poller, reconcile). Saves IDs to `cronjob-org-ids.json` |
 | `setup-blog-pipeline-crons.js` | Registers cron-job.org jobs for blog pipeline (generation, QA, publish, demand). Saves IDs to `blog-pipeline-cron-ids.json` |
+| `setup-storage-and-seed.mjs` | Creates `charge-packs` storage bucket, uploads all 8 playbook PDFs, upserts `charge_packs` rows. Options: `--skip-upload`, `--skip-seed`, `--dry-run` |
 | `apply-pending-sql.mjs` | Ad-hoc SQL applier via Supabase Management API. Takes filepath arg. Used for quick DB fixes outside migration flow |
+| `apply-enrichment-batches.mjs` | Applies enrichment UPDATE statements in batches of 100 (avoids Management API 413 payload limit) |
 
 ### Validation & Linting
 | File | Purpose |
@@ -28,6 +30,13 @@
 | `legal-research-fl.mjs` | FL statute verification: validates on FL Online Sunshine, searches CourtListener for citing case law, updates `source_urls` + `confidence_score`. Rate-limited 2s/request |
 | `legal-research-all.mjs` | All-state statute verification: FL via Online Sunshine, federal via Cornell LII, other states via Justia URL + CourtListener case law. Rate-limited 1.5s/request. Supports single jurisdiction, single statute, dry-run, summary modes |
 | `classify-case-law.mjs` | Case law classifier: fetches CourtListener opinions, extracts outcome, classifies DEFENSE/PROSECUTION/NEUTRAL, determines binding authority. Rate-limited 750ms/request |
+| `generate-case-law-enrichment.ts` | Enrichment generator: creates missing-state jurisdiction data (ID, SC) and prosecution/defense strategic analysis. NEVER generates case law (see `no-hallucinated-legal-data`). Commands: `--missing-states`, `--enrich --all`, `--full --all`, `--build-migration`, `--validate`, `--stats`, `--dry-run` |
+| `scrub-enrichment-citations.mjs` | Safety scrubber: DELETES enrichment items containing case citations (`X v. Y`), inline pinpoint statute section refs, or `[verify with attorney]` placeholders. Leaves general legal concepts intact |
+| `generate-charge-enrichment-de-hi-id-md-sc.mjs` | Scrub-safe enrichment JSON generator for DE/HI/ID/MD/SC — pre-filters known banned patterns (case names, `§` refs, state code prefixes, article cites) before writing |
+| `validate-enrichment-de-hi-id-md-sc.mjs` | Validator for DE/HI/ID/MD/SC enrichment files — every source slug has an entry, 3-5 items per array, no scrub-triggering content |
+| `run-full-pipeline.mjs` | Full charge taxonomy + case law pipeline runner (outside Claude Code). Steps: load jurisdiction data → verify statutes → classify cases. ZERO Claude tokens. Flags: `--skip-load`, `--skip-verify`, `--classify-limit N`. ~6-12 hours end-to-end |
+| `pipeline-status.mjs` | Read-only progress monitor for the verification pipeline. `--watch` refreshes every 30s |
+| `fix-orphan-slugs.mjs` | One-time remapper: remaps non-standard charge slugs to canonical COMMON_CHARGES slugs across all jurisdiction JSONs. Delete after use |
 
 #### Citation Verification — Offline vs Runtime
 
@@ -51,6 +60,8 @@ The full multi-source verification cascade (Harvard CAP, GovInfo, eCFR, Cornell 
 ### E2E Testing
 | File | Purpose |
 |------|---------|
+| `qa-e2e-test.mjs` | **Main E2E purchase runner.** Playwright-driven full flow: `/api/qa-checkout` ($0) → Stripe checkout → success page → download both PDFs → verify delivery email. Usage: `node scripts/qa-e2e-test.mjs [tier\|all]` (default `dui-first-offense`) |
+| `e2e-playbook-visual.mjs` | Read-only Puppeteer visual validation of playbook sales + checkout + services pages. No Stripe/DB writes — safe against prod. `--base-url` flag supported |
 | `test-ib-pipeline.ts` | Intelligence Brief E2E: render, validate, push (create order+case), update section, cleanup |
 | `test-batch-generation.mjs` | Case Decoder batch flow: Batch API submit → poll → render |
 | `e2e-all-pipelines.mjs` | Full E2E: Case Decoder + Intelligence Brief + Playbook flows. Creates test data, verifies transitions, cleans up |
@@ -63,6 +74,9 @@ The full multi-source verification cascade (Harvard CAP, GovInfo, eCFR, Cornell 
 |------|---------|
 | `geo-prompt-test.mjs` | GEO baseline test (Evan Bailyn method). Logs 10 prompts for manual testing across ChatGPT, Perplexity, Google AI |
 | `demand-feed-query.mjs` | Reddit/Google Trends demand signal queries |
+| `schedule-tweets.mjs` | Schedules pending tweets via Postiz API — 2/day at 9 AM and 6 PM EST, reads `content/queue/twitter/pending` |
+| `schedule-social.mjs` | Multi-platform Postiz scheduler (twitter, facebook, or `--all`). Skips image/video platforms. `--dry-run` supported |
+| `schedule-social-slow.mjs` | Hourly-friendly single-post scheduler (one post per run) to stay under Postiz 30 req/hr limit. Designed for Task Scheduler |
 
 ### Asset Rendering
 | File | Purpose |

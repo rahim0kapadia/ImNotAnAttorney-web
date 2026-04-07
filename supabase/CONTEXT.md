@@ -22,6 +22,8 @@
 | `drip_state` | Per-subscriber drip sequence progress (sequence_id, step, last_sent_at) |
 | `partners` | Partner referral accounts: commission rate, payout history |
 | `partner_referrals` | Referral → order attribution |
+| `calculator_results` | Free calculator tool outputs (good-time, SOL, diversion). Shareable via token URL. Captures email post-result. |
+| `calculator_aggregates` | Daily calculator analytics (by slug, state, charge_type). Upserted via `increment_calculator_aggregate()` RPC. |
 
 ### Engine Tables (engine-owned, read-only from web)
 

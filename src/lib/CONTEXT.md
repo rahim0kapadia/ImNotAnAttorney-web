@@ -1,6 +1,6 @@
 # Core Business Logic — src/lib/
 
-> 63 modules. This is where all business rules live: auth, payments, email, cron orchestration, AI report generation, scoring, and demand intelligence.
+> 59 modules. This is where all business rules live: auth, payments, email, cron orchestration, AI report generation, scoring, and demand intelligence.
 
 ## Module Table
 
@@ -63,6 +63,7 @@
 | `blog-generation/qa-upl.ts` | UPL compliance check on post content |
 | `blog-generation/topic-research.ts` | Keyword + demand research |
 | `blog-generation/prompts.ts` | Blog generation prompt builders |
+| `blog-generation/index.ts` | Barrel export — re-exports `generatePost`, `buildGenerationPrompt`, `enrichTopic`, `runHumanizerCheck`, `runSlopAudit`, `runUPLCheck`, `publishDraft` |
 
 ### Scoring
 | File | Purpose |
@@ -91,8 +92,7 @@
 | `feature-flags.ts` | Feature toggle: read/write from `feature_flags` table |
 | `schema.ts` | JSON-LD structured data builders (Article, Service, FAQ, HowTo, BreadcrumbList) |
 | `site.ts` | Site constants: `SITE_URL`, `SITE_NAME`, `OG_IMAGE` |
-| `rate-limit.ts` | API rate limiting (in-memory, per IP) |
-| `analytics.ts` | Vercel Analytics event helpers |
+| `rate-limit.ts` | API rate limiting (Supabase RPC primary, in-memory fallback) |
 | `batch-api.ts` | Batch processing wrapper for document pipeline |
 | `format.ts` | String formatting helpers (dates, currency, case IDs) |
 | `request.ts` | HTTP fetch wrapper with retry + error normalization |
@@ -156,11 +156,11 @@ No passwords. Flow: `POST /api/customer/magic-link` → token stored in `magic_l
 | Memory max requests | 3 per window | `rate-limit.ts:28` |
 | Memory max keys | 10,000 | `rate-limit.ts:29` |
 | **Site** | | |
-| SITE_URL | `https://imnotanattorney.com` | `site.ts:35-36` |
-| CONTACT_EMAIL | `help@imnotanattorney.com` | `site.ts:42` |
-| PHYSICAL_ADDRESS | 195 Dr MLK Jr St N, St Petersburg, FL 33701 | `site.ts:52-53` |
-| OPERATOR_TOKEN_TTL | 86,400s (24h) | `site.ts:116` |
-| PHASE2_TOKEN_TTL | 2,592,000s (30 days) | `site.ts:119` |
+| SITE_URL | `https://imnotanattorney.com` | `site.ts:48-49` |
+| CONTACT_EMAIL | `help@imnotanattorney.com` | `site.ts:55` |
+| PHYSICAL_ADDRESS | 195 Dr MLK Jr St N, St Petersburg, FL 33701 | `site.ts:65-66` |
+| OPERATOR_TOKEN_TTL | 86,400s (24h) | `site.ts:129` |
+| PHASE2_TOKEN_TTL | 2,592,000s (30 days) | `site.ts:132` |
 | **Email** | | |
 | FROM_EMAIL | `noreply@imnotanattorney.com` | `email.ts:53-54` |
 | Nurture days | 1, 3, 5, 7, 10, 14 | `drip-emails.ts:7` |
