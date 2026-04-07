@@ -27,6 +27,7 @@ import {
   sendPhase2IntakeReminders,
   sendAwaitingIntakeReminders,
   escalateStuckIntakes,
+  detectStuckStandaloneReports,
 } from "@/lib/cron/operator-alerts";
 import {
   cleanupAbandonedIntakes,
@@ -53,6 +54,7 @@ const TASKS: { name: string; fn: (ctx: CronContext) => Promise<CronResult> }[] =
   { name: "phase2-intake-reminders", fn: sendPhase2IntakeReminders },
   { name: "awaiting-intake-reminders", fn: sendAwaitingIntakeReminders },
   { name: "intake-escalation", fn: escalateStuckIntakes },
+  { name: "stuck-standalone-reports", fn: detectStuckStandaloneReports },
   // Compliance cleanup (Parts 6-7)
   { name: "abandoned-intake-cleanup", fn: cleanupAbandonedIntakes },
   { name: "rate-limit-cleanup", fn: cleanupRateLimits },

@@ -1080,6 +1080,10 @@ export async function POST(req: NextRequest) {
             refunded_at: new Date().toISOString(),
             download_token: null,
             download_token_expires_at: null,
+            // Revoke standalone report access (C11)
+            standalone_report_token_hash: null,
+            standalone_report_storage_path: null,
+            standalone_report_token_expires_at: null,
           })
           .eq("stripe_payment_intent_id", paymentIntentId);
 

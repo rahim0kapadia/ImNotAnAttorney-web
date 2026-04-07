@@ -712,3 +712,59 @@ export async function escalateStuckIntakes(ctx: CronContext): Promise<CronResult
 
   return result;
 }
+
+// ============================================================
+// PART 7: STUCK STANDALONE REPORT DETECTION (C9 mitigation)
+// ============================================================
+
+/**
+ * Detects standalone product orders where intake was submitted but no report
+ * was generated within 10 minutes. This catches Edge Function crashes/timeouts.
+ *
+ * Alerts the operator with order details and a retry curl command.
+ */
+export async function detectStuckStandaloneReports(
+  ctx: CronContext
+): Promise<CronResult> {
+  const result = emptyResult();
+
+  const tenMinAgo = new Date(ctx.now);
+  tenMinAgo.setMinutes(tenMinAgo.getMinutes() - 10);
+
+  const { data: stuckStandalone } = await ctx.supabase
+    .from("orders")
+    .select("id, email, standalone_product_slug, updated_at")
+    .eq("product_type", "standalone")
+    .eq("status", "paid")
+    .not("standalone_intake", "is", null)
+    .is("standalone_report_storage_path", null)
+    .lt("updated_at", tenMinAgo.toISOString());
+
+  if (stuckStandalone && stuckStandalone.length > 0) {
+    for (const order of stuckStandalone) {
+      const minutesStuck = Math.round(
+        (ctx.now.getTime() - new Date(order.updated_at).getTime()) /
+          (1000 * 60)
+      );
+
+      const sendResult = await sendEmail({
+        to: ctx.operatorEmail,
+        subject: `ALERT: Standalone report stuck ${minutesStuck}+ min — ${order.standalone_product_slug}`,
+        html: `<h1 style="color: #EF4444;">Standalone Report Not Generated</h1>
+          <p>Order has intake data but no report after <strong>${minutesStuck} minutes</strong>. The edge function likely crashed or timed out.</p>
+          <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
+            <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(order.email)}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Product:</strong> ${escapeHtml(order.standalone_product_slug || "unknown")}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Order ID:</strong> ${order.id}</p>
+          </div>
+          <p style="margin-top: 16px;"><strong style="color: white;">Retry command:</strong></p>
+          <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">curl -X POST ${ctx.siteUrl}/api/generate/standalone -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"orderId":"${order.id}","force":true}'</code>`,
+      });
+
+      if (sendResult.success) result.sent++;
+      else result.errors++;
+    }
+  }
+
+  return result;
+}

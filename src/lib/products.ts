@@ -130,7 +130,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellText:
       "Your employment is one piece. The Case Decoder examines your full defense landscape.",
     dripSequenceKey: "research_employment",
-    isActive: false,
+    isActive: true,
   },
   "license-risk": {
     name: "Professional License Risk Research",
