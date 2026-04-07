@@ -15,7 +15,14 @@
 | File | Purpose |
 |------|---------|
 | `stripe.ts` | Stripe SDK init + dual-mode selector (test vs live per `TIER_CORE[slug].live`) |
-| `tiers.ts` | **SINGLE SOURCE OF TRUTH** — all pricing, Stripe price IDs, tier slugs, live flags |
+| `tiers.ts` | **SINGLE SOURCE OF TRUTH (tiered products)** — all pricing, Stripe price IDs, tier slugs, live flags |
+| `products.ts` | **SINGLE SOURCE OF TRUTH (standalone products)** — calculators, content guides, research reports. Parallels tiers.ts. Prices in cents. Checkout uses inline `price_data` (no Stripe Price IDs). |
+
+### Standalone Product Support
+| File | Purpose |
+|------|---------|
+| `sanitize.ts` | `sanitizeReportHtml()` — allowlist-based HTML sanitizer for Claude-generated reports (used by standalone report viewer). Allows semantic tags + ARIA attributes, strips scripts/iframes/event handlers. |
+| `calculator.ts` | Calculator computation logic (good-time credit, SOL, diversion eligibility). Reads state rules from JSON data files. |
 
 ### Email
 | File | Purpose |

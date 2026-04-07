@@ -1,6 +1,6 @@
 # Database Layer — supabase/
 
-> Supabase PostgreSQL: 50+ tables, 32 sequential migrations, RLS policies, 2 Edge Functions, and 2 storage buckets. Shared by all three INAA repos (web, engine, business-docs).
+> Supabase PostgreSQL: 50+ tables, 32+ sequential migrations, RLS policies, 3 Edge Functions, and 3 storage buckets. Shared by all three INAA repos (web, engine, business-docs).
 
 ## Schema Overview
 
@@ -8,7 +8,7 @@
 
 | Table | Purpose |
 |-------|---------|
-| `orders` | Stripe order records: tier, amount, stripe_session_id, refund state |
+| `orders` | Stripe order records: tier, amount, stripe_session_id, refund state. Standalone product columns: `standalone_product_slug`, `standalone_intake_token`, `standalone_intake` (jsonb), `standalone_report_token_hash`, `standalone_report_storage_path`, `standalone_report_token_expires_at`, `standalone_eval_results`. Refund clears all standalone report fields. |
 | `cases` | One row per case service purchase. Central state machine: `pending → intake → processing → review → delivered` |
 | `intakes` | Case Decoder intake form submissions |
 | `ib_intakes` | Intelligence Brief Phase 2 intake submissions |
@@ -66,8 +66,9 @@ supabase/migrations/
 
 ```
 supabase/functions/
-  generate-report/     # Case Decoder report generation
-  evaluate-report/     # UPL compliance evaluation
+  generate-report/        # Case Decoder + Intelligence Brief report generation
+  evaluate-report/        # UPL compliance evaluation
+  generate-standalone/    # Standalone research product generation (Employment Impact, etc.)
 ```
 
 ### generate-report
@@ -85,18 +86,31 @@ supabase/functions/
 - If PASS: sets `cases.evaluation_status = 'passed'`, operator can deliver
 - If FAIL: sets `cases.evaluation_status = 'failed'`, blocks delivery, creates operator task with flagged passages
 
+### generate-standalone
+- Called via fire-and-forget POST from `/api/intake/standalone/[slug]` (customer path) or `/api/generate/standalone` (operator retry)
+- Loads order + intake data from `orders` table (standalone_product_slug, standalone_intake)
+- Builds prompt from intake data; currently supports `employment-impact` slug, extensible via `buildUserPrompt()` switch
+- Calls Claude Sonnet (configurable via `CLAUDE_MODEL` env var)
+- Generates cryptographic report token (16 bytes hex); hashes with SHA-256
+- Uploads report HTML to `standalone-reports` Storage bucket at `{orderId}.html`
+- Updates `orders` with: `standalone_report_token_hash`, `standalone_report_storage_path`, `standalone_report_token_expires_at` (1 year)
+- Sends delivery email to customer with `/report/standalone/{plaintextToken}` link
+- On failure: updates order status, emails operator with retry curl command
+
 ### Deploy Edge Functions
 ```bash
 npx supabase functions deploy generate-report --project-ref jxjbjmgdukwkoclydqdr
 npx supabase functions deploy evaluate-report --project-ref jxjbjmgdukwkoclydqdr
+npx supabase functions deploy generate-standalone --project-ref jxjbjmgdukwkoclydqdr --no-verify-jwt
 ```
 
 ## Storage Buckets
 
 | Bucket | Purpose | Access |
 |--------|---------|--------|
-| `discovery-documents` | Customer-uploaded case documents (PDFs, images) | Private: service role only |
-| `report-exports` | Generated report PDFs for download | Private: download token required |
+| `discovery-files` | Customer-uploaded case documents (PDFs, images) | Private: service role only |
+| `charge-packs` | Playbook PDFs for download | Private: download token required |
+| `standalone-reports` | Generated HTML reports for standalone research products (Employment Impact, etc.) | Private: token-hash lookup via report viewer. 5MB limit, `text/html` only. |
 
 ## RLS Patterns
 

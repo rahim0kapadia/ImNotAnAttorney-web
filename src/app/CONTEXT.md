@@ -1,6 +1,6 @@
 # Pages & Routes — src/app/
 
-> Next.js App Router: 28 pages and 68 API routes. All routes are server components by default; client components marked `"use client"`.
+> Next.js App Router: 35+ pages and 75+ API routes. All routes are server components by default; client components marked `"use client"`.
 
 ## Page Map
 
@@ -21,6 +21,16 @@
 | `/score` | `score/page.tsx` | Defense Strength Score quiz |
 | `/score/results/[token]` | `score/results/[token]/page.tsx` | Score visualization + lead capture |
 | `/dui-defense/[state]` | `dui-defense/[state]/page.tsx` | State-specific DUI content pages |
+
+### Standalone Products (Phase 0-3 product expansion, catalog: `src/lib/products.ts`)
+| Route | File | Purpose |
+|-------|------|---------|
+| `/tools/[slug]` | `tools/[slug]/page.tsx` | Free calculator wizard (Good Time Credit live) |
+| `/tools/[slug]/results/[token]` | `tools/[slug]/results/[token]/page.tsx` | Saved calculator results, shareable link (noindex) |
+| `/guides/[slug]` | `guides/[slug]/page.tsx` | Free content guides (First Court Appearance live) |
+| `/services/[slug]` | `services/[slug]/page.tsx` | Landing page for paid research products (Employment Impact live, $197) |
+| `/intake/standalone/[slug]` | `intake/standalone/[slug]/page.tsx` | Token-gated intake form for research products |
+| `/report/standalone/[token]` | `report/standalone/[token]/page.tsx` | Report viewer (Storage-backed, sanitized HTML, noindex) |
 
 ### Auth & Checkout
 | Route | File | Purpose |
@@ -86,9 +96,17 @@
 |--------|-------|---------|
 | POST | `/api/generate/case-decoder` | Trigger Case Decoder Edge Function |
 | POST | `/api/generate/intelligence-brief/*` | Trigger IB phases (5 parallel + 4 sequential) |
+| POST | `/api/generate/standalone` | Operator retry for standalone research products (fires `generate-standalone` Edge Function) |
 | POST | `/api/evaluate/case-decoder` | UPL compliance evaluation |
 | POST | `/api/deliver` | Email report to customer + set `delivered_at` |
 | GET | `/api/download/[token]` | Download token validation |
+
+### Standalone Product Routes (calculators, intake, tools)
+| Method | Route | Purpose |
+|--------|-------|---------|
+| POST | `/api/intake/standalone/[slug]` | Token-auth intake submission; validates allowlists, sanitizes, fires Edge Function |
+| POST | `/api/tools/save-results` | Save calculator results with email for shareable link |
+| GET | `/api/tools/[slug]` | Dynamic calculator compute endpoint |
 
 ### Scoring & Free Tools (5 routes)
 | Method | Route | Purpose |

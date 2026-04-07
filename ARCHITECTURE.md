@@ -36,10 +36,11 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 
 | Subsystem | What It Does | Details |
 |-----------|-------------|---------|
-| **Pages & Routes** | 28 pages + 68 API routes (App Router) | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
-| **Core Business Logic** | Auth, payments, email, cron, reports, scoring | [`src/lib/CONTEXT.md`](src/lib/CONTEXT.md) |
+| **Pages & Routes** | 35+ pages + 75+ API routes (App Router) | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
+| **Core Business Logic** | Auth, payments, email, cron, reports, scoring, sanitization | [`src/lib/CONTEXT.md`](src/lib/CONTEXT.md) |
+| **Standalone Products** | Calculators, content guides, research reports (3 delivery systems) | `src/lib/products.ts` (source of truth) |
 | **UI Components** | 45+ components (layout, sales, intake, motion) | [`src/components/CONTEXT.md`](src/components/CONTEXT.md) |
-| **Database** | 50+ tables, 32 migrations, Edge Functions | [`supabase/CONTEXT.md`](supabase/CONTEXT.md) |
+| **Database** | 50+ tables, 32+ migrations, 3 Edge Functions, 3 storage buckets | [`supabase/CONTEXT.md`](supabase/CONTEXT.md) |
 | **Content** | 35+ MDX blog posts + social content queue | [`content/CONTEXT.md`](content/CONTEXT.md) |
 | **Scripts** | 24 utilities: cron setup, legal research, E2E tests | [`scripts/CONTEXT.md`](scripts/CONTEXT.md) |
 | **Playbook System** | 8 configurable sales pages (1 component, 8 configs) | [`PLAYBOOK-ARCHITECTURE.md`](PLAYBOOK-ARCHITECTURE.md) |
@@ -55,6 +56,15 @@ Blog/SEO → Free resources (ungated) → Score Quiz (/score, email captured aft
          → Service Checkout ($197–$9,997) → Stripe webhook → Case created
            → Intake form → Report generation (Edge Function / Engine workers)
            → Operator review → Delivery email → Post-purchase drip
+         → Standalone Product Checkout ($0–$297) → Stripe webhook → Order + intake token
+           → Intake form (token-gated) → generate-standalone Edge Function
+           → Report uploaded to Storage → Delivery email → /report/standalone/[token]
+
+STANDALONE PRODUCT SYSTEMS (src/lib/products.ts is source of truth):
+  1. Calculators (free) — /tools/[slug] wizard → instant result (Good Time Credit live)
+  2. Content Guides (free) — /guides/[slug] static pages (First Court Appearance live)
+  3. Instant Research ($197+) — /services/[slug] → checkout → intake → Claude → Storage
+     → /report/standalone/[token] (Employment Impact Assessment live)
 ```
 
 ## Life of a Case
