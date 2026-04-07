@@ -1,0 +1,266 @@
+{
+  "_metadata": {
+    "description": "Verified good time credit rules by state. Calculator references this instead of generating rules from memory.",
+    "sources": [
+      "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0900-0999/0944/Sections/0944.275.html",
+      "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=2933&lawCode=PEN",
+      "https://law.justia.com/codes/texas/government-code/title-4/subtitle-g/chapter-498/section-498-003/",
+      "https://www.nysenate.gov/legislation/laws/COR/803",
+      "https://law.justia.com/codes/new-york/cor/article-24/803/",
+      "https://www.pa.gov/agencies/cor/about-us/rights-laws-regulations-and-acts/recidivism-risk-reduction-incentive",
+      "https://www.palegis.us/statutes/consolidated/view-statute?iFrame=true&txtType=HTM&ttl=61&div=0&chpt=45",
+      "https://law.justia.com/codes/illinois/chapter-730/act-730-ilcs-5/chapter-v/",
+      "https://codes.ohio.gov/ohio-revised-code/section-2967.193",
+      "https://law.justia.com/codes/georgia/2010/title-17/chapter-10/article-1/17-10-6-1",
+      "https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/BySection/Chapter_15a/GS_15A-1340.13.pdf",
+      "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-800-33",
+      "https://www.michigan.gov/corrections/For-Families/truth-in-sentencing-information"
+    ],
+    "last_verified": "2026-04-06",
+    "anti_hallucination": "If a state is not in this file, the calculator MUST say: 'Good time credit rules for [state] are not yet in our database. Your state's Department of Corrections website publishes these rules, or this is a question worth raising with your attorney.'"
+  },
+  "FL": {
+    "state_name": "Florida",
+    "rules": [
+      {
+        "name": "85% Rule (Truth in Sentencing)",
+        "statute": "Fla. Stat. § 944.275(4)(f)",
+        "applies_to": "Offenses committed on or after October 1, 1995",
+        "credit_rate": "Defendants must serve at least 85% of their sentence imposed",
+        "max_gain_time": "Up to 15% reduction through accumulated gain time credits",
+        "eligible_credits": [
+          "Basic gain time: 10 days per month for satisfactory behavior",
+          "Incentive gain time: up to additional days for program completion, work, and education"
+        ],
+        "disqualifiers": [
+          "Life sentences",
+          "Capital offenses",
+          "Death sentences"
+        ],
+        "calculation_formula": "release_date = sentence_start + (sentence_months * 0.85) - custody_credits",
+        "notes": "Florida abolished discretionary parole for offenses committed on or after October 1, 1983 (Sentencing Guidelines Act). Section 944.275(4)(f) bars any inmate from earning gain time that would cause the sentence to expire prior to serving 85% of the sentence imposed."
+      }
+    ]
+  },
+  "CA": {
+    "state_name": "California",
+    "rules": [
+      {
+        "name": "Violent Felony 85% Rule",
+        "statute": "Cal. Penal Code § 2933.1",
+        "applies_to": "Persons convicted of a violent felony listed in Penal Code § 667.5(c)",
+        "credit_rate": "Defendants must serve at least 85% of their sentence (conduct credit is capped at 15% under Penal Code § 2933.1 for qualifying violent felonies)",
+        "max_gain_time": "15% maximum credit for violent felony convictions",
+        "eligible_credits": [
+          "Conduct credit under Penal Code § 2933.1 capped at 15% for violent felonies"
+        ],
+        "disqualifiers": [
+          "Life without parole",
+          "Death sentences"
+        ],
+        "calculation_formula": "release_date = sentence_start + (sentence_months * 0.85) - custody_credits",
+        "notes": "Non-violent prisoners are governed by Penal Code § 2933, which generally provides day-for-day credit (one day credit for each day served, equating to roughly 50% of the sentence). This entry shows the violent-felony rule because that is the most common scenario for serious cases."
+      },
+      {
+        "name": "Day-for-Day Conduct Credit (Non-Violent)",
+        "statute": "Cal. Penal Code § 2933",
+        "applies_to": "Non-violent felony prisoners in CDCR custody not subject to § 2933.1, § 2933.2, or § 667 (Three Strikes)",
+        "credit_rate": "Defendants effectively serve approximately 50% of their sentence under day-for-day conduct credit",
+        "max_gain_time": "Up to 50% sentence reduction (one day credit for each day served)",
+        "eligible_credits": [
+          "Section 2933 worktime credit on a 1-for-1 basis"
+        ],
+        "disqualifiers": [
+          "Violent felonies under § 667.5(c) (capped at 15% per § 2933.1)",
+          "Murder (no credits per § 2933.2)",
+          "Three Strikes second/third strikers (limited to 20%)"
+        ],
+        "calculation_formula": "release_date = sentence_start + (sentence_months * 0.50) - custody_credits",
+        "notes": "Penal Code § 2933 provides credit reductions of six months for every six months of continuous incarceration. CDCR also awards additional Good Conduct, Milestone, Educational, and Rehabilitative Achievement credits per Penal Code § 2933.05."
+      }
+    ]
+  },
+  "TX": {
+    "state_name": "Texas",
+    "rules": [
+      {
+        "name": "3g / Article 42A.054 No Good Conduct Time Rule",
+        "statute": "Tex. Code Crim. Proc. art. 42A.054 and Tex. Gov't Code § 508.145(d)",
+        "applies_to": "Defendants convicted of offenses listed in Article 42A.054 (formerly 3g offenses) including murder, capital murder, aggravated kidnapping, aggravated sexual assault, aggravated robbery, and certain other violent and sexual offenses",
+        "credit_rate": "Defendants must serve at least 50% of the sentence (or 30 years, whichever is less) before parole eligibility, and good conduct time does NOT count toward parole eligibility for these offenses",
+        "max_gain_time": "Good conduct time accrues but does not advance parole eligibility for 42A.054 offenses",
+        "eligible_credits": [
+          "Class I or trusty: 20 days good conduct time per 30 days served (Tex. Gov't Code § 498.003)",
+          "Class II: 10 days per 30 days served",
+          "Diligent participation credit: up to 15 days per 30 days served"
+        ],
+        "disqualifiers": [
+          "Capital felonies (life without parole, no parole)",
+          "Continuous sexual abuse of a child (no parole eligibility advancement)",
+          "Class III inmates earn no good conduct time"
+        ],
+        "calculation_formula": "release_date = sentence_start + (sentence_months * 0.50) - custody_credits",
+        "notes": "For 42A.054 offenses, parole eligibility requires actual calendar time of one-half the sentence or 30 years, whichever is less. Good conduct time still affects mandatory supervision for non-3g offenders but is non-credit toward parole for 3g offenders. Texas abolished mandatory supervision release for many violent offenders in 1996."
+      }
+    ]
+  },
+  "NY": {
+    "state_name": "New York",
+    "rules": [
+      {
+        "name": "Good Behavior Allowance (Determinate Sentence)",
+        "statute": "N.Y. Correct. Law § 803",
+        "applies_to": "Persons serving determinate sentences, including violent felony offenders sentenced under Penal Law § 70.02",
+        "credit_rate": "Defendants serving a determinate sentence may receive a good behavior allowance of up to one-seventh (1/7) of the sentence, meaning they must serve at least approximately 86% of the sentence imposed",
+        "max_gain_time": "Up to 1/7 (approximately 14.3%) of the determinate sentence",
+        "eligible_credits": [
+          "Good behavior time allowance up to 1/7 of determinate sentence",
+          "Limited Credit Time Allowance (six months) under § 803-b for certain program completions"
+        ],
+        "disqualifiers": [
+          "Class A-I felony offenses (other than certain Article 220 drug offenses)",
+          "Sentences for violent felony offenses are excluded from MERIT time but still receive good behavior time up to 1/7"
+        ],
+        "calculation_formula": "release_date = sentence_start + (sentence_months * (6/7)) - custody_credits",
+        "notes": "Indeterminate sentences may receive good behavior allowance of up to 1/3 of the maximum term (effectively 67% served). Merit time of 1/7 (determinate) or 1/6 (indeterminate) is available only to non-violent offenders who complete qualifying programs. Violent felons receive only the standard good behavior allowance."
+      }
+    ]
+  },
+  "PA": {
+    "state_name": "Pennsylvania",
+    "rules": [
+      {
+        "name": "Standard Minimum Sentence Rule (No Good Time)",
+        "statute": "61 Pa.C.S. § 6137 and 61 Pa.C.S. § 4503 (RRRI)",
+        "applies_to": "All Pennsylvania state prison inmates",
+        "credit_rate": "Defendants must serve 100% of the minimum sentence imposed before parole eligibility (Pennsylvania has no good-time credit reducing the minimum)",
+        "max_gain_time": "0% reduction of minimum for general population; eligible non-violent offenders may earn an RRRI minimum equal to 5/6 of the original minimum (sentences over 3 years) or 3/4 (sentences 3 years or less)",
+        "eligible_credits": [
+          "Recidivism Risk Reduction Incentive (RRRI) reduced minimum under 61 Pa.C.S. § 4503 for eligible non-violent offenders",
+          "Standard parole consideration at minimum sentence expiration"
+        ],
+        "disqualifiers": [
+          "History of past or present violent behavior (RRRI ineligible)",
+          "Weapons enhancement",
+          "Personal injury crime conviction",
+          "Title 18 Chapter 61 firearms offense conviction"
+        ],
+        "calculation_formula": "parole_eligibility = sentence_start + minimum_sentence - custody_credits",
+        "notes": "Pennsylvania does not award good time or earned time credit against the minimum sentence. Inmates must serve the full minimum before being considered for parole. RRRI provides a one-time reduced minimum for eligible non-violent first-time offenders who complete required programming. For a violent offender, the effective served percentage is 100% of the minimum."
+      }
+    ]
+  },
+  "IL": {
+    "state_name": "Illinois",
+    "rules": [
+      {
+        "name": "Truth in Sentencing - Serious Violent Felony 85% Rule",
+        "statute": "730 ILCS 5/3-6-3(a)(2)",
+        "applies_to": "Persons convicted of certain enumerated violent offenses (e.g., second degree murder, aggravated criminal sexual assault, aggravated battery with a firearm, home invasion, intentional homicide of an unborn child)",
+        "credit_rate": "Defendants convicted of qualifying serious violent felonies must serve at least 85% of their sentence (limited to 4.5 days of sentence credit per month)",
+        "max_gain_time": "Up to 15% reduction (4.5 days of credit per month)",
+        "eligible_credits": [
+          "Sentence credit of 4.5 days per month for 85% offenses",
+          "Earned Sentence Credit (program participation) under 730 ILCS 5/3-6-3(a)(4)"
+        ],
+        "disqualifiers": [
+          "First degree murder (must serve 100% of sentence)",
+          "Terrorism, certain sex offenses against children (100% in some cases)",
+          "Inmates with less than 60 days served are not eligible for earned credit"
+        ],
+        "calculation_formula": "release_date = sentence_start + (sentence_months * 0.85) - custody_credits",
+        "notes": "Under 730 ILCS 5/3-6-3, first degree murder requires service of 100% of the sentence, certain serious violent felonies require 85%, and most other Class X and lower offenses receive day-for-day (50%) credit. Truth in Sentencing replaced Illinois' prior day-for-day system for violent offenders in 1998."
+      }
+    ]
+  },
+  "OH": {
+    "state_name": "Ohio",
+    "rules": [
+      {
+        "name": "Earned Credit (8% Cap)",
+        "statute": "Ohio Rev. Code § 2967.193",
+        "applies_to": "Most Ohio prison inmates serving stated prison terms",
+        "credit_rate": "Defendants must serve at least 92% of their sentence; earned credit is capped at 8% of the total stated prison term",
+        "max_gain_time": "8% maximum reduction of stated prison term through earned credit",
+        "eligible_credits": [
+          "1 or 5 days of credit per completed month of productive program participation (education, vocational, treatment, prison industry)",
+          "90 days credit (or 10% of sentence, whichever is less) for completing certain programs such as a high school diploma or intensive outpatient drug treatment"
+        ],
+        "disqualifiers": [
+          "Life imprisonment without parole",
+          "Sexually oriented offenses committed on or after September 30, 2011",
+          "Certain repeat violent offenders"
+        ],
+        "calculation_formula": "release_date = sentence_start + (sentence_months * 0.92) - custody_credits",
+        "notes": "Ohio's Truth in Sentencing reform (S.B. 2, effective July 1, 1996) eliminated indeterminate sentencing and parole for most felonies. Earned credit under § 2967.193 is the primary sentence reduction mechanism and is strictly capped at 8% of the total prison term in the aggregate."
+      }
+    ]
+  },
+  "GA": {
+    "state_name": "Georgia",
+    "rules": [
+      {
+        "name": "Seven Deadly Sins - 100% Service Rule",
+        "statute": "O.C.G.A. § 17-10-6.1",
+        "applies_to": "Persons convicted of a 'serious violent felony' as defined in § 17-10-6.1: murder/felony murder, armed robbery, kidnapping, rape, aggravated child molestation, aggravated sodomy, and aggravated sexual battery",
+        "credit_rate": "Defendants convicted of a serious violent felony must serve 100% of the sentence imposed with no parole, earned time, early release, work release, or other sentence-reducing measures",
+        "max_gain_time": "0% reduction for serious violent felonies",
+        "eligible_credits": [
+          "None for serious violent felonies covered by § 17-10-6.1"
+        ],
+        "disqualifiers": [
+          "All seven serious violent felonies (the 'seven deadly sins') receive no early release",
+          "Life sentences require minimum 30 years served before any parole consideration"
+        ],
+        "calculation_formula": "release_date = sentence_start + sentence_months - custody_credits",
+        "notes": "For non-§17-10-6.1 felonies, Georgia generally requires service of approximately one-third of the sentence before parole eligibility under State Board of Pardons and Paroles guidelines. The 'seven deadly sins' rule is the most common controlling rule for the serious violent cases this calculator addresses."
+      }
+    ]
+  },
+  "NC": {
+    "state_name": "North Carolina",
+    "rules": [
+      {
+        "name": "Structured Sentencing - Earned Time Cannot Reduce Below Minimum",
+        "statute": "N.C. Gen. Stat. § 15A-1340.13(d)",
+        "applies_to": "All felonies committed on or after October 1, 1994 sentenced under Structured Sentencing",
+        "credit_rate": "Defendants must serve 100% of the minimum sentence imposed; earned time can only reduce the maximum term down to (but not below) the minimum",
+        "max_gain_time": "Earned time may reduce time served between minimum and maximum (typically 0% reduction below minimum)",
+        "eligible_credits": [
+          "Earned time credit awarded by the Division of Prisons for good behavior, work, and program participation",
+          "Meritorious time credit for exceptional service"
+        ],
+        "disqualifiers": [
+          "Class A felonies (life without parole or death — no early release)",
+          "Class B1 first-degree murder (life without parole)",
+          "Earned time cannot be applied to reduce sentence below the statutory minimum"
+        ],
+        "calculation_formula": "release_date = sentence_start + minimum_sentence - custody_credits",
+        "notes": "North Carolina abolished parole for crimes committed on or after October 1, 1994 under Structured Sentencing. Felons must serve at least 100% of the minimum term. Earned time only affects the maximum term (i.e., the time between minimum and maximum during which an inmate could otherwise be held). Effective service percentage is therefore 100% of the minimum."
+      }
+    ]
+  },
+  "MI": {
+    "state_name": "Michigan",
+    "rules": [
+      {
+        "name": "Truth in Sentencing - 100% of Minimum Sentence",
+        "statute": "Mich. Comp. Laws § 769.34 and § 800.33 (Truth in Sentencing, P.A. 314 of 1998)",
+        "applies_to": "Assaultive crimes committed on or after December 15, 1998, and all other crimes committed on or after December 15, 2000",
+        "credit_rate": "Defendants must serve 100% of the minimum sentence imposed before parole eligibility (no good time, no disciplinary credits reduce the minimum)",
+        "max_gain_time": "0% reduction of the minimum sentence",
+        "eligible_credits": [
+          "None for sentences covered by Truth in Sentencing",
+          "Disciplinary time under MCL 800.34 may be considered by the Parole Board but does not formally extend the minimum"
+        ],
+        "disqualifiers": [
+          "All offenses subject to Truth in Sentencing (no good time available)",
+          "Life without parole offenses",
+          "Sexually delinquent persons"
+        ],
+        "calculation_formula": "parole_eligibility = sentence_start + minimum_sentence - custody_credits",
+        "notes": "Michigan's 1998 Truth in Sentencing law (P.A. 314 of 1998, codified at MCL 769.34 and amending MCL 800.33) eliminated good time and disciplinary credits for prisoners convicted of crimes within scope. Inmates must serve 100% of the judicially imposed minimum sentence before being eligible for parole consideration. Disciplinary time tracks misconducts and is considered by the Parole Board but does not add to the minimum."
+      }
+    ]
+  }
+}
