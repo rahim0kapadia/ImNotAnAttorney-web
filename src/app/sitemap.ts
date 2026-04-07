@@ -25,6 +25,7 @@ import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blog";
 import { allPlaybookSlugs } from "@/lib/playbook-configs";
 import { allStateSlugs } from "@/data/state-dui-laws";
+import { productsByCategory } from "@/lib/products";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -43,6 +44,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.8,
+    })
+  );
+
+  // Content guides — dynamic routes under /guides/[slug] driven by the
+  // standalone product catalog. Only active content products are included.
+  const guideEntries: MetadataRoute.Sitemap = productsByCategory("content").map(
+    (guide) => ({
+      url: `${SITE_URL}/guides/${guide.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     })
   );
 
@@ -66,6 +78,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     ...playbookEntries,
+    ...guideEntries,
     {
       url: `${SITE_URL}/playbooks`,
       lastModified: new Date("2026-03-24"),

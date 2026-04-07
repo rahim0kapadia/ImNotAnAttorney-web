@@ -25,6 +25,7 @@ import { TestimonialSection } from "@/components/TestimonialSection";
 import { SITE_URL } from "@/lib/site";
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
+import { productsByCategory } from "@/lib/products";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -95,6 +96,10 @@ const rightsGuides = [
 ];
 
 export default function ResourcesPage() {
+  // Active content guides — drives from products.ts so adding a guide is
+  // isActive: true + GUIDE_CONTENT entry in /guides/[slug]/page.tsx.
+  const contentGuides = productsByCategory("content");
+
   return (
     <div className="px-4 py-16">
       <script
@@ -148,6 +153,48 @@ export default function ResourcesPage() {
           </StaggerContainer>
         </section>
         </FadeInUp>
+
+        {/* FREE GUIDES — dynamic content guides sourced from products.ts */}
+        {contentGuides.length > 0 && (
+          <FadeInUp>
+          <section className="mt-12" aria-labelledby="free-guides-heading">
+            <h2
+              id="free-guides-heading"
+              className="font-display text-xl font-bold text-white"
+            >
+              Free Guides
+            </h2>
+            <p className="mt-1 text-sm text-zinc-400">
+              Walkthroughs for specific moments in your case. No email
+              required.
+            </p>
+            <StaggerContainer className="mt-6 grid gap-4 md:grid-cols-2">
+              {contentGuides.map((guide) => (
+                <StaggerItem
+                  key={guide.slug}
+                  className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6"
+                >
+                  <span className="inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                    Free Guide
+                  </span>
+                  <h3 className="mt-3 font-bold text-white">
+                    <Link
+                      href={`/guides/${guide.slug}`}
+                      className="inline-block rounded-sm py-1 hover:text-amber-400 focus:outline-none focus-visible:text-amber-400 focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900"
+                    >
+                      {guide.name}
+                      <span aria-hidden="true"> &rarr;</span>
+                    </Link>
+                  </h3>
+                  <p className="mt-2 text-sm text-zinc-400">
+                    {guide.description}
+                  </p>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </section>
+          </FadeInUp>
+        )}
 
         <FadeInUp>
         <section className="mt-12">

@@ -34,7 +34,11 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import type { ComponentType } from "react";
-import { getProduct, isValidProduct } from "@/lib/products";
+import {
+  STANDALONE_PRODUCTS,
+  getProduct,
+  isValidProduct,
+} from "@/lib/products";
 import { SITE_URL } from "@/lib/site";
 
 /**
@@ -49,6 +53,19 @@ const GUIDE_CONTENT: Record<
 > = {
   "first-court-appearance": () => import("../content/first-court-appearance"),
 };
+
+/**
+ * Pre-render one static page per active content guide at build time.
+ *
+ * Reads directly from the product catalog so adding a new content guide is
+ * a two-line change: flip `isActive: true` in `products.ts` and add a
+ * registry entry to `GUIDE_CONTENT` above.
+ */
+export function generateStaticParams() {
+  return Object.entries(STANDALONE_PRODUCTS)
+    .filter(([slug, p]) => p.category === "content" && p.isActive && slug in GUIDE_CONTENT)
+    .map(([slug]) => ({ slug }));
+}
 
 interface Props {
   params: Promise<{ slug: string }>;
