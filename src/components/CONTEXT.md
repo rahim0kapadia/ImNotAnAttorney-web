@@ -1,6 +1,6 @@
 # UI Components — src/components/
 
-> 45+ React components. Server Components by default; client components marked `"use client"` for interactivity.
+> 44 React components. Server Components by default; client components marked `"use client"` for interactivity.
 
 ## Component Groups
 

@@ -1,4 +1,18 @@
-# ImNotAnAttorney — Architecture
+# ImNotAnAttorney — Architecture (DEEPLY STALE — DO NOT TRUST)
+
+> **⚠️ WARNING (2026-04-07):** This document has significant drift from the actual codebase.
+> - Claims "28 pages, 35 API routes" — actual is 55 pages, 70 API routes
+> - Claims "11 migrations" — actual is 41 migrations
+> - Claims "Stripe test mode" — **production is LIVE mode since March 2026**
+> - Claims "2 storage buckets" — actual is 3
+> - Last verified against code: never
+>
+> **Source of truth:** Use the lean docs instead:
+> - `/ARCHITECTURE.md` (root) — system map
+> - `src/app/CONTEXT.md`, `src/lib/CONTEXT.md`, `supabase/CONTEXT.md` — subsystem details
+>
+> This doc is preserved for historical context only. Do not rely on any specific claim here
+> without verifying against the current code. A rewrite or deletion is tracked as follow-up work.
 
 ## System Overview
 
@@ -268,14 +282,16 @@ The engine integrates with 7 external legal data APIs for citation verification,
 
 ### Citation Verification Cascade
 
-Citations are verified through a priority cascade:
+**STATUS (2026-04-07):** The web pipeline does NOT verify citations at runtime.
+Citation verification happens OFFLINE via these scripts:
 
-1. **CourtListener** (primary) — search by case name + citation
-2. **Harvard CAP** — fallback for historical cases
-3. **GovInfo** — for statutory references
-4. **eCFR** — for regulatory references
+1. `scripts/legal-research-all.mjs` — searches CourtListener for cases citing each statute, populates `statute_case_law` with REAL cases (case_name, citation, court, year, holding, courtlistener_cluster_id)
+2. `scripts/classify-case-law.mjs` — fetches actual opinion text from CourtListener, classifies DEFENSE/PROSECUTION, runs `checkNegativeTreatment()` to verify good law via citing-opinions endpoint
+3. The `generate-report` Edge Function only filters cases via `is_good_law=eq.true` — it does NOT verify Claude-generated citations against any database
 
-**Confidence tiers:** STRONG (verified in primary source) → MODERATE (verified in secondary) → WEAK (partial match) → UNVERIFIED (no match found) → FABRICATED (contradicted by source). Claims below 90% confidence are marked `[VERIFY]` in output.
+The full multi-source verification cascade (Harvard CAP, GovInfo, eCFR) lives in the **engine repo** (`legal-verifier.mjs`), NOT in this web repo. The Case Decoder + Intelligence Brief tiers rely on the LLM's anti-hallucination block + the `is_good_law` filter on database-injected cases.
+
+**Future work:** Port the engine's `legal-verifier.mjs` cascade or build a post-generation verifier that scans output for citation patterns and verifies each via CourtListener.
 
 ## Anti-Hallucination Architecture
 

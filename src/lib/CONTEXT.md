@@ -1,6 +1,6 @@
 # Core Business Logic — src/lib/
 
-> 60+ modules. This is where all business rules live: auth, payments, email, cron orchestration, AI report generation, scoring, and demand intelligence.
+> 63 modules. This is where all business rules live: auth, payments, email, cron orchestration, AI report generation, scoring, and demand intelligence.
 
 ## Module Table
 
@@ -29,9 +29,8 @@
 |------|---------|
 | `email.ts` | Resend integration: send transactional email + CAN-SPAM unsubscribe footer |
 | `drip-emails.ts` | 7 email sequence definitions (templates, timing, triggers) |
-| `trial-ops-emails.ts` | Operator messaging templates for trial-tier cases |
 
-### Cron Orchestration (22 daily tasks)
+### Cron Orchestration (26 daily tasks)
 | File | Purpose |
 |------|---------|
 | `cron/drip-nurture.ts` | Nurture sequence emails (days 1, 3, 5, 7, 14, 30) for non-purchasers |

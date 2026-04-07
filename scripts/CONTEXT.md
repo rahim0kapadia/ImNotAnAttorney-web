@@ -1,6 +1,6 @@
 # Scripts — scripts/
 
-> 24 utility scripts: cron setup, tier validation, report backup, legal research, charge taxonomy generation, E2E tests, GBP asset rendering.
+> 35+ utility scripts: cron setup, tier validation, report backup, legal research, charge taxonomy generation, E2E tests, enrichment pipelines, social scheduling.
 
 ## Script Inventory
 
@@ -26,6 +26,7 @@
 |------|---------|
 | `load-jurisdiction-data.mjs` | Loads jurisdiction statute JSONs from `data/charge-taxonomy/` into Supabase `jurisdiction_statutes` table. Single state or all states |
 | `legal-research-fl.mjs` | FL statute verification: validates on FL Online Sunshine, searches CourtListener for citing case law, updates `source_urls` + `confidence_score`. Rate-limited 2s/request |
+| `legal-research-all.mjs` | All-state statute verification: FL via Online Sunshine, federal via Cornell LII, other states via Justia URL + CourtListener case law. Rate-limited 1.5s/request. Supports single jurisdiction, single statute, dry-run, summary modes |
 | `classify-case-law.mjs` | Case law classifier: fetches CourtListener opinions, extracts outcome, classifies DEFENSE/PROSECUTION/NEUTRAL, determines binding authority. Rate-limited 750ms/request |
 
 ### Charge Taxonomy
@@ -69,6 +70,7 @@
 | Supabase project ref | `jxjbjmgdukwkoclydqdr` | `load-jurisdiction-data.mjs:17`, `apply-pending-sql.mjs:12`, `classify-case-law.mjs:32` |
 | CourtListener fetch delay | 750ms | `classify-case-law.mjs:33` |
 | FL statute fetch delay | 2000ms | `legal-research-fl.mjs:32` |
+| All-state fetch delay | 1500ms | `legal-research-all.mjs:28` |
 | Generate-worker max retries | 3 (on 529 overloaded) | `generate-worker.mjs` |
 | GBP render dimensions | 1024x576 (2x DPI) | `render-gbp-cover.js:15` |
 | Parent env file | `../ImNotAnAttorney/.env.local` | `load-jurisdiction-data.mjs:20`, `legal-research-fl.mjs:36` |
@@ -86,6 +88,12 @@ Legal Research Pipeline:
   → CourtListener API (fetch citing cases)
   → UPDATE jurisdiction_statutes (source_urls, confidence_score)
   → classify-case-law.mjs → UPDATE statute_case_law (classification, holding)
+
+All-State Legal Research Pipeline:
+  jurisdiction_statutes (DB) → FL Online Sunshine (FL only)
+  → Cornell LII (federal only) → Justia URL reference (other states)
+  → CourtListener API (case law search, boosts confidence)
+  → UPDATE jurisdiction_statutes (source_urls, confidence_score, verified_at)
 
 Report Backup Pipeline:
   SELECT cases WHERE status='generating' AND updated_at < now() - 3min

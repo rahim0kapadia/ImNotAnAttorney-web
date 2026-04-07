@@ -1,6 +1,6 @@
 # Pages & Routes — src/app/
 
-> Next.js App Router: 35+ pages and 75+ API routes. All routes are server components by default; client components marked `"use client"`.
+> Next.js App Router: 55 pages and 70 API routes. All routes are server components by default; client components marked `"use client"`.
 
 ## Page Map
 

@@ -36,11 +36,11 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 
 | Subsystem | What It Does | Details |
 |-----------|-------------|---------|
-| **Pages & Routes** | 35+ pages + 75+ API routes (App Router) | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
+| **Pages & Routes** | 55 pages + 70 API routes (App Router) | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
 | **Core Business Logic** | Auth, payments, email, cron, reports, scoring, sanitization | [`src/lib/CONTEXT.md`](src/lib/CONTEXT.md) |
 | **Standalone Products** | Calculators, content guides, research reports (3 delivery systems) | `src/lib/products.ts` (source of truth) |
 | **UI Components** | 45+ components (layout, sales, intake, motion) | [`src/components/CONTEXT.md`](src/components/CONTEXT.md) |
-| **Database** | 50+ tables, 32+ migrations, 3 Edge Functions, 3 storage buckets | [`supabase/CONTEXT.md`](supabase/CONTEXT.md) |
+| **Database** | 50+ tables, 41 migrations, 3 Edge Functions, 3 storage buckets | [`supabase/CONTEXT.md`](supabase/CONTEXT.md) |
 | **Content** | 35+ MDX blog posts + social content queue | [`content/CONTEXT.md`](content/CONTEXT.md) |
 | **Scripts** | 24 utilities: cron setup, legal research, E2E tests | [`scripts/CONTEXT.md`](scripts/CONTEXT.md) |
 | **Playbook System** | 8 configurable sales pages (1 component, 8 configs) | [`PLAYBOOK-ARCHITECTURE.md`](PLAYBOOK-ARCHITECTURE.md) |
@@ -166,10 +166,11 @@ Patterns that span multiple subsystems:
 ## Deployment
 
 - **Trigger:** `git push origin master` → GitHub integration → Vercel auto-deploy
-- **Account:** `rahim0kapadia-1967` / team: `rahim-kapadias-projects`
-- **Project:** `imnotanattorney-web` (prj_fgx7OUbudHbS2WrfoaLKb07jJAnB)
+- **Team ID:** `team_UEzHXQJJI46GEPEYeFspl1Pq`
+- **Production project:** `imnotanattorney` (prj_zqxNgG9xcM235bnKRoEgP5kBOEEr) — this serves `imnotanattorney.com`
+- **DO NOT USE:** `imnotanattorney-web` (prj_fgx7OUbudHbS2WrfoaLKb07jJAnB) — duplicate project, unlinked from GitHub Apr 4 2026
 - **Edge Functions:** Deploy separately via Supabase CLI (`supabase functions deploy`)
-- **Env vars:** `npx vercel env add VAR_NAME` then trigger redeploy via empty commit
+- **Env vars:** `vercel env add VAR_NAME production --token $VERCEL_TOKEN` (CLI targets correct project via `.vercel/project.json`)
 
 ## Maintenance Rules
 
