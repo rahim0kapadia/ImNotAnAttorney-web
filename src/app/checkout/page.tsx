@@ -43,10 +43,121 @@
 "use client";
 
 import { TIER_CORE, tierPriceNum, upgradePrice, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
+import { getProduct, isValidProduct } from "@/lib/products";
 import { useSearchParams } from "next/navigation";
-import { useState, Suspense } from "react";
+import { useState, useRef, Suspense } from "react";
 import Link from "next/link";
 import { TrustBadges } from "@/components/TrustBadges";
+
+/**
+ * Standalone product checkout — minimal card rendered when ?standaloneProduct=<slug>
+ * is in the URL. Short-circuits the tier-based checkout UI.
+ */
+function StandaloneCheckout({
+  slug,
+  chargeParam,
+}: {
+  slug: string;
+  chargeParam: string | null;
+}) {
+  const product = getProduct(slug)!;
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleStandaloneCheckout() {
+    if (loading) return;
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailError("Please enter a valid email address");
+      inputRef.current?.focus();
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          standaloneProduct: slug,
+          email,
+          chargeType: chargeParam || undefined,
+        }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        setError(data.error || "Checkout failed — please try again");
+        setLoading(false);
+      }
+    } catch {
+      setError("Network error — please try again");
+      setLoading(false);
+    }
+  }
+
+  return (
+    <main className="mx-auto max-w-2xl px-4 py-16">
+      <h1 className="text-3xl font-bold text-white">{product.name}</h1>
+      <p className="mt-2 text-lg text-amber-400">{product.priceDisplay}</p>
+      <p className="mt-4 text-zinc-300">{product.description}</p>
+      <p className="mt-2 text-sm text-zinc-400">Delivery: {product.deliveryDetail}</p>
+
+      <div className="mt-8 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+        <label htmlFor="standalone-email" className="block text-sm font-semibold text-zinc-200">
+          Email address
+        </label>
+        <input
+          id="standalone-email"
+          ref={inputRef}
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          required
+          aria-invalid={emailError ? "true" : "false"}
+          aria-describedby={emailError ? "standalone-email-error" : undefined}
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            if (emailError) setEmailError(null);
+          }}
+          className="mt-2 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-4 py-3 text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+          placeholder="you@example.com"
+        />
+        <p
+          id="standalone-email-error"
+          className="mt-2 min-h-[1.25rem] text-sm text-red-400"
+          aria-live="polite"
+        >
+          {emailError || ""}
+        </p>
+
+        <button
+          type="button"
+          onClick={handleStandaloneCheckout}
+          disabled={loading}
+          className="mt-4 w-full rounded-lg bg-amber-500 px-6 py-4 text-base font-bold text-black transition-colors hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:cursor-not-allowed disabled:opacity-60"
+          aria-busy={loading}
+        >
+          {loading ? "Redirecting to payment..." : `Continue to payment — ${product.priceDisplay}`}
+        </button>
+
+        {error && (
+          <p className="mt-3 text-sm text-red-400" role="alert">
+            {error}
+          </p>
+        )}
+      </div>
+
+      <p className="mt-6 text-xs text-zinc-400">
+        This report provides legal INFORMATION — not legal ADVICE. Your attorney remains the final authority on strategy decisions.
+      </p>
+    </main>
+  );
+}
 
 /**
  * TierInfo shape for the TIER_INFO lookup table.
@@ -600,9 +711,17 @@ const TIER_INFO: Record<string, TierInfo> = {
  */
 function CheckoutContent() {
   const searchParams = useSearchParams();
+  const standaloneSlugParam = searchParams.get("standaloneProduct");
+  const charge = searchParams.get("charge"); // Charge type passed from score page
+
+  // Short-circuit: standalone research products render a minimal purchase card
+  // outside the tier upgrade ladder. Must run before any tier lookup.
+  if (standaloneSlugParam && isValidProduct(standaloneSlugParam)) {
+    return <StandaloneCheckout slug={standaloneSlugParam} chargeParam={charge} />;
+  }
+
   const tier = searchParams.get("tier") || "case-decoder";
   const band = searchParams.get("band"); // Score band passed from score page CTA
-  const charge = searchParams.get("charge"); // Charge type passed from score page
   const refParam = searchParams.get("ref"); // Referral code from quiz link
   const planParam = searchParams.get("plan"); // Payment plan (e.g., "2x" for installments)
   const [loading, setLoading] = useState(false);
