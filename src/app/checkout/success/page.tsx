@@ -41,6 +41,7 @@ import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 import { CONTACT_EMAIL, SITE_URL } from "@/lib/site";
 import { TIER_CORE, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
+import { getProduct } from "@/lib/products";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { TrustBadges } from "@/components/TrustBadges";
 
@@ -199,6 +200,10 @@ function SuccessContent() {
   const tier = searchParams.get("tier");
   const info = tier ? TIER_NEXT_STEPS[tier] : null;
 
+  // Standalone research products pass ?product=<slug> instead of ?tier=
+  const productSlug = searchParams.get("product");
+  const standaloneProduct = productSlug ? getProduct(productSlug) : null;
+
   const [verified, setVerified] = useState<boolean | null>(null);
   const [timeLeft, setTimeLeft] = useState<string>("");
   const [customerEmail, setCustomerEmail] = useState<string>("");
@@ -206,6 +211,7 @@ function SuccessContent() {
   const [priorityDelivery, setPriorityDelivery] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [emergencyDownloadUrl, setEmergencyDownloadUrl] = useState<string | null>(null);
+  const [intakeUrl, setIntakeUrl] = useState<string | null>(null);
 
   // Verify the Stripe checkout session server-side via /api/checkout/verify.
   // This confirms the payment actually completed (prevents URL spoofing).
@@ -224,6 +230,7 @@ function SuccessContent() {
         if (data.priorityDelivery) setPriorityDelivery(true);
         if (data.downloadUrl) setDownloadUrl(data.downloadUrl);
         if (data.emergencyDownloadUrl) setEmergencyDownloadUrl(data.emergencyDownloadUrl);
+        if (data.intakeUrl) setIntakeUrl(data.intakeUrl);
       })
       .catch(() => setVerified(false));
   }, [sessionId]);
@@ -329,7 +336,33 @@ function SuccessContent() {
           You&apos;re one of the defendants who prepares instead of waits. That changes how your next attorney meeting goes.
         </p>
 
-        {info ? (
+        {standaloneProduct ? (
+          <>
+            <p className="mt-3 text-lg text-amber-400">{standaloneProduct.name}</p>
+            <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-5 text-left">
+              <p className="text-sm font-semibold text-amber-400">Next: Complete Your Details</p>
+              <p className="mt-2 text-sm text-zinc-300">
+                To generate your personalized {standaloneProduct.name}, we need a few details about your situation. This takes about 2 minutes.
+              </p>
+              {intakeUrl ? (
+                <a
+                  href={intakeUrl}
+                  className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+                >
+                  Complete Your Details
+                </a>
+              ) : (
+                <p className="mt-4 text-sm text-zinc-400">
+                  A link to complete your details has been sent to{" "}
+                  <span className="text-zinc-300">{customerEmail || "your email"}</span>.
+                </p>
+              )}
+              <p className="mt-3 text-xs text-zinc-500">
+                Your report is generated within 60 seconds of submission.
+              </p>
+            </div>
+          </>
+        ) : info ? (
           <>
             <p className="mt-3 text-lg text-amber-400">{info.name}</p>
 

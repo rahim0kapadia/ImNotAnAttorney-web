@@ -123,6 +123,25 @@ export async function GET(req: NextRequest) {
       }
     }
 
+    // For standalone research products, look up the intake token from the order
+    // record. The webhook creates the token synchronously, so it should be
+    // present. Return intakeUrl so the success page can render an intake CTA.
+    const standaloneSlug = session.metadata?.standalone_product_slug;
+    if (session.metadata?.product_type === "standalone" && standaloneSlug) {
+      response.standaloneProduct = standaloneSlug;
+      const { data: standaloneOrder } = await supabase
+        .from("orders")
+        .select("standalone_intake_token")
+        .eq("stripe_session_id", sessionId)
+        .eq("product_type", "standalone")
+        .maybeSingle();
+
+      if (standaloneOrder?.standalone_intake_token) {
+        const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+        response.intakeUrl = `${origin}/intake/standalone/${standaloneSlug}?token=${standaloneOrder.standalone_intake_token}`;
+      }
+    }
+
     return NextResponse.json(response);
   } catch {
     // On any Stripe API error (invalid session ID, network failure, etc.),
