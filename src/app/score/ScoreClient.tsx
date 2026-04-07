@@ -628,7 +628,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               aria-describedby={emailError ? "score-email-error" : undefined}
               className="flex-1 rounded-lg border border-amber-500/30 bg-zinc-800 px-4 py-3 text-base text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none" />
             <button type="submit" disabled={emailSubmitting}
-              className="rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black hover:bg-amber-400 disabled:opacity-50">
+              className="rounded-lg bg-amber-500 px-6 py-3 text-base font-bold text-black hover:bg-amber-400 disabled:opacity-50">
               {emailSubmitting ? "..." : "Send My Report"}
             </button>
           </form>
@@ -675,7 +675,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 <div className="mt-4">
                   <Link
                     href={`/checkout?tier=${playbookKey}&charge=${answers.chargeType}&band=${result.band}`}
-                    className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-sm font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
+                    className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-base font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
                   >
                     Get Your {playbookTier.name} — {playbookTier.priceDisplay} →
                   </Link>
@@ -692,7 +692,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 </p>
                 <Link
                   href={`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`}
-                  className="mt-2 inline-block text-sm text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+                  className="mt-2 inline-block text-base text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
                 >
                   Learn about the Case Decoder →
                 </Link>
@@ -704,7 +704,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         // NO LIVE PLAYBOOK — show Case Decoder as primary (existing behavior)
         return isCrisis ? (
           <div className="space-y-4">
-            <p className="text-sm font-semibold text-zinc-300">Where to start depends on what you need next.</p>
+            <p className="text-base font-semibold text-zinc-300">Where to start depends on what you need next.</p>
             <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
               <h2 className="font-bold text-white">Get your case analyzed by documented defense methodology — {TIER_CORE["case-decoder"].priceDisplay}</h2>
               <p className="mt-2 text-base text-zinc-400">
@@ -716,7 +716,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               <div className="mt-4">
                 <Link
                   href={`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`}
-                  className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-sm font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
+                  className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-base font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
                 >
                   {bandCTAButton[result.band] || "Start My Case Analysis"} — {TIER_CORE["case-decoder"].priceDisplay} →
                 </Link>
@@ -733,7 +733,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 </p>
                 <Link
                   href={`/checkout?tier=intelligence-brief&charge=${answers.chargeType}&band=${result.band}`}
-                  className="mt-2 inline-block text-sm text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+                  className="mt-2 inline-block text-base text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
                 >
                   See what the Intelligence Brief includes →
                 </Link>
@@ -758,7 +758,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             <div className="mt-4">
               <Link
                 href={`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`}
-                className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-sm font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
+                className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-base font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
               >
                 {bandCTAButton[result.band] || "See What My Score Misses"} — {TIER_CORE["case-decoder"].priceDisplay} →
               </Link>
@@ -771,7 +771,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 </p>
                 <Link
                   href={`/checkout?tier=intelligence-brief&charge=${answers.chargeType}&band=${result.band}`}
-                  className="mt-2 inline-block text-sm text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+                  className="mt-2 inline-block text-base text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
                 >
                   See what the Intelligence Brief includes →
                 </Link>
@@ -801,7 +801,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           </p>
           <Link
             href={`/checkout?tier=${CHARGE_PLAYBOOK[answers.chargeType]}`}
-            className="mt-3 w-full rounded-lg border border-amber-500/50 px-6 py-4 text-center text-sm font-semibold text-amber-400 transition-colors hover:border-amber-500 sm:w-auto sm:inline-block block"
+            className="mt-3 w-full rounded-lg border border-amber-500/50 px-6 py-4 text-center text-base font-semibold text-amber-400 transition-colors hover:border-amber-500 sm:w-auto sm:inline-block block"
           >
             Start with the Playbook — {TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE].priceDisplay} →
           </Link>
@@ -819,7 +819,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             <button
               onClick={handleShare}
               disabled={shareLoading}
-              className="mt-4 rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black hover:bg-amber-400 disabled:opacity-50 transition-colors"
+              className="mt-4 rounded-lg bg-amber-500 px-6 py-3 text-base font-bold text-black hover:bg-amber-400 disabled:opacity-50 transition-colors"
             >
               {shareLoading ? "Saving..." : "Save & Get My Link"}
             </button>
@@ -1288,7 +1288,7 @@ export default function ScoreClient() {
                   type="button"
                   disabled={!allAnswered}
                   onClick={() => submitScore(answers)}
-                  className={`rounded-lg px-6 py-3 text-sm font-bold text-black transition-all ${
+                  className={`rounded-lg px-6 py-3 text-base font-bold text-black transition-all ${
                     allAnswered
                       ? "bg-amber-500 hover:bg-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.3)]"
                       : "bg-amber-500/50 cursor-not-allowed opacity-50"

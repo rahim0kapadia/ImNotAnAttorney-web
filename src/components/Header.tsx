@@ -112,7 +112,7 @@ export function Header() {
           ))}
           <Link
             href="/start"
-            className="rounded-lg bg-amber-500 px-4 py-3 text-sm font-semibold text-black transition-all hover:bg-amber-400 hover:shadow-md hover:shadow-amber-500/30"
+            className="rounded-lg bg-amber-500 px-4 py-3 text-base font-semibold text-black transition-all hover:bg-amber-400 hover:shadow-md hover:shadow-amber-500/30"
           >
             Get Started
           </Link>
@@ -188,7 +188,7 @@ export function Header() {
             <Link
               href="/start"
               onClick={() => setMobileOpen(false)}
-              className="rounded-lg bg-amber-500 px-4 py-3 text-center text-sm font-semibold text-black transition-colors hover:bg-amber-400"
+              className="rounded-lg bg-amber-500 px-4 py-3 text-center text-base font-semibold text-black transition-colors hover:bg-amber-400"
             >
               Get Started
             </Link>

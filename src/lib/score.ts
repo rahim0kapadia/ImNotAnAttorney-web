@@ -369,73 +369,73 @@ export function getChargeSpecificObservation(chargeType: string, timeIndex: numb
   switch (chargeType) {
     case "dui":
       if (noAttorney) {
-        return "For DUI cases, the right attorney will immediately request breathalyzer calibration records, dash/body cam footage, and the arresting officer's field sobriety certification. These are the first questions to ask when you retain counsel.";
+        return "DUI defense starts with breathalyzer calibration records, dash/body cam footage, and the officer's sobriety certification. First questions when retaining counsel.";
       }
       return timeIndex >= 2
-        ? "In DUI cases at this stage, defense attorneys typically have already requested breathalyzer calibration records and the arresting officer's field sobriety certification. Ask: \"Have we received the breathalyzer maintenance logs?\""
-        : "For DUI cases, early priorities include requesting the dash/body cam footage and the breathalyzer calibration records. A question worth asking: \"Have these been requested?\"";
+        ? "By now, breathalyzer calibration records and the officer's sobriety certification are key. Ask: \"Have we received the maintenance logs?\""
+        : "For DUI cases, early priorities include requesting dash/body cam footage and breathalyzer calibration records. Ask: \"Have these been requested?\"";
     case "drug":
     case "drug-possession":
       if (noAttorney) {
-        return "For drug possession cases, the right attorney will examine how the evidence was obtained — search warrant validity, informant reliability, chain of custody, and lab report accuracy. These are the first questions to ask when you retain counsel.";
+        return "Drug possession defense examines how evidence was obtained — warrant validity, informant reliability, chain of custody, lab accuracy. Key questions for counsel.";
       }
       return timeIndex >= 2
-        ? "For drug possession cases at this stage, lab report review is critical — weight calculation errors and chain-of-custody gaps have led to charge reductions. Ask: \"Have you reviewed the lab report for accuracy?\""
-        : "For drug possession cases, defense attorneys typically examine how the evidence was obtained — search warrant validity, informant reliability, and chain of custody. Ask: \"What is the plan for challenging the evidence?\"";
+        ? "Lab report review is critical — weight errors and chain-of-custody gaps lead to reductions. Ask: \"Have you reviewed the lab report?\""
+        : "Defense examines how evidence was obtained — warrant validity, informant reliability, chain of custody. Ask: \"What's the plan for challenging evidence?\"";
     case "drug-trafficking":
       if (noAttorney) {
-        return "For trafficking charges, the right attorney will examine whether you're charged based on quantity thresholds or actual distribution evidence, whether confidential informant testimony is involved, and whether wiretap evidence was properly authorized. Mandatory minimums make early intervention critical.";
+        return "Trafficking defense examines quantity thresholds vs. distribution evidence, CI testimony, and wiretap authorization. Mandatory minimums make early counsel critical.";
       }
       return timeIndex >= 2
-        ? "For trafficking cases at this stage, defense attorneys typically review all wiretap authorizations, CI reliability records, and co-defendant statements. Conspiracy charges can extend liability to others' actions. Ask: \"Have the CI's reliability and the basis for the quantity calculation been challenged?\""
-        : "For trafficking cases, key questions include the basis for the charge — quantity-based thresholds vs. actual distribution evidence, and whether conspiracy exposure applies. Ask: \"Am I exposed to mandatory minimums, and what is the quantity at issue?\"";
+        ? "Wiretap authorizations, CI reliability, and co-defendant statements are under review now. Ask: \"Has the quantity basis been challenged?\""
+        : "Key questions: quantity-based thresholds vs. distribution evidence, and conspiracy exposure. Ask: \"Am I exposed to mandatory minimums?\"";
     case "probation-violation":
       if (noAttorney) {
-        return "Probation violation hearings use a lower standard of proof — preponderance of evidence, not beyond reasonable doubt. The right attorney will determine whether this is a technical or substantive violation and whether graduated sanctions or alternatives to revocation are available.";
+        return "Violation hearings use preponderance of evidence, not beyond reasonable doubt. Key question for counsel: technical vs. substantive violation, and alternative sanctions.";
       }
       return timeIndex >= 2
-        ? "For probation violations at this stage, defense attorneys typically prepare a clear strategy for the revocation hearing — including mitigating evidence, compliance documentation, and alternative sanctions. Ask: \"What evidence are we presenting at the hearing, and have we explored graduated sanctions?\""
-        : "For probation violations, the distinction between technical and substantive violations matters — technical violations often have alternatives to revocation. A question worth asking: \"Is this a technical or substantive violation, and what alternatives to jail time exist?\"";
+        ? "Hearing prep includes mitigating evidence, compliance records, and alternative sanctions. Ask: \"What are we presenting, and have we explored alternatives?\""
+        : "Technical vs. substantive violations matters — technical often have alternatives to revocation. Ask: \"What type is this, and what alternatives exist?\"";
     case "white-collar":
       if (noAttorney) {
-        return "White collar cases often have parallel civil or regulatory exposure on a separate timeline. When you retain an attorney, one of the first questions to ask is whether there is civil liability connected to the charges.";
+        return "White collar cases often carry parallel civil or regulatory exposure. A key first question for counsel: is there civil liability connected to these charges?";
       }
-      return "White collar cases often have parallel civil or regulatory exposure on a separate timeline. Ask: \"Is there any civil liability connected to these charges, and are we addressing it?\"";
+      return "White collar cases often carry parallel civil or regulatory exposure. Ask: \"Is there civil liability connected to these charges?\"";
     case "sex-offense":
       if (noAttorney) {
-        return "Sex offense cases carry severe collateral consequences beyond the criminal sentence — mandatory registry under SORNA, residency restrictions, and employment limitations that can last decades. The right attorney will scrutinize forensic evidence procedures, digital evidence handling, and Brady material before anything else.";
+        return "Sex offense cases carry collateral consequences — SORNA registry, residency restrictions, employment limits. The right attorney scrutinizes forensic procedures, digital evidence, and Brady material first.";
       }
       return timeIndex >= 2
-        ? "For sex offense cases at this stage, defense attorneys typically review all forensic reports, challenge evidence handling procedures, and assess Brady material. Registry consequences make every decision high-stakes. Ask: \"Have any issues been identified with how the evidence was collected, and what is the defense theory?\""
-        : "For sex offense cases, defense attorneys typically scrutinize forensic evidence collection, digital evidence preservation, and interview procedures. Ask: \"What are the registration requirements if convicted, and what is the strategy to avoid them?\"";
+        ? "Forensic reports, evidence handling, and Brady material are critical now. Ask: \"Have issues been found with evidence collection, and what's the defense theory?\""
+        : "Defense scrutinizes forensic evidence collection, digital preservation, and interview procedures. Ask: \"What are registration consequences, and what's the strategy?\"";
     case "federal-criminal":
       if (noAttorney) {
-        return "Federal cases move faster and carry harsher penalties than state cases. Federal sentencing guidelines, mandatory minimums, and cooperation agreements make early attorney involvement critical. The right attorney will immediately assess your exposure under the USSG and explore pre-indictment intervention.";
+        return "Federal cases move faster with harsher penalties. Sentencing guidelines, mandatory minimums, and cooperation agreements make early counsel critical for pre-indictment intervention.";
       }
       return timeIndex >= 2
-        ? "For federal cases at this stage, defense attorneys typically file all pre-trial motions, obtain Rule 16 discovery, and develop a clear sentencing strategy. Ask: \"Have we received all Rule 16 discovery, and what is our sentencing exposure under the guidelines?\""
-        : "For federal cases, defense attorneys typically calculate the sentencing guideline range and examine grand jury materials early. Ask: \"What is my estimated guideline range, and what has been discussed with the AUSA?\"";
+        ? "Pre-trial motions, Rule 16 discovery, and sentencing strategy are priorities. Ask: \"Have we received all discovery, and what's our guideline exposure?\""
+        : "Defense calculates the sentencing guideline range and reviews grand jury materials early. Ask: \"What's my estimated guideline range?\"";
     case "self-defense":
       if (noAttorney) {
-        return "Self-defense is an affirmative defense — you're admitting the act but arguing it was justified. The right attorney will examine whether your jurisdiction follows 'stand your ground' or 'duty to retreat,' the proportionality of force used, and the timeline of events. Witness statements and surveillance footage are time-critical.";
+        return "Self-defense means admitting the act but arguing justification. Key factors: stand your ground vs. duty to retreat, force proportionality, timeline. Witness evidence is time-critical.";
       }
       return timeIndex >= 2
-        ? "For self-defense cases at this stage, defense attorneys typically have a clear theory of justification, preserved all surveillance and witness evidence, and prepared for force proportionality arguments. Ask: \"What is the theory of justification, and has all evidence of the threat been preserved?\""
-        : "For self-defense cases, preserving all evidence of the threat is critical — witness statements, surveillance footage, medical records, and 911 recordings. Ask: \"What evidence supports a reasonable belief of imminent harm, and has it been preserved?\"";
+        ? "A clear justification theory and preserved evidence are essential. Ask: \"What's the justification theory, and has all threat evidence been preserved?\""
+        : "Preserving threat evidence is critical — witness statements, surveillance, medical records, 911 recordings. Ask: \"Has all threat evidence been preserved?\"";
     case "other-felony":
       if (noAttorney) {
-        return "For felony cases, the right attorney will build a defense theory by identifying which elements of the charge are weakest. This is typically one of the first conversations when retaining counsel.";
+        return "Felony defense starts by identifying which elements of the charge are weakest. A key first conversation when retaining counsel.";
       }
       return timeIndex >= 2
-        ? "For felony cases at this stage, defense attorneys typically have a clear theory of defense and are preparing for key evidentiary hearings. Ask: \"What is our defense theory and what motions are we filing?\""
-        : `For felony cases, building a defense theory and identifying which elements of the charge are weakest is a key early step. Ask: "What is the theory of defense?"`;
+        ? "A clear defense theory and evidentiary hearing prep are priorities. Ask: \"What's our defense theory and what motions are we filing?\""
+        : `Building a defense theory by identifying the weakest elements of the charge is a key early step. Ask: "What is the theory?"`;
     case "other-misdemeanor":
       if (noAttorney) {
-        return "Even for misdemeanor charges, a conviction creates a permanent record that can affect employment, housing, and professional licensing. Many misdemeanor charges qualify for diversion or deferred adjudication — programs that can result in dismissal. When you retain an attorney, ask specifically about eligibility.";
+        return "Even misdemeanors create a permanent record affecting employment, housing, and licensing. Many qualify for diversion or deferred adjudication. Ask counsel about eligibility.";
       }
       return timeIndex >= 2
-        ? "Even for misdemeanor charges, a conviction creates a permanent record. At this stage, diversion or deferred adjudication options are worth exploring. Ask: \"Have we explored every alternative to a conviction on my record?\""
-        : "Even for misdemeanor charges, a conviction creates a permanent record that can affect employment, housing, and professional licensing. A question worth asking: are diversion or deferred adjudication programs available — options that can result in dismissal instead of conviction?";
+        ? "A conviction creates a permanent record. Diversion and deferred adjudication are worth exploring. Ask: \"Have we explored every alternative to conviction?\""
+        : "Misdemeanor convictions create permanent records affecting employment, housing, and licensing. Worth exploring: diversion or deferred adjudication that can result in dismissal.";
     default:
       return `For ${getChargeLabel(chargeType)} cases, understanding which elements the prosecution must prove — and which ones are weakest — is a key question worth exploring.`;
   }

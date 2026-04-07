@@ -1124,7 +1124,7 @@ function CheckoutContent() {
           <button
             onClick={handleCheckout}
             disabled={loading || !email || (!info.isDigitalProduct && !consentChecked)}
-            className="mt-4 w-full rounded-lg bg-amber-500 py-4 text-sm font-bold text-black transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-4 w-full rounded-lg bg-amber-500 py-4 text-base font-bold text-black transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? (
               <span className="inline-flex items-center gap-2">

@@ -11,12 +11,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { SITE_URL } from "@/lib/site";
 import { requireCron } from "@/lib/auth/guards";
 
-const INDEXNOW_KEY = process.env.INDEXNOW_KEY || "e4052ae08a6601d2550172f078562c00";
+const INDEXNOW_KEY = process.env.INDEXNOW_KEY;
 const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
 
 export async function POST(req: NextRequest) {
   const auth = requireCron(req);
   if (!auth.authorized) return auth.error;
+
+  if (!INDEXNOW_KEY) {
+    return NextResponse.json({ error: "INDEXNOW_KEY not configured" }, { status: 500 });
+  }
 
   let body;
   try {

@@ -29,7 +29,7 @@ export default function PrivacyPage() {
           Privacy Policy
         </h1>
         <p className="mt-2 text-sm text-zinc-400">
-          Last updated: March 6, 2026
+          Last updated: April 6, 2026
         </p>
 
         <div className="mt-10 space-y-8 text-sm leading-relaxed text-zinc-400">
@@ -320,10 +320,51 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <strong className="text-zinc-300">Google Analytics</strong> —
-                Website traffic analytics via Google Analytics 4 (GA4). Sets{" "}
+                Website traffic analytics via Google Analytics 4 (GA4). Collects
+                page views, device information (browser, operating system,
+                screen size), referral source, and user interaction events
+                (clicks, scroll depth, form submissions). IP addresses are
+                anonymized by default before storage. Data is retained for
+                14 months, after which event-level data is automatically
+                deleted while aggregated reports are preserved. Sets{" "}
                 <code className="text-zinc-300">_ga</code> and{" "}
                 <code className="text-zinc-300">_ga_*</code> cookies to
                 distinguish users and sessions. Subject to{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber-400 underline"
+                >
+                  Google&apos;s Privacy Policy
+                </a>
+              </li>
+              <li>
+                <strong className="text-zinc-300">Meta Pixel (consent-gated)</strong> —
+                Conversion tracking and ad measurement for Meta (Facebook,
+                Instagram) advertising. Tracks page views and conversion
+                events (purchases, intake submissions). Sets the{" "}
+                <code className="text-zinc-300">_fbp</code> cookie. Data is
+                shared with Meta for ad targeting and measurement. The Meta
+                Pixel only loads after you provide explicit consent — it is
+                disabled by default. Subject to{" "}
+                <a
+                  href="https://www.facebook.com/privacy/policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber-400 underline"
+                >
+                  Meta&apos;s Privacy Policy
+                </a>
+              </li>
+              <li>
+                <strong className="text-zinc-300">Google Ads (consent-gated)</strong> —
+                Conversion tracking and ad measurement for Google Ads
+                campaigns. Tracks conversion events for ad attribution. Sets
+                the <code className="text-zinc-300">_gcl_au</code> cookie.
+                Data is shared with Google for ad measurement and conversion
+                reporting. Google Ads only loads after you provide explicit
+                consent — it is disabled by default. Subject to{" "}
                 <a
                   href="https://policies.google.com/privacy"
                   target="_blank"
@@ -609,11 +650,20 @@ export default function PrivacyPage() {
               >
                 Stripe&apos;s Privacy Policy
               </a>{" "}
-              for details. We do not use cookies for advertising, retargeting,
-              or cross-site tracking. We do not respond to Global Privacy
-              Control (GPC) or &quot;Do Not Track&quot; (DNT) browser signals
-              because we do not engage in cross-context behavioral advertising
-              or tracking.
+              for details. With your explicit consent, we may also load the
+              Meta Pixel (which sets the{" "}
+              <code className="text-zinc-300">_fbp</code> cookie for
+              conversion tracking on Facebook and Instagram ads) and Google
+              Ads conversion tracking (which sets the{" "}
+              <code className="text-zinc-300">_gcl_au</code> cookie for
+              attribution of Google Ads campaigns). Both are disabled by
+              default and only activate after you opt in. We do not use
+              cookies for cross-site behavioral retargeting outside these
+              consent-gated conversion measurement tools. We do not respond to
+              Global Privacy Control (GPC) or &quot;Do Not Track&quot; (DNT)
+              browser signals because consent for advertising cookies is
+              handled through our explicit opt-in flow rather than browser
+              signals.
             </p>
           </section>
 

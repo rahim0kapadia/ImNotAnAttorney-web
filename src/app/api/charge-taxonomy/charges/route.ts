@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCommonCharges, getJurisdictionStatute } from "@/lib/charge-taxonomy";
+import { getCommonCharges } from "@/lib/charge-taxonomy";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
@@ -21,10 +21,19 @@ export async function GET(req: NextRequest) {
 
     const charges = await getCommonCharges(category, jurisdiction, url, key);
 
-    // If jurisdiction provided, enrich with statute info
-    if (jurisdiction) {
-      const enriched = await Promise.all(charges.map(async (c) => {
-        const statute = await getJurisdictionStatute(c.slug, jurisdiction, url, key);
+    // If jurisdiction provided, enrich with statute info (single batch query)
+    if (jurisdiction && charges.length > 0) {
+      const slugList = charges.map((c) => c.slug).join(",");
+      const statuteRes = await fetch(
+        `${url}/rest/v1/jurisdiction_statutes?common_charge_slug=in.(${slugList})&jurisdiction=eq.${encodeURIComponent(jurisdiction)}&active=eq.true&select=common_charge_slug,statute_number,offense_class`,
+        { headers: { apikey: key, Authorization: `Bearer ${key}` } }
+      );
+      const statutes: Array<{ common_charge_slug: string; statute_number: string | null; offense_class: string | null }> =
+        statuteRes.ok ? await statuteRes.json() : [];
+      const statuteMap = new Map(statutes.map((s) => [s.common_charge_slug, s]));
+
+      const enriched = charges.map((c) => {
+        const statute = statuteMap.get(c.slug);
         return {
           slug: c.slug,
           label: c.label,
@@ -32,7 +41,7 @@ export async function GET(req: NextRequest) {
           statute_number: statute?.statute_number ?? null,
           offense_class: statute?.offense_class ?? null,
         };
-      }));
+      });
       return NextResponse.json(enriched, {
         headers: { "Cache-Control": "public, max-age=3600" },
       });
