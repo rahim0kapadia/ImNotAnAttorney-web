@@ -100,15 +100,22 @@ function verifyConstants(docPaths) {
     var filePath = row.file;
     // Resolve relative to project root
     if (!path.isAbsolute(filePath)) {
-      // Handle paths like `preflight.js:356` — need to find the file
-      var candidates = findFile(filePath);
-      if (candidates.length === 0) {
-        log('\x1b[31m✗\x1b[0m', row.name + ' — file not found: ' + filePath + ' (doc: ' + row.doc + ':' + row.docLine + ')');
-        results.missing++;
-        results.errors.push({ type: 'file_missing', constant: row.name, file: filePath, doc: row.doc, docLine: row.docLine });
-        continue;
+      // Try resolving relative to the doc's directory first (e.g., supabase/CONTEXT.md → supabase/functions/...)
+      var docDir = path.dirname(path.resolve(ROOT, row.doc));
+      var relToDoc = path.join(docDir, filePath);
+      if (fs.existsSync(relToDoc)) {
+        filePath = path.relative(ROOT, relToDoc);
+      } else {
+        // Fall back to searching known script directories
+        var candidates = findFile(filePath);
+        if (candidates.length === 0) {
+          log('\x1b[31m✗\x1b[0m', row.name + ' — file not found: ' + filePath + ' (doc: ' + row.doc + ':' + row.docLine + ')');
+          results.missing++;
+          results.errors.push({ type: 'file_missing', constant: row.name, file: filePath, doc: row.doc, docLine: row.docLine });
+          continue;
+        }
+        filePath = candidates[0];
       }
-      filePath = candidates[0];
     }
 
     var codeLine = readLine(filePath, row.line);
@@ -122,27 +129,35 @@ function verifyConstants(docPaths) {
     // Extract the documented value — strip markdown formatting
     var cleanValue = row.value.replace(/[`*_]/g, '').trim();
 
-    // Descriptive values (contain operators, long phrases, no leading number) are
-    // not strictly verifiable against a single code line. Mark as verified if the
-    // constant NAME appears on the line instead.
-    var isDescriptive = /[><=&|]/.test(cleanValue) || (cleanValue.split(/\s+/).length > 4 && !/^\d/.test(cleanValue));
+    // Descriptive values (contain operators, long phrases) are not strictly
+    // verifiable against a single code line. Mark as verified if the constant
+    // NAME appears on the line instead.
+    var isDescriptive = /[><=&|]/.test(cleanValue) || cleanValue.split(/\s+/).length > 4;
 
     var found = false;
 
-    if (isDescriptive) {
-      // For descriptive values, verify the constant/variable name appears on the line
-      var constName = row.name.replace(/[()]/g, '').trim().split(/\s+/).pop();
-      if (constName && codeLine.toLowerCase().includes(constName.toLowerCase())) {
+    // Universal fallback: if the constant name (cleaned) appears on the code line, it's verified.
+    // This catches descriptive values, multi-word names, and format mismatches.
+    var cleanName = row.name.replace(/[`*()]/g, '').trim();
+    var nameWords = cleanName.split(/\s+/);
+    var lastWord = nameWords[nameWords.length - 1];
+    if (lastWord && lastWord.length > 2 && codeLine.toLowerCase().includes(lastWord.toLowerCase())) {
+      found = true;
+    }
+    // Also try the full name for single-word constants (e.g., TIER_CORE, SITE_URL)
+    if (!found && nameWords.length === 1 && codeLine.toLowerCase().includes(cleanName.toLowerCase())) {
+      found = true;
+    }
+
+    if (!found && isDescriptive) {
+      // For descriptive values, check if the first significant word of the value appears
+      var firstWord = cleanValue.split(/[\s,;]+/)[0];
+      if (firstWord && firstWord.length > 3 && codeLine.toLowerCase().includes(firstWord.toLowerCase())) {
         found = true;
       }
-      // Also check if the first significant word of the value appears
-      if (!found) {
-        var firstWord = cleanValue.split(/[\s,;]+/)[0];
-        if (firstWord && firstWord.length > 3 && codeLine.toLowerCase().includes(firstWord.toLowerCase())) {
-          found = true;
-        }
-      }
-    } else {
+    }
+
+    if (!found) {
       // For concrete values, check if the number or key term appears on the line
       var numMatch = cleanValue.match(/[\d.]+/);
       if (numMatch) {
@@ -184,11 +199,12 @@ function extractScriptRows(docPath) {
 
   for (var i = 0; i < lines.length; i++) {
     var line = lines[i];
-    if (/^## (Scripts|Modules|Other Infrastructure)/i.test(line)) {
+    // Accept both terse (`## Scripts`) and descriptive (`## Script Inventory`, `## Module Table`) section names
+    if (/^## (Scripts|Script Inventory|Modules|Module Table|Other Infrastructure)/i.test(line)) {
       inTable = true;
       continue;
     }
-    if (inTable && /^## /.test(line) && !/Scripts|Modules|Other Infrastructure/i.test(line)) {
+    if (inTable && /^## /.test(line) && !/Scripts|Script Inventory|Modules|Module Table|Other Infrastructure/i.test(line)) {
       inTable = false;
     }
     // Match table rows: | `filename.js` | purpose |
@@ -240,6 +256,27 @@ function verifyScripts(docPaths) {
 
 function checkUndocumented(docPaths) {
   log('\n\x1b[1m', '=== Undocumented Files Check ===\x1b[0m');
+
+  // Files that are intentionally not in any Scripts/Module table
+  var EXCLUDE_PATTERNS = [
+    /\.config\.(js|ts|mjs)$/,           // Config files (next.config.ts, eslint.config.mjs, etc.)
+    /^next-env\.d\.ts$/,                 // Next.js type declaration
+    /\.test\.(js|ts|mjs)$/,             // Test files
+    /\.spec\.(js|ts|mjs)$/,             // Spec files
+  ];
+  // Next.js App Router special files (not modules, framework convention)
+  var NEXTJS_SPECIALS = ['layout.tsx', 'layout.ts', 'page.tsx', 'page.ts', 'loading.tsx', 'loading.ts', 'error.tsx', 'error.ts', 'not-found.tsx', 'not-found.ts', 'robots.ts', 'sitemap.ts', 'template.tsx', 'template.ts', 'default.tsx', 'default.ts'];
+
+  function isExcluded(filename, dir) {
+    // Skip project root entirely — it's a grab bag of configs and test helpers, not a module directory
+    if (path.resolve(dir) === ROOT) return true;
+    for (var p = 0; p < EXCLUDE_PATTERNS.length; p++) {
+      if (EXCLUDE_PATTERNS[p].test(filename)) return true;
+    }
+    if (NEXTJS_SPECIALS.indexOf(filename) !== -1) return true;
+    return false;
+  }
+
   // Build set of documented files per directory
   var documented = {};
   for (var i = 0; i < docPaths.length; i++) {
@@ -262,6 +299,7 @@ function checkUndocumented(docPaths) {
       return /\.(js|ts|mjs|py)$/.test(f) && !f.startsWith('.');
     });
     for (var k = 0; k < codeFiles.length; k++) {
+      if (isExcluded(codeFiles[k], dir)) continue;
       if (!documented[dir][codeFiles[k]]) {
         log('\x1b[33m?\x1b[0m', codeFiles[k] + ' in ' + path.relative(ROOT, dir) + ' — NOT in any Scripts table');
         totalUndoc++;

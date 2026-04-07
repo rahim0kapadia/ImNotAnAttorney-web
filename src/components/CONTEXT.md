@@ -97,7 +97,7 @@
 | STATUS_STYLES | 20+ status→Tailwind class mappings | `StatusBadge.tsx:6-37` |
 | TRUST_BADGES | 4 badges (confidentiality, guarantee, Stripe, methodology) | `TrustBadges.tsx:9-40` |
 | FadeInUp defaults | y: 24px, duration: 0.5s, spring stiffness: 100 | `FadeInUp.tsx:19-40` |
-| StaggerContainer delay | 0.1s between items | `StaggerContainer.tsx:6-13` |
+| StaggerContainer delay | 0.1s between items | `globals.css:77` |
 
 ## Integration Points
 

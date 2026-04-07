@@ -135,31 +135,31 @@ No passwords. Flow: `POST /api/customer/magic-link` → token stored in `magic_l
 | Constant | Value | File:Line |
 |----------|-------|-----------|
 | **Pricing** | | |
-| DUI First Offense | $97, `live: true` | `tiers.ts:31-45` |
-| Case Decoder | $197, priority $97 (4h) | `tiers.ts:151-165` |
-| Intelligence Brief | $997, priority $297 (24h) | `tiers.ts:166-180` |
+| DUI First Offense | $97, `live: true` | `tiers.ts:33-45` |
+| Case Decoder | $197, priority $97 (4h) | `tiers.ts:153-165` |
+| Intelligence Brief | $997, priority $297 (24h) | `tiers.ts:168-180` |
 | X-Ray | $2,497, priority $497 (5 days) | `tiers.ts:181-195` |
 | War Room | $4,997, priority $997 (20 days) | `tiers.ts:196-210` |
-| Situation Room | $9,997 | `tiers.ts:211-225` |
-| Witness Pack | $297 add-on | `tiers.ts:241-255` |
+| Situation Room | $9,997 | `tiers.ts:213-225` |
+| Witness Pack | $297 add-on | `tiers.ts:243-255` |
 | **Scoring** | | |
 | Base score | 50 (neutral midpoint) | `score.ts:77` |
-| Score bands | Critical 0-30, Concerning 31-50, Average 51-70, Adequate 71-85, Excellent 86-100 | `score.ts:299-304` |
+| Score bands | Critical 0-30, Concerning 31-50, Average 51-70, Adequate 71-85, Excellent 86-100 | `score.ts:300-304` |
 | Motions weight | 20% | `score.ts:118` |
-| Discovery weight | 15% | `score.ts:144` |
+| Discovery weight | 15% | `score.ts:145` |
 | Communication weight | 15% | `score.ts:167` |
-| Attorney type weight | 10% | `score.ts:94` |
-| Strategy weight | 10% | `score.ts:192` |
-| Time modifier weight | 30% | `score.ts:80-81` |
+| Attorney type weight | 10% | `score.ts:93` |
+| Strategy weight | 10% | `score.ts:191` |
+| Time modifier weight | 30% | `score.ts:81` |
 | **Rate Limiting** | | |
 | Memory window | 60 seconds | `rate-limit.ts:27` |
 | Memory max requests | 3 per window | `rate-limit.ts:28` |
 | Memory max keys | 10,000 | `rate-limit.ts:29` |
 | **Site** | | |
-| SITE_URL | `https://imnotanattorney.com` | `site.ts:48-49` |
+| SITE_URL | `https://imnotanattorney.com` | `site.ts:49` |
 | CONTACT_EMAIL | `help@imnotanattorney.com` | `site.ts:55` |
-| PHYSICAL_ADDRESS | 195 Dr MLK Jr St N, St Petersburg, FL 33701 | `site.ts:65-66` |
-| OPERATOR_TOKEN_TTL | 86,400s (24h) | `site.ts:129` |
+| PHYSICAL_ADDRESS | 195 Dr MLK Jr St N, St Petersburg, FL 33701 | `site.ts:66` |
+| OPERATOR_TOKEN_TTL | 24 * 60 * 60 = 86,400s (24h) | `site.ts:129` |
 | PHASE2_TOKEN_TTL | 2,592,000s (30 days) | `site.ts:132` |
 | **Email** | | |
 | FROM_EMAIL | `noreply@imnotanattorney.com` | `email.ts:53-54` |

@@ -37,6 +37,11 @@
 | `run-full-pipeline.mjs` | Full charge taxonomy + case law pipeline runner (outside Claude Code). Steps: load jurisdiction data → verify statutes → classify cases. ZERO Claude tokens. Flags: `--skip-load`, `--skip-verify`, `--classify-limit N`. ~6-12 hours end-to-end |
 | `pipeline-status.mjs` | Read-only progress monitor for the verification pipeline. `--watch` refreshes every 30s |
 | `fix-orphan-slugs.mjs` | One-time remapper: remaps non-standard charge slugs to canonical COMMON_CHARGES slugs across all jurisdiction JSONs. Delete after use |
+| `add-reference-urls.mjs` | Appends cross-reference URLs (Justia, Google Scholar, CourtListener search) to `statute_case_law.source_urls[]` from citation patterns. Does not fetch — stores for manual verification. `--limit`, `--dry-run` |
+| `verify-statutes-openstates.mjs` | Verifies unverified statutes against OpenStates API (all 50 states). Appends OpenStates URL to `source_urls[]` and bumps `confidence_score`. Free tier 500 req/day. `--limit`, `--jurisdiction`, `--dry-run` |
+| `verify-via-cap.mjs` | Verifies case law against Harvard CAP static archive (6.7M cases, 1658–2018). Appends CAP URL to `source_urls[]`; deletes unverifiable rows with no CourtListener cluster. `--limit`, `--dry-run` |
+| `verify-via-cornell-scotus.mjs` | Verifies SCOTUS cases via Cornell LII HEAD checks. Appends URL to `source_urls[]`; deletes unverifiable rows. Rate-limited 1s/request. `--limit`, `--dry-run` |
+| `verify-via-courtlistener-citation.mjs` | Verifies case law via CourtListener `/citation-lookup/` POST endpoint. Stores `cluster_id` + URL; deletes unverifiable rows. Rate-limited 1.5s/request. `--limit`, `--dry-run` |
 
 #### Citation Verification — Offline vs Runtime
 
@@ -73,7 +78,6 @@ The full multi-source verification cascade (Harvard CAP, GovInfo, eCFR, Cornell 
 | File | Purpose |
 |------|---------|
 | `geo-prompt-test.mjs` | GEO baseline test (Evan Bailyn method). Logs 10 prompts for manual testing across ChatGPT, Perplexity, Google AI |
-| `demand-feed-query.mjs` | Reddit/Google Trends demand signal queries |
 | `schedule-tweets.mjs` | Schedules pending tweets via Postiz API — 2/day at 9 AM and 6 PM EST, reads `content/queue/twitter/pending` |
 | `schedule-social.mjs` | Multi-platform Postiz scheduler (twitter, facebook, or `--all`). Skips image/video platforms. `--dry-run` supported |
 | `schedule-social-slow.mjs` | Hourly-friendly single-post scheduler (one post per run) to stay under Postiz 30 req/hr limit. Designed for Task Scheduler |
@@ -84,6 +88,7 @@ The full multi-source verification cascade (Harvard CAP, GovInfo, eCFR, Cornell 
 | `render-gbp-cover.js` | GBP cover image → 1024x576 PNG via Puppeteer |
 | `render-gbp-photos.js` | GBP photo assets → PNG via Puppeteer |
 | `render-gbp-profile.js` | GBP profile section → PNG via Puppeteer |
+| `redact-discovery.py` | Redacts PII from real PCSO discovery PDFs and exports pages as 2x retina PNGs for the website. Uses PyMuPDF. Output: `public/discovery/` |
 
 ### Migration Helpers
 | File | Purpose |
@@ -97,7 +102,7 @@ The full multi-source verification cascade (Harvard CAP, GovInfo, eCFR, Cornell 
 | Supabase project ref | `jxjbjmgdukwkoclydqdr` | `load-jurisdiction-data.mjs:17`, `apply-pending-sql.mjs:12`, `classify-case-law.mjs:32` |
 | CourtListener fetch delay | 750ms | `classify-case-law.mjs:33` |
 | FL statute fetch delay | 2000ms | `legal-research-fl.mjs:32` |
-| All-state fetch delay | 1500ms | `legal-research-all.mjs:28` |
+| All-state fetch delay | 1500ms | `legal-research-all.mjs:32` |
 | Generate-worker max retries | 3 (on 529 overloaded) | `generate-worker.mjs` |
 | GBP render dimensions | 1024x576 (2x DPI) | `render-gbp-cover.js:15` |
 | Parent env file | `../ImNotAnAttorney/.env.local` | `load-jurisdiction-data.mjs:20`, `legal-research-fl.mjs:36` |
