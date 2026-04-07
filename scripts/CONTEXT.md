@@ -42,6 +42,9 @@
 | `verify-via-cap.mjs` | Verifies case law against Harvard CAP static archive (6.7M cases, 1658–2018). Appends CAP URL to `source_urls[]`; deletes unverifiable rows with no CourtListener cluster. `--limit`, `--dry-run` |
 | `verify-via-cornell-scotus.mjs` | Verifies SCOTUS cases via Cornell LII HEAD checks. Appends URL to `source_urls[]`; deletes unverifiable rows. Rate-limited 1s/request. `--limit`, `--dry-run` |
 | `verify-via-courtlistener-citation.mjs` | Verifies case law via CourtListener `/citation-lookup/` POST endpoint. Stores `cluster_id` + URL; deletes unverifiable rows. Rate-limited 1.5s/request. `--limit`, `--dry-run` |
+| `bulk-dump-cases.mjs` | Exports all `statute_case_law` rows to local JSON via single Supabase Management API query. Writes to `data/bulk-verify/`. `--output` |
+| `bulk-download-cap.mjs` | Downloads needed CAP CasesMetadata.json volumes from `static.case.law` to `.cap-cache/`. Parses citations from dump JSON, deduplicates. `--dry-run`, `--concurrency N` |
+| `bulk-verify-cases.mjs` | Matches citations against local CAP cache, generates + batch-applies SQL updates. Marks unverifiable as `NOT_IN_DB` (safer than delete for bulk). Zero API calls during verify. `--dry-run` |
 
 #### Citation Verification — Offline vs Runtime
 
