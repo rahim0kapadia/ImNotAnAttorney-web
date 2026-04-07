@@ -38,7 +38,7 @@ export function sanitizeReportHtml(html: string): string {
       ol: ["start", "type"],
       time: ["datetime"],
       abbr: ["title"],
-      "*": ["class", "id"],
+      "*": ["class", "id", "aria-label", "aria-describedby", "role", "lang"],
     },
     allowedSchemes: ["http", "https", "mailto"],
     disallowedTagsMode: "discard",

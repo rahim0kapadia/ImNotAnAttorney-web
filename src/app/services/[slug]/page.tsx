@@ -68,7 +68,7 @@ export default async function ProductLandingPage({ params }: Props) {
   if (!copy) notFound();
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100">
       <div className="mx-auto max-w-2xl px-4 py-16">
         {/* Hero */}
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
@@ -128,6 +128,6 @@ export default async function ProductLandingPage({ params }: Props) {
           attorney remains the final authority on strategy decisions.
         </p>
       </div>
-    </main>
+    </div>
   );
 }

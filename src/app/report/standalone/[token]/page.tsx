@@ -11,6 +11,10 @@
  *   - HTML fetched from Supabase Storage and sanitized before rendering
  *
  * SEO: robots noindex/nofollow — reports must not appear in search engines.
+ *
+ * A11y: No <main> element — root layout provides it. Uses <div> wrappers.
+ * Disclaimer uses text-zinc-600 for 7:1 contrast on white. Upsell link is
+ * self-describing. Waiting state has role="status" and refresh guidance.
  */
 import { notFound } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -50,7 +54,6 @@ export default async function StandaloneReportPage({ params }: Props) {
   const supabase = createAdminClient();
   const tokenHash = hashToken(token);
 
-  // Look up order by hashed token (W14)
   const { data: order, error } = await supabase
     .from("orders")
     .select(
@@ -62,29 +65,28 @@ export default async function StandaloneReportPage({ params }: Props) {
   if (error || !order) notFound();
   if (order.status === "refunded") notFound();
 
-  // Report not yet generated — show waiting state
   if (!order.standalone_report_storage_path) {
     return (
-      <main className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center">
-        <div className="text-center max-w-md px-4">
+      <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center">
+        <div className="text-center max-w-md px-4" role="status">
           <h1 className="text-2xl font-bold mb-4">
             Your report is being generated
           </h1>
           <p className="text-zinc-400">
             You&apos;ll receive an email when it&apos;s ready. This usually
-            takes under 60 seconds.
+            takes under 60 seconds. Refresh this page to check if your report is
+            ready.
           </p>
         </div>
-      </main>
+      </div>
     );
   }
 
-  // Check token expiry
   if (order.standalone_report_token_expires_at) {
     const expires = new Date(order.standalone_report_token_expires_at);
     if (expires < new Date()) {
       return (
-        <main className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center">
+        <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center">
           <div className="text-center max-w-md px-4">
             <h1 className="text-2xl font-bold mb-4">Report Link Expired</h1>
             <p className="text-zinc-400">
@@ -92,25 +94,25 @@ export default async function StandaloneReportPage({ params }: Props) {
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
                 className="text-blue-400 underline"
+                aria-label={`Email support at ${CONTACT_EMAIL}`}
               >
                 {CONTACT_EMAIL}
               </a>{" "}
               for access.
             </p>
           </div>
-        </main>
+        </div>
       );
     }
   }
 
-  // Fetch report HTML from Supabase Storage (W8)
   const { data: htmlBlob, error: storageError } = await supabase.storage
     .from("standalone-reports")
     .download(order.standalone_report_storage_path);
 
   if (storageError || !htmlBlob) {
     return (
-      <main className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center">
+      <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center">
         <div className="text-center max-w-md px-4">
           <h1 className="text-2xl font-bold mb-4">
             Report temporarily unavailable
@@ -120,13 +122,14 @@ export default async function StandaloneReportPage({ params }: Props) {
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="text-blue-400 underline"
+              aria-label={`Email support at ${CONTACT_EMAIL}`}
             >
               {CONTACT_EMAIL}
             </a>
             .
           </p>
         </div>
-      </main>
+      </div>
     );
   }
 
@@ -135,7 +138,7 @@ export default async function StandaloneReportPage({ params }: Props) {
   const product = getProduct(order.standalone_product_slug);
 
   return (
-    <main className="min-h-screen bg-white text-zinc-900 print:bg-white">
+    <div className="min-h-screen bg-white text-zinc-900 print:bg-white">
       <div className="mx-auto max-w-3xl px-4 py-8">
         {product && (
           <header className="mb-8 pb-6 border-b border-zinc-200">
@@ -146,13 +149,12 @@ export default async function StandaloneReportPage({ params }: Props) {
           </header>
         )}
 
-        {/* Report content — styled via report-content class */}
         <article
           className="report-content"
+          aria-label="Report content"
           dangerouslySetInnerHTML={{ __html: safeHtml }}
         />
 
-        {/* Upsell CTA */}
         {product?.upsellText && product.upsellTier && (
           <div className="mt-12 pt-8 border-t border-zinc-200">
             <p className="text-zinc-600 mb-4">{product.upsellText}</p>
@@ -160,13 +162,12 @@ export default async function StandaloneReportPage({ params }: Props) {
               href={`/checkout?tier=${product.upsellTier}`}
               className="inline-block bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold text-sm"
             >
-              Learn More
+              Explore the Case Decoder
             </a>
           </div>
         )}
 
-        {/* Disclaimer */}
-        <p className="mt-8 text-xs text-zinc-400 border-t border-zinc-100 pt-6">
+        <p className="mt-8 text-xs text-zinc-600 border-t border-zinc-100 pt-6">
           This report provides legal INFORMATION — not legal ADVICE. The
           analysis draws on methods developed by elite defense attorneys, applied
           specifically to your case details. Your attorney remains the final
@@ -174,11 +175,10 @@ export default async function StandaloneReportPage({ params }: Props) {
         </p>
       </div>
 
-      {/* Report content styles — since @tailwindcss/typography is not installed */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
-        .report-content h1 { font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1rem; color: #18181b; }
+        .report-content h1 { font-size: 1.25rem; font-weight: 700; margin: 1.75rem 0 0.75rem; color: #18181b; border-bottom: 1px solid #e4e4e7; padding-bottom: 0.5rem; }
         .report-content h2 { font-size: 1.25rem; font-weight: 700; margin: 1.75rem 0 0.75rem; color: #18181b; border-bottom: 1px solid #e4e4e7; padding-bottom: 0.5rem; }
         .report-content h3 { font-size: 1.1rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: #27272a; }
         .report-content p { margin: 0.75rem 0; line-height: 1.7; color: #3f3f46; }
@@ -203,6 +203,6 @@ export default async function StandaloneReportPage({ params }: Props) {
       `,
         }}
       />
-    </main>
+    </div>
   );
 }

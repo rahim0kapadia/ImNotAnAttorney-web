@@ -43,7 +43,7 @@ export default async function StandaloneIntakePage({
   if (!token) notFound();
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100">
       <div className="mx-auto max-w-2xl px-4 py-16">
         <h1 className="text-2xl font-bold mb-2">Complete Your Details</h1>
         <p className="text-zinc-400 mb-8">
@@ -55,6 +55,6 @@ export default async function StandaloneIntakePage({
           token={token}
         />
       </div>
-    </main>
+    </div>
   );
 }

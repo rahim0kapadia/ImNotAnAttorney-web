@@ -160,7 +160,7 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
   }
 
   const selectClass =
-    "w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent";
+    "w-full bg-zinc-900 border border-zinc-600 rounded-lg px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent";
   const labelClass = "block text-sm font-medium text-zinc-300 mb-1.5";
 
   return (
