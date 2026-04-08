@@ -1,0 +1,151 @@
+{
+  "_metadata": {
+    "description": "Verified diversion program eligibility by state. Claude references this instead of generating program names/eligibility from memory.",
+    "sources": [
+      "F.S. § 948.08 (Pretrial Intervention)",
+      "F.S. § 948.16 (Misdemeanor PTI)",
+      "F.S. § 397.334 (Drug Court)",
+      "F.S. § 394.47891 (Mental Health Court)",
+      "F.S. § 394.917 (Veterans Treatment Court)",
+      "F.S. § 958.04 (Youthful Offender)"
+    ],
+    "last_verified": "2026-02-24",
+    "anti_hallucination": "If a program or jurisdiction is not in this file, the report MUST say: 'Diversion program eligibility varies by county and State Attorney's office — ask your attorney about available alternatives.'"
+  },
+  "FL": {
+    "state_name": "Florida",
+    "programs": {
+      "pretrial_intervention_felony": {
+        "name": "Pretrial Intervention Program (PTI) — Felony",
+        "statute": "F.S. § 948.08",
+        "description": "Diversion program allowing eligible defendants to avoid prosecution by completing supervision and conditions",
+        "eligible_charges": "Generally non-violent felonies where defendant has no prior felony convictions",
+        "general_eligibility": [
+          "No prior felony convictions (generally)",
+          "Victim and State Attorney must consent",
+          "Defendant must waive speedy trial",
+          "Typically first-time offenders"
+        ],
+        "disqualifiers": [
+          "Trafficking charges (generally ineligible without special State Attorney approval)",
+          "First-degree felonies (requires State Attorney approval)",
+          "Prior PTI participation",
+          "Crimes involving firearms (varies by circuit)",
+          "DUI (separate diversion process)",
+          "Sex offenses (generally excluded)"
+        ],
+        "completion_result": "Charges dismissed (nolle prosequi) upon successful completion",
+        "typical_duration": "6-12 months (can be up to 1 year for felonies)",
+        "county_variation": "Eligibility criteria and available programs vary significantly by judicial circuit and State Attorney's office"
+      },
+      "pretrial_intervention_misdemeanor": {
+        "name": "Misdemeanor Pretrial Intervention",
+        "statute": "F.S. § 948.16",
+        "description": "Similar to felony PTI but for misdemeanor charges",
+        "eligible_charges": "Misdemeanors where defendant has no prior convictions",
+        "completion_result": "Charges dismissed upon successful completion",
+        "typical_duration": "3-6 months"
+      },
+      "drug_court": {
+        "name": "Drug Court / Treatment-Based Drug Court Program",
+        "statute": "F.S. § 397.334",
+        "description": "Intensive treatment program as alternative to incarceration for substance abuse-related offenses",
+        "eligible_charges": [
+          "Drug possession (Schedule I-V)",
+          "Non-violent drug-related offenses",
+          "Some property crimes driven by substance abuse"
+        ],
+        "general_eligibility": [
+          "Substance abuse disorder diagnosis",
+          "Non-violent offense",
+          "Willingness to participate in treatment",
+          "Varies significantly by county/circuit"
+        ],
+        "disqualifiers": [
+          "Drug trafficking (generally NOT eligible — trafficking penalties are statutory mandatory minimums)",
+          "Violent felonies",
+          "Prior drug court failure (varies by circuit)",
+          "Sex offenses"
+        ],
+        "completion_result": "Varies by circuit — may result in charges dismissed, reduced charges, or reduced sentence",
+        "typical_duration": "12-18 months",
+        "note": "Drug court availability and eligibility vary dramatically by county. Some circuits have very active programs; others are limited."
+      },
+      "veterans_treatment_court": {
+        "name": "Veterans Treatment Court",
+        "statute": "F.S. § 394.47891 (Veterans Treatment Court) and F.S. § 948.08(7) (veteran PTI)",
+        "description": "Specialized court for veterans with service-connected mental health or substance abuse issues",
+        "eligible_charges": "Varies by circuit — generally non-violent offenses with demonstrated connection to military service-related conditions",
+        "general_eligibility": [
+          "Veteran or active duty service member",
+          "Condition connected to military service (PTSD, TBI, substance abuse, mental health)",
+          "Non-violent offense (varies by circuit)",
+          "VA eligibility for treatment services"
+        ],
+        "completion_result": "Varies — may include charge dismissal, reduced charges, or alternative sentencing",
+        "county_variation": "Not available in all circuits. Check local availability."
+      },
+      "mental_health_court": {
+        "name": "Mental Health Court",
+        "statute": "F.S. § 394.47891",
+        "description": "Specialized court for defendants with diagnosed mental health conditions",
+        "eligible_charges": "Varies by circuit — generally non-violent offenses where mental health condition is a contributing factor",
+        "general_eligibility": [
+          "Diagnosed mental health condition",
+          "Connection between condition and offense",
+          "Non-violent offense (varies by circuit)",
+          "Willingness to participate in treatment"
+        ],
+        "completion_result": "Varies by circuit",
+        "county_variation": "Not available in all circuits"
+      },
+      "dui_diversion": {
+        "name": "DUI Diversion / First-Time DUI Program",
+        "description": "Alternative to standard DUI prosecution for first-time offenders",
+        "eligible_charges": "First DUI offense with no aggravating factors",
+        "general_eligibility": [
+          "First DUI offense",
+          "No injury to another person",
+          "No minor in the vehicle",
+          "BAC below certain threshold (varies by program)",
+          "State Attorney consent"
+        ],
+        "disqualifiers": [
+          "Prior DUI conviction",
+          "BAC ≥ 0.15 (in some circuits)",
+          "Accident with injury",
+          "Refusal to submit to testing (in some circuits)",
+          "Commercial driver's license"
+        ],
+        "completion_result": "Charges reduced or dismissed (varies by circuit)",
+        "county_variation": "NOT available in all Florida counties. Many circuits do NOT offer DUI diversion. Check local availability."
+      },
+      "youthful_offender": {
+        "name": "Youthful Offender Sentencing",
+        "statute": "F.S. § 958.04",
+        "description": "Alternative sentencing for defendants under age 21 at time of offense",
+        "general_eligibility": [
+          "Under 21 years old at time of offense",
+          "Not charged with capital or life felony",
+          "Not previously classified as youthful offender",
+          "Judge or State Attorney must designate"
+        ],
+        "max_sentence": "6 years (regardless of statutory maximum for the offense)",
+        "note": "Youthful offender designation is discretionary — not automatic even if criteria are met"
+      }
+    },
+    "substantial_assistance": {
+      "name": "Substantial Assistance (Cooperation)",
+      "statute": "F.S. § 893.135(4) (trafficking); general authority under sentencing statutes",
+      "description": "The ONLY mechanism to go below mandatory minimum sentences in Florida trafficking cases",
+      "how_it_works": "The STATE must file the motion — the judge cannot depart from the mandatory minimum without the State's motion. Defendant provides cooperation (testimony, information, undercover work) in exchange for the State's recommendation for reduced sentence.",
+      "note": "This is not a 'program' — it is a prosecutorial tool. The defendant has no right to substantial assistance; it is entirely at the State Attorney's discretion.",
+      "risks": [
+        "Safety risk to defendant and family",
+        "Cooperation may be insufficient (State determines adequacy)",
+        "Cooperation may not result in the reduction defendant expects",
+        "Information provided can be used against defendant if cooperation fails"
+      ]
+    }
+  }
+}

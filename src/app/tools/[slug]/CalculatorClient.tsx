@@ -15,27 +15,33 @@
  *   lives on the enclosing <label> via focus-within.
  * - On calculate-success: focus moves to the <h2> results heading
  *   (tabIndex={-1}) so screen readers announce the new state.
- * - Results numbers grid is a <dl>/<dt>/<dd> for programmatic label/value
+ * - Good-time results grid is a <dl>/<dt>/<dd> for programmatic label/value
  *   pairing (not <p> tags).
+ * - Diversion results use <ul> (program eligibility is a list, not
+ *   key-value pairs). Per-program UPL hedge in text content.
+ * - Dynamic county options wrapped with aria-live="polite".
  * - Error: role="alert". Success: role="status". Region: labelled by h2.
- * - All interactive hit areas are ≥44px (WCAG 2.5.8 exceeds the 24px min).
+ * - All interactive hit areas are >=44px (WCAG 2.5.8 exceeds the 24px min).
  */
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import type { StandaloneProduct } from "@/lib/products";
 
-// ─── Step definitions (one array per calculator slug) ─────────────
+// --- Step definitions (one array per calculator slug) ---------------
 
 interface StepOption {
   value: string;
   label: string;
 }
 
+type AnswerValue = string | number;
+
 interface Step {
   id: string;
   label: string;
-  type: "select" | "number" | "date";
+  type: "select" | "dropdown" | "number" | "date";
   options?: StepOption[];
+  dynamicOptions?: (answers: Record<string, AnswerValue>) => StepOption[];
   placeholder?: string;
   helpText?: string;
 }
@@ -96,22 +102,140 @@ const GOOD_TIME_STEPS: Step[] = [
   },
 ];
 
+// --- Florida counties (all 67, alphabetical) -----------------------
+
+const FL_COUNTIES: StepOption[] = [
+  "Alachua", "Baker", "Bay", "Bradford", "Brevard", "Broward",
+  "Calhoun", "Charlotte", "Citrus", "Clay", "Collier", "Columbia",
+  "DeSoto", "Dixie", "Duval", "Escambia", "Flagler", "Franklin",
+  "Gadsden", "Gilchrist", "Glades", "Gulf", "Hamilton", "Hardee",
+  "Hendry", "Hernando", "Highlands", "Hillsborough", "Holmes",
+  "Indian River", "Jackson", "Jefferson", "Lafayette", "Lake", "Lee",
+  "Leon", "Levy", "Liberty", "Madison", "Manatee", "Marion", "Martin",
+  "Miami-Dade", "Monroe", "Nassau", "Okaloosa", "Okeechobee", "Orange",
+  "Osceola", "Palm Beach", "Pasco", "Pinellas", "Polk", "Putnam",
+  "Santa Rosa", "Sarasota", "Seminole", "St. Johns", "St. Lucie",
+  "Sumter", "Suwannee", "Taylor", "Union", "Volusia", "Wakulla",
+  "Walton", "Washington",
+].map((name) => ({ value: name, label: name }));
+
+const DIVERSION_STEPS: Step[] = [
+  {
+    id: "state",
+    label: "What state is your case in?",
+    type: "select",
+    options: [{ value: "FL", label: "Florida" }],
+    helpText: "We currently cover Florida. More states coming soon.",
+  },
+  {
+    id: "county",
+    label: "What county is your case in?",
+    type: "dropdown",
+    dynamicOptions: (answers) => {
+      if (answers.state === "FL") return FL_COUNTIES;
+      return [];
+    },
+  },
+  {
+    id: "chargeType",
+    label: "What type of charge?",
+    type: "select",
+    options: [
+      { value: "drug-possession", label: "Drug Possession" },
+      { value: "drug-trafficking", label: "Drug Trafficking" },
+      { value: "dui", label: "DUI / DWI" },
+      { value: "assault", label: "Assault" },
+      { value: "theft-property", label: "Theft / Property Crime" },
+      { value: "domestic-violence", label: "Domestic Violence" },
+      { value: "white-collar", label: "White Collar / Fraud" },
+      { value: "other-felony", label: "Other Felony" },
+      { value: "other-misdemeanor", label: "Other Misdemeanor" },
+    ],
+  },
+  {
+    id: "chargeCategory",
+    label: "What is the charge classification?",
+    type: "select",
+    options: [
+      { value: "felony", label: "Felony" },
+      { value: "misdemeanor", label: "Misdemeanor" },
+    ],
+  },
+  {
+    id: "priorConvictions",
+    label: "Do you have prior convictions?",
+    type: "select",
+    options: [
+      { value: "none", label: "No prior convictions" },
+      { value: "misdemeanor", label: "Prior misdemeanor(s)" },
+      { value: "felony", label: "Prior felony" },
+      { value: "multiple", label: "Multiple prior convictions" },
+    ],
+  },
+  {
+    id: "priorDiversion",
+    label: "Have you previously participated in a diversion program?",
+    type: "select",
+    options: [
+      { value: "yes", label: "Yes" },
+      { value: "no", label: "No" },
+    ],
+  },
+  {
+    id: "chargeInvolves",
+    label: "Which of the following best describes the charge?",
+    type: "select",
+    options: [
+      { value: "violence", label: "Violence" },
+      { value: "firearms", label: "Firearms" },
+      { value: "sexual", label: "Sexual conduct" },
+      { value: "trafficking", label: "Trafficking" },
+      { value: "none", label: "None of the above" },
+    ],
+  },
+  {
+    id: "isVeteran",
+    label: "Are you a military veteran?",
+    type: "select",
+    options: [
+      { value: "yes", label: "Yes" },
+      { value: "no", label: "No" },
+    ],
+  },
+  {
+    id: "substanceAbuse",
+    label: "Do you have a history of substance abuse?",
+    type: "select",
+    options: [
+      { value: "yes", label: "Yes" },
+      { value: "no", label: "No" },
+    ],
+    helpText: "This determines drug court eligibility.",
+  },
+  {
+    id: "mentalHealthDiagnosis",
+    label: "Do you have a diagnosed mental health condition?",
+    type: "select",
+    options: [
+      { value: "yes", label: "Yes" },
+      { value: "no", label: "No" },
+    ],
+    helpText: "This determines mental health court eligibility.",
+  },
+];
+
 const STEP_MAP: Record<string, Step[]> = {
   "good-time": GOOD_TIME_STEPS,
-  // "sol": SOL_STEPS,
-  // "diversion": DIVERSION_STEPS,
+  "diversion-eligibility": DIVERSION_STEPS,
 };
 
-// Every calculator eventually contributes to prisonType context — for
-// good-time this is hard-coded to "state" because the rules file only
-// covers state sentences. Federal and county have separate rule systems.
 const DEFAULT_PRISON_TYPE: Record<string, string> = {
   "good-time": "state",
 };
 
-// ─── Types for API response ──────────────────────────────────────
+// --- Types for API response ----------------------------------------
 
-interface CalculatorResult {
+interface GoodTimeResult {
   supported: boolean;
   stateName?: string;
   minimumServePercent?: number;
@@ -125,12 +249,234 @@ interface CalculatorResult {
   fallbackMessage?: string;
 }
 
-type AnswerValue = string | number;
+interface DiversionProgramAssessment {
+  programName: string;
+  programKey: string;
+  statute: string | null;
+  eligibility: "LIKELY_ELIGIBLE" | "POSSIBLY_ELIGIBLE" | "LIKELY_INELIGIBLE" | "NOT_APPLICABLE";
+  reasons: string[];
+  description: string;
+  typicalDuration: string | null;
+  completionResult: string | null;
+}
+
+interface DiversionClientResult {
+  supported: boolean;
+  stateName: string;
+  county: string;
+  programs: DiversionProgramAssessment[];
+  disqualifiersIdentified: string[];
+  questions: string[];
+  countyNote: string;
+  fallbackMessage?: string;
+}
+
+type CalculatorResult = GoodTimeResult | DiversionClientResult;
 
 interface Props {
   slug: string;
   product: StandaloneProduct;
 }
+
+// --- Diversion eligibility badge colors (brand: amber positive) ----
+
+const ELIGIBILITY_BADGE: Record<
+  DiversionProgramAssessment["eligibility"],
+  { label: string; className: string } | null
+> = {
+  LIKELY_ELIGIBLE: {
+    label: "Likely Eligible",
+    className: "bg-amber-500/20 text-amber-400 border-amber-500/40",
+  },
+  POSSIBLY_ELIGIBLE: {
+    label: "Factors to Explore",
+    className: "bg-zinc-500/20 text-zinc-300 border-zinc-500/40",
+  },
+  LIKELY_INELIGIBLE: {
+    label: "Likely Ineligible",
+    className: "bg-red-500/20 text-red-400 border-red-500/40",
+  },
+  NOT_APPLICABLE: null,
+};
+
+function isDiversionResult(
+  slug: string,
+  _r: CalculatorResult,
+): _r is DiversionClientResult {
+  return slug === "diversion-eligibility";
+}
+
+// --- Diversion result renderer -------------------------------------
+
+function DiversionResults({ result }: { result: DiversionClientResult }) {
+  if (!result.supported) {
+    return (
+      <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 mb-6">
+        <p className="text-zinc-200">
+          {result.fallbackMessage ??
+            "We couldn\u2019t compute a result for this combination."}
+        </p>
+      </div>
+    );
+  }
+
+  const visiblePrograms = result.programs.filter(
+    (p) => ELIGIBILITY_BADGE[p.eligibility] !== null,
+  );
+  const detailPrograms = result.programs.filter(
+    (p) =>
+      p.eligibility === "LIKELY_ELIGIBLE" ||
+      p.eligibility === "POSSIBLY_ELIGIBLE",
+  );
+
+  return (
+    <>
+      {/* Eligibility Summary */}
+      <section className="mb-8">
+        <h3 className="text-lg font-semibold text-zinc-50 mb-4">
+          Eligibility Summary
+        </h3>
+        <ul className="space-y-3">
+          {visiblePrograms.map((program) => {
+            const badge = ELIGIBILITY_BADGE[program.eligibility]!;
+            return (
+              <li
+                key={program.programKey}
+                className="bg-zinc-900 border border-zinc-700 rounded-lg p-4"
+              >
+                <div className="flex flex-wrap items-center gap-3 mb-2">
+                  <span className="font-medium text-zinc-50">
+                    {program.programName}
+                  </span>
+                  <span
+                    className={`text-xs font-medium px-2.5 py-1 rounded-full border ${badge.className}`}
+                  >
+                    {badge.label}
+                  </span>
+                </div>
+                {program.statute && (
+                  <p className="text-xs text-zinc-400 mb-1">
+                    {program.statute}
+                  </p>
+                )}
+                {program.reasons[0] && (
+                  <p className="text-sm text-zinc-300">
+                    {program.eligibility === "LIKELY_ELIGIBLE"
+                      ? "Based on published eligibility criteria, you may qualify."
+                      : program.eligibility === "POSSIBLY_ELIGIBLE"
+                        ? "Based on published eligibility criteria, there are factors worth exploring."
+                        : "Based on published eligibility criteria, this program may not be available given your situation."}{" "}
+                    {program.reasons[0]}
+                  </p>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      {/* Program Details */}
+      {detailPrograms.length > 0 && (
+        <section className="mb-8">
+          <h3 className="text-lg font-semibold text-zinc-50 mb-4">
+            Program Details
+          </h3>
+          <ul className="space-y-4">
+            {detailPrograms.map((program) => (
+              <li
+                key={program.programKey}
+                className="bg-zinc-900 border border-zinc-700 rounded-lg p-5"
+              >
+                <h4 className="font-medium text-zinc-50 mb-2">
+                  {program.programName}
+                </h4>
+                <p className="text-sm text-zinc-300 mb-3">
+                  {program.description}
+                </p>
+                {program.typicalDuration && (
+                  <p className="text-sm text-zinc-400 mb-1">
+                    <span className="text-zinc-500">Typical duration:</span>{" "}
+                    {program.typicalDuration}
+                  </p>
+                )}
+                {program.completionResult && (
+                  <p className="text-sm text-zinc-400 mb-3">
+                    <span className="text-zinc-500">On completion:</span>{" "}
+                    {program.completionResult}
+                  </p>
+                )}
+                <p className="text-xs text-zinc-500 italic mb-2">
+                  Based on published eligibility criteria, you may qualify for
+                  this program. This is not a determination of eligibility.
+                </p>
+                <ul className="space-y-1">
+                  {program.reasons.map((reason, i) => (
+                    <li
+                      key={i}
+                      className="text-sm text-zinc-300 pl-4 relative before:content-['\2022'] before:absolute before:left-0 before:text-zinc-500"
+                    >
+                      {reason}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Disqualifiers Identified */}
+      {result.disqualifiersIdentified.length > 0 && (
+        <section className="mb-8">
+          <h3 className="text-lg font-semibold text-zinc-50 mb-2">
+            Disqualifiers Identified
+          </h3>
+          <p className="text-sm text-zinc-400 mb-3">
+            These factors, based on the information you provided, may affect your
+            eligibility for certain programs:
+          </p>
+          <ul className="space-y-2">
+            {result.disqualifiersIdentified.map((dq, i) => (
+              <li
+                key={i}
+                className="text-sm text-red-300 bg-red-900/20 border border-red-800/40 rounded-lg px-4 py-3"
+              >
+                {dq}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Questions for Your Attorney */}
+      {result.questions.length > 0 && (
+        <section className="mb-8">
+          <h3 className="text-lg font-semibold text-zinc-50 mb-3">
+            Questions for Your Attorney
+          </h3>
+          <ol className="space-y-2 list-decimal list-inside">
+            {result.questions.map((q, i) => (
+              <li key={i} className="text-sm text-zinc-200 leading-relaxed">
+                {q}
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      {/* County Note */}
+      {result.countyNote && (
+        <section className="mb-6">
+          <p className="text-xs text-zinc-500 border-t border-zinc-800 pt-4">
+            {result.countyNote}
+          </p>
+        </section>
+      )}
+    </>
+  );
+}
+
+// --- Main component ------------------------------------------------
 
 export default function CalculatorClient({ slug, product }: Props) {
   const steps = STEP_MAP[slug];
@@ -145,20 +491,14 @@ export default function CalculatorClient({ slug, product }: Props) {
   const stepContainerRef = useRef<HTMLDivElement>(null);
   const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
 
-  // Focus management: when the step changes, focus the first interactive
-  // control in the new step so keyboard users land in the right place.
   useEffect(() => {
     if (!result && stepContainerRef.current) {
-      const input =
-        stepContainerRef.current.querySelector<HTMLElement>(
-          'input:not([type="hidden"]), select, button[role="radio"]',
-        );
-      input?.focus();
+      const legend =
+        stepContainerRef.current.querySelector<HTMLElement>("legend");
+      legend?.focus();
     }
   }, [currentStep, result]);
 
-  // Focus management: when results arrive, move focus to the results
-  // heading so screen reader users hear the new state announced.
   useEffect(() => {
     if (result && resultsHeadingRef.current) {
       resultsHeadingRef.current.focus();
@@ -223,7 +563,6 @@ export default function CalculatorClient({ slug, product }: Props) {
     }
   }
 
-  // Fail closed if the calculator wasn't configured for this slug.
   if (!steps) {
     return (
       <p role="alert" className="text-red-400">
@@ -234,6 +573,9 @@ export default function CalculatorClient({ slug, product }: Props) {
 
   const step = steps[currentStep];
   const isLastStep = currentStep === steps.length - 1;
+  const resolvedOptions = step.dynamicOptions
+    ? step.dynamicOptions(answers)
+    : step.options;
   const currentAnswer = answers[step.id];
   const canProceed =
     currentAnswer !== undefined &&
@@ -250,8 +592,6 @@ export default function CalculatorClient({ slug, product }: Props) {
   }
 
   function handleNumberChange(value: string, id: string) {
-    // Strip non-digits (inputMode="numeric" + pattern helps but doesn't
-    // enforce on paste). Empty string clears the value.
     const cleaned = value.replace(/[^0-9]/g, "");
     setAnswers((a) => {
       if (cleaned === "") {
@@ -263,7 +603,7 @@ export default function CalculatorClient({ slug, product }: Props) {
     });
   }
 
-  // ─── RESULTS VIEW ────────────────────────────────────────────
+  // --- RESULTS VIEW ------------------------------------------------
 
   if (result) {
     return (
@@ -281,64 +621,95 @@ export default function CalculatorClient({ slug, product }: Props) {
           Your Results
         </h2>
 
-        {result.supported === false || !result.minimumServePercent ? (
-          <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 mb-6">
-            <p className="text-zinc-200">
-              {result.fallbackMessage ??
-                "We couldn't compute a result for this combination."}
-            </p>
-          </div>
+        {isDiversionResult(slug, result) ? (
+          <DiversionResults result={result} />
         ) : (
           <>
-            <dl className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 mb-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <dt className="text-zinc-300 text-sm">Minimum Serve Time</dt>
-                <dd className="text-2xl font-bold text-zinc-50">
-                  {result.minimumServePercent}%
-                </dd>
+            {(result as GoodTimeResult).supported === false ||
+            !(result as GoodTimeResult).minimumServePercent ? (
+              <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 mb-6">
+                <p className="text-zinc-200">
+                  {(result as GoodTimeResult).fallbackMessage ??
+                    "We couldn\u2019t compute a result for this combination."}
+                </p>
               </div>
-              <div>
-                <dt className="text-zinc-300 text-sm">Estimated Serve</dt>
-                <dd className="text-2xl font-bold text-zinc-50">
-                  {result.estimatedServeMonths} months
-                </dd>
-              </div>
-              <div>
-                <dt className="text-zinc-300 text-sm">
-                  Potential Good Time Reduction
-                </dt>
-                <dd className="text-2xl font-bold text-green-400">
-                  {result.estimatedCreditMonths ?? 0} months
-                </dd>
-              </div>
-              <div>
-                <dt className="text-zinc-300 text-sm">
-                  After Custody Credit
-                </dt>
-                <dd className="text-2xl font-bold text-blue-300">
-                  {result.estimatedNetServeMonths} months
-                </dd>
-              </div>
-            </dl>
+            ) : (
+              <>
+                <dl className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 mb-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <dt className="text-zinc-300 text-sm">
+                      Minimum Serve Time
+                    </dt>
+                    <dd className="text-2xl font-bold text-zinc-50">
+                      {(result as GoodTimeResult).minimumServePercent}%
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-zinc-300 text-sm">Estimated Serve</dt>
+                    <dd className="text-2xl font-bold text-zinc-50">
+                      {(result as GoodTimeResult).estimatedServeMonths} months
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-zinc-300 text-sm">
+                      Potential Good Time Reduction
+                    </dt>
+                    <dd className="text-2xl font-bold text-green-400">
+                      {(result as GoodTimeResult).estimatedCreditMonths ?? 0}{" "}
+                      months
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-zinc-300 text-sm">
+                      After Custody Credit
+                    </dt>
+                    <dd className="text-2xl font-bold text-blue-300">
+                      {(result as GoodTimeResult).estimatedNetServeMonths}{" "}
+                      months
+                    </dd>
+                  </div>
+                </dl>
 
-            <p className="text-xs text-zinc-400 mb-6">
-              Based on {result.ruleApplied} ({result.statuteCitation})
-            </p>
+                <p className="text-xs text-zinc-400 mb-6">
+                  Based on {(result as GoodTimeResult).ruleApplied} (
+                  {(result as GoodTimeResult).statuteCitation})
+                </p>
 
-            <ul className="mb-6 space-y-3">
-              {result.observations.map((obs, i) => (
-                <li
-                  key={i}
-                  className="text-zinc-200 text-base leading-relaxed"
-                >
-                  {obs}
-                </li>
-              ))}
-            </ul>
+                <ul className="mb-6 space-y-3">
+                  {(result as GoodTimeResult).observations.map((obs, i) => (
+                    <li
+                      key={i}
+                      className="text-zinc-200 text-base leading-relaxed"
+                    >
+                      {obs}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </>
         )}
 
-        {/* ─── Email save (post-value) ─────────────────────────── */}
+        {/* Start Over */}
+        <div className="mt-6 mb-2">
+          <button
+            type="button"
+            onClick={() => {
+              setResult(null);
+              setCurrentStep(0);
+              setAnswers({});
+              setError(null);
+              setSaved(false);
+              setSaveEmail("");
+              setSaveError(null);
+            }}
+            className="text-sm text-zinc-400 hover:text-zinc-200 underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 rounded"
+          >
+            Start over with different answers
+          </button>
+        </div>
+
+        {/* Email save (post-value) */}
         {!saved ? (
           <div className="mt-8 bg-zinc-900 border border-zinc-700 rounded-lg p-6">
             <h3 className="font-semibold mb-2 text-zinc-50">
@@ -393,7 +764,7 @@ export default function CalculatorClient({ slug, product }: Props) {
           </div>
         )}
 
-        {/* ─── Upsell CTA ─────────────────────────────────────── */}
+        {/* Upsell CTA */}
         {product.upsellTier && product.upsellText && (
           <div className="mt-8 border-t border-zinc-800 pt-8">
             <p className="text-zinc-200 mb-4">{product.upsellText}</p>
@@ -409,7 +780,7 @@ export default function CalculatorClient({ slug, product }: Props) {
     );
   }
 
-  // ─── WIZARD VIEW ─────────────────────────────────────────────
+  // --- WIZARD VIEW -------------------------------------------------
 
   return (
     <div ref={stepContainerRef}>
@@ -439,7 +810,10 @@ export default function CalculatorClient({ slug, product }: Props) {
 
       {/* Current step */}
       <fieldset className="border-0 p-0 m-0">
-        <legend className="text-xl font-semibold mb-4 text-zinc-50">
+        <legend
+          tabIndex={-1}
+          className="text-xl font-semibold mb-4 text-zinc-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 rounded"
+        >
           {step.label}
         </legend>
         {step.helpText && (
@@ -448,9 +822,12 @@ export default function CalculatorClient({ slug, product }: Props) {
           </p>
         )}
 
-        {step.type === "select" && step.options && (
-          <div className="space-y-2">
-            {step.options.map((opt) => {
+        {step.type === "select" && resolvedOptions && (
+          <div
+            className="space-y-2"
+            {...(step.dynamicOptions ? { "aria-live": "polite" as const } : {})}
+          >
+            {resolvedOptions.map((opt) => {
               const selected = answers[step.id] === opt.value;
               return (
                 <label
@@ -486,12 +863,44 @@ export default function CalculatorClient({ slug, product }: Props) {
           </div>
         )}
 
+        {step.type === "dropdown" && resolvedOptions && (
+          <div
+            {...(step.dynamicOptions ? { "aria-live": "polite" as const } : {})}
+          >
+            <select
+              value={
+                typeof answers[step.id] === "string"
+                  ? (answers[step.id] as string)
+                  : ""
+              }
+              onChange={(e) =>
+                setAnswers((a) => ({ ...a, [step.id]: e.target.value }))
+              }
+              aria-label={step.label}
+              aria-describedby={
+                step.helpText ? `help-${step.id}` : undefined
+              }
+              className="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-4 py-3 text-lg text-zinc-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+            >
+              <option value="" disabled>
+                Select…
+              </option>
+              {resolvedOptions.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         {step.type === "number" && (
           <input
             type="text"
             inputMode="numeric"
             pattern="[0-9]*"
             autoComplete="off"
+            aria-label={step.label}
             placeholder={step.placeholder}
             value={
               typeof answers[step.id] === "number"
@@ -509,6 +918,7 @@ export default function CalculatorClient({ slug, product }: Props) {
         {step.type === "date" && (
           <input
             type="date"
+            aria-label={step.label}
             value={
               typeof answers[step.id] === "string"
                 ? (answers[step.id] as string)
@@ -542,7 +952,7 @@ export default function CalculatorClient({ slug, product }: Props) {
           disabled={!canProceed || loading}
           className="flex-1 bg-blue-500 hover:bg-blue-400 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
         >
-          {loading ? "Calculating…" : isLastStep ? "Calculate" : "Next"}
+          {loading ? "Calculating\u2026" : isLastStep ? "Calculate" : "Next"}
         </button>
       </div>
 

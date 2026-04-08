@@ -103,7 +103,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellText:
       "Diversion eligibility is just one factor. The Case Decoder maps your full range of options.",
     dripSequenceKey: "calculator_diversion",
-    isActive: false,
+    isActive: true,
   },
 
   // ─── RESEARCH PRODUCTS ($97-$297 — instant generated reports) ─
@@ -925,7 +925,92 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellText:
       "After arraignment, the real preparation begins. The Case Decoder maps your next steps.",
     dripSequenceKey: null,
-    isActive: false,
+    isActive: true,
+  },
+  "courtroom-behavior": {
+    name: "Courtroom Behavior Expectations",
+    category: "content",
+    price: 0,
+    priceDisplay: "Free",
+    delivery: "Instant",
+    deliveryDetail: "Read immediately — no sign-up required.",
+    description:
+      "How to act, speak, and present yourself in court — from someone who learned the hard way.",
+    intakeFields: [],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Know the etiquette. The Case Decoder maps the defense strategy.",
+    dripSequenceKey: null,
+    isActive: true,
+  },
+  "court-outfit": {
+    name: "Court Date Outfit Guidance",
+    category: "content",
+    price: 0,
+    priceDisplay: "Free",
+    delivery: "Instant",
+    deliveryDetail: "Read immediately — no sign-up required.",
+    description:
+      "What to wear and what NOT to wear to your court date — judges notice more than you think.",
+    intakeFields: [],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Look the part. The Case Decoder covers the substance of your defense.",
+    dripSequenceKey: null,
+    isActive: true,
+  },
+  "jail-visitation": {
+    name: "Jail Visitation Logistics",
+    category: "content",
+    price: 0,
+    priceDisplay: "Free",
+    delivery: "Instant",
+    deliveryDetail: "Read immediately — no sign-up required.",
+    description:
+      "What to bring, what to expect, and how to find your facility's visitation rules.",
+    intakeFields: [],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Help them understand their case. The Case Decoder gives a clear picture of what they are facing.",
+    dripSequenceKey: null,
+    isActive: true,
+  },
+  "character-reference-letter": {
+    name: "Character Reference Letter Guidance",
+    category: "content",
+    price: 0,
+    priceDisplay: "Free",
+    delivery: "Instant",
+    deliveryDetail: "Read immediately — no sign-up required.",
+    description:
+      "What judges look for in character reference letters — and a framework to write one that matters.",
+    intakeFields: [],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "A strong letter helps. The Case Decoder maps the full defense strategy.",
+    dripSequenceKey: null,
+    isActive: true,
+  },
+  "attorney-communication": {
+    name: "Attorney Communication Templates",
+    category: "content",
+    price: 0,
+    priceDisplay: "Free",
+    delivery: "Instant",
+    deliveryDetail: "Read immediately — no sign-up required.",
+    description:
+      "Email templates and a communication log for productive conversations with your defense attorney.",
+    intakeFields: [],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Communicate effectively. The Case Decoder gives your attorney the research they need.",
+    dripSequenceKey: null,
+    isActive: true,
   },
 } as const satisfies Record<string, StandaloneProduct>;
 

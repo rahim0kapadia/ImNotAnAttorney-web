@@ -3,7 +3,7 @@
  *
  * POST /api/tools/good-time   → Good Time Credit Calculator
  * POST /api/tools/sol          → Statute of Limitations Calculator (future)
- * POST /api/tools/diversion    → Diversion Eligibility Checker (future)
+ * POST /api/tools/diversion-eligibility → Diversion Eligibility Checker
  *
  * Pattern: Same as /api/score — validate input, compute, return result,
  * fire anonymous analytics. No PII stored at computation time.
@@ -19,6 +19,9 @@ import {
   calculateGoodTime,
   validateGoodTimeInput,
   type GoodTimeInput,
+  calculateDiversion,
+  validateDiversionInput,
+  type DiversionInput,
 } from "@/lib/calculator";
 
 /**
@@ -38,8 +41,11 @@ const CALCULATOR_REGISTRY: Record<
     validate: (input) => validateGoodTimeInput(input as GoodTimeInput),
     calculate: (input) => calculateGoodTime(input as GoodTimeInput),
   },
+  "diversion-eligibility": {
+    validate: (input) => validateDiversionInput(input as DiversionInput),
+    calculate: (input) => calculateDiversion(input as DiversionInput),
+  },
   // "sol": { validate: validateSOLInput, calculate: calculateSOL },
-  // "diversion": { validate: validateDiversionInput, calculate: calculateDiversion },
 };
 
 export async function POST(

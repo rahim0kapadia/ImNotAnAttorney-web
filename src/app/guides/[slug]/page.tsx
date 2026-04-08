@@ -53,6 +53,12 @@ const GUIDE_CONTENT: Record<
 > = {
   "first-court-appearance": () => import("../content/first-court-appearance"),
   "family-action-plan": () => import("../content/family-action-plan"),
+  "arraignment-protocol": () => import("../content/arraignment-protocol"),
+  "courtroom-behavior": () => import("../content/courtroom-behavior"),
+  "court-outfit": () => import("../content/court-outfit"),
+  "jail-visitation": () => import("../content/jail-visitation"),
+  "character-reference-letter": () => import("../content/character-reference-letter"),
+  "attorney-communication": () => import("../content/attorney-communication"),
 };
 
 /**
