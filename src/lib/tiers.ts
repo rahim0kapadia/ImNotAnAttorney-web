@@ -180,7 +180,8 @@ export const TIER_CORE = {
   },
   "x-ray": {
     name: "The X-Ray",
-    price: 249700,
+    // PRICE TEST: raise to $2,997 after Wave 1 ships in production
+    price: 249700,  // x-ray current
     priceDisplay: "$2,497",
     delivery: "10 business days",
     deliveryDetail: "Included reports (Case Decoder + Intelligence Brief) are delivered first, then your full X-Ray analysis within 10 business days of document upload.",
@@ -195,7 +196,8 @@ export const TIER_CORE = {
   },
   "war-room": {
     name: "The War Room",
-    price: 499700,
+    // PRICE TEST: raise to $5,997 after Wave 1 ships in production
+    price: 499700,  // war-room current
     priceDisplay: "$4,997",
     delivery: "25-28 days + weekly updates",
     deliveryDetail: "Included reports delivered first, then your full War Room intelligence package within 25-28 business days. Weekly updates begin immediately after initial delivery.",
@@ -210,7 +212,8 @@ export const TIER_CORE = {
   },
   "situation-room": {
     name: "The Situation Room",
-    price: 999700,
+    // PRICE TEST: raise to $14,997 after Wave 3 ships in production
+    price: 999700,  // situation-room current
     priceDisplay: "$9,997",
     delivery: "24-48hr priority turnaround",
     deliveryDetail: "All deliverables on a priority timeline with 24-48hr turnaround per stage. Trial Intelligence Operations activate when trial begins.",

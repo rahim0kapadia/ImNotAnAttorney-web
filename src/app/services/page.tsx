@@ -66,7 +66,17 @@ export const metadata: Metadata = {
  *   - stageLabel: case-stage label (e.g., "First 30 days") shown above tier name
  *   - requiresWarRoom: true -> "Requires War Room" prerequisite badge
  *   - discovery: true -> shows "Requires discovery documents" note
+ *   - capabilities?: optional sub-list of capability bullets rendered beneath the desc
  */
+// COURT CASE PORT — Wave 1 Step 9
+// Capability bullets named below depend on feature flags set in Step 8:
+//   x-ray desc references Judge Intelligence Profile + Motion Opportunity Preview
+//     (gated on ff.wave1.judge_intelligence_profile + ff.wave1.motion_wave_strategy)
+//   war-room desc references Judge Dossier + Motion Wave Strategy + Cross-Exam Library
+//     (gated on ff.wave1.judge_intelligence_profile + ff.wave2.cross_exam_templates)
+//   situation-room desc references Full Battle Intelligence triangle
+//     (gated on ff.wave3.witness_structured_research + wave1 + wave2 flags)
+// DO NOT flip copy on before Step 8 flags are enabled in production.
 const caseTypes = [
   {
     title: "Drug Cases",
@@ -94,7 +104,12 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "We read every page of your discovery and flag what doesn't add up. Missing evidence. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references. Each question shows what a good answer looks like — and what a red flag looks like. Also includes your Intelligence Brief, a Discovery Strength Rating, and a Prosecution Weakness Analysis.",
+        desc: "We read every page of your discovery and flag what doesn't add up. Missing evidence. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references. Each one shows what a good answer looks like — and what a red flag looks like.",
+        capabilities: [
+          "Judge research — how this judge has ruled on motions like yours",
+          "A prioritized list of motions your attorney could file, with filing deadlines",
+          "Discovery Strength Rating + Prosecution Weakness Analysis",
+        ],
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
         stageLabel: "When you have your case documents",
       },
@@ -102,7 +117,13 @@ const caseTypes = [
         name: TIER_CORE["war-room"].name,
         slug: "war-room",
         price: TIER_CORE["war-room"].priceDisplay,
-        desc: "Everything above, plus profiles on your judge and prosecutor. Witness analysis for up to 8 witnesses. Motion timing questions for your attorney. Case law package. Weekly updates. We also audit the evidence chain — was every item handled properly? And we rank each witness across 7 trust factors.",
+        desc: "Everything in the X-Ray, plus a full research operation for the life of your case. Weekly updates. Evidence-chain audit. Each witness ranked across 7 trust factors.",
+        capabilities: [
+          "Judge research with language patterns this judge has responded to in written orders",
+          "A full motion strategy — which motions to file first, in what order",
+          "Cross-examination question libraries keyed to findings in your discovery",
+          "Witness analysis for up to 8 prosecution witnesses",
+        ],
         discovery: TIER_CORE["war-room"].requiresDiscovery,
         stageLabel: "Building your defense",
       },
@@ -110,7 +131,12 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "During trial, you get nightly analysis of each day's testimony. Every morning, a prep brief with cross-examination angles. All witnesses researched. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Requires War Room.",
+        desc: "During trial, you get nightly analysis of each day's testimony and a morning prep brief with cross-examination angles. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Requires War Room.",
+        capabilities: [
+          "Everything in War Room, plus:",
+          "Background research on every prosecution witness with source URLs your attorney can verify",
+          "The full \"battle intelligence\" package — judge research + cross-examination libraries + witness backgrounds, all keyed to your discovery",
+        ],
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: TIER_CORE["situation-room"].requiresWarRoom,
         stageLabel: "Trial confirmed",
@@ -143,7 +169,12 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "We read every page of your discovery and flag what doesn't add up. Missing evidence. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references. Each question shows what a good answer looks like — and what a red flag looks like. Also includes your Intelligence Brief, a Discovery Strength Rating, and a Prosecution Weakness Analysis.",
+        desc: "We read every page of your discovery and flag what doesn't add up. Breathalyzer calibration logs. Field sobriety test compliance. Rights that may have been violated. You get 35-50 questions for your attorney, with page references — each one showing what a good answer looks like and what a red flag looks like.",
+        capabilities: [
+          "Judge research — how this judge has ruled on motions like yours",
+          "A prioritized list of motions your attorney could file, with filing deadlines",
+          "Discovery Strength Rating + Prosecution Weakness Analysis",
+        ],
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
         stageLabel: "When you have your case documents",
       },
@@ -151,7 +182,13 @@ const caseTypes = [
         name: TIER_CORE["war-room"].name,
         slug: "war-room",
         price: TIER_CORE["war-room"].priceDisplay,
-        desc: "Profiles on your judge and prosecutor. Expert witness challenges. Motion timing questions for your attorney. Case law package. Weekly updates until your case resolves. We also audit the evidence chain — was every item handled properly? And we rank each witness across 7 trust factors.",
+        desc: "Everything in the X-Ray, plus a full research operation until your case resolves. Weekly updates. Evidence-chain audit. Each witness ranked across 7 trust factors.",
+        capabilities: [
+          "Judge research with language patterns this judge has responded to in written orders",
+          "A full motion strategy — which motions to file first, in what order",
+          "Cross-examination question libraries keyed to findings in your discovery",
+          "Expert witness challenge research (breath instrument, blood draw, SFST instructor)",
+        ],
         discovery: TIER_CORE["war-room"].requiresDiscovery,
         stageLabel: "Building your defense",
       },
@@ -159,7 +196,12 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "During trial, you get nightly analysis of each day's testimony. Every morning, a prep brief with cross-examination angles. Officer research. Expert credibility questions. Jury selection research. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Requires War Room.",
+        desc: "During trial, you get nightly analysis of each day's testimony and a morning prep brief with cross-examination angles. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Requires War Room.",
+        capabilities: [
+          "Everything in War Room, plus:",
+          "Background research on the arresting officer and every prosecution witness with source URLs your attorney can verify",
+          "The full \"battle intelligence\" package — judge research + cross-examination libraries + witness backgrounds, all keyed to your discovery",
+        ],
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: TIER_CORE["situation-room"].requiresWarRoom,
         stageLabel: "Trial confirmed",
@@ -192,7 +234,12 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "We read every page of your discovery and flag what doesn't add up. Missing evidence. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references. Each question shows what a good answer looks like — and what a red flag looks like. Also includes your Intelligence Brief, a Discovery Strength Rating, and a Prosecution Weakness Analysis.",
+        desc: "We read every page of your discovery and flag what doesn't add up. Missing exhibits. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references — each one showing what a good answer looks like and what a red flag looks like.",
+        capabilities: [
+          "Judge research — how this judge has ruled on motions like yours",
+          "A prioritized list of motions your attorney could file, with filing deadlines",
+          "Discovery Strength Rating + Prosecution Weakness Analysis",
+        ],
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
         stageLabel: "When you have your case documents",
       },
@@ -200,7 +247,13 @@ const caseTypes = [
         name: TIER_CORE["war-room"].name,
         slug: "war-room",
         price: TIER_CORE["war-room"].priceDisplay,
-        desc: "Full research operation. Profile on your federal prosecutor. Cooperator analysis. Deep dive into your sentencing guidelines. Case law package. Weekly updates. We also audit the evidence chain — was every item handled properly? And we rank each witness across 7 trust factors.",
+        desc: "Everything in the X-Ray, plus a full research operation for the life of your case. Federal prosecutor profile. Cooperator analysis. Deep dive into your sentencing guidelines. Weekly updates. Evidence-chain audit. Each witness ranked across 7 trust factors.",
+        capabilities: [
+          "Judge research with language patterns this judge has responded to in written orders",
+          "A full motion strategy — which motions to file first, in what order",
+          "Cross-examination question libraries keyed to findings in your discovery",
+          "Cooperator and expert witness background research",
+        ],
         discovery: TIER_CORE["war-room"].requiresDiscovery,
         stageLabel: "Building your defense",
       },
@@ -208,7 +261,12 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "During trial, you get nightly analysis of each day's testimony. Every morning, a prep brief with cross-examination angles. Expert credibility research. Cooperator background questions. Guidelines research. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Requires War Room.",
+        desc: "During trial, you get nightly analysis of each day's testimony and a morning prep brief with cross-examination angles. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Requires War Room.",
+        capabilities: [
+          "Everything in War Room, plus:",
+          "Background research on every prosecution witness and cooperator with source URLs your attorney can verify",
+          "The full \"battle intelligence\" package — judge research + cross-examination libraries + witness backgrounds, all keyed to your discovery",
+        ],
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: TIER_CORE["situation-room"].requiresWarRoom,
         stageLabel: "Trial confirmed",
@@ -298,7 +356,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["x-ray"].name,
-        description: "Full discovery analysis, 35-50 questions, Judge Intelligence Profile, Prosecutor Research Profile, Discovery Strength Rating",
+        description: "Full discovery analysis, 35-50 questions, judge research on motions like yours, prioritized motion list with filing deadlines, Discovery Strength Rating",
         price: (TIER_CORE["x-ray"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -307,7 +365,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["war-room"].name,
-        description: "Ongoing intelligence operation with weekly updates, witness analysis, motion timing, case law package",
+        description: "Ongoing intelligence operation with weekly updates, judge research with language patterns from written orders, full motion strategy, cross-examination question libraries keyed to your discovery, witness analysis",
         price: (TIER_CORE["war-room"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -316,7 +374,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["situation-room"].name,
-        description: "Trial Intelligence Operations — evening debrief, morning prep, priority response, all witnesses researched",
+        description: "Trial Intelligence Operations — evening debrief, morning prep, priority response, background research on every prosecution witness with source URLs your attorney can verify",
         price: (TIER_CORE["situation-room"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -715,7 +773,14 @@ export default function ServicesPage() {
                       {tier.price}
                     </span>
                   </div>
-                  <p className="mt-2 flex-1 text-sm text-zinc-400">{tier.desc}</p>
+                  <p className="mt-2 text-sm text-zinc-400">{tier.desc}</p>
+                  {"capabilities" in tier && Array.isArray((tier as { capabilities?: string[] }).capabilities) && (
+                    <ul className="mt-3 flex-1 list-disc space-y-1 pl-5 text-xs text-zinc-400">
+                      {(tier as { capabilities: string[] }).capabilities.map((cap) => (
+                        <li key={cap}>{cap}</li>
+                      ))}
+                    </ul>
+                  )}
                   {tier.slug === "x-ray" && (
                     <p className="mt-3 text-xs text-zinc-400">
                       Analysis powered by 7 defense methodologies: evidence chain integrity, drug forensic analysis, constitutional compliance mapping, witness statement cross-referencing, suppression opportunity detection, investigation quality assessment, and 15-pattern forensic detection.
@@ -771,6 +836,13 @@ export default function ServicesPage() {
                   </span>
                 </div>
                 <p className="mt-2 text-sm text-zinc-400">{ct.tiers[4].desc}</p>
+                {"capabilities" in ct.tiers[4] && Array.isArray((ct.tiers[4] as { capabilities?: string[] }).capabilities) && (
+                  <ul className="mt-3 list-disc space-y-1 pl-5 text-xs text-zinc-400">
+                    {(ct.tiers[4] as { capabilities: string[] }).capabilities.map((cap) => (
+                      <li key={cap}>{cap}</li>
+                    ))}
+                  </ul>
+                )}
                 <p className="mt-2 text-xs text-amber-400/80">
                   {/* Total computed dynamically from tiers.ts */}
                   Includes all tiers ({(() => {
