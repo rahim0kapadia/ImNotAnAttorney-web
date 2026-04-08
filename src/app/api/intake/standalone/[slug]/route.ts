@@ -6,8 +6,10 @@
  * Edge Function.
  *
  * Security:
- *   - (C5) Auth via standalone_intake_token — NOT email-based lookup
+ *   - (C5 + W6) Auth via SHA-256 hash of standalone_intake_token — the plaintext
+ *     token lives only in the customer's email; the DB stores only the hash
  *   - (C6) All fields validated: enums against allowlists, text sanitized
+ *   - (W6) Rate limited: 5 requests per 60 seconds per IP
  *   - (W13) Payload size guard (10KB max)
  *   - (C10/C9) Generation via Supabase Edge Function (no self-referential fetch)
  */
@@ -15,6 +17,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getProduct } from "@/lib/products";
 import { isValidChargeType } from "@/lib/charge-types";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIp } from "@/lib/request";
+import { hashToken } from "@/lib/site";
 
 // (C6) Allowlists for enum fields — prevents prompt injection
 const VALID_EMPLOYER_TYPES = new Set([
@@ -152,6 +157,20 @@ export async function POST(
     return NextResponse.json({ error: "Invalid product" }, { status: 400 });
   }
 
+  // (W6 security polish) Rate limit per IP: 5 intake submissions per 60s.
+  // Prevents token enumeration attacks and spam of the generation pipeline.
+  // Matches the intake endpoint in /api/subscribe for consistency.
+  const ip = getClientIp(req);
+  const { limited } = await checkRateLimit(
+    createAdminClient(),
+    `intake-standalone:${ip}`,
+    5,
+    60
+  );
+  if (limited) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   let body;
   try {
     body = await req.json();
@@ -179,11 +198,14 @@ export async function POST(
 
   const supabase = createAdminClient();
 
-  // (C5) Find order by intake token — NOT by email
+  // (C5 + W6) Find order by intake token HASH — never plaintext. The plaintext
+  // token travels only via the customer's email; the DB stores only its SHA-256
+  // hash. This matches the standalone_report_token_hash pattern.
+  const tokenHash = hashToken(token);
   const { data: order, error: orderError } = await supabase
     .from("orders")
     .select("id, email, standalone_intake, standalone_product_slug")
-    .eq("standalone_intake_token", token)
+    .eq("standalone_intake_token_hash", tokenHash)
     .eq("standalone_product_slug", slug)
     .eq("status", "paid")
     .is("standalone_intake", null)

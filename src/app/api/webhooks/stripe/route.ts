@@ -138,8 +138,11 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Missing email" }, { status: 500 });
       }
 
-      // Cryptographic intake token — only the customer gets this via email
+      // Cryptographic intake token — only the customer gets this via email.
+      // The plaintext token is NEVER stored in the DB; only its SHA-256 hash.
+      // Matches the pattern already used for standalone_report_token_hash.
       const intakeToken = randomBytes(24).toString("base64url");
+      const intakeTokenHash = hashToken(intakeToken);
 
       // Use tier: "standalone" (sentinel). The slug lives in standalone_product_slug.
       // This prevents contaminating the tier column used by upgrade credit queries.
@@ -158,7 +161,7 @@ export async function POST(req: NextRequest) {
           paid_at: new Date().toISOString(),
           product_type: "standalone",
           standalone_product_slug: standaloneSlug,
-          standalone_intake_token: intakeToken,
+          standalone_intake_token_hash: intakeTokenHash,
         });
 
       if (standaloneOrderError) {

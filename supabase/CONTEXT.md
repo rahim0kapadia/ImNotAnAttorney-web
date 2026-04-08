@@ -8,7 +8,7 @@
 
 | Table | Purpose |
 |-------|---------|
-| `orders` | Stripe order records: tier, amount, stripe_session_id, refund state. Standalone product columns: `standalone_product_slug`, `standalone_intake_token`, `standalone_intake` (jsonb), `standalone_report_token_hash`, `standalone_report_storage_path`, `standalone_report_token_expires_at`, `standalone_eval_results`. Refund clears all standalone report fields. |
+| `orders` | Stripe order records: tier, amount, stripe_session_id, refund state, `updated_at` (added 2026-04-08). Standalone product columns: `standalone_product_slug`, `standalone_intake_token_hash` (SHA-256, added 2026-04-08), `standalone_intake` (jsonb), `standalone_report_token_hash`, `standalone_report_storage_path`, `standalone_report_token_expires_at`, `standalone_eval_results`. Legacy `standalone_intake_token` plaintext column retained in schema but no longer written — to be dropped in a follow-up migration. Refund clears all standalone report fields. |
 | `cases` | One row per case service purchase. Central state machine: `pending → intake → processing → review → delivered` |
 | `intakes` | Case Decoder intake form submissions |
 | `ib_intakes` | Intelligence Brief Phase 2 intake submissions |
