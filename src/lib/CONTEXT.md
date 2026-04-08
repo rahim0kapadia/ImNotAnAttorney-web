@@ -16,7 +16,7 @@
 |------|---------|
 | `stripe.ts` | Stripe SDK init + dual-mode selector (test vs live per `TIER_CORE[slug].live`) |
 | `tiers.ts` | **SINGLE SOURCE OF TRUTH (tiered products)** — all pricing, Stripe price IDs, tier slugs, live flags |
-| `products.ts` | **SINGLE SOURCE OF TRUTH (standalone products)** — calculators, content guides, research reports. Parallels tiers.ts. Prices in cents. Checkout uses inline `price_data` (no Stripe Price IDs). |
+| `products.ts` | **SINGLE SOURCE OF TRUTH (standalone products)** — 32 products across 3 categories (3 calculators, 3 content guides, 26 research reports). 21 active / 11 inactive as of 2026-04-08. Parallels tiers.ts. Prices in cents. Checkout uses inline `price_data` (no Stripe Price IDs). Research products stamped across Waves 1-4: Wave 1 = 8 Reddit-validated $97 products (breathalyzer-challenge, fst-review, plea-consequences, drug-test-reliability, bail-hearing-prep, sentencing-prep, family-case-research, arrest-report-review), Wave 2 = 5 life-impact ($127-$297; collateral-consequences, license-risk, security-clearance active — custody-impact and immigration-impact pending UPL audit), Wave 3 = 4 post-conviction (HIGH UPL, all inactive pending prompt hardening), Wave 4 = 6 net-new from Reddit research (attorney-performance-review, probation-violation-response, discovery-decoder, constructive-possession, self-surrender-prep, probation-rights). |
 
 ### Standalone Product Support
 | File | Purpose |

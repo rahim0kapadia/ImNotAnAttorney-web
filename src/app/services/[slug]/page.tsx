@@ -70,6 +70,363 @@ const PRODUCT_COPY: Record<
     sampleInsight:
       "A motion to compel discovery is the most commonly missed motion in early-stage cases — not because it isn't viable, but because defendants don't know it exists. In many jurisdictions the prosecution's discovery obligation kicks in within days of arraignment.",
   },
+
+  // -- Wave 1 --- $97 DUI / evidence products --------------------------------
+
+  "breathalyzer-challenge": {
+    headline: "Can the breathalyzer result be challenged?",
+    stakes:
+      "Breathalyzer machines have a documented 66% error rate when improperly calibrated. An attorney charges $200-400 just to look at this issue — $97 is invisible against those stakes. False positives from GERD, diabetes, and other medical conditions are well-documented. Every state mandates calibration schedules and operator certification requirements, and those requirements are not always followed.",
+    includes: [
+      "Challenge viability assessment (STRONG / MODERATE / WEAK)",
+      "State calibration requirements with statute citations",
+      "Common challenge grounds specific to your situation",
+      "Medical factor analysis if applicable (GERD, diabetes, medications)",
+      "Discovery request list for your attorney",
+      "6 questions for your attorney about the breathalyzer evidence",
+    ],
+    sampleInsight:
+      "Florida requires annual calibration and operator certification for every breath-test instrument. When maintenance logs show the machine was overdue for calibration or the operator's certification had lapsed, the result becomes a question the defense can raise — and judges have excluded breath results on exactly those grounds.",
+  },
+  "fst-review": {
+    headline:
+      "Were your field sobriety tests administered correctly?",
+    stakes:
+      "66% of field sobriety tests violate NHTSA standards. Even under ideal conditions, the one-leg-stand test is only 65% accurate — according to NHTSA's own studies. Officers rarely follow the exact protocol. $97 vs $200-400 for an attorney to perform the same analysis.",
+    includes: [
+      "NHTSA compliance check per test administered",
+      "Physical factor analysis independent of impairment (age, weight, injuries, footwear)",
+      "Officer administration issues identified",
+      "Published accuracy rates from NHTSA's own validation studies",
+      "Questions for your attorney about FST issues",
+    ],
+    sampleInsight:
+      "NHTSA's own validation study shows the HGN test at 77% accuracy, walk-and-turn at 68%, and one-leg-stand at 65% — under ideal conditions. Uneven surfaces, weather, poor lighting, and inappropriate footwear reduce accuracy further. Those are the government's own numbers, and they apply to every FST case.",
+  },
+  "plea-consequences": {
+    headline: "What are you actually agreeing to?",
+    stakes:
+      "There are 45,000+ documented collateral consequences that defendants are never told about. A plea that looks favorable in criminal court can be devastating for immigration, employment, professional licensing, and housing. The pressure to accept quickly — without understanding the full picture — is intense. $97 vs making a decision worth $50,000 or more without all the facts.",
+    includes: [
+      "Plain-English plea offer decode",
+      "Criminal consequences breakdown",
+      "Top 10 collateral consequences for your specific situation",
+      "Original charge vs. plea comparison",
+      "Timing considerations and deadline implications",
+      "Questions for your attorney about the plea terms",
+    ],
+    sampleInsight:
+      "A nolo contendere plea in criminal court is treated identically to a guilty plea by immigration courts under the Immigration and Nationality Act. This surprises defendants who believe 'no contest' protects them — it does not, and the immigration consequences can be identical to a straight guilty plea.",
+  },
+  "drug-test-reliability": {
+    headline: "Can the drug test results be challenged?",
+    stakes:
+      "Field drug tests have documented false positive rates that are higher than most defendants realize. Chain of custody gaps are common. Lab certifications may have lapsed. $97 vs $200-400 for an attorney to perform the same analysis of the testing evidence.",
+    includes: [
+      "Published false positive rates for the test type used in your case",
+      "Chain of custody requirements and potential gaps",
+      "Lab certification verification",
+      "Challenge grounds specific to the testing method",
+      "Questions for your attorney about the drug test evidence",
+    ],
+    sampleInsight:
+      "NIK field test kits have produced documented false positives for common household items including chocolate, soap, and over-the-counter medications. The distinction between presumptive field testing and confirmatory lab testing is a critical defense angle — a positive field test without lab confirmation is a question worth raising.",
+  },
+  "bail-hearing-prep": {
+    headline:
+      "Prepare for the hearing that determines your freedom.",
+    stakes:
+      "The bail hearing window is 24-48 hours. This is the liberty decision — a judge weighing flight risk, danger to the community, and community ties. $97 to understand what the judge is looking for vs going in blind to the hearing that determines whether you wait at home or in jail.",
+    includes: [
+      "How bail hearings work — what judges consider and in what order",
+      "Factors in your favor based on your situation",
+      "Factors that may work against you",
+      "Bail reduction strategies framed as questions for your attorney",
+      "Questions for your attorney before the hearing",
+    ],
+    sampleInsight:
+      "Proactively offering conditions — ankle monitor, travel restrictions, third-party custodian — before the judge asks signals accountability and community investment. Judges who see a defendant arriving with a plan tend to view the flight risk question differently than when a defendant offers nothing.",
+  },
+  "sentencing-prep": {
+    headline:
+      "Prepare for the most consequential hearing of your case.",
+    stakes:
+      "Sentencing determines the actual outcome — everything before it was process. Mitigation evidence, character references, allocution preparation — each element matters, and each has rules. $97 vs walking into the hearing that decides the rest of your life without preparation.",
+    includes: [
+      "Sentencing hearing structure and what to expect",
+      "Published sentencing range for your charge in your jurisdiction",
+      "Mitigation factors analysis specific to your situation",
+      "Character reference guidance — who to ask, what to include",
+      "Allocution considerations — what judges respond to",
+      "Questions for your attorney about sentencing preparation",
+    ],
+    sampleInsight:
+      "The difference between guidelines ranges and mandatory minimums is one of the most misunderstood aspects of sentencing. Departure motions allow judges to sentence below the guidelines range when specific conditions are met — and the grounds for departure vary by jurisdiction. Knowing which grounds apply is the starting point.",
+  },
+  "family-case-research": {
+    headline:
+      "Understand what your loved one is facing.",
+    stakes:
+      "Family members are a new audience — buying for someone they care about who is inside the system. Legal jargon makes an already terrifying situation worse. $97 to understand the charges, the timeline, and how to actually help — in plain English, not legalese.",
+    includes: [
+      "Plain-English charge explanation",
+      "What is happening now based on the current case stage",
+      "Specific ways to help (and what actually makes a difference)",
+      "What NOT to do — jail phones are recorded, social media is monitored, witness contact has rules",
+      "Questions to ask the attorney on your loved one's behalf",
+    ],
+    sampleInsight:
+      "Jail phone calls are recorded and monitored. Family members discussing case details over the phone can inadvertently create evidence that the prosecution can use. This applies to every facility — the recording disclosure at the beginning of the call is not a formality.",
+  },
+  "arrest-report-review": {
+    headline:
+      "What does your arrest report actually say — and what's wrong with it?",
+    stakes:
+      "Every error in the arrest report is a potential defense motion. Miranda issues, probable cause gaps, procedural violations — they are all in the document. This is pre-discovery intelligence at $97, vs waiting weeks or months for your attorney to review it.",
+    includes: [
+      "Plain-English report summary",
+      "Potential issues identified (inconsistencies, missing information, procedure violations)",
+      "Miranda and rights analysis",
+      "Probable cause assessment",
+      "Questions for your attorney based on specific issues found in the report",
+    ],
+    sampleInsight:
+      "Officers frequently write arrest reports hours after the stop. Time gaps between the incident and report writing create memory reliability issues that defense attorneys can explore — especially when the report contains precise details that are unlikely to be remembered accurately after a significant delay.",
+  },
+
+  // -- Wave 2 --- Life-impact products ----------------------------------------
+
+  "collateral-consequences": {
+    headline: "What happens to the rest of your life?",
+    stakes:
+      "There are 45,000+ documented collateral consequences of a criminal record. Employment, housing, voting, gun rights, professional licensing, custody, immigration — each follows different rules, different timelines, and different standards. The $147 cost of knowing is invisible against any single surprise consequence that surfaces months or years later.",
+    includes: [
+      "Consequences inventory by severity (CRITICAL / SIGNIFICANT / MODERATE)",
+      "Employment and background check impact",
+      "Housing disqualification risks",
+      "Civil rights impact (voting, firearms, jury service)",
+      "Government benefits eligibility",
+      "Education impacts",
+      "Immigration summary (if applicable)",
+      "Custody overview (if applicable)",
+    ],
+    sampleInsight:
+      "In Texas, a felony conviction permanently bars you from serving on a jury — even after completing your sentence. But voting rights are automatically restored upon completion of your sentence, including probation and parole. Each consequence follows different rules.",
+  },
+  "license-risk": {
+    headline: "Will you lose your license?",
+    stakes:
+      "A professional license represents $100,000+ per year in earning capacity. Some licensing boards mandate self-reporting within DAYS of an arrest — not a conviction, an arrest. Missing that deadline can be an independent violation worse than the underlying charge. $297 vs career extinction.",
+    includes: [
+      "Risk assessment per license and charge combination",
+      "Board reporting requirements with deadlines",
+      "Board action triggers — what initiates review",
+      "Historical board outcomes for similar situations",
+      "Dual-track timeline (criminal case vs. board proceedings)",
+      "License-preserving defense questions",
+      "Profession-specific considerations",
+      "10 questions split between criminal defense and licensing attorneys",
+    ],
+    sampleInsight:
+      "In Florida, registered nurses must self-report any arrest to the Board of Nursing within 30 days — not just convictions. Failure to report is an independent disciplinary violation that can trigger suspension even if the criminal charge is ultimately dismissed.",
+  },
+  "immigration-impact": {
+    headline: "Will this charge affect your immigration status?",
+    stakes:
+      "For non-citizens, the stakes are existential. A state misdemeanor can be classified as a federal 'aggravated felony' for immigration purposes. CIMT classification, aggravated felony analysis, and plea consequences operate under completely different rules than criminal court. $297 vs a $2,000-5,000 immigration attorney consultation for the same analysis.",
+    includes: [
+      "Deportation risk assessment",
+      "Crime Involving Moral Turpitude (CIMT) analysis",
+      "Aggravated felony analysis under federal immigration law",
+      "Status-specific impact based on your immigration category",
+      "Plea consequences matrix — how different plea options affect immigration",
+      "ICE detainer risk assessment",
+      "Questions for your criminal defense attorney",
+      "Questions for an immigration attorney",
+    ],
+    sampleInsight:
+      "A plea to 'theft' with a one-year sentence is classified as an 'aggravated felony' under federal immigration law — even if the state treats it as a misdemeanor. This triggers mandatory deportation with no cancellation of removal available.",
+  },
+  "security-clearance": {
+    headline: "Will this charge cost you your clearance?",
+    stakes:
+      "A security clearance represents $100,000-300,000 in annual income. Self-reporting obligations mean that failure to report can be a bigger problem than the charge itself. The adjudicative guidelines have specific mitigating conditions — knowing which ones apply is the difference between keeping and losing the clearance. $147 to know what to report and when.",
+    includes: [
+      "Clearance risk level assessment",
+      "Self-reporting obligations under SEAD 3 and EO 12968",
+      "Adjudicative guidelines analysis for your charge type",
+      "Historical outcomes from DOHA decisions",
+      "Timeline and process for clearance review",
+      "Questions for your attorney about clearance preservation",
+    ],
+    sampleInsight:
+      "Under SEAD 3, cleared individuals must self-report any arrest within 24 hours to their security officer. Failure to report is itself a security concern that can trigger an independent investigation — separate from and in addition to whatever happens with the underlying charge.",
+  },
+  "custody-impact": {
+    headline: "Will this charge affect your custody?",
+    stakes:
+      "For parents, this is the nuclear emotional trigger. Criminal court and family court are separate systems with separate standards, separate timelines, and separate judges. The other parent can file an emergency motion IMMEDIATELY. $197 to understand how these two systems interact vs a custody surprise that arrives without warning.",
+    includes: [
+      "Custody impact assessment based on charge and jurisdiction",
+      "How criminal and family courts interact",
+      "Charge-specific custody impact analysis",
+      "Protective order implications",
+      "What the other parent can do — and on what timeline",
+      "Dual-track strategy questions for your attorney",
+      "Immediate considerations and time-sensitive steps",
+    ],
+    sampleInsight:
+      "Criminal court uses 'beyond a reasonable doubt.' Family court uses 'preponderance of the evidence' — meaning the other parent needs to show it is merely more likely than not that custody should change. These are fundamentally different standards operating on different timelines.",
+  },
+
+  // -- Wave 3 --- Post-conviction products ------------------------------------
+
+  "expungement-research": {
+    headline: "Can your record be cleared?",
+    stakes:
+      "Post-conviction consequences compound over years — every background check, every job application, every housing application. Eligibility for expungement varies dramatically by state, charge type, and completion status. $97 vs $500-1,500 for an attorney just to assess eligibility before any work begins.",
+    includes: [
+      "Eligibility determination for your charge and jurisdiction",
+      "Waiting period calculation based on your timeline",
+      "Process overview in your state",
+      "What expungement does and does not do",
+      "Limitations — who can still see the record after expungement",
+      "Questions for your attorney about the expungement process",
+    ],
+    sampleInsight:
+      "In many states, 'expungement' and 'sealing' are different things with different consequences. Sealed records are hidden from public view but may still be visible to law enforcement and certain employers. Expunged records are destroyed. The distinction matters for what shows up on background checks.",
+  },
+  "sentence-reduction": {
+    headline: "Can your sentence be reduced?",
+    stakes:
+      "Rule 35 motions, compassionate release, retroactive guideline changes — mechanisms exist for sentence reduction that most defendants never learn about. $147 is 5-10% of what an appellate attorney charges just for an initial consultation.",
+    includes: [
+      "Available sentence reduction mechanisms by jurisdiction",
+      "Applicable mechanism analysis for your specific situation",
+      "Required documentation for each viable mechanism",
+      "Timeline and filing deadlines",
+      "Questions for your attorney about sentence reduction options",
+    ],
+    sampleInsight:
+      "The First Step Act (2018) made certain federal guideline amendments retroactive, allowing thousands of inmates to petition for reduced sentences. But the window to file is time-limited and the process requires specific documentation that takes time to assemble.",
+  },
+  "appeal-viability": {
+    headline: "Is an appeal worth pursuing?",
+    stakes:
+      "An appellate attorney viability consultation costs $1,000-2,000. $297 provides the same analysis using published appellate standards and success rates — the same framework an appellate attorney uses to assess whether your case has grounds.",
+    includes: [
+      "Viability assessment (STRONG / MODERATE / WEAK / NOT VIABLE)",
+      "Deadline status — whether you are still within the filing window",
+      "Grounds analysis with published success rates by issue type",
+      "Preservation issues — whether the issues were properly objected to at trial",
+      "Process overview and estimated costs",
+      "Questions for an appellate attorney",
+    ],
+    sampleInsight:
+      "The most common reason appeals fail is that the issue was not 'preserved' — meaning the attorney did not object at trial. Without a contemporaneous objection on the record, most appellate courts will not review the issue, regardless of how strong the argument is.",
+  },
+  "ineffective-counsel": {
+    headline: "Did your attorney fail you?",
+    stakes:
+      "The Strickland standard requires proving two separate things — deficient performance AND prejudice. This is the highest-stakes analysis in the post-conviction space. $297 for documented analysis to bring to a new attorney, built on the same two-prong framework that courts use to evaluate these claims.",
+    includes: [
+      "Strickland standard explained — the two-prong test in plain English",
+      "Issue analysis per identified problem in your case",
+      "Documentation recommendations for building the record",
+      "Timeline for ineffective assistance of counsel claims in your jurisdiction",
+      "Questions for a new attorney about pursuing an IAC claim",
+    ],
+    sampleInsight:
+      "The Strickland test requires showing both that your attorney's performance was deficient AND that the deficiency changed the outcome. Meeting the first prong alone is not enough — courts regularly find deficient performance but deny relief because the outcome would have been the same.",
+  },
+
+  // -- Wave 4 --- Reddit net-new products -------------------------------------
+
+  "attorney-performance-review": {
+    headline: "Is your attorney doing their job?",
+    stakes:
+      "Attorney distrust and communication gaps are the #1 reason defendants seek outside information. Knowing what to expect — communication frequency, motion filing timelines, discovery requests — is the difference between informed concern and unnecessary panic. $97 to benchmark attorney performance against what defendants in your situation have a right to expect.",
+    includes: [
+      "Communication frequency benchmark for your case type",
+      "Motion filing timeline analysis",
+      "Discovery request assessment",
+      "Case progress evaluation vs. typical timelines for your charge",
+      "Questions to ask your attorney — specific, not confrontational",
+    ],
+    sampleInsight:
+      "In an active felony case, contact from your attorney at least every 2-3 weeks is standard. If your attorney has not communicated in over a month and you have a pending hearing, that is a question worth raising — along with specific questions about what has been filed and what is pending.",
+  },
+  "probation-violation-response": {
+    headline: "What happens when you violate probation?",
+    stakes:
+      "Missed appointment, failed drug test, new arrest — each type of violation carries different consequences and different response strategies. The difference between a technical violation and a substantive violation can mean the difference between modified conditions and revocation. $97 vs guessing at what comes next.",
+    includes: [
+      "Violation severity assessment for your specific situation",
+      "Technical vs. substantive classification and why it matters",
+      "Potential consequences for your specific violation type",
+      "Hearing preparation — what to expect and what the judge considers",
+      "Questions for your attorney about the violation",
+    ],
+    sampleInsight:
+      "A 'technical' violation (missed appointment, failed drug test) is treated very differently from a 'substantive' violation (new arrest). Technical violations often result in modified conditions, while substantive violations frequently trigger revocation hearings. The classification determines the exposure.",
+  },
+  "discovery-decoder": {
+    headline: "What's in your discovery — and what's missing?",
+    stakes:
+      "Discovery is the prosecution's evidence file — and what is NOT in it can matter as much as what is. This is the bridge between free guides and the $997 Intelligence Brief. $147 to understand what the prosecution has, what they should have disclosed, and what questions to ask about the gaps.",
+    includes: [
+      "Discovery contents analysis — what is in the file",
+      "What is present vs. what should be there for your charge type",
+      "Gap identification — missing items and their significance",
+      "Significance of each document type in the discovery package",
+      "Questions for your attorney about missing items",
+    ],
+    sampleInsight:
+      "Body camera footage is discovery material that the prosecution is obligated to disclose. If it exists and was not provided, that is a Brady question worth raising — the absence of video in a case where body cameras were standard can be as significant as its presence.",
+  },
+  "constructive-possession": {
+    headline: "Were the items actually yours?",
+    stakes:
+      "Drugs or weapons found in shared spaces — cars, apartments, common areas — create possession questions that are more complex than most defendants realize. Proximity alone is not possession. $97 for an analysis of constructive possession law in your state applied to your specific facts.",
+    includes: [
+      "Constructive possession elements in your state",
+      "Proximity analysis — what proximity does and does not prove",
+      "Knowledge and control factors",
+      "Shared space defense angles",
+      "Questions for your attorney about the possession theory",
+    ],
+    sampleInsight:
+      "Constructive possession requires proof of both knowledge AND control. Being in the same room as contraband is not enough — the prosecution must show you knew it was there AND had the ability to exercise control over it. In shared spaces, this burden becomes significantly harder to meet.",
+  },
+  "self-surrender-prep": {
+    headline: "How to prepare for self-surrender.",
+    stakes:
+      "Self-surrender is a zero-competition niche — and defendants facing it have almost no reliable information available. $97 for a step-by-step preparation guide covering personal, financial, and legal readiness when you know you are going in.",
+    includes: [
+      "Pre-surrender checklist (personal, financial, legal affairs)",
+      "What to bring and what to leave home",
+      "What to expect at intake — the process step by step",
+      "First 24-48 hours — what happens and what to know",
+      "Questions for your attorney before surrendering",
+    ],
+    sampleInsight:
+      "Most self-surrender facilities allow you to bring prescription medications in their original pharmacy bottles. Anything not in the original container will be confiscated. Arranging with your attorney to provide the facility with a medication list in advance can prevent gaps in medication access during intake processing.",
+  },
+  "probation-rights": {
+    headline:
+      "What can your probation officer actually require?",
+    stakes:
+      "'Can my PO do this?' is one of the most common questions on every probation forum. The line between standard conditions, special conditions, and overreach is not always clear — and most defendants do not know where it is. $97 to understand your rights, your conditions, and the difference.",
+    includes: [
+      "Standard vs. special conditions breakdown for your jurisdiction",
+      "Probation officer authority limits in your state",
+      "Search and seizure rules while on probation",
+      "Modification request process — how to change conditions through the court",
+      "Questions for your attorney about specific issues with your PO",
+    ],
+    sampleInsight:
+      "Standard probation conditions (reporting, travel restrictions) are set by the court, not your probation officer. If your PO adds requirements not in your court order, that is a question worth raising with your attorney — the authority to impose conditions belongs to the judge, not the officer.",
+  },
 };
 
 interface Props {
@@ -117,7 +474,7 @@ export default async function ProductLandingPage({ params }: Props) {
 
         {/* What's included */}
         <h2 className="text-2xl font-semibold mb-4">What You Get</h2>
-        <ul className="space-y-3 mb-8" role="list">
+        <ul className="space-y-3 mb-8">
           {copy.includes.map((item, i) => (
             <li key={i} className="flex gap-3">
               <span

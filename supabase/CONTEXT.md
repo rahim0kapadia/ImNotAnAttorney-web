@@ -99,13 +99,22 @@ If UPL eval exceeds 100s inside the Edge Function, the Psych eval is skipped and
 ### generate-standalone
 - Called via fire-and-forget POST from `/api/intake/standalone/[slug]` (customer path) or `/api/generate/standalone` (operator retry)
 - Loads order + intake data from `orders` table (standalone_product_slug, standalone_intake)
-- Builds prompt from intake data; currently supports `employment-impact` slug, extensible via `buildUserPrompt()` switch
-- Calls Claude Sonnet (configurable via `CLAUDE_MODEL` env var)
+- Builds prompt from intake data. Supports **24 research product slugs** as of 2026-04-08 (post product stamping sprint):
+  - **Infra pre-stamping (3):** employment-impact, judge-profile, motion-opportunity-scan
+  - **Wave 1 ($97 Reddit-validated, 8):** breathalyzer-challenge, fst-review, plea-consequences, drug-test-reliability, bail-hearing-prep, sentencing-prep, family-case-research, arrest-report-review
+  - **Wave 2 (life-impact, 5):** collateral-consequences, license-risk, custody-impact, immigration-impact, security-clearance
+  - **Wave 3 (post-conviction HIGH UPL, 4):** expungement-research, sentence-reduction, appeal-viability, ineffective-counsel
+  - **Wave 4 (Reddit net-new, 6):** attorney-performance-review, probation-violation-response, discovery-decoder, constructive-possession, self-surrender-prep, probation-rights
+- Architecture: `PRODUCT_META` map (slug -> name + price display), per-slug TypeScript interfaces for intake shape, `buildUserPrompt(slug, intake)` switch with 24 cases. System prompt is shared — UPL-safe + anti-hallucination + HTML output format.
+- Anti-hallucination rules baked into every prompt: "Do not fabricate statute citations, case names, or case numbers. If uncertain about a specific state's statute, say 'state law varies — verify current provisions with your attorney'". Free-text user inputs are wrapped in triple-quotes in the prompt; the `sanitizeText` function in the intake route strips incoming triple-quotes to block prompt injection via input escape.
+- HIGH UPL products (expungement-research, sentence-reduction, appeal-viability, ineffective-counsel, custody-impact) have extra-cautious framing: "factors that MAY be relevant" never "you should", "based on published criteria, you MAY be eligible" never "you are eligible".
+- Calls Claude Sonnet (configurable via `CLAUDE_MODEL` env var, default `claude-sonnet-4-6`)
 - Generates cryptographic report token (16 bytes hex); hashes with SHA-256
 - Uploads report HTML to `standalone-reports` Storage bucket at `{orderId}.html`
 - Updates `orders` with: `standalone_report_token_hash`, `standalone_report_storage_path`, `standalone_report_token_expires_at` (1 year)
 - Sends delivery email to customer with `/report/standalone/{plaintextToken}` link
 - On failure: updates order status, emails operator with retry curl command
+- **Deploy after adding new products:** `npx supabase functions deploy generate-standalone --project-ref jxjbjmgdukwkoclydqdr --no-verify-jwt`
 
 ### Deploy Edge Functions
 ```bash

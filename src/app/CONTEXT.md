@@ -34,15 +34,17 @@
 | `/r/[code]/quiz` | `r/[code]/quiz/page.tsx` | Referral-tracked score quiz entry |
 | `/research/defense-score-data` | `research/defense-score-data/page.tsx` | Aggregate score stats (ISR 1h) |
 
-### Standalone Products (Phase 0-3 product expansion, catalog: `src/lib/products.ts`)
+### Standalone Products (catalog: `src/lib/products.ts` — 32 products, 21 active as of 2026-04-08)
 | Route | File | Purpose |
 |-------|------|---------|
-| `/tools/[slug]` | `tools/[slug]/page.tsx` | Free calculator wizard (Good Time Credit live) |
+| `/tools/[slug]` | `tools/[slug]/page.tsx` | Free calculator wizard (Good Time Credit live; SOL and Diversion draft) |
 | `/tools/[slug]/results/[token]` | `tools/[slug]/results/[token]/page.tsx` | Saved calculator results, shareable link (noindex) |
-| `/guides/[slug]` | `guides/[slug]/page.tsx` | Free content guides (First Court Appearance live) |
-| `/services/[slug]` | `services/[slug]/page.tsx` | Landing page for paid research products (Employment Impact live, $197) |
-| `/intake/standalone/[slug]` | `intake/standalone/[slug]/page.tsx` | Token-gated intake form for research products |
+| `/guides/[slug]` | `guides/[slug]/page.tsx` | Free content guides (First Court Appearance, Family Action Plan, Arraignment Protocol) |
+| `/services/[slug]` | `services/[slug]/page.tsx` | Landing page for paid research products — 26 PRODUCT_COPY entries (employment-impact $197, judge-profile $497, motion-opportunity-scan $497, collateral-consequences $147, license-risk $297, security-clearance $147, + 8 Wave 1 $97 DUI/evidence products + 6 Wave 4 Reddit net-new products). Dynamic route — PRODUCT_COPY map keyed by slug. |
+| `/intake/standalone/[slug]` | `intake/standalone/[slug]/page.tsx` | Token-gated intake form for research products. `IntakeFormClient.tsx` has a FIELD_SETS registry with 26 per-slug field configurations — data-driven form, zero code per new product. |
 | `/report/standalone/[token]` | `report/standalone/[token]/page.tsx` | Report viewer (Storage-backed, sanitized HTML, noindex) |
+
+**Product stamping sprint (2026-04-08):** 18 new research products + 5 updated existing products added in a single session. Non-destructive architecture — IntakeFormClient.tsx was already generalized from hardcoded employment-impact fields to a data-driven FIELD_SETS registry in the prior court case port session, so Wave 1-4 stamping was pure data additions across 6 files (products.ts, IntakeFormClient.tsx, services/[slug]/page.tsx, generate-standalone/index.ts, intake/standalone/[slug]/route.ts, qa-checkout/route.ts). Zero breaking changes to Employment Impact live flow. See `docs/handoff/2026-04-08-product-stamping-waves-1-4.md` in the ImNotAnAttorney business repo for the per-product breakdown.
 
 ### Auth & Checkout
 | Route | File | Purpose |

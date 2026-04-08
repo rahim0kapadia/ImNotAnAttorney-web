@@ -2,10 +2,13 @@
  * @fileoverview QA Checkout Shortcut
  *
  * GET /api/qa-checkout?tier=dui-first-offense
+ * GET /api/qa-checkout?product=employment-impact
  *
  * Creates a Stripe checkout session with the internal QA coupon (100% off)
  * and redirects to the Stripe-hosted checkout page. Saves pasting long
  * Stripe URLs — just open this URL in a browser.
+ *
+ * Supports both tier products (?tier=) and standalone products (?product=).
  *
  * Security: Requires ?key= matching OPERATOR_SECRET. Without the correct
  * key, returns 404 (looks like the route doesn't exist). Not linked from
@@ -28,13 +31,19 @@ export async function GET(req: NextRequest) {
   }
 
   const tier = req.nextUrl.searchParams.get("tier") || "dui-first-offense";
+  const product = req.nextUrl.searchParams.get("product");
   const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
 
-  // Call our own checkout API to create the session
+  // Call our own checkout API to create the session.
+  // ?product= creates a standalone product checkout; otherwise tier checkout.
+  const checkoutBody = product
+    ? { standaloneProduct: product, email: QA_EMAIL }
+    : { tier, email: QA_EMAIL };
+
   const checkoutRes = await fetch(`${origin}/api/checkout`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ tier, email: QA_EMAIL }),
+    body: JSON.stringify(checkoutBody),
   });
 
   if (!checkoutRes.ok) {

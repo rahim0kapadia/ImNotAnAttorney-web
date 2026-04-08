@@ -46,21 +46,86 @@ const VALID_CASE_STAGES = new Set([
   "post-trial",
 ]);
 
+// Product stamping — enum allowlists for new product intake fields
+const VALID_LICENSE_TYPES = new Set([
+  "nursing", "cdl", "teaching", "real-estate", "financial-advisor",
+  "attorney", "physician", "pharmacy", "engineering", "accounting",
+  "cosmetology", "contractor", "other",
+]);
+
+const VALID_CUSTODY_STATUS = new Set([
+  "sole", "joint", "visitation-only", "no-order", "pending",
+]);
+
+const VALID_IMMIGRATION_STATUS = new Set([
+  "citizen", "green-card", "visa", "daca", "tps",
+  "pending-petition", "undocumented", "other",
+]);
+
+const VALID_YES_NO_DONTKNOW = new Set(["yes", "no", "dont-know"]);
+
+const VALID_CLEARANCE_LEVELS = new Set([
+  "confidential", "secret", "top-secret", "ts-sci", "q", "l",
+]);
+
+const VALID_SELF_REPORTED = new Set(["yes", "no", "not-yet", "dont-know"]);
+
+const VALID_CONVICTION_METHODS = new Set(["plea", "trial"]);
+
+const VALID_PRIOR_CONVICTIONS = new Set(["none", "misdemeanor", "felony", "multiple"]);
+
+const VALID_OFFENSE_CLASS = new Set(["felony", "misdemeanor"]);
+
+const VALID_CHARGE_INVOLVES = new Set([
+  "substances", "fraud", "violence", "sexual", "domestic-violence",
+  "child-related", "none",
+]);
+
+const VALID_TEST_TYPES = new Set([
+  "field-test", "lab-analysis", "urinalysis", "hair", "blood",
+]);
+
+const VALID_BREATHALYZER_TYPES = new Set([
+  "intoxilyzer", "datamaster", "draeger", "unknown",
+]);
+
+// appealGrounds and issuesIdentified are free-text fields (textarea),
+// not enum selects — no allowlist needed. Validated via sanitizeText.
+
 // Fields that may be optional (not strictly required) on a per-product basis.
 // Validation still sanitizes them when present, but does not 400 on absence.
 const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
   "judge-profile": new Set(["caseNumber"]),
   "motion-opportunity-scan": new Set(["judgeName"]),
+  "breathalyzer-challenge": new Set(["medicalConditions", "timeBetweenStopAndTest"]),
+  "fst-review": new Set(["weather", "footwear"]),
+  "plea-consequences": new Set(["occupation", "immigrationStatus"]),
+  "bail-hearing-prep": new Set(["flightRiskFactors", "currentBailAmount"]),
+  "sentencing-prep": new Set(["sentencingRange"]),
+  "self-surrender-prep": new Set(["surrenderDate", "surrenderLocation"]),
+  "license-risk": new Set(["licensingBoard"]),
+  "sentence-reduction": new Set(["sentencingDate"]),
+  "appeal-viability": new Set(["trialIssues"]),
 };
 
 // Long-form text fields get a higher length cap than the default 200 chars.
-const LONG_TEXT_FIELDS = new Set(["knownFacts"]);
+const LONG_TEXT_FIELDS = new Set([
+  "knownFacts", "trialIssues", "pleaOfferTerms", "mitigatingFactors",
+  "surfaceConditions", "physicalConditions", "medicalConditions",
+  "issuesIdentified", "basisForReduction", "appealGrounds",
+  "communityTies", "flightRiskFactors", "reportDetails",
+  "probationConditions", "probationOfficerIssue", "discoveryContents",
+  "locationDescription",
+]);
 
-/** (C6) Sanitize free-text fields: strip control chars, limit length. */
+/** (C6) Sanitize free-text fields: strip control chars, triple-quotes, limit length. */
 function sanitizeText(value: unknown, maxLength = 200): string {
   if (typeof value !== "string") return "";
   return value
     .replace(/[\x00-\x1F\x7F]/g, "")
+    .replace(/"{3,}/g, '"')
+    .replace(/'{3,}/g, "'")
+    .replace(/`{3,}/g, "`")
     .trim()
     .slice(0, maxLength);
 }
@@ -165,9 +230,52 @@ export async function POST(
         { status: 400 }
       );
     }
+    if (field === "licenseType" && !VALID_LICENSE_TYPES.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid license type" }, { status: 400 });
+    }
+    if (field === "custodyStatus" && !VALID_CUSTODY_STATUS.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid custody status" }, { status: 400 });
+    }
+    if (field === "immigrationStatus" && !VALID_IMMIGRATION_STATUS.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid immigration status" }, { status: 400 });
+    }
+    if (field === "otherParentAwareness" && !VALID_YES_NO_DONTKNOW.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid value" }, { status: 400 });
+    }
+    if (field === "clearanceLevel" && !VALID_CLEARANCE_LEVELS.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid clearance level" }, { status: 400 });
+    }
+    if (field === "selfReported" && !VALID_SELF_REPORTED.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid value" }, { status: 400 });
+    }
+    if (field === "convictionMethod" && !VALID_CONVICTION_METHODS.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid conviction method" }, { status: 400 });
+    }
+    if (field === "priorConvictions" && !VALID_PRIOR_CONVICTIONS.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid value" }, { status: 400 });
+    }
+    if (field === "offenseClass" && !VALID_OFFENSE_CLASS.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid offense class" }, { status: 400 });
+    }
+    if (field === "chargeInvolves" && !VALID_CHARGE_INVOLVES.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid value" }, { status: 400 });
+    }
+    if (field === "testType" && !VALID_TEST_TYPES.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid test type" }, { status: 400 });
+    }
+    if (field === "breathalyzerType" && !VALID_BREATHALYZER_TYPES.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid breathalyzer type" }, { status: 400 });
+    }
 
     // Boolean fields
-    if (["industryRegulated", "hasClearance", "hasLicense"].includes(field)) {
+    if ([
+      "industryRegulated", "hasClearance", "hasLicense",
+      "hasSecurityClearance", "hasChildren", "priorDiscipline",
+      "pendingFamilyCase", "hasGreenCard", "pendingPetition",
+      "confirmatoryTest", "resultsDocs", "officerDemonstrated",
+      "choiceOfTest", "sentenceCompleted", "probationCompleted",
+      "boardNotified",
+    ].includes(field)) {
       sanitized[field] = raw === true || raw === "true";
       continue;
     }

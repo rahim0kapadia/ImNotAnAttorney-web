@@ -236,6 +236,27 @@ const PRODUCT_META: Record<string, { name: string; price: string }> = {
   "custody-impact": { name: "Custody Impact During Prosecution", price: "$197" },
   "judge-profile": { name: "Judge Profile", price: "$497" },
   "motion-opportunity-scan": { name: "Motion Opportunity Scan", price: "$497" },
+  // ─── Wave 1 — DUI/pre-trial $97 research ───────────────────
+  "breathalyzer-challenge": { name: "Breathalyzer Calibration Challenges", price: "$97" },
+  "fst-review": { name: "Field Sobriety Test Accuracy Review", price: "$97" },
+  "plea-consequences": { name: "Plea Deal Hidden Consequences", price: "$97" },
+  "drug-test-reliability": { name: "Drug Test Reliability Research", price: "$97" },
+  "bail-hearing-prep": { name: "Bail Hearing Preparation", price: "$97" },
+  "sentencing-prep": { name: "Sentencing Hearing Preparation", price: "$97" },
+  "family-case-research": { name: "Family Member Case Research", price: "$97" },
+  "arrest-report-review": { name: "Arrest Report Review", price: "$97" },
+  // ─── Wave 3 — Post-conviction research (HIGH UPL) ──────────
+  "expungement-research": { name: "Expungement Eligibility Research", price: "$97" },
+  "sentence-reduction": { name: "Sentence Reduction Petition Research", price: "$147" },
+  "appeal-viability": { name: "Appeal Viability Assessment", price: "$297" },
+  "ineffective-counsel": { name: "Ineffective Counsel Documentation", price: "$297" },
+  // ─── Wave 4 — Net-new from Reddit research ─────────────────
+  "attorney-performance-review": { name: "Attorney Performance Review", price: "$97" },
+  "probation-violation-response": { name: "Probation Violation Response", price: "$97" },
+  "discovery-decoder": { name: "Discovery Decoder", price: "$147" },
+  "constructive-possession": { name: "Constructive Possession Analysis", price: "$97" },
+  "self-surrender-prep": { name: "Self-Surrender Preparation", price: "$97" },
+  "probation-rights": { name: "Probation Rights Research", price: "$97" },
 };
 
 // ============================================================
@@ -351,6 +372,165 @@ interface MotionOpportunityScanIntake {
   caseStage: string;
   judgeName: string;
   knownFacts: string;
+}
+
+// ─── Wave 1 — DUI/pre-trial $97 research ───────────────────
+
+interface BreathalyzerChallengeIntake {
+  state: string;
+  chargeType: string;
+  bacReading: string;
+  breathalyzerType: string;
+  timeBetweenStopAndTest: string;
+  choiceOfTest: string;
+  medicalConditions: string;
+}
+
+interface FstReviewIntake {
+  state: string;
+  chargeType: string;
+  testsAdministered: string;
+  surfaceConditions: string;
+  weather: string;
+  footwear: string;
+  physicalConditions: string;
+  officerDemonstrated: string;
+}
+
+interface PleaConsequencesIntake {
+  state: string;
+  chargeType: string;
+  pleaOfferCharge: string;
+  pleaOfferTerms: string;
+  occupation: string;
+  immigrationStatus: string;
+  hasLicense: string;
+}
+
+interface DrugTestReliabilityIntake {
+  state: string;
+  chargeType: string;
+  testType: string;
+  substanceIdentified: string;
+  confirmatoryTest: string;
+  resultsDocs: string;
+}
+
+interface BailHearingPrepIntake {
+  state: string;
+  chargeType: string;
+  priorConvictions: string;
+  communityTies: string;
+  flightRiskFactors: string;
+  currentBailAmount: string;
+}
+
+interface SentencingPrepIntake {
+  state: string;
+  chargeType: string;
+  convictionMethod: string;
+  sentencingRange: string;
+  priorConvictions: string;
+  mitigatingFactors: string;
+}
+
+interface FamilyCaseResearchIntake {
+  state: string;
+  chargeType: string;
+  relationshipToDefendant: string;
+  defendantInCustody: string;
+  defendantHasAttorney: string;
+  caseStage: string;
+}
+
+interface ArrestReportReviewIntake {
+  state: string;
+  chargeType: string;
+  reportDetails: string;
+}
+
+// ─── Wave 3 — Post-conviction research (HIGH UPL) ──────────
+
+interface ExpungementResearchIntake {
+  state: string;
+  chargeType: string;
+  convictionOrDismissal: string;
+  convictionDate: string;
+  sentenceCompleted: string;
+  priorConvictions: string;
+  probationCompleted: string;
+}
+
+interface SentenceReductionIntake {
+  state: string;
+  chargeType: string;
+  sentenceImposed: string;
+  sentencingDate: string;
+  basisForReduction: string;
+}
+
+interface AppealViabilityIntake {
+  state: string;
+  chargeType: string;
+  convictionMethod: string;
+  appealGrounds: string;
+  appealDeadlineStatus: string;
+  trialIssues: string;
+}
+
+interface IneffectiveCounselIntake {
+  state: string;
+  chargeType: string;
+  issuesIdentified: string;
+  caseOutcome: string;
+}
+
+// ─── Wave 4 — Net-new from Reddit research ─────────────────
+
+interface AttorneyPerformanceReviewIntake {
+  state: string;
+  chargeType: string;
+  caseStage: string;
+  issuesIdentified: string;
+  communicationFrequency: string;
+}
+
+interface ProbationViolationResponseIntake {
+  state: string;
+  chargeType: string;
+  violationType: string;
+  priorViolations: string;
+  probationConditions: string;
+}
+
+interface DiscoveryDecoderIntake {
+  state: string;
+  chargeType: string;
+  discoveryReceived: string;
+  discoveryContents: string;
+}
+
+interface ConstructivePossessionIntake {
+  state: string;
+  chargeType: string;
+  locationDescription: string;
+  proximityToContraband: string;
+  ownershipOfLocation: string;
+}
+
+interface SelfSurrenderPrepIntake {
+  state: string;
+  chargeType: string;
+  surrenderDate: string;
+  surrenderLocation: string;
+  hasAttorney: string;
+}
+
+interface ProbationRightsIntake {
+  state: string;
+  chargeType: string;
+  probationConditions: string;
+  probationOfficerIssue: string;
 }
 
 /**
@@ -517,6 +697,414 @@ Produce a comprehensive HTML report covering:
 7. What This Scan Cannot Tell You — explicit limitations: this scan does not analyze your discovery, does not interview witnesses, and cannot replace an attorney's case-specific judgment. The scan identifies opportunities; your attorney evaluates which to pursue.
 
 Frame everything as INFORMATION to bring to your attorney's attention. Use "you might explore", "factors worth discussing", "motions that may apply" — never "we recommend", "you should file", or "your best option is".`;
+    }
+
+    // ─── Wave 1 — DUI/pre-trial $97 research ─────────────────
+
+    case "breathalyzer-challenge": {
+      const data = intake as unknown as BreathalyzerChallengeIntake;
+      return `Generate a Breathalyzer Calibration Challenges report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- BAC Reading: """${data.bacReading}"""
+- Breathalyzer Type: ${data.breathalyzerType}
+- Time Between Stop and Test: """${data.timeBetweenStopAndTest}"""
+- Offered Choice of Test: ${data.choiceOfTest}
+- Medical Conditions: """${data.medicalConditions || "None reported"}"""
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. Challenge Viability — rate overall viability as STRONG / MODERATE / WEAK based on the combination of BAC reading, machine type, time gap, and medical factors. Explain the rating in plain English.
+2. Calibration Requirements — state-mandated calibration schedule for this breathalyzer type, operator certification requirements, and the governing statute or regulation (cite only if you are confident it exists; otherwise note "verify current statute with your attorney").
+3. Common Challenge Grounds — analyze each that may apply: mouth alcohol contamination, rising BAC defense (time between stop and test), operator error patterns for this machine type, known machine error rates and recall history.
+4. Medical Factor Analysis — if medical conditions were reported, explain how each condition can affect breathalyzer readings (GERD, diabetes, dental work, etc.). If none reported, note common conditions defendants may not realize are relevant.
+5. Discovery Requests — specific documents the defendant's attorney may want to request: calibration logs, maintenance records, operator certification, solution lot numbers, device error logs.
+6. Questions for Your Attorney — 10 charge-type and machine-specific questions to bring to the defense attorney.
+
+Frame everything as INFORMATION for discussion with their attorney. Use "factors to consider", "questions worth exploring" — never "you should", "we recommend".`;
+    }
+
+    case "fst-review": {
+      const data = intake as unknown as FstReviewIntake;
+      return `Generate a Field Sobriety Test Accuracy Review for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Tests Administered: """${data.testsAdministered}"""
+- Surface Conditions: """${data.surfaceConditions}"""
+- Weather Conditions: """${data.weather}"""
+- Footwear: """${data.footwear}"""
+- Physical Conditions: """${data.physicalConditions || "None reported"}"""
+- Officer Demonstrated Tests: ${data.officerDemonstrated}
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. NHTSA Compliance Check — for EACH test administered (HGN, Walk-and-Turn, One-Leg Stand), list the NHTSA-standardized administration requirements and note which environmental or procedural factors from the intake may represent deviations. If the officer did not demonstrate, note NHTSA's demonstration requirement.
+2. Physical Factor Analysis — how each reported physical condition (age, weight, injuries, disabilities, medications) affects performance on each specific test. Published NHTSA accuracy rates already account for IDEAL conditions — real-world conditions reduce reliability further.
+3. Officer Administration Issues — common administration errors by test type: wrong instruction sequence, incorrect demonstration, improper scoring, stopping test early. Whether officer demonstrated is a key factor for Walk-and-Turn and One-Leg Stand.
+4. Published Accuracy Rates — NHTSA's own published accuracy rates for each standardized test (HGN: 77%, Walk-and-Turn: 68%, One-Leg Stand: 65% — under IDEAL conditions). Combined battery accuracy. What these percentages mean for false positives.
+5. Questions for Your Attorney — 10 test-specific questions tied to the factors identified above.
+
+Frame everything as INFORMATION for discussion with their attorney. Use "patterns typically observed", "factors to consider" — never "you should", "we recommend".`;
+    }
+
+    case "plea-consequences": {
+      const data = intake as unknown as PleaConsequencesIntake;
+      return `Generate a Plea Deal Hidden Consequences report for:
+- State: ${data.state}
+- Original Charge Type: ${data.chargeType}
+- Plea Offer Charge: """${data.pleaOfferCharge}"""
+- Plea Offer Terms: """${data.pleaOfferTerms}"""
+- Occupation: """${data.occupation || "Not specified"}"""
+- Immigration Status: ${data.immigrationStatus || "Not specified"}
+- Has Professional License: ${data.hasLicense || "Not specified"}
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. Plea Offer Decoded — translate the plea offer into plain English. What the charge means, what the terms mean, what "adjudication withheld" or "deferred adjudication" means if applicable.
+2. Criminal Consequences — direct sentencing consequences of accepting: jail/prison time, probation terms, fines, community service, classes, restitution. Compare to the original charge's potential consequences.
+3. Top 10 Collateral Consequences — the 10 most impactful hidden consequences for THIS specific plea charge in THIS state, prioritized by the defendant's situation (occupation, immigration status, licensing). Cover: employment, housing, gun rights, voting, immigration, custody, education, public benefits, travel, and professional licensing as applicable.
+4. Original Charge vs. Plea Offer — side-by-side comparison table: max sentence, collateral consequences, record impact, expungement eligibility for each.
+5. Timing Considerations — withdrawal deadlines, when consequences attach (at plea vs. adjudication vs. sentencing), and how timing affects leverage.
+6. Questions for Your Attorney — 10 questions specific to the plea offer and the defendant's personal circumstances.
+
+Frame everything as INFORMATION for discussion with their attorney. Use "factors to consider", "questions worth exploring" — never "you should", "we recommend", "we advise".`;
+    }
+
+    case "drug-test-reliability": {
+      const data = intake as unknown as DrugTestReliabilityIntake;
+      return `Generate a Drug Test Reliability Research report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Test Type: ${data.testType}
+- Substance Identified: """${data.substanceIdentified}"""
+- Confirmatory Test Performed: ${data.confirmatoryTest}
+- Results Documentation Available: ${data.resultsDocs}
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. Test Reliability — published false positive rates for this test type and substance. Known cross-reactants (medications, foods, supplements) that can trigger false positives for the identified substance. Distinction between presumptive and confirmatory testing.
+2. Chain of Custody — what proper chain of custody looks like for this test type. Common gaps. What documentation should exist at each step. Questions about handling, storage temperature, and time between collection and testing.
+3. Lab Certification — required certifications for the testing lab (CLIA, state-specific). How to verify certification. What expired or missing certification means for admissibility.
+4. Challenge Grounds — specific grounds for challenging this test type: methodology limitations, operator qualifications, equipment calibration, sample handling, confirmation testing requirements. Whether a confirmatory test was performed is a critical factor.
+5. Questions for Your Attorney — 10 test-specific questions, including discovery requests for lab records, analyst qualifications, and equipment maintenance logs.
+
+Frame everything as INFORMATION for discussion with their attorney. Use "factors to consider", "questions worth exploring" — never "you should", "we recommend".`;
+    }
+
+    case "bail-hearing-prep": {
+      const data = intake as unknown as BailHearingPrepIntake;
+      return `Generate a Bail Hearing Preparation report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Prior Convictions: ${data.priorConvictions}
+- Community Ties: """${data.communityTies}"""
+- Flight Risk Factors: """${data.flightRiskFactors || "None identified"}"""
+- Current Bail Amount: """${data.currentBailAmount || "Not yet set"}"""
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. How Bail Hearings Work — plain-English explanation of the bail hearing process in this state. What the judge considers, who speaks, and how decisions are typically made. Pretrial services role if applicable.
+2. Factors in Your Favor — based on the reported community ties, analyze which factors support release or bail reduction: employment, family ties, length of residency, community involvement, prior court appearance history.
+3. Factors Against You — honest assessment of factors that may weigh against the defendant: charge severity, prior convictions, flight risk factors reported. Understanding these allows the attorney to prepare responses.
+4. Bail Reduction Strategies — framed as QUESTIONS to explore with the attorney: alternative conditions (GPS monitoring, check-ins, travel restrictions), bail bond options, surety vs. cash bail, OR (own recognizance) eligibility factors in this state.
+5. Questions for Your Attorney — 10 hearing-specific questions including timing, what to bring, how to present, and what conditions to expect.
+
+Frame everything as INFORMATION for discussion with their attorney. Use "factors to consider", "questions worth exploring" — never "you should", "we recommend".`;
+    }
+
+    case "sentencing-prep": {
+      const data = intake as unknown as SentencingPrepIntake;
+      return `Generate a Sentencing Hearing Preparation report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Conviction Method: ${data.convictionMethod}
+- Sentencing Range: """${data.sentencingRange}"""
+- Prior Convictions: ${data.priorConvictions}
+- Mitigating Factors: """${data.mitigatingFactors}"""
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. What to Expect — plain-English walkthrough of the sentencing hearing process in this state. Who speaks, in what order, what the judge considers, how long it typically takes. Pre-sentence investigation report (PSI) role and timeline.
+2. Sentencing Range — published sentencing guidelines or ranges for this charge type in this state. How prior convictions affect the range. Mandatory minimums if applicable (cite only if confident; otherwise note "verify with your attorney"). Distinction between guidelines and judicial discretion.
+3. Mitigation Factors — analysis of each reported mitigating factor and how courts in this state typically weigh it. Additional mitigating factors the defendant may not have considered: employment history, family responsibilities, mental health treatment, substance abuse treatment, community service, restitution, remorse.
+4. Character References — who makes effective character witnesses, what they should address, how to prepare them. Letter format vs. live testimony considerations.
+5. Allocution Considerations — framed as questions for the attorney: whether to make a personal statement, what courts respond to, what to avoid, how allocution differs from testimony.
+6. Questions for Your Attorney — 10 sentencing-specific questions including preparation timeline, PSI interview strategy, and what conditions to request as alternatives.
+
+Frame everything as INFORMATION for discussion with their attorney. Use "factors to consider", "questions worth exploring" — never "you should", "we recommend".`;
+    }
+
+    case "family-case-research": {
+      const data = intake as unknown as FamilyCaseResearchIntake;
+      return `Generate a Family Member Case Research report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Relationship to Defendant: """${data.relationshipToDefendant}"""
+- Defendant Currently in Custody: ${data.defendantInCustody}
+- Defendant Has Attorney: ${data.defendantHasAttorney}
+- Case Stage: ${data.caseStage}
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. What They're Facing — plain-English explanation of the charge type, what it means, typical case timeline in this state, and potential outcomes. Written for a family member, not the defendant — explain the system from the outside.
+2. What's Happening Now — based on the case stage, explain what is currently happening in the case, what comes next, and approximate timelines. If in custody, explain the custody/bond process.
+3. How to Help — specific, actionable ways the family member can support the defendant based on their relationship and the case stage. Include: attending court, documenting character, helping find/communicate with attorneys, managing finances, maintaining normalcy for children if applicable.
+4. What NOT to Do — critical warnings: jail phone calls are recorded and monitored, do not discuss case details on the phone or in jail visits, social media posts can become evidence, do not contact witnesses or alleged victims, do not post bail without understanding conditions.
+5. Questions to Ask the Attorney — 10 specific questions the family member can ask the defendant's attorney (or help the defendant ask), tailored to this charge type and case stage.
+
+This report is for a FAMILY MEMBER, not the defendant. Write with empathy — this person is scared for someone they love. Frame everything as INFORMATION. Use "factors to consider", "questions worth exploring" — never "you should", "we recommend".`;
+    }
+
+    case "arrest-report-review": {
+      const data = intake as unknown as ArrestReportReviewIntake;
+      return `Generate an Arrest Report Review for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Report Details: """${data.reportDetails}"""
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. Report Summary — translate the arrest report into plain English. What happened according to the report, in chronological order. Define any legal terms or police jargon used.
+2. Potential Issues — identify inconsistencies, vague language, missing information, and potential procedural issues in the report. Common patterns: time gaps, passive voice hiding who did what, conclusory statements without supporting observations, missing witness information.
+3. Miranda/Rights Analysis — based on the report details, identify when (if) Miranda warnings were given relative to questioning. Whether the timeline suggests any statements were obtained before rights were read. Note: this analysis is based on what the report states, which may differ from what actually occurred.
+4. Probable Cause Assessment — analyze the stated basis for the stop, detention, and arrest. Whether the report articulates specific, articulable facts (Terry standard) or relies on vague suspicion. Whether the escalation from stop to arrest is supported by the facts described.
+5. Questions for Your Attorney — 10 report-specific questions highlighting the gaps and issues identified, plus discovery requests (body cam footage, dash cam, dispatch records, CAD logs).
+
+Frame everything as INFORMATION for discussion with their attorney. Use "patterns typically observed", "factors to consider" — never "you should", "we recommend".`;
+    }
+
+    // ─── Wave 3 — Post-conviction research (HIGH UPL) ──────────
+
+    case "expungement-research": {
+      const data = intake as unknown as ExpungementResearchIntake;
+      return `Generate an Expungement Eligibility Research report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Outcome: ${data.convictionOrDismissal}
+- Conviction/Disposition Date: """${data.convictionDate}"""
+- Sentence Completed: ${data.sentenceCompleted}
+- Prior Convictions: ${data.priorConvictions}
+- Probation Completed: ${data.probationCompleted}
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+HIGH UPL SENSITIVITY — use "based on published state criteria, you MAY be eligible" — NEVER "you are eligible" or "you qualify."
+
+Produce a comprehensive HTML report covering:
+1. Eligibility Determination — based on published state criteria, categorize as: ELIGIBLE NOW / ELIGIBLE AFTER [estimated date] / NOT ELIGIBLE / UNCERTAIN. Explain the basis for the determination. If UNCERTAIN, explain which factors need attorney verification.
+2. Waiting Period — the state's published waiting period for this charge type and disposition (conviction vs. dismissal). When the waiting period starts (from disposition date, sentence completion, or probation completion). Calculate approximate eligibility date based on the dates provided.
+3. Process in Your State — step-by-step overview of the expungement/sealing process in this state: petition filing, hearing requirements, required documentation, typical timeline from filing to order, filing fees.
+4. What Expungement Does — what records are sealed or destroyed, who can still see them, what the defendant can legally say on applications after expungement in this state.
+5. Limitations — what expungement does NOT do: federal records, immigration records, news articles, private background check databases that may retain old data. Restoration of rights limitations.
+6. Questions for Your Attorney — 10 state-specific questions about the expungement process, eligibility edge cases, and what to expect.
+
+Frame everything as INFORMATION for discussion with their attorney. Use "factors that may apply", "questions worth exploring" — never "you should file", "we recommend".`;
+    }
+
+    case "sentence-reduction": {
+      const data = intake as unknown as SentenceReductionIntake;
+      return `Generate a Sentence Reduction Petition Research report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Sentence Imposed: """${data.sentenceImposed}"""
+- Sentencing Date: """${data.sentencingDate}"""
+- Basis for Reduction: """${data.basisForReduction}"""
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+HIGH UPL SENSITIVITY — use "mechanisms that may be available" — NEVER "you should file" or "we recommend filing."
+
+Produce a comprehensive HTML report covering:
+1. Available Mechanisms — overview of sentence reduction mechanisms that may exist in this state: Rule 35 motions (or state equivalent), compassionate release, retroactive sentencing guideline amendments, executive clemency/commutation, earned time credits, medical release. Note which mechanisms are statutory vs. discretionary.
+2. Applicable Mechanism Analysis — for each mechanism that may apply based on the defendant's situation and stated basis, analyze: eligibility criteria, typical grounds for success, filing deadlines (some are time-limited — e.g., Rule 35 often has a 120-day or 1-year window from sentencing), standard of review, success rates if published.
+3. Required Documentation — what supporting documentation is typically needed: institutional records, programming certificates, medical records, employment history, character letters, victim impact considerations.
+4. Timeline — realistic timeline expectations from filing through resolution for each applicable mechanism. Whether the sentence continues during the petition process.
+5. Questions for Your Attorney — 10 mechanism-specific questions about eligibility, strategy, and expectations.
+
+Frame everything as INFORMATION for discussion with their attorney. Use "mechanisms that may be available", "factors that may apply" — never "you should file", "we recommend".`;
+    }
+
+    case "appeal-viability": {
+      const data = intake as unknown as AppealViabilityIntake;
+      return `Generate an Appeal Viability Assessment for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Conviction Method: ${data.convictionMethod}
+- Appeal Grounds: """${data.appealGrounds}"""
+- Appeal Deadline Status: ${data.appealDeadlineStatus}
+- Trial Issues: """${data.trialIssues}"""
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+HIGH UPL SENSITIVITY — use "based on published appellate standards" — NEVER "you have a strong appeal" or "your appeal will succeed."
+
+Produce a comprehensive HTML report covering:
+1. Viability Assessment — based on published appellate standards, rate overall viability as STRONG / MODERATE / WEAK / NOT VIABLE. Explain the rating in plain English. Be honest — most appeals face an uphill battle, and defendants deserve to know that before investing time and money.
+2. Deadline Status — based on the reported deadline status, explain the applicable filing deadlines in this state (notice of appeal, brief deadlines). If the deadline may have passed, explain post-conviction alternatives (state habeas, Rule 32, etc.). Deadlines are jurisdictional — missing them is typically fatal.
+3. Grounds Analysis — for each ground identified, analyze: whether it is a recognized appellate ground, what standard of review applies (de novo, abuse of discretion, plain error), whether it was preserved at trial (objected to on the record), and how appellate courts in this state have typically treated similar arguments.
+4. Preservation Issues — critical analysis of whether the trial issues were properly preserved. Unpreserved issues face plain error review, which is much harder to win. If issues were not preserved, explain what that means for the appeal.
+5. Process and Cost — realistic overview of the appellate process: timeline (typically 1-3 years), costs (transcript, attorney fees, filing fees), what happens during the appeal (sentence continues unless stayed), and success rate context.
+6. Questions for an Appellate Attorney — 10 specific questions for a consultation with an appellate specialist (who may be different from the trial attorney).
+
+Frame everything as INFORMATION for discussion with an appellate attorney. Use "factors that may apply", "questions worth exploring" — never "you should appeal", "we recommend".`;
+    }
+
+    case "ineffective-counsel": {
+      const data = intake as unknown as IneffectiveCounselIntake;
+      return `Generate an Ineffective Counsel Documentation report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Issues Identified: """${data.issuesIdentified}"""
+- Case Outcome: ${data.caseOutcome}
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+HIGHEST UPL SENSITIVITY — use "factors that MAY be relevant to an IAC analysis" — NEVER "your attorney was ineffective" or "you have an IAC claim." Frame the entire report as "information for the attorney evaluating the claim" — not as a determination that ineffective assistance occurred.
+
+Produce a comprehensive HTML report covering:
+1. Strickland Standard Explained — plain-English explanation of the two-prong test: (1) performance fell below objective standard of reasonableness, and (2) but for the deficient performance, there is a reasonable probability the outcome would have been different. Explain how high this bar is — courts give strong deference to attorney strategy decisions.
+2. Issue Analysis — for EACH issue identified by the defendant, analyze: whether it relates to the performance prong or the prejudice prong, whether it could be explained as a strategic decision (which courts will defer to), and what documentation would be needed to support a claim based on this issue.
+3. Documentation Recommendations — what records and evidence would be relevant for an attorney evaluating a potential IAC claim: trial transcripts, motion practice history, communication logs, discovery records, case timeline, and what to document NOW before memories fade.
+4. Timeline for IAC Claims — state-specific deadlines for post-conviction IAC claims (state habeas, Rule 3.850 in FL, PCRA in PA, etc.). These deadlines are often strict. Note the applicable deadline framework for this state without fabricating specific time limits if unsure.
+5. Questions for a New Attorney — 10 questions to ask during a consultation with an attorney who handles post-conviction claims. Frame as: "bring these questions and the documentation above to a consultation."
+
+Frame everything as INFORMATION for the attorney who will evaluate the claim. Use "factors that may be relevant", "considerations for the evaluating attorney" — never "your attorney was ineffective", "you have a claim", "we recommend filing".`;
+    }
+
+    // ─── Wave 4 — Net-new from Reddit research ─────────────────
+
+    case "attorney-performance-review": {
+      const data = intake as unknown as AttorneyPerformanceReviewIntake;
+      return `Generate an Attorney Performance Review for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Case Stage: ${data.caseStage}
+- Issues Identified: """${data.issuesIdentified}"""
+- Communication Frequency: ${data.communicationFrequency}
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. Communication Benchmark — what communication frequency is typical for this charge type and case stage. Industry standards from bar associations. How this defendant's reported experience compares. Note: low communication does not necessarily mean poor representation — some stages are "waiting" stages.
+2. Motion Filing Timeline Assessment — what motions a defense attorney would typically have filed by this case stage for this charge type. This is not prescriptive — different strategies call for different approaches — but provides a baseline for the defendant to have an informed conversation.
+3. Discovery Status Assessment — where discovery should be in the process at this case stage. What the defendant should have received. What to ask about if they have not received discovery yet.
+4. Case Progress vs. Typical Timelines — how the case timeline compares to typical timelines for this charge type in this state. Continuances, delays, and what they mean (delays can be strategic, not negligent).
+5. Questions to Ask Your Attorney — 10 constructive, non-confrontational questions designed to get information, not to accuse. Frame as: "these questions help you understand your case status and your attorney's strategy."
+6. When to Consider a Second Opinion — general factors that may warrant seeking a second opinion from another attorney. Frame carefully: this is about the defendant being informed, not about attacking their current attorney.
+
+Frame everything as INFORMATION. This is about empowering the defendant with context, not building a complaint against their attorney. Use "patterns typically observed", "factors to consider" — never "your attorney is failing", "you should fire your attorney".`;
+    }
+
+    case "probation-violation-response": {
+      const data = intake as unknown as ProbationViolationResponseIntake;
+      return `Generate a Probation Violation Response report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Violation Type: ${data.violationType}
+- Prior Violations: ${data.priorViolations}
+- Probation Conditions: """${data.probationConditions}"""
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. Violation Classification — explain the difference between technical violations (missed appointment, failed drug test, curfew violation) and substantive violations (new arrest). Classify this violation and explain what that classification means for potential consequences.
+2. Potential Consequences — range of outcomes for this violation type in this state: warning, modified conditions, extended probation, short jail sanction, revocation and imposition of original sentence. How prior violations affect the range. Judicial discretion factors.
+3. Hearing Preparation — what happens at a violation hearing: burden of proof (preponderance, not beyond reasonable doubt), who testifies, what evidence is presented, the defendant's right to speak. Timeline from violation to hearing.
+4. Mitigating Factors to Document — factors that courts consider in mitigation: compliance history, employment, treatment participation, family responsibilities, circumstances of the violation. What documentation to gather before the hearing.
+5. Questions for Your Attorney — 10 violation-specific questions about the hearing process, potential outcomes, and preparation strategy.
+
+Frame everything as INFORMATION for discussion with their attorney. Use "factors to consider", "questions worth exploring" — never "you should", "we recommend".`;
+    }
+
+    case "discovery-decoder": {
+      const data = intake as unknown as DiscoveryDecoderIntake;
+      return `Generate a Discovery Decoder report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Discovery Received: ${data.discoveryReceived}
+- Discovery Contents Description: """${data.discoveryContents}"""
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. Discovery Contents Inventory — based on the description provided, categorize what the defendant appears to have received: police reports, witness statements, lab reports, photos/videos, expert reports, electronic evidence, surveillance, financial records, etc.
+2. What's Present vs. What Should Be There — for this charge type, list the standard discovery categories and mark each as PRESENT / MISSING / UNCLEAR based on the defendant's description. Standard discovery for this charge type includes [list charge-specific items].
+3. Gap Analysis — for each MISSING item, explain what it is, why it matters for the defense, and whether the prosecution is obligated to disclose it. Prioritize gaps by importance to the defense.
+4. Significance of Each Document Type — for each category of discovery the defendant received, explain what to look for and what questions it should raise. Written for a layperson who has never read legal documents before.
+5. Brady/Giglio Obligations Overview — plain-English explanation of the prosecution's obligation to disclose exculpatory evidence (Brady) and witness impeachment information (Giglio). What the defendant can do if they believe required disclosures are missing.
+6. Questions for Your Attorney About Missing Items — 10 specific questions about the gaps identified, including discovery motions and deadlines.
+
+Frame everything as INFORMATION for discussion with their attorney. Use "factors to consider", "questions worth exploring" — never "you should file", "we recommend".`;
+    }
+
+    case "constructive-possession": {
+      const data = intake as unknown as ConstructivePossessionIntake;
+      return `Generate a Constructive Possession Analysis for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Location Description: """${data.locationDescription}"""
+- Proximity to Contraband: """${data.proximityToContraband}"""
+- Ownership of Location: """${data.ownershipOfLocation}"""
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. Constructive Possession Elements — what the prosecution must prove for constructive possession in this state: knowledge of the contraband's presence AND dominion/control over it. Explain each element in plain English. Note: mere proximity is generally insufficient.
+2. Proximity Analysis — based on the described proximity, analyze how courts in this state have treated similar proximity scenarios. Distance, accessibility, plain view vs. concealment, and whether the location arrangement suggests knowledge and control.
+3. Knowledge and Control Factors — what evidence typically establishes (or fails to establish) knowledge and control: fingerprints, DNA, statements, ownership of container, exclusive vs. shared access, other personal items in the same location.
+4. Shared Space Defense Angles — if the location is shared (vehicle with passengers, shared residence, common area), analyze how shared access affects the prosecution's burden. The "equal access" defense pattern. What the prosecution needs beyond mere presence in a shared space.
+5. Questions for Your Attorney — 10 case-specific questions about the constructive possession defense, evidence challenges, and discovery requests.
+
+Frame everything as INFORMATION for discussion with their attorney. Use "factors to consider", "questions worth exploring" — never "you should argue", "we recommend".`;
+    }
+
+    case "self-surrender-prep": {
+      const data = intake as unknown as SelfSurrenderPrepIntake;
+      return `Generate a Self-Surrender Preparation report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Surrender Date: """${data.surrenderDate}"""
+- Surrender Location: """${data.surrenderLocation}"""
+- Has Attorney: ${data.hasAttorney}
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. Pre-Surrender Checklist — comprehensive checklist organized by category: personal affairs (bills, mail, dependents, pets, employer notification), financial (bank access, bill autopay, power of attorney if needed), legal (documents to bring, attorney contact info, case number), and practical (what to wear, personal items to leave at home).
+2. What to Bring / What to Leave — specific list of items to bring (government ID, prescription verification letter, case paperwork, attorney's card, limited cash for commissary) and items to leave behind (jewelry, electronics, wallet contents, anything valuable). Facility-specific rules may vary — note the defendant's attorney or the facility can confirm specifics.
+3. What to Expect at Intake — step-by-step walkthrough of the intake process: booking, fingerprinting, medical screening, property storage, phone call availability, housing assignment. Timeline (intake typically takes 4-8 hours). What to expect emotionally — this is normal to be anxious about.
+4. First 24-48 Hours — what happens after intake: orientation, commissary access timeline, phone/email setup, visitation scheduling, daily routine overview. Practical survival information written with empathy.
+5. Questions for Your Attorney — 10 surrender-specific questions including: voluntary surrender benefits at sentencing, reporting instructions, what happens if circumstances change before the surrender date, and post-surrender communication plan.
+
+This person is about to lose their freedom. Write with dignity and practical clarity. Frame everything as INFORMATION. Use "factors to consider", "questions worth exploring" — never "you should", "we recommend".`;
+    }
+
+    case "probation-rights": {
+      const data = intake as unknown as ProbationRightsIntake;
+      return `Generate a Probation Rights Research report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Probation Conditions: """${data.probationConditions}"""
+- Probation Officer Issue: """${data.probationOfficerIssue}"""
+
+Do not fabricate statute citations, case names, or case numbers. If you are uncertain about a specific state's statute, say "state law varies — verify current provisions with your attorney" rather than inventing a citation.
+
+Produce a comprehensive HTML report covering:
+1. Standard vs. Special Conditions — explain the difference between standard conditions (that apply to all probationers in this state) and special conditions (court-ordered for this specific case). Identify which of the reported conditions are standard and which may be special. Courts have limits on what special conditions can be imposed — they must be reasonably related to the offense or rehabilitation.
+2. Probation Officer Authority Limits — what a PO can and cannot require beyond the court-ordered conditions. POs cannot unilaterally add conditions — only the court can modify conditions. If the PO is requiring something not in the court order, explain the defendant's options.
+3. Search and Seizure Rules on Probation — how Fourth Amendment rights are modified (not eliminated) on probation in this state. When a PO can search without a warrant, when they need one, and what "reasonable suspicion" means in the probation context. Home visits vs. searches.
+4. Condition Modification Process — how to request modification of probation conditions through the court. What grounds support modification. The process (motion, hearing, burden of proof). Early termination eligibility in this state.
+5. Questions for Your Attorney — 10 questions specific to the reported PO issue and probation conditions, including documentation strategies and when to escalate.
+
+Frame everything as INFORMATION for discussion with their attorney. Use "factors to consider", "questions worth exploring" — never "you should", "we recommend".`;
     }
 
     default:
