@@ -34,7 +34,7 @@ const PRODUCT_COPY: Record<
       "10 questions to ask your defense attorney about employment",
     ],
     sampleInsight:
-      "In Florida, employers cannot ask about arrests that did not lead to conviction on initial applications (Ban-the-Box, effective 2024). But background check timing matters — your charge appears differently at different stages.",
+      "Sample finding — Registered Nurse, Florida, DUI charge. Employment risk: SIGNIFICANT. Under Florida Board of Nursing rules, licensees must self-report arrests within 30 days. Failure to report is an independent disciplinary violation that can trigger suspension even if the criminal charge is dismissed. Estimated income impact if license suspended: $280,000–$420,000 over 10 years. Your report will build the same specific analysis for your exact state, occupation, and charge.",
   },
   "judge-profile": {
     headline: "Know your judge before your first hearing.",

@@ -30,8 +30,8 @@
 export const TIER_CORE = {
   "dui-first-offense": {
     name: "DUI Defense Playbook",
-    price: 9700, // cents
-    priceDisplay: "$97",
+    price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
+    priceDisplay: "$127",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
     requiresDiscovery: false,
@@ -45,8 +45,8 @@ export const TIER_CORE = {
   },
   "drug-possession": {
     name: "Drug Possession Defense Playbook",
-    price: 9700, // cents
-    priceDisplay: "$97",
+    price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
+    priceDisplay: "$127",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
     requiresDiscovery: false,
@@ -60,8 +60,8 @@ export const TIER_CORE = {
   },
   "probation-violation": {
     name: "Probation Violation Defense Playbook",
-    price: 9700, // cents
-    priceDisplay: "$97",
+    price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
+    priceDisplay: "$127",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
     requiresDiscovery: false,
@@ -75,8 +75,8 @@ export const TIER_CORE = {
   },
   "white-collar": {
     name: "White Collar Defense Playbook",
-    price: 9700, // cents
-    priceDisplay: "$97",
+    price: 14700, // cents — raised from $97 → $147 (2026-04-07, Hormozi premium tier for higher-stakes charges)
+    priceDisplay: "$147",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
     requiresDiscovery: false,
@@ -90,8 +90,8 @@ export const TIER_CORE = {
   },
   "sex-offense": {
     name: "Sex Offense Defense Playbook",
-    price: 9700, // cents
-    priceDisplay: "$97",
+    price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
+    priceDisplay: "$127",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
     requiresDiscovery: false,
@@ -105,8 +105,8 @@ export const TIER_CORE = {
   },
   "federal-criminal": {
     name: "Federal Criminal Defense Playbook",
-    price: 9700, // cents
-    priceDisplay: "$97",
+    price: 14700, // cents — raised from $97 → $147 (2026-04-07, Hormozi premium tier: federal stakes)
+    priceDisplay: "$147",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
     requiresDiscovery: false,
@@ -120,8 +120,8 @@ export const TIER_CORE = {
   },
   "drug-trafficking": {
     name: "Drug Trafficking Defense Playbook",
-    price: 9700, // cents
-    priceDisplay: "$97",
+    price: 14700, // cents — raised from $97 → $147 (2026-04-07, Hormozi premium tier: trafficking stakes)
+    priceDisplay: "$147",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
     requiresDiscovery: false,
@@ -135,8 +135,8 @@ export const TIER_CORE = {
   },
   "self-defense": {
     name: "Self-Defense / Justifiable Force Defense Playbook",
-    price: 9700, // cents
-    priceDisplay: "$97",
+    price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
+    priceDisplay: "$127",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
     requiresDiscovery: false,
