@@ -52,6 +52,7 @@ const GUIDE_CONTENT: Record<
   () => Promise<{ default: ComponentType }>
 > = {
   "first-court-appearance": () => import("../content/first-court-appearance"),
+  "family-action-plan": () => import("../content/family-action-plan"),
 };
 
 /**
