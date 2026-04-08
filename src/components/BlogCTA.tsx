@@ -25,7 +25,70 @@ const CATEGORY_PLAYBOOK: Record<string, string> = {
   "general-defense": "dui-first-offense",
 };
 
+/**
+ * Categories that route to standalone research products instead of TIER_CORE
+ * playbooks. Each entry has hardcoded sales copy because standalone products
+ * don't live in TIER_CORE.
+ */
+const STANDALONE_CATEGORY_CTA: Record<
+  string,
+  {
+    slug: string;
+    price: string;
+    headline: string;
+    headlineAccent: string;
+    subhead: string;
+    primaryLabel: string;
+    secondaryLabel: string;
+  }
+> = {
+  employment: {
+    slug: "employment-impact",
+    price: "$197",
+    headline: "Will THIS specific charge cost YOUR specific job?",
+    headlineAccent: "Find out in 48 hours.",
+    subhead:
+      "Employment Impact Assessment: state-specific background check analysis, employer type rules, and professional license implications for your exact situation. 60-second intake, report delivered in 48 hours. 7-day refund guarantee.",
+    primaryLabel: "Get Your Employment Impact Assessment — $197",
+    secondaryLabel: "Not sure yet? Take the free Defense Milestone Score",
+  },
+};
+
 export function BlogCTA({ category }: { category?: string }) {
+  // Standalone product branch — employment and any future standalone categories
+  const standalone = category ? STANDALONE_CATEGORY_CTA[category] : undefined;
+  if (standalone) {
+    return (
+      <FadeInUp>
+        <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
+          <h3 className="text-lg font-bold text-white">
+            {standalone.headline}{" "}
+            <span className="text-amber-400">{standalone.headlineAccent}</span>
+          </h3>
+          <p className="mt-2 text-sm text-zinc-400">{standalone.subhead}</p>
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href={`/checkout?standaloneProduct=${standalone.slug}`}
+              className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+            >
+              {standalone.primaryLabel} &rarr;
+            </Link>
+            <Link
+              href="/score"
+              className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:border-amber-500"
+            >
+              {standalone.secondaryLabel}
+            </Link>
+          </div>
+          <div className="mt-4">
+            <TrustBadges variant="compact" />
+          </div>
+        </div>
+      </FadeInUp>
+    );
+  }
+
+  // Tier playbook branch (unchanged)
   const playbookSlug = category ? CATEGORY_PLAYBOOK[category] || "dui-first-offense" : "dui-first-offense";
   const tier = TIER_CORE[playbookSlug as keyof typeof TIER_CORE];
   const isLive = tier?.live === true;

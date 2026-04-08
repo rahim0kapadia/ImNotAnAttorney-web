@@ -47,7 +47,12 @@ export function HomepageHero() {
       <section className="px-4 pb-16 pt-24 text-center md:pt-32">
         <div className="mx-auto max-w-4xl">
           <FadeInUp>
-            <h1 className="font-display text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
+            <p className="text-sm font-semibold uppercase tracking-wider text-amber-500">
+              Know What They Know
+            </p>
+          </FadeInUp>
+          <FadeInUp delay={0.05}>
+            <h1 className="mt-3 font-display text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
               Your Case File Has Answers.
               <br />
               <span className="text-amber-400">We Find Them. Now You Know.</span>
@@ -55,9 +60,8 @@ export function HomepageHero() {
           </FadeInUp>
           <FadeInUp delay={0.1}>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300">
-              Case-specific research that uncovers what your case file actually
-              contains &mdash; and the exact questions that close the information
-              gap. Built from 40+ elite defense attorney methodologies.
+              We read your actual case file. We find what doesn&apos;t add up.
+              We hand you the questions your attorney has to answer.
             </p>
           </FadeInUp>
 
